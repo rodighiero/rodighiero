@@ -1,0 +1,10 @@
+---
+title: "VISAP 2025 Catalog"
+year: 2025
+order: 9
+venue: "IEEE"
+authors: "Çay, Damla, Dario Rodighiero, Weidi Zhang,&nbsp;Martina R. Fröschl, Peter Mindek, and Beatrice Gobbo"
+url: "https://visap.net/2025/downloads/visap-2025-booklet.pdf"
+img: "VISAP-2025-Catalog.jpg"
+---
+Care is easy to recognize on a personal level,especially when it appears in the small, attentivegestures woven into daily life. We see it whensomeone nurses a sick friend, tends a garden,or stitches a quilt by hand. Each act is markedby presence, patience, and a quiet commitmentexpressed through attention. It takes form throughdeliberate actions that often go unnoticed yet carryenduring meaning. B
