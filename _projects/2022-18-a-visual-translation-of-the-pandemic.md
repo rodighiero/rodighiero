@@ -1,0 +1,10 @@
+---
+title: "A Visual Translation of the Pandemic"
+year: 2022
+order: 18
+venue: "Leonardo"
+authors: "Rodighiero, Dario, Eveline Wandl-Vogt, and Elian Carsenat"
+url: "https://research.rug.nl/en/publications/a-visual-translation-of-the-pandemic"
+img: "Covid-19.jpg"
+---
+In 1923, Walter Benjamin published translations of Baudelaire’s poetry with a prefatory essay the idea that translation is therefore not only the practice of addressing foreign readerships, but rather a process of authorship in which the original text is amplified with further significance. The authors use the term translation with a meaning that is not only linguistic but also visual. They analyz

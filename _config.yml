@@ -1,0 +1,15 @@
+title: Dario Rodighiero
+description: Design, Data, and Humanities
+url: https://dariorodighiero.com
+
+collections:
+  projects:
+    output: false
+    sort_by: order
+
+defaults:
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: null
