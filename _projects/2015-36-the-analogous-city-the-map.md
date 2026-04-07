@@ -3,7 +3,7 @@ title: "The Analogous City, the Map"
 year: 2015
 order: 36
 venue: "EPFL Archizoom"
-type: "chapter"
+type: "book"
 authors: "Rodighiero, Dario"
 doi: "https://infoscience.epfl.ch/record/209326"
 img: "Analogous-City.jpg"
