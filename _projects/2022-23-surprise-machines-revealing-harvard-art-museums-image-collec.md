@@ -3,6 +3,7 @@ title: "Surprise Machines: Revealing Harvard Art Museums’ Image Collection"
 year: 2022
 order: 23
 venue: "Information Design Journal"
+type: "journal"
 authors: "Rodighiero, Dario, Lins Derry, Douglas Duhaime, Jordan Kruguer, Maximilian C. Mueller, Christopher Pietsch, Jeffrey T. Schnapp, Jeff Steward, and metaLAB."
 url: "https://doi.org/10.1075/idj.22013.rod"
 img: "Surprise-Machines.jpg"

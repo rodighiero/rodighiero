@@ -3,6 +3,7 @@ title: "Orchestrating Cultural Heritage: Exploring the Automated Analysis and Or
 year: 2023
 order: 16
 venue: ""
+type: "journal"
 authors: "Picca, Davide, Antonin Schnyder, Eri Kostina, Alessandro Adamou, Dario Rodighiero, and Jeffrey Schnapp"
 url: "https://pure.rug.nl/ws/portalfiles/portal/780076742/3603163.3609066.pdf"
 img: "Charles-S.-Peirce-Manuscript-Page.jpg"

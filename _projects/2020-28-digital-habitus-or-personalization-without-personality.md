@@ -3,6 +3,7 @@ title: "Digital Habitus or Personalization without Personality"
 year: 2020
 order: 28
 venue: "HUMANA.MENTE"
+type: "journal"
 authors: "Romele, Alberto, and Dario Rodighiero"
 url: "https://doi.org/10.5281/zenodo.3950030"
 img: "Bourdieu.jpg"

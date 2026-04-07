@@ -3,6 +3,7 @@ title: "AI-Generated Images for Representing Individuals: Navigating the Thin Li
 year: 2025
 order: 2
 venue: "IEEE VIS Arts Program (VISAP)"
+type: "conference"
 authors: "Ahrend, Julia C., Björn Döge, Tom M. Duscher, and Dario Rodighiero"
 url: "https://doi.org/10.48550/arXiv.2509.03071"
 img: "AI-generated-images-for-representing-individuals.jpg"

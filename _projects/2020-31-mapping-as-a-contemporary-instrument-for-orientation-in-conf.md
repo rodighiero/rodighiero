@@ -3,6 +3,7 @@ title: "Mapping as a Contemporary Instrument for Orientation in Conferences"
 year: 2020
 order: 31
 venue: "AIUCD"
+type: "conference"
 authors: ""
 url: "https://doi.org/10.5281/zenodo.3611340"
 img: "AIUCD-2020.jpg"

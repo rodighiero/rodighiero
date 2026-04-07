@@ -3,6 +3,7 @@ title: "Living Library of Trees: Mapping Knowledge Ecology in Arnold Arboretum"
 year: 2025
 order: 6
 venue: "IEEE VIS Arts Program (VISAP)"
+type: "conference"
 authors: "Malmstedt, Johan, Giacomo Nanni, and Dario Rodighiero"
 url: "https://doi.org/10.48550/arXiv.2509.00114"
 img: "Arnold_Arboretum_1936.jpg"

@@ -3,6 +3,7 @@ title: "Mapping Affinities: Democratizing Data Visualization"
 year: 2021
 order: 26
 venue: "Métis Presses"
+type: "book"
 authors: "Rodighiero, Dario"
 url: "https://library.oapen.org/handle/20.500.12657/91793"
 img: "Mapping-AffinitiesDemocratizing-Data-Visualization.jpg"

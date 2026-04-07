@@ -3,6 +3,7 @@ title: "Ethical and Aesthetical Questions on Stock Images: The Case of AI’s De
 year: 2024
 order: 11
 venue: "Lessico Di Etica Pubblica"
+type: "book-chapter"
 authors: "Romele, Alberto, Sabina Rosenbergova, and Dario Rodighiero"
 url: "https://www.eticapubblica.it/alberto-romele-dario-rodighiero-sabina-rosenbergova-ethical-and-aesthetical-questions-on-stock-images-the-case-of-ais-depictions/"
 img: "AI-Stock-Images.png"

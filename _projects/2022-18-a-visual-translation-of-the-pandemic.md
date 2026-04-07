@@ -3,6 +3,7 @@ title: "A Visual Translation of the Pandemic"
 year: 2022
 order: 18
 venue: "Leonardo"
+type: "journal"
 authors: "Rodighiero, Dario, Eveline Wandl-Vogt, and Elian Carsenat"
 url: "https://research.rug.nl/en/publications/a-visual-translation-of-the-pandemic"
 img: "Covid-19.jpg"
