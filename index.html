@@ -84,6 +84,25 @@
     .col-desc p { font-size: var(--small); margin: 0; color: rgba(0,0,0,0.75); line-height: 1.6; }
     .col-img img { width: 100%; display: block; }
 
+    footer {
+      margin-top: 6rem;
+      padding: 3rem 0 4rem;
+      text-align: right;
+    }
+    footer blockquote {
+      font-size: var(--small);
+      line-height: 1.7;
+      margin: 0 0 0.75rem;
+      color: rgba(0,0,0,0.75);
+      max-width: 600px;
+      margin-left: auto;
+    }
+    footer cite {
+      font-size: var(--small);
+      font-style: normal;
+      color: rgba(0,0,0,0.45);
+    }
+
     @media (max-width: 1000px) {
       .header { grid-template-columns: var(--col) 1fr 1fr; }
       .header .bio-col:last-child { display: none; }
@@ -170,6 +189,11 @@
     </div>
     {% endfor %}
   </div>
+
+  <footer>
+    <blockquote>"Alongside Daniele [Guido] and Donato [Ricci], Dario is part of the 'Little Italy' that has set up shop in the AIME offices. Apart from sharing his enthusiasm and insatiable curiosity, Dario has brought along ten years experience in designing digital interfaces. With the others on the team, he has given life and form to the daring insights of both himself and his compatriots."</blockquote>
+    <cite>— Bruno Latour, Paris 2013</cite>
+  </footer>
 
   <script>
     document.querySelectorAll('.filters a').forEach(function(link) {
