@@ -148,8 +148,7 @@
       </div>
     </div>
     {% capture bio_raw %}{% include_relative README.md %}{% endcapture %}
-    {% assign bio_clean = bio_raw | remove: "\r" | strip %}
-    {% assign bio_paragraphs = bio_clean | split: "\n\n" %}
+    {% assign bio_paragraphs = bio_raw | split: "<!-- split -->" %}
     {% for para in bio_paragraphs %}
       {% assign para_trimmed = para | strip %}
       {% if para_trimmed != "" %}
