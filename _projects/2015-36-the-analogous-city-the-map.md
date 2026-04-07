@@ -5,7 +5,7 @@ order: 36
 venue: "EPFL Archizoom"
 type: "chapter"
 authors: "Rodighiero, Dario"
-url: "https://infoscience.epfl.ch/record/209326"
+doi: "https://infoscience.epfl.ch/record/209326"
 img: "Analogous-City.jpg"
 ---
 

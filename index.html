@@ -146,7 +146,7 @@
         {% if project.year %}<div class="year">{{ project.year }}</div>{% endif %}
         <h2>{{ project.title }}</h2>
         {% if project.authors %}<div class="authors">{{ project.authors }}</div>{% endif %}
-        {% if project.url %}<a href="{{ project.url }}" class="doi" target="_blank">{{ project.url }}</a>{% endif %}
+        {% if project.doi %}<a href="{{ project.doi }}" class="doi" target="_blank">{{ project.doi }}</a>{% endif %}
       </div>
       <div class="col-desc">
         {{ project.content | markdownify }}
