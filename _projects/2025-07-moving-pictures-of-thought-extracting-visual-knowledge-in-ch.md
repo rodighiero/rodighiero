@@ -3,7 +3,7 @@ title: "Moving Pictures of Thought: Extracting Visual Knowledge in Charles S. Pe
 year: 2025
 order: 7
 venue: "Anthology of Computers and the Humanities"
-type: "chapter"
+type: "conference"
 authors: "Pedretti, Carlo Teo, Davide Picca, and Dario Rodighiero"
 doi: "https://doi.org/10.63744/fkFGJ6wSzDPV"
 img: "Paul_Klee.jpg"
