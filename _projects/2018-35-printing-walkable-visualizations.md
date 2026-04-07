@@ -3,6 +3,7 @@ title: "Printing Walkable Visualizations"
 year: 2018
 order: 35
 venue: "Biennial Research Transdisciplinary Imaging Conference"
+type: "conference"
 authors: ""
 url: "https://doi.org/10.6084/m9.figshare.6104693.v2"
 img: "DH2014.jpg"

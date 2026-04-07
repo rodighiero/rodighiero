@@ -3,6 +3,7 @@ title: "The Hermeneutic Circle of Data Visualization: The Case Study of the Affi
 year: 2020
 order: 32
 venue: "Techné"
+type: "journal"
 authors: "Rodighiero, Dario, and Alberto Romele"
 url: "https://doi.org/10.5840/techne202081126"
 img: "Lemniscate.jpg"

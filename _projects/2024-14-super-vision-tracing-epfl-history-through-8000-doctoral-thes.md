@@ -3,6 +3,7 @@ title: "Super-Vision: Tracing EPFL History Through 8,000 Doctoral Theses"
 year: 2024
 order: 14
 venue: "Journal of Digital History"
+type: "journal"
 authors: "Rodighiero, Dario, Philippe Rivière, and Sarah Kenderdine"
 url: "https://doi.org/10.1515/JDH-2023-0004"
 img: "epfl-pavilions.jpg"

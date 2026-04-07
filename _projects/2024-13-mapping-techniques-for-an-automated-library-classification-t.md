@@ -3,6 +3,7 @@ title: "Mapping Techniques for an Automated Library Classification: The Case Stu
 year: 2024
 order: 13
 venue: "Linking Theory and Practice of Digital Libraries"
+type: "conference"
 authors: "Casey, Hannah Laureen, Alessandro Adamou, and Dario Rodighiero"
 url: "https://zenodo.org/records/13862868"
 img: "bibliotheca-hertziana.jpg"

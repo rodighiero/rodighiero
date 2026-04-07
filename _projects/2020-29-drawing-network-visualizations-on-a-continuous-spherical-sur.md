@@ -3,6 +3,7 @@ title: "Drawing Network Visualizations on a Continuous, Spherical Surface"
 year: 2020
 order: 29
 venue: "Information Visualisation"
+type: "conference"
 authors: ""
 url: "https://pure.rug.nl/ws/files/224968970/Rodighiero_2020_Drawing_Network_Visualizations_on_a_Continuous_Sp.pdf"
 img: "Butterfly-Waterman.jpg"

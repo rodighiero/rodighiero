@@ -3,6 +3,7 @@ title: "Experiments of Network Literacy for Urban Designers: Bridging Informatio
 year: 2025
 order: 4
 venue: "Land"
+type: "journal"
 authors: "Rodighiero, Dario"
 url: "https://doi.org/10.3390/land14091901"
 img: "Amsterdam.jpg"

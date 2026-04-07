@@ -3,6 +3,7 @@ title: "Advanced Interface Design for IIIF: A Digital Tool to Explore Image Coll
 year: 2023
 order: 15
 venue: ""
+type: "journal"
 authors: ""
 url: "https://doi.org/10.6092/ISSN.2532-8816/17230"
 img: "Descartes-IIIF.jpg"
