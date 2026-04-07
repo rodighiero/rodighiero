@@ -3,7 +3,7 @@ title: "Network Literacy: How to Understand, Design, and Read a Visual Relationa
 year: 2025
 order: 8
 venue: "Progetto Grafico"
-type: "magazine"
+type: "journal"
 authors: "Rodighiero, Dario"
 url: "https://hdl.handle.net/11370/3648f43f-5e55-48a4-b130-6537029226fc"
 img: "Sociogram.png"
