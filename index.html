@@ -148,9 +148,13 @@
       </div>
     </div>
     {% capture bio_raw %}{% include_relative README.md %}{% endcapture %}
-    {% assign bio_paragraphs = bio_raw | split: "\n\n" | where_exp: "p", "p != ''" %}
+    {% assign bio_clean = bio_raw | remove: "\r" | strip %}
+    {% assign bio_paragraphs = bio_clean | split: "\n\n" %}
     {% for para in bio_paragraphs %}
-    <div class="bio-col">{{ para | markdownify }}</div>
+      {% assign para_trimmed = para | strip %}
+      {% if para_trimmed != "" %}
+    <div class="bio-col">{{ para_trimmed | markdownify }}</div>
+      {% endif %}
     {% endfor %}
   </header>
 
