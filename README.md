@@ -2,7 +2,7 @@ Dario Rodighiero is an Assistant Professor of Science and Technology Studies at 
 
 <!-- split -->
 
-Combining computational techniques with design, Dario investigates how complex information can be revealed. Grounded in Science and Technology Studies, his research focuses on the mapping of science: he is the author of [*Mapping Affinities: Democratizing Data Visualization*](https://dariorodighiero.com/Mapping-Affinities), which proposes new ways to design organizational charts. His work further engages with digital cultural archives, exploring questions of representation, interpretation, and self-identification. Visualization is approached as a method for knowledge design, bridging critical inquiry and design practice to foster reflection and dialogue by opening new visual modes of understanding.
+Combining computational techniques with design, Dario investigates how complex information can be revealed. Grounded in Science and Technology Studies, his research focuses on the mapping of science: he is the author of [*Mapping Affinities: Democratizing Data Visualization*](https://dariorodighiero.com/Mapping-Affinities), which proposes new ways to design organizational charts. His work further engages with digital cultural archives, exploring questions of representation and interpretation. Visualization is approached as a method for knowledge design, bridging critical inquiry and design practice to foster reflection and dialogue by opening new visual modes of understanding.
 
 <!-- split -->
 
