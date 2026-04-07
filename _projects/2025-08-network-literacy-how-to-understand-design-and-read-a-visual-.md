@@ -1,7 +1,6 @@
 ---
 title: "Network Literacy: How to Understand, Design, and Read a Visual Relational Model"
 year: 2025
-order: 8
 venue: "Progetto Grafico"
 type: "journal"
 authors: "Rodighiero, Dario"

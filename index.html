@@ -171,7 +171,7 @@
 
   <!-- ── Publications ── -->
   <div id="projects">
-    {% assign projects = site.projects | sort: "order" %}
+    {% assign projects = site.projects | sort: "title" | reverse | sort: "year" | reverse %}
     {% for project in projects %}
     <div class="project" data-type="{{ project.type }}">
       <div class="col-meta">

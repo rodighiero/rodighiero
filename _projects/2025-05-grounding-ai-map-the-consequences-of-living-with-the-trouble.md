@@ -1,7 +1,6 @@
 ---
 title: "Grounding AI Map: The Consequences of Living with the Trouble of an Irreductionist Map"
 year: 2025
-order: 5
 venue: "Revue Design Arts Medias"
 type: "journal"
 authors: "Ficozzi, Matilde, Mathieu Jacomy, Dario Rodighiero, Anne Beaulieu, and Anders Kristian Munk"

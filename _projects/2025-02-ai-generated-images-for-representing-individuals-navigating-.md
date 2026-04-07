@@ -1,7 +1,6 @@
 ---
 title: "AI-Generated Images for Representing Individuals: Navigating the Thin Line Between Care and Bias"
 year: 2025
-order: 2
 venue: "IEEE VIS Arts Program (VISAP)"
 type: "conference"
 authors: "Ahrend, Julia C., Björn Döge, Tom M. Duscher, and Dario Rodighiero"

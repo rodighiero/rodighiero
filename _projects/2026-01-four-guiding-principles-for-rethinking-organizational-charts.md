@@ -1,7 +1,6 @@
 ---
 title: "Four Guiding Principles for Rethinking Organizational Charts"
 year: 2026
-order: 1
 venue: "Handbook of Digital and Computational Research Methods"
 type: "chapter"
 authors: "Rodighiero, Dario"

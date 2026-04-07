@@ -1,7 +1,6 @@
 ---
 title: "Extending Museum beyond Physical Space: A Data-Driven Study of Aldo Rossi’s Analogous City as a Mobile Museum Object"
 year: 2022
-order: 20
 venue: "International Journal for Digital Art History"
 type: "journal"
 authors: "Rodighiero, Dario"

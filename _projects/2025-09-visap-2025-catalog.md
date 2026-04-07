@@ -1,7 +1,6 @@
 ---
 title: "VISAP 2025 Catalog"
 year: 2025
-order: 9
 venue: "IEEE"
 type: "book"
 authors: "Çay, Damla, Dario Rodighiero, Weidi Zhang,&nbsp;Martina R. Fröschl, Peter Mindek, and Beatrice Gobbo"

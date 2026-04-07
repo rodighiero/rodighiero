@@ -1,7 +1,6 @@
 ---
 title: "Mapping Affinities in Academic Organizations."
 year: 2018
-order: 34
 venue: "Frontiers"
 type: "journal"
 authors: "Rodighiero, Dario, Frédéric Kaplan, and Boris Beaude"

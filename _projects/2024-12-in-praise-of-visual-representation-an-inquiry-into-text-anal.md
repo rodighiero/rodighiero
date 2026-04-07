@@ -1,7 +1,6 @@
 ---
 title: "In Praise of Visual Representation: An Inquiry into Text Analysis and Network Visualization for Charting Scientific Communities"
 year: 2024
-order: 12
 venue: "Visual Communication"
 type: "journal"
 authors: "Rodighiero, Dario"

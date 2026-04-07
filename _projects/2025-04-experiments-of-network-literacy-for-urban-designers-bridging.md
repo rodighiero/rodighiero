@@ -1,7 +1,6 @@
 ---
 title: "Experiments of Network Literacy for Urban Designers: Bridging Information Design and Spatial Morphology"
 year: 2025
-order: 4
 venue: "Land"
 type: "journal"
 authors: "Rodighiero, Dario"

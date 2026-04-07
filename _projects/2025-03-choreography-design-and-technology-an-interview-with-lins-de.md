@@ -1,7 +1,6 @@
 ---
 title: "Choreography, Design, and Technology: An Interview with Lins Derry from the metaLAB (at) Harvard"
 year: 2025
-order: 3
 venue: "Per–Forming Spaces"
 type: "chapter"
 authors: "Derry, Lins, Dario Rodighiero"

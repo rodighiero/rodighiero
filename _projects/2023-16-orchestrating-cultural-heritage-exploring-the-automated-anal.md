@@ -1,7 +1,6 @@
 ---
 title: "Orchestrating Cultural Heritage: Exploring the Automated Analysis and Organization of Charles S. Peirce’s PAP Manuscript"
 year: 2023
-order: 16
 venue: ""
 type: "conference"
 authors: "Picca, Davide, Antonin Schnyder, Eri Kostina, Alessandro Adamou, Dario Rodighiero, and Jeffrey Schnapp"
