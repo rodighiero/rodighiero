@@ -1,7 +1,6 @@
 ---
 title: "Weather Map: A Diachronic Visual Model for Controversy Mapping"
 year: 2023
-order: 17
 venue: ""
 type: "chapter"
 authors: ""

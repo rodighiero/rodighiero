@@ -1,7 +1,6 @@
 ---
 title: "Mapping as a Contemporary Instrument for Orientation in Conferences"
 year: 2020
-order: 31
 venue: "AIUCD"
 type: "conference"
 authors: ""

@@ -1,7 +1,6 @@
 ---
 title: "Mapping Techniques for an Automated Library Classification: The Case Study of Library Loans at Bibliotheca Hertziana"
 year: 2024
-order: 13
 venue: "Linking Theory and Practice of Digital Libraries"
 type: "conference"
 authors: "Casey, Hannah Laureen, Alessandro Adamou, and Dario Rodighiero"

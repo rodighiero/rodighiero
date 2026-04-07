@@ -1,7 +1,6 @@
 ---
 title: "The Hermeneutic Circle of Data Visualization: The Case Study of the Affinity Map"
 year: 2020
-order: 32
 venue: "Techné"
 type: "journal"
 authors: "Rodighiero, Dario, and Alberto Romele"

@@ -1,7 +1,6 @@
 ---
 title: "COVIC: Collecting Visualizations of COVID-19 to Outline a Space of Possibilities"
 year: 2022
-order: 19
 venue: "Design Issues"
 type: "journal"
 authors: "Kahn, Paul, Hugh Dubberly, and Dario Rodighiero"

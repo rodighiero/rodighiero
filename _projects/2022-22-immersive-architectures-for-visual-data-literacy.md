@@ -1,7 +1,6 @@
 ---
 title: "Immersive Architectures for Visual Data Literacy"
 year: 2022
-order: 22
 venue: "Information Design Journal"
 type: "journal"
 authors: "Rodighiero, Dario, Eveline Wandl-Vogt, Elian Carsenat, Jules Döring, Oliver Elias, Michaela Fragner, and Stepha Farkashazy"

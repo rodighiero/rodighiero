@@ -1,7 +1,6 @@
 ---
 title: "Moving Pictures of Thought: Extracting Visual Knowledge in Charles S. Peirce’s Manuscripts with Vision-Language Models"
 year: 2025
-order: 7
 venue: "Anthology of Computers and the Humanities"
 type: "conference"
 authors: "Pedretti, Carlo Teo, Davide Picca, and Dario Rodighiero"

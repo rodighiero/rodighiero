@@ -1,7 +1,6 @@
 ---
 title: "Immaginare Gesti-Barriera Contro Il Ritorno Alla Produzione Pre-Crisi"
 year: 2020
-order: 30
 venue: "Antinomie"
 type: "magazine"
 authors: "Latour, Bruno. Translated by Daniele Guido, Donato Ricci, Dario Rodighiero, and Giulia Taurino"

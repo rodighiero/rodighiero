@@ -1,7 +1,6 @@
 ---
 title: "Ethical and Aesthetical Questions on Stock Images: The Case of AI’s Depictions"
 year: 2024
-order: 11
 venue: "Lessico Di Etica Pubblica"
 type: "journal"
 authors: "Romele, Alberto, Sabina Rosenbergova, and Dario Rodighiero"

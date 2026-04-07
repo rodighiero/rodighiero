@@ -1,7 +1,6 @@
 ---
 title: "Drawing Network Visualizations on a Continuous, Spherical Surface"
 year: 2020
-order: 29
 venue: "Information Visualisation"
 type: "conference"
 authors: ""

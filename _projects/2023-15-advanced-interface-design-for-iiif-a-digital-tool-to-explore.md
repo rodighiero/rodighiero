@@ -1,7 +1,6 @@
 ---
 title: "Advanced Interface Design for IIIF: A Digital Tool to Explore Image Collections at Different Scales"
 year: 2023
-order: 15
 venue: "Umanistica Digitale"
 type: "journal"
 authors: ""
