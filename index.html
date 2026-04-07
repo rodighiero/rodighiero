@@ -144,15 +144,11 @@
         </a>
       </div>
     </div>
-    <div class="bio-col">
-      <p>Dario Rodighiero is an Assistant Professor of Science and Technology Studies at the <a href="https://www.rug.nl/" target="_blank">University of Groningen</a>, where he is involved in programs that bridge data science with society. Based at the interdisciplinary faculty Campus Fryslân, he coordinates the minor <a href="https://www.rug.nl/gmw/education/minor/datawise?lang=en" target="_blank">Data Wise</a> and teaches data and visual literacy within the <a href="https://www.rug.nl/bachelors/data-science-and-society/" target="_blank">Data Science and Society</a> Bachelor's program. He maintains active collaborations with <a href="https://www.harvard.edu" target="_blank">Harvard University</a>, where he is a faculty associate at the <a href="https://cyber.harvard.edu" target="_blank">Berkman Klein Center for Internet &amp; Society</a> and a principal at <a href="https://mlml.io" target="_blank">metaLAB</a>—a research and teaching laboratory dedicated to experimenting with digital technologies in the arts and humanities.</p>
-    </div>
-    <div class="bio-col">
-      <p>Combining computational techniques with design, Dario investigates how complex information can be revealed. Grounded in Science and Technology Studies, his research focuses on the mapping of science: he is the author of <a href="https://library.oapen.org/handle/20.500.12657/91793" target="_blank">Mapping Affinities: Democratizing Data Visualization</a>, which proposes new ways to design organizational charts. His work further engages with digital cultural archives, exploring questions of representation, interpretation, and self-identification. Visualization is approached as a method for knowledge design, bridging critical inquiry and design practice to foster reflection and dialogue by opening new visual modes of understanding.</p>
-    </div>
-    <div class="bio-col">
-      <p>Dario holds a PhD from the <a href="https://epfl.ch" target="_blank">École polytechnique fédérale de Lausanne (EPFL)</a>, where he attended the doctoral program Architecture and Sciences of the City. He has held research and teaching positions at <a href="https://www.mit.edu" target="_blank">MIT</a>, the <a href="https://commission.europa.eu" target="_blank">European Commission</a>, <a href="https://www.sorbonne-universite.fr/en/" target="_blank">Paris-Sorbonne University</a>, and <a href="https://www.sciencespo.fr" target="_blank">Sciences Po</a>. The collaboration with Bruno Latour at the médialab shaped his engagement with digital platforms as tools for philosophical inquiry and collective exploration. He lectured at venues such as <a href="https://home.cern/" target="_blank">CERN</a> and <a href="https://ars.electronica.art/" target="_blank">Ars Electronica</a>, and exhibited his work at the <a href="https://www.maxxi.art/" target="_blank">MAXXI</a> and <a href="https://harvardartmuseums.org/" target="_blank">Harvard Art Museums</a>.</p>
-    </div>
+    {% capture bio_raw %}{% include_relative README.md %}{% endcapture %}
+    {% assign bio_paragraphs = bio_raw | split: "\n\n" | where_exp: "p", "p != ''" %}
+    {% for para in bio_paragraphs %}
+    <div class="bio-col">{{ para | markdownify }}</div>
+    {% endfor %}
   </header>
 
   <!-- ── Filter bar ── -->
