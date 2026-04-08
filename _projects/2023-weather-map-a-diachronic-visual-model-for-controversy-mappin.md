@@ -1,7 +1,7 @@
 ---
 title: "Weather Map: A Diachronic Visual Model for Controversy Mapping"
 year: 2023
-venue: ""
+venue: "De Gruyter"
 type: "chapter"
 authors: "Rodighiero, Dario, and Jean Daniélou"
 doi: "https://doi.org/10.1515/9783111317779-017"

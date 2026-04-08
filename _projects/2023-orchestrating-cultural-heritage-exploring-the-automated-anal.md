@@ -1,7 +1,7 @@
 ---
 title: "Orchestrating Cultural Heritage: Exploring the Automated Analysis and Organization of Charles S. Peirce’s PAP Manuscript"
 year: 2023
-venue: ""
+venue: "ACM Conference on Hypertext and Social Media"
 type: "conference"
 authors: "Picca, Davide, Antonin Schnyder, Eri Kostina, Alessandro Adamou, Dario Rodighiero, and Jeffrey Schnapp"
 doi: "https://pure.rug.nl/ws/portalfiles/portal/780076742/3603163.3609066.pdf"
