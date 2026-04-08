@@ -108,13 +108,18 @@
       color: rgba(0,0,0,0.5);
     }
     .filters span { margin-right: 0.3rem; }
-    .filters a {
+    .filters button {
       margin: 0 0.3rem;
       color: rgba(0,0,0,0.5);
       cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      font-size: var(--small);
     }
-    .filters a:hover, .filters a.active { color: #000; text-decoration: underline; }
-    .filters a.active { color: #000; }
+    .filters button:hover, .filters button.active { color: #000; text-decoration: underline; }
+    .filters button.active { color: #000; }
 
     /* ── Publications list ── */
     .project {
@@ -205,12 +210,12 @@
   <!-- ── Filter bar ── -->
   <nav class="filters">
     <span>Selected publications filtered by:</span>
-    <a href="#" class="active" data-filter="all">Everything</a> |
-    <a href="#" data-filter="book">Books</a> |
-    <a href="#" data-filter="chapter">Book Chapters</a> |
-    <a href="#" data-filter="journal">Journal Articles</a> |
-    <a href="#" data-filter="conference">Conference Papers</a> |
-    <a href="#" data-filter="magazine">Magazine Articles</a>
+    <button class="active" data-filter="all">Everything</button> |
+    <button data-filter="book">Books</button> |
+    <button data-filter="chapter">Book Chapters</button> |
+    <button data-filter="journal">Journal Articles</button> |
+    <button data-filter="conference">Conference Papers</button> |
+    <button data-filter="magazine">Magazine Articles</button>
   </nav>
 
   <!-- ── Publications ── -->
@@ -243,10 +248,9 @@
   </footer>
 
   <script>
-    document.querySelectorAll('.filters a').forEach(function(link) {
+    document.querySelectorAll('.filters button').forEach(function(link) {
       link.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelectorAll('.filters a').forEach(function(l) { l.classList.remove('active'); });
+        document.querySelectorAll('.filters button').forEach(function(l) { l.classList.remove('active'); });
         this.classList.add('active');
         var filter = this.dataset.filter;
         document.querySelectorAll('.project').forEach(function(p) {
