@@ -3,7 +3,7 @@ title: "Printing Walkable Visualizations"
 year: 2018
 venue: "Biennial Research Transdisciplinary Imaging Conference"
 type: "conference"
-authors: ""
+authors: "Rodighiero, Dario"
 doi: "https://doi.org/10.6084/m9.figshare.6104693.v2"
 img: "Printing-Walkable-Visualizations.webp"
 ---

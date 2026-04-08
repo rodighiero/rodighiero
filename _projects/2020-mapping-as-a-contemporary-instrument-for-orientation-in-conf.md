@@ -3,7 +3,7 @@ title: "Mapping as a Contemporary Instrument for Orientation in Conferences"
 year: 2020
 venue: "AIUCD"
 type: "conference"
-authors: ""
+authors: "Moon, Chloe Ye Eun, and Dario Rodighiero"
 doi: "https://doi.org/10.5281/zenodo.3611340"
 img: "Mapping-as-a-Contemporary-Instrument-for-Orientation-in-Conferences.webp"
 ---
