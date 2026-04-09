@@ -129,8 +129,8 @@
       align-items: start;
       border-top: 1px solid rgba(0,0,0,0.2);
     }
-    .col-meta .venue { font-size: var(--small); font-style: italic; color: rgba(0,0,0,0.55); }
-    .col-meta .year { font-size: var(--small); color: rgba(0,0,0,0.4); margin: 0.1rem 0; }
+    .col-meta .meta-line { font-size: var(--small); color: rgba(0,0,0,0.4); margin-bottom: 0.2rem; }
+    .col-meta .meta-line .venue { font-style: italic; color: rgba(0,0,0,0.55); }
     .col-meta h2 { font-size: var(--base); font-weight: 500; margin: 0.3rem 0 0.2rem; line-height: 1.35; }
     .col-meta .authors { font-size: var(--small); color: rgba(0,0,0,0.6); }
     .col-meta h2 a { color: inherit; text-decoration: none; }
@@ -222,8 +222,7 @@
     {% for project in projects %}
     <div class="project" data-type="{{ project.type }}">
       <div class="col-meta">
-        {% if project.venue %}<div class="venue">{{ project.venue }}</div>{% endif %}
-        {% if project.year %}<div class="year">{{ project.year }}</div>{% endif %}
+        <div class="meta-line">{% if project.year %}{{ project.year }}{% endif %}{% if project.year and project.venue %} · {% endif %}{% if project.venue %}<span class="venue">{{ project.venue }}</span>{% endif %}</div>
         <h2>{% if project.doi %}<a href="{{ project.doi }}" target="_blank" rel="noopener noreferrer">{{ project.title }}<span class="ext">↗</span></a>{% else %}{{ project.title }}{% endif %}</h2>
         {% if project.authors %}<div class="authors">{{ project.authors }}</div>{% endif %}
       </div>
