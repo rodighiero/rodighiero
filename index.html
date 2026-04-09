@@ -138,6 +138,9 @@
     .col-meta h2 a .ext { font-size: 1em; color: inherit; margin-left: 0.2em; font-weight: 400; }
     .col-desc { grid-column: span 2; }
     .col-desc p { font-size: var(--small); margin: 0; color: rgba(0,0,0,0.75); line-height: 1.6; }
+    .col-img { grid-column: 4; grid-row: 1; }
+    .col-meta { grid-column: 1; }
+    .col-desc { grid-column: 2 / span 2; }
     .col-img img { width: 100%; display: block; }
 
     footer {
@@ -221,6 +224,11 @@
     {% assign projects = site.projects | sort: "title" | reverse | sort: "year" | reverse %}
     {% for project in projects %}
     <div class="project" data-type="{{ project.type }}">
+      {% if project.img %}
+      <div class="col-img">
+        <img src="images/{{ project.img }}" alt="{{ project.title }}" loading="lazy">
+      </div>
+      {% endif %}
       <div class="col-meta">
         <div class="meta-line">{% if project.year %}{{ project.year }}{% endif %}{% if project.year and project.venue %} · {% endif %}{% if project.venue %}<span class="venue">{{ project.venue }}</span>{% endif %}</div>
         <h2>{% if project.doi %}<a href="{{ project.doi }}" target="_blank" rel="noopener noreferrer">{{ project.title }}<span class="ext">↗</span></a>{% else %}{{ project.title }}{% endif %}</h2>
@@ -229,11 +237,6 @@
       <div class="col-desc">
         {{ project.content | markdownify }}
       </div>
-      {% if project.img %}
-      <div class="col-img">
-        <img src="images/{{ project.img }}" alt="{{ project.title }}" loading="lazy">
-      </div>
-      {% endif %}
     </div>
     {% endfor %}
   </div>
