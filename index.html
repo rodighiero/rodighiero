@@ -157,13 +157,8 @@
       color: rgba(0,0,0,0.45);
     }
 
-    @media (max-width: 1000px) {
-      .header { grid-template-columns: var(--col) 1fr 1fr; }
-      .header .bio-col:last-child { display: none; }
-    }
     @media (max-width: 700px) {
       .header { grid-template-columns: 1fr; gap: 1rem; }
-      .header .bio-col:last-child { display: block; }
       .header .icons { margin-bottom: 0.6rem; }
       .project { grid-template-columns: 1fr; }
       .col-img { display: none; }
