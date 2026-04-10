@@ -2,7 +2,7 @@
 title: "Archives, Museums, and Installations: Aldo Rossi's Legacy in Digital Transition"
 year: 2026
 venue: "Preservation, Digital Technology & Culture"
-type: "article"
+type: "journal"
 authors: "Rodighiero, Dario, Carla Zhara Buda, and Angela Parente"
 doi: "https://doi.org/10.1515/pdtc-2025-0066"
 img: "Archives-Museums-and-Installations.webp"
