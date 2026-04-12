@@ -233,7 +233,7 @@
       {% endif %}
       <div class="col-meta">
         <div class="meta-line">{% if project.year %}{{ project.year }}{% endif %}{% if project.year and project.venue %} · {% endif %}{% if project.venue %}<span class="venue">{{ project.venue }}</span>{% endif %}</div>
-        <h2>{% if project.doi %}<a href="{{ project.doi }}" target="_blank" rel="noopener noreferrer">{{ project.title }}<span class="ext"><svg viewBox="-1 -1 13 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="9" x2="9" y2="1"/><polyline points="2,1 9,1 9,8"/></svg></span></a>{% else %}{{ project.title }}{% endif %}</h2>
+        <h2><a href="{{ project.url }}">{{ project.title }}</a>{% if project.doi %}<a href="{{ project.doi }}" target="_blank" rel="noopener noreferrer" class="ext"><svg viewBox="-1 -1 13 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="9" x2="9" y2="1"/><polyline points="2,1 9,1 9,8"/></svg></a>{% endif %}</h2>
         {% if project.authors %}<div class="authors">{{ project.authors }}</div>{% endif %}
       </div>
       <div class="col-desc">
