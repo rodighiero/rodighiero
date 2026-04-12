@@ -4,7 +4,7 @@ url: https://dariorodighiero.com
 
 collections:
   projects:
-    output: false
+    output: true
     sort_by: order
 
 defaults:
@@ -12,4 +12,4 @@ defaults:
       path: ""
       type: projects
     values:
-      layout: null
+      layout: project
