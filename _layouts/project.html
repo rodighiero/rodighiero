@@ -76,11 +76,7 @@
 </head>
 <body>
   <a class="back" href="{{ site.url }}/">← Dario Rodighiero</a>
-  <div class="meta-line">
-    <span class="venue">{{ page.venue }}</span>
-    {% if page.year %} · {{ page.year }}{% endif %}
-    {% if page.type %} · {{ page.type }}{% endif %}
-  </div>
+  <div class="meta-line">{% if page.year %}{{ page.year }}{% endif %}{% case page.type %}{% when 'book' %} · Book{% when 'chapter' %} · Book Chapter{% when 'journal' %} · Journal Article{% when 'conference' %} · Conference Paper{% when 'magazine' %} · Magazine Article{% endcase %}{% if page.venue %}<br><span class="venue">{{ page.venue }}</span>{% endif %}</div>
   <h1>{{ page.title }}</h1>
   {% if page.authors %}<div class="authors">{{ page.authors }}</div>{% endif %}
   {% if page.doi %}<div class="doi"><a href="{{ page.doi }}" target="_blank">{{ page.doi }}</a></div>{% endif %}
