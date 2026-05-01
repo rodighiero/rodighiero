@@ -5,6 +5,7 @@ url: https://dariorodighiero.com
 collections:
   projects:
     output: true
+    permalink: /:name
 
 defaults:
   - scope:
