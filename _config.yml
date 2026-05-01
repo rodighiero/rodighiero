@@ -2,6 +2,9 @@ title: Dario Rodighiero
 description: Design, Data, and Humanities
 url: https://dariorodighiero.com
 
+plugins:
+  - jekyll-redirect-from
+
 collections:
   projects:
     output: true

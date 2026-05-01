@@ -72,6 +72,13 @@
     .abstract { font-size: var(--small); line-height: 1.6; color: rgba(0,0,0,0.75); }
     .abstract p { margin: 0; }
     .image img { width: 100%; display: block; }
+    .cite { margin-top: 2.5rem; font-size: var(--small); }
+    .cite summary { cursor: pointer; color: rgba(0,0,0,0.55); user-select: none; }
+    .cite summary:hover { color: #000; }
+    .cite[open] summary { color: #000; margin-bottom: 0.6rem; }
+    .cite pre { background: #f5f5f5; padding: 0.9rem 1rem; border-radius: 4px; font-size: 0.72rem; line-height: 1.5; overflow-x: auto; margin: 0; font-family: ui-monospace, Menlo, monospace; }
+    .cite-copy { margin-top: 0.5rem; background: none; border: 1px solid rgba(0,0,0,0.3); color: #000; padding: 0.25rem 0.7rem; cursor: pointer; font-size: 0.7rem; font-family: inherit; border-radius: 3px; }
+    .cite-copy:hover { background: #000; color: #fff; }
   </style>
 </head>
 <body>
@@ -88,5 +95,31 @@
     </div>
     {% endif %}
   </div>
+
+  {% capture entry_type %}{% case page.type %}{% when 'journal' %}article{% when 'magazine' %}article{% when 'chapter' %}incollection{% when 'book' %}book{% when 'conference' %}inproceedings{% else %}misc{% endcase %}{% endcapture %}
+  {% capture venue_field %}{% case page.type %}{% when 'journal' %}journal{% when 'magazine' %}journal{% when 'chapter' %}booktitle{% when 'conference' %}booktitle{% when 'book' %}publisher{% else %}howpublished{% endcase %}{% endcapture %}
+  <details class="cite">
+    <summary>Cite this</summary>
+    <pre id="bibtex">@{{ entry_type }}{rodighiero{{ page.year }}{{ page.slug | split: '-' | first }},
+  author    = {{ "{" }}{{ page.authors }}{{ "}" }},
+  title     = {{ "{" }}{{ page.title }}{{ "}" }},
+  {{ venue_field }}   = {{ "{" }}{{ page.venue }}{{ "}" }},
+  year      = {{ "{" }}{{ page.year }}{{ "}" }}{% if page.doi %},
+  doi       = {{ "{" }}{{ page.doi | remove: 'https://doi.org/' }}{{ "}" }}{% endif %}
+}</pre>
+    <button class="cite-copy" type="button">Copy to clipboard</button>
+  </details>
+
+  <script>
+    document.querySelector('.cite-copy').addEventListener('click', function() {
+      var text = document.getElementById('bibtex').textContent;
+      navigator.clipboard.writeText(text).then(function() {
+        var btn = document.querySelector('.cite-copy');
+        var original = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(function() { btn.textContent = original; }, 1500);
+      });
+    });
+  </script>
 </body>
 </html>
