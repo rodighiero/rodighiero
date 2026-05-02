@@ -241,14 +241,14 @@
         {% capture entry_type %}{% case project.type %}{% when 'journal' %}article{% when 'magazine' %}article{% when 'chapter' %}incollection{% when 'book' %}book{% when 'conference' %}inproceedings{% else %}misc{% endcase %}{% endcapture %}
         {% capture venue_field %}{% case project.type %}{% when 'journal' %}journal{% when 'magazine' %}journal{% when 'chapter' %}booktitle{% when 'conference' %}booktitle{% when 'book' %}publisher{% else %}howpublished{% endcase %}{% endcapture %}
         <button class="cite-btn" type="button">Cite</button>
-        <script type="text/plain" class="bibtex-data">@{{ entry_type }}&#123;rodighiero{{ project.year }}{{ project.slug | split: '-' | first }},
+        <pre class="bibtex-data" hidden>@{{ entry_type }}&#123;rodighiero{{ project.year }}{{ project.slug | split: '-' | first }},
   author    = &#123;{{ project.authors }}&#125;,
   title     = &#123;{{ project.title }}&#125;,
   {{ venue_field }}   = &#123;{{ project.venue }}&#125;,
   year      = &#123;{{ project.year }}&#125;{% if project.doi contains 'doi.org/' %},
   doi       = &#123;{{ project.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}&#125;{% elsif project.doi %},
   url       = &#123;{{ project.doi }}&#125;{% endif %}
-&#125;</script>
+&#125;</pre>
       </div>
       <div class="col-desc">
         {{ project.content | markdownify }}
