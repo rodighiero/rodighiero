@@ -85,14 +85,14 @@
   {% capture entry_type %}{% case page.type %}{% when 'journal' %}article{% when 'magazine' %}article{% when 'chapter' %}incollection{% when 'book' %}book{% when 'conference' %}inproceedings{% else %}misc{% endcase %}{% endcapture %}
   {% capture venue_field %}{% case page.type %}{% when 'journal' %}journal{% when 'magazine' %}journal{% when 'chapter' %}booktitle{% when 'conference' %}booktitle{% when 'book' %}publisher{% else %}howpublished{% endcase %}{% endcapture %}
   {% if page.doi %}<div class="doi"><a href="{{ page.doi }}" target="_blank">{{ page.doi }}</a><button class="cite-btn" type="button">Cite</button></div>{% else %}<div class="doi"><button class="cite-btn" type="button">Cite</button></div>{% endif %}
-  <script type="text/plain" class="bibtex-data">@{{ entry_type }}&#123;rodighiero{{ page.year }}{{ page.slug | split: '-' | first }},
+  <pre class="bibtex-data" hidden>@{{ entry_type }}&#123;rodighiero{{ page.year }}{{ page.slug | split: '-' | first }},
   author    = &#123;{{ page.authors }}&#125;,
   title     = &#123;{{ page.title }}&#125;,
   {{ venue_field }}   = &#123;{{ page.venue }}&#125;,
   year      = &#123;{{ page.year }}&#125;{% if page.doi contains 'doi.org/' %},
   doi       = &#123;{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}&#125;{% elsif page.doi %},
   url       = &#123;{{ page.doi }}&#125;{% endif %}
-&#125;</script>
+&#125;</pre>
   <div class="content">
     <div class="abstract">{{ content }}</div>
     {% if page.img %}
