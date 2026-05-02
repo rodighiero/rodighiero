@@ -72,13 +72,9 @@
     .abstract { font-size: var(--small); line-height: 1.6; color: rgba(0,0,0,0.75); }
     .abstract p { margin: 0; }
     .image img { width: 100%; display: block; }
-    .cite { margin-top: 2.5rem; font-size: var(--small); }
-    .cite summary { cursor: pointer; color: rgba(0,0,0,0.55); user-select: none; }
-    .cite summary:hover { color: #000; }
-    .cite[open] summary { color: #000; margin-bottom: 0.6rem; }
-    .cite pre { background: #f5f5f5; padding: 0.9rem 1rem; border-radius: 4px; font-size: 0.72rem; line-height: 1.5; overflow-x: auto; margin: 0; font-family: ui-monospace, Menlo, monospace; }
-    .cite-copy { margin-top: 0.5rem; background: none; border: 1px solid rgba(0,0,0,0.3); color: #000; padding: 0.25rem 0.7rem; cursor: pointer; font-size: 0.7rem; font-family: inherit; border-radius: 3px; }
-    .cite-copy:hover { background: #000; color: #fff; }
+    .cite-btn { background: none; border: none; padding: 0; margin-left: 0.8rem; font: inherit; font-size: var(--small); color: rgba(0,0,0,0.5); cursor: pointer; text-decoration: underline; }
+    .cite-btn:hover { color: #000; }
+    .cite-btn.copied { color: #000; text-decoration: none; }
   </style>
 </head>
 <body>
@@ -86,7 +82,17 @@
   <div class="meta-line">{% if page.year %}{{ page.year }}{% endif %}{% case page.type %}{% when 'book' %} · Book{% when 'chapter' %} · Book Chapter{% when 'journal' %} · Journal Article{% when 'conference' %} · Conference Paper{% when 'magazine' %} · Magazine Article{% endcase %}{% if page.venue %}<br><span class="venue">{{ page.venue }}</span>{% endif %}</div>
   <h1>{{ page.title }}</h1>
   {% if page.authors %}<div class="authors">{{ page.authors }}</div>{% endif %}
-  {% if page.doi %}<div class="doi"><a href="{{ page.doi }}" target="_blank">{{ page.doi }}</a></div>{% endif %}
+  {% capture entry_type %}{% case page.type %}{% when 'journal' %}article{% when 'magazine' %}article{% when 'chapter' %}incollection{% when 'book' %}book{% when 'conference' %}inproceedings{% else %}misc{% endcase %}{% endcapture %}
+  {% capture venue_field %}{% case page.type %}{% when 'journal' %}journal{% when 'magazine' %}journal{% when 'chapter' %}booktitle{% when 'conference' %}booktitle{% when 'book' %}publisher{% else %}howpublished{% endcase %}{% endcapture %}
+  {% if page.doi %}<div class="doi"><a href="{{ page.doi }}" target="_blank">{{ page.doi }}</a><button class="cite-btn" type="button">Cite</button></div>{% else %}<div class="doi"><button class="cite-btn" type="button">Cite</button></div>{% endif %}
+  <script type="text/plain" class="bibtex-data">@{{ entry_type }}&#123;rodighiero{{ page.year }}{{ page.slug | split: '-' | first }},
+  author    = &#123;{{ page.authors }}&#125;,
+  title     = &#123;{{ page.title }}&#125;,
+  {{ venue_field }}   = &#123;{{ page.venue }}&#125;,
+  year      = &#123;{{ page.year }}&#125;{% if page.doi contains 'doi.org/' %},
+  doi       = &#123;{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}&#125;{% elsif page.doi %},
+  url       = &#123;{{ page.doi }}&#125;{% endif %}
+&#125;</script>
   <div class="content">
     <div class="abstract">{{ content }}</div>
     {% if page.img %}
@@ -96,29 +102,17 @@
     {% endif %}
   </div>
 
-  {% capture entry_type %}{% case page.type %}{% when 'journal' %}article{% when 'magazine' %}article{% when 'chapter' %}incollection{% when 'book' %}book{% when 'conference' %}inproceedings{% else %}misc{% endcase %}{% endcapture %}
-  {% capture venue_field %}{% case page.type %}{% when 'journal' %}journal{% when 'magazine' %}journal{% when 'chapter' %}booktitle{% when 'conference' %}booktitle{% when 'book' %}publisher{% else %}howpublished{% endcase %}{% endcapture %}
-  <details class="cite">
-    <summary>Cite this</summary>
-    <pre id="bibtex">@{{ entry_type }}&#123;rodighiero{{ page.year }}{{ page.slug | split: '-' | first }},
-  author    = &#123;{{ page.authors }}&#125;,
-  title     = &#123;{{ page.title }}&#125;,
-  {{ venue_field }}   = &#123;{{ page.venue }}&#125;,
-  year      = &#123;{{ page.year }}&#125;{% if page.doi contains 'doi.org/' %},
-  doi       = &#123;{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}&#125;{% elsif page.doi %},
-  url       = &#123;{{ page.doi }}&#125;{% endif %}
-&#125;</pre>
-    <button class="cite-copy" type="button">Copy to clipboard</button>
-  </details>
-
   <script>
-    document.querySelector('.cite-copy').addEventListener('click', function() {
-      var text = document.getElementById('bibtex').textContent;
-      navigator.clipboard.writeText(text).then(function() {
-        var btn = document.querySelector('.cite-copy');
-        var original = btn.textContent;
+    document.querySelector('.cite-btn').addEventListener('click', function() {
+      var btn = this;
+      var data = document.querySelector('.bibtex-data');
+      navigator.clipboard.writeText(data.textContent.trim()).then(function() {
         btn.textContent = 'Copied!';
-        setTimeout(function() { btn.textContent = original; }, 1500);
+        btn.classList.add('copied');
+        setTimeout(function() {
+          btn.textContent = 'Cite';
+          btn.classList.remove('copied');
+        }, 1500);
       });
     });
   </script>
