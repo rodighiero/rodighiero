@@ -104,8 +104,9 @@
   author    = &#123;{{ page.authors }}&#125;,
   title     = &#123;{{ page.title }}&#125;,
   {{ venue_field }}   = &#123;{{ page.venue }}&#125;,
-  year      = &#123;{{ page.year }}&#125;{% if page.doi %},
-  doi       = &#123;{{ page.doi | remove: 'https://doi.org/' }}&#125;{% endif %}
+  year      = &#123;{{ page.year }}&#125;{% if page.doi contains 'doi.org/' %},
+  doi       = &#123;{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}&#125;{% elsif page.doi %},
+  url       = &#123;{{ page.doi }}&#125;{% endif %}
 &#125;</pre>
     <button class="cite-copy" type="button">Copy to clipboard</button>
   </details>
