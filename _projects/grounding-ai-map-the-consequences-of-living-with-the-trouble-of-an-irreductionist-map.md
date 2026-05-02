@@ -4,6 +4,7 @@ year: 2025
 venue: "Revue Design Arts Medias"
 type: "journal"
 authors: "Ficozzi, Matilde, Mathieu Jacomy, Dario Rodighiero, Anne Beaulieu, and Anders Kristian Munk"
+authors_bibtex: "Ficozzi, Matilde and Mathieu Jacomy and Dario Rodighiero and Anne Beaulieu and Anders Kristian Munk"
 doi: "https://journal.dampress.org/issues/design-et-abstractions/grounding-ai-map-the-consequences-of-living-with-the-trouble-of-an-irreductionist-map"
 img: "Grounding-AI-Map.webp"
 ---

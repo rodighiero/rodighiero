@@ -4,6 +4,7 @@ year: 2020
 venue: "HUMANA.MENTE"
 type: "journal"
 authors: "Romele, Alberto, and Dario Rodighiero"
+authors_bibtex: "Romele, Alberto and Dario Rodighiero"
 doi: "https://doi.org/10.5281/zenodo.3950030"
 img: "Digital-Habitus-or-Personalization-without-Personality.webp"
 ---

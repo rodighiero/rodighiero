@@ -4,6 +4,7 @@ year: 2022
 venue: "Information Design Journal"
 type: "journal"
 authors: "Rodighiero, Dario, Eveline Wandl-Vogt, Elian Carsenat, Jules Döring, Oliver Elias, Michaela Fragner, and Stepha Farkashazy"
+authors_bibtex: "Rodighiero, Dario and Eveline Wandl-Vogt and Elian Carsenat and Jules Döring and Oliver Elias and Michaela Fragner and Stepha Farkashazy"
 doi: "https://doi.org/10.1075/idj.22016.rod"
 img: "Immersive-Architectures-for-Visual-Data-Literacy.webp"
 ---

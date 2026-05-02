@@ -4,6 +4,7 @@ year: 2025
 venue: "IEEE"
 type: "book"
 authors: "Çay, Damla, Dario Rodighiero, Weidi Zhang,&nbsp;Martina R. Fröschl, Peter Mindek, and Beatrice Gobbo"
+authors_bibtex: "Çay, Damla and Dario Rodighiero and Weidi Zhang,&nbsp;Martina R. Fröschl and Peter Mindek and Beatrice Gobbo"
 doi: "https://visap.net/2025/downloads/visap-2025-booklet.pdf"
 img: "VISAP-2025-Catalog.webp"
 ---

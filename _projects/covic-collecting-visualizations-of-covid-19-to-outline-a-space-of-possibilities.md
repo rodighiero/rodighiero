@@ -4,6 +4,7 @@ year: 2022
 venue: "Design Issues"
 type: "journal"
 authors: "Kahn, Paul, Hugh Dubberly, and Dario Rodighiero"
+authors_bibtex: "Kahn, Paul and Hugh Dubberly and Dario Rodighiero"
 doi: "https://doi.org/10.1162/desi_a_00697"
 img: "Covic.webp"
 ---

@@ -4,6 +4,7 @@ year: 2022
 venue: "Information Design Journal"
 type: "journal"
 authors: "Rodighiero, Dario, Lins Derry, Douglas Duhaime, Jordan Kruguer, Maximilian C. Mueller, Christopher Pietsch, Jeffrey T. Schnapp, Jeff Steward, and metaLAB."
+authors_bibtex: "Rodighiero, Dario and Lins Derry and Douglas Duhaime and Jordan Kruguer and Maximilian C. Mueller and Christopher Pietsch and Jeffrey T. Schnapp and Jeff Steward and metaLAB"
 doi: "https://doi.org/10.1075/idj.22013.rod"
 img: "Surprise-Machines.webp"
 ---

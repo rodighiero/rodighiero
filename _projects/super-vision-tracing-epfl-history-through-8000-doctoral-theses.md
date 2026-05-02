@@ -4,6 +4,7 @@ year: 2024
 venue: "Journal of Digital History"
 type: "journal"
 authors: "Rodighiero, Dario, Philippe Rivière, and Sarah Kenderdine"
+authors_bibtex: "Rodighiero, Dario and Philippe Rivière and Sarah Kenderdine"
 doi: "https://doi.org/10.1515/JDH-2023-0004"
 img: "Super-Vision.webp"
 ---

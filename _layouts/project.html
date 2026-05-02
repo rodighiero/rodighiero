@@ -86,7 +86,7 @@
   {% capture venue_field %}{% case page.type %}{% when 'journal' %}journal{% when 'magazine' %}journal{% when 'chapter' %}booktitle{% when 'conference' %}booktitle{% when 'book' %}publisher{% else %}howpublished{% endcase %}{% endcapture %}
   {% if page.doi %}<div class="doi"><a href="{{ page.doi }}" target="_blank">{{ page.doi }}</a><button class="cite-btn" type="button">Cite</button></div>{% else %}<div class="doi"><button class="cite-btn" type="button">Cite</button></div>{% endif %}
   <pre class="bibtex-data" hidden>@{{ entry_type }}&#123;rodighiero{{ page.year }}{{ page.slug | split: '-' | first }},
-  author    = &#123;{{ page.authors }}&#125;,
+  author    = &#123;{{ page.authors_bibtex | default: page.authors }}&#125;,
   title     = &#123;{{ page.title }}&#125;,
   {{ venue_field }}   = &#123;{{ page.venue }}&#125;,
   year      = &#123;{{ page.year }}&#125;{% if page.doi contains 'doi.org/' %},
