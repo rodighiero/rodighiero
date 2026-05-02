@@ -4,6 +4,7 @@ year: 2015
 venue: "EPFL Archizoom"
 type: "book"
 authors: "Rodighiero, Dario"
+authors_bibtex: "Rodighiero, Dario"
 doi: "https://infoscience.epfl.ch/record/209326"
 img: "The-Analogous-City-the-Map.webp"
 ---

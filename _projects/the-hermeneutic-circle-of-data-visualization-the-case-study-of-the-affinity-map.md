@@ -4,6 +4,7 @@ year: 2020
 venue: "Techné"
 type: "journal"
 authors: "Rodighiero, Dario, and Alberto Romele"
+authors_bibtex: "Rodighiero, Dario and Alberto Romele"
 doi: "https://doi.org/10.5840/techne202081126"
 img: "The-Hermeneutic-Circle-of-Data-Visualization.webp"
 ---

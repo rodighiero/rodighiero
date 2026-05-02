@@ -4,6 +4,7 @@ year: 2025
 venue: "Land"
 type: "journal"
 authors: "Rodighiero, Dario"
+authors_bibtex: "Rodighiero, Dario"
 doi: "https://doi.org/10.3390/land14091901"
 img: "Experiments-of-Network-Literacy-for-Urban-Designers.webp"
 ---

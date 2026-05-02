@@ -4,6 +4,7 @@ year: 2026
 venue: "Preservation, Digital Technology & Culture"
 type: "journal"
 authors: "Rodighiero, Dario, Carla Zhara Buda, and Angela Parente"
+authors_bibtex: "Rodighiero, Dario and Carla Zhara Buda and Angela Parente"
 doi: "https://doi.org/10.1515/pdtc-2025-0066"
 img: "Archives-Museums-and-Installations.webp"
 ---

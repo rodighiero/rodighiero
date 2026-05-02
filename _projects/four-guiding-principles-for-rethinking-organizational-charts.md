@@ -4,6 +4,7 @@ year: 2026
 venue: "Handbook of Digital and Computational Research Methods"
 type: "chapter"
 authors: "Rodighiero, Dario"
+authors_bibtex: "Rodighiero, Dario"
 doi: "https://hdl.handle.net/11370/6021c844-43e3-4fe8-b3c2-b8afa1361872"
 img: "Four-Guiding-Principles-for-Rethinking-Organizational-Charts.webp"
 ---

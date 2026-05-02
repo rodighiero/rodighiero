@@ -4,6 +4,7 @@ year: 2021
 venue: "Visual Culture Studies"
 type: "journal"
 authors: "Rodighiero, Dario, Eveline Wandl-Vogt, and Elian Carsenat"
+authors_bibtex: "Rodighiero, Dario and Eveline Wandl-Vogt and Elian Carsenat"
 doi: "https://doi.org/10.5281/zenodo.5115621"
 img: "Making-Visible-the-Invisible-Work-of-Scientists-during-the-COVID-19-Pandemic.webp"
 ---

@@ -4,6 +4,7 @@ year: 2022
 venue: "Leonardo"
 type: "journal"
 authors: "Rodighiero, Dario, Eveline Wandl-Vogt, and Elian Carsenat"
+authors_bibtex: "Rodighiero, Dario and Eveline Wandl-Vogt and Elian Carsenat"
 doi: "https://research.rug.nl/en/publications/a-visual-translation-of-the-pandemic"
 img: "A-Visual-Translation-of-the-Pandemic.webp"
 redirect_from:

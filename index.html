@@ -242,7 +242,7 @@
         {% capture venue_field %}{% case project.type %}{% when 'journal' %}journal{% when 'magazine' %}journal{% when 'chapter' %}booktitle{% when 'conference' %}booktitle{% when 'book' %}publisher{% else %}howpublished{% endcase %}{% endcapture %}
         <button class="cite-btn" type="button">Cite</button>
         <pre class="bibtex-data" hidden>@{{ entry_type }}&#123;rodighiero{{ project.year }}{{ project.slug | split: '-' | first }},
-  author    = &#123;{{ project.authors }}&#125;,
+  author    = &#123;{{ project.authors_bibtex | default: project.authors }}&#125;,
   title     = &#123;{{ project.title }}&#125;,
   {{ venue_field }}   = &#123;{{ project.venue }}&#125;,
   year      = &#123;{{ project.year }}&#125;{% if project.doi contains 'doi.org/' %},
