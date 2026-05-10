@@ -3,8 +3,7 @@ title: "In Praise of Visual Representation: An Inquiry into Text Analysis and Ne
 year: 2024
 venue: "Visual Communication"
 type: "journal"
-authors: "Rodighiero, Dario"
-authors_bibtex: "Rodighiero, Dario"
+author: "Dario Rodighiero"
 doi: "https://doi.org/10.1177/14703572241248408"
 img: "In-Praise-of-Visual-Representation.webp"
 ---

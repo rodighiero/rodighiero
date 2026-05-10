@@ -3,8 +3,7 @@ title: "Ars memorativa as the genesis of information design: a conversation with
 year: 2021
 venue: "Nightingale"
 type: "magazine"
-authors: "Lima, Manuel, Dario Rodighiero"
-authors_bibtex: "Lima, Manuel and Dario Rodighiero"
+author: "Manuel Lima and Dario Rodighiero"
 doi: "https://nightingaledvs.com/ars-memorativa-as-the-genesis-of-information-design-a-conversation-with-manuel-lima/"
 img: "Ars-memorativa-as-the-genesis-of-information-design.webp"
 ---

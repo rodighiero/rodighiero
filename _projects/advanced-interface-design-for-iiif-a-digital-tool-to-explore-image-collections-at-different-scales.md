@@ -3,8 +3,7 @@ title: "Advanced Interface Design for IIIF: A Digital Tool to Explore Image Coll
 year: 2023
 venue: "Umanistica Digitale"
 type: "journal"
-authors: "Rodighiero, Dario, Alberto Romele, José Higuera Rubio, Celeste Pedro, Matteo Azzi, and Giorgio Uboldi"
-authors_bibtex: "Rodighiero, Dario and Alberto Romele and José Higuera Rubio and Celeste Pedro and Matteo Azzi and Giorgio Uboldi"
+author: "Dario Rodighiero and Alberto Romele and José Higuera Rubio and Celeste Pedro and Matteo Azzi and Giorgio Uboldi"
 doi: "https://doi.org/10.6092/ISSN.2532-8816/17230"
 img: "Advanced-Interface-Design-for-IIIF.webp"
 redirect_from:

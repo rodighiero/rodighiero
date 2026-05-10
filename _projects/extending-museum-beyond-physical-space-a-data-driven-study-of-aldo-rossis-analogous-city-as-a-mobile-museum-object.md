@@ -3,8 +3,7 @@ title: "Extending Museum beyond Physical Space: A Data-Driven Study of Aldo Ross
 year: 2022
 venue: "International Journal for Digital Art History"
 type: "journal"
-authors: "Rodighiero, Dario"
-authors_bibtex: "Rodighiero, Dario"
+author: "Dario Rodighiero"
 doi: "https://doi.org/10.11588/DAH.2021.6.77681"
 img: "Extending-Museum-beyond-Physical-Space.webp"
 ---

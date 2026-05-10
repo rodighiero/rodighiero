@@ -3,8 +3,7 @@ title: "Mapping Affinities in Academic Organizations."
 year: 2018
 venue: "Frontiers"
 type: "journal"
-authors: "Rodighiero, Dario, Frédéric Kaplan, and Boris Beaude"
-authors_bibtex: "Rodighiero, Dario and Frédéric Kaplan and Boris Beaude"
+author: "Dario Rodighiero and Frédéric Kaplan and Boris Beaude"
 doi: "https://doi.org/10.3389/frma.2018.00004"
 img: "Mapping-Affinities-in-Academic-Organizations.webp"
 ---

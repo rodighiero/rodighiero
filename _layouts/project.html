@@ -81,13 +81,15 @@
   <a class="back" href="{{ site.url }}/">← Dario Rodighiero</a>
   <div class="meta-line">{% if page.year %}{{ page.year }}{% endif %}{% case page.type %}{% when 'book' %} · Book{% when 'chapter' %} · Book Chapter{% when 'journal' %} · Journal Article{% when 'conference' %} · Conference Paper{% when 'magazine' %} · Magazine Article{% endcase %}{% if page.venue %}<br><span class="venue">{{ page.venue }}</span>{% endif %}</div>
   <h1>{{ page.title }}</h1>
-  {% if page.authors %}<div class="authors">{{ page.authors }}</div>{% endif %}
+  {% if page.author or page.editor %}<div class="authors">{% if page.author %}{{ page.author | replace: ' and ', ', ' }}{% if page.editor %}. Ed. {{ page.editor | replace: ' and ', ', ' }}{% endif %}{% elsif page.editor %}{{ page.editor | replace: ' and ', ', ' }}, eds.{% endif %}{% if page.translator %}. Translated by {{ page.translator | replace: ' and ', ', ' }}{% endif %}</div>{% endif %}
   {% capture entry_type %}{% case page.type %}{% when 'journal' %}article{% when 'magazine' %}article{% when 'chapter' %}incollection{% when 'book' %}book{% when 'conference' %}inproceedings{% else %}misc{% endcase %}{% endcapture %}
   {% capture venue_field %}{% case page.type %}{% when 'journal' %}journal{% when 'magazine' %}journal{% when 'chapter' %}booktitle{% when 'conference' %}booktitle{% when 'book' %}publisher{% else %}howpublished{% endcase %}{% endcapture %}
   {% if page.doi %}<div class="doi"><a href="{{ page.doi }}" target="_blank">{{ page.doi }}</a><button class="cite-btn" type="button">Cite</button></div>{% else %}<div class="doi"><button class="cite-btn" type="button">Cite</button></div>{% endif %}
   <pre class="bibtex-data" hidden>@{{ entry_type }}&#123;rodighiero{{ page.year }}{{ page.slug | split: '-' | first }},
-  author    = &#123;{{ page.authors_bibtex | default: page.authors }}&#125;,
-  title     = &#123;{{ page.title }}&#125;,
+{% if page.author %}  author     = &#123;{{ page.author }}&#125;,
+{% endif %}{% if page.editor %}  editor     = &#123;{{ page.editor }}&#125;,
+{% endif %}{% if page.translator %}  translator = &#123;{{ page.translator }}&#125;,
+{% endif %}  title     = &#123;{{ page.title }}&#125;,
   {{ venue_field }}   = &#123;{{ page.venue }}&#125;,
   year      = &#123;{{ page.year }}&#125;{% if page.doi contains 'doi.org/' %},
   doi       = &#123;{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}&#125;{% elsif page.doi %},
