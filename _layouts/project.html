@@ -93,12 +93,28 @@
     .abstract { font-size: var(--small); line-height: 1.6; color: rgba(0,0,0,0.75); }
     .abstract p { margin: 0; }
     .image img { width: 100%; display: block; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
     .cite-btn { display: inline-block; margin-left: 0.8rem; background: transparent; color: rgba(0,0,0,0.55); border: 1px solid rgba(0,0,0,0.2); padding: 0.15rem 0.55rem; font: inherit; font-size: 0.68rem; cursor: pointer; border-radius: 2px; line-height: 1.4; vertical-align: 1px; }
     .cite-btn:hover { color: #000; border-color: rgba(0,0,0,0.5); }
     .cite-btn.copied { color: #000; border-color: #000; }
+    .project-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(0,0,0,0.2);
+      font-size: var(--small);
+      color: rgba(0,0,0,0.5);
+      gap: 2rem;
+    }
+    .project-nav a { color: inherit; text-decoration: none; }
+    .project-nav a:hover { color: #000; text-decoration: underline; }
+    .project-nav .nav-label { display: block; font-size: 0.68rem; margin-bottom: 0.2rem; opacity: 0.6; }
+    .project-nav .nav-next { text-align: right; }
   </style>
 </head>
 <body>
+  <div aria-live="polite" class="sr-only" id="live-msg"></div>
   <a class="back" href="{{ site.url }}/">← Dario Rodighiero</a>
   <div class="meta-line">{% if page.year %}{{ page.year }}{% endif %}{% case page.type %}{% when 'book' %} · Book{% when 'chapter' %} · Book Chapter{% when 'journal' %} · Journal Article{% when 'conference' %} · Conference Paper{% when 'magazine' %} · Magazine Article{% when 'map' %} · Map{% endcase %}{% if page.venue %}<br><span class="venue">{{ page.venue }}</span>{% endif %}</div>
   <h1>{{ page.title }}</h1>
@@ -125,16 +141,35 @@
     {% endif %}
   </div>
 
+  {% assign _sorted = site.projects | sort: "title" | reverse | sort: "year" | reverse %}
+  {% assign _prev = nil %}
+  {% assign _next = nil %}
+  {% assign _found = false %}
+  {% for _p in _sorted %}
+    {% if _found and _next == nil %}{% assign _next = _p %}{% endif %}
+    {% if _p.url == page.url %}{% assign _found = true %}{% endif %}
+    {% unless _found %}{% assign _prev = _p %}{% endunless %}
+  {% endfor %}
+  {% if _prev or _next %}
+  <nav class="project-nav" aria-label="Project navigation">
+    <div class="nav-prev">{% if _prev %}<a href="{{ site.url }}{{ _prev.url }}"><span class="nav-label">← Newer</span>{{ _prev.title }}</a>{% endif %}</div>
+    <div class="nav-next">{% if _next %}<a href="{{ site.url }}{{ _next.url }}"><span class="nav-label">Older →</span>{{ _next.title }}</a>{% endif %}</div>
+  </nav>
+  {% endif %}
+
   <script>
+    var liveMsg = document.getElementById('live-msg');
     document.querySelector('.cite-btn').addEventListener('click', function() {
       var btn = this;
       var data = document.querySelector('.bibtex-data');
       navigator.clipboard.writeText(data.textContent.trim()).then(function() {
         btn.textContent = 'Copied!';
         btn.classList.add('copied');
+        liveMsg.textContent = 'BibTeX citation copied to clipboard.';
         setTimeout(function() {
           btn.textContent = 'Cite';
           btn.classList.remove('copied');
+          liveMsg.textContent = '';
         }, 1500);
       });
     });
