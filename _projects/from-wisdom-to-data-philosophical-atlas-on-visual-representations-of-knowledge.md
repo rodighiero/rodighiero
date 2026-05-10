@@ -3,8 +3,7 @@ title: "From Wisdom to Data: Philosophical Atlas on Visual Representations of Kn
 year: 2022
 venue: "Porto University Press"
 type: "book"
-authors: "Higuera Rubio, José, Alberto Romele, Dario Rodighiero, and Celeste Pedro, eds."
-authors_bibtex: "Higuera Rubio, José and Alberto Romele and Dario Rodighiero and Celeste Pedro, eds"
+editor: "José Higuera Rubio and Alberto Romele and Dario Rodighiero and Celeste Pedro"
 doi: "https://www.up.pt/press/books/978-989-746-315-0"
 img: "From-Wisdom-to-Data.webp"
 ---

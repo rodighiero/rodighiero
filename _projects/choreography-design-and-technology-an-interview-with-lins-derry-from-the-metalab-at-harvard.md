@@ -3,8 +3,7 @@ title: "Choreography, Design, and Technology: An Interview with Lins Derry from 
 year: 2025
 venue: "Per–Forming Spaces"
 type: "chapter"
-authors: "Derry, Lins, Dario Rodighiero"
-authors_bibtex: "Derry, Lins and Dario Rodighiero"
+author: "Lins Derry and Dario Rodighiero"
 doi: "https://hdl.handle.net/11370/d7e556b3-06df-4c6d-b8fa-5c21003734af"
 img: "Choreography-Design-and-Technology.webp"
 ---

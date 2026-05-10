@@ -3,8 +3,7 @@ title: "Experiments of Network Literacy for Urban Designers: Bridging Informatio
 year: 2025
 venue: "Land"
 type: "journal"
-authors: "Rodighiero, Dario"
-authors_bibtex: "Rodighiero, Dario"
+author: "Dario Rodighiero"
 doi: "https://doi.org/10.3390/land14091901"
 img: "Experiments-of-Network-Literacy-for-Urban-Designers.webp"
 ---

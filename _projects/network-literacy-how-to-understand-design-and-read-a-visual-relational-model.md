@@ -3,8 +3,7 @@ title: "Network Literacy: How to Understand, Design, and Read a Visual Relationa
 year: 2025
 venue: "Progetto Grafico"
 type: "journal"
-authors: "Rodighiero, Dario"
-authors_bibtex: "Rodighiero, Dario"
+author: "Dario Rodighiero"
 doi: "https://hdl.handle.net/11370/3648f43f-5e55-48a4-b130-6537029226fc"
 img: "Network-Literacy.webp"
 ---

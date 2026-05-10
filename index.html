@@ -237,13 +237,15 @@
       <div class="col-meta">
         <div class="meta-line">{% if project.year %}{{ project.year }}{% endif %}{% case project.type %}{% when 'book' %} · Book{% when 'chapter' %} · Book Chapter{% when 'journal' %} · Journal Article{% when 'conference' %} · Conference Paper{% when 'magazine' %} · Magazine Article{% endcase %}{% if project.venue %}<br><span class="venue">{{ project.venue }}</span>{% endif %}</div>
         <h2>{% if project.doi %}<a href="{{ project.doi }}" target="_blank" rel="noopener noreferrer">{{ project.title }}<span class="ext"><svg viewBox="-1 -1 13 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="9" x2="9" y2="1"/><polyline points="2,1 9,1 9,8"/></svg></span></a>{% else %}{{ project.title }}{% endif %}</h2>
-        {% if project.authors %}<div class="authors">{{ project.authors }}</div>{% endif %}
+        {% if project.author or project.editor %}<div class="authors">{% if project.author %}{{ project.author | replace: ' and ', ', ' }}{% if project.editor %}. Ed. {{ project.editor | replace: ' and ', ', ' }}{% endif %}{% elsif project.editor %}{{ project.editor | replace: ' and ', ', ' }}, eds.{% endif %}{% if project.translator %}. Translated by {{ project.translator | replace: ' and ', ', ' }}{% endif %}</div>{% endif %}
         {% capture entry_type %}{% case project.type %}{% when 'journal' %}article{% when 'magazine' %}article{% when 'chapter' %}incollection{% when 'book' %}book{% when 'conference' %}inproceedings{% else %}misc{% endcase %}{% endcapture %}
         {% capture venue_field %}{% case project.type %}{% when 'journal' %}journal{% when 'magazine' %}journal{% when 'chapter' %}booktitle{% when 'conference' %}booktitle{% when 'book' %}publisher{% else %}howpublished{% endcase %}{% endcapture %}
         <button class="cite-btn" type="button">Cite</button>
         <pre class="bibtex-data" hidden>@{{ entry_type }}&#123;rodighiero{{ project.year }}{{ project.slug | split: '-' | first }},
-  author    = &#123;{{ project.authors_bibtex | default: project.authors }}&#125;,
-  title     = &#123;{{ project.title }}&#125;,
+{% if project.author %}  author     = &#123;{{ project.author }}&#125;,
+{% endif %}{% if project.editor %}  editor     = &#123;{{ project.editor }}&#125;,
+{% endif %}{% if project.translator %}  translator = &#123;{{ project.translator }}&#125;,
+{% endif %}  title     = &#123;{{ project.title }}&#125;,
   {{ venue_field }}   = &#123;{{ project.venue }}&#125;,
   year      = &#123;{{ project.year }}&#125;{% if project.doi contains 'doi.org/' %},
   doi       = &#123;{{ project.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}&#125;{% elsif project.doi %},

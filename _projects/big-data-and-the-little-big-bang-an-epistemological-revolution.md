@@ -3,8 +3,7 @@ title: "Big Data and the Little Big Bang: An Epistemological (r)Evolution"
 year: 2020
 venue: "Frontiers"
 type: "journal"
-authors: "Balazka, Dominik, and Dario Rodighiero"
-authors_bibtex: "Balazka, Dominik and Dario Rodighiero"
+author: "Dominik Balazka and Dario Rodighiero"
 doi: "https://doi.org/10.3389/fdata.2020.00031"
 img: "Big-Data-and-the-Little-Big-Bang.webp"
 ---

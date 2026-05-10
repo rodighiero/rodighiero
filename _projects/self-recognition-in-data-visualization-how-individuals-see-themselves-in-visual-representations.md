@@ -3,8 +3,7 @@ title: "Self-Recognition in Data Visualization: How Individuals See Themselves i
 year: 2019
 venue: "EspacesTemps.Net"
 type: "journal"
-authors: "Rodighiero, Dario, and Loup Cellard"
-authors_bibtex: "Rodighiero, Dario and Loup Cellard"
+author: "Dario Rodighiero and Loup Cellard"
 doi: "https://doi.org/10.26151/espacestemps.net-wztp-cc46"
 img: "Self-Recognition-in-Data-Visualization.webp"
 redirect_from:

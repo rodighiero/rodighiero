@@ -3,8 +3,7 @@ title: "Orchestrating Cultural Heritage: Exploring the Automated Analysis and Or
 year: 2023
 venue: "ACM Conference on Hypertext and Social Media"
 type: "conference"
-authors: "Picca, Davide, Antonin Schnyder, Eri Kostina, Alessandro Adamou, Dario Rodighiero, and Jeffrey Schnapp"
-authors_bibtex: "Picca, Davide and Antonin Schnyder and Eri Kostina and Alessandro Adamou and Dario Rodighiero and Jeffrey Schnapp"
+author: "Davide Picca and Antonin Schnyder and Eri Kostina and Alessandro Adamou and Dario Rodighiero and Jeffrey Schnapp"
 doi: "https://pure.rug.nl/ws/portalfiles/portal/780076742/3603163.3609066.pdf"
 img: "Orchestrating-Cultural-Heritage.webp"
 ---

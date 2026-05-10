@@ -3,8 +3,7 @@ title: "Visualizing as a Form of Collective Care"
 year: 2025
 venue: "Nightingale"
 type: "magazine"
-authors: "Çay, Damla, Dario Rodighiero, and Weidi Zhang"
-authors_bibtex: "Çay, Damla and Dario Rodighiero and Weidi Zhang"
+author: "Damla Çay and Dario Rodighiero and Weidi Zhang"
 doi: "https://nightingaledvs.com/visualizing-as-a-form-of-collective-care/"
 img: "Visualizing-as-a-Form-of-Collective-Care.webp"
 ---
