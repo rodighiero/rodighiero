@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% assign _excerpt = page.content | strip_html | truncatewords: 40 %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page.title }} — Dario Rodighiero</title>
-  <meta name="description" content="{{ page.content | strip_html | truncatewords: 40 }}">
+  <meta name="description" content="{{ _excerpt }}">
   <meta name="keywords" content="Dario Rodighiero{% if page.venue %}, {{ page.venue }}{% endif %}{% if page.type %}, {{ page.type }}{% endif %}, data visualization, digital humanities, design">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#ffffff">
   <meta name="color-scheme" content="light">
   <meta name="author" content="Dario Rodighiero">
   <link rel="canonical" href="{{ site.url }}{{ page.url }}">
-  <link rel="alternate" type="application/rss+xml" title="Dario Rodighiero" href="{{ site.url }}/feed.xml">
-  <meta property="og:site_name" content="Dario Rodighiero">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml">
+  <meta property="og:site_name" content="{{ site.title }}">
   <meta property="og:title" content="{{ page.title }}">
-  <meta property="og:description" content="{{ page.content | strip_html | truncatewords: 40 }}">
+  <meta property="og:description" content="{{ _excerpt }}">
   <meta property="og:url" content="{{ site.url }}{{ page.url }}">
   <meta property="og:type" content="article">
   {% if page.img %}<meta property="og:image" content="{{ site.url }}/images/{{ page.img }}">
@@ -24,7 +25,7 @@
   {% if page.author %}<meta property="article:author" content="{{ page.author | replace: ' and ', ', ' }}">{% endif %}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ page.title }}">
-  <meta name="twitter:description" content="{{ page.content | strip_html | truncatewords: 40 }}">
+  <meta name="twitter:description" content="{{ _excerpt }}">
   {% if page.img %}<meta name="twitter:image" content="{{ site.url }}/images/{{ page.img }}">{% endif %}
   <script type="application/ld+json">
   {
@@ -36,7 +37,7 @@
     "publisher": "{{ page.venue | escape }}",
     {% if page.doi %}"url": "{{ page.doi }}",{% endif %}
     {% if page.img %}"image": "{{ site.url }}/images/{{ page.img }}",{% endif %}
-    "description": "{{ page.content | strip_html | truncatewords: 40 | escape }}"
+    "description": "{{ _excerpt | escape }}"
   }
   </script>
   <script type="application/ld+json">
@@ -44,7 +45,7 @@
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Dario Rodighiero", "item": "{{ site.url }}" },
+      { "@type": "ListItem", "position": 1, "name": "{{ site.title }}", "item": "{{ site.url }}" },
       { "@type": "ListItem", "position": 2, "name": "{{ page.title | escape }}", "item": "{{ site.url }}{{ page.url }}" }
     ]
   }
