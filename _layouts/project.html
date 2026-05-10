@@ -31,7 +31,9 @@
     "description": "{{ page.content | strip_html | truncatewords: 40 | escape }}"
   }
   </script>
+  <link rel="apple-touch-icon" href="{{ site.url }}/apple-touch-icon.png">
   <link rel="shortcut icon" href="{{ site.url }}/favicon.ico">
+  <link rel="preload" href="{{ site.url }}/fonts/nunito.css" as="style">
   <link rel="stylesheet" href="{{ site.url }}/fonts/nunito.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; }
@@ -99,7 +101,7 @@
     <div class="abstract">{{ content }}</div>
     {% if page.img %}
     <div class="image">
-      <img src="{{ site.url }}/images/{{ page.img }}" alt="{{ page.title }}">
+      <img src="{{ site.url }}/images/{{ page.img }}" alt="{{ page.title }}" loading="lazy">
     </div>
     {% endif %}
   </div>
