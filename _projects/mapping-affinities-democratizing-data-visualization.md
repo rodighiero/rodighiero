@@ -6,6 +6,8 @@ type: "book"
 author: "Dario Rodighiero"
 doi: "https://library.oapen.org/handle/20.500.12657/91793"
 img: "Mapping-Affinities.webp"
+img_width: 700
+img_height: 858
 redirect_from:
   - /Mapping-Affinities
 ---

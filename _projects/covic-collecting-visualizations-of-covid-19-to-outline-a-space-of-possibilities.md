@@ -6,6 +6,8 @@ type: "journal"
 author: "Paul Kahn and Hugh Dubberly and Dario Rodighiero"
 doi: "https://doi.org/10.1162/desi_a_00697"
 img: "Covic.webp"
+img_width: 700
+img_height: 700
 redirect_from:
   - /Covic
 ---

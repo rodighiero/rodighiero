@@ -6,6 +6,8 @@ type: "journal"
 author: "Dario Rodighiero and Eveline Wandl-Vogt and Elian Carsenat"
 doi: "https://research.rug.nl/en/publications/a-visual-translation-of-the-pandemic"
 img: "A-Visual-Translation-of-the-Pandemic.webp"
+img_width: 700
+img_height: 700
 redirect_from:
   - /A-Visual-Translation-of-the-Pandemic
 ---

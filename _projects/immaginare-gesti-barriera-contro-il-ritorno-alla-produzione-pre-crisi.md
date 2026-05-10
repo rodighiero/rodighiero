@@ -7,6 +7,8 @@ author: "Bruno Latour"
 translator: "Daniele Guido and Donato Ricci and Dario Rodighiero and Giulia Taurino"
 doi: "https://antinomie.it/index.php/2020/04/09/immaginare-gesti-barriera-contro-il-ritorno-alla-produzione-pre-crisi/"
 img: "Immaginare-Gesti-Barriera-Contro-Il-Ritorno-Alla-Produzione-Pre-Crisi.webp"
+img_width: 700
+img_height: 560
 redirect_from:
   - /Gesti-Barriera
 ---

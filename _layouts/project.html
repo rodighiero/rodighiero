@@ -7,6 +7,7 @@
   <meta name="description" content="{{ page.content | strip_html | truncatewords: 40 }}">
   <meta name="keywords" content="Dario Rodighiero{% if page.venue %}, {{ page.venue }}{% endif %}{% if page.type %}, {{ page.type }}{% endif %}, data visualization, digital humanities, design">
   <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#ffffff">
   <meta name="author" content="Dario Rodighiero">
   <link rel="canonical" href="{{ site.url }}{{ page.url }}">
   <meta property="og:title" content="{{ page.title }}">
@@ -101,7 +102,7 @@
     <div class="abstract">{{ content }}</div>
     {% if page.img %}
     <div class="image">
-      <img src="{{ site.url }}/images/{{ page.img }}" alt="{{ page.title }}" loading="lazy">
+      <img src="{{ site.url }}/images/{{ page.img }}" alt="{{ page.title }}" loading="lazy"{% if page.img_width %} width="{{ page.img_width }}" height="{{ page.img_height }}"{% endif %}>
     </div>
     {% endif %}
   </div>

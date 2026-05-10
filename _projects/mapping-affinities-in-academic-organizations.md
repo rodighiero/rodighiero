@@ -6,6 +6,8 @@ type: "journal"
 author: "Dario Rodighiero and Frédéric Kaplan and Boris Beaude"
 doi: "https://doi.org/10.3389/frma.2018.00004"
 img: "Mapping-Affinities-in-Academic-Organizations.webp"
+img_width: 700
+img_height: 438
 redirect_from:
   - /Mapping-Affinities-Frontiers
 ---

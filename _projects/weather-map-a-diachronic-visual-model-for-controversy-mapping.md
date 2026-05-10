@@ -6,6 +6,8 @@ type: "chapter"
 author: "Dario Rodighiero and Jean Daniélou"
 doi: "https://doi.org/10.1515/9783111317779-017"
 img: "Weather-Map.webp"
+img_width: 700
+img_height: 525
 redirect_from:
   - /Weather-Map
 ---

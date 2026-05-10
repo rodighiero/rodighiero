@@ -6,6 +6,8 @@ type: "book"
 editor: "Damla Çay and Dario Rodighiero and Weidi Zhang and Martina R. Fröschl and Peter Mindek and Beatrice Gobbo"
 doi: "https://visap.net/2025/downloads/visap-2025-booklet.pdf"
 img: "VISAP-2025-Catalog.webp"
+img_width: 700
+img_height: 542
 redirect_from:
   - /VISAP-2025-Catalog
 ---

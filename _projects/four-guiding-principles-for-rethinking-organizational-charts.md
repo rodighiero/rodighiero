@@ -6,6 +6,8 @@ type: "chapter"
 author: "Dario Rodighiero"
 doi: "https://hdl.handle.net/11370/6021c844-43e3-4fe8-b3c2-b8afa1361872"
 img: "Four-Guiding-Principles-for-Rethinking-Organizational-Charts.webp"
+img_width: 570
+img_height: 893
 redirect_from:
   - /Handbook-of-Digital-and-Computational-Research-Methods
 ---

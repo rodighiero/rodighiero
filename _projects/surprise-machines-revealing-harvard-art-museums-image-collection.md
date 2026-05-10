@@ -6,6 +6,8 @@ type: "journal"
 author: "Dario Rodighiero and Lins Derry and Douglas Duhaime and Jordan Kruguer and Maximilian C. Mueller and Christopher Pietsch and Jeffrey T. Schnapp and Jeff Steward and metaLAB."
 doi: "https://doi.org/10.1075/idj.22013.rod"
 img: "Surprise-Machines.webp"
+img_width: 700
+img_height: 700
 redirect_from:
   - /Surprise-Machines-2
 ---

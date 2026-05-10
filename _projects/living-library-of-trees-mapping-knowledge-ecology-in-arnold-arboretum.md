@@ -6,6 +6,8 @@ type: "conference"
 author: "Johan Malmstedt and Giacomo Nanni and Dario Rodighiero"
 doi: "https://doi.org/10.48550/arXiv.2509.00114"
 img: "Living-Library-of-Trees.webp"
+img_width: 700
+img_height: 507
 redirect_from:
   - /Living-library-of-trees
 ---
