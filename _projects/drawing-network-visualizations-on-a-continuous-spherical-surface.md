@@ -6,6 +6,8 @@ type: "conference"
 author: "Dario Rodighiero"
 doi: "https://pure.rug.nl/ws/files/224968970/Rodighiero_2020_Drawing_Network_Visualizations_on_a_Continuous_Sp.pdf"
 img: "Drawing-Network-Visualizations-on-a-Continuous-Spherical-Surface.webp"
+img_width: 700
+img_height: 393
 redirect_from:
   - /Spherical-Surface
 ---

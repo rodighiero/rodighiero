@@ -6,6 +6,8 @@ type: "conference"
 author: "Chloe Ye Eun Moon and Dario Rodighiero"
 doi: "https://doi.org/10.5281/zenodo.3611340"
 img: "Mapping-as-a-Contemporary-Instrument-for-Orientation-in-Conferences.webp"
+img_width: 700
+img_height: 438
 redirect_from:
   - /Orientation-in-Conferences
 ---

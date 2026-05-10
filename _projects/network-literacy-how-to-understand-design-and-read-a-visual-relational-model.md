@@ -6,6 +6,8 @@ type: "journal"
 author: "Dario Rodighiero"
 doi: "https://hdl.handle.net/11370/3648f43f-5e55-48a4-b130-6537029226fc"
 img: "Network-Literacy.webp"
+img_width: 700
+img_height: 538
 redirect_from:
   - /Progetto-Grafico
 ---

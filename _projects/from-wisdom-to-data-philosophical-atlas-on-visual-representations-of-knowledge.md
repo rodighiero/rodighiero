@@ -6,6 +6,8 @@ type: "book"
 editor: "José Higuera Rubio and Alberto Romele and Dario Rodighiero and Celeste Pedro"
 doi: "https://www.up.pt/press/books/978-989-746-315-0"
 img: "From-Wisdom-to-Data.webp"
+img_width: 700
+img_height: 1016
 redirect_from:
   - /From-Wisdom-to-Data
 ---

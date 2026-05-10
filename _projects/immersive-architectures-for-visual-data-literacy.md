@@ -6,6 +6,8 @@ type: "journal"
 author: "Dario Rodighiero and Eveline Wandl-Vogt and Elian Carsenat and Jules Döring and Oliver Elias and Michaela Fragner and Stepha Farkashazy"
 doi: "https://doi.org/10.1075/idj.22016.rod"
 img: "Immersive-Architectures-for-Visual-Data-Literacy.webp"
+img_width: 700
+img_height: 525
 redirect_from:
   - /Ars-Electronica
 ---
