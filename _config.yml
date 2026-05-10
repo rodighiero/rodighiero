@@ -4,6 +4,11 @@ url: https://dariorodighiero.com
 
 plugins:
   - jekyll-redirect-from
+  - jekyll-feed
+
+feed:
+  collections:
+    - projects
 
 collections:
   projects:
