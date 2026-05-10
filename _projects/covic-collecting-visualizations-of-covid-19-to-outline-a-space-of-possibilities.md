@@ -6,5 +6,7 @@ type: "journal"
 author: "Paul Kahn and Hugh Dubberly and Dario Rodighiero"
 doi: "https://doi.org/10.1162/desi_a_00697"
 img: "Covic.webp"
+redirect_from:
+  - /Covic
 ---
 We describe the COVID-19 Online Visualization Collection (COVIC), its goals, how it came to be, and why we propose such a collection as a new path for design research. The COVIC database contains a collective visualization response to the COVID-19 pandemic gathered from approximately 3,000 articles, each containing one or more visualizations (about 12,000 in total). We have sought to create a resource for design research—a boundary object—that will be useful to any of the disciplines brought together through their response to the pandemic event.
