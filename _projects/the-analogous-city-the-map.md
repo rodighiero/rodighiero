@@ -2,7 +2,7 @@
 title: "The Analogous City, the Map"
 year: 2015
 venue: "EPFL Archizoom"
-type: "book"
+type: "map"
 author: "Aldo Rossi and Eraldo Consolascio and Bruno Reichlin and Fabio Reinhart"
 editor: "Dario Rodighiero"
 doi: "https://infoscience.epfl.ch/record/209326"
