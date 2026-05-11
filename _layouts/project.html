@@ -116,7 +116,7 @@
 <body>
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
   <a class="back" href="{{ site.url }}/">← Dario Rodighiero</a>
-  <div class="meta-line">{% if page.year %}{{ page.year }}{% endif %}{% case page.type %}{% when 'book' %} · Book{% when 'chapter' %} · Book Chapter{% when 'journal' %} · Journal Article{% when 'conference' %} · Conference Paper{% when 'magazine' %} · Magazine Article{% when 'map' %} · Map{% endcase %}{% if page.venue %}<br><span class="venue">{{ page.venue }}</span>{% endif %}</div>
+  <div class="meta-line">{% if page.year %}<time datetime="{{ page.year }}">{{ page.year }}</time>{% endif %}{% case page.type %}{% when 'book' %} · Book{% when 'chapter' %} · Book Chapter{% when 'journal' %} · Journal Article{% when 'conference' %} · Conference Paper{% when 'magazine' %} · Magazine Article{% when 'map' %} · Map{% endcase %}{% if page.venue %}<br><span class="venue">{{ page.venue }}</span>{% endif %}</div>
   <h1>{{ page.title }}</h1>
   {% if page.author or page.editor %}<div class="authors">{% if page.author %}{{ page.author | replace: ' and ', ', ' }}{% if page.editor %}. Ed. {{ page.editor | replace: ' and ', ', ' }}{% endif %}{% elsif page.editor %}{{ page.editor | replace: ' and ', ', ' }}, eds.{% endif %}{% if page.translator %}. Translated by {{ page.translator | replace: ' and ', ', ' }}{% endif %}</div>{% endif %}
   {% capture entry_type %}{% case page.type %}{% when 'journal' %}article{% when 'magazine' %}article{% when 'chapter' %}incollection{% when 'book' %}book{% when 'conference' %}inproceedings{% when 'map' %}misc{% else %}misc{% endcase %}{% endcapture %}
