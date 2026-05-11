@@ -1,0 +1,375 @@
+{% capture _filter_path %}{% case page.filter %}{% when 'book' %}/books/{% when 'chapter' %}/book-chapters/{% when 'journal' %}/journal-articles/{% when 'conference' %}/conference-papers/{% when 'magazine' %}/magazine-articles/{% when 'map' %}/maps/{% else %}/{% endcase %}{% endcapture %}
+{% capture _filter_label %}{% case page.filter %}{% when 'book' %}Books{% when 'chapter' %}Book Chapters{% when 'journal' %}Journal Articles{% when 'conference' %}Conference Papers{% when 'magazine' %}Magazine Articles{% when 'map' %}Maps{% endcase %}{% endcapture %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% if _filter_label != "" %}<title>{{ _filter_label }} — Dario Rodighiero</title>
+  {% else %}<title>Dario Rodighiero — Design, Data, and Humanities</title>
+  {% endif %}
+  <meta name="description" content="Dario Rodighiero researches data visualization, digital humanities, and Science and Technology Studies. Assistant Professor at University of Groningen, Faculty Associate at Harvard's Berkman Klein Center.">
+  <meta name="author" content="Dario Rodighiero">
+  <meta name="keywords" content="Dario Rodighiero, data visualization, digital humanities, Science and Technology Studies, University of Groningen, Berkman Klein Center, metaLAB Harvard, mapping, information design">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="color-scheme" content="light">
+  <link rel="canonical" href="{{ site.url }}{{ _filter_path }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml">
+  <meta property="og:site_name" content="{{ site.title }}">
+  {% if _filter_label != "" %}<meta property="og:title" content="{{ _filter_label }} — Dario Rodighiero">
+  {% else %}<meta property="og:title" content="Dario Rodighiero — Design, Data, and Humanities">
+  {% endif %}
+  <meta property="og:description" content="Dario Rodighiero researches data visualization, digital humanities, and Science and Technology Studies. Assistant Professor at University of Groningen, Faculty Associate at Harvard's Berkman Klein Center.">
+  <meta property="og:url" content="{{ site.url }}{{ _filter_path }}">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="{{ site.url }}/images/Dario-Rodighiero.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="800">
+  <meta name="twitter:card" content="summary_large_image">
+  {% if _filter_label != "" %}<meta name="twitter:title" content="{{ _filter_label }} — Dario Rodighiero">
+  {% else %}<meta name="twitter:title" content="Dario Rodighiero — Design, Data, and Humanities">
+  {% endif %}
+  <meta name="twitter:description" content="Dario Rodighiero researches data visualization, digital humanities, and Science and Technology Studies. Assistant Professor at University of Groningen, Faculty Associate at Harvard's Berkman Klein Center.">
+  <meta name="twitter:image" content="{{ site.url }}/images/Dario-Rodighiero.webp">
+  <link rel="apple-touch-icon" href="{{ site.url }}/apple-touch-icon.png">
+  <link rel="icon" href="{{ site.url }}/favicon.ico">
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Dario Rodighiero",
+      "url": "{{ site.url }}",
+      "description": "Personal website of Dario Rodighiero — researcher in data visualization, digital humanities, and Science and Technology Studies."
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Dario Rodighiero",
+      "url": "{{ site.url }}",
+      "image": "{{ site.url }}/images/Dario-Rodighiero.webp",
+      "description": "Dario Rodighiero researches data visualization, digital humanities, and Science and Technology Studies. Assistant Professor at University of Groningen, Faculty Associate at Harvard's Berkman Klein Center.",
+      "jobTitle": "Assistant Professor of Science and Technology Studies",
+      "affiliation": [
+        { "@type": "Organization", "name": "University of Groningen", "url": "https://www.rug.nl/staff/d.rodighiero" },
+        { "@type": "Organization", "name": "metaLAB (at) Harvard", "url": "https://mlml.io/m/dario-rodighiero" },
+        { "@type": "Organization", "name": "Berkman Klein Center for Internet & Society", "url": "https://cyber.harvard.edu/people/dario-rodighiero" }
+      ],
+      "sameAs": [
+        "https://github.com/rodighiero/",
+        "https://scholar.google.com/citations?user=h065R1oAAAAJ",
+        "https://www.linkedin.com/in/dariorodighiero/",
+        "https://orcid.org/0000-0002-1405-7062",
+        "https://www.zotero.org/rodighiero"
+      ],
+      "knowsAbout": ["Data Visualization", "Digital Humanities", "Science and Technology Studies", "Information Design", "Mapping"]
+    }
+  ]
+  </script>
+  <link rel="preload" href="{{ site.url }}/fonts/nunito.css" as="style">
+  <link rel="stylesheet" href="{{ site.url }}/fonts/nunito.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --font: "Nunito", sans-serif;
+      --small: 0.78rem;
+      --base: 0.9rem;
+      --col: 220px;
+    }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font);
+      font-size: var(--base);
+      line-height: 1.5;
+      color: #000;
+      background: #fff;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 2rem;
+      max-width: 1200px;
+    }
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .skip-link { position: absolute; top: -100%; left: 0; padding: 0.5rem 1rem; background: #000; color: #fff; font-size: var(--small); z-index: 100; text-decoration: none; }
+    .skip-link:focus { top: 0; }
+
+    /* ── Header ── */
+    .header {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 2rem;
+      padding-bottom: 2rem;
+      margin-bottom: 1.2rem;
+    }
+    .header h1 { font-size: 1.3rem; font-weight: 500; margin: 0 0 0.6rem; }
+    .header .links { font-size: var(--small); line-height: 1.6; }
+    .header .links a { display: inline; }
+    .header .icons { display: flex; gap: 0.75rem; margin-top: 0.6rem; }
+    .header .icons a { display: flex; opacity: 0.5; padding: 2px; }
+    .header .icons a:hover { opacity: 1; }
+    .header .icons svg { width: 16px; height: 16px; fill: currentColor; overflow: visible; }
+    .header .bio-col { font-size: var(--small); line-height: 1.6; }
+    .header .bio-col p { margin: 0; }
+    .header .bio-col a { text-decoration: underline; }
+
+    /* ── Filter bar ── */
+    .filters {
+      font-size: var(--small);
+      margin-top: 3rem;
+      margin-bottom: 1.5rem;
+      color: rgba(0,0,0,0.55);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .filter-label { margin-right: 0.2rem; }
+    .filters button {
+      color: rgba(0,0,0,0.55);
+      cursor: pointer;
+      background: none;
+      border: 1px solid rgba(0,0,0,0.2);
+      padding: 0.15rem 0.6rem;
+      font: inherit;
+      font-size: var(--small);
+      border-radius: 2px;
+      line-height: 1.4;
+    }
+    .filters button:hover { color: #000; border-color: rgba(0,0,0,0.5); }
+    .filters button.active { color: #fff; background: #000; border-color: #000; }
+
+    /* ── Publications list ── */
+    .project {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 2rem;
+      padding: 1.2rem 0 2.8rem;
+      align-items: start;
+      border-top: 1px solid rgba(0,0,0,0.2);
+    }
+    .col-meta .meta-line { font-size: 0.7rem; color: rgba(0,0,0,0.55); margin-bottom: 0.2rem; }
+    .col-meta .meta-line .venue { font-style: italic; color: rgba(0,0,0,0.55); }
+    .col-meta h2 { font-size: var(--base); font-weight: 500; margin: 0.6rem 0 0.2rem; line-height: 1.35; }
+    .col-meta .authors { font-size: var(--small); color: rgba(0,0,0,0.6); }
+    .cite-btn { display: inline-block; margin-top: 0.6rem; background: transparent; color: rgba(0,0,0,0.55); border: 1px solid rgba(0,0,0,0.2); padding: 0.15rem 0.55rem; font: inherit; font-size: 0.68rem; cursor: pointer; border-radius: 2px; line-height: 1.4; }
+    .cite-btn:hover { color: #000; border-color: rgba(0,0,0,0.5); }
+    .cite-btn.copied { color: #000; border-color: #000; }
+    .col-meta h2 a { color: inherit; text-decoration: none; }
+    .col-meta h2 a:hover { text-decoration: underline; }
+    .col-meta h2 a .ext { display: inline; margin-left: 0.3em; text-decoration: none; white-space: nowrap; }
+    .col-meta h2 a .ext svg { width: 1.25ex; height: 1.25ex; vertical-align: -0.1ex; }
+    .col-img { grid-column: 4; grid-row: 1; }
+    .col-meta { grid-column: 1; }
+    .col-desc { grid-column: 2 / span 2; }
+    .col-desc p { font-size: var(--small); margin: 0; color: rgba(0,0,0,0.75); line-height: 1.6; }
+    .col-img img { width: 100%; height: auto; display: block; }
+
+    footer {
+      margin-top: 6rem;
+      padding: 3rem 0 4rem;
+      text-align: right;
+    }
+    footer blockquote {
+      font-size: var(--small);
+      line-height: 1.7;
+      margin: 0 0 0.75rem;
+      color: rgba(0,0,0,0.75);
+      max-width: 600px;
+      margin-left: auto;
+    }
+    footer cite {
+      font-size: var(--small);
+      font-style: normal;
+      color: rgba(0,0,0,0.55);
+    }
+
+    @media (max-width: 1024px) {
+      .header { grid-template-columns: 1fr; gap: 1rem; }
+      .header .icons { margin-bottom: 0.6rem; }
+      .project { display: block; overflow: hidden; }
+      .col-img { display: block; float: right; width: 25%; margin: 0 0 1rem 1.5rem; }
+      .col-desc { margin-top: 1.2rem; }
+    }
+  </style>
+</head>
+<body data-filter="{{ page.filter | default: 'all' }}">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div aria-live="polite" class="sr-only" id="live-msg"></div>
+
+  <!-- ── Header ── -->
+  <header class="header">
+    <div>
+      <h1>Dario Rodighiero</h1>
+      <div class="links">
+        <a href="https://www.rug.nl/staff/d.rodighiero">University of Groningen</a> · <a href="https://mlml.io/m/dario-rodighiero">metaLAB (at) Harvard</a> · <a href="https://cyber.harvard.edu/people/dario-rodighiero">Berkman Klein Center</a>
+      </div>
+      <div class="icons">
+        <a href="https://github.com/rodighiero/" aria-label="GitHub">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        </a>
+        <a href="https://scholar.google.com/citations?user=h065R1oAAAAJ&amp;sortby=pubdate" aria-label="Google Scholar">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/dariorodighiero/" aria-label="LinkedIn">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="https://orcid.org/0000-0002-1405-7062" aria-label="ORCID">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325 5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c2.359 0 3.713-1.709 3.713-3.772 0-2.344-1.536-3.672-3.601-3.672h-2.409z"/></svg>
+        </a>
+        <a href="https://www.zotero.org/rodighiero" aria-label="Zotero">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M21.231 2.462 7.18 20.923h14.564V24H2.256v-2.462L16.308 3.076H2.975V0h18.256v2.462z"/></svg>
+        </a>
+      </div>
+    </div>
+    {% capture bio_raw %}{% include bio.md %}{% endcapture %}
+    {% assign bio_paragraphs = bio_raw | split: "<!-- split -->" %}
+    {% for para in bio_paragraphs %}
+      {% assign para_trimmed = para | strip %}
+      {% if para_trimmed != "" %}
+    <div class="bio-col">{{ para_trimmed | markdownify }}</div>
+      {% endif %}
+    {% endfor %}
+  </header>
+
+  <main id="main-content">
+    <!-- ── Filter bar ── -->
+    <nav class="filters" aria-label="Filter publications by type">
+      <span class="filter-label">Selected publications, filter by type:</span>
+      <button data-filter="all" aria-pressed="false">Everything</button>
+      <button data-filter="book" aria-pressed="false">Books</button>
+      <button data-filter="chapter" aria-pressed="false">Book Chapters</button>
+      <button data-filter="journal" aria-pressed="false">Journal Articles</button>
+      <button data-filter="conference" aria-pressed="false">Conference Papers</button>
+      <button data-filter="magazine" aria-pressed="false">Magazine Articles</button>
+      <button data-filter="map" aria-pressed="false">Maps</button>
+    </nav>
+
+    <!-- ── Publications ── -->
+    <div id="projects">
+      {% assign sorted_projects = site.projects | sort: "title" | reverse | sort: "year" | reverse %}
+      {% for project in sorted_projects %}
+      <div class="project" data-type="{{ project.type }}">
+        {% if project.img %}
+        <div class="col-img">
+          <img src="{{ site.url }}/images/{{ project.img }}" alt="{{ project.title }}" loading="lazy">
+        </div>
+        {% endif %}
+        <div class="col-meta">
+          <div class="meta-line">{% if project.year %}<time datetime="{{ project.year }}">{{ project.year }}</time>{% endif %}{% case project.type %}{% when 'book' %} · Book{% when 'chapter' %} · Book Chapter{% when 'journal' %} · Journal Article{% when 'conference' %} · Conference Paper{% when 'magazine' %} · Magazine Article{% when 'map' %} · Map{% endcase %}{% if project.venue %}<br><span class="venue">{{ project.venue }}</span>{% endif %}</div>
+          <h2>{% if project.doi %}<a href="{{ project.doi }}">{{ project.title }}<span class="ext"><svg aria-hidden="true" viewBox="-1 -1 13 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="9" x2="9" y2="1"/><polyline points="2,1 9,1 9,8"/></svg></span></a>{% else %}{{ project.title }}{% endif %}</h2>
+          {% if project.author or project.editor %}<div class="authors">{% if project.author %}{{ project.author | replace: ' and ', ', ' }}{% if project.editor %}. Ed. {{ project.editor | replace: ' and ', ', ' }}{% endif %}{% elsif project.editor %}{{ project.editor | replace: ' and ', ', ' }}, eds.{% endif %}{% if project.translator %}. Translated by {{ project.translator | replace: ' and ', ', ' }}{% endif %}</div>{% endif %}
+          {% capture entry_type %}{% case project.type %}{% when 'journal' %}article{% when 'magazine' %}article{% when 'chapter' %}incollection{% when 'book' %}book{% when 'conference' %}inproceedings{% when 'map' %}misc{% else %}misc{% endcase %}{% endcapture %}
+          {% capture venue_field %}{% case project.type %}{% when 'journal' %}journal{% when 'magazine' %}journal{% when 'chapter' %}booktitle{% when 'conference' %}booktitle{% when 'book' %}publisher{% when 'map' %}howpublished{% else %}howpublished{% endcase %}{% endcapture %}
+          <button class="cite-btn" type="button">Cite</button>
+          <pre class="bibtex-data" hidden>@{{ entry_type }}&#123;rodighiero{{ project.year }}{{ project.slug | split: '-' | first }},
+{% if project.author %}  author     = &#123;{{ project.author }}&#125;,
+{% endif %}{% if project.editor %}  editor     = &#123;{{ project.editor }}&#125;,
+{% endif %}{% if project.translator %}  translator = &#123;{{ project.translator }}&#125;,
+{% endif %}  title     = &#123;{{ project.title }}&#125;,
+  {{ venue_field }}   = &#123;{{ project.venue }}&#125;,
+  year      = &#123;{{ project.year }}&#125;{% if project.doi contains 'doi.org/' %},
+  doi       = &#123;{{ project.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}&#125;{% elsif project.doi %},
+  url       = &#123;{{ project.doi }}&#125;{% endif %}
+&#125;</pre>
+        </div>
+        <div class="col-desc">
+          {{ project.content | markdownify }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </main>
+
+  <footer>
+    <blockquote>"Alongside Daniele [Guido] and Donato [Ricci], Dario is part of the 'Little Italy' that has set up shop in the AIME offices. Apart from sharing his enthusiasm and insatiable curiosity, Dario has brought along ten years experience in designing digital interfaces. With the others on the team, he has given life and form to the daring insights of both himself and his compatriots."</blockquote>
+    <cite>— Bruno Latour, Paris 2013</cite>
+  </footer>
+
+  <script>
+    var filterPaths = {
+      'all': '/',
+      'book': '/books/',
+      'chapter': '/book-chapters/',
+      'journal': '/journal-articles/',
+      'conference': '/conference-papers/',
+      'magazine': '/magazine-articles/',
+      'map': '/maps/'
+    };
+
+    var liveMsg = document.getElementById('live-msg');
+    var projects = document.querySelectorAll('.project');
+    var filterBtns = document.querySelectorAll('.filters button');
+    var initialFilter = document.body.dataset.filter || 'all';
+
+    // Add counts
+    filterBtns.forEach(function(btn) {
+      var filter = btn.dataset.filter;
+      var count = filter === 'all'
+        ? projects.length
+        : document.querySelectorAll('.project[data-type="' + filter + '"]').length;
+      btn.textContent = btn.textContent + ' (' + count + ')';
+    });
+
+    function applyFilter(filter, push) {
+      filterBtns.forEach(function(btn) {
+        var active = btn.dataset.filter === filter;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      projects.forEach(function(p) {
+        p.style.display = (filter === 'all' || p.dataset.type === filter) ? '' : 'none';
+      });
+      if (push) history.pushState({ filter: filter }, '', filterPaths[filter] || '/');
+    }
+
+    applyFilter(initialFilter, false);
+
+    filterBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        applyFilter(this.dataset.filter, true);
+      });
+    });
+
+    window.addEventListener('popstate', function(e) {
+      applyFilter((e.state && e.state.filter) || 'all', false);
+    });
+
+    // Keep arrow on same line as last word of title
+    document.querySelectorAll('.col-meta h2 a').forEach(function(a) {
+      var ext = a.querySelector('.ext');
+      if (!ext) return;
+      var textNode = ext.previousSibling;
+      if (!textNode || textNode.nodeType !== 3) return;
+      var text = textNode.textContent;
+      var lastSpace = text.lastIndexOf(' ');
+      if (lastSpace === -1) return;
+      textNode.textContent = text.slice(0, lastSpace + 1);
+      var nowrap = document.createElement('span');
+      nowrap.style.whiteSpace = 'nowrap';
+      nowrap.appendChild(document.createTextNode(text.slice(lastSpace + 1)));
+      nowrap.appendChild(ext.cloneNode(true));
+      a.insertBefore(nowrap, ext);
+      ext.remove();
+    });
+
+    // Cite buttons
+    document.querySelectorAll('.cite-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var data = btn.nextElementSibling;
+        if (!data || !data.classList.contains('bibtex-data')) return;
+        navigator.clipboard.writeText(data.textContent.trim()).then(function() {
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          liveMsg.textContent = 'BibTeX citation copied to clipboard.';
+          setTimeout(function() {
+            btn.textContent = 'Cite';
+            btn.classList.remove('copied');
+            liveMsg.textContent = '';
+          }, 1500);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
