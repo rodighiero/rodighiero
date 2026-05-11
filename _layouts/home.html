@@ -222,7 +222,7 @@
         </a>
       </div>
     </div>
-    {% capture bio_raw %}{% include_relative ../README.md %}{% endcapture %}
+    {% capture bio_raw %}{% include bio.md %}{% endcapture %}
     {% assign bio_paragraphs = bio_raw | split: "<!-- split -->" %}
     {% for para in bio_paragraphs %}
       {% assign para_trimmed = para | strip %}
