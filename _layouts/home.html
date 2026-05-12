@@ -247,8 +247,8 @@
 
     <!-- ── Publications ── -->
     <div id="projects">
-      {% assign sorted_projects = site.projects | sort: "title" | reverse | sort: "year" | reverse %}
-      {% for project in sorted_projects %}
+      {% assign year_groups = site.projects | group_by: "year" | sort: "name" | reverse %}
+      {% for group in year_groups %}{% assign group_projects = group.items | sort: "title" %}{% for project in group_projects %}
       <div class="project" data-type="{{ project.type }}">
         {% if project.img %}
         <div class="col-img">
@@ -277,7 +277,7 @@
           {{ project.excerpt }}
         </div>
       </div>
-      {% endfor %}
+      {% endfor %}{% endfor %}
     </div>
   </main>
 
