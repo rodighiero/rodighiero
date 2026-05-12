@@ -90,6 +90,7 @@
       border-top: 1px solid rgba(0,0,0,0.2);
       padding-top: 1.5rem;
     }
+    .title-block { max-width: calc(50% - 1rem); }
     .abstract { grid-column: 1 / span 2; font-size: var(--small); line-height: 1.6; color: rgba(0,0,0,0.75); }
     .image { grid-column: 3 / span 2; }
     .abstract p { margin: 0 0 0.8rem; }
@@ -120,12 +121,14 @@
 <body>
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
   <a class="back" href="{{ site.url }}/">← All publications</a>
+  <div class="title-block">
   <div class="meta-line">{% if page.year %}<time datetime="{{ page.year }}">{{ page.year }}</time>{% endif %}{% case page.type %}{% when 'book' %} · Book{% when 'chapter' %} · Book Chapter{% when 'journal' %} · Journal Article{% when 'conference' %} · Conference Paper{% when 'magazine' %} · Magazine Article{% when 'map' %} · Map{% endcase %}{% if page.venue %}<br><span class="venue">{{ page.venue }}</span>{% endif %}</div>
   <h1>{{ page.title }}</h1>
   {% if page.author or page.editor %}<div class="authors">{% if page.author %}{{ page.author | replace: ' and ', ', ' }}{% if page.editor %}. Ed. {{ page.editor | replace: ' and ', ', ' }}{% endif %}{% elsif page.editor %}{{ page.editor | replace: ' and ', ', ' }}, eds.{% endif %}{% if page.translator %}. Translated by {{ page.translator | replace: ' and ', ', ' }}{% endif %}</div>{% endif %}
   {% capture entry_type %}{% case page.type %}{% when 'journal' %}article{% when 'magazine' %}article{% when 'chapter' %}incollection{% when 'book' %}book{% when 'conference' %}inproceedings{% when 'map' %}misc{% else %}misc{% endcase %}{% endcapture %}
   {% capture venue_field %}{% case page.type %}{% when 'journal' %}journal{% when 'magazine' %}journal{% when 'chapter' %}booktitle{% when 'conference' %}booktitle{% when 'book' %}publisher{% when 'map' %}howpublished{% else %}howpublished{% endcase %}{% endcapture %}
   {% if page.doi %}<div class="doi"><a href="{{ page.doi }}">{{ page.doi }}</a><button class="cite-btn" type="button">Cite</button></div>{% else %}<div class="doi"><button class="cite-btn" type="button">Cite</button></div>{% endif %}
+  </div>
   <pre class="bibtex-data" hidden>@{{ entry_type }}&#123;rodighiero{{ page.year }}{{ page.slug | split: '-' | first }},
 {% if page.author %}  author     = &#123;{{ page.author }}&#125;,
 {% endif %}{% if page.editor %}  editor     = &#123;{{ page.editor }}&#125;,
