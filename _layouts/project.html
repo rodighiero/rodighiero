@@ -148,7 +148,9 @@
     {% endif %}
   </div>
 
-  {% assign _sorted = site.projects | sort: "title" | reverse | sort: "year" | reverse %}
+  {% assign _year_groups = site.projects | group_by: "year" | sort: "name" | reverse %}
+  {% assign _sorted = "" | split: "" %}
+  {% for _group in _year_groups %}{% assign _group_sorted = _group.items | sort: "title" %}{% assign _sorted = _sorted | concat: _group_sorted %}{% endfor %}
   {% assign _prev = nil %}
   {% assign _next = nil %}
   {% assign _found = false %}
