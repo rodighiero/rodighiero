@@ -17,7 +17,7 @@ layout: null
   {% for project in site.projects %}
   <url>
     <loc>{{ site.url }}{{ project.url | remove: '.html' }}</loc>
-    {% if project.year %}<lastmod>{{ project.year }}-01-01</lastmod>{% endif %}
+    <lastmod>{{ site.time | date: "%Y-%m-%d" }}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
