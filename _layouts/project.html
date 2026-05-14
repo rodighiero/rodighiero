@@ -36,7 +36,7 @@
     "headline": "{{ page.title | escape }}",
     "name": "{{ page.title | escape }}",
     {% if page.author %}{% assign _authors = page.author | split: ' and ' %}{% if _authors.size == 1 %}"author": { "@type": "Person", "name": "{{ page.author | escape }}" },{% else %}"author": [{% for _a in _authors %}{ "@type": "Person", "name": "{{ _a | escape }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}{% else %}"author": { "@type": "Person", "name": "Dario Rodighiero", "url": "{{ site.url }}" },{% endif %}
-    "datePublished": "{{ page.year }}-01-01",
+    "datePublished": "{{ page.year }}",
     {% if page.venue %}"publisher": { "@type": "Organization", "name": "{{ page.venue | escape }}" },{% endif %}
     "url": "{{ site.url }}{{ page.url }}",
     {% if page.doi %}"sameAs": "{{ page.doi }}",{% endif %}
