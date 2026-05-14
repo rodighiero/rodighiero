@@ -117,10 +117,9 @@
     .project-nav .nav-label { font-size: 0.68rem; opacity: 0.6; }
     .project-nav .nav-prev .nav-label { margin-right: 0.3rem; }
     .project-nav .nav-next .nav-label { margin-left: 0.3rem; }
-    .project-nav .nav-all { font-size: 0.68rem; opacity: 0.6; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.35rem; }
-    .project-nav .nav-all a { display: flex; align-items: center; gap: 0.35rem; }
-    .project-nav .nav-all svg { flex-shrink: 0; }
-    .nav-siblings { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+    .project-nav .nav-all { text-align: center; font-size: 0.68rem; opacity: 0.6; }
+    .project-nav .nav-all a { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+    .nav-siblings { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: start; }
     .project-nav .nav-next { text-align: right; }
   </style>
 </head>
@@ -138,9 +137,9 @@
     {% unless _found %}{% assign _prev = _p %}{% endunless %}
   {% endfor %}
   <nav class="project-nav" aria-label="Project navigation">
-    <div class="nav-all"><a href="{{ site.url }}/"><svg width="11" height="11" viewBox="0 0 11 11" fill="currentColor" aria-hidden="true"><rect y="0" width="11" height="1.5"/><rect y="4.25" width="11" height="1.5"/><rect y="8.5" width="11" height="1.5"/></svg>All publications</a></div>
     <div class="nav-siblings">
       <div class="nav-prev">{% if _prev %}<a href="{{ site.url }}{{ _prev.url }}"><span class="nav-label">← Newer</span>{{ _prev.title }}</a>{% endif %}</div>
+      <div class="nav-all"><a href="{{ site.url }}/"><svg width="11" height="11" viewBox="0 0 11 11" fill="currentColor" aria-hidden="true"><rect y="0" width="11" height="1.5"/><rect y="4.25" width="11" height="1.5"/><rect y="8.5" width="11" height="1.5"/></svg>All publications</a></div>
       <div class="nav-next">{% if _next %}<a href="{{ site.url }}{{ _next.url }}">{{ _next.title }}<span class="nav-label"> Older →</span></a>{% endif %}</div>
     </div>
   </nav>
