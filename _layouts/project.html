@@ -79,7 +79,7 @@
     }
     a { color: inherit; text-decoration: none; }
     a:hover { text-decoration: underline; }
-    .back { font-size: var(--small); color: rgba(0,0,0,0.55); margin-bottom: 3rem; display: block; }
+    .back { font-size: var(--small); color: rgba(0,0,0,0.55); margin-bottom: 1rem; display: block; }
     .back:hover { color: #000; text-decoration: underline; }
     .meta-line { font-size: 0.7rem; color: rgba(0,0,0,0.55); margin-bottom: 0.4rem; }
     .meta-line .venue { font-style: italic; color: rgba(0,0,0,0.55); }
@@ -110,9 +110,9 @@
     .project-nav {
       display: flex;
       justify-content: space-between;
-      margin-top: 3rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(0,0,0,0.2);
+      margin-bottom: 3rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.2);
       font-size: var(--small);
       color: rgba(0,0,0,0.55);
       gap: 2rem;
@@ -126,6 +126,23 @@
 <body>
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
   <a class="back" href="{{ site.url }}/">← All publications</a>
+  {% assign _year_groups = site.projects | group_by: "year" | sort: "name" | reverse %}
+  {% assign _sorted = "" | split: "" %}
+  {% for _group in _year_groups %}{% assign _group_sorted = _group.items | sort: "title" %}{% assign _sorted = _sorted | concat: _group_sorted %}{% endfor %}
+  {% assign _prev = nil %}
+  {% assign _next = nil %}
+  {% assign _found = false %}
+  {% for _p in _sorted %}
+    {% if _found and _next == nil %}{% assign _next = _p %}{% endif %}
+    {% if _p.url == page.url %}{% assign _found = true %}{% endif %}
+    {% unless _found %}{% assign _prev = _p %}{% endunless %}
+  {% endfor %}
+  {% if _prev or _next %}
+  <nav class="project-nav" aria-label="Project navigation">
+    <div class="nav-prev">{% if _prev %}<a href="{{ site.url }}{{ _prev.url }}"><span class="nav-label">← Newer</span>{{ _prev.title }}</a>{% endif %}</div>
+    <div class="nav-next">{% if _next %}<a href="{{ site.url }}{{ _next.url }}"><span class="nav-label">Older →</span>{{ _next.title }}</a>{% endif %}</div>
+  </nav>
+  {% endif %}
   <div class="title-block">
   <div class="meta-line">{% if page.year %}<time datetime="{{ page.year }}">{{ page.year }}</time>{% endif %}{% case page.type %}{% when 'book' %} · Book{% when 'chapter' %} · Book Chapter{% when 'journal' %} · Journal Article{% when 'conference' %} · Conference Paper{% when 'magazine' %} · Magazine Article{% when 'map' %} · Map{% endcase %}{% if page.venue %}<br><span class="venue">{{ page.venue }}</span>{% endif %}</div>
   <h1>{{ page.title }}</h1>
@@ -152,24 +169,6 @@
     </div>
     {% endif %}
   </div>
-
-  {% assign _year_groups = site.projects | group_by: "year" | sort: "name" | reverse %}
-  {% assign _sorted = "" | split: "" %}
-  {% for _group in _year_groups %}{% assign _group_sorted = _group.items | sort: "title" %}{% assign _sorted = _sorted | concat: _group_sorted %}{% endfor %}
-  {% assign _prev = nil %}
-  {% assign _next = nil %}
-  {% assign _found = false %}
-  {% for _p in _sorted %}
-    {% if _found and _next == nil %}{% assign _next = _p %}{% endif %}
-    {% if _p.url == page.url %}{% assign _found = true %}{% endif %}
-    {% unless _found %}{% assign _prev = _p %}{% endunless %}
-  {% endfor %}
-  {% if _prev or _next %}
-  <nav class="project-nav" aria-label="Project navigation">
-    <div class="nav-prev">{% if _prev %}<a href="{{ site.url }}{{ _prev.url }}"><span class="nav-label">← Newer</span>{{ _prev.title }}</a>{% endif %}</div>
-    <div class="nav-next">{% if _next %}<a href="{{ site.url }}{{ _next.url }}"><span class="nav-label">Older →</span>{{ _next.title }}</a>{% endif %}</div>
-  </nav>
-  {% endif %}
 
   <script>
     var liveMsg = document.getElementById('live-msg');
