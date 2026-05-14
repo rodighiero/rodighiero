@@ -27,16 +27,21 @@
   <meta name="twitter:title" content="{{ page.title }}">
   <meta name="twitter:description" content="{{ _excerpt }}">
   {% if page.img %}<meta name="twitter:image" content="{{ site.url }}/images/{{ page.img }}">{% endif %}
+  {% case page.type %}{% when 'book' %}{% assign _schema_type = 'Book' %}{% when 'chapter' %}{% assign _schema_type = 'Chapter' %}{% when 'magazine' %}{% assign _schema_type = 'Article' %}{% when 'map' %}{% assign _schema_type = 'Map' %}{% else %}{% assign _schema_type = 'ScholarlyArticle' %}{% endcase %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "ScholarlyArticle",
+    "@type": "{{ _schema_type }}",
+    "@id": "{{ site.url }}{{ page.url }}",
     "headline": "{{ page.title | escape }}",
+    "name": "{{ page.title | escape }}",
     {% if page.author %}{% assign _authors = page.author | split: ' and ' %}{% if _authors.size == 1 %}"author": { "@type": "Person", "name": "{{ page.author | escape }}" },{% else %}"author": [{% for _a in _authors %}{ "@type": "Person", "name": "{{ _a | escape }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}{% else %}"author": { "@type": "Person", "name": "Dario Rodighiero", "url": "{{ site.url }}" },{% endif %}
-    "datePublished": "{{ page.year }}",
-    "publisher": "{{ page.venue | escape }}",
-    {% if page.doi %}"url": "{{ page.doi }}",{% endif %}
+    "datePublished": "{{ page.year }}-01-01",
+    {% if page.venue %}"publisher": { "@type": "Organization", "name": "{{ page.venue | escape }}" },{% endif %}
+    "url": "{{ site.url }}{{ page.url }}",
+    {% if page.doi %}"sameAs": "{{ page.doi }}",{% endif %}
     {% if page.img %}"image": "{{ site.url }}/images/{{ page.img }}",{% endif %}
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ site.url }}{{ page.url }}" },
     "description": "{{ _excerpt | escape }}"
   }
   </script>
