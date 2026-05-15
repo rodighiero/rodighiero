@@ -12,9 +12,17 @@ class PublicationDateGenerator < Jekyll::Generator
     docs.group_by { |doc| doc.data['year'].to_i }.each do |year, group|
       sorted = group.sort_by { |doc| doc.data['title'].to_s.downcase }
       sorted.each_with_index do |doc, i|
-        # Add the offset as time arithmetic: a raw seconds argument to
-        # Time.new would raise once a year holds more than 60 titles.
-        doc.data['date'] = Time.new(year, 1, 1, 12, 0, 0) + (sorted.size - 1 - i)
+        if year.zero?
+          # A non-numeric year (e.g. "Forthcoming") yields 0. Date it at build
+          # time so it sorts newest in the feed (matching the homepage, where
+          # it sorts first) — but never in the future, which would trip
+          # Jekyll's future-date filter and drop the page from the build.
+          doc.data['date'] = site.time - i
+        else
+          # Add the offset as time arithmetic: a raw seconds argument to
+          # Time.new would raise once a year holds more than 60 titles.
+          doc.data['date'] = Time.new(year, 1, 1, 12, 0, 0) + (sorted.size - 1 - i)
+        end
       end
     end
   end
