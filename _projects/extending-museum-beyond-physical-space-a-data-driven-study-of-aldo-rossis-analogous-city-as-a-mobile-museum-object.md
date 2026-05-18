@@ -109,10 +109,6 @@ Returning to Aldus Manutius' story, knowledge and circulation spark the actual r
 
 The role of museums is to facilitate the circulation of knowledge, and digital objects represent perfect mediators to connect knowledge with society. Accessibility, in this sense, is a property that establishes connectivity with the territory, like a network whose ramifications extend the museum to the city itself and beyond. Supporting and developing objects of digital materiality has to be seen at this point as the key to adding a new life and value to museums, by extending the reach, relationships, and interactions that were previously impossible.
 
-## Acknowledgements
-
-This article would not be possible without the financial help of the Swiss National Science Foundation, which funded my studies at Harvard University and Bibliotheca Hertziana through the grant number P400PS_194442, titled Recommendation System for Academic Mobility. Thanks also go to all the friends and colleagues who made the map of the Analogous City possible, including Maxene Graze whose help was priceless in the final editing.
-
 ## References
 
 - Algarotti, F. 1759. "Lettera a Prospero Pesci," September 28, 1759.
