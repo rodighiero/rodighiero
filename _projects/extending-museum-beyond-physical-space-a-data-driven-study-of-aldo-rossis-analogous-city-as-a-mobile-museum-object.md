@@ -111,65 +111,65 @@ The role of museums is to facilitate the circulation of knowledge, and digital o
 
 ## References
 
-- Algarotti, F. 1759. "Lettera a Prospero Pesci," September 28, 1759.
-- Alpers, S. 1991. "The Museum as a Way of Seeing." In _Exhibiting Cultures: The Poetics and Politics of Museum Display_, edited by Ivan Karp and Steven D. Lavine, 25–32. Smithsonian Institution Press.
-- Anderson, W., and J. Malouf. 2018. _Spitzmaus Mummy in a Coffin and Other Treasures_. Edited by Sabine Haag and Jasper Sharp. Verlag der Buchhandlung Walther König.
-- Benjamin, W. (1968) 2007. "The Work of Art in the Age of Mechanical Reproduction." In _Illuminations_, edited by Hannah Arendt. Schocken Books.
-- Boesiger, W., and H. Girsberger. 1967. _Le Corbusier 1910-65_. Les Editions d'Architecture.
-- Braghieri, N. 2019. "Alcune indagini e riflessioni intorno a City of Composite Presence." _Piano b. Arti e culture visive_ 4 (2): 61–87.
-- Braghieri, N. 2020. _MA2020 | Architettura e Collage_. Mantova Architettura 2020.
-- Cache, B. 2018. "Vers une encyclopédie vitruvienne contemporaine." Presented at the Leçons inaugurales des Professeurs Emmanuel Rey et Bernard Cache, EPFL, April 9.
-- Campanile, N. 2020. "The Appropriate Form. The Analogy between the Architectural and Urban Scale." In _From Mega to Nano: The Complexity of a Multiscalar Project_, 10–27. Palermo University Press.
-- Canaletto, G. A. 1756. _Capriccio with Palladian Buildings_. Parma's National Gallery.
-- Caniggia, G. 1963. _Lettura di una città: Como_. Centro studi di storia urbanistica.
-- Caporali, G. B. 1536. _Archittetura_. Bigazzini.
-- Celant, G., and S. Huijts, eds. 2015. _Aldo Rossi: Opera Grafica: Etchings Lithographs Silkscreen Prints_. Silvana Editoriale.
-- Cellauro, L. 2012. "Venice and the Origins of the Art-Historical Tradition of Display of the Modern Museum." _Konsthistorisk Tidskrift/Journal of Art History_ 81 (2): 94–122.
-- Davies, M. 1999. _Aldus Manutius: Printer and Publisher of Renaissance Venice_. Arizona Center for Medieval and Renaissance Studies.
-- D'Aviler, A.-C. 1738. _Cours d'architecture_. Chez Jean Mariette.
-- Davis, D. 1995. "The Work of Art in the Age of Digital Reproduction (An Evolving Thesis: 1991-1995)." _Leonardo_ 28 (5): 381.
-- De Michelis, G. 2014. "What Design Tells Us about Objects and Things." _Design and Culture_ 6 (2): 187–202.
-- Dufour, G.-H. 1865. "Topographic Map of Switzerland." Swiss Confederation.
-- Fera, F. S., and L. Conti. 2007. _Fabio Reinhart: architettura della coerenza_. CLUEB.
-- Ferlenga, A. 2021. "Aldo Rossi: The Architect and the Cities." MAXXI – Museo Nazionale Delle Arti Del XXI Secolo.
-- Ferlenga, A., and M. Biraghi. 2015. _Comunità Italia: architettura, città, paesaggio 1945-2000_. Silvana Editoriale.
-- Frutiger, A. 1997. _Symbols and Signs: Explorations_. Syndor Press.
-- Godoli, E., ed. 1974. _Giuseppe Pistocchi (1744-1814) architetto giacobino_. Rotografica Fiorentina.
-- Gorman, M. J. 2020. _Idea Colliders: The Future of Science Museums_. MIT Press.
-- Hennion, A., and B. Latour. 1996. "L'art, l'aura et la technique selon Benjamin." _Les Cahiers de médiologie_ 1 (1): 235–41.
-- Isgro, M. 2020. "Modernism in Motion: Jean Tinguely's Meta-Mechanical Reliefs, 1954–59." _Art Journal_ 79 (2): 6–23.
-- Lampariello, B. 2017. _Aldo Rossi e le forme del razionalismo esaltato. Dai progetti scolastici alla «città analoga», 1950-1973_. Quodlibet.
-- Latour, B. 1986. "Visualisation and Cognition: Thinking with Eyes and Hands." _Knowledge and Society Studies in the Sociology of Culture Past and Present_ 6: 1–40.
-- Lowe, A., ed. 2020. _The Aura in the Age of Digital Materiality: Rethinking Preservation in the Shadow of an Uncertain Future_. Silvana Editoriale.
-- Malraux, A. (1952) 1997. _Le musée imaginaire_. Gallimard.
-- Marzo Magno, A. 2020. _L'inventore di libri: Aldo Manuzio, Venezia e il suo tempo_. Laterza.
-- McEwan, C. 2020. "Architecture, Multitude and the Analogical City as a Critical Project." _Architecture and Culture_, 1–16.
-- Murray, P. 1971. _Architettura del Rinascimento_. Edited by Pier Luigi Nervi. Electa Editrice.
-- Ortelli, L. 2015. "Analogies." In _Architectura Ludens_, edited by Alexandre Blanc. EPFL Magma & Principes / Manslab.
-- Palladio, A. 1786. _Le fabbriche e i disegni di Andrea Palladio_. Giovanni Rossi.
-- Piranesi, G. B. 1913. _Oeuvres choisies: frontispices, compositions: prisons, trophées, plan et vues de Rome dessinés et gravés de 1746 à 1778_. Vincent.
-- Reichlin, B., and F. Reinhart. 1969. _Bellinzona: architettura per la città antica_. Casabella.
-- Reinhart, F. 2015a. "Captions for the 'Analogous City.'" In _The Analogous City, the Map_. EPFL Archizoom.
-- Reinhart, F. 2015b. "From Picture Panel to City-Map." In _The Analogous City, the Map_. EPFL Archizoom.
-- Rigal, A., and D. Rodighiero. 2015. "Trajectoire d'une représentation cartographique en réseau." _Cartes & Géomatique_ 225: 33–41.
-- Rodari, G. (1974) 2010. _Grammatica della fantasia: introduzione all'arte di inventare storie_. Einaudi Ragazzi.
-- Rodighiero, D. 2015. _The Analogous City, the Map_. EPFL Archizoom.
-- Rossi, A. 1975a. _Construcción de la ciudad: Aldo Rossi 1 Parte_. NovoGraphos.
-- Rossi, A. 1975b. _Construcción de la ciudad: Aldo Rossi 2 Parte_. NovoGraphos.
-- Rossi, A. 1976. "La città analoga: tavola." _Lotus International_, no. 13 (December): 4–9.
-- Rossi, A. (1966) 1982. _The Architecture of the City_. Edited by Peter Eisenman. MIT Press.
-- Rossi, A., E. Consolascio, and M. Bosshard. 1979. _La costruzione del territorio nel Cantone Ticino_. Fondazione Ticino Nostro.
-- Rossi, A., M. Fortis, and M. Scolari. 1970. "Architettura di Aldo Rossi 1964-1970." _Controspazio_ 10.
-- Rowley, N., and J. Völlnagel, eds. 2020. _Between Cosmos and Pathos: Berlin Works from Aby Warburg's Mnemosyne Atlas_. Deutscher Kunstverlag.
-- Russoli, F. 2017. _Senza utopia non si fa la realtà: scritti sul museo (1952-1977)_. Skira.
-- Savi, V. 1976. _L'architettura di Aldo Rossi_. Franco Angeli.
-- Savinio, A. 1976. _Alberto Savinio_. Electa Editrice.
-- Settis, S. 2015. "Supremely Original." In _Serial / Portable Classic: The Greek Canon and Its Mutations_, edited by Salvatore Settis, Anna Anguissola, and Davide Gasparotto, 51–72. Fondazione Prada.
-- Snydman, S., R. Sanderson, and T. Cramer. 2015. "The International Image Interoperability Framework (IIIF): A Community & Technology Approach for Web-Based Images." In _Archiving 2015 Final Program and Proceedings_, 16–21. Society for Imaging Science and Technology.
-- Tafuri, M. 1976. "Ceci n'est pas une ville." _Lotus International_, no. 13 (December): 10–13.
-- Tafuri, M., and F. Dal Co. 1976. _Architettura contemporanea_. Edited by Pier Luigi Nervi. Electa Editrice.
-- Tanzio da Varallo. 1625. _David and Goliath_. Varallo Sesia's Pinacoteca Civica.
-- Urbons, K. 1991. _Copy art: Kunst und Design mit dem Fotokopierer_. DuMont.
-- Venturi, R., S. Izenour, and D. Scott Brown. 1977. _Learning from Las Vegas: The Forgotten Symbolism of Architectural Form_. MIT Press.
-- Vrana, V. G., D. A. Kydros, E. C. Kehris, A.-I. T. Theocharidis, and G. I. Kavavasilis. 2021. "Top Museums on Instagram: A Network Analysis." In _Research Anthology on Strategies for Using Social Media as a Service and Tool in Business_, 1029–55. IGI Global.
-- Whyte, I. B. 2000. "Charlottenhof: The Prince, the Gardener, the Architect and the Writer." _Architectural History_ 43: 1–23.
+- Algarotti, Francesco. 1759. "Lettera a Prospero Pesci." September 28, 1759. <https://complessopilotta.it/opera/capriccio-con-edifici-palladiani/>.
+- Alpers, Svetlana. 1991. "The Museum as a Way of Seeing." In _Exhibiting Cultures: The Poetics and Politics of Museum Display_, edited by Ivan Karp and Steven D. Lavine, 25–32. Washington: Smithsonian Institution Press.
+- Anderson, Wes, and Juman Malouf. 2018. _Spitzmaus Mummy in a Coffin and Other Treasures_. Edited by Sabine Haag and Jasper Sharp. Stuttgart: Verlag der Buchhandlung Walther König.
+- Benjamin, Walter. (1968) 2007. "The Work of Art in the Age of Mechanical Reproduction." In _Illuminations_, edited by Hannah Arendt. Reprint. New York: Schocken Books.
+- Boesiger, Willy, and Hans Girsberger. 1967. _Le Corbusier 1910–65_. Zurich: Les Editions d'Architecture.
+- Braghieri, Nicola. 2019. "Alcune indagini e riflessioni intorno a City of Composite Presence." _Piano b. Arti e culture visive_ 4 (2): 61–87. <https://doi.org/10/ghqbdg>.
+- Braghieri, Nicola. 2020. _MA2020 | Architettura e Collage_. Mantova Architettura 2020. <https://www.youtube.com/watch?v=_SDKvlFXubo>.
+- Cache, Bernard. 2018. "Vers une encyclopédie vitruvienne contemporaine." Presented at the Leçons inaugurales des Professeurs Emmanuel Rey et Bernard Cache, EPFL, April 9.
+- Campanile, Nicola. 2020. "The Appropriate Form. The Analogy between the Architectural and Urban Scale." In _From Mega to Nano: The Complexity of a Multiscalar Project_, 10–27. Palermo: Palermo University Press.
+- Canaletto, Giovanni Antonio. 1756. _Capriccio with Palladian Buildings_. Parma: Parma's National Gallery.
+- Caniggia, Gianfranco. 1963. _Lettura di una città: Como_. Roma: Centro studi di storia urbanistica.
+- Caporali, Giovanni Battista. 1536. _Archittetura_. Bigazzini. <https://doi.org/10.3931/E-RARA-27122>.
+- Celant, Germano, and Stijn Huijts, eds. 2015. _Aldo Rossi: Opera Grafica: Etchings Lithographs Silkscreen Prints_. Cinisello Balsamo: Silvana Editoriale.
+- Cellauro, Louis. 2012. "Venice and the Origins of the Art-Historical Tradition of Display of the Modern Museum." _Konsthistorisk Tidskrift/Journal of Art History_ 81 (2): 94–122. <https://doi.org/10/ghqbdc>.
+- D'Aviler, Augustin-Charles. 1738. _Cours d'architecture_. Paris: Chez Jean Mariette. <https://doi.org/10.3931/E-RARA-5>.
+- Davies, Martin. 1999. _Aldus Manutius: Printer and Publisher of Renaissance Venice_. 2nd printing. Tempe: Arizona Center for Medieval and Renaissance Studies.
+- Davis, Douglas. 1995. "The Work of Art in the Age of Digital Reproduction (An Evolving Thesis: 1991–1995)." _Leonardo_ 28 (5): 381. <https://doi.org/10/btp8xd>.
+- De Michelis, Giorgio. 2014. "What Design Tells Us about Objects and Things." _Design and Culture_ 6 (2): 187–202. <https://doi.org/10/gc8z22>.
+- Dufour, Guillaume-Henri. 1865. "Topographic Map of Switzerland." Switzerland: Swiss Confederation. <http://map.geo.admin.ch>.
+- Fera, Francesco Saverio, and Luca Conti. 2007. _Fabio Reinhart: architettura della coerenza_. Bologna: CLUEB.
+- Ferlenga, Alberto. 2021. "Aldo Rossi: The Architect and the Cities." MAXXI – Museo Nazionale delle Arti del XXI Secolo. <https://www.maxxi.art/en/events/aldo-rossi-larchitetto-e-le-citta/>.
+- Ferlenga, Alberto, and Marco Biraghi. 2015. _Comunità Italia: architettura, città, paesaggio 1945–2000_. Cinisello Balsamo: Silvana Editoriale.
+- Frutiger, Adrian. 1997. _Symbols and Signs: Explorations_. Cham: Syndor Press.
+- Godoli, Ezio, ed. 1974. _Giuseppe Pistocchi (1744–1814) architetto giacobino_. Faenza: Rotografica Fiorentina.
+- Gorman, Michael John. 2020. _Idea Colliders: The Future of Science Museums_. Cambridge, MA: MIT Press. <https://doi.org/10.7551/mitpress/11019.001.0001>.
+- Hennion, Antoine, and Bruno Latour. 1996. "L'art, l'aura et la technique selon Benjamin." _Les Cahiers de médiologie_ 1 (1): 235–41. <https://doi.org/10/gd4vq2>.
+- Isgro, Marina. 2020. "Modernism in Motion: Jean Tinguely's Meta-Mechanical Reliefs, 1954–59." _Art Journal_ 79 (2): 6–23. <https://doi.org/10.1080/00043249.2020.1765550>.
+- Lampariello, Beatrice. 2017. _Aldo Rossi e le forme del razionalismo esaltato. Dai progetti scolastici alla «città analoga», 1950–1973_. Macerata: Quodlibet.
+- Latour, Bruno. 1986. "Visualisation and Cognition: Thinking with Eyes and Hands." Edited by Henrica Kuklick. _Knowledge and Society Studies in the Sociology of Culture Past and Present_ 6: 1–40.
+- Lowe, Adam, ed. 2020. _The Aura in the Age of Digital Materiality: Rethinking Preservation in the Shadow of an Uncertain Future_. Cinisello Balsamo: Silvana Editoriale.
+- Malraux, André. (1952) 1997. _Le musée imaginaire_. Paris: Gallimard.
+- Marzo Magno, Alessandro. 2020. _L'inventore di libri: Aldo Manuzio, Venezia e il suo tempo_. Roma: Laterza.
+- McEwan, Cameron. 2020. "Architecture, Multitude and the Analogical City as a Critical Project." _Architecture and Culture_, 1–16. <https://doi.org/10/ghqbdd>.
+- Murray, Peter. 1971. _Architettura del Rinascimento_. Edited by Pier Luigi Nervi. Milano: Electa Editrice.
+- Ortelli, Luca. 2015. "Analogies." In _Architectura Ludens_, edited by Alexandre Blanc. EPFL Magma & Principes / Manslab.
+- Palladio, Andrea. 1786. _Le fabbriche e i disegni di Andrea Palladio_. Vicenza: Giovanni Rossi. <https://doi.org/10.3931/E-RARA-12411>.
+- Piranesi, Giovanni Battista. 1913. _Oeuvres choisies: frontispices, compositions: prisons, trophées, plan et vues de Rome dessinés et gravés de 1746 à 1778_. Paris: Vincent.
+- Reichlin, Bruno, and Fabio Reinhart. 1969. _Bellinzona: architettura per la città antica_. Casabella.
+- Reinhart, Fabio. 2015a. "Captions for the 'Analogous City.'" In _The Analogous City, the Map_. Lausanne: EPFL Archizoom. <https://infoscience.epfl.ch/record/209326>.
+- Reinhart, Fabio. 2015b. "From Picture Panel to City-Map." In _The Analogous City, the Map_. Lausanne: EPFL Archizoom. <https://infoscience.epfl.ch/record/209326>.
+- Rigal, Alexandre, and Dario Rodighiero. 2015. "Trajectoire d'une représentation cartographique en réseau." Edited by Armelle Couillet and Jasmine Desclaux-Salachas. _Cartes & Géomatique_ 225: 33–41. <https://infoscience.epfl.ch/record/214582/>.
+- Rodari, Gianni. (1974) 2010. _Grammatica della fantasia: introduzione all'arte di inventare storie_. Torino: Einaudi Ragazzi.
+- Rodighiero, Dario. 2015. _The Analogous City, the Map_. Lausanne: EPFL Archizoom. <https://infoscience.epfl.ch/record/209326>.
+- Rossi, Aldo. 1975a. _Construcción de la ciudad: Aldo Rossi 1 Parte_. NovoGraphos.
+- Rossi, Aldo. 1975b. _Construcción de la ciudad: Aldo Rossi 2 Parte_. NovoGraphos.
+- Rossi, Aldo. 1976. "La città analoga: tavola." _Lotus International_, no. 13 (December): 4–9.
+- Rossi, Aldo. (1966) 1982. _The Architecture of the City_. Edited by Peter Eisenman. American edition. Cambridge, MA: MIT Press.
+- Rossi, Aldo, Eraldo Consolascio, and Max Bosshard. 1979. _La costruzione del territorio nel Cantone Ticino_. Lugano: Fondazione Ticino Nostro.
+- Rossi, Aldo, Massimo Fortis, and Massimo Scolari. 1970. "Architettura di Aldo Rossi 1964–1970." _Controspazio_ 10.
+- Rowley, Neville, and Jörg Völlnagel, eds. 2020. _Between Cosmos and Pathos: Berlin Works from Aby Warburg's Mnemosyne Atlas_. Berlin: Deutscher Kunstverlag.
+- Russoli, Franco. 2017. _Senza utopia non si fa la realtà: scritti sul museo (1952–1977)_. Edited by Erica Bernardi. Milano: Skira.
+- Savi, Vittorio. 1976. _L'architettura di Aldo Rossi_. Milano: Franco Angeli.
+- Savinio, Alberto. 1976. _Alberto Savinio_. Milano: Electa Editrice.
+- Settis, Salvatore. 2015. "Supremely Original." In _Serial / Portable Classic: The Greek Canon and Its Mutations_, edited by Salvatore Settis, Anna Anguissola, and Davide Gasparotto, 51–72. Milano: Fondazione Prada.
+- Snydman, Stuart, Robert Sanderson, and Tom Cramer. 2015. "The International Image Interoperability Framework (IIIF): A Community & Technology Approach for Web-Based Images." In _Archiving 2015 Final Program and Proceedings_, 16–21. Springfield, VA: Society for Imaging Science and Technology.
+- Tafuri, Manfredo. 1976. "Ceci n'est pas une ville." _Lotus International_, no. 13 (December): 10–13.
+- Tafuri, Manfredo, and Francesco Dal Co. 1976. _Architettura contemporanea_. Edited by Pier Luigi Nervi. Milano: Electa Editrice.
+- Tanzio da Varallo. 1625. _David and Goliath_. Varallo Sesia: Pinacoteca Civica.
+- Urbons, Klaus. 1991. _Copy art: Kunst und Design mit dem Fotokopierer_. Köln: DuMont.
+- Venturi, Robert, Steven Izenour, and Denise Scott Brown. 1977. _Learning from Las Vegas: The Forgotten Symbolism of Architectural Form_. Cambridge, MA: MIT Press.
+- Vrana, Vasiliki G., Dimitrios A. Kydros, Evangelos C. Kehris, Anastasios-Ioannis T. Theocharidis, and George I. Kavavasilis. 2021. "Top Museums on Instagram: A Network Analysis." In _Research Anthology on Strategies for Using Social Media as a Service and Tool in Business_, edited by Information Resources Management Association, 1029–55. Hershey, PA: IGI Global. <https://doi.org/10.4018/978-1-7998-9020-1.ch052>.
+- Whyte, Iain Boyd. 2000. "Charlottenhof: The Prince, the Gardener, the Architect and the Writer." _Architectural History_ 43: 1–23. <https://doi.org/10/dxm6kd>.
