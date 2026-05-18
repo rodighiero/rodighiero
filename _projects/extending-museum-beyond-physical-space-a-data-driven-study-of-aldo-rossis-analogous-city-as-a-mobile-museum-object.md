@@ -117,7 +117,7 @@ The role of museums is to facilitate the circulation of knowledge, and digital o
 - Benjamin, Walter. (1968) 2007. "The Work of Art in the Age of Mechanical Reproduction." In _Illuminations_, edited by Hannah Arendt. Reprint. New York: Schocken Books.
 - Boesiger, Willy, and Hans Girsberger. 1967. _Le Corbusier 1910–65_. Zurich: Les Editions d'Architecture.
 - Braghieri, Nicola. 2019. "Alcune indagini e riflessioni intorno a City of Composite Presence." _Piano b. Arti e culture visive_ 4 (2): 61–87. <https://doi.org/10/ghqbdg>.
-- Braghieri, Nicola. 2020. _MA2020 | Architettura e Collage_. Mantova Architettura 2020. <https://www.youtube.com/watch?v=_SDKvlFXubo>.
+- ———. 2020. _MA2020 — Architettura e Collage_. Mantova Architettura 2020.
 - Cache, Bernard. 2018. "Vers une encyclopédie vitruvienne contemporaine." Presented at the Leçons inaugurales des Professeurs Emmanuel Rey et Bernard Cache, EPFL, April 9.
 - Campanile, Nicola. 2020. "The Appropriate Form. The Analogy between the Architectural and Urban Scale." In _From Mega to Nano: The Complexity of a Multiscalar Project_, 10–27. Palermo: Palermo University Press.
 - Canaletto, Giovanni Antonio. 1756. _Capriccio with Palladian Buildings_. Parma: Parma's National Gallery.
@@ -150,14 +150,14 @@ The role of museums is to facilitate the circulation of knowledge, and digital o
 - Piranesi, Giovanni Battista. 1913. _Oeuvres choisies: frontispices, compositions: prisons, trophées, plan et vues de Rome dessinés et gravés de 1746 à 1778_. Paris: Vincent.
 - Reichlin, Bruno, and Fabio Reinhart. 1969. _Bellinzona: architettura per la città antica_. Casabella.
 - Reinhart, Fabio. 2015a. "Captions for the 'Analogous City.'" In _The Analogous City, the Map_. Lausanne: EPFL Archizoom. <https://infoscience.epfl.ch/record/209326>.
-- Reinhart, Fabio. 2015b. "From Picture Panel to City-Map." In _The Analogous City, the Map_. Lausanne: EPFL Archizoom. <https://infoscience.epfl.ch/record/209326>.
+- ———. 2015b. "From Picture Panel to City-Map." In _The Analogous City, the Map_. Lausanne: EPFL Archizoom. <https://infoscience.epfl.ch/record/209326>.
 - Rigal, Alexandre, and Dario Rodighiero. 2015. "Trajectoire d'une représentation cartographique en réseau." Edited by Armelle Couillet and Jasmine Desclaux-Salachas. _Cartes & Géomatique_ 225: 33–41. <https://infoscience.epfl.ch/record/214582/>.
 - Rodari, Gianni. (1974) 2010. _Grammatica della fantasia: introduzione all'arte di inventare storie_. Torino: Einaudi Ragazzi.
 - Rodighiero, Dario. 2015. _The Analogous City, the Map_. Lausanne: EPFL Archizoom. <https://infoscience.epfl.ch/record/209326>.
 - Rossi, Aldo. 1975a. _Construcción de la ciudad: Aldo Rossi 1 Parte_. NovoGraphos.
-- Rossi, Aldo. 1975b. _Construcción de la ciudad: Aldo Rossi 2 Parte_. NovoGraphos.
-- Rossi, Aldo. 1976. "La città analoga: tavola." _Lotus International_, no. 13 (December): 4–9.
-- Rossi, Aldo. (1966) 1982. _The Architecture of the City_. Edited by Peter Eisenman. American edition. Cambridge, MA: MIT Press.
+- ———. 1975b. _Construcción de la ciudad: Aldo Rossi 2 Parte_. NovoGraphos.
+- ———. 1976. "La città analoga: tavola." _Lotus International_, no. 13 (December): 4–9.
+- ———. (1966) 1982. _The Architecture of the City_. Edited by Peter Eisenman. American edition. Cambridge, MA: MIT Press.
 - Rossi, Aldo, Eraldo Consolascio, and Max Bosshard. 1979. _La costruzione del territorio nel Cantone Ticino_. Lugano: Fondazione Ticino Nostro.
 - Rossi, Aldo, Massimo Fortis, and Massimo Scolari. 1970. "Architettura di Aldo Rossi 1964–1970." _Controspazio_ 10.
 - Rowley, Neville, and Jörg Völlnagel, eds. 2020. _Between Cosmos and Pathos: Berlin Works from Aby Warburg's Mnemosyne Atlas_. Berlin: Deutscher Kunstverlag.
