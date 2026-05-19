@@ -1,0 +1,26 @@
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+  --font: "Nunito", sans-serif;
+  --small: 0.78rem;
+  --base: 0.9rem;
+}
+html { font-size: 16px; }
+body {
+  font-family: var(--font);
+  font-size: var(--base);
+  line-height: 1.5;
+  color: #000;
+  background: #fff;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 2rem;
+  max-width: 1200px;
+}
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.meta-line { font-size: 0.7rem; color: rgba(0,0,0,0.55); margin-bottom: 0.2rem; }
+.meta-line .venue { font-style: italic; }
+.authors { font-size: var(--small); color: rgba(0,0,0,0.6); }
+.cite-btn { display: inline-block; background: transparent; color: rgba(0,0,0,0.55); border: 1px solid rgba(0,0,0,0.2); padding: 0.15rem 0.55rem; font: inherit; font-size: 0.68rem; cursor: pointer; border-radius: 2px; line-height: 1.4; }
+.cite-btn:hover { color: #000; border-color: rgba(0,0,0,0.5); }
+.cite-btn.copied { color: #000; border-color: #000; }
