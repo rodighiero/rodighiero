@@ -8,8 +8,9 @@
   <meta name="description" content="{{ _excerpt }}">
   <meta name="keywords" content="Dario Rodighiero{% if page.venue %}, {{ page.venue }}{% endif %}{% if page.type %}, {{ page.type }}{% endif %}, data visualization, digital humanities, design">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#ffffff">
-  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
   <meta name="author" content="Dario Rodighiero">
   <link rel="canonical" href="{{ site.url }}{{ page.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml">
@@ -72,11 +73,11 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 2rem;
       margin-top: 2rem;
-      border-top: 1px solid rgba(0,0,0,0.2);
+      border-top: 1px solid var(--border);
       padding-top: 1.5rem;
     }
     .title-block { max-width: calc(50% - 1rem); }
-    .abstract { grid-column: 1 / span 2; font-size: var(--small); line-height: 1.6; color: rgba(0,0,0,0.75); }
+    .abstract { grid-column: 1 / span 2; font-size: var(--small); line-height: 1.6; color: var(--muted-3); }
     .image { grid-column: 3 / span 2; }
     .abstract p { margin: 0 0 0.8rem; }
     .abstract ul { list-style: none; padding-left: 1em; }
@@ -87,12 +88,12 @@
     .project-nav {
       margin-bottom: 3rem;
       padding-bottom: 1.5rem;
-      border-bottom: 1px solid rgba(0,0,0,0.2);
+      border-bottom: 1px solid var(--border);
       font-size: var(--small);
-      color: rgba(0,0,0,0.55);
+      color: var(--muted-1);
     }
     .project-nav a { color: inherit; text-decoration: none; }
-    .project-nav a:hover { color: #000; text-decoration: underline; }
+    .project-nav a:hover { color: var(--fg); text-decoration: underline; }
     .project-nav .nav-label { font-size: 0.68rem; opacity: 0.6; }
     .project-nav .nav-prev .nav-label { margin-right: 0.3rem; }
     .project-nav .nav-next .nav-label { margin-left: 0.3rem; }

@@ -13,8 +13,9 @@
   <meta name="author" content="Dario Rodighiero">
   <meta name="keywords" content="Dario Rodighiero, data visualization, digital humanities, Science and Technology Studies, University of Groningen, Berkman Klein Center, metaLAB Harvard, mapping, information design">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#ffffff">
-  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
   <link rel="canonical" href="{{ site.url }}{{ _filter_path }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml">
   <meta property="og:site_name" content="{{ site.title }}">
@@ -73,7 +74,7 @@
   <link rel="preload" href="{{ site.url }}/fonts/nunito.css" as="style">
   <link rel="stylesheet" href="{{ site.url }}/fonts/nunito.css">
   <style>
-    .skip-link { position: absolute; top: -100%; left: 0; padding: 0.5rem 1rem; background: #000; color: #fff; font-size: var(--small); z-index: 100; text-decoration: none; }
+    .skip-link { position: absolute; top: -100%; left: 0; padding: 0.5rem 1rem; background: var(--fg); color: var(--bg); font-size: var(--small); z-index: 100; text-decoration: none; }
     .skip-link:focus { top: 0; }
 
     /* ── Header ── */
@@ -100,7 +101,7 @@
       font-size: var(--small);
       margin-top: 3rem;
       margin-bottom: 1.5rem;
-      color: rgba(0,0,0,0.55);
+      color: var(--muted-1);
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -108,18 +109,18 @@
     }
     .filter-label { margin-right: 0.2rem; }
     .filters button {
-      color: rgba(0,0,0,0.55);
+      color: var(--muted-1);
       cursor: pointer;
       background: none;
-      border: 1px solid rgba(0,0,0,0.2);
+      border: 1px solid var(--border);
       padding: 0.15rem 0.6rem;
       font: inherit;
       font-size: var(--small);
       border-radius: 2px;
       line-height: 1.4;
     }
-    .filters button:hover { color: #000; border-color: rgba(0,0,0,0.5); }
-    .filters button.active { color: #fff; background: #000; border-color: #000; }
+    .filters button:hover { color: var(--fg); border-color: var(--border-hover); }
+    .filters button.active { color: var(--bg); background: var(--fg); border-color: var(--fg); }
 
     /* ── Publications list ── */
     .project {
@@ -128,7 +129,7 @@
       gap: 2rem;
       padding: 1.2rem 0 2.8rem;
       align-items: start;
-      border-top: 1px solid rgba(0,0,0,0.2);
+      border-top: 1px solid var(--border);
     }
     .col-meta h2 { font-size: var(--base); font-weight: 500; margin: 0.6rem 0 0.2rem; line-height: 1.35; }
     .cite-btn { margin-top: 0.6rem; }
@@ -139,7 +140,7 @@
     .col-img { grid-column: 4; grid-row: 1; }
     .col-meta { grid-column: 1; }
     .col-desc { grid-column: 2 / span 2; }
-    .col-desc p { font-size: var(--small); margin: 0; color: rgba(0,0,0,0.75); line-height: 1.6; }
+    .col-desc p { font-size: var(--small); margin: 0; color: var(--muted-3); line-height: 1.6; }
     .col-img img { width: 100%; height: auto; display: block; }
 
     footer {
@@ -151,14 +152,14 @@
       font-size: var(--small);
       line-height: 1.7;
       margin: 0 0 0.75rem;
-      color: rgba(0,0,0,0.75);
+      color: var(--muted-3);
       max-width: 600px;
       margin-left: auto;
     }
     footer cite {
       font-size: var(--small);
       font-style: normal;
-      color: rgba(0,0,0,0.55);
+      color: var(--muted-1);
     }
 
     @media (max-width: 1024px) {
