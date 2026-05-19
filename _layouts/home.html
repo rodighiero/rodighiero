@@ -5,6 +5,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <script>!function(){var c=localStorage.getItem('colorScheme');if(c)document.documentElement.classList.add(c)}()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% if _filter_label != "" %}<title>{{ _filter_label }} — Dario Rodighiero</title>
   {% else %}<title>Dario Rodighiero — Design, Data, and Humanities</title>
@@ -173,6 +174,7 @@
 </head>
 <body data-filter="{{ page.filter | default: 'all' }}">
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  {% include mode-toggle.html %}
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
 
   <!-- ── Header ── -->
@@ -336,6 +338,23 @@
       nowrap.appendChild(extLink);
       h2.insertBefore(nowrap, titleLink.nextSibling);
     });
+
+    // Mode toggle
+    (function() {
+      var html = document.documentElement;
+      document.querySelector('.mode-toggle').addEventListener('click', function() {
+        var isDark = html.classList.contains('dark') ||
+          (!html.classList.contains('light') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        html.classList.remove('dark', 'light');
+        if (isDark) {
+          html.classList.add('light');
+          localStorage.setItem('colorScheme', 'light');
+        } else {
+          html.classList.add('dark');
+          localStorage.setItem('colorScheme', 'dark');
+        }
+      });
+    })();
 
     // Cite buttons
     document.querySelectorAll('.cite-btn').forEach(function(btn) {

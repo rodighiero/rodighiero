@@ -42,3 +42,30 @@ a:hover { text-decoration: underline; }
 .cite-btn { display: inline-block; background: transparent; color: var(--muted-1); border: 1px solid var(--border); padding: 0.15rem 0.55rem; font: inherit; font-size: 0.68rem; cursor: pointer; border-radius: 2px; line-height: 1.4; }
 .cite-btn:hover { color: var(--fg); border-color: var(--border-hover); }
 .cite-btn.copied { color: var(--fg); border-color: var(--fg); }
+
+/* ── Mode toggle ── */
+.mode-toggle {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  padding: 2px;
+  display: flex;
+  opacity: 0.4;
+  z-index: 10;
+}
+.mode-toggle:hover { opacity: 1; }
+.mode-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.mode-toggle .icon-sun { display: none; }
+.mode-toggle .icon-moon { display: flex; }
+@media (prefers-color-scheme: dark) {
+  html:not(.light) .mode-toggle .icon-sun { display: flex; }
+  html:not(.light) .mode-toggle .icon-moon { display: none; }
+}
+html.dark .mode-toggle .icon-sun { display: flex; }
+html.dark .mode-toggle .icon-moon { display: none; }
+html.light .mode-toggle .icon-sun { display: none; }
+html.light .mode-toggle .icon-moon { display: flex; }
