@@ -1,4 +1,4 @@
-Jekyll::Hooks.register :site, :after_reset do |site|
+Jekyll::Hooks.register :site, :post_read do |site|
   readme_path = File.join(site.source, 'README.md')
   if File.exist?(readme_path)
     site.data['readme_content'] = File.read(readme_path)
