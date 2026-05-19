@@ -223,7 +223,7 @@
         </a>
       </div>
     </div>
-    {% assign bio_raw = site.readme_content %}
+    {% assign bio_raw = site.data.readme_content %}
     {% assign bio_paragraphs = bio_raw | split: "<!-- split -->" %}
     {% for para in bio_paragraphs %}
       {% assign para_trimmed = para | strip %}
