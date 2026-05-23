@@ -1,4 +1,4 @@
-<figure>
+<figure{% if include.wide %} class="wide"{% endif %}>
   <img src="{{ include.src }}" alt="{{ include.caption }}" loading="lazy">
   {% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}
 </figure>
