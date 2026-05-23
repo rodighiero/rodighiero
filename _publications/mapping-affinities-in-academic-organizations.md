@@ -1,5 +1,5 @@
 ---
-title: "Mapping Affinities in Academic Organizations."
+title: "Mapping Affinities in Academic Organizations"
 year: 2018
 venue: "Frontiers"
 type: "journal"
