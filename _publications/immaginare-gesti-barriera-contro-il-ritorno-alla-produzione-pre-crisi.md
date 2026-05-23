@@ -9,6 +9,7 @@ doi: "https://antinomie.it/index.php/2020/04/09/immaginare-gesti-barriera-contro
 img: "Immaginare-Gesti-Barriera-Contro-Il-Ritorno-Alla-Produzione-Pre-Crisi.webp"
 img_width: 700
 img_height: 560
+lang: it
 redirect_from:
   - /Gesti-Barriera
 ---
