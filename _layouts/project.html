@@ -79,6 +79,7 @@
     }
     .title-block { max-width: calc(50% - 1rem); }
     .abstract { grid-column: 1 / span 2; font-size: var(--small); line-height: 1.6; color: var(--muted-3); }
+    .abstract.full { grid-column: 1 / span 4; }
     .image { grid-column: 3 / span 2; }
     .abstract p { margin: 0 0 0.8rem; }
     .abstract ul { list-style: none; padding-left: 1em; }
@@ -150,12 +151,12 @@
   url       = &#123;{{ page.doi }}&#125;{% endif %}
 &#125;</pre>
   <div class="content">
-    <div class="abstract">{{ content }}</div>
-    {% if page.img %}
+    <div class="abstract{% if page.figures %} full{% endif %}">{{ content }}</div>
+    {% unless page.figures %}{% if page.img %}
     <div class="image">
       <img src="{{ site.url }}/images/{{ page.img }}" alt="{{ page.title }}" loading="lazy"{% if page.img_width %} width="{{ page.img_width }}" height="{{ page.img_height }}"{% endif %}>
     </div>
-    {% endif %}
+    {% endif %}{% endunless %}
   </div>
 
   <script>

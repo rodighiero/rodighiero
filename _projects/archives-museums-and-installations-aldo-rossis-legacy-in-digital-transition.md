@@ -9,6 +9,7 @@ volume: 55
 issue: 1
 pages: "45–53"
 img: "archives-museums-and-installations/fig_002.webp"
+figures: true
 img_width: 1329
 img_height: 749
 ---
@@ -68,6 +69,8 @@ The second initiative, _Aldo Rossi Digital_ (MAXXI 2022), reimagined this work a
 For Bruno Latour, mediation is never neutral – it transforms what it transmits. As objects and knowledge circulate through networks, they are translated, redirected, and reshaped (Latour 2005). In Rossi's exhibitions, mediation takes place on multiple levels. The archive is not simply moved into the gallery or online; it is reassembled through curatorial choices, exhibition design, and digital interface. Each step affects how Rossi's work is perceived. These exhibitions act as mediating spaces, producing new associations and inviting different forms of engagement. For example, in _Aldo Rossi: L'architetto e le città_ (MAXXI 2021), the exhibition layout turned the archive into a spatial narrative that invited active exploration. The digital version extended this further, highlighting mediation through tools like filters, thematic tags, and open navigation. In Latour's terms, these are not secondary processes – they are central to how heritage is shaped and circulated. Rossi's exhibitions, then, are not passive displays but sites where his legacy is continuously adapted and reinterpreted.
 
 Taken together, these exhibitions show that Aldo Rossi's legacy is not shaped by simply presenting archival content to the public but by the interaction of curatorial direction, exhibition design, and institutional context. The physical exhibition at MAXXI used spatial sequencing and thematic groupings to guide engagement, while the digital platform relied on modular navigation and visual links. Both created settings where heritage is experienced as an evolving process of interpretation. This combined strategy reflects changing patterns of audience engagement, offering continuity across media while adapting to different formats and rhythms. It also illustrates the role of institutions like MAXXI in shaping how memory is made accessible and meaningful. Rather than presenting a definitive image, these exhibitions treat Rossi's work as an open collection of forms and ideas. In doing so, they frame exhibition-making as an active part of heritage work – one that contributes to the ongoing reinterpretation of the archive.
+
+{% include figure.html src="/images/archives-museums-and-installations/fig_002.webp" caption="Figure 2. Installation view of the exhibition Aldo Rossi: The architect and the cities (MAXXI, Rome, 2021), curated by Alberto Ferlenga. The retrospective brought together more than 800 works from Rossi's archive and international collections, including drawings, notebooks, photographs, letters, and a spectacular series of architectural models. Displayed thematically and chronologically, the exhibition emphasized Rossi's idea of the city as an accumulation of memory and form. Photo: Courtesy of MAXXI." %}
 
 ## Installations
 
