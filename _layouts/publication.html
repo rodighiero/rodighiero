@@ -199,6 +199,19 @@
         }, 1500);
       });
     });
+
+    document.querySelectorAll('.abstract figure img').forEach(function(img) {
+      function applyOrientation() {
+        if (img.naturalWidth > img.naturalHeight) {
+          img.closest('figure').classList.add('wide');
+        }
+      }
+      if (img.complete && img.naturalWidth > 0) {
+        applyOrientation();
+      } else {
+        img.addEventListener('load', applyOrientation);
+      }
+    });
   </script>
 </body>
 </html>
