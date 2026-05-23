@@ -16,7 +16,6 @@ This chapter explores the transformative impact of digital tools on visualizing 
 
 <!--more-->
 
-
 ## Introduction
 
 A few years ago, a Zurich company adopted a business model aimed at optimizing office space. When working from home was recognized as an efficient method to lower energy costs, the company realized that rents could be reduced by optimizing occupancy in smaller office spaces. As a result, employees were no longer bound to personal desks, instead changing their positions daily, based on their activities: a quiet room was appropriate when concentration was required, while an open-plan area suited teamwork. The choice of an appropriate desk could be made at the office entrance through a tablet computer providing an overview of available spaces. In addition, the tablet computer displayed the identities of employees already in the office, fostering opportunities for collaboration and enhancing the creation of a dynamic workspace.
