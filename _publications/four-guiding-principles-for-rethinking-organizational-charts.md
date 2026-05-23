@@ -132,11 +132,11 @@ If you want to read more, you can discover the further scope of the Affinity Map
 - Euler, L. 1953. "Leonhard Euler and the Koenigsberg Bridges." _Scientific American_ 189 (1): 66–72.
 - Garfield, E. 1970. "Citation Indexing for Studying Science." _Nature_ 227 (5259): 669–671. https://doi.org/10/b9962z
 - Garfield, E. 2006. "The History and Meaning of the Journal Impact Factor." _JAMA_ 295 (1): 90–93. https://doi.org/10/bgvhsf
-- Gingras, Y. 2014. _Les Dérives de l'évaluation de la recherche: Du bon usage de la bibliométrie_. Paris: Raisons d'agir éditions.
+- Gingras, Y. 2014. _Les dérives de l'évaluation de la recherche: du bon usage de la bibliométrie_. Paris: Raisons d'agir éditions.
 - Groys, B. 2008. "The Obligation to Self-Design." _E-Flux_, November 1. http://www.e-flux.com/journal/00/68457/the-obligation-to-self-design/
 - Hatch, M. J. 2011. _Organizations: A Very Short Introduction_. Vol. 264. New York: Oxford University Press.
 - Hatch, M. J., and A. L. Cunliffe. 2013. _Organization Theory: Modern, Symbolic, and Postmodern Perspectives_. 3rd ed. Oxford: Oxford University Press.
-- King, D. B., and M. Wertheimer. 2005. _Max Wertheimer and Gestalt Theory_. New Brunswick: Transaction Publishers.
+- King, D. B., and M. Wertheimer. 2005. _Max Wertheimer & Gestalt Theory_. New Brunswick: Transaction Publishers.
 - Kitchin, R. 2014. _The Data Revolution: Big Data, Open Data, Data Infrastructures and Their Consequences_. London: SAGE Publications.
 - Latour, B. 2005. _Reassembling the Social: An Introduction to Actor-Network-Theory_. Oxford: Oxford University Press.
 - Latour, B., and S. Woolgar. 1986. _Laboratory Life: The Construction of Scientific Facts_. Princeton, NJ: Princeton University Press.
@@ -151,8 +151,8 @@ If you want to read more, you can discover the further scope of the Affinity Map
 - Moretti, F. 2005. _Graphs, Maps, Trees: Abstract Models for a Literary History_. London: Verso.
 - Parviainen, P., M. Tihinen, J. Kääriäinen, and S. Teppola. 2022. "Tackling the Digitalization Challenge: How to Benefit from Digitalization in Practice." _International Journal of Information Systems and Project Management_ 5 (1): 63–77. https://doi.org/10.12821/ijispm050104
 - Pentland, A. 2008. _Honest Signals: How They Shape Our World_. Cambridge, MA: MIT Press.
-- Rancière, J. 2000. _Le Partage du Sensible: Esthétique et Politique_. Paris: La Fabrique-éditions.
-- Rigal, A., and D. Rodighiero. 2015. "Trajectoire d'une Représentation Cartographique en Réseau." _Cartes & Géomatique_ 225: 33–41.
+- Rancière, J. 2000. _Le partage du sensible: esthétique et politique_. Paris: La Fabrique-éditions.
+- Rigal, A., and D. Rodighiero. 2015. "Trajectoire d'une représentation cartographique en réseau." _Cartes & Géomatique_ 225: 33–41.
 - Rodighiero, D. 2018. "Printing Walkable Visualizations." In _Proceedings of the 5th Biennial Research Transdisciplinary Imaging Conference_, 58–73. https://doi.org/10.6084/m9.figshare.6104693.v2
 - Rodighiero, D. 2020. "Drawing Network Visualizations on a Continuous, Spherical Surface." _Proceedings of the 24th International Conference Information Visualisation (IV)_, 573–580. https://doi.org/10.1109/IV51561.2020.00097
 - Rodighiero, D. 2021. _Mapping Affinities: Democratizing Data Visualization_. Open-access English edition. Geneva: Métis Presses. https://doi.org/10.37866/0563-99-9
@@ -163,12 +163,12 @@ If you want to read more, you can discover the further scope of the Affinity Map
 - Rodighiero, D., P. Rivière, and S. Kenderdine. 2024. "Super-Vision: Tracing EPFL History through 8,000 Doctoral Theses." _Journal of Digital History_ 3 (1).
 - Rodighiero, D., E. Wandl-Vogt, and E. Carsenat. 2022. "A Visual Translation of the Pandemic." _Leonardo_ 55 (3): 297–303. https://doi.org/10.1162/leon_a_02203
 - Romele, A., and D. Rodighiero. 2020. "Digital Habitus or Personalization without Personality." _HUMANA.MENTE Journal of Philosophical Studies_ 13 (37): 98–126. https://doi.org/10/ghm6cn
-- Rosenthal, C. 2013. "Big Data in the Age of the Telegraph." _McKinsey Quarterly_, March 1.
+- Rosenthal, C. 2013. "Big Data in the Age of the Telegraph." _McKinsey Quarterly_, March 1. http://www.mckinsey.com/business-functions/organization/our-insights/big-data-in-the-age-of-the-telegraph
 - Roussi, A. 2020. "Resisting the Rise of Facial Recognition." _Nature_ 587 (7834): 350–353. https://doi.org/10.1038/d41586-020-03188-2
-- Satariano, A. 2020. "How My Boss Monitors Me While I Work from Home." _The New York Times_, May 6.
+- Satariano, A. 2020. "How My Boss Monitors Me While I Work from Home." _The New York Times_, May 6. https://www.nytimes.com/2020/05/06/technology/employee-monitoring-work-from-home-virus.html
 - Schrage, M. 2020. _Recommendation Engines_. Cambridge, MA: MIT Press.
 - Scott, J. 2000. _Social Network Analysis: A Handbook_. 2nd ed. London: SAGE Publications.
-- Severo, M., and A. Romele, eds. 2015. _Traces Numériques et Territoires_. Paris: Presses de Mines. https://doi.org/10.4000/books.pressesmines.1984
+- Severo, M., and A. Romele, eds. 2015. _Traces numériques et territoires_. Paris: Presses de Mines. https://doi.org/10.4000/books.pressesmines.1984
 - Shedroff, N. 1999. "Information Interaction Design: A Unified Field Theory of Design." In _Information Design_, edited by R. Jacobson. Cambridge, MA: MIT Press.
 - Tufte, E. R. 1997. _Visual Explanations: Images and Quantities, Evidence and Narrative_. Cheshire, CT: Graphics Press.
 - UNESCO. 2022. _Recommendation on the Ethics of Artificial Intelligence_. Programme and Meeting Document SHS/BIO/PI/2021/1. Paris. https://unesdoc.unesco.org/ark:/48223/pf0000381137.locale=en
