@@ -124,14 +124,14 @@ If you want to read more, you can discover the further scope of the Affinity Map
 - Barabási, A.-L., M. Bello, J. Kluge-Fabényi, K. Forde, J. Készman, I. Meirelles, C. G. Ratti, M. Ritchie, A. Szántó, P. Weibel, and A. Stang. 2020. _Hidden Patterns: Visualizing Networks at BarabásiLab_. Berlin: Hatje Cantz Verlag.
 - Bostock, M., V. Ogievetsky, and J. Heer. 2011. "D3: Data-Driven Documents." _IEEE Transactions on Visualization and Computer Graphics_ 17 (12): 2301–2309. https://doi.org/10.1109/TVCG.2011.185
 - Brinton, W. C. 1919. _Graphic Methods for Presenting Facts_. New York: The Engineering Magazine Company.
-- Brinton, W. C. 1939. _Graphic Presentation_. New York: Brinton Associates.
+- ———. 1939. _Graphic Presentation_. New York: Brinton Associates.
 - Bürdek, B. E. 2015. _Design: History, Theory and Practice of Product Design_. Berlin: Birkhäuser.
 - Cohen, S. M., and C. D. C. Reeve. 2020. "Aristotle's Metaphysics." In _The Stanford Encyclopedia of Philosophy_, edited by E. N. Zalta. https://plato.stanford.edu/archives/win2020/entries/aristotle-metaphysics/
 - Dick, S. 2019. "Artificial Intelligence." _Harvard Data Science Review_, July 1. https://doi.org/10.1162/99608f92.92fe150c
 - Elias, N. 1991. _The Society of Individuals_. Edited by M. Schröter. Oxford: Basil Blackwell.
 - Euler, L. 1953. "Leonhard Euler and the Koenigsberg Bridges." _Scientific American_ 189 (1): 66–72.
 - Garfield, E. 1970. "Citation Indexing for Studying Science." _Nature_ 227 (5259): 669–671. https://doi.org/10/b9962z
-- Garfield, E. 2006. "The History and Meaning of the Journal Impact Factor." _JAMA_ 295 (1): 90–93. https://doi.org/10/bgvhsf
+- ———. 2006. "The History and Meaning of the Journal Impact Factor." _JAMA_ 295 (1): 90–93. https://doi.org/10/bgvhsf
 - Gingras, Y. 2014. _Les dérives de l'évaluation de la recherche: du bon usage de la bibliométrie_. Paris: Raisons d'agir éditions.
 - Groys, B. 2008. "The Obligation to Self-Design." _E-Flux_, November 1. http://www.e-flux.com/journal/00/68457/the-obligation-to-self-design/
 - Hatch, M. J. 2011. _Organizations: A Very Short Introduction_. Vol. 264. New York: Oxford University Press.
@@ -154,10 +154,10 @@ If you want to read more, you can discover the further scope of the Affinity Map
 - Rancière, J. 2000. _Le partage du sensible: esthétique et politique_. Paris: La Fabrique-éditions.
 - Rigal, A., and D. Rodighiero. 2015. "Trajectoire d'une représentation cartographique en réseau." _Cartes & Géomatique_ 225: 33–41.
 - Rodighiero, D. 2018. "Printing Walkable Visualizations." In _Proceedings of the 5th Biennial Research Transdisciplinary Imaging Conference_, 58–73. https://doi.org/10.6084/m9.figshare.6104693.v2
-- Rodighiero, D. 2020. "Drawing Network Visualizations on a Continuous, Spherical Surface." _Proceedings of the 24th International Conference Information Visualisation (IV)_, 573–580. https://doi.org/10.1109/IV51561.2020.00097
-- Rodighiero, D. 2021. _Mapping Affinities: Democratizing Data Visualization_. Open-access English edition. Geneva: Métis Presses. https://doi.org/10.37866/0563-99-9
-- Rodighiero, D. 2022. "The Lemniscate of Data Visualization: Production and Consumption of Data from an Actor-Network Perspective." Paper presented at _Images Today: Archives, Identities, and Algorithms_, Université de Liège, March 29.
-- Rodighiero, D. 2024. "In Praise of Visual Representation: An Inquiry into Text Analysis and Network Visualization for Charting Scientific Communities." _Visual Communication_ 23 (3): 513–526. https://doi.org/10.1177/14703572241248408
+- ———. 2020. "Drawing Network Visualizations on a Continuous, Spherical Surface." _Proceedings of the 24th International Conference Information Visualisation (IV)_, 573–580. https://doi.org/10.1109/IV51561.2020.00097
+- ———. 2021. _Mapping Affinities: Democratizing Data Visualization_. Open-access English edition. Geneva: Métis Presses. https://doi.org/10.37866/0563-99-9
+- ———. 2022. "The Lemniscate of Data Visualization: Production and Consumption of Data from an Actor-Network Perspective." Paper presented at _Images Today: Archives, Identities, and Algorithms_, Université de Liège, March 29.
+- ———. 2024. "In Praise of Visual Representation: An Inquiry into Text Analysis and Network Visualization for Charting Scientific Communities." _Visual Communication_ 23 (3): 513–526. https://doi.org/10.1177/14703572241248408
 - Rodighiero, D., and L. Cellard. 2019. "Self-Recognition in Data Visualization: How Individuals See Themselves in Visual Representations." _EspacesTemps.Net_, August. https://doi.org/10.26151/espacestemps.net-wztp-cc46
 - Rodighiero, D., and A. Romele. 2020. "The Hermeneutic Circle of Data Visualization: The Case Study of the Affinity Map." _Techné: Research in Philosophy and Technology_ 24 (3): 357–375. https://doi.org/10/gg6w5p
 - Rodighiero, D., P. Rivière, and S. Kenderdine. 2024. "Super-Vision: Tracing EPFL History through 8,000 Doctoral Theses." _Journal of Digital History_ 3 (1).
