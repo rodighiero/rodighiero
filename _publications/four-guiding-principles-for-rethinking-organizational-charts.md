@@ -6,8 +6,9 @@ type: "chapter"
 author: "Dario Rodighiero"
 doi: "https://hdl.handle.net/11370/6021c844-43e3-4fe8-b3c2-b8afa1361872"
 img: "four-guiding-principles/fig_002.webp"
-img_width: 3798
-img_height: 5953
+figures: true
+img_width: 766
+img_height: 1200
 redirect_from:
   - /Handbook-of-Digital-and-Computational-Research-Methods
 ---
