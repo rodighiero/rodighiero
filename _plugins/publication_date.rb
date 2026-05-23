@@ -1,12 +1,19 @@
-# Sets page.date from page.year for publications.
-# Runs as a Generator (before jekyll-feed collects dates) so the feed
-# uses the actual publication year rather than the build date.
+# Sets page.date from page.year for publications, preserving the homepage
+# sort order (year desc, then alphabetical within each year) in the feed.
+# Within a year, alphabetically-first titles get a slightly later timestamp
+# so they appear first in the feed (which sorts newest-first).
 class PublicationDateGenerator < Jekyll::Generator
   priority :high
 
   def generate(site)
-    site.collections['publications']&.docs&.each do |doc|
-      doc.data['date'] = Time.new(doc.data['year'].to_i, 1, 1) if doc.data['year']
+    docs = site.collections['publications']&.docs
+    return unless docs
+
+    docs.group_by { |doc| doc.data['year'].to_i }.each do |year, group|
+      sorted = group.sort_by { |doc| doc.data['title'].to_s.downcase }
+      sorted.each_with_index do |doc, i|
+        doc.data['date'] = Time.new(year, 1, 1, 23, 59, sorted.size - 1 - i)
+      end
     end
   end
 end
