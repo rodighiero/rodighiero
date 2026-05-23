@@ -5,6 +5,9 @@ venue: "Preservation, Digital Technology & Culture"
 type: "journal"
 author: "Dario Rodighiero and Carla Zhara Buda and Angela Parente"
 doi: "https://doi.org/10.1515/pdtc-2025-0066"
+volume: 55
+issue: 1
+pages: "45–53"
 img: "Archives-Museums-and-Installations.webp"
 img_width: 1329
 img_height: 749

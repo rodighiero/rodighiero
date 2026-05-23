@@ -85,6 +85,9 @@
     .abstract ul li { margin-bottom: 0.5rem; }
     .abstract ul li::before { content: "- "; margin-left: -1em; }
     .image img { width: 100%; height: auto; display: block; }
+    .abstract figure { margin: 1.5rem 0; }
+    .abstract figure img { width: 100%; height: auto; display: block; }
+    .abstract figcaption { margin-top: 0.4rem; font-size: 0.68rem; color: var(--muted-1); line-height: 1.5; }
     .cite-btn { margin-left: 0.8rem; vertical-align: 1px; }
     .project-nav {
       margin-bottom: 3rem;
@@ -139,7 +142,10 @@
 {% endif %}{% if page.translator %}  translator = &#123;{{ page.translator }}&#125;,
 {% endif %}  title     = &#123;{{ page.title }}&#125;,
   {{ venue_field }}   = &#123;{{ page.venue }}&#125;,
-  year      = &#123;{{ page.year }}&#125;{% if page.doi contains 'doi.org/' %},
+  year      = &#123;{{ page.year }}&#125;{% if page.volume %},
+  volume    = &#123;{{ page.volume }}&#125;{% endif %}{% if page.issue %},
+  number    = &#123;{{ page.issue }}&#125;{% endif %}{% if page.pages %},
+  pages     = &#123;{{ page.pages }}&#125;{% endif %}{% if page.doi contains 'doi.org/' %},
   doi       = &#123;{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}&#125;{% elsif page.doi %},
   url       = &#123;{{ page.doi }}&#125;{% endif %}
 &#125;</pre>
