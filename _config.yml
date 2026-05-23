@@ -9,16 +9,16 @@ plugins:
 
 feed:
   collections:
-    - projects
+    - publications
 
 collections:
-  projects:
+  publications:
     output: true
     permalink: /:name
 
 defaults:
   - scope:
       path: ""
-      type: projects
+      type: publications
     values:
-      layout: project
+      layout: publication
