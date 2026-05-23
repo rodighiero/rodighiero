@@ -124,7 +124,7 @@
     .filters button.active { color: var(--bg); background: var(--fg); border-color: var(--fg); }
 
     /* ── Publications list ── */
-    .project {
+    .publication {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
       gap: 2rem;
@@ -166,7 +166,7 @@
     @media (max-width: 1024px) {
       .header { grid-template-columns: 1fr; gap: 1rem; }
       .header .icons { margin-bottom: 0.6rem; }
-      .project { display: block; overflow: hidden; }
+      .publication { display: block; overflow: hidden; }
       .col-img { display: block; float: right; width: 25%; margin: 0 0 1rem 1.5rem; }
       .col-desc { margin-top: 1.2rem; }
     }
@@ -226,35 +226,35 @@
     </nav>
 
     <!-- ── Publications ── -->
-    <div id="projects">
-      {% assign year_groups = site.projects | group_by: "year" | sort: "name" | reverse %}
-      {% for group in year_groups %}{% assign group_projects = group.items | sort: "title" %}{% for project in group_projects %}
-      <div class="project" data-type="{{ project.type }}">
-        {% if project.img %}
+    <div id="publications">
+      {% assign year_groups = site.publications | group_by: "year" | sort: "name" | reverse %}
+      {% for group in year_groups %}{% assign group_publications = group.items | sort: "title" %}{% for publication in group_publications %}
+      <div class="publication" data-type=" {{ publication.type }}">
+        {% if publication.img %}
         <div class="col-img">
-          <img src="{{ site.url }}/images/{{ project.img }}" alt="{{ project.title }}" loading="lazy">
+          <img src="{{ site.url }}/images/ {{ publication.img }}" alt=" {{ publication.title }}" loading="lazy">
         </div>
         {% endif %}
         <div class="col-meta">
-          <div class="meta-line">{% if project.year %}<time datetime="{{ project.year }}">{{ project.year }}</time>{% endif %}{% case project.type %}{% when 'book' %} · Book{% when 'chapter' %} · Book Chapter{% when 'journal' %} · Journal Article{% when 'conference' %} · Conference Paper{% when 'magazine' %} · Magazine Article{% when 'map' %} · Map{% endcase %}{% if project.venue %}<br><span class="venue">{{ project.venue }}</span>{% endif %}</div>
-          <h2><a href="{{ site.url }}{{ project.url }}">{{ project.title }}</a>{% if project.doi %}<a href="{{ project.doi }}" class="ext-link" aria-label="External link"><span class="ext"><svg aria-hidden="true" viewBox="-1 -1 13 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="9" x2="9" y2="1"/><polyline points="2,1 9,1 9,8"/></svg></span></a>{% endif %}</h2>
-          {% if project.author or project.editor %}<div class="authors">{% if project.author %}{{ project.author | replace: ' and ', ', ' }}{% if project.editor %}. Ed. {{ project.editor | replace: ' and ', ', ' }}{% endif %}{% elsif project.editor %}{{ project.editor | replace: ' and ', ', ' }}, eds.{% endif %}{% if project.translator %}. Translated by {{ project.translator | replace: ' and ', ', ' }}{% endif %}</div>{% endif %}
-          {% capture entry_type %}{% case project.type %}{% when 'journal' %}article{% when 'magazine' %}article{% when 'chapter' %}incollection{% when 'book' %}book{% when 'conference' %}inproceedings{% when 'map' %}misc{% else %}misc{% endcase %}{% endcapture %}
-          {% capture venue_field %}{% case project.type %}{% when 'journal' %}journal{% when 'magazine' %}journal{% when 'chapter' %}booktitle{% when 'conference' %}booktitle{% when 'book' %}publisher{% when 'map' %}howpublished{% else %}howpublished{% endcase %}{% endcapture %}
+          <div class="meta-line">{% if publication.year %}<time datetime=" {{ publication.year }}"> {{ publication.year }}</time>{% endif %}{% case publication.type %}{% when 'book' %} · Book{% when 'chapter' %} · Book Chapter{% when 'journal' %} · Journal Article{% when 'conference' %} · Conference Paper{% when 'magazine' %} · Magazine Article{% when 'map' %} · Map{% endcase %}{% if publication.venue %}<br><span class="venue"> {{ publication.venue }}</span>{% endif %}</div>
+          <h2><a href="{{ site.url }} {{ publication.url }}"> {{ publication.title }}</a>{% if publication.doi %}<a href=" {{ publication.doi }}" class="ext-link" aria-label="External link"><span class="ext"><svg aria-hidden="true" viewBox="-1 -1 13 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="9" x2="9" y2="1"/><polyline points="2,1 9,1 9,8"/></svg></span></a>{% endif %}</h2>
+          {% if publication.author or project.editor %}<div class="authors">{% if publication.author %} {{ publication.author | replace: ' and ', ', ' }}{% if publication.editor %}. Ed.  {{ publication.editor | replace: ' and ', ', ' }}{% endif %}{% elsif publication.editor %} {{ publication.editor | replace: ' and ', ', ' }}, eds.{% endif %}{% if publication.translator %}. Translated by  {{ publication.translator | replace: ' and ', ', ' }}{% endif %}</div>{% endif %}
+          {% capture entry_type %}{% case publication.type %}{% when 'journal' %}article{% when 'magazine' %}article{% when 'chapter' %}incollection{% when 'book' %}book{% when 'conference' %}inproceedings{% when 'map' %}misc{% else %}misc{% endcase %}{% endcapture %}
+          {% capture venue_field %}{% case publication.type %}{% when 'journal' %}journal{% when 'magazine' %}journal{% when 'chapter' %}booktitle{% when 'conference' %}booktitle{% when 'book' %}publisher{% when 'map' %}howpublished{% else %}howpublished{% endcase %}{% endcapture %}
           <button class="cite-btn" type="button">Cite</button>
-          <pre class="bibtex-data" hidden>@{{ entry_type }}&#123;rodighiero{{ project.year }}{{ project.slug | split: '-' | first }},
-{% if project.author %}  author     = &#123;{{ project.author }}&#125;,
-{% endif %}{% if project.editor %}  editor     = &#123;{{ project.editor }}&#125;,
-{% endif %}{% if project.translator %}  translator = &#123;{{ project.translator }}&#125;,
-{% endif %}  title     = &#123;{{ project.title }}&#125;,
-  {{ venue_field }}   = &#123;{{ project.venue }}&#125;,
-  year      = &#123;{{ project.year }}&#125;{% if project.doi contains 'doi.org/' %},
-  doi       = &#123;{{ project.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}&#125;{% elsif project.doi %},
-  url       = &#123;{{ project.doi }}&#125;{% endif %}
+          <pre class="bibtex-data" hidden>@{{ entry_type }}&#123;rodighiero {{ publication.year }} {{ publication.slug | split: '-' | first }},
+{% if publication.author %}  author     = &#123; {{ publication.author }}&#125;,
+{% endif %}{% if publication.editor %}  editor     = &#123; {{ publication.editor }}&#125;,
+{% endif %}{% if publication.translator %}  translator = &#123; {{ publication.translator }}&#125;,
+{% endif %}  title     = &#123; {{ publication.title }}&#125;,
+  {{ venue_field }}   = &#123; {{ publication.venue }}&#125;,
+  year      = &#123; {{ publication.year }}&#125;{% if publication.doi contains 'doi.org/' %},
+  doi       = &#123; {{ publication.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}&#125;{% elsif publication.doi %},
+  url       = &#123; {{ publication.doi }}&#125;{% endif %}
 &#125;</pre>
         </div>
         <div class="col-desc">
-          {{ project.excerpt }}
+           {{ publication.excerpt }}
         </div>
       </div>
       {% endfor %}{% endfor %}
@@ -278,7 +278,7 @@
     };
 
     var liveMsg = document.getElementById('live-msg');
-    var projects = document.querySelectorAll('.project');
+    var publications = document.querySelectorAll('.publication');
     var filterBtns = document.querySelectorAll('.filters button');
     var initialFilter = document.body.dataset.filter || 'all';
 
@@ -286,8 +286,8 @@
     filterBtns.forEach(function(btn) {
       var filter = btn.dataset.filter;
       var count = filter === 'all'
-        ? projects.length
-        : document.querySelectorAll('.project[data-type="' + filter + '"]').length;
+        ? publications.length
+        : document.querySelectorAll('.publication[data-type="' + filter + '"]').length;
       btn.textContent = btn.textContent + ' (' + count + ')';
     });
 
@@ -297,7 +297,7 @@
         btn.classList.toggle('active', active);
         btn.setAttribute('aria-pressed', active ? 'true' : 'false');
       });
-      projects.forEach(function(p) {
+      publications.forEach(function(p) {
         p.style.display = (filter === 'all' || p.dataset.type === filter) ? '' : 'none';
       });
       if (push) history.pushState({ filter: filter }, '', filterPaths[filter] || '/');
