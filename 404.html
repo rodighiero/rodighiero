@@ -8,37 +8,35 @@ permalink: /404.html
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Page not found — Dario Rodighiero</title>
   <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="light dark">
   <link rel="canonical" href="https://dariorodighiero.com">
   <link rel="shortcut icon" href="/favicon.ico">
   <link rel="stylesheet" href="/fonts/nunito.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; }
+    :root { --fg: #000; --bg: #fff; --muted: rgba(0,0,0,0.6); }
+    @media (prefers-color-scheme: dark) { :root { --fg: #e8e8e8; --bg: #111; --muted: rgba(255,255,255,0.5); } }
     html { font-size: 16px; }
     body {
       font-family: "Nunito", sans-serif;
       font-size: 0.9rem;
       line-height: 1.5;
-      color: #000;
-      background: #fff;
+      color: var(--fg);
+      background: var(--bg);
       margin: 0 auto;
       padding: 2rem 1.5rem;
       max-width: 1200px;
     }
-    a { color: inherit; }
+    a { color: inherit; text-decoration: underline; }
     .wrap { margin-top: 4rem; }
     h1 { font-size: 1.3rem; font-weight: 500; margin: 0 0 1rem; }
-    p { font-size: 0.78rem; color: rgba(0,0,0,0.6); margin: 0 0 0.5rem; }
+    p { font-size: 0.78rem; color: var(--muted); margin: 0 0 0.5rem; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Page not found</h1>
-    <p>This page no longer exists. You will be redirected to the <a href="https://dariorodighiero.com">homepage</a> in a moment.</p>
+    <p>This page no longer exists. Go back to the <a href="https://dariorodighiero.com">homepage</a>.</p>
   </div>
-  <script>
-    setTimeout(function() {
-      window.location.href = "https://dariorodighiero.com";
-    }, 3000);
-  </script>
 </body>
 </html>

@@ -17,7 +17,7 @@ layout: null
   {% for project in site.publications %}
   <url>
     <loc>{{ site.url }}{{ project.url | remove: '.html' }}</loc>
-    <lastmod>{{ site.time | date: "%Y-%m-%d" }}</lastmod>
+    <lastmod>{{ project.year }}-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
