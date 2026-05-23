@@ -70,22 +70,21 @@
     .doi { font-size: var(--small); margin-bottom: 2rem; }
     .doi a { text-decoration: underline; }
     .content {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
       margin-top: 2rem;
       border-top: 1px solid var(--border);
       padding-top: 1.5rem;
     }
-    .title-block { max-width: calc(50% - 1rem); }
-    .abstract { grid-column: 1 / span 4; font-size: var(--small); line-height: 1.6; color: var(--muted-3); }
-    .abstract p { margin: 0 0 0.8rem; }
+    .title-block { max-width: 660px; }
+    .abstract { max-width: 660px; font-size: 1rem; line-height: 1.85; color: var(--fg); }
+    .abstract p { margin: 0 0 1.1rem; }
+    .abstract h2 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.6rem; }
+    .abstract h3 { font-size: 1rem; font-weight: 500; margin: 1.5rem 0 0.5rem; }
     .abstract ul { list-style: none; padding-left: 1em; }
     .abstract ul li { margin-bottom: 0.5rem; }
     .abstract ul li::before { content: "- "; margin-left: -1em; }
-.abstract figure { margin: 1.5rem 0; }
+    .abstract figure { margin: 2rem 0; }
     .abstract figure img { width: 100%; height: auto; display: block; }
-    .abstract figcaption { margin-top: 0.4rem; font-size: 0.68rem; color: var(--muted-1); line-height: 1.5; }
+    .abstract figcaption { margin-top: 0.5rem; font-size: 0.75rem; color: var(--muted-1); line-height: 1.5; }
     .cite-btn { margin-left: 0.8rem; vertical-align: 1px; }
     .project-nav {
       margin-bottom: 3rem;
