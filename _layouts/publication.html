@@ -140,10 +140,19 @@
     .abstract figure.wide { display: block; }
     .abstract figure.wide img { width: auto; max-width: min(990px, 100vw); max-height: 660px; position: relative; left: 50%; transform: translateX(-50%); }
     @media print {
-      .mode-toggle, .publication-nav, .cite-btn { display: none !important; }
-      body { max-width: 100% !important; font-size: 11pt; }
+      @page { margin: 2cm; }
+      :root, html.dark, html.light { color-scheme: light !important; }
+      html, body { background: #fff !important; color: #000 !important; }
+      .mode-toggle, .publication-nav, .cite-btn, .skip-link { display: none !important; }
+      body { max-width: 100% !important; font-size: 10.5pt; line-height: 1.5; }
+      h1 { font-size: 18pt; page-break-after: avoid; }
+      .abstract h2 { font-size: 13pt; page-break-after: avoid; }
+      .abstract h3 { font-size: 11pt; page-break-after: avoid; }
+      .abstract p, .abstract li { orphans: 3; widows: 3; }
+      .abstract figure, .hero { page-break-inside: avoid; }
       .abstract figure.wide img { position: static !important; left: 0 !important; transform: none !important; width: 100% !important; max-height: none !important; }
       .abstract figure img { max-width: 100% !important; }
+      .doi a[href]::after { content: " (" attr(href) ")"; font-size: 9pt; word-break: break-all; }
     }
     .cite-btn { margin-left: 0.8rem; vertical-align: 1px; }
     .publication-nav { font-size: var(--small); color: var(--muted-1); }
