@@ -145,6 +145,7 @@ Cultivating network literacy, then, is not only about learning to design or read
 - Sachs, Horst, Michael Stiebitz, and Robin J. Wilson. 1988. "An Historical Note: Euler's Königsberg Letters." *Journal of Graph Theory* 12 (1): 133–39. [doi:10.1002/jgt.3190120114](https://doi.org/10.1002/jgt.3190120114).
 - Scott, John. 2000. *Social Network Analysis: A Handbook*. 2nd ed. London: SAGE Publications.
 - Shields, Rob. 2012. "Cultural Topology: The Seven Bridges of Königsburg, 1736." *Theory, Culture & Society* 29 (4–5): 43–57. [doi:10.1177/0263276412451161](https://doi.org/10.1177/0263276412451161).
-- Venturini, Tommaso, Mathieu Jacomy, and Pablo Jensen. 2021. "What Do We See When We Look at Networks." *Big Data & Society* 8 (1). [doi:10.1177/20539517211018488](https://doi.org/10.1177/20539517211018488).
+- Venturini, Tommaso, Mathieu Jacomy, Axel Meunier, and Bruno Latour. 2017. "An Unexpected Journey: A Few Lessons from Sciences Po Médialab's Experience." *Big Data & Society* 4 (2). [doi:10/gf7tk2](https://doi.org/10/gf7tk2).
 - Venturini, Tommaso, Anders Kristian Munk, and Mathieu Jacomy. 2019. "Actor-Network vs Network Analysis vs Digital Networks." In *DigitalSTS: A Field Guide for Science & Technology Studies*, edited by Janet Vertesi and David Ribes. Princeton, NJ: Princeton University Press.
+- Venturini, Tommaso, Mathieu Jacomy, and Pablo Jensen. 2021. "What Do We See When We Look at Networks." *Big Data & Society* 8 (1). [doi:10.1177/20539517211018488](https://doi.org/10.1177/20539517211018488).
 - Windhager, Florian, Saminu Salisu, Roger A. Leite, Velitchko Filipov, and Silvia Miksch. 2020. "Many Views Are Not Enough." *IEEE Computer Graphics and Applications*, 58–71.
