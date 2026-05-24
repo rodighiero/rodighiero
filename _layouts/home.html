@@ -216,6 +216,23 @@
       .col-img { display: block; float: right; width: 25%; margin: 0 0 1rem 1.5rem; }
       .col-desc { margin-top: 1.2rem; }
     }
+    @media print {
+      @page { margin: 2cm; }
+      :root, html.dark, html.light { color-scheme: light !important; }
+      html, body { background: #fff !important; color: #000 !important; }
+      .mode-toggle, .skip-link, .filters, .header .icons, .cite-btn, footer { display: none !important; }
+      .header { display: block; padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid #999; }
+      .header-portrait { display: none; }
+      .header h1 { font-size: 18pt; margin-bottom: 0.4rem; }
+      .header .links, .header .bio-col { font-size: 9.5pt; }
+      .header .bio-col { margin-top: 0.6rem; }
+      .publication { display: block; padding: 0.4rem 0 0.8rem; border-top: 1px solid #ccc; page-break-inside: avoid; }
+      .col-img { display: none; }
+      .col-meta h2 { font-size: 11pt; margin: 0.2rem 0; }
+      .col-desc { display: none; }
+      .meta-line, .authors { font-size: 9.5pt; }
+      a { color: #000; text-decoration: none; }
+    }
   </style>
 </head>
 <body data-filter="{{ page.filter | default: 'all' }}">
