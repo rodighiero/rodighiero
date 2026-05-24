@@ -118,14 +118,14 @@ Cultivating network literacy, then, is not only about learning to design or read
 - Euler, Leonhard. 1953. "Leonhard Euler and the Koenigsberg Bridges." *Scientific American* 189 (1): 66–72. [jstor.org/stable/24944279](http://www.jstor.org/stable/24944279).
 - Ficozzi, Matilde, Mathieu Jacomy, Dario Rodighiero, Anne Beaulieu, and Anders Kristian Munk. 2025. "Grounding AI Map." *Design et Abstractions, Revue Design Arts Medias*, June. [journal.dampress.org/issues/design-et-abstractions/grounding-ai-map](https://journal.dampress.org/issues/design-et-abstractions/grounding-ai-map-the-consequences-of-living-with-the-trouble-of-an-irreductionist-map).
 - Grandjean, Martin. 2014. "La connaissance est un réseau." *Les Cahiers du Numérique* 10 (3): 37–54. [doi:10.3166/lcn.10.3.37-54](https://doi.org/10.3166/lcn.10.3.37-54).
-- Grandjean, Martin. 2015. "GEPHI – Introduction to Network Analysis and Visualization." martingrandjean.ch. [martingrandjean.ch/gephi-introduction](http://www.martingrandjean.ch/gephi-introduction).
-- Grandjean, Martin. 2021. "Introduction to Social Network Analysis." Paper presented at the HNR+ResHist Conference, June 30. [halshs.archives-ouvertes.fr/halshs-03351755](https://halshs.archives-ouvertes.fr/halshs-03351755/document).
+- ———. 2015. "GEPHI – Introduction to Network Analysis and Visualization." martingrandjean.ch. [martingrandjean.ch/gephi-introduction](http://www.martingrandjean.ch/gephi-introduction).
+- ———. 2021. "Introduction to Social Network Analysis." Paper presented at the HNR+ResHist Conference, June 30. [halshs.archives-ouvertes.fr/halshs-03351755](https://halshs.archives-ouvertes.fr/halshs-03351755/document).
 - Gray, Jonathan, Carolin Gerlitz, and Liliana Bounegru. 2018. "Data Infrastructure Literacy." *Big Data & Society* 5 (2). [doi:10.1177/2053951718786316](https://doi.org/10.1177/2053951718786316).
 - Harman, Graham. 2009. *Prince of Networks: Bruno Latour and Metaphysics*. Melbourne: Re.press.
 - Hobbs, Robert Carleton. 2004. *Mark Lombardi: Global Networks*. New York: Independent Curators International.
 - Jacomy, Mathieu, Tommaso Venturini, Sebastien Heymann, and Mathieu Bastian. 2014. "ForceAtlas2, a Continuous Graph Layout Algorithm for Handy Network Visualization Designed for the Gephi Software." *PLoS ONE* 9 (6). [doi:10.1371/journal.pone.0098679](https://doi.org/10.1371/journal.pone.0098679).
 - Latour, Bruno. 2005. *Reassembling the Social: An Introduction to Actor-Network-Theory*. Oxford: Oxford University Press.
-- Latour, Bruno. 2013. *An Inquiry into Modes of Existence: An Anthropology of the Moderns*. Cambridge, MA: Harvard University Press.
+- ———. 2013. *An Inquiry into Modes of Existence: An Anthropology of the Moderns*. Cambridge, MA: Harvard University Press.
 - Lazer, David M. J., Alex Pentland, Lada Adamic, et al. 2009. "Computational Social Science." *Science* 323 (5915): 721–23. [doi:10.1126/science.1167742](https://doi.org/10.1126/science.1167742).
 - Lévy, Jacques, Ogier Maitre, and Thibault Romany. 2016. "Rebattre les cartes." *Réseaux* 195 (1): 17. [doi:10/ghqdk7](https://doi.org/10/ghqdk7).
 - Lima, Manuel. 2011. *Visual Complexity: Mapping Patterns of Information*. New York: Princeton Architectural Press.
@@ -140,7 +140,10 @@ Cultivating network literacy, then, is not only about learning to design or read
 - Noichl, Maximilian. 2019. "Modeling the Structure of Recent Philosophy." *Synthese*. [doi:10/ghp7f4](https://doi.org/10/ghp7f4).
 - Ricci, Donato, Robin De Mourat, Christophe Leclercq, and Bruno Latour. 2017. "Clues. Anomalies. Understanding." In *Designing Interactive Hypermedia Systems*, edited by Everardo Reyes-Garcia and Nasreddine Bouhaï. Hoboken, NJ: John Wiley & Sons. [doi:10.1002/9781119388272.ch6](https://doi.org/10.1002/9781119388272.ch6).
 - Rodighiero, Dario. 2021. *Mapping Affinities: Democratizing Data Visualization*. Métis Presses. [doi:10.37866/0563-99-9](https://doi.org/10.37866/0563-99-9).
+- Rodighiero, Dario, and Jean Daniélou. 2023. "Weather Map: A Diachronic Visual Model for Controversy Mapping." In *Zoomland: Exploring Scale in Digital History and Humanities*, edited by Florentina Armaselu and Andreas Fickers. Berlin: De Gruyter. [doi:10.1515/9783111317779-017](https://doi.org/10.1515/9783111317779-017).
 - Rodighiero, Dario, Lins Derry, Douglas Duhaime, et al. 2022. "Surprise Machines: Revealing Harvard Art Museums' Image Collection." *Information Design Journal* 27 (1): 21–34. [doi:10.1075/idj.22013.rod](https://doi.org/10.1075/idj.22013.rod).
+- Rodighiero, Dario, Philippe Rivière, and Sarah Kenderdine. 2024. "Super-Vision: Tracing EPFL History through 8,000 Doctoral Theses." *Journal of Digital History* 3 (1). [doi:10.1515/JDH-2023-0004](https://doi.org/10.1515/JDH-2023-0004).
+- Rodighiero, Dario, Eveline Wandl-Vogt, Elian Carsenat, et al. 2022. "Immersive Architectures for Visual Data Literacy." *Information Design Journal* 27 (3): 295–308. [doi:10.1075/idj.22016.rod](https://doi.org/10.1075/idj.22016.rod).
 - Romele, Alberto, and Dario Rodighiero. 2020. "Digital Habitus or Personalization without Personality." *HUMANA.MENTE Journal of Philosophical Studies* 13 (37): 98–126. [doi:10.5281/zenodo.3950030](https://doi.org/10.5281/zenodo.3950030).
 - Sachs, Horst, Michael Stiebitz, and Robin J. Wilson. 1988. "An Historical Note: Euler's Königsberg Letters." *Journal of Graph Theory* 12 (1): 133–39. [doi:10.1002/jgt.3190120114](https://doi.org/10.1002/jgt.3190120114).
 - Scott, John. 2000. *Social Network Analysis: A Handbook*. 2nd ed. London: SAGE Publications.
