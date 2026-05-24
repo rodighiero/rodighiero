@@ -143,7 +143,7 @@
       @page { margin: 2cm; }
       :root, html.dark, html.light { color-scheme: light !important; }
       html, body { background: #fff !important; color: #000 !important; }
-      .mode-toggle, .publication-nav, .cite-btn, .skip-link { display: none !important; }
+      .mode-toggle, .publication-nav, .cite-btn { display: none !important; }
       body { max-width: 100% !important; font-size: 10.5pt; line-height: 1.5; }
       h1 { font-size: 18pt; page-break-after: avoid; }
       .abstract h2 { font-size: 13pt; page-break-after: avoid; }
@@ -170,7 +170,6 @@
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to main content</a>
   {% include mode-toggle.html %}
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
   {% assign _year_groups = site.publications | group_by: "year" | sort: "name" | reverse %}
@@ -184,7 +183,7 @@
     {% if _p.url == page.url %}{% assign _found = true %}{% endif %}
     {% unless _found %}{% assign _prev = _p %}{% endunless %}
   {% endfor %}
-  <main id="main-content">
+  <main>
   {% include publication-nav.html modifier="publication-nav-top" label="Project navigation" %}
   <article>
   <div class="title-block">

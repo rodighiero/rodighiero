@@ -120,9 +120,6 @@
   <link rel="preload" href="/fonts/nunito.css" as="style">
   <link rel="stylesheet" href="/fonts/nunito.css">
   <style>
-    .skip-link { position: absolute; top: -100%; left: 0; padding: 0.5rem 1rem; background: var(--fg); color: var(--bg); font-size: var(--small); z-index: 100; text-decoration: none; }
-    .skip-link:focus { top: 0; }
-
     /* ── Header ── */
     .header {
       display: grid;
@@ -220,7 +217,7 @@
       @page { margin: 2cm; }
       :root, html.dark, html.light { color-scheme: light !important; }
       html, body { background: #fff !important; color: #000 !important; }
-      .mode-toggle, .skip-link, .filters, .header .icons, .cite-btn, footer { display: none !important; }
+      .mode-toggle, .filters, .header .icons, .cite-btn, footer { display: none !important; }
       .header { display: block; padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid #999; }
       .header-portrait { display: none; }
       .header h1 { font-size: 18pt; margin-bottom: 0.4rem; }
@@ -236,7 +233,6 @@
   </style>
 </head>
 <body data-filter="{{ page.filter | default: 'all' }}">
-  <a class="skip-link" href="#main-content">Skip to main content</a>
   {% include mode-toggle.html %}
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
 
@@ -279,7 +275,7 @@
     {% endfor %}
   </header>
 
-  <main id="main-content">
+  <main>
     <!-- ── Filter bar ── -->
     <nav class="filters" aria-label="Filter publications by type">
       <span class="filter-label">Selected publications, filter by type:</span>
