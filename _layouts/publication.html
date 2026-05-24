@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <script>!function(){var c=localStorage.getItem('colorScheme');if(c)document.documentElement.classList.add(c)}()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ page.title }} — {{ page.author | replace: ' and ', ', ' }}</title>
+  <title>{{ page.title | escape }} — {{ page.author | replace: ' and ', ', ' | escape }}</title>
   <meta name="description" content="{{ _excerpt }}">
   <meta name="keywords" content="Dario Rodighiero{% if page.venue %}, {{ page.venue }}{% endif %}{% if page.type %}, {{ page.type }}{% endif %}, data visualization, digital humanities, design">
   <meta name="robots" content="index, follow">
