@@ -5,9 +5,9 @@ venue: "Progetto Grafico"
 type: "journal"
 author: "Dario Rodighiero"
 doi: "https://hdl.handle.net/11370/3648f43f-5e55-48a4-b130-6537029226fc"
-img: "network-literacy/fig_002.webp"
-img_width: 700
-img_height: 538
+img: "network-literacy/fig_001.webp"
+img_width: 1432
+img_height: 1100
 figures: true
 excerpt_separator: "<!--more-->"
 redirect_from:
