@@ -170,6 +170,7 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   {% include mode-toggle.html %}
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
   {% assign _year_groups = site.publications | group_by: "year" | sort: "name" | reverse %}
@@ -183,7 +184,9 @@
     {% if _p.url == page.url %}{% assign _found = true %}{% endif %}
     {% unless _found %}{% assign _prev = _p %}{% endunless %}
   {% endfor %}
+  <main id="main-content">
   {% include publication-nav.html modifier="publication-nav-top" label="Project navigation" %}
+  <article>
   <div class="title-block">
   <div class="meta-line">{% if page.year %}<time datetime="{{ page.year }}">{{ page.year }}</time>{% endif %}{% case page.type %}{% when 'book' %} · Book{% when 'chapter' %} · Book Chapter{% when 'journal' %} · Journal Article{% when 'conference' %} · Conference Paper{% when 'magazine' %} · Magazine Article{% when 'map' %} · Map{% endcase %}{% if page.venue %}<br><span class="venue">{{ page.venue }}</span>{% endif %}</div>
   <h1>{{ page.title }}</h1>
@@ -206,10 +209,12 @@
   url       = &#123;{{ page.doi }}&#125;{% endif %}
 &#125;</pre>
   <div class="content">
-    {% if page.img and page.figures != true %}<figure class="hero"><img src="/images/{{ page.img }}" alt="{{ page.title }}" width="{{ page.img_width }}" height="{{ page.img_height }}"></figure>{% endif %}
+    {% if page.img and page.figures != true %}<figure class="hero"><img src="/images/{{ page.img }}" alt="" width="{{ page.img_width }}" height="{{ page.img_height }}"></figure>{% endif %}
     <div class="abstract">{{ content }}</div>
   </div>
+  </article>
   {% include publication-nav.html modifier="publication-nav-footer" label="Project navigation, end of page" %}
+  </main>
 
   <script>
     // Mode toggle
