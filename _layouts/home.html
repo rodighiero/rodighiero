@@ -38,43 +38,85 @@
   <meta name="twitter:description" content="{{ _meta_desc }}">
   <meta name="twitter:image" content="{{ site.url }}/images/Dario-Rodighiero.webp">
   <meta name="twitter:image:alt" content="Dario Rodighiero">
+  <!-- Open Graph profile namespace (homepage only) -->
+  {% if _filter_label == "" %}
+  <meta property="profile:first_name" content="Dario">
+  <meta property="profile:last_name" content="Rodighiero">
+  <meta property="profile:username" content="rodighiero">
+  {% endif %}
+  <!-- Dublin Core -->
+  <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+  <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
+  {% if _filter_label != "" %}<meta name="DC.title" content="{{ _filter_label }} — Dario Rodighiero">
+  {% else %}<meta name="DC.title" content="Dario Rodighiero — Design, Data, and Humanities">
+  {% endif %}
+  <meta name="DC.creator" content="Dario Rodighiero">
+  <meta name="DC.subject" content="Data Visualization; Digital Humanities; Science and Technology Studies; Information Design; Mapping">
+  <meta name="DC.description" content="{{ _meta_desc }}">
+  <meta name="DC.publisher" content="Dario Rodighiero">
+  <meta name="DC.type" content="Text">
+  <meta name="DC.format" content="text/html">
+  <meta name="DC.language" content="en">
+  <meta name="DC.identifier" content="{{ site.url }}{{ _filter_path }}">
+  <meta name="DCTERMS.modified" content="{{ site.time | date: '%Y-%m-%d' }}">
   <link rel="me" href="https://github.com/rodighiero/">
   <link rel="me" href="https://www.linkedin.com/in/dariorodighiero/">
   <link rel="me" href="https://orcid.org/0000-0002-1405-7062">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="icon" href="/favicon.ico">
   <script type="application/ld+json">
-  [
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Dario Rodighiero",
-      "url": "{{ site.url }}",
-      "description": "Personal website of Dario Rodighiero — researcher in data visualization, digital humanities, and Science and Technology Studies."
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Dario Rodighiero",
-      "url": "{{ site.url }}",
-      "image": "{{ site.url }}/images/Dario-Rodighiero.webp",
-      "description": "Dario Rodighiero researches data visualization, digital humanities, and Science and Technology Studies. Assistant Professor at University of Groningen, Faculty Associate at Harvard's Berkman Klein Center.",
-      "jobTitle": "Assistant Professor of Science and Technology Studies",
-      "affiliation": [
-        { "@type": "Organization", "name": "University of Groningen", "url": "https://www.rug.nl/staff/d.rodighiero" },
-        { "@type": "Organization", "name": "metaLAB (at) Harvard", "url": "https://mlml.io/m/dario-rodighiero" },
-        { "@type": "Organization", "name": "Berkman Klein Center for Internet & Society", "url": "https://cyber.harvard.edu/people/dario-rodighiero" }
-      ],
-      "sameAs": [
-        "https://github.com/rodighiero/",
-        "https://scholar.google.com/citations?user=h065R1oAAAAJ",
-        "https://www.linkedin.com/in/dariorodighiero/",
-        "https://orcid.org/0000-0002-1405-7062",
-        "https://www.zotero.org/rodighiero"
-      ],
-      "knowsAbout": ["Data Visualization", "Digital Humanities", "Science and Technology Studies", "Information Design", "Mapping"]
-    }
-  ]
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "{{ site.url }}/#website",
+        "name": "Dario Rodighiero",
+        "url": "{{ site.url }}",
+        "description": "Personal website of Dario Rodighiero — researcher in data visualization, digital humanities, and Science and Technology Studies."
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "{{ site.url }}/#profilepage",
+        "url": "{{ site.url }}",
+        "isPartOf": { "@id": "{{ site.url }}/#website" },
+        "dateModified": "{{ site.time | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+        "mainEntity": { "@id": "https://orcid.org/0000-0002-1405-7062" }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://orcid.org/0000-0002-1405-7062",
+        "name": "Dario Rodighiero",
+        "url": "{{ site.url }}",
+        "image": {
+          "@type": "ImageObject",
+          "url": "{{ site.url }}/images/Dario-Rodighiero.webp",
+          "width": 1200,
+          "height": 800
+        },
+        "description": "Dario Rodighiero researches data visualization, digital humanities, and Science and Technology Studies. Assistant Professor at University of Groningen, Faculty Associate at Harvard's Berkman Klein Center.",
+        "jobTitle": "Assistant Professor of Science and Technology Studies",
+        "worksFor": { "@type": "Organization", "name": "University of Groningen", "url": "https://www.rug.nl/staff/d.rodighiero" },
+        "affiliation": [
+          { "@type": "Organization", "name": "University of Groningen", "url": "https://www.rug.nl/staff/d.rodighiero" },
+          { "@type": "Organization", "name": "metaLAB (at) Harvard", "url": "https://mlml.io/m/dario-rodighiero" },
+          { "@type": "Organization", "name": "Berkman Klein Center for Internet & Society", "url": "https://cyber.harvard.edu/people/dario-rodighiero" }
+        ],
+        "sameAs": [
+          "https://github.com/rodighiero/",
+          "https://scholar.google.com/citations?user=h065R1oAAAAJ",
+          "https://www.linkedin.com/in/dariorodighiero/",
+          "https://orcid.org/0000-0002-1405-7062",
+          "https://www.zotero.org/rodighiero"
+        ],
+        "knowsAbout": ["Data Visualization", "Digital Humanities", "Science and Technology Studies", "Information Design", "Mapping"],
+        "knowsLanguage": [
+          { "@type": "Language", "name": "English" },
+          { "@type": "Language", "name": "Italian" }
+        ]
+      }
+    ]
+  }
   </script>
   <link rel="preload" href="/css/main.css" as="style">
   <link rel="stylesheet" href="/css/main.css">
