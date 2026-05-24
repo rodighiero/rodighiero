@@ -36,6 +36,43 @@
   {% if page.img %}<meta name="twitter:image" content="{{ site.url }}/images/{{ page.img }}">
   <meta name="twitter:image:alt" content="{{ page.title | escape }}">{% else %}<meta name="twitter:image" content="{{ site.url }}/images/Dario-Rodighiero.webp">
   <meta name="twitter:image:alt" content="Dario Rodighiero">{% endif %}
+  <!-- HighWire Press / Google Scholar citation tags -->
+  <meta name="citation_title" content="{{ page.title | escape }}">
+  {% if page.author %}{% assign _citation_authors = page.author | split: ' and ' %}{% for _ca in _citation_authors %}
+  <meta name="citation_author" content="{{ _ca | strip | escape }}">
+  {% endfor %}{% else %}
+  <meta name="citation_author" content="Dario Rodighiero">
+  {% endif %}
+  {% if page.year %}<meta name="citation_publication_date" content="{{ page.year }}">{% endif %}
+  {% case page.type %}{% when 'journal' %}<meta name="citation_journal_title" content="{{ page.venue | escape }}">
+  {% when 'magazine' %}<meta name="citation_journal_title" content="{{ page.venue | escape }}">
+  {% when 'conference' %}<meta name="citation_conference_title" content="{{ page.venue | escape }}">
+  {% when 'chapter' %}<meta name="citation_book_title" content="{{ page.venue | escape }}">{% endcase %}
+  {% if page.doi and page.doi contains 'doi.org/' %}<meta name="citation_doi" content="{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}">{% endif %}
+  <meta name="citation_abstract_html_url" content="{{ site.url }}{{ page.url }}">
+  <meta name="citation_language" content="{{ page.lang | default: 'en' }}">
+  {% if page.img %}<meta name="citation_cover_date" content="{{ page.year }}-01-01">{% endif %}
+  <!-- Dublin Core -->
+  <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+  <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
+  <meta name="DC.title" content="{{ page.title | escape }}">
+  <meta name="DC.creator" content="{{ page.author | default: 'Dario Rodighiero' | replace: ' and ', '; ' | escape }}">
+  <meta name="DC.description" content="{{ _excerpt | escape }}">
+  {% if page.venue %}<meta name="DC.source" content="{{ page.venue | escape }}">{% endif %}
+  {% if page.year %}<meta name="DC.date" content="{{ page.year }}">{% endif %}
+  {% case page.type %}{% when 'journal' %}<meta name="DC.type" content="article">
+  {% when 'magazine' %}<meta name="DC.type" content="article">
+  {% when 'conference' %}<meta name="DC.type" content="conferencePaper">
+  {% when 'chapter' %}<meta name="DC.type" content="bookPart">
+  {% when 'book' %}<meta name="DC.type" content="book">
+  {% when 'map' %}<meta name="DC.type" content="image">
+  {% else %}<meta name="DC.type" content="text">{% endcase %}
+  <meta name="DC.format" content="text/html">
+  <meta name="DC.language" content="{{ page.lang | default: 'en' }}">
+  <meta name="DC.identifier" content="{{ site.url }}{{ page.url }}">
+  {% if page.doi %}<meta name="DC.identifier" content="{{ page.doi }}">{% endif %}
+  <meta name="DC.publisher" content="Dario Rodighiero">
+  <meta name="DCTERMS.isPartOf" content="{{ site.url }}">
   {% case page.type %}{% when 'book' %}{% assign _schema_type = 'Book' %}{% when 'chapter' %}{% assign _schema_type = 'ScholarlyArticle' %}{% when 'magazine' %}{% assign _schema_type = 'Article' %}{% when 'map' %}{% assign _schema_type = 'Map' %}{% else %}{% assign _schema_type = 'ScholarlyArticle' %}{% endcase %}
   <script type="application/ld+json">
   {
