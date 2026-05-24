@@ -19,7 +19,7 @@ This is a Jekyll static site — the personal academic website of Dario Rodighie
 
 **Layouts** are self-contained HTML files with inlined CSS and JS — no external stylesheet or build step:
 - `_layouts/home.html` — the publications list; handles both the homepage and the filtered sub-pages. The `filter` front matter variable on a page (e.g. `filter: journal`) drives which type is shown and sets the `<title>` and canonical URL. Client-side JS buttons let the user switch filters without a page reload.
-- `_layouts/project.html` — individual publication pages. Generates BibTeX in a hidden `<pre>` and copies it to the clipboard on "Cite" button click. Prev/next navigation is computed in Liquid, sorted by year descending then title descending.
+- `_layouts/publication.html` — individual publication pages. Generates BibTeX in a hidden `<pre>` and copies it to the clipboard on "Cite" button click. Prev/next navigation is computed in Liquid, sorted by year descending then title descending.
 
 **Filter pages** (`/books/`, `/journal-articles/`, `/conference-papers/`, `/book-chapters/`, `/magazine-articles/`, `/maps/`) are generated at build time by `_plugins/filter_pages.rb` — no static directories needed. To add or rename a filter, edit the `filters` array in that file.
 
