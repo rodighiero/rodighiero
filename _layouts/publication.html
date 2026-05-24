@@ -100,7 +100,7 @@
     .abstract figcaption { margin-top: 0.5rem; font-size: 0.75rem; color: var(--muted-1); line-height: 1.5; }
     .abstract figure.wide { position: relative; left: 50%; transform: translateX(-50%); display: inline-block; max-width: 100vw; }
     .abstract figure.wide img { width: auto; max-width: min(990px, 100vw); max-height: 660px; }
-    .abstract figure.wide figcaption { max-width: 660px; margin-left: auto; margin-right: auto; }
+    .abstract figure.wide figcaption { max-width: 612px; margin-left: max(1.5rem, calc(min(990px, 100vw) / 2 - 306px)); margin-right: 0; }
     @media print {
       .mode-toggle, .publication-nav, .cite-btn { display: none !important; }
       body { max-width: 100% !important; font-size: 11pt; }
