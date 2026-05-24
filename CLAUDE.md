@@ -28,3 +28,17 @@ This is a Jekyll static site — the personal academic website of Dario Rodighie
 **Fonts** are self-hosted under `fonts/` (Nunito). No CDN dependencies.
 
 **Plugins**: `jekyll-redirect-from` (legacy URL redirects), `jekyll-feed` (RSS for the `publications` collection), plus two local plugins in `_plugins/`.
+
+## SEO
+
+Both layouts share a common `<head>` structure:
+- `<title>`, `meta description`, `meta keywords`, `rel=canonical`, `robots: index, follow`
+- Open Graph (`og:title`, `og:description`, `og:url`, `og:type`, `og:image`, `og:image:alt`, `og:locale`)
+- Twitter Card (`twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`, `twitter:image:alt`)
+- JSON-LD structured data
+
+**`og:locale`** is set to `en_US` by default; publications with `lang: it` in their front matter get `it_IT`.
+
+**OG/Twitter image**: `home.html` always uses the author portrait (`images/Dario-Rodighiero.webp`). `publication.html` uses `page.img` when present, falling back to the same portrait so social cards are never blank.
+
+**JSON-LD types** on publication pages follow Schema.org: `Book`, `ScholarlyArticle` (journals, conferences, magazine articles, book chapters), and `Map`. `home.html` emits a `WebSite` + `Person` graph with `sameAs` links to ORCID, Google Scholar, GitHub, LinkedIn, and Zotero.
