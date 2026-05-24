@@ -44,8 +44,7 @@
   <meta name="citation_author" content="Dario Rodighiero">
   {% endif %}
   {% if page.year %}<meta name="citation_publication_date" content="{{ page.year }}">{% endif %}
-  {% case page.type %}{% when 'journal' %}<meta name="citation_journal_title" content="{{ page.venue | escape }}">
-  {% when 'magazine' %}<meta name="citation_journal_title" content="{{ page.venue | escape }}">
+  {% case page.type %}{% when 'journal', 'magazine' %}<meta name="citation_journal_title" content="{{ page.venue | escape }}">
   {% when 'conference' %}<meta name="citation_conference_title" content="{{ page.venue | escape }}">
   {% when 'chapter' %}<meta name="citation_book_title" content="{{ page.venue | escape }}">{% endcase %}
   {% if page.doi and page.doi contains 'doi.org/' %}<meta name="citation_doi" content="{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}">{% endif %}
@@ -56,12 +55,15 @@
   <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
   <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
   <meta name="DC.title" content="{{ page.title | escape }}">
-  <meta name="DC.creator" content="{{ page.author | default: 'Dario Rodighiero' | replace: ' and ', '; ' | escape }}">
+  {% if page.author %}{% assign _dc_authors = page.author | split: ' and ' %}{% for _da in _dc_authors %}
+  <meta name="DC.creator" content="{{ _da | strip | escape }}">
+  {% endfor %}{% else %}
+  <meta name="DC.creator" content="Dario Rodighiero">
+  {% endif %}
   <meta name="DC.description" content="{{ _excerpt | escape }}">
   {% if page.venue %}<meta name="DC.source" content="{{ page.venue | escape }}">{% endif %}
   {% if page.year %}<meta name="DC.date" content="{{ page.year }}">{% endif %}
-  {% case page.type %}{% when 'journal' %}<meta name="DC.type" content="article">
-  {% when 'magazine' %}<meta name="DC.type" content="article">
+  {% case page.type %}{% when 'journal', 'magazine' %}<meta name="DC.type" content="article">
   {% when 'conference' %}<meta name="DC.type" content="conferencePaper">
   {% when 'chapter' %}<meta name="DC.type" content="bookPart">
   {% when 'book' %}<meta name="DC.type" content="book">

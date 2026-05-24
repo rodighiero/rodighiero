@@ -1,15 +1,14 @@
 {% capture _filter_path %}{% case page.filter %}{% when 'book' %}/books/{% when 'chapter' %}/book-chapters/{% when 'journal' %}/journal-articles/{% when 'conference' %}/conference-papers/{% when 'magazine' %}/magazine-articles/{% when 'map' %}/maps/{% else %}/{% endcase %}{% endcapture %}
 {% capture _filter_label %}{% case page.filter %}{% when 'book' %}Books{% when 'chapter' %}Book Chapters{% when 'journal' %}Journal Articles{% when 'conference' %}Conference Papers{% when 'magazine' %}Magazine Articles{% when 'map' %}Maps{% endcase %}{% endcapture %}
 {% capture _meta_desc %}{% case page.filter %}{% when 'book' %}Books by Dario Rodighiero on data visualization, digital humanities, and Science and Technology Studies.{% when 'chapter' %}Book chapters by Dario Rodighiero on data visualization, digital humanities, and Science and Technology Studies.{% when 'journal' %}Journal articles by Dario Rodighiero on data visualization, digital humanities, and Science and Technology Studies.{% when 'conference' %}Conference papers by Dario Rodighiero on data visualization, digital humanities, and Science and Technology Studies.{% when 'magazine' %}Magazine articles by Dario Rodighiero on data visualization, digital humanities, and Science and Technology Studies.{% when 'map' %}Maps and spatial visualizations by Dario Rodighiero on data and digital humanities.{% else %}Dario Rodighiero researches data visualization, digital humanities, and Science and Technology Studies. Assistant Professor at University of Groningen, Faculty Associate at Harvard's Berkman Klein Center.{% endcase %}{% endcapture %}
+{% capture _page_title %}{% if _filter_label != "" %}{{ _filter_label }} — Dario Rodighiero{% else %}Dario Rodighiero — Design, Data, and Humanities{% endif %}{% endcapture %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <script>!function(){var c=localStorage.getItem('colorScheme');if(c)document.documentElement.classList.add(c)}()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {% if _filter_label != "" %}<title>{{ _filter_label }} — Dario Rodighiero</title>
-  {% else %}<title>Dario Rodighiero — Design, Data, and Humanities</title>
-  {% endif %}
+  <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
   <meta name="author" content="Dario Rodighiero">
   <meta name="keywords" content="Dario Rodighiero, data visualization, digital humanities, Science and Technology Studies, University of Groningen, Berkman Klein Center, metaLAB Harvard, mapping, information design">
@@ -20,9 +19,7 @@
   <link rel="canonical" href="{{ site.url }}{{ _filter_path }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}/feed/publications.xml">
   <meta property="og:site_name" content="{{ site.title }}">
-  {% if _filter_label != "" %}<meta property="og:title" content="{{ _filter_label }} — Dario Rodighiero">
-  {% else %}<meta property="og:title" content="Dario Rodighiero — Design, Data, and Humanities">
-  {% endif %}
+  <meta property="og:title" content="{{ _page_title }}">
   <meta property="og:description" content="{{ _meta_desc }}">
   <meta property="og:url" content="{{ site.url }}{{ _filter_path }}">
   <meta property="og:type" content="website">
@@ -32,13 +29,10 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="800">
   <meta name="twitter:card" content="summary_large_image">
-  {% if _filter_label != "" %}<meta name="twitter:title" content="{{ _filter_label }} — Dario Rodighiero">
-  {% else %}<meta name="twitter:title" content="Dario Rodighiero — Design, Data, and Humanities">
-  {% endif %}
+  <meta name="twitter:title" content="{{ _page_title }}">
   <meta name="twitter:description" content="{{ _meta_desc }}">
   <meta name="twitter:image" content="{{ site.url }}/images/Dario-Rodighiero.webp">
   <meta name="twitter:image:alt" content="Dario Rodighiero">
-  <!-- Open Graph profile namespace (homepage only) -->
   {% if _filter_label == "" %}
   <meta property="profile:first_name" content="Dario">
   <meta property="profile:last_name" content="Rodighiero">
@@ -47,9 +41,7 @@
   <!-- Dublin Core -->
   <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
   <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
-  {% if _filter_label != "" %}<meta name="DC.title" content="{{ _filter_label }} — Dario Rodighiero">
-  {% else %}<meta name="DC.title" content="Dario Rodighiero — Design, Data, and Humanities">
-  {% endif %}
+  <meta name="DC.title" content="{{ _page_title }}">
   <meta name="DC.creator" content="Dario Rodighiero">
   <meta name="DC.subject" content="Data Visualization; Digital Humanities; Science and Technology Studies; Information Design; Mapping">
   <meta name="DC.description" content="{{ _meta_desc }}">
@@ -78,7 +70,7 @@
       {
         "@type": "ProfilePage",
         "@id": "{{ site.url }}/#profilepage",
-        "url": "{{ site.url }}",
+        "url": "{{ site.url }}/",
         "isPartOf": { "@id": "{{ site.url }}/#website" },
         "dateModified": "{{ site.time | date: '%Y-%m-%dT%H:%M:%SZ' }}",
         "mainEntity": { "@id": "https://orcid.org/0000-0002-1405-7062" }
