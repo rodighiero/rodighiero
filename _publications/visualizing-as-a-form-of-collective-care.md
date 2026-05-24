@@ -29,10 +29,6 @@ Building on this understanding of visualization as a relational and embodied pra
 
 VISAP '25 explores the theme Collective Care, inviting bold, critical, and creative works that reflect on the role of visualization in an interconnected world. In conjunction with IEEE VIS 2025, the program welcomes papers, pictorials, and artworks engaging with care, solidarity, and ethical collaboration. VISAP will take place in person at the University of Applied Arts Vienna from November 6–15, while IEEE VIS runs at the Austria Center Vienna from November 2–7.
 
-Submission deadline: June 13, 2025.
-
-For details, visit: [visap.net](https://visap.net) · [LinkedIn](https://www.linkedin.com/company/ieeevisap/) · [Instagram](https://www.instagram.com/visapnet/) · [art@ieeevis.org](mailto:art@ieeevis.org)
-
 ## References
 
 - Lupi, G. (2015). The New Aesthetic of Data Narrative. In D. Bihanic (Ed.), *New Challenges for Data Design*. Springer, London. [doi:10.1007/978-1-4471-6596-5_3](https://link.springer.com/chapter/10.1007/978-1-4471-6596-5_3)
