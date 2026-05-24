@@ -32,5 +32,4 @@ VISAP '25 explores the theme Collective Care, inviting bold, critical, and creat
 ## References
 
 - Lupi, G. (2015). The New Aesthetic of Data Narrative. In D. Bihanic (Ed.), *New Challenges for Data Design*. Springer, London. [doi:10.1007/978-1-4471-6596-5_3](https://link.springer.com/chapter/10.1007/978-1-4471-6596-5_3)
-
 - Puig de la Bellacasa, M. (2011). Matters of care in technoscience: Assembling neglected things. *Social Studies of Science*, 41(1), 85–106. [doi:10.1177/0306312710380301](https://journals.sagepub.com/doi/10.1177/0306312710380301)
