@@ -1,0 +1,40 @@
+<script>
+  // Mode toggle
+  (function() {
+    var html = document.documentElement;
+    document.querySelector('.mode-toggle').addEventListener('click', function() {
+      var isDark = html.classList.contains('dark') ||
+        (!html.classList.contains('light') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      html.classList.remove('dark', 'light');
+      if (isDark) {
+        html.classList.add('light');
+        localStorage.setItem('colorScheme', 'light');
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('colorScheme', 'dark');
+      }
+    });
+  })();
+
+  // Cite buttons
+  (function() {
+    var liveMsg = document.getElementById('live-msg');
+    document.querySelectorAll('.cite-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var scope = btn.closest('.col-meta') || btn.closest('article') || document;
+        var data = scope.querySelector('.bibtex-data');
+        if (!data) return;
+        navigator.clipboard.writeText(data.textContent.trim()).then(function() {
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          if (liveMsg) liveMsg.textContent = 'BibTeX citation copied to clipboard.';
+          setTimeout(function() {
+            btn.textContent = 'Cite';
+            btn.classList.remove('copied');
+            if (liveMsg) liveMsg.textContent = '';
+          }, 1500);
+        });
+      });
+    });
+  })();
+</script>

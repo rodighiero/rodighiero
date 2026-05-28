@@ -1,0 +1,13 @@
+{% capture entry_type %}{% case include.item.type %}{% when 'journal' %}article{% when 'magazine' %}article{% when 'chapter' %}incollection{% when 'book' %}book{% when 'conference' %}inproceedings{% when 'map' %}misc{% else %}misc{% endcase %}{% endcapture %}{% capture venue_field %}{% case include.item.type %}{% when 'journal' %}journal{% when 'magazine' %}journal{% when 'chapter' %}booktitle{% when 'conference' %}booktitle{% when 'book' %}publisher{% when 'map' %}howpublished{% else %}howpublished{% endcase %}{% endcapture %}<pre class="bibtex-data" hidden>@{{ entry_type }}&#123;rodighiero{{ include.item.year }}{{ include.item.slug | split: '-' | first }},
+{% if include.item.author %}  author     = &#123;{{ include.item.author }}&#125;,
+{% endif %}{% if include.item.editor %}  editor     = &#123;{{ include.item.editor }}&#125;,
+{% endif %}{% if include.item.translator %}  translator = &#123;{{ include.item.translator }}&#125;,
+{% endif %}  title     = &#123;{{ include.item.title }}&#125;,
+  {{ venue_field }}   = &#123;{{ include.item.venue }}&#125;,
+  year      = &#123;{{ include.item.year }}&#125;{% if include.item.volume %},
+  volume    = &#123;{{ include.item.volume }}&#125;{% endif %}{% if include.item.issue %},
+  number    = &#123;{{ include.item.issue }}&#125;{% endif %}{% if include.item.pages %},
+  pages     = &#123;{{ include.item.pages }}&#125;{% endif %}{% if include.item.doi contains 'doi.org/' %},
+  doi       = &#123;{{ include.item.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}&#125;{% elsif include.item.doi %},
+  url       = &#123;{{ include.item.doi }}&#125;{% endif %}
+&#125;</pre>
