@@ -141,6 +141,13 @@
     .abstract figcaption { margin-top: 0.5rem; font-size: 0.75rem; color: var(--muted-1); line-height: 1.5; }
     .abstract figure.wide { display: block; }
     .abstract figure.wide img { width: auto; max-width: min(990px, 100vw); max-height: 660px; position: relative; left: 50%; transform: translateX(-50%); }
+    .abstract sup a.footnote { font-size: 0.7em; font-weight: 600; text-decoration: none; padding: 0 0.1em; }
+    .abstract .footnotes { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.8rem; line-height: 1.6; color: var(--muted-1); }
+    .abstract .footnotes ol { padding-left: 1.3em; }
+    .abstract .footnotes li { margin-bottom: 0.5rem; }
+    .abstract .footnotes li::marker { color: var(--muted-1); }
+    .abstract .footnotes p { margin: 0; }
+    .abstract .footnotes a.reversefootnote { text-decoration: none; margin-left: 0.3em; }
     @media print {
       @page { margin: 2cm 4.5cm; }
       :root, html.dark, html.light { color-scheme: light !important; }
