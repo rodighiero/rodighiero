@@ -150,6 +150,7 @@ Beyond the technical merits, Surprise Machines is a collective project developed
 - ———. 2022. "A Visual Translation of the Pandemic." *Leonardo* 55 (3). [doi:10.1162/leon_a_02203](https://doi.org/10.1162/leon_a_02203).
 - Russakovsky, Olga, Jia Deng, Hao Su, et al. 2015. "ImageNet Large Scale Visual Recognition Challenge." arXiv. [doi:10.1007/s11263-015-0816-y](https://doi.org/10.1007/s11263-015-0816-y).
 - Seguin, Benoit. 2018. "The Replica Project: Building a Visual Search Engine for Art Historians." *XRDS: Crossroads, The ACM Magazine for Students* 24 (3): 24–29. [doi:10.1145/3186653](https://doi.org/10.1145/3186653).
+- Snydman, Stuart, Robert Sanderson, and Tom Cramer. 2015. "The International Image Interoperability Framework (IIIF): A Community & Technology Approach for Web-Based Images." *Archiving Conference 2015*, May. [doi:10.2352/issn.2168-3204.2015.12.1.art00005](https://doi.org/10.2352/issn.2168-3204.2015.12.1.art00005).
 - Steward, Jeff. (2015) 2021. *API Documentation*. Harvard Art Museums. [github.com/harvardartmuseums/api-docs](https://github.com/harvardartmuseums/api-docs).
 - Turing, Alan M. 1950. "Computing Machinery and Intelligence." *Mind* LIX (236): 433–60. [doi:10.1093/mind/LIX.236.433](https://doi.org/10.1093/mind/LIX.236.433).
 - Vane, Olivia. 2019. *Timeline Design for Visualising Cultural Heritage Data*. PhD thesis, Royal College of Art.
