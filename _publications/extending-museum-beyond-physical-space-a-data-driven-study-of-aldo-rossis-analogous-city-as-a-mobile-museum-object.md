@@ -139,7 +139,7 @@ The role of museums is to facilitate the circulation of knowledge, and digital o
 - Gorman, Michael John. 2020. _Idea Colliders: The Future of Science Museums_. Cambridge, MA: MIT Press. <https://doi.org/10.7551/mitpress/11019.001.0001>.
 - Hennion, Antoine, and Bruno Latour. 1996. "L'art, l'aura et la technique selon Benjamin." _Les Cahiers de médiologie_ 1 (1): 235–41. <https://doi.org/10/gd4vq2>.
 - Isgro, Marina. 2020. "Modernism in Motion: Jean Tinguely's Meta-Mechanical Reliefs, 1954–59." _Art Journal_ 79 (2): 6–23. <https://doi.org/10.1080/00043249.2020.1765550>.
-- Lampariello, Beatrice. 2017. _Aldo Rossi e le forme del razionalismo esaltato. Dai progetti scolastici alla «città analoga», 1950–1973_. Macerata: Quodlibet.
+- Lampariello, Beatrice. 2017. _Aldo Rossi e le forme del razionalismo esaltato. Dai progetti scolastici alla “città analoga”, 1950–1973_. Macerata: Quodlibet.
 - Latour, Bruno. 1986. "Visualisation and Cognition: Thinking with Eyes and Hands." Edited by Henrica Kuklick. _Knowledge and Society Studies in the Sociology of Culture Past and Present_ 6: 1–40.
 - Lowe, Adam, ed. 2020. _The Aura in the Age of Digital Materiality: Rethinking Preservation in the Shadow of an Uncertain Future_. Cinisello Balsamo: Silvana Editoriale.
 - Malraux, André. (1952) 1997. _Le musée imaginaire_. Paris: Gallimard.
