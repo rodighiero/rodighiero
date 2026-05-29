@@ -176,7 +176,6 @@
       border-top: 1px solid var(--border);
     }
     .col-meta h2 { font-size: var(--base); font-weight: 500; margin: 0.6rem 0 0.2rem; line-height: 1.35; }
-    .cite-btn { margin-top: 0.6rem; }
     .col-meta h2 a { color: inherit; text-decoration: none; }
     .col-meta h2:has(a:not(.ext-link):hover) a:not(.ext-link) { text-decoration: underline; }
     .col-meta h2 a .ext { display: inline; margin-left: 0.3em; text-decoration: none; white-space: nowrap; }
@@ -297,8 +296,6 @@
           {% include meta-line.html item=publication %}
           <h2><a href="{{ publication.url }}">{{ publication.title }}</a>{% if publication.doi %}<a href="{{ publication.doi }}" class="ext-link" aria-label="External link"><span class="ext"><svg aria-hidden="true" viewBox="-1 -1 13 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="9" x2="9" y2="1"/><polyline points="2,1 9,1 9,8"/></svg></span></a>{% endif %}</h2>
           {% include authors.html item=publication %}
-          <button class="cite-btn" type="button">Cite</button>
-          {% include bibtex.html item=publication %}
         </div>
         <div class="col-desc">
           {{ publication.excerpt }}
