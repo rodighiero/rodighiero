@@ -61,9 +61,9 @@ Si tratta di fare la lista delle attività di cui vi siete sentiti privati dalla
 
 Trovate infine un modo per comparare la vostra descrizione con quella di altri partecipanti. La stesura e la sovrapposizione delle risposte dovrebbero disegnare via via un paesaggio composto da linee conflittuali, alleanze, controversie e contrasti.
 
-[^1]: Vedi l’articolo sui lobbisti scatenati negli Stati Uniti di Mark Stoller, “The coronavirus relief bill could turn into a corporate coup if we aren’t careful”, *The Guardian*, 24 marzo 2020.
-[^2]: “Nous ne vivons pas sur la même planète”, in *AOC*, 18 dicembre 2019.
-[^3]: Deborah Danowski, Eduardo Viveiros de Castro, “L’arrêt de monde.” *De l’univers clos au monde infini*, a cura di Emilie Hache, Editions Dehors, Parigi 2014, pp. 221-339.
-[^4]: Vedi Dusan Kazic, *Plantes animées. De la production aux relations avec les plantes*. Tesi di dottorato, AgroPariTech, 2019.
-[^5]: Pierre Charbonnier, *Abondance et liberté. Une histoire environnementale des idées politiques*, The Discovery, Parigi 2020.
-[^6]: L’auto descrizione riprende la procedura dei nuovi cahiers de doléance introdotti da Bruno Latour in *Tracciare la rotta. Come orientarsi in politica* (Raffaello Cortina 2018) e approfondito da un gruppo di artisti e ricercatori.
+[^1]: Stoller, Mark. 2020. “The Coronavirus Relief Bill Could Turn into a Corporate Coup If We Aren’t Careful.” *The Guardian*, 24 marzo 2020.
+[^2]: Latour, Bruno. 2019. “Nous ne vivons pas sur la même planète.” *AOC*, 18 dicembre 2019.
+[^3]: Danowski, Deborah, e Eduardo Viveiros de Castro. 2014. “L’arrêt de monde.” In *De l’univers clos au monde infini*, a cura di Emilie Hache, 221–339. Parigi: Éditions Dehors.
+[^4]: Kazic, Dusan. 2019. “Plantes animées: De la production aux relations avec les plantes.” Tesi di dottorato, AgroParisTech.
+[^5]: Charbonnier, Pierre. 2020. *Abondance et liberté: Une histoire environnementale des idées politiques*. Parigi: La Découverte.
+[^6]: Latour, Bruno. 2018. *Tracciare la rotta: Come orientarsi in politica*. Milano: Raffaello Cortina. L’auto descrizione riprende la procedura dei nuovi cahiers de doléance qui introdotti e approfondita da un gruppo di artisti e ricercatori.
