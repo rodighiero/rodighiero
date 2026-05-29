@@ -2,7 +2,7 @@
 title: "Grounding AI: Exploring the Role of Algorithms in Science"
 year: 2026
 venue: "University of Groningen Press"
-type: "book"
+type: "map"
 author: "Matilde Ficozzi and Dario Rodighiero and Mathieu Jacomy and Anders Kristian Munk"
 doi: "https://doi.org/10.21827/69de53fee06e8"
 img: "Grounding-AI.webp"
