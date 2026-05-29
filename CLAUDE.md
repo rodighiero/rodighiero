@@ -19,6 +19,8 @@ This is a Jekyll static site — the personal academic website of Dario Rodighie
 
 The body of each file is the abstract. Full-text articles (the complete published text, not just an abstract) put the lead/abstract paragraph first, then a `<!--more-->` marker, then the full text using `##` for section headings. The layout italicizes the part before `<!--more-->` as the lead. Footnotes/references inside full-text articles use kramdown footnote syntax (`[^1]` … `[^1]:`) and follow **Chicago author-date** style (e.g. `Author, First. Year. *Title*. Place: Publisher.`).
 
+**Quotation marks**: use curly quotes (`“ ”`), never caporali/guillemets (`« »`), for Italian and English text. The only exception is French-language quotations, which keep French guillemets.
+
 **Layouts** are self-contained HTML files with inlined CSS and JS — no external stylesheet or build step:
 - `_layouts/home.html` — the publications list; handles both the homepage and the filtered sub-pages. The `filter` front matter variable on a page (e.g. `filter: journal`) drives which type is shown and sets the `<title>` and canonical URL. Client-side JS buttons let the user switch filters without a page reload.
 - `_layouts/publication.html` — individual publication pages. Generates BibTeX in a hidden `<pre>` and copies it to the clipboard on "Cite" button click. Prev/next navigation is computed in Liquid, sorted by year descending then title descending.
