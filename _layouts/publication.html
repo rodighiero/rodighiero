@@ -125,6 +125,7 @@
     .title-block { max-width: 660px; }
     .abstract { max-width: 660px; font-size: 1rem; line-height: 1.85; color: var(--fg); }
     .abstract p { margin: 0 0 1.1rem; }
+    .abstract .lead { font-style: italic; color: var(--muted-2); margin-bottom: 2rem; }
     .abstract h2 { font-size: 1.15rem; font-weight: 700; margin: 3rem 0 0.8rem; letter-spacing: 0.01em; color: var(--fg); }
     .abstract h3 { font-size: 1rem; font-weight: 600; font-style: italic; margin: 2rem 0 0.6rem; color: var(--fg); }
     .abstract blockquote { margin: 1.5rem 0 1.5rem 0; padding-left: 1.2rem; border-left: 2px solid var(--border); color: var(--muted-2); font-style: italic; }
@@ -198,7 +199,8 @@
   {% include bibtex.html item=page %}
   <div class="content">
     {% if page.img and page.figures != true %}<figure class="hero"><img src="/images/{{ page.img }}" alt="" width="{{ page.img_width }}" height="{{ page.img_height }}"></figure>{% endif %}
-    <div class="abstract">{{ content }}</div>
+    {% assign _content_parts = content | split: '<!--more-->' %}
+    {% if _content_parts.size > 1 %}<div class="abstract"><div class="lead">{{ _content_parts[0] }}</div>{{ _content_parts[1] }}</div>{% else %}<div class="abstract">{{ content }}</div>{% endif %}
   </div>
   </article>
   {% include publication-nav.html modifier="publication-nav-footer" label="Project navigation, end of page" %}
