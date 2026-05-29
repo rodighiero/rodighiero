@@ -47,17 +47,12 @@ Attenzione: non si tratta di un questionario e non è nemmeno un sondaggio. È u
 
 Si tratta di fare la lista delle attività di cui vi siete sentiti privati dalla crisi attuale e che vi danno la sensazione di una violazione delle vostre condizioni essenziali di sussistenza. Per ogni attività, indicate se preferireste che riprendessero come prima, meglio di prima, o che non riprendano proprio. Rispondete a queste domande:
 
-**Domanda 1:** Quali sono le attività attualmente sospese che vorreste non ricominciassero più?
-
-**Domanda 2:** Descrivete a) perché queste attività vi sembrano nocive/superflue/pericolose/incoerenti; b) in che misura la loro scomparsa/messa in attesa/sostituzione renderebbe più facile/più coerente svolgere altre attività che preferireste? (Scrivete un paragrafo distinto per ciascuna delle risposte alla domanda 1)
-
-**Domanda 3:** Quali misure prevedereste per facilitare la transizione ad altre attività per tutti gli operai/impiegati/agenti/imprenditori che non potrebbero più continuare le attività soppresse?
-
-**Domanda 4:** Quali sono le attività attualmente sospese che vorreste vedere svilupparsi/ricominciare, o ancora quali attività sostitutive dovrebbero essere inventate?
-
-**Domanda 5:** Descrivete a) perché queste attività vi sembrano positive; b) come rendono più semplici/armoniche/coerenti altre attività che vi piacerebbero e c) che permettono di contrastare quelle che giudicate sfavorevoli? (Scrivete un paragrafo distinto per ciascuna delle risposte alla domanda 4).
-
-**Domanda 6:** Quali misure adottereste per aiutare operai/impiegati/agenti/imprenditori ad acquisire le capacità/i metodi/i guadagni/gli strumenti per permettere la ripresa/lo sviluppo/la nascita di queste attività?
+1. Quali sono le attività attualmente sospese che vorreste non ricominciassero più?
+2. Descrivete a) perché queste attività vi sembrano nocive/superflue/pericolose/incoerenti; b) in che misura la loro scomparsa/messa in attesa/sostituzione renderebbe più facile/più coerente svolgere altre attività che preferireste? (Scrivete un paragrafo distinto per ciascuna delle risposte alla domanda 1)
+3. Quali misure prevedereste per facilitare la transizione ad altre attività per tutti gli operai/impiegati/agenti/imprenditori che non potrebbero più continuare le attività soppresse?
+4. Quali sono le attività attualmente sospese che vorreste vedere svilupparsi/ricominciare, o ancora quali attività sostitutive dovrebbero essere inventate?
+5. Descrivete a) perché queste attività vi sembrano positive; b) come rendono più semplici/armoniche/coerenti altre attività che vi piacerebbero e c) che permettono di contrastare quelle che giudicate sfavorevoli? (Scrivete un paragrafo distinto per ciascuna delle risposte alla domanda 4).
+6. Quali misure adottereste per aiutare operai/impiegati/agenti/imprenditori ad acquisire le capacità/i metodi/i guadagni/gli strumenti per permettere la ripresa/lo sviluppo/la nascita di queste attività?
 
 Trovate infine un modo per comparare la vostra descrizione con quella di altri partecipanti. La stesura e la sovrapposizione delle risposte dovrebbero disegnare via via un paesaggio composto da linee conflittuali, alleanze, controversie e contrasti.
 
