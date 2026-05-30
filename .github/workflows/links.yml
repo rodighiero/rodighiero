@@ -1,0 +1,40 @@
+name: Check links
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+      - run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+      - uses: lycheeverse/lychee-action@v2
+        id: lychee
+        with:
+          args: >-
+            --no-progress
+            --accept 200,206,403,429
+            --max-retries 2
+            --timeout 20
+            --exclude-path _site/assets
+            './_site/**/*.html'
+          fail: false
+      - uses: peter-evans/create-issue-from-file@v5
+        if: steps.lychee.outputs.exit_code != 0
+        with:
+          title: Link Checker Report
+          content-filepath: ./lychee/out.md
+          labels: link-checker
