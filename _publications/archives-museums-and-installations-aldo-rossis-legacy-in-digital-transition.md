@@ -20,8 +20,6 @@ This article offers a theoretical reflection grounded in curatorial analysis and
 
 <!--more-->
 
-**Keywords:** Aldo Rossi; digital heritage; experimental museology
-
 ## Introduction
 
 Laurajane Smith describes cultural heritage as a process shaped by remembering, storytelling, and meaning making. It unfolds when people engage with the past to understand the present, relying on memory to make sense of society. "The real sense of heritage […] is […] in the act of passing on and receiving memories and knowledge" (Smith 2006, 2). This view resonates with historian Pierre Nora's observation that modern societies have lost the communal settings in which memory once circulated – such as villages, religious rituals, or oral traditions (Nora 1989). In response, communities create new symbolic sites of memory that attempt to preserve what can no longer be experienced directly, such as monuments and commemorative rituals. While Smith focuses on the cultural work of remembering, Nora emphasizes the rupture that makes such work necessary. Both underscore that heritage emerges from efforts to retain meaning when memory becomes unstable. From this shared perspective, institutions play a vital role in preserving and transmitting memory. They offer frameworks where fragmented histories can be collected, reinterpreted, and kept active. "The role of preserving symbolic sites of memory is formalized through international instruments, such as UNESCO's Convention on the Protection of the World Cultural and Natural Heritage" (UNESCO 1972). These frameworks task states and cultural bodies with identifying, protecting, and promoting heritage as a living process – one that supports identity, diversity, and knowledge over time.
