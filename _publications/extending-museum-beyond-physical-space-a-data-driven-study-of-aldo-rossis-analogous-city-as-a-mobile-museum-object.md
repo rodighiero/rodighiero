@@ -18,8 +18,6 @@ Aldo Rossi composed the famous collage known as Analogous City for the Venice Bi
 
 <!--more-->
 
-**Keywords:** Architecture; Exhibition; GLAM Institutions; Interactive Installation
-
 ## An issue of accessibility
 
 The introduction of the printing press to Europe in the mid-1400s was not a complete cultural revolution as it is often made out to be. Johannes Gutenberg's books were novelty items that only wealthy collectors could afford. The real revolution took place fifty years later in Venice, where the publisher Aldus Manutius introduced typographic and editorial innovations that led to the creation of the paperback (Marzo Magno 2020). In the late fifteenth century, Manutius printed a small book of about sixty pages entitled _De Aetna_, which radically changed the way of reading. Readers were previously forced to handle heavy books, but the paperback was mobile, increasing the book's context and reach. Books were purged from glosses and formatted using the italic type, an innovation introduced by the font designer Griffo which entirely revolutionized typography. The combination of these innovations lowered the price of books, making them accessible to a wider audience (Davies 1999, 42). Manutius' story teaches us how the revolution does not take place with the printing press but with the later wider access to literary works. Contextualizing this teaching in museums, it can be said that the real revolution is not found in new architectures or digital infrastructure but in the concept of accessibility understood as the circulation of collections, in their multiple possible forms.
