@@ -165,6 +165,22 @@
     }
     .filters button:hover { color: var(--fg); border-color: var(--border-hover); }
     .filters button.active { color: var(--bg); background: var(--fg); border-color: var(--fg); }
+    .filters input[type="search"] {
+      color: var(--fg);
+      background: none;
+      border: 1px solid var(--border);
+      padding: 0.15rem 0.6rem;
+      font: inherit;
+      font-size: var(--small);
+      border-radius: 2px;
+      line-height: 1.4;
+      width: 12rem;
+      margin-left: auto;
+    }
+    .filters input[type="search"]:focus { outline: none; border-color: var(--border-hover); }
+    .filters input[type="search"]::placeholder { color: var(--muted-3); }
+    .no-results { font-size: var(--small); color: var(--muted-3); padding: 2rem 0; }
+    .no-results[hidden] { display: none; }
 
     /* ── Publications list ── */
     .publication {
@@ -271,7 +287,7 @@
 
   <main>
     <!-- ── Filter bar ── -->
-    <nav class="filters" aria-label="Filter publications by type">
+    <nav class="filters" aria-label="Filter publications">
       <span class="filter-label">Selected publications, filter by type:</span>
       <button data-filter="all" aria-pressed="false">Everything</button>
       <button data-filter="book" aria-pressed="false">Books</button>
@@ -280,13 +296,15 @@
       <button data-filter="conference" aria-pressed="false">Conference Papers</button>
       <button data-filter="magazine" aria-pressed="false">Magazine Articles</button>
       <button data-filter="map" aria-pressed="false">Maps</button>
+      <input type="search" id="search-input" placeholder="Search…" aria-label="Search publications" autocomplete="off">
     </nav>
 
     <!-- ── Publications ── -->
     <div id="publications">
       {% assign year_groups = site.publications | group_by: "year" | sort: "name" | reverse %}
       {% for group in year_groups %}{% assign group_publications = group.items | sort: "title" %}{% for publication in group_publications %}
-      <div class="publication" data-type="{{ publication.type }}">
+      {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.venue }} {{ publication.year }} {{ publication.excerpt | strip_html }}{% endcapture %}
+      <div class="publication" data-type="{{ publication.type }}" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
         {% if publication.img %}
         <div class="col-img">
           <img src="/images/{{ publication.img }}" alt="" loading="lazy" width="{{ publication.img_width }}" height="{{ publication.img_height }}">
@@ -303,6 +321,7 @@
       </div>
       {% endfor %}{% endfor %}
     </div>
+    <p id="no-results" class="no-results" hidden>No publications match your search.</p>
   </main>
 
   <footer>
@@ -323,7 +342,18 @@
 
     var publications = document.querySelectorAll('.publication');
     var filterBtns = document.querySelectorAll('.filters button');
+    var searchInput = document.getElementById('search-input');
+    var noResults = document.getElementById('no-results');
     var initialFilter = document.body.dataset.filter || 'all';
+    var currentFilter = initialFilter;
+
+    function normalize(s) {
+      return s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
+    }
+
+    publications.forEach(function(p) {
+      p._haystack = normalize(p.getAttribute('data-search') || '');
+    });
 
     // Add counts
     filterBtns.forEach(function(btn) {
@@ -340,9 +370,20 @@
         btn.classList.toggle('active', active);
         btn.setAttribute('aria-pressed', active ? 'true' : 'false');
       });
+      var query = searchInput ? searchInput.value : '';
+      var tokens = query ? normalize(query).split(/\s+/).filter(Boolean) : [];
+      var visible = 0;
       publications.forEach(function(p) {
-        p.style.display = (filter === 'all' || p.dataset.type === filter) ? '' : 'none';
+        var typeMatch = (filter === 'all' || p.dataset.type === filter);
+        var searchMatch = true;
+        for (var i = 0; i < tokens.length; i++) {
+          if (p._haystack.indexOf(tokens[i]) === -1) { searchMatch = false; break; }
+        }
+        var show = typeMatch && searchMatch;
+        p.style.display = show ? '' : 'none';
+        if (show) visible++;
       });
+      if (noResults) noResults.hidden = visible !== 0;
       if (push) history.pushState({ filter: filter }, '', filterPaths[filter] || '/');
     }
 
@@ -350,12 +391,20 @@
 
     filterBtns.forEach(function(btn) {
       btn.addEventListener('click', function() {
-        applyFilter(this.dataset.filter, true);
+        currentFilter = this.dataset.filter;
+        applyFilter(currentFilter, true);
       });
     });
 
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        applyFilter(currentFilter, false);
+      });
+    }
+
     window.addEventListener('popstate', function(e) {
-      applyFilter((e.state && e.state.filter) || 'all', false);
+      currentFilter = (e.state && e.state.filter) || 'all';
+      applyFilter(currentFilter, false);
     });
 
     // Keep arrow on same line as last word of title
