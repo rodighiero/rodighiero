@@ -174,8 +174,8 @@
       font-size: var(--small);
       border-radius: 2px;
       line-height: 1.4;
-      width: 12rem;
-      margin-left: auto;
+      width: 20rem;
+      max-width: 100%;
     }
     .filters input[type="search"]:focus { outline: none; border-color: var(--border-hover); }
     .filters input[type="search"]::placeholder { color: var(--muted-3); }
@@ -288,7 +288,8 @@
   <main>
     <!-- ── Filter bar ── -->
     <nav class="filters" aria-label="Filter publications">
-      <span class="filter-label">Selected publications, filter by type:</span>
+      <input type="search" id="search-input" placeholder="Filter selected publications by keyword…" aria-label="Filter publications by keyword" autocomplete="off">
+      <span class="filter-label">or by category:</span>
       <button data-filter="all" aria-pressed="false">Everything</button>
       <button data-filter="book" aria-pressed="false">Books</button>
       <button data-filter="chapter" aria-pressed="false">Book Chapters</button>
@@ -296,7 +297,6 @@
       <button data-filter="conference" aria-pressed="false">Conference Papers</button>
       <button data-filter="magazine" aria-pressed="false">Magazine Articles</button>
       <button data-filter="map" aria-pressed="false">Maps</button>
-      <input type="search" id="search-input" placeholder="Search…" aria-label="Search publications" autocomplete="off">
     </nav>
 
     <!-- ── Publications ── -->
