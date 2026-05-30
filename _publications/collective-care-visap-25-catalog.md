@@ -10,6 +10,8 @@ img_width: 700
 img_height: 542
 redirect_from:
   - /catalog-visap-2025
+  - /visap-2025-catalog
+  - /VISAP-2025-Catalog
 ---
 
 Care is easy to recognize on a personal level, especially when it appears in the small, attentive gestures woven into daily life. We see it when someone nurses a sick friend, tends a garden, or stitches a quilt by hand. Each act is marked by presence, patience, and a quiet commitment expressed through attention. It takes form through deliberate actions that often go unnoticed yet carry enduring meaning. But what does care look like when it scales up across complex systems where the risks are greater, the people more dispersed, and the consequences harder to trace?
