@@ -140,46 +140,63 @@
     .header .bio-col p { margin: 0; }
     .header .bio-col a { text-decoration: underline; }
 
-    /* ── Filter bar ── */
+    /* ── Publications heading & filters ── */
+    .publications-heading {
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin: 3rem 0 1.2rem;
+    }
     .filters {
       font-size: var(--small);
-      margin-top: 3rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       color: var(--muted-1);
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.75rem 2rem;
     }
-    .filter-label { margin-right: 0.2rem; }
-    .filters button {
-      color: var(--muted-1);
-      cursor: pointer;
-      background: none;
-      border: 1px solid var(--border);
-      padding: 0.15rem 0.6rem;
-      font: inherit;
-      font-size: var(--small);
-      border-radius: 2px;
-      line-height: 1.4;
+    .filter-search { display: inline-flex; align-items: center; gap: 0.5rem; }
+    .filter-search svg {
+      width: 14px; height: 14px; flex-shrink: 0; color: var(--muted-3);
     }
-    .filters button:hover { color: var(--fg); border-color: var(--border-hover); }
-    .filters button.active { color: var(--bg); background: var(--fg); border-color: var(--fg); }
     .filters input[type="search"] {
       color: var(--fg);
       background: none;
-      border: 1px solid var(--border);
-      padding: 0.15rem 0.6rem;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      padding: 0.2rem 0;
       font: inherit;
       font-size: var(--small);
-      border-radius: 2px;
       line-height: 1.4;
-      width: 20rem;
+      width: 16rem;
       max-width: 100%;
     }
-    .filters input[type="search"]:focus { outline: none; border-color: var(--border-hover); }
+    .filters input[type="search"]:focus { outline: none; border-bottom-color: var(--fg); }
     .filters input[type="search"]::placeholder { color: var(--muted-3); }
-    .filter-break { flex-basis: 100%; height: 0; margin: 0; }
+    .filter-types { display: flex; flex-wrap: wrap; align-items: center; }
+    .filter-types button {
+      color: var(--muted-1);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      font-size: var(--small);
+      line-height: 1.4;
+    }
+    .filter-types button:hover { color: var(--fg); }
+    .filter-types button.active { color: var(--fg); font-weight: 500; }
+    .filter-types button + button::before {
+      content: '·';
+      margin: 0 0.5rem;
+      color: var(--muted-3);
+      font-weight: 400;
+    }
+    .filter-count {
+      color: var(--muted-3);
+      font-variant-numeric: tabular-nums;
+      margin-left: auto;
+    }
     .no-results { font-size: var(--small); color: var(--muted-3); padding: 2rem 0; }
     .no-results[hidden] { display: none; }
 
@@ -287,18 +304,23 @@
   </header>
 
   <main>
+    <h2 class="publications-heading">Selected publications</h2>
     <!-- ── Filter bar ── -->
     <nav class="filters" aria-label="Filter publications">
-      <input type="search" id="search-input" placeholder="Filter selected publications by keyword…" aria-label="Filter publications by keyword" autocomplete="off">
-      <span class="filter-break" aria-hidden="true"></span>
-      <span class="filter-label">or by type:</span>
-      <button data-filter="all" aria-pressed="false">Everything</button>
-      <button data-filter="book" aria-pressed="false">Books</button>
-      <button data-filter="chapter" aria-pressed="false">Book Chapters</button>
-      <button data-filter="journal" aria-pressed="false">Journal Articles</button>
-      <button data-filter="conference" aria-pressed="false">Conference Papers</button>
-      <button data-filter="magazine" aria-pressed="false">Magazine Articles</button>
-      <button data-filter="map" aria-pressed="false">Maps</button>
+      <label class="filter-search">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+        <input type="search" id="search-input" placeholder="Filter by keyword…" aria-label="Filter publications by keyword" autocomplete="off">
+      </label>
+      <div class="filter-types" role="group" aria-label="Filter by type">
+        <button data-filter="all" aria-pressed="false">All</button>
+        <button data-filter="book" aria-pressed="false">Books</button>
+        <button data-filter="chapter" aria-pressed="false">Book Chapters</button>
+        <button data-filter="journal" aria-pressed="false">Journal Articles</button>
+        <button data-filter="conference" aria-pressed="false">Conference Papers</button>
+        <button data-filter="magazine" aria-pressed="false">Magazine Articles</button>
+        <button data-filter="map" aria-pressed="false">Maps</button>
+      </div>
+      <div class="filter-count" id="filter-count" aria-live="polite"></div>
     </nav>
 
     <!-- ── Publications ── -->
@@ -346,8 +368,10 @@
     var filterBtns = document.querySelectorAll('.filters button');
     var searchInput = document.getElementById('search-input');
     var noResults = document.getElementById('no-results');
+    var filterCount = document.getElementById('filter-count');
     var initialFilter = document.body.dataset.filter || 'all';
     var currentFilter = initialFilter;
+    var total = publications.length;
 
     function normalize(s) {
       return s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
@@ -357,14 +381,15 @@
       p._haystack = normalize(p.getAttribute('data-search') || '');
     });
 
-    // Add counts
-    filterBtns.forEach(function(btn) {
-      var filter = btn.dataset.filter;
-      var count = filter === 'all'
-        ? publications.length
-        : document.querySelectorAll('.publication[data-type="' + filter + '"]').length;
-      btn.textContent = btn.textContent + ' (' + count + ')';
-    });
+    function updateCount(visible) {
+      if (!filterCount) return;
+      if (visible === total) {
+        filterCount.textContent = 'Showing all ' + total + ' publications';
+      } else {
+        var noun = visible === 1 ? 'publication' : 'publications';
+        filterCount.textContent = 'Showing ' + visible + ' of ' + total + ' ' + noun;
+      }
+    }
 
     function applyFilter(filter, push) {
       filterBtns.forEach(function(btn) {
@@ -386,6 +411,7 @@
         if (show) visible++;
       });
       if (noResults) noResults.hidden = visible !== 0;
+      updateCount(visible);
       if (push) history.pushState({ filter: filter }, '', filterPaths[filter] || '/');
     }
 
