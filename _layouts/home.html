@@ -383,12 +383,9 @@
 
     function updateCount(visible) {
       if (!filterCount) return;
-      if (visible === total) {
-        filterCount.textContent = 'Showing all ' + total + ' publications';
-      } else {
-        var noun = visible === 1 ? 'publication' : 'publications';
-        filterCount.textContent = 'Showing ' + visible + ' of ' + total + ' ' + noun;
-      }
+      filterCount.textContent = visible === total
+        ? 'Showing all ' + total
+        : 'Showing ' + visible + ' of ' + total;
     }
 
     function applyFilter(filter, push) {
