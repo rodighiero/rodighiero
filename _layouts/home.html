@@ -179,6 +179,7 @@
     }
     .filters input[type="search"]:focus { outline: none; border-color: var(--border-hover); }
     .filters input[type="search"]::placeholder { color: var(--muted-3); }
+    .filter-break { flex-basis: 100%; height: 0; margin: 0; }
     .no-results { font-size: var(--small); color: var(--muted-3); padding: 2rem 0; }
     .no-results[hidden] { display: none; }
 
@@ -289,7 +290,8 @@
     <!-- ── Filter bar ── -->
     <nav class="filters" aria-label="Filter publications">
       <input type="search" id="search-input" placeholder="Filter selected publications by keyword…" aria-label="Filter publications by keyword" autocomplete="off">
-      <span class="filter-label">or by category:</span>
+      <span class="filter-break" aria-hidden="true"></span>
+      <span class="filter-label">or by type:</span>
       <button data-filter="all" aria-pressed="false">Everything</button>
       <button data-filter="book" aria-pressed="false">Books</button>
       <button data-filter="chapter" aria-pressed="false">Book Chapters</button>
