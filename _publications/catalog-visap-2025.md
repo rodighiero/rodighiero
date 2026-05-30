@@ -1,10 +1,10 @@
 ---
-title: "VISAP '25 Catalog: Collective Care"
+title: "Collective Care: VISAP '25 Catalog"
 year: 2025
-venue: IEEE VIS Conference, Vienna
-type: book
-author: Damla Çay, Dario Rodighiero, Weidi Zhang, Martina R. Fröschl, Peter Mindek, Beatrice Gobbo
-img: catalog-visap-2025.webp
+venue: "IEEE VIS Conference, Vienna"
+type: "book"
+author: "Damla Çay and Dario Rodighiero and Weidi Zhang and Martina R. Fröschl and Peter Mindek and Beatrice Gobbo"
+img: "catalog-visap-2025.webp"
 img_width: 600
 img_height: 776
 ---
@@ -49,4 +49,4 @@ Peter Mindek, Nanographics GmbH
 **Design Chair**\
 Beatrice Gobbo, Politecnico di Milano
 
-[^1]: This is an extended edition of a text that appeared in June in the magazine *Nightingale*, available at <https://nightingaledvs.com/visualizing-as-a-form-of-collective-care/>.
+[^1]: This is an extended edition of a text that appeared in *Nightingale* in June 2025: Çay, Damla, Dario Rodighiero, and Weidi Zhang. 2025. “Visualizing as a Form of Collective Care.” *Nightingale*, June. <https://nightingaledvs.com/visualizing-as-a-form-of-collective-care/>.
