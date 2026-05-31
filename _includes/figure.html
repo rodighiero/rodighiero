@@ -1,4 +1,4 @@
 <figure>
-  <img src="{{ include.src }}" alt="{{ include.alt }}">
+  {% assign _dims = include.src | image_size %}<img src="{{ include.src }}" alt="{{ include.alt }}"{% if _dims.width %} width="{{ _dims.width }}" height="{{ _dims.height }}"{% endif %} loading="lazy" decoding="async">
   {% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}
 </figure>
