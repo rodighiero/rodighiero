@@ -33,7 +33,7 @@ The map consists of a simple sheet that is printed on both sides. One part shows
 
 Each process of establishing a historical identity requires a certain time and so far the fragments of The Analogous City had never been completely revealed. During this practice of reconstruction and deconstruction of the city, some important and hidden stories have surfaced again, those of its inhabitants: the people who have shaped the city and discussed it by exposing their ideas and stories. All of their stories are so interesting that it is a pity that they cannot all figure there, and that there has not been time to listen to all of them.
 
-The references of The Analogous City have been extracted from existing books; a significant part of the archaeological work has been done in both traditional and digital libraries and archives. By identifying myself with the architects of the city, I have tried to recover all publications that the authors selected, photocopied, cut out and put carefully together in creating this collective collage (that is now kept in the basements of the Centre Pompidou in Paris).
+The references of The Analogous City have been extracted from existing books; a significant part of the archaeological work has been done in both traditional and digital libraries and archives. By identifying myself with the architects of the city, I have tried to recover all publications that the authors selected, photocopied, cut out and put carefully together in creating this collective collage, now kept in the basements of the Centre Pompidou in Paris (Figure 1).
 
 For this reason, all bibliographic references already existed as publications in the Spring of 1976, when The Analogous City was composed. Any references from a subsequent date are ascribable to the private archives of the authors.
 
@@ -47,7 +47,7 @@ In this way, this installation reveals itself as a modern tool, available to all
 
 The work has required time and passion. Initially, references arrived quickly, but little by little as the puzzle was being completed, to recover a certain reference became increasingly difficult and took more and more time. For instance, the last reference was found thanks to the help of Beatrice Lampariello, and required months of research, in the spare moments that I had during my doctorate study at EPFL. Reconstructing the tracks required such a long time, in scattered moments, that even now I could not tell exactly how many tracks make up The Analogous City. I count 42.
 
-The map is part of a digital installation within the exhibition. The installation consists of a table, on top of which The Analogous City has been reproduced and from which, with the use of augmented reality technology, it has been possible to extrude all references that compose it, so as to make them interactive: by framing the map with a tablet, the camera framing is displayed on the screen, enriched with virtual references. These elements are the signs that form The Analogous City. Superimposed upon the references of the plan, they fluctuate and invite the viewer to discover and explore the collage of The Analogous City, by means of a deconstruction.
+The map is part of a digital installation within the exhibition. The installation consists of a table, on top of which The Analogous City has been reproduced and from which, with the use of augmented reality technology, it has been possible to extrude all references that compose it, so as to make them interactive: by framing the map with a tablet, the camera framing is displayed on the screen, enriched with virtual references. These elements are the signs that form The Analogous City. Superimposed upon the references of the plan, they fluctuate and invite the viewer to discover and explore the collage of The Analogous City, by means of a deconstruction (Figure 2).
 
 As a publication, the map offers a similar experience as the installation exhibited at the museum: by downloading the application, it is possible to interact with the map, which replicates at home what visitors have experienced at the museum.
 
@@ -62,8 +62,8 @@ Finally the work loses the typical vertical orientation of a painting, to become
 - Rossi, Aldo. 1981. _A Scientific Autobiography_. Translated by Lawrence Venuti. Cambridge, MA: MIT Press.
 - Secchi, Bernardo. 2000. _Prima lezione di urbanistica_. Roma-Bari: Laterza.
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_001.webp" caption="Figure 1. The Analogous City rebuilt using complete documents collected during research." %}
+{% include figure.html src="/images/the-analogous-city-the-map/fig_001.webp" caption="Figure 1. The references identified during the research, returned to their exact positions within the original collage." %}
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_002.webp" caption="Figure 2. The Analogous City rebuilt by using cut outs of original documents." %}
+{% include figure.html src="/images/the-analogous-city-the-map/fig_002.webp" caption="Figure 2. The entry point of the museum's augmented-reality application, where the references appear as floating elements above the artwork." %}
 
 [^1]: The exhibition opened on 25 June 2015 at the Bonnefantenmuseum in Maastricht and ran through 15 November 2015, before traveling to the École polytechnique fédérale de Lausanne (Archizoom) and the Galleria d'Arte Moderna e Contemporanea di Bergamo (GAMeC). It brought together one hundred prints from the museum's own collection alongside forty drawings and paintings from private collections, complemented by printing plates and proofs.
