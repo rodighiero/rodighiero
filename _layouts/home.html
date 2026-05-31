@@ -261,13 +261,14 @@
   </style>
 </head>
 <body data-filter="{{ page.filter | default: 'all' }}">
+  <a class="skip-link" href="#main">Skip to main content</a>
   {% include mode-toggle.html %}
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
 
   <!-- ── Header ── -->
   <header class="header">
     <div>
-      <img src="/images/Dario-Rodighiero.webp" alt="Dario Rodighiero" class="header-portrait" width="1200" height="800">
+      <img src="/images/Dario-Rodighiero.webp" alt="Dario Rodighiero" class="header-portrait" width="1200" height="800" fetchpriority="high" decoding="async">
       <h1>Dario Rodighiero</h1>
       <div class="links">
         <a href="https://www.rug.nl/staff/d.rodighiero">University of Groningen</a> · <a href="https://mlml.io/m/dario-rodighiero">metaLAB (at) Harvard</a> · <a href="https://cyber.harvard.edu/people/dario-rodighiero">Berkman Klein Center</a>
@@ -303,7 +304,7 @@
     {% endfor %}
   </header>
 
-  <main>
+  <main id="main">
     <h2 class="publications-heading">Selected publications</h2>
     <!-- ── Filter bar ── -->
     <nav class="filters" aria-label="Filter publications">
