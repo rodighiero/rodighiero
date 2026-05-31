@@ -56,13 +56,13 @@ The map is part of a digital installation within the exhibition. The installatio
 
 As a publication, the map offers a similar experience as the installation exhibited at the museum: by downloading the application, it is possible to interact with the map, which replicates at home what visitors have experienced at the museum.
 
-As Italo Calvino (2005) would say, my work has involved the subtraction of weight: the references of The Analogous City were freed, disconnected from the work and made to fluctuate. This operation has revealed new relations between references, thereby creating new meanings: new conversations that have their foundations in the tracks of the city, which reminds us that The Analogous City is not a static work, but rather a lively, dynamic city.
+As Italo Calvino (1988) would say, my work has involved the subtraction of weight: the references of The Analogous City were freed, disconnected from the work and made to fluctuate. This operation has revealed new relations between references, thereby creating new meanings: new conversations that have their foundations in the tracks of the city, which reminds us that The Analogous City is not a static work, but rather a lively, dynamic city.
 
 Finally the work loses the typical vertical orientation of a painting, to become a city map and meeting place for the museum installation. The intention has been to generate a new space that is also a meeting point, like a square, and then to enrich that place with personal discussions, stories, and people, because we should not forget that, as Rossi (1981) reminded in his _A Scientific Autobiography_, "the project was only a pretext for a general involvement".
 
 ## References
 
-- Calvino, Italo. 2005. _Lezioni americane: sei proposte per il prossimo millennio_. Milano: Mondadori.
+- Calvino, Italo. 1988. _Six Memos for the Next Millennium_. Cambridge, MA: Harvard University Press.
 - Celant, Germano, and Stijn Huijts, eds. 2015. _Aldo Rossi: Opera Grafica: Etchings Lithographs Silkscreen Prints_. Cinisello Balsamo: Silvana Editoriale.
 - Rossi, Aldo. 1981. _A Scientific Autobiography_. Translated by Lawrence Venuti. Cambridge, MA: MIT Press.
 - Secchi, Bernardo. 2000. _Prima lezione di urbanistica_. Roma-Bari: Laterza.
