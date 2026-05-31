@@ -2,6 +2,7 @@ title: Dario Rodighiero
 excerpt_separator: "<!--more-->"
 description: Design, Data, and Humanities
 url: https://dariorodighiero.com
+goatcounter_code: fumoseaffabulazioni
 
 plugins:
   - jekyll-redirect-from
