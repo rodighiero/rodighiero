@@ -27,7 +27,7 @@ This idea already existed, it takes shape in a building designed by Aldo Rossi h
 
 Although technologies have transformed the medium over the last few decades, a map preserves its role as an orientation tool that helps to identify an area's landmarks and to become familiar with them. With a map in hand, one can set out and venture the streets, visit the neighborhoods, marvel at the unexpected sights that only a city can offer, and rediscover the pleasures of wandering, only to find, all of a sudden, one has arrived at destination.
 
-This map has been developed as a tool to know The Analogous City. It is part of a museum installation within the exhibition _Aldo Rossi – The Window of the Poet, Prints 1973–1997_ that will be opened in Maastricht next June. This work originates from a cooperation between the Bonnefanten Museum and the École polytechnique fédérale de Lausanne (EPFL), represented namely by the Archizoom Gallery and the Laboratory of Digital Humanities.
+This map has been developed as a tool to know The Analogous City. It is part of a museum installation within the exhibition _Aldo Rossi – The Window of the Poet, Prints 1973–1997_ (Celant and Huijts 2015) that will be opened in Maastricht next June. This work originates from a cooperation between the Bonnefanten Museum and the École polytechnique fédérale de Lausanne (EPFL), represented namely by the Archizoom Gallery and the Laboratory of Digital Humanities.
 
 The map consists of a simple sheet that is printed on both sides. One part shows a large format print of the work, with its references listed in chronological order; the other, the texts of Fabio Reinhart and Aldo Rossi, together with the list of references and related images, are shown in their entirety, just as they are printed in books.
 
@@ -58,6 +58,7 @@ Finally the work loses the typical vertical orientation of a painting, to become
 ## References
 
 - Calvino, Italo. 2005. _Lezioni americane: sei proposte per il prossimo millennio_. Milano: Mondadori.
+- Celant, Germano, and Stijn Huijts, eds. 2015. _Aldo Rossi: Opera Grafica: Etchings Lithographs Silkscreen Prints_. Cinisello Balsamo: Silvana Editoriale.
 - Rossi, Aldo. 2009. _Autobiografia scientifica_. Milano: Il Saggiatore.
 - Secchi, Bernardo. 2000. _Prima lezione di urbanistica_. Roma-Bari: Laterza.
 
