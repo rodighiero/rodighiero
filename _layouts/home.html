@@ -388,6 +388,12 @@
         : 'Showing ' + visible + ' of ' + total;
     }
 
+    function trackPageview() {
+      if (window.goatcounter && window.goatcounter.count) {
+        window.goatcounter.count({ path: location.pathname });
+      }
+    }
+
     function applyFilter(filter, push) {
       filterBtns.forEach(function(btn) {
         var active = btn.dataset.filter === filter;
@@ -409,7 +415,10 @@
       });
       if (noResults) noResults.hidden = visible !== 0;
       updateCount(visible);
-      if (push) history.pushState({ filter: filter }, '', filterPaths[filter] || '/');
+      if (push) {
+        history.pushState({ filter: filter }, '', filterPaths[filter] || '/');
+        trackPageview();
+      }
     }
 
     applyFilter(initialFilter, false);
@@ -430,6 +439,7 @@
     window.addEventListener('popstate', function(e) {
       currentFilter = (e.state && e.state.filter) || 'all';
       applyFilter(currentFilter, false);
+      trackPageview();
     });
 
     // Keep arrow on same line as last word of title
