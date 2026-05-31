@@ -35,6 +35,8 @@ Each process of establishing a historical identity requires a certain time and s
 
 The references of The Analogous City have been extracted from existing books; a significant part of the archaeological work has been done in both traditional and digital libraries and archives. By identifying myself with the architects of the city, I have tried to recover all publications that the authors selected, photocopied, cut out and put carefully together in creating this collective collage, now kept in the basements of the Centre Pompidou in Paris (Figure 1).
 
+{% include figure.html src="/images/the-analogous-city-the-map/fig_001.webp" caption="Figure 1. The references identified during the research, returned to their exact positions within the original collage." %}
+
 For this reason, all bibliographic references already existed as publications in the Spring of 1976, when The Analogous City was composed. Any references from a subsequent date are ascribable to the private archives of the authors.
 
 I can truly find myself in the words of Aldo Rossi, who said that this latest project is particularly dear to me; it is an affection project.
@@ -49,6 +51,8 @@ The work has required time and passion. Initially, references arrived quickly, b
 
 The map is part of a digital installation within the exhibition. The installation consists of a table, on top of which The Analogous City has been reproduced and from which, with the use of augmented reality technology, it has been possible to extrude all references that compose it, so as to make them interactive: by framing the map with a tablet, the camera framing is displayed on the screen, enriched with virtual references. These elements are the signs that form The Analogous City. Superimposed upon the references of the plan, they fluctuate and invite the viewer to discover and explore the collage of The Analogous City, by means of a deconstruction (Figure 2).
 
+{% include figure.html src="/images/the-analogous-city-the-map/fig_002.webp" caption="Figure 2. The entry point of the museum's augmented-reality application, where the references appear as floating elements above the artwork." %}
+
 As a publication, the map offers a similar experience as the installation exhibited at the museum: by downloading the application, it is possible to interact with the map, which replicates at home what visitors have experienced at the museum.
 
 As Italo Calvino (2005) would say, my work has involved the subtraction of weight: the references of The Analogous City were freed, disconnected from the work and made to fluctuate. This operation has revealed new relations between references, thereby creating new meanings: new conversations that have their foundations in the tracks of the city, which reminds us that The Analogous City is not a static work, but rather a lively, dynamic city.
@@ -61,9 +65,5 @@ Finally the work loses the typical vertical orientation of a painting, to become
 - Celant, Germano, and Stijn Huijts, eds. 2015. _Aldo Rossi: Opera Grafica: Etchings Lithographs Silkscreen Prints_. Cinisello Balsamo: Silvana Editoriale.
 - Rossi, Aldo. 1981. _A Scientific Autobiography_. Translated by Lawrence Venuti. Cambridge, MA: MIT Press.
 - Secchi, Bernardo. 2000. _Prima lezione di urbanistica_. Roma-Bari: Laterza.
-
-{% include figure.html src="/images/the-analogous-city-the-map/fig_001.webp" caption="Figure 1. The references identified during the research, returned to their exact positions within the original collage." %}
-
-{% include figure.html src="/images/the-analogous-city-the-map/fig_002.webp" caption="Figure 2. The entry point of the museum's augmented-reality application, where the references appear as floating elements above the artwork." %}
 
 [^1]: The exhibition opened on 25 June 2015 at the Bonnefantenmuseum in Maastricht and ran through 15 November 2015, before traveling to the École polytechnique fédérale de Lausanne (Archizoom) and the Galleria d'Arte Moderna e Contemporanea di Bergamo (GAMeC). It brought together one hundred prints from the museum's own collection alongside forty drawings and paintings from private collections, complemented by printing plates and proofs.
