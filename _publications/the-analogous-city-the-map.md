@@ -55,8 +55,6 @@ As Italo Calvino (2005) would say, my work has involved the subtraction of weigh
 
 Finally the work loses the typical vertical orientation of a painting, to become a city map and meeting place as the museum installation. The intention has been to generate a new space that is also a meeting point, like a square, and then to enrich that place with personal discussions, stories, and people, because we should not forget that, as Rossi (2009) reminded in his _A Scientific Autobiography_, "the project was only a pretext for a general involvement".
 
-*Dario Rodighiero, April 2015. Translation by Marzia Deplano and Baukje Reitsma.*
-
 ## References
 
 - Calvino, Italo. 2005. _Lezioni americane: sei proposte per il prossimo millennio_. Milano: Mondadori.
