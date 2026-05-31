@@ -261,7 +261,6 @@
   </style>
 </head>
 <body data-filter="{{ page.filter | default: 'all' }}">
-  <a class="skip-link" href="#main">Skip to main content</a>
   {% include mode-toggle.html %}
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
 
@@ -304,7 +303,7 @@
     {% endfor %}
   </header>
 
-  <main id="main">
+  <main>
     <h2 class="publications-heading">Selected publications</h2>
     <!-- ── Filter bar ── -->
     <nav class="filters" aria-label="Filter publications">
