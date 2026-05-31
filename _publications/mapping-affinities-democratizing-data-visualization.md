@@ -15,6 +15,14 @@ Organizations are complex systems whose members leave behind a wealth of digital
 
 <!--more-->
 
+> The important process of flattening and decentralizing organizations starts first by understanding their structure. *Mapping Affinities* by Dario Rodighiero introduces an important network visualization model to map large organizations in order to foster collaboration and autonomy. This is a much-needed effort.
+>
+> — Manuel Lima
+
+> The diagrammatic mapping produced by Dario Rodighiero’s designs combines the complexity of esoteric insight with the clarity of rational logic. This well-formulated approach promises to produce ways of ‘reading’ massive quantities of current data so that its statistical richness becomes graphically legible. In the process, the transformation of mere information into schematic visualizations exposes latent, actual, and potential affinities through a practice suggestive of digital alchemy. This is fascinating work, full of possibilities.
+>
+> — Johanna Drucker
+
 ## Introduction
 
 Today, organizations are more than ever complex systems. They are so large, ramified, and intertwined that their organic structure seems like a tangle of activities. Day by day organization members contribute to keeping these structures alive with their actions, behaviors, and thoughts. Organizations rely on these daily practices.
@@ -38,11 +46,3 @@ The metric of affinities is crucial for academic organizations. Translating affi
 The metric of affinities has to be, therefore, at the disposal of the whole collective to visually lead individuals in personal choices.
 
 This book is the result of five years working at the École Polytechnique Fédérale de Lausanne (EPFL), during which the problem of mapping affinities was addressed through a design approach. This problem was tackled by visual means, which represent the only solution to manage the enormous mass of data that humans are increasingly producing. The innovation of this work does not stay in the problem itself but rather in the reconciliation of humanities and technology through a new European Bauhaus.
-
-> The important process of flattening and decentralizing organizations starts first by understanding their structure. *Mapping Affinities* by Dario Rodighiero introduces an important network visualization model to map large organizations in order to foster collaboration and autonomy. This is a much-needed effort.
->
-> — Manuel Lima
-
-> The diagrammatic mapping produced by Dario Rodighiero’s designs combines the complexity of esoteric insight with the clarity of rational logic. This well-formulated approach promises to produce ways of ‘reading’ massive quantities of current data so that its statistical richness becomes graphically legible. In the process, the transformation of mere information into schematic visualizations exposes latent, actual, and potential affinities through a practice suggestive of digital alchemy. This is fascinating work, full of possibilities.
->
-> — Johanna Drucker
