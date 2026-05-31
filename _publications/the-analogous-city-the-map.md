@@ -19,8 +19,6 @@ This new publication of The Analogous City, an artwork produced by Aldo Rossi, E
 
 ## A Subtraction of Weight
 
-*Dario Rodighiero, April 2015*
-
 The Analogous City is not simply a work that projects over a flat surface a continuous past; rather, it exists as a dialogue with the present and a comparison with one's ideals, and memory. I like to think of The Analogous City as a real alternative. That is how I became an inhabitant of this city and started to patiently reconstruct its history, from its neighbourhoods to its streets, from its monuments to its houses. I have talked to the people who lived in this city and listened to the stories of authors, scholars of architecture and simple flâneurs.
 
 I was inspired by the idea of Bernardo Secchi who identifies city planning as a combination of tracks: real practices that model the city, and shape it over time, at their overlapping. Secchi also states that there is another layer that intertwines with the practices and integrates the fragments left by them: the layer of discussions. After months of researching this work, if asked to reflect about it, I would say that The Analogous City is an urban fabric formed by tracks and conversations: tracks of all real and unreal objects that have become a sign on the map; discussions of all those authors, critics, historians, architects, who are equally inhabitants of this city.
@@ -57,7 +55,7 @@ As Italo Calvino would say, my work has involved the subtraction of weight: the 
 
 Finally the work loses the typical vertical orientation of a painting, to become a city map and meeting place as the museum installation. The intention has been to generate a new space that is also a meeting point, like a square, and then to enrich that place with personal discussions, stories, and people, because we should not forget that, as Rossi reminded in his _A Scientific Autobiography_, "the project was only a pretext for a general involvement".
 
-*Translation by Marzia Deplano and Baukje Reitsma.*
+*Dario Rodighiero, April 2015. Translation by Marzia Deplano and Baukje Reitsma.*
 
 ## References
 
