@@ -55,7 +55,7 @@ As Italo Calvino would say, my work has involved the subtraction of weight: the 
 
 Finally the work loses the typical vertical orientation of a painting, to become a city map and meeting place as the museum installation. The intention has been to generate a new space that is also a meeting point, like a square, and then to enrich that place with personal discussions, stories, and people, because we should not forget that, as Rossi reminded in his _A Scientific Autobiography_, "the project was only a pretext for a general involvement".
 
-*Dario Rodighiero, April 2015. Translation by Marzia Deplano and Baukje Reitsma.*
+*Rodighiero, Dario. 2015. Translated by Marzia Deplano and Baukje Reitsma.*
 
 ## References
 
