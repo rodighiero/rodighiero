@@ -23,7 +23,7 @@ The Analogous City is not simply a work that projects over a flat surface a cont
 
 I was inspired by Bernardo Secchi (2000), who identifies city planning as a combination of tracks: real practices that model the city, and shape it over time, at their overlapping. Secchi also states that there is another layer that intertwines with the practices and integrates the fragments left by them: the layer of discussions. After months of researching this work, if asked to reflect about it, I would say that The Analogous City is an urban fabric formed by tracks and conversations: tracks of all real and unreal objects that have become a sign on the map; discussions of all those authors, critics, historians, architects, who are equally inhabitants of this city.
 
-This idea already existed, it takes shape in a building designed by Aldo Rossi himself, the Bonnefanten Museum. What better way to show the richness of this urban fabric to visitors – the new inhabitants of this city – than through a city map? An object so simple and recognizable, that it does not require any instructions.
+This idea already existed, it takes shape in a building designed by Aldo Rossi himself, the Bonnefanten Museum. What better way to show the richness of this urban fabric to visitors – the new inhabitants of this city – than through a city map? An object so simple and recognizable that it does not require any instructions.
 
 Although technologies have changed medium over the last few decades, a map preserves its role as an orientation tool that helps to identify an area's landmarks and to become familiar with them. With a map in hand, one can set out and venture the streets, visit the neighbourhoods, marvel at the unexpected sights that only a city can offer, and rediscover the pleasures of wandering, only to find, all of a sudden, one has arrived at destination.
 
@@ -31,13 +31,13 @@ This map has been developed as a tool to know The Analogous City. It is part of 
 
 The map consists of a simple sheet that is printed on both sides. One part shows a large format print of the work, with its references listed in chronological order; the other, the texts of Fabio Reinhart and Aldo Rossi, together with the list of references and related images, are shown in their entirety, just as they are printed in books.
 
-Each process of establishing a historical identity requires a certain time and so far the fragments of The Analogous City had never been completely revealed. During this practice of reconstruction and deconstruction of the city, some important and hidden stories have surfaced again, those of its inhabitants: the people who have shaped the city and discussed about it by exposing their ideas and stories. All of their stories are so interesting, that it is a pity that they cannot all figure there, and that there has not been time to listen to all of them.
+Each process of establishing a historical identity requires a certain time and so far the fragments of The Analogous City had never been completely revealed. During this practice of reconstruction and deconstruction of the city, some important and hidden stories have surfaced again, those of its inhabitants: the people who have shaped the city and discussed it by exposing their ideas and stories. All of their stories are so interesting that it is a pity that they cannot all figure there, and that there has not been time to listen to all of them.
 
-The references of The Analogous City have been extracted from existing books, a significant part of the archaeological work has been made in both traditional and digital libraries and archives. By identifying myself with the architects of the city, I have tried to recover all publications that the authors selected, photocopied, cut out and put carefully together in creating this collective collage (that is now kept in the basements of the Centre Pompidou in Paris).
+The references of The Analogous City have been extracted from existing books; a significant part of the archaeological work has been done in both traditional and digital libraries and archives. By identifying myself with the architects of the city, I have tried to recover all publications that the authors selected, photocopied, cut out and put carefully together in creating this collective collage (that is now kept in the basements of the Centre Pompidou in Paris).
 
 For this reason, all bibliographic references already existed as publications in the Spring of 1976, when The Analogous City was composed. Any references from a subsequent date are ascribable to the private archives of the authors.
 
-I can truly find myself in the words of Aldo Rossi, who said that this latest project is particularly dear to me, it is an affection project.
+I can truly find myself in the words of Aldo Rossi, who said that this latest project is particularly dear to me; it is an affection project.
 
 I better understood the esteem among architects (not all) for Rossi's thinking by talking to those who contributed to the work, as well as the effort of the authors who spent whole nights building the city, because as Fabio Reinhart recalls, during the day they had to work to make a living.
 
@@ -51,7 +51,7 @@ The map is part of a digital installation within the exhibition. The installatio
 
 As a publication, the map offers a similar experience as the installation exhibited at the museum: by downloading the application, it is possible to interact with the map, which replicates at home what visitors have experienced at the museum.
 
-As Italo Calvino (2005) would say, my work has involved the subtraction of weight: the references of The Analogous City were freed, disconnected from the work and made to fluctuate. This operation has revealed new relations between references, thereby creating new meanings: new conversations that have as their foundations in the tracks of the city, which reminds us that The Analogous City is not a static work, but rather a lively, dynamic city.
+As Italo Calvino (2005) would say, my work has involved the subtraction of weight: the references of The Analogous City were freed, disconnected from the work and made to fluctuate. This operation has revealed new relations between references, thereby creating new meanings: new conversations that have their foundations in the tracks of the city, which reminds us that The Analogous City is not a static work, but rather a lively, dynamic city.
 
 Finally the work loses the typical vertical orientation of a painting, to become a city map and meeting place as the museum installation. The intention has been to generate a new space that is also a meeting point, like a square, and then to enrich that place with personal discussions, stories, and people, because we should not forget that, as Rossi (2009) reminded in his _A Scientific Autobiography_, "the project was only a pretext for a general involvement".
 
