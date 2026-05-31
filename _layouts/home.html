@@ -173,8 +173,9 @@
     }
     .filters input[type="search"]:focus { outline: none; border-bottom-color: var(--fg); }
     .filters input[type="search"]::placeholder { color: var(--muted-3); }
-    .filter-types { display: flex; flex-wrap: wrap; align-items: center; }
+    .filter-types { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
     .filter-types button {
+      position: relative;
       color: var(--muted-1);
       cursor: pointer;
       background: none;
@@ -188,7 +189,10 @@
     .filter-types button.active { color: var(--fg); font-weight: 500; }
     .filter-types button + button::before {
       content: '·';
-      margin: 0 0.5rem;
+      position: absolute;
+      left: -0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
       color: var(--muted-3);
       font-weight: 400;
     }
