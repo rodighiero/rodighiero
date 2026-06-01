@@ -23,6 +23,7 @@ jobs:
       - uses: lycheeverse/lychee-action@v2
         id: lychee
         with:
+          jobSummary: false
           args: >-
             --no-progress
             --accept 200,202,206,302,403,429,999
