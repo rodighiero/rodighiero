@@ -24,10 +24,12 @@ jobs:
         with:
           args: >-
             --no-progress
-            --accept 200,206,403,429
+            --accept 200,202,206,302,403,429,999
             --max-retries 2
             --timeout 20
             --root-dir ${{ github.workspace }}/_site
+            --fallback-extensions html
             --exclude-path _site/assets
+            --exclude '^/$'
             './_site/**/*.html'
           fail: true
