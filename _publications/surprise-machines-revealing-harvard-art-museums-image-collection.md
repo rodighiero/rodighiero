@@ -129,7 +129,7 @@ Beyond the technical merits, Surprise Machines is a collective project developed
 - Jodidio, Philip. 2014. *Piano: Renzo Piano Building Workshop, Complete Works, 1966–Today*. Cologne: Taschen.
 - Karjus, Andres, Mar Canet Solà, Tillmann Ohm, Sebastian E. Ahnert, and Maximilian Schich. 2022. "Compression Ensembles Quantify Aesthetic Complexity and the Evolution of Visual Art." arXiv. [doi:10.48550/arXiv.2205.10271](https://doi.org/10.48550/arXiv.2205.10271).
 - Kenderdine, Sarah, Ingrid Mason, and Lily Hibberd. 2021. "Computational Archives for Experimental Museology," 3–18. [doi:10.1007/978-3-030-83647-4_1](https://doi.org/10.1007/978-3-030-83647-4_1).
-- Klinke, Harald. 2021. "V-Lab Workshop: Visual Analysis in Cultural Data – Image Plots and t-SNE Maps Made Easy." History of Art Department, October 28. [arthistory.berkeley.edu/events/v-lab-workshop](https://arthistory.berkeley.edu/events/v-lab-workshop-visual-analysis-in-cultural-data-image-plots-and-t-sne-maps-made-easy/).
+- Klinke, Harald. 2021. "V-Lab Workshop: Visual Analysis in Cultural Data – Image Plots and t-SNE Maps Made Easy." History of Art Department, October 28.
 - Kräutli, Florian. 2016. *Visualising Cultural Data: Exploring Digital Collections through Timeline Visualisations*. PhD thesis, Royal College of Art.
 - Latour, Bruno. 1988. *The Pasteurization of France*. Translated by Alan Sheridan and John Law. Cambridge, MA: Harvard University Press.
 - Lima, Manuel. 2011. *Visual Complexity: Mapping Patterns of Information*. New York: Princeton Architectural Press.
