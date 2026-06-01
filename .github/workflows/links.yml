@@ -34,7 +34,7 @@ jobs:
             --exclude '^/$'
             --exclude 'linkedin\.com'
             --exclude 'fu-berlin\.de'
-            './_site/**/*.html'
+            './_site/*.html'
           fail: false
       - name: Annotate broken links with source context
         if: steps.lychee.outputs.exit_code != 0
