@@ -129,13 +129,16 @@
       margin-bottom: 1.2rem;
     }
     .header-portrait { width: 100%; height: auto; border-radius: 4px; display: block; margin-bottom: 0.75rem; }
-    .header h1 { font-size: 1.3rem; font-weight: 500; margin: 0; }
+    .header h1 { font-size: 1.3rem; font-weight: 500; margin: 0.85rem 0 0; line-height: 1.6; }
     .header .links { font-size: var(--small); line-height: 1.6; margin-top: -0.2rem; }
-    .header .links a { display: inline; }
-    .header .icons { display: flex; gap: 0.75rem; margin-top: 0.5rem; }
+    .header .links a { display: block; }
+    .header .links a::before { content: "· "; }
+    .header .icons { display: flex; gap: 0.75rem; margin-top: 1rem; }
     .header .icons a { display: flex; opacity: 0.5; padding: 2px; }
     .header .icons a:hover { opacity: 1; }
     .header .icons svg { width: 16px; height: 16px; fill: currentColor; overflow: visible; }
+    .header .icons a[aria-label="Zotero"] svg { transform: scale(0.9); }
+    .header .icons a[aria-label="RSS feed"] svg { transform: scale(1.15); }
     .header .bio-col { font-size: var(--small); line-height: 1.6; }
     .header .bio-col p { margin: 0; }
     .header .bio-col a { text-decoration: underline; }
@@ -256,7 +259,7 @@
       .header { display: block; overflow: hidden; }
       .header-portrait { float: left; width: 220px; margin: 0 1.5rem 0.75rem 0; }
       .header .icons { margin-bottom: 0.6rem; }
-      .header .bio-col { margin-top: 1rem; }
+      .header .bio-col { clear: left; margin-top: 1rem; }
       .publication { display: block; overflow: hidden; }
       .col-img { display: block; float: right; width: 220px; margin: 0 0 1rem 1.5rem; }
       .col-desc { margin-top: 1.2rem; }
@@ -285,7 +288,7 @@
       <img src="/images/Dario-Rodighiero.webp" alt="Dario Rodighiero" class="header-portrait" width="1200" height="800" fetchpriority="high" decoding="async">
       <h1>Dario Rodighiero</h1>
       <div class="links">
-        <a href="https://www.rug.nl/staff/d.rodighiero">University of Groningen</a> · <a href="https://mlml.io/m/dario-rodighiero">metaLAB (at) Harvard/Berlin/Basel</a> · <a href="https://cyber.harvard.edu/people/dario-rodighiero">Berkman Klein Center</a>
+        <a href="https://www.rug.nl/staff/d.rodighiero">University of Groningen</a><a href="https://mlml.io/m/dario-rodighiero">metaLAB (at) Harvard/Berlin/Basel</a><a href="https://cyber.harvard.edu/people/dario-rodighiero">Berkman Klein Center for Internet &amp; Society</a>
       </div>
       <div class="icons">
         <a href="https://github.com/rodighiero/" aria-label="GitHub">
