@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
 
 jobs:
   check:
@@ -22,19 +21,13 @@ jobs:
         env:
           JEKYLL_ENV: production
       - uses: lycheeverse/lychee-action@v2
-        id: lychee
         with:
           args: >-
             --no-progress
             --accept 200,206,403,429
             --max-retries 2
             --timeout 20
+            --root-dir ${{ github.workspace }}/_site
             --exclude-path _site/assets
             './_site/**/*.html'
-          fail: false
-      - uses: peter-evans/create-issue-from-file@v5
-        if: steps.lychee.outputs.exit_code != 0
-        with:
-          title: Link Checker Report
-          content-filepath: ./lychee/out.md
-          labels: link-checker
+          fail: true
