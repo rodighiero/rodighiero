@@ -209,17 +209,24 @@
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
       gap: 2rem;
-      padding: 1.2rem 0 2.8rem;
+      margin: 0 -1rem;
+      padding: 1.2rem 1rem 2.8rem;
       align-items: start;
       border-top: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s ease;
     }
     .col-meta h2 { font-size: var(--base); font-weight: 500; margin: 0.6rem 0 0.2rem; line-height: 1.35; display: inline-block; max-width: 100%; }
     .col-meta h2 a { color: inherit; text-decoration: none; }
-    .col-meta h2:has(a:not(.ext-link):hover) a:not(.ext-link) { text-decoration: underline; }
+    .publication:hover .col-meta h2 a:not(.ext-link) { text-decoration: underline; }
     .col-meta h2 a .ext { display: inline; margin-left: 0.3em; text-decoration: none; white-space: nowrap; }
     .col-meta h2 a .ext svg { width: 1.25ex; height: 1.25ex; vertical-align: -0.1ex; }
-    .col-meta h2:has(a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; border-radius: 2px; }
+    .col-meta h2:has(.ext-link:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; border-radius: 2px; }
     .col-meta h2 a:focus-visible { outline: none; }
+    .publication:hover,
+    .publication:has(.col-meta h2 a:not(.ext-link):focus-visible) { background: color-mix(in srgb, var(--fg) 5%, transparent); }
+    .publication:has(.col-meta h2 a:not(.ext-link):focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
     .col-img { grid-column: 4; grid-row: 1; }
     .col-meta { grid-column: 1; }
     .col-desc { grid-column: 2 / span 2; }
@@ -470,6 +477,21 @@
       nowrap.appendChild(lastWordLink);
       nowrap.appendChild(extLink);
       h2.insertBefore(nowrap, titleLink.nextSibling);
+    });
+
+    // Make the whole row a target for the publication page,
+    // without breaking inline links or text selection.
+    publications.forEach(function(p) {
+      var titleLink = p.querySelector('.col-meta h2 a:not(.ext-link)');
+      if (!titleLink) return;
+      var href = titleLink.getAttribute('href');
+      p.addEventListener('click', function(e) {
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        if (e.target.closest('a')) return;
+        var sel = window.getSelection();
+        if (sel && sel.toString().length > 0) return;
+        window.location.href = href;
+      });
     });
   </script>
   {% include common-scripts.html %}
