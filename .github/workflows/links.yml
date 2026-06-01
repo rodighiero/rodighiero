@@ -32,5 +32,6 @@ jobs:
             --exclude-path _site/assets
             --exclude '^/$'
             --exclude 'linkedin\.com'
+            --exclude 'fu-berlin\.de'
             './_site/**/*.html'
           fail: true
