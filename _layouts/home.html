@@ -253,10 +253,12 @@
     }
 
     @media (max-width: 1024px) {
-      .header { grid-template-columns: 1fr; gap: 1rem; }
+      .header { display: block; overflow: hidden; }
+      .header-portrait { float: left; width: 220px; margin: 0 1.5rem 0.75rem 0; }
       .header .icons { margin-bottom: 0.6rem; }
+      .header .bio-col { margin-top: 1rem; }
       .publication { display: block; overflow: hidden; }
-      .col-img { display: block; float: right; width: 25%; margin: 0 0 1rem 1.5rem; }
+      .col-img { display: block; float: right; width: 220px; margin: 0 0 1rem 1.5rem; }
       .col-desc { margin-top: 1.2rem; }
     }
     @media print {
