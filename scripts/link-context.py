@@ -141,8 +141,6 @@ def main() -> int:
             continue
         primary = hits[0]
         file, line_no, kind, ctx = primary
-        if len(ctx) > 240:
-            ctx = ctx[:240].rstrip() + "…"
         print(f"{n}. **[{info['status']}]** `{file}:{line_no}` ({kind})  ")
         print(f"   `{url}`  ")
         if not info["status"].isdigit():
