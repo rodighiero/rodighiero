@@ -118,7 +118,7 @@ The cartographic projection is one of the most ambitious human gestures. It embo
 
 The advantages that characterize the cartographic projections are balanced by inconveniences, as it happens in many processes of transformation. The major trouble is the deformation of the distances between the nodes, which is clearly visible in Figure 5. The Mercator projection (Monmonier 2004) clearly shows a deformation that is proportional to the distance from the equator. The Mercator is one of the major projections as it maintains the correct proportion in numerous populated areas. However, the distortion of Norway is clearly noticeable compared to the grid as well as the false magnitude of Antarctica.
 
-{% include figure.html src="/images/spherical-projection/fig_005.webp" caption="Figure 5. The Mercator projection (Monmonier 2004) shows a deformation that is proportional to the distance from the equator. The distortion of Norway is clearly noticeable compared to the grid, as well as the false magnitude of Antarctica." %}
+{% include figure.html src="/images/spherical-projection/fig_005.webp" caption="Figure 5. Ptolemy collected a lot of information about projection techniques, improving them. This figure shows how a portion of the sphere is flattened on a two-dimensional surface (Dilke 1987). This method can be applied to the Earth as to any kind of globe, such as the spherical network." %}
 
 Network projections thus have to be interpreted carefully as, like a map, the distances can be represented deceitfully. In general—this is valid for all data visualizations—it is necessary to have a general awareness of the creation process to understand every outcome. Such knowledge will allow the reader to read the media with the necessary precautions.
 
