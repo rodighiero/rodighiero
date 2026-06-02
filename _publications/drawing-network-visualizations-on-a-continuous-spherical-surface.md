@@ -82,7 +82,7 @@ The lexical cartography is based on vocabulary similarity, inferred from papers.
 
 The case study of the Digital Humanities Conference (DH2019) confirms the issue of centrality raised in these pages. Despite the high connectivity of lexical ties, a set of authors is always confined towards the network’s borders (see Figure 1). The rich connectivity of DH2019 makes the conference a perfect example to demonstrate the efficacy of the spherical layout.
 
-{% include figure.html src="/images/spherical-projection/1.png" caption="Figure 1. This network visualization represents the Digital Humanities Conference that took place in 2019 in Utrecht, Netherlands. The visualization is composed of authors connected by their common terminology. Although the high connectivity, some scholars are placed anyway on the edges, transforming the network into a sort of ranking." %}
+{% include figure.html src="/images/spherical-projection/1.webp" caption="Figure 1. This network visualization represents the Digital Humanities Conference that took place in 2019 in Utrecht, Netherlands. The visualization is composed of authors connected by their common terminology. Although the high connectivity, some scholars are placed anyway on the edges, transforming the network into a sort of ranking." %}
 
 ## Drawing on the Spherical Surface
 
@@ -92,13 +92,13 @@ Network visualizations are the result of a process of stabilization in which edg
 
 Parameters play an important role in spherical networks. The optimal coverage of the surface derives from a delicate balance of two parameters that operate on the system: the link strength[^4] and the many-body forces.[^5] When the forces are not correctly balanced, the risk is obtaining a roundish, slightly curved flat network like Antarctica. If this were to happen, the link strength would be loosened to slide the network gently over the sphere until it is entirely covered. Likewise, the many-body force has to be increased to untwist any eventual cluster of nodes, which might make the visualization unreadable.
 
-{% include figure.html src="/images/spherical-projection/2.jpg" caption="Figure 2. This sequence shows three moments of the network arrangement. In particular, it is noticeable how the size of the nodes changes according to their position: larger nodes are closer to the viewer. During the arrangement, these nodes adopt the same size, which means that they are organizing on the spherical surface at the same distance from the sphere’s center." %}
+{% include figure.html src="/images/spherical-projection/2.webp" caption="Figure 2. This sequence shows three moments of the network arrangement. In particular, it is noticeable how the size of the nodes changes according to their position: larger nodes are closer to the viewer. During the arrangement, these nodes adopt the same size, which means that they are organizing on the spherical surface at the same distance from the sphere’s center." %}
 
 The result of the agency is a node arrangement that looks like a sphere (see Figure 3). The likeliness to a globe is further reinforced by curved lines that stay for edges. The number of authors (around 1,000) and the number of links (around 140,000) shape a dense network that leads to results favorable to a spherical arrangement.
 
 It is noticeable how the network cannot be read in terms of centrality. Such a measure is absent in favor of another one, density. The network density is intended as the number of nodes in a given area that describes a local neighborhood. When a lot of nodes are condensed, it is an index of a highly shared vocabulary, as in the case of a co-authored conference paper. When single authors are situated in rarefied areas, they are still in a contextual neighborhood despite the distance from the others. In any case, every author always belongs to a 360-degree contextual area.
 
-{% include figure.html src="/images/spherical-projection/3.jpg" caption="Figure 3. This snapshot shows a representation of the Digital Humanities Conference 2019. The flat network presented in Figure 1 is differently arranged on a spherical surface. No individuals are placed on the borders, each node is over 360 degrees. In such a condition, there is no way to create a ranking based on centrality, it is rather a space that invites interpretation through the density of different areas." %}
+{% include figure.html src="/images/spherical-projection/3.webp" caption="Figure 3. This snapshot shows a representation of the Digital Humanities Conference 2019. The flat network presented in Figure 1 is differently arranged on a spherical surface. No individuals are placed on the borders, each node is over 360 degrees. In such a condition, there is no way to create a ranking based on centrality, it is rather a space that invites interpretation through the density of different areas." %}
 
 ## The Origins of Cartographic Projection
 
@@ -118,29 +118,29 @@ The cartographic projection is one of the most ambitious human gestures. It embo
 
 The advantages that characterize the cartographic projections are balanced by inconveniences, as it happens in many processes of transformation. The major trouble is the deformation of the distances between the nodes, which is clearly visible in Figure 5. The Mercator projection (Monmonier 2004) clearly shows a deformation that is proportional to the distance from the equator. The Mercator is one of the major projections as it maintains the correct proportion in numerous populated areas. However, the distortion of Norway is clearly noticeable compared to the grid as well as the false magnitude of Antarctica.
 
-{% include figure.html src="/images/spherical-projection/5.png" caption="Figure 5. The Mercator projection (Monmonier 2004) shows a deformation that is proportional to the distance from the equator. The distortion of Norway is clearly noticeable compared to the grid, as well as the false magnitude of Antarctica." %}
+{% include figure.html src="/images/spherical-projection/5.webp" caption="Figure 5. The Mercator projection (Monmonier 2004) shows a deformation that is proportional to the distance from the equator. The distortion of Norway is clearly noticeable compared to the grid, as well as the false magnitude of Antarctica." %}
 
 Network projections thus have to be interpreted carefully as, like a map, the distances can be represented deceitfully. In general—this is valid for all data visualizations—it is necessary to have a general awareness of the creation process to understand every outcome. Such knowledge will allow the reader to read the media with the necessary precautions.
 
 The results of applying the Mercator projection to DH2019 are shown in Figure 6. The comparison between Figures 5 and 6 gives us an idea of the network deformation, in particular at the top and the bottom of the image where connections are rather spaced. It also has to be considered that these margins are defined by manual intervention as the Mercator projection goes to infinity towards north and south. Furthermore, there is another difference from a standard geographical projection: territory doesn’t have any regular geometrical shape. The lines that are straight on the spherical surface give a sense of the deformation of the plane. Figure 5 shows how lines, which are carefully distributed on the spherical surface, tend to be more curved by moving away from the equator.
 
-{% include figure.html src="/images/spherical-projection/6.jpg" caption="Figure 6. The Mercator projection applied to a network shows clearly how the deformation of the space is reflected by the length and the curvature of the edges. Understanding space means having the design process clear above all else." %}
+{% include figure.html src="/images/spherical-projection/6.webp" caption="Figure 6. The Mercator projection applied to a network shows clearly how the deformation of the space is reflected by the length and the curvature of the edges. Understanding space means having the design process clear above all else." %}
 
 The darkened zone of the Mercator projection (see Figure 6) shows how the network mainly occupies the area corresponding to the Equator, which enables a horizontal continuity. However, other projections have different characteristics as it is the case of Charles Peirce’s quincuncial projection (Krämer and Ljungberg 2016). In the 18th century, it was pretty common for students and scholars to practice with cartography; Charles Peirce, who is internationally known for his studies in pragmatism, has equally contributed to cartography with his own projection. The quincuncial projection is particularly relevant in this context as it can be tiled in every direction (see Figure 7). Its continuity expands both horizontal and vertical directions, creating a space that is continuous at north, east, south, and west. Contrary to the Mercator projection, the quincuncial one keeps a great precision at the poles making it a perfect tool for Arctic expeditions cruising in the Northern Hemisphere. The North Pole is, indeed, exactly at the map’s center while the South Pole is distributed to the four corners. Looking at Figure 7, it is easy to notice how nodes are massed on the diagonals of the image. More difficult to read, in the same figure, is the deformation of the space which is indicated by the curving lines that draw a double-s shape on the diagonals. As said before, these lines are straight on the spherical surface; keeping this in mind will help to perceive the spatial deformation of the globe.
 
-{% include figure.html src="/images/spherical-projection/7.jpg" caption="Figure 7. Charles Peirce’s quincuncial projection can be tiled in all directions. This characteristic makes the network arrangement particularly interesting as the space continuity is guaranteed both vertically and horizontally." %}
+{% include figure.html src="/images/spherical-projection/7.webp" caption="Figure 7. Charles Peirce’s quincuncial projection can be tiled in all directions. This characteristic makes the network arrangement particularly interesting as the space continuity is guaranteed both vertically and horizontally." %}
 
 Many are the cartographic projections that have been conceived over time. Each of them allows the viewer to see different aspects of the Earth, which also means exploring different forms in this context. The orthographic (Figure 3), the Mercator (Figure 6), and the quincuncial (Figure 7) projections are the most relevant ones in terms of spatial transformation and continuity. However, the d3 library allowed us to explore more unusual projections, which are hereinafter presented in a showcase that is intentionally more aesthetic than rational. These projections are called Waterman’s Butterfly (Figure 8), Conic Equal-Area (Figure 9), Dodecahedral (Figure 10), Icosahedral (Figure 11), and Lee’s Tetrahedral (Figure 12). For a fortunate coincidence, this selection made on personal taste represents a series of geometrical volumes. That means that, potentially, these network visualizations can be printed and mounted with glue.
 
-{% include figure.html src="/images/spherical-projection/8.jpg" caption="Figure 8. Butterfly of Waterman." %}
+{% include figure.html src="/images/spherical-projection/8.webp" caption="Figure 8. Butterfly of Waterman." %}
 
-{% include figure.html src="/images/spherical-projection/9.jpg" caption="Figure 9. Conic equal-area." %}
+{% include figure.html src="/images/spherical-projection/9.webp" caption="Figure 9. Conic equal-area." %}
 
-{% include figure.html src="/images/spherical-projection/10.jpg" caption="Figure 10. Dodecahedral." %}
+{% include figure.html src="/images/spherical-projection/10.webp" caption="Figure 10. Dodecahedral." %}
 
-{% include figure.html src="/images/spherical-projection/11.jpg" caption="Figure 11. Icosahedral." %}
+{% include figure.html src="/images/spherical-projection/11.webp" caption="Figure 11. Icosahedral." %}
 
-{% include figure.html src="/images/spherical-projection/12.jpg" caption="Figure 12. Lee’s tetrahedral." %}
+{% include figure.html src="/images/spherical-projection/12.webp" caption="Figure 12. Lee’s tetrahedral." %}
 
 ## Conclusions
 
