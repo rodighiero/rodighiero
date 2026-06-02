@@ -5,9 +5,9 @@ venue: "Information Visualisation"
 type: "conference"
 author: "Dario Rodighiero"
 doi: "https://hdl.handle.net/11370/33d1eac9-ce4d-4417-98d8-bea7abdfbbf2"
-img: "Drawing-Network-Visualizations-on-a-Continuous-Spherical-Surface.webp"
-img_width: 700
-img_height: 393
+img: "spherical-projection/fig_008.webp"
+img_width: 2000
+img_height: 1123
 figures: true
 redirect_from:
   - /Spherical-Surface
