@@ -26,7 +26,7 @@ It is noticeable how centrality is one of the major metrics that affect interpre
 
 Weighting the idea to draw a network without centrality, it was evident that the spherical surface offered what was needed. Indeed, a sphere like the Earth has a surface to draw a network without edges.
 
-This article proves how a continuous surface can be a more democratic space for visualizing communities. Then, to increase readability, spherical networks are unfolded using techniques of geographical projection such as the Mercator or the quincuncial ones. The variety of such techniques are then applied to a dataset representing the digital humanities community. The lexical distance between authors is so translated into pictures in which functionality fades into a sense of aesthetic and sublime (Manovich 2008).
+This article proves how a continuous surface can be a more democratic space for visualizing communities. Then, to increase readability, spherical networks are unfolded using techniques of geographical projection such as the Mercator or the quincuncial ones. The variety of such techniques are then applied to a dataset representing the digital humanities community.[^1] The lexical distance between authors is so translated into pictures in which functionality fades into a sense of aesthetic and sublime (Manovich 2008).
 
 ## Being a Flat Networker
 
@@ -86,11 +86,11 @@ The case study of the Digital Humanities Conference (DH2019) confirms the issue 
 
 ## Drawing on the Spherical Surface
 
-Network arrangement is based on mathematical methods that simulate the molecular dynamics. Verlet integration is a method that Isaac Newton used to integrate the equations of motions, but today is employed in the force-directed graph layout. Using a relational dataset where weighted edges connect nodes, the network can be represented on a two-dimensional surface, making its structure readable. D3.js is one of the free libraries available to draw networks using JavaScript (Bostock, Ogievetsky, and Heer 2011).
+Network arrangement is based on mathematical methods that simulate the molecular dynamics. Verlet integration is a method that Isaac Newton used to integrate the equations of motions, but today is employed in the force-directed graph layout.[^2] Using a relational dataset where weighted edges connect nodes, the network can be represented on a two-dimensional surface, making its structure readable. D3.js is one of the free libraries available to draw networks using JavaScript (Bostock, Ogievetsky, and Heer 2011).
 
-Network visualizations are the result of a process of stabilization in which edges use their force in a process of spatial negotiation. Differently from the force layout applied to obtain a flat network, designing a three-dimensional network requires a modified system of forces able to plot the network in a three-dimensional space. Furthermore, drawing on a spherical surface requires an additional force to the system, acting similarly to gravity. Such a force makes sure that nodes, which are bouncing in the space during the arrangement (see Figure 2), are attracted by an imaginary spherical surface around a hypothetical center. The sum of these forces magically stabilizes the nodes on the spherical surface, but this is not the sole condition.
+Network visualizations are the result of a process of stabilization in which edges use their force in a process of spatial negotiation. Differently from the force layout applied to obtain a flat network, designing a three-dimensional network requires a modified system of forces[^3] able to plot the network in a three-dimensional space. Furthermore, drawing on a spherical surface requires an additional force to the system, acting similarly to gravity. Such a force makes sure that nodes, which are bouncing in the space during the arrangement (see Figure 2), are attracted by an imaginary spherical surface around a hypothetical center. The sum of these forces magically stabilizes the nodes on the spherical surface, but this is not the sole condition.
 
-Parameters play an important role in spherical networks. The optimal coverage of the surface derives from a delicate balance of two parameters that operate on the system: the link strength and the many-body forces. When the forces are not correctly balanced, the risk is obtaining a roundish, slightly curved flat network like Antarctica. If this were to happen, the link strength would be loosened to slide the network gently over the sphere until it is entirely covered. Likewise, the many-body force has to be increased to untwist any eventual cluster of nodes, which might make the visualization unreadable.
+Parameters play an important role in spherical networks. The optimal coverage of the surface derives from a delicate balance of two parameters that operate on the system: the link strength[^4] and the many-body forces.[^5] When the forces are not correctly balanced, the risk is obtaining a roundish, slightly curved flat network like Antarctica. If this were to happen, the link strength would be loosened to slide the network gently over the sphere until it is entirely covered. Likewise, the many-body force has to be increased to untwist any eventual cluster of nodes, which might make the visualization unreadable.
 
 {% include figure.html src="/images/spherical-projection/2.jpg" caption="Figure 2. This sequence shows three moments of the network arrangement. In particular, it is noticeable how the size of the nodes changes according to their position: larger nodes are closer to the viewer. During the arrangement, these nodes adopt the same size, which means that they are organizing on the spherical surface at the same distance from the sphere’s center." %}
 
@@ -114,7 +114,7 @@ The hypothesis of this article is that this connectivity between dimensions is s
 
 ## Cartographic Projection of Spherical Networks
 
-The cartographic projection is one of the most ambitious human gestures. It embodies the gigantic effort to grasp and represent the volume of the Earth. This article presents how it is possible to apply this projection to network visualization and what advantages that operation entails. That operation was technically achievable through the d3-geo component that extends the d3 library with different projection techniques.
+The cartographic projection is one of the most ambitious human gestures. It embodies the gigantic effort to grasp and represent the volume of the Earth. This article presents how it is possible to apply this projection to network visualization and what advantages that operation entails. That operation was technically achievable through the d3-geo component[^6] that extends the d3 library with different projection techniques.
 
 The advantages that characterize the cartographic projections are balanced by inconveniences, as it happens in many processes of transformation. The major trouble is the deformation of the distances between the nodes, which is clearly visible in Figure 5. The Mercator projection (Monmonier 2004) clearly shows a deformation that is proportional to the distance from the equator. The Mercator is one of the major projections as it maintains the correct proportion in numerous populated areas. However, the distortion of Norway is clearly noticeable compared to the grid as well as the false magnitude of Antarctica.
 
@@ -156,7 +156,7 @@ This article is the result of a conversation between Philippe Rivière and Dario
 
 Special thanks to Kurt Fendt and the MIT Active Archives Initiative, Jeffrey Schnapp and the Harvard Metalab. Special thanks also go to José Higuera and Alberto Romele who supported the development, as well as to Boris Beaude and Ogier Maitre for the insightful conversations.
 
-This research has been possible thanks to two generous institutions: the Swiss National Science Foundation (SNSF), which supports Rodighiero’s studies in the United States, and the Fundação para a Ciência e a Tecnologia, which financed software development.
+This research has been possible thanks to two generous institutions: the Swiss National Science Foundation (SNSF),[^7] which supports Rodighiero’s studies in the United States, and the Fundação para a Ciência e a Tecnologia,[^8] which financed software development.
 
 ## References
 
@@ -193,3 +193,12 @@ This research has been possible thanks to two generous institutions: the Swiss N
 - Scott, J. 2000. _Social Network Analysis_. London: SAGE Publications.
 - Shelley, D. S., and M. H. Gunes. 2012. “GerbilSphere: Inner Sphere Network Visualization.” _Computer Networks_ 56 (3): 1016–1028. <https://doi.org/10.1016/j.comnet.2011.10.023>
 - Strabo. 2014. _The Geography of Strabo_. Edited and translated by D. W. Roller. Cambridge: Cambridge University Press.
+
+[^1]: More information about the software is available at <https://dariorodighiero.com/Flat-Network-Conspiracy>.
+[^2]: The D3 force layout is available at <https://github.com/d3/d3-force>.
+[^3]: Asturiano’s three-dimensional model is downloadable at <https://github.com/vasturiano/d3-force-3d>.
+[^4]: Link strength is defined at <https://github.com/d3/d3-force#link_strength>.
+[^5]: Many-body force is illustrated at <https://github.com/d3/d3-force#many-body>.
+[^6]: More information about the D3 geographic projections at <https://github.com/d3/d3-geo-projection>.
+[^7]: More information on the Worldwide Map of Research (SNSF #P2ELP1_181930) is available at <http://p3.snf.ch/project-181930>.
+[^8]: More information on From Data to Wisdom is available at <https://ifilosofia.up.pt/projects/data-wisdom>.
