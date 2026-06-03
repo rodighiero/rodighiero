@@ -186,7 +186,7 @@ The case study of the Digital Humanities Conference is an example of how data vi
 - Shelley, D. S., and M. H. Gunes. 2012. “GerbilSphere: Inner Sphere Network Visualization.” _Computer Networks_ 56 (3): 1016–1028. <https://doi.org/10.1016/j.comnet.2011.10.023>
 - Strabo. 2014. _The Geography of Strabo_. Edited and translated by D. W. Roller. Cambridge: Cambridge University Press.
 
-[^1]: More information about the software is available at <https://github.com/rodighiero/spherical-projection>.
+[^1]: The accompanying software lays out a network on a sphere with `d3-force-3d` and unfolds it onto the plane through a dozen geographic projections — Mercator, Orthographic, Equal Earth, and others — rendered live with PIXI.js. Source code at <https://github.com/rodighiero/spherical-projection>; live demo at <https://rodighiero.github.io/spherical-projection/>.
 [^2]: The D3 force layout is available at <https://github.com/d3/d3-force>.
 [^3]: Asturiano’s three-dimensional model is downloadable at <https://github.com/vasturiano/d3-force-3d>.
 [^4]: Link strength is defined at <https://github.com/d3/d3-force#link_strength>.
