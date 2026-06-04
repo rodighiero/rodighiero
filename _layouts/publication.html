@@ -181,8 +181,8 @@
       .hero { page-break-inside: avoid; }
       .abstract figure { page-break-inside: auto; break-inside: auto; max-width: 100% !important; }
       .abstract figure.wide { width: auto !important; max-width: 100% !important; margin: 1.5rem 0 !important; position: static !important; transform: none !important; -webkit-transform: none !important; }
-      .abstract figure img, .abstract figure.wide img { width: 100% !important; max-width: 100% !important; max-height: 50vh !important; height: auto !important; position: static !important; left: auto !important; transform: none !important; -webkit-transform: none !important; }
-      .abstract figcaption { page-break-before: avoid; break-before: avoid; }
+      .abstract figure img, .abstract figure.wide img { width: 100% !important; max-width: 100% !important; max-height: 50vh !important; height: auto !important; position: static !important; left: auto !important; transform: none !important; -webkit-transform: none !important; page-break-after: avoid; break-after: avoid; }
+      .abstract figcaption { page-break-before: avoid; break-before: avoid; page-break-inside: avoid; break-inside: avoid; }
       .doi a[href]::after { content: " (" attr(href) ")"; font-size: 7.5pt; word-break: break-all; }
       .abstract h2#references { page-break-before: always; }
       .abstract h2#references + ul { font-size: 7.5pt; line-height: 1.45; list-style: none; padding-left: 0; margin: 0; }
