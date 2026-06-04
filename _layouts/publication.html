@@ -214,9 +214,9 @@
     {% if _content_parts.size > 1 %}<div class="abstract"><div class="lead">{{ _content_parts[0] }}</div>{{ _content_parts[1] }}</div>{% else %}<div class="abstract">{{ content }}</div>{% endif %}
   </div>
   </article>
+  {% if _content_parts.size > 1 %}<footer class="editorial-note"><p>Editorial note: this text is republished from its original venue and lightly edited for uniformity across the site. Citations and references have been restated in Chicago author-date style; obvious typos, incidental reference errors, and occasional language slips have been corrected. Small differences from the original publication may therefore exist; the version of record is the publisher’s, linked at the top of this page.</p></footer>{% endif %}
   {% include publication-nav.html modifier="publication-nav-footer" label="Project navigation, end of page" %}
   </main>
-  {% if _content_parts.size > 1 %}<footer class="editorial-note"><p>Editorial note: this text is republished from its original venue and lightly edited for uniformity across the site. Citations and references have been restated in Chicago author-date style; obvious typos, incidental reference errors, and occasional language slips have been corrected. Small differences from the original publication may therefore exist; the version of record is the publisher’s, linked at the top of this page.</p></footer>{% endif %}
 
   {% include common-scripts.html %}
   <script>
