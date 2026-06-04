@@ -174,11 +174,11 @@
       }
       .abstract .keep-with-next { display: block; page-break-inside: avoid; break-inside: avoid; }
       .abstract p, .abstract li { orphans: 3; widows: 3; }
-      main, article { overflow: visible !important; position: static !important; }
+      html, body, main, article, .content, .abstract { height: auto !important; min-height: 0 !important; max-height: none !important; overflow: visible !important; position: static !important; }
       .hero { page-break-inside: avoid; }
       .abstract figure { page-break-inside: avoid; break-inside: avoid; max-width: 100% !important; }
       .abstract figure.wide { width: auto !important; max-width: 100% !important; margin: 1.5rem 0 !important; position: static !important; transform: none !important; -webkit-transform: none !important; }
-      .abstract figure img, .abstract figure.wide img { width: 100% !important; max-width: 100% !important; max-height: 50vh !important; height: auto !important; position: static !important; left: auto !important; transform: none !important; -webkit-transform: none !important; page-break-after: avoid; break-after: avoid; }
+      .abstract figure img, .abstract figure.wide img { width: 100% !important; max-width: 100% !important; max-height: 12cm !important; height: auto !important; position: static !important; left: auto !important; transform: none !important; -webkit-transform: none !important; page-break-after: avoid; break-after: avoid; }
       .abstract figcaption { page-break-before: avoid; break-before: avoid; page-break-inside: avoid; break-inside: avoid; }
       .doi a[href]::after { content: " (" attr(href) ")"; font-size: 7.5pt; word-break: break-all; }
       .abstract h2#references { page-break-before: always; }
@@ -261,6 +261,10 @@
       if (h.parentNode.classList && h.parentNode.classList.contains('keep-with-next')) return;
       var next = h.nextElementSibling;
       if (!next) return;
+      // Never wrap a heading whose next block is a list (e.g. References): the list can be
+      // taller than a page, and an unbreakable block taller than a page makes Safari truncate
+      // everything after it during print pagination.
+      if (next.tagName === 'UL' || next.tagName === 'OL') return;
       var wrap = document.createElement('div');
       wrap.className = 'keep-with-next';
       h.parentNode.insertBefore(wrap, h);
