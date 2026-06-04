@@ -252,6 +252,29 @@
         img.addEventListener('load', applyOrientation, { once: true });
       }
     });
+
+    // Ensure all lazy-loaded figures are fetched before printing.
+    // beforeprint flips them to eager; for Cmd/Ctrl+P we intercept and await loading first so menu-initiated prints capture the images too.
+    function eagerLoadFigures() {
+      document.querySelectorAll('img[loading="lazy"]').forEach(function(img) { img.loading = 'eager'; });
+    }
+    window.addEventListener('beforeprint', eagerLoadFigures);
+
+    window.addEventListener('keydown', function(e) {
+      if (e.key.toLowerCase() !== 'p' || !(e.metaKey || e.ctrlKey) || e.shiftKey || e.altKey) return;
+      var imgs = Array.from(document.querySelectorAll('img')).filter(function(i) { return !i.complete || i.naturalWidth === 0; });
+      if (imgs.length === 0) return;
+      e.preventDefault();
+      eagerLoadFigures();
+      Promise.all(imgs.map(function(img) {
+        return new Promise(function(resolve) {
+          if (img.complete && img.naturalWidth > 0) return resolve();
+          img.addEventListener('load', resolve, { once: true });
+          img.addEventListener('error', resolve, { once: true });
+          setTimeout(resolve, 5000);
+        });
+      })).then(function() { window.print(); });
+    });
   </script>
   {% include analytics.html %}
 </body>
