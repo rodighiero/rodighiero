@@ -150,6 +150,8 @@
     .abstract .footnotes li::marker { color: var(--muted-1); }
     .abstract .footnotes p { margin: 0; }
     .abstract .footnotes a.reversefootnote { text-decoration: none; margin-left: 0.3em; }
+    .abstract .editorial-note { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.8rem; line-height: 1.6; color: var(--muted-1); font-style: italic; }
+    .abstract .editorial-note p { margin: 0; }
     @media print {
       @page { margin: 2cm 4.5cm; }
       :root, html.dark, html.light { color-scheme: light !important; }
@@ -209,7 +211,7 @@
   <div class="content">
     {% if page.img and page.figures != true %}<figure class="hero"><img src="/images/{{ page.img }}" alt="" width="{{ page.img_width }}" height="{{ page.img_height }}"></figure>{% endif %}
     {% assign _content_parts = content | split: '<!--more-->' %}
-    {% if _content_parts.size > 1 %}<div class="abstract"><div class="lead">{{ _content_parts[0] }}</div>{{ _content_parts[1] }}</div>{% else %}<div class="abstract">{{ content }}</div>{% endif %}
+    {% if _content_parts.size > 1 %}<div class="abstract"><div class="lead">{{ _content_parts[0] }}</div>{{ _content_parts[1] }}<aside class="editorial-note"><p>Editorial note: this text is republished from its original venue and lightly edited for uniformity across the site. Citations and references have been restated in Chicago author-date style; obvious typos, incidental reference errors, and occasional language slips have been corrected. Small differences from the original publication may therefore exist; the version of record is the publisher’s, linked at the top of this page.</p></aside></div>{% else %}<div class="abstract">{{ content }}</div>{% endif %}
   </div>
   </article>
   {% include publication-nav.html modifier="publication-nav-footer" label="Project navigation, end of page" %}
