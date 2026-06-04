@@ -160,9 +160,13 @@
       .mode-toggle, .publication-nav, .cite-btn { display: none !important; }
       body { max-width: 100% !important; line-height: 1.3; }
       .abstract { line-height: 1.5; }
-      h1 { font-size: 13pt; page-break-after: avoid; }
-      .abstract h2 { font-size: 9.5pt; page-break-after: avoid; }
-      .abstract h3 { font-size: 8.5pt; page-break-after: avoid; }
+      h1 { font-size: 13pt; page-break-after: avoid; break-after: avoid; break-after: avoid-page; }
+      .abstract h2 { font-size: 9.5pt; page-break-after: avoid; break-after: avoid; break-after: avoid-page; }
+      .abstract h3 { font-size: 8.5pt; page-break-after: avoid; break-after: avoid; break-after: avoid-page; }
+      .abstract h2 + p, .abstract h2 + ul, .abstract h2 + ol, .abstract h2 + figure,
+      .abstract h3 + p, .abstract h3 + ul, .abstract h3 + ol, .abstract h3 + figure {
+        page-break-before: avoid; break-before: avoid; break-before: avoid-page;
+      }
       .abstract p, .abstract li { orphans: 3; widows: 3; }
       main, article { overflow: visible !important; position: static !important; }
       .abstract figure, .hero { page-break-inside: avoid; }
