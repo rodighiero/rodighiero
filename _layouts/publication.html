@@ -154,8 +154,9 @@
     .abstract .footnotes a.reversefootnote { text-decoration: none; margin-left: 0.3em; }
     footer.editorial-note { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-size: 0.8rem; line-height: 1.6; color: var(--muted-1); font-style: italic; }
     footer.editorial-note p { margin: 0; }
+    .abstract .keep-with-next { display: contents; }
     @media print {
-      @page { margin: 2cm 4.5cm; }
+      @page { margin: 2cm 2.5cm; size: A4; }
       :root, html.dark, html.light { color-scheme: light !important; }
       html { font-size: 8pt; }
       html, body { background: #fff !important; color: #000 !important; }
@@ -171,7 +172,7 @@
       .abstract h3 + p, .abstract h3 + ul, .abstract h3 + ol, .abstract h3 + figure {
         page-break-before: avoid; break-before: avoid;
       }
-      .abstract .keep-with-next { page-break-inside: avoid; break-inside: avoid; }
+      .abstract .keep-with-next { display: block; page-break-inside: avoid; break-inside: avoid; }
       .abstract p, .abstract li { orphans: 3; widows: 3; }
       main, article { overflow: visible !important; position: static !important; }
       .hero { page-break-inside: avoid; }
@@ -255,32 +256,19 @@
       document.querySelectorAll('img[loading="lazy"]').forEach(function(img) { img.loading = 'eager'; });
     }
 
-    // Wrap each h2/h3 with its immediate next sibling in a keep-with-next div so the print engine cannot break between a heading and its first paragraph or figure.
-    function wrapHeadingsForPrint() {
-      document.querySelectorAll('.abstract h2, .abstract h3').forEach(function(h) {
-        if (h.parentNode.classList && h.parentNode.classList.contains('keep-with-next')) return;
-        var next = h.nextElementSibling;
-        if (!next) return;
-        var wrap = document.createElement('div');
-        wrap.className = 'keep-with-next';
-        h.parentNode.insertBefore(wrap, h);
-        wrap.appendChild(h);
-        wrap.appendChild(next);
-      });
-    }
-    function unwrapHeadingsAfterPrint() {
-      document.querySelectorAll('.abstract .keep-with-next').forEach(function(wrap) {
-        var parent = wrap.parentNode;
-        while (wrap.firstChild) parent.insertBefore(wrap.firstChild, wrap);
-        parent.removeChild(wrap);
-      });
-    }
-
-    window.addEventListener('beforeprint', function() {
-      eagerLoadFigures();
-      wrapHeadingsForPrint();
+    // Pre-wrap each h2/h3 with its immediate next sibling in a keep-with-next div so the print engine cannot break between a heading and its first paragraph or figure. Doing this on page load (instead of beforeprint) avoids Safari layout glitches that can truncate print output when the DOM mutates mid-pagination.
+    document.querySelectorAll('.abstract h2, .abstract h3').forEach(function(h) {
+      if (h.parentNode.classList && h.parentNode.classList.contains('keep-with-next')) return;
+      var next = h.nextElementSibling;
+      if (!next) return;
+      var wrap = document.createElement('div');
+      wrap.className = 'keep-with-next';
+      h.parentNode.insertBefore(wrap, h);
+      wrap.appendChild(h);
+      wrap.appendChild(next);
     });
-    window.addEventListener('afterprint', unwrapHeadingsAfterPrint);
+
+    window.addEventListener('beforeprint', eagerLoadFigures);
 
     window.addEventListener('keydown', function(e) {
       if (e.key.toLowerCase() !== 'p' || !(e.metaKey || e.ctrlKey) || e.shiftKey || e.altKey) return;
@@ -295,7 +283,7 @@
           img.addEventListener('error', resolve, { once: true });
           setTimeout(resolve, 5000);
         });
-      })).then(function() { wrapHeadingsForPrint(); window.print(); });
+      })).then(function() { window.print(); });
     });
   </script>
   {% include analytics.html %}
