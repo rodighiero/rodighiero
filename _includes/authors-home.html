@@ -1,0 +1,118 @@
+{%- comment -%}
+  Homepage author/editor formatter.
+  - Strips "Rodighiero" from author/editor lists.
+  - Author:    "with X and Y"  (empty if Dario was solo)
+  - Editor:    "edited with X and Y"  (Dario among editors)
+               "edited by X and Y"    (Dario absent from editors)
+  - Translator unchanged: "translated by X and Y"
+  - Lists join with ", " and "and" before the last name (no Oxford comma).
+{%- endcomment -%}
+{%- assign me = "Rodighiero" -%}
+{%- assign SEP = "|||SEP|||" -%}
+
+{%- assign auth_part = "" -%}
+{%- if include.item.author -%}
+  {%- assign auth_raw = include.item.author | split: " and " -%}
+  {%- assign auth_had_me = false -%}
+  {%- assign auth_kept = "" -%}
+  {%- for a in auth_raw -%}
+    {%- assign a_trim = a | strip -%}
+    {%- if a_trim contains me -%}
+      {%- assign auth_had_me = true -%}
+    {%- else -%}
+      {%- if auth_kept == "" -%}{%- assign auth_kept = a_trim -%}
+      {%- else -%}{%- assign auth_kept = auth_kept | append: SEP | append: a_trim -%}{%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if auth_kept != "" -%}
+    {%- assign auth_arr = auth_kept | split: SEP -%}
+    {%- assign auth_list = "" -%}
+    {%- for a in auth_arr -%}
+      {%- if forloop.first -%}{%- assign auth_list = a -%}
+      {%- elsif forloop.last -%}{%- assign auth_list = auth_list | append: " and " | append: a -%}
+      {%- else -%}{%- assign auth_list = auth_list | append: ", " | append: a -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if auth_had_me -%}{%- assign auth_part = "with " | append: auth_list -%}
+    {%- else -%}{%- assign auth_part = auth_list -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- assign ed_part = "" -%}
+{%- if include.item.editor -%}
+  {%- assign ed_raw = include.item.editor | split: " and " -%}
+  {%- assign ed_had_me = false -%}
+  {%- assign ed_kept = "" -%}
+  {%- for e in ed_raw -%}
+    {%- assign e_trim = e | strip -%}
+    {%- if e_trim contains me -%}
+      {%- assign ed_had_me = true -%}
+    {%- else -%}
+      {%- if ed_kept == "" -%}{%- assign ed_kept = e_trim -%}
+      {%- else -%}{%- assign ed_kept = ed_kept | append: SEP | append: e_trim -%}{%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if ed_kept != "" -%}
+    {%- assign ed_arr = ed_kept | split: SEP -%}
+    {%- assign ed_list = "" -%}
+    {%- for e in ed_arr -%}
+      {%- if forloop.first -%}{%- assign ed_list = e -%}
+      {%- elsif forloop.last -%}{%- assign ed_list = ed_list | append: " and " | append: e -%}
+      {%- else -%}{%- assign ed_list = ed_list | append: ", " | append: e -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if ed_had_me -%}{%- assign ed_part = "edited with " | append: ed_list -%}
+    {%- else -%}{%- assign ed_part = "edited by " | append: ed_list -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- assign tr_part = "" -%}
+{%- if include.item.translator -%}
+  {%- assign tr_raw = include.item.translator | split: " and " -%}
+  {%- assign tr_had_me = false -%}
+  {%- assign tr_kept = "" -%}
+  {%- for t in tr_raw -%}
+    {%- assign t_trim = t | strip -%}
+    {%- if t_trim contains me -%}
+      {%- assign tr_had_me = true -%}
+    {%- else -%}
+      {%- if tr_kept == "" -%}{%- assign tr_kept = t_trim -%}
+      {%- else -%}{%- assign tr_kept = tr_kept | append: SEP | append: t_trim -%}{%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if tr_kept != "" -%}
+    {%- assign tr_arr = tr_kept | split: SEP -%}
+    {%- assign tr_list = "" -%}
+    {%- for t in tr_arr -%}
+      {%- if forloop.first -%}{%- assign tr_list = t -%}
+      {%- elsif forloop.last -%}{%- assign tr_list = tr_list | append: " and " | append: t -%}
+      {%- else -%}{%- assign tr_list = tr_list | append: ", " | append: t -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if tr_had_me -%}{%- assign tr_part = "translated with " | append: tr_list -%}
+    {%- else -%}{%- assign tr_part = "translated by " | append: tr_list -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- comment -%} Capitalize first letter only when a part follows a period. {%- endcomment -%}
+{%- assign out = "" -%}
+{%- if auth_part != "" -%}{%- assign out = auth_part -%}{%- endif -%}
+{%- if ed_part != "" -%}
+  {%- if out != "" -%}
+    {%- assign ed_first = ed_part | slice: 0, 1 | upcase -%}
+    {%- assign ed_rest = ed_part | slice: 1, 9999 -%}
+    {%- assign out = out | append: ". " | append: ed_first | append: ed_rest -%}
+  {%- else -%}{%- assign out = ed_part -%}{%- endif -%}
+{%- endif -%}
+{%- if tr_part != "" -%}
+  {%- if out != "" -%}
+    {%- assign tr_first = tr_part | slice: 0, 1 | upcase -%}
+    {%- assign tr_rest = tr_part | slice: 1, 9999 -%}
+    {%- assign out = out | append: ". " | append: tr_first | append: tr_rest -%}
+  {%- else -%}{%- assign out = tr_part -%}{%- endif -%}
+{%- endif -%}
+
+{%- if out != "" -%}<div class="authors">{{ out }}</div>{%- endif -%}

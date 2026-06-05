@@ -1,12 +1,10 @@
-{% capture _filter_path %}{% case page.filter %}{% when 'book' %}/books/{% when 'chapter' %}/book-chapters/{% when 'journal' %}/journal-articles/{% when 'conference' %}/conference-papers/{% when 'magazine' %}/magazine-articles/{% when 'map' %}/maps/{% else %}/{% endcase %}{% endcapture %}
-{% capture _filter_label %}{% case page.filter %}{% when 'book' %}Books{% when 'chapter' %}Book Chapters{% when 'journal' %}Journal Articles{% when 'conference' %}Conference Papers{% when 'magazine' %}Magazine Articles{% when 'map' %}Maps{% endcase %}{% endcapture %}
-{% capture _meta_desc %}{% case page.filter %}{% when 'book' %}Books by Dario Rodighiero on data visualization, digital humanities, and Science and Technology Studies.{% when 'chapter' %}Book chapters by Dario Rodighiero on data visualization, digital humanities, and Science and Technology Studies.{% when 'journal' %}Journal articles by Dario Rodighiero on data visualization, digital humanities, and Science and Technology Studies.{% when 'conference' %}Conference papers by Dario Rodighiero on data visualization, digital humanities, and Science and Technology Studies.{% when 'magazine' %}Magazine articles by Dario Rodighiero on data visualization, digital humanities, and Science and Technology Studies.{% when 'map' %}Maps and spatial visualizations by Dario Rodighiero on data and digital humanities.{% else %}Dario Rodighiero researches data visualization, digital humanities, and Science and Technology Studies. Assistant Professor at University of Groningen, Faculty Associate at Harvard's Berkman Klein Center.{% endcase %}{% endcapture %}
-{% capture _page_title %}{% if _filter_label != "" %}{{ _filter_label }} — Dario Rodighiero{% else %}Dario Rodighiero — Science and Technology Studies{% endif %}{% endcapture %}
+{% assign _meta_desc = "Dario Rodighiero researches data visualization, digital humanities, and Science and Technology Studies. Assistant Professor at University of Groningen, Faculty Associate at Harvard's Berkman Klein Center." %}
+{% assign _page_title = "Dario Rodighiero — Science and Technology Studies" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <script>!function(){var c=localStorage.getItem('colorScheme');if(c)document.documentElement.classList.add(c)}()</script>
+  <script>!function(){var c=localStorage.getItem('colorScheme');if(c)document.documentElement.classList.add(c);var v=localStorage.getItem('publicationView');document.documentElement.dataset.initialView=(v==='list'?'list':'gallery')}()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
@@ -16,12 +14,12 @@
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
   <meta name="color-scheme" content="light dark">
-  <link rel="canonical" href="{{ site.url }}{{ _filter_path }}">
+  <link rel="canonical" href="{{ site.url }}/">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}/feed/publications.xml">
   <meta property="og:site_name" content="{{ site.title }}">
   <meta property="og:title" content="{{ _page_title }}">
   <meta property="og:description" content="{{ _meta_desc }}">
-  <meta property="og:url" content="{{ site.url }}{{ _filter_path }}">
+  <meta property="og:url" content="{{ site.url }}/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_US">
   <meta property="og:image" content="{{ site.url }}/images/Dario-Rodighiero.webp">
@@ -33,11 +31,9 @@
   <meta name="twitter:description" content="{{ _meta_desc }}">
   <meta name="twitter:image" content="{{ site.url }}/images/Dario-Rodighiero.webp">
   <meta name="twitter:image:alt" content="Dario Rodighiero">
-  {% if _filter_label == "" %}
   <meta property="profile:first_name" content="Dario">
   <meta property="profile:last_name" content="Rodighiero">
   <meta property="profile:username" content="rodighiero">
-  {% endif %}
   <!-- Dublin Core -->
   <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
   <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
@@ -49,7 +45,7 @@
   <meta name="DC.type" content="Text">
   <meta name="DC.format" content="text/html">
   <meta name="DC.language" content="en">
-  <meta name="DC.identifier" content="{{ site.url }}{{ _filter_path }}">
+  <meta name="DC.identifier" content="{{ site.url }}/">
   <meta name="DCTERMS.modified" content="{{ site.time | date: '%Y-%m-%d' }}">
   <link rel="me" href="https://github.com/rodighiero/">
   <link rel="me" href="https://www.linkedin.com/in/dariorodighiero/">
@@ -143,98 +139,134 @@
     .header .bio-col p { margin: 0; }
     .header .bio-col a { text-decoration: underline; }
 
-    /* ── Publications heading & filters ── */
-    .publications-heading {
-      font-size: 1.3rem;
-      font-weight: 500;
-      margin: 3rem 0 1.2rem;
-    }
+    /* ── Search bar + view toggle ── */
     .filters {
-      font-size: var(--small);
-      margin-bottom: 2rem;
-      color: var(--muted-1);
+      margin: 3rem 0 2rem;
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
-      gap: 0.75rem 2rem;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border);
+      padding: 0.4rem 0;
     }
-    .filter-search { display: inline-flex; align-items: center; gap: 0.5rem; }
-    .filter-search svg {
-      width: 14px; height: 14px; flex-shrink: 0; color: var(--muted-3);
+    .filters:focus-within { border-bottom-color: var(--fg); }
+    .filters-search {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
+    .filter-search-icon { width: 16px; height: 16px; flex-shrink: 0; color: var(--muted-3); }
     .filters input[type="search"] {
+      flex: 1;
+      min-width: 0;
       color: var(--fg);
       background: none;
       border: none;
-      border-bottom: 1px solid var(--border);
       padding: 0.2rem 0;
       font: inherit;
-      font-size: var(--small);
+      font-size: 1rem;
       line-height: 1.4;
-      width: 16rem;
-      max-width: 100%;
     }
-    .filters input[type="search"]:focus { outline: none; border-bottom-color: var(--fg); }
+    .filters input[type="search"]:focus { outline: none; }
     .filters input[type="search"]::placeholder { color: var(--muted-3); }
-    .filter-types { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
-    .filter-types button {
-      position: relative;
-      color: var(--muted-1);
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-      font: inherit;
-      font-size: var(--small);
-      line-height: 1.4;
-    }
-    .filter-types button:hover { color: var(--fg); }
-    .filter-types button.active { color: var(--fg); font-weight: 500; }
-    .filter-types button + button::before {
-      content: '·';
-      position: absolute;
-      left: -0.6rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted-3);
-      font-weight: 400;
-    }
     .filter-count {
       color: var(--muted-3);
       font-variant-numeric: tabular-nums;
-      margin-left: auto;
+      font-size: var(--small);
+      flex-shrink: 0;
     }
+    .view-toggle { display: flex; gap: 0.25rem; flex-shrink: 0; }
+    .view-toggle button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      background: none;
+      border: none;
+      color: var(--muted-3);
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .view-toggle button:hover { color: var(--fg); }
+    .view-toggle button[aria-pressed="true"] {
+      color: var(--fg);
+      background: color-mix(in srgb, var(--fg) 10%, transparent);
+    }
+    .view-toggle svg { width: 16px; height: 16px; }
     .no-results { font-size: var(--small); color: var(--muted-3); padding: 2rem 0; }
     .no-results[hidden] { display: none; }
 
-    /* ── Publications list ── */
+    /* ── Publications (shared) ── */
+    #publications { position: relative; }
     .publication {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: 2rem;
-      margin: 0 -1rem;
-      padding: 1.2rem 1rem 2.8rem;
-      align-items: start;
-      border-top: 1px solid var(--border);
+      padding: 0.6rem;
       border-radius: 4px;
       cursor: pointer;
       transition: background 0.15s ease;
     }
-    .col-meta h2 { font-size: var(--base); font-weight: 500; margin: 0.6rem 0 0.2rem; line-height: 1.35; display: inline-block; max-width: 100%; }
-    .col-meta h2 a { color: inherit; text-decoration: none; }
-    .publication:hover .col-meta h2 a:not(.ext-link) { text-decoration: underline; }
-    .col-meta h2 a .ext { display: inline; margin-left: 0.3em; text-decoration: none; white-space: nowrap; }
-    .col-meta h2 a .ext svg { width: 1.25ex; height: 1.25ex; vertical-align: -0.1ex; }
-    .col-meta h2:has(.ext-link:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; border-radius: 2px; }
-    .col-meta h2 a:focus-visible { outline: none; }
+    .publication .card-img img { width: 100%; height: auto; display: block; }
+    .card-meta h2 {
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin: 0.35rem 0 0;
+      line-height: 1.3;
+      display: inline-block;
+      max-width: 100%;
+    }
+    .card-meta h2 a { color: inherit; text-decoration: none; }
+    .card-meta h2 a:focus-visible { outline: none; }
     .publication:hover,
-    .publication:has(.col-meta h2 a:not(.ext-link):focus-visible) { background: color-mix(in srgb, var(--fg) 5%, transparent); }
-    .publication:has(.col-meta h2 a:not(.ext-link):focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
-    .col-img { grid-column: 4; grid-row: 1; }
-    .col-meta { grid-column: 1; }
-    .col-desc { grid-column: 2 / span 2; }
-    .col-desc p { font-size: var(--small); margin: 0; color: var(--muted-3); line-height: 1.6; }
-    .col-img img { width: 100%; height: auto; display: block; }
+    .publication:has(.card-meta h2 a:focus-visible) { background: color-mix(in srgb, var(--fg) 5%, transparent); }
+    .publication:has(.card-meta h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
+    .card-meta .meta-line {
+      font-size: 0.52rem;
+      color: var(--muted-2);
+      line-height: 1.5;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .card-meta .authors { font-size: var(--small); color: var(--fg); line-height: 1.5; margin-top: 0.4rem; }
+    .card-desc p { font-size: var(--small); margin: 0; color: var(--muted-3); line-height: 1.6; }
+    .card-desc em, .card-desc i, .card-desc cite { font-style: normal; }
+
+    /* ── Gallery view (masonry) ── */
+    body[data-view="gallery"] .publication {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      will-change: transform;
+    }
+    body[data-view="gallery"] .publication .card-img {
+      width: 100%;
+      margin-bottom: 0.8rem;
+      background: color-mix(in srgb, var(--fg) 4%, transparent);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    body[data-view="gallery"] .publication { border-top: 1px solid var(--border); padding-top: 1rem; }
+    body[data-view="gallery"] .publication.at-top { border-top: none; padding-top: 0.6rem; }
+    body[data-view="gallery"] .card-desc { display: none; }
+
+    /* ── List view ── */
+    body[data-view="list"] .publication {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 2rem;
+      margin: 0 -1rem 3rem;
+      padding: 1rem 1rem 0.6rem;
+      align-items: start;
+      border-top: 1px solid var(--border);
+    }
+    body[data-view="list"] .publication.at-top { border-top: none; padding-top: 0.6rem; }
+    body[data-view="list"] .publication:last-child { margin-bottom: 0; }
+    body[data-view="list"] .card-img { grid-column: 4; grid-row: 1; }
+    body[data-view="list"] .card-meta { grid-column: 1; }
+    body[data-view="list"] .card-desc { grid-column: 2 / span 2; }
+
 
     footer {
       margin-top: 6rem;
@@ -260,9 +292,9 @@
       .header-portrait { float: left; width: 220px; margin: 0 1.5rem 0.75rem 0; }
       .header .icons { margin-bottom: 0.6rem; }
       .header .bio-col { clear: left; margin-top: 1rem; }
-      .publication { display: block; overflow: hidden; }
-      .col-img { display: block; float: right; width: 220px; margin: 0 0 1rem 1.5rem; }
-      .col-desc { margin-top: 1.2rem; }
+      body[data-view="list"] .publication { display: block; overflow: hidden; }
+      body[data-view="list"] .card-img { display: block; float: right; width: 220px; margin: 0 0 1rem 1.5rem; }
+      body[data-view="list"] .card-desc { margin-top: 1.2rem; }
     }
     @media print {
       @page { margin: 2cm 2.8cm; }
@@ -278,7 +310,8 @@
     }
   </style>
 </head>
-<body data-filter="{{ page.filter | default: 'all' }}">
+<body data-view="gallery">
+  <script>document.body.dataset.view = document.documentElement.dataset.initialView || 'gallery'</script>
   {% include mode-toggle.html %}
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
 
@@ -324,44 +357,41 @@
   </header>
 
   <main>
-    <h2 class="publications-heading">Selected publications</h2>
-    <!-- ── Filter bar ── -->
-    <nav class="filters" aria-label="Filter publications">
-      <label class="filter-search">
-        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
-        <input type="search" id="search-input" placeholder="Filter by keyword…" aria-label="Filter publications by keyword" autocomplete="off">
+    <!-- ── Search bar ── -->
+    <div class="filters">
+      <label class="filters-search" aria-label="Search publications">
+        <svg class="filter-search-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+        <input type="search" id="search-input" placeholder="Search publications by title, author, venue, year, type…" autocomplete="off">
       </label>
-      <div class="filter-types" role="group" aria-label="Filter by type">
-        <button data-filter="all" aria-pressed="false">All</button>
-        <button data-filter="book" aria-pressed="false">Books</button>
-        <button data-filter="chapter" aria-pressed="false">Book Chapters</button>
-        <button data-filter="journal" aria-pressed="false">Journal Articles</button>
-        <button data-filter="conference" aria-pressed="false">Conference Papers</button>
-        <button data-filter="magazine" aria-pressed="false">Magazine Articles</button>
-        <button data-filter="map" aria-pressed="false">Maps</button>
+      <span class="filter-count" id="filter-count" aria-live="polite"></span>
+      <div class="view-toggle" role="group" aria-label="View">
+        <button type="button" data-view="gallery" aria-label="Gallery view" aria-pressed="false">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+        </button>
+        <button type="button" data-view="list" aria-label="List view" aria-pressed="false">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+        </button>
       </div>
-      <div class="filter-count" id="filter-count" aria-live="polite"></div>
-    </nav>
+    </div>
 
     <!-- ── Publications ── -->
     <div id="publications">
       {% assign year_groups = site.publications | group_by: "year" | sort: "name" | reverse %}
       {% for group in year_groups %}{% assign group_publications = group.items | sort: "title" %}{% for publication in group_publications %}
-      {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.venue }} {{ publication.year }} {{ publication.excerpt | strip_html }}{% endcapture %}
-      <div class="publication" data-type="{{ publication.type }}" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
+      {% capture _type_label %}{% case publication.type %}{% when 'book' %}Book{% when 'chapter' %}Book Chapter{% when 'journal' %}Journal Article{% when 'conference' %}Conference Paper{% when 'magazine' %}Magazine Article{% when 'map' %}Map{% endcase %}{% endcapture %}
+      {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.venue }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }}{% endcapture %}
+      <div class="publication" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
         {% if publication.img %}
-        <div class="col-img">
+        <div class="card-img">
           <img src="/images/{{ publication.img }}" alt="" loading="lazy" width="{{ publication.img_width }}" height="{{ publication.img_height }}">
         </div>
         {% endif %}
-        <div class="col-meta">
+        <div class="card-meta">
           {% include meta-line.html item=publication %}
-          <h2><a href="{{ publication.url }}">{{ publication.title }}</a>{% if publication.doi %}<a href="{{ publication.doi }}" class="ext-link" tabindex="-1" aria-label="External link"><span class="ext"><svg aria-hidden="true" viewBox="-1 -1 13 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="9" x2="9" y2="1"/><polyline points="2,1 9,1 9,8"/></svg></span></a>{% endif %}</h2>
-          {% include authors.html item=publication %}
+          <h2><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
+          {% include authors-home.html item=publication %}
         </div>
-        <div class="col-desc">
-          {{ publication.excerpt }}
-        </div>
+        <div class="card-desc">{{ publication.excerpt }}</div>
       </div>
       {% endfor %}{% endfor %}
     </div>
@@ -374,24 +404,95 @@
   </footer>
 
   <script>
-    var filterPaths = {
-      'all': '/',
-      'book': '/books/',
-      'chapter': '/book-chapters/',
-      'journal': '/journal-articles/',
-      'conference': '/conference-papers/',
-      'magazine': '/magazine-articles/',
-      'map': '/maps/'
-    };
-
     var publications = document.querySelectorAll('.publication');
-    var filterBtns = document.querySelectorAll('.filters button');
     var searchInput = document.getElementById('search-input');
     var noResults = document.getElementById('no-results');
     var filterCount = document.getElementById('filter-count');
-    var initialFilter = document.body.dataset.filter || 'all';
-    var currentFilter = initialFilter;
+    var grid = document.getElementById('publications');
+    var viewButtons = document.querySelectorAll('.view-toggle button');
     var total = publications.length;
+
+    // ── Masonry layout (gallery only) ──
+    var GAP_X = 24;
+    var GAP_Y = 48;
+    function columnCount(w) {
+      if (w < 640) return 1;
+      if (w < 1024) return 2;
+      if (w < 1400) return 3;
+      return 4;
+    }
+    function clearMasonry() {
+      grid.style.height = '';
+      publications.forEach(function(p) {
+        p.style.width = '';
+        p.style.transform = '';
+        p.classList.remove('at-top');
+      });
+    }
+    function layoutMasonry() {
+      if (!grid) return;
+      if (document.body.dataset.view !== 'gallery') return;
+      var containerWidth = grid.clientWidth;
+      var cols = columnCount(window.innerWidth);
+      var colWidth = (containerWidth - GAP_X * (cols - 1)) / cols;
+      var colHeights = new Array(cols).fill(0);
+      publications.forEach(function(p) {
+        p.style.width = colWidth + 'px';
+        p.classList.remove('at-top');
+      });
+      publications.forEach(function(p) {
+        if (p.style.display === 'none') return;
+        var minCol = 0;
+        for (var i = 1; i < cols; i++) {
+          if (colHeights[i] < colHeights[minCol]) minCol = i;
+        }
+        var x = minCol * (colWidth + GAP_X);
+        var y = colHeights[minCol];
+        if (y === 0) p.classList.add('at-top');
+        var h = p.getBoundingClientRect().height;
+        p.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+        colHeights[minCol] = y + h + GAP_Y;
+      });
+      grid.style.height = (Math.max.apply(null, colHeights) - GAP_Y) + 'px';
+    }
+    function markFirstVisible() {
+      publications.forEach(function(p) { p.classList.remove('at-top'); });
+      for (var i = 0; i < publications.length; i++) {
+        if (publications[i].style.display !== 'none') {
+          publications[i].classList.add('at-top');
+          break;
+        }
+      }
+    }
+    var layoutScheduled = false;
+    function scheduleLayout() {
+      if (layoutScheduled) return;
+      layoutScheduled = true;
+      requestAnimationFrame(function() { layoutScheduled = false; layoutMasonry(); });
+    }
+    window.addEventListener('resize', scheduleLayout);
+    grid && grid.querySelectorAll('img').forEach(function(img) {
+      if (!img.complete) img.addEventListener('load', scheduleLayout, { once: true });
+    });
+
+    // ── View toggle ──
+    function setView(view) {
+      document.body.dataset.view = view;
+      try { localStorage.setItem('publicationView', view); } catch (e) {}
+      viewButtons.forEach(function(b) {
+        b.setAttribute('aria-pressed', b.dataset.view === view ? 'true' : 'false');
+      });
+      if (view === 'gallery') {
+        scheduleLayout();
+      } else {
+        clearMasonry();
+        markFirstVisible();
+      }
+    }
+    viewButtons.forEach(function(b) {
+      b.addEventListener('click', function() { setView(this.dataset.view); });
+    });
+    setView(document.body.dataset.view || 'gallery');
 
     function normalize(s) {
       return s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
@@ -408,88 +509,34 @@
         : 'Showing ' + visible + ' of ' + total;
     }
 
-    function trackPageview() {
-      if (window.goatcounter && window.goatcounter.count) {
-        window.goatcounter.count({ path: location.pathname });
-      }
-    }
-
-    function applyFilter(filter, push) {
-      filterBtns.forEach(function(btn) {
-        var active = btn.dataset.filter === filter;
-        btn.classList.toggle('active', active);
-        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-      });
+    function applySearch() {
       var query = searchInput ? searchInput.value : '';
       var tokens = query ? normalize(query).split(/\s+/).filter(Boolean) : [];
       var visible = 0;
       publications.forEach(function(p) {
-        var typeMatch = (filter === 'all' || p.dataset.type === filter);
-        var searchMatch = true;
+        var match = true;
         for (var i = 0; i < tokens.length; i++) {
-          if (p._haystack.indexOf(tokens[i]) === -1) { searchMatch = false; break; }
+          if (p._haystack.indexOf(tokens[i]) === -1) { match = false; break; }
         }
-        var show = typeMatch && searchMatch;
-        p.style.display = show ? '' : 'none';
-        if (show) visible++;
+        p.style.display = match ? '' : 'none';
+        if (match) visible++;
       });
       if (noResults) noResults.hidden = visible !== 0;
       updateCount(visible);
-      if (push) {
-        history.pushState({ filter: filter }, '', filterPaths[filter] || '/');
-        trackPageview();
-      }
+      if (document.body.dataset.view === 'gallery') scheduleLayout();
+      else markFirstVisible();
     }
 
-    applyFilter(initialFilter, false);
-
-    filterBtns.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        currentFilter = this.dataset.filter;
-        applyFilter(currentFilter, true);
-      });
-    });
+    applySearch();
 
     if (searchInput) {
-      searchInput.addEventListener('input', function() {
-        applyFilter(currentFilter, false);
-      });
+      searchInput.addEventListener('input', applySearch);
     }
 
-    window.addEventListener('popstate', function(e) {
-      currentFilter = (e.state && e.state.filter) || 'all';
-      applyFilter(currentFilter, false);
-      trackPageview();
-    });
-
-    // Keep arrow on same line as last word of title
-    document.querySelectorAll('.col-meta h2').forEach(function(h2) {
-      var titleLink = h2.querySelector('a:not(.ext-link)');
-      var extLink = h2.querySelector('.ext-link');
-      if (!titleLink || !extLink) return;
-      var textNode = titleLink.lastChild;
-      while (textNode && textNode.nodeType !== 3) textNode = textNode.previousSibling;
-      if (!textNode) return;
-      var text = textNode.textContent;
-      var lastSpace = text.lastIndexOf(' ');
-      if (lastSpace === -1) return;
-      textNode.textContent = text.slice(0, lastSpace + 1);
-      var lastWordLink = document.createElement('a');
-      lastWordLink.href = titleLink.href;
-      lastWordLink.setAttribute('tabindex', '-1');
-      lastWordLink.setAttribute('aria-hidden', 'true');
-      lastWordLink.textContent = text.slice(lastSpace + 1);
-      var nowrap = document.createElement('span');
-      nowrap.style.whiteSpace = 'nowrap';
-      nowrap.appendChild(lastWordLink);
-      nowrap.appendChild(extLink);
-      h2.insertBefore(nowrap, titleLink.nextSibling);
-    });
-
-    // Make the whole row a target for the publication page,
+    // Make the whole card a target for the publication page,
     // without breaking inline links or text selection.
     publications.forEach(function(p) {
-      var titleLink = p.querySelector('.col-meta h2 a:not(.ext-link)');
+      var titleLink = p.querySelector('.card-meta h2 a');
       if (!titleLink) return;
       var href = titleLink.getAttribute('href');
       p.addEventListener('click', function(e) {
