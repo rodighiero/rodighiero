@@ -4,12 +4,6 @@ layout: null
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>{{ site.url }}/</loc><lastmod>{{ site.data.git_mtime }}</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>
-  <url><loc>{{ site.url }}/books/</loc><lastmod>{{ site.data.git_mtime }}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>{{ site.url }}/book-chapters/</loc><lastmod>{{ site.data.git_mtime }}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>{{ site.url }}/journal-articles/</loc><lastmod>{{ site.data.git_mtime }}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>{{ site.url }}/conference-papers/</loc><lastmod>{{ site.data.git_mtime }}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>{{ site.url }}/magazine-articles/</loc><lastmod>{{ site.data.git_mtime }}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>{{ site.url }}/maps/</loc><lastmod>{{ site.data.git_mtime }}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   {% for project in site.publications %}
   <url>
     <loc>{{ site.url }}{{ project.url | remove: '.html' }}</loc>

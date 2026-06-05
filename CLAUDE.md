@@ -22,16 +22,14 @@ The body of each file is the abstract. Full-text articles (the complete publishe
 **Quotation marks**: use curly quotes (`“ ”`), never caporali/guillemets (`« »`), for Italian and English text. The only exception is French-language quotations, which keep French guillemets.
 
 **Layouts** are self-contained HTML files with inlined CSS and JS — no external stylesheet or build step:
-- `_layouts/home.html` — the publications list; handles both the homepage and the filtered sub-pages. The `filter` front matter variable on a page (e.g. `filter: journal`) drives which type is shown and sets the `<title>` and canonical URL. Client-side JS buttons let the user switch filters without a page reload.
-- `_layouts/publication.html` — individual publication pages. Generates BibTeX in a hidden `<pre>` and copies it to the clipboard on "Cite" button click. Prev/next navigation is computed in Liquid, sorted by year descending then title descending.
-
-**Filter pages** (`/books/`, `/journal-articles/`, `/conference-papers/`, `/book-chapters/`, `/magazine-articles/`, `/maps/`) are generated at build time by `_plugins/filter_pages.rb` — no static directories needed. To add or rename a filter, edit the `filters` array in that file.
+- `_layouts/home.html` — the only top-level publications page. Two view modes, toggled in the search bar and persisted in `localStorage` under `publicationView`: a **gallery** (custom JS masonry — newest first, packed by shortest column, `GAP_X`/`GAP_Y` in the inline script) and a **list** (4-column grid with abstracts). A single full-width search bar filters across title, authors, editor, translator, venue, year, type label, volume, issue, pages and DOI. The `.at-top` class is added by JS to suppress the top hairline on first-visible (list) or y=0 (gallery) cards. Author/editor/translator lines come from `_includes/authors-home.html`, which strips "Rodighiero" and prefixes with `with` / `edited with` / `translated with` (or `edited by` / `translated by` when Dario is not in the list).
+- `_layouts/publication.html` — individual publication pages. Generates BibTeX in a hidden `<pre>` and copies it to the clipboard on "Cite" button click. Prev/next navigation is computed in Liquid, sorted by year descending then title descending. Uses `_includes/authors.html` (the full citation, not the homepage shorthand).
 
 **Bio** text lives in `README.md`, split into three paragraphs with `<!-- split -->` comments. `_plugins/readme_content.rb` reads it at each build cycle and exposes it as `site.data.readme_content` for the `home` layout. This way `README.md` doubles as the GitHub repo readme.
 
 **Fonts** are self-hosted under `fonts/` (Nunito). No CDN dependencies.
 
-**Plugins**: `jekyll-redirect-from` (legacy URL redirects), `jekyll-feed` (RSS for the `publications` collection), plus two local plugins in `_plugins/`.
+**Plugins**: `jekyll-redirect-from` (legacy URL redirects), `jekyll-feed` (RSS for the `publications` collection), plus one local plugin in `_plugins/readme_content.rb`.
 
 ## SEO
 
