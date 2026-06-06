@@ -108,3 +108,9 @@ html.dark .mode-toggle .icon-sun { display: flex; }
 html.dark .mode-toggle .icon-moon { display: none; }
 html.light .mode-toggle .icon-sun { display: none; }
 html.light .mode-toggle .icon-moon { display: flex; }
+
+@media print {
+  :root, html.dark, html.light { color-scheme: light !important; }
+  html, body { background: #fff !important; color: #000 !important; }
+  a { color: #000 !important; }
+}
