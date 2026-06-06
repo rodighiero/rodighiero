@@ -8,7 +8,6 @@ doi: "https://doi.org/10.5281/zenodo.3950030"
 img: "Digital-Habitus-or-Personalization-without-Personality.webp"
 img_width: 700
 img_height: 522
-img_border: true
 redirect_from:
   - /Digital-Habitus
 ---

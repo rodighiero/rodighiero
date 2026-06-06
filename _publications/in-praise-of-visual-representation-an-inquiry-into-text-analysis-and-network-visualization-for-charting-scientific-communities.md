@@ -8,7 +8,6 @@ doi: "https://doi.org/10.1177/14703572241248408"
 img: "In-Praise-of-Visual-Representation.webp"
 img_width: 700
 img_height: 525
-img_border: true
 redirect_from:
   - /Visual-Communication
 ---

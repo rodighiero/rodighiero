@@ -10,7 +10,6 @@ doi: "https://doi.org/10.11588/DAH.2021.6.77681"
 img: "extending-museum/fig_002.webp"
 img_width: 1980
 img_height: 1481
-img_border: true
 figures: true
 redirect_from:
   - /Extending-Museum
