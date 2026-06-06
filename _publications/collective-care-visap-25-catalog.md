@@ -8,7 +8,6 @@ doi: "https://visap.net/2025/downloads/visap-2025-booklet.pdf"
 img: "Collective-Care-VISAP-25-Catalog.webp"
 img_width: 700
 img_height: 541
-img_border: true
 redirect_from:
   - /catalog-visap-2025
   - /visap-2025-catalog
