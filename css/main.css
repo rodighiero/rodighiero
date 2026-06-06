@@ -91,13 +91,12 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   background: none;
   border: none;
   cursor: pointer;
-  color: inherit;
+  color: var(--muted);
   padding: 2px;
   display: flex;
-  opacity: 0.6;
   z-index: 10;
 }
-.mode-toggle:hover { opacity: 1; }
+.mode-toggle:hover { color: var(--fg); }
 .mode-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
 .mode-toggle .icon-sun { display: none; }
 .mode-toggle .icon-moon { display: flex; }
