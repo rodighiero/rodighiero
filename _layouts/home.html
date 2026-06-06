@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <script>!function(){var c=localStorage.getItem('colorScheme');if(c)document.documentElement.classList.add(c);var v=localStorage.getItem('publicationView');document.documentElement.dataset.initialView=(v==='list'?'list':'gallery')}()</script>
+  <script>!function(){var c=localStorage.getItem('colorScheme');if(c)document.documentElement.classList.add(c);var v=window.innerWidth<=1024?'gallery':localStorage.getItem('publicationView');document.documentElement.dataset.initialView=(v==='list'?'list':'gallery')}()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
@@ -286,6 +286,7 @@
       .header-portrait { float: left; width: 220px; margin: 0 1.5rem 0.75rem 0; }
       .header .icons { margin-bottom: 0.6rem; }
       .header .bio-col { clear: left; margin-top: 1rem; }
+      .filter-count, .view-toggle { display: none; }
       body[data-view="list"] .publication { display: block; overflow: hidden; }
       body[data-view="list"] .card-img { display: block; float: right; width: 220px; margin: 0 0 1rem 1.5rem; }
       body[data-view="list"] .card-desc { margin-top: 1.2rem; }
@@ -470,9 +471,11 @@
     });
 
     // ── View toggle ──
-    function setView(view) {
+    function setView(view, persist) {
       document.body.dataset.view = view;
-      try { localStorage.setItem('publicationView', view); } catch (e) {}
+      if (persist !== false) {
+        try { localStorage.setItem('publicationView', view); } catch (e) {}
+      }
       viewButtons.forEach(function(b) {
         b.setAttribute('aria-pressed', b.dataset.view === view ? 'true' : 'false');
       });
@@ -483,10 +486,19 @@
         markFirstVisible();
       }
     }
+    function applyResponsiveView() {
+      if (window.innerWidth <= 1024) {
+        if (document.body.dataset.view !== 'gallery') setView('gallery', false);
+      } else {
+        var saved = localStorage.getItem('publicationView') === 'list' ? 'list' : 'gallery';
+        if (document.body.dataset.view !== saved) setView(saved, false);
+      }
+    }
     viewButtons.forEach(function(b) {
       b.addEventListener('click', function() { setView(this.dataset.view); });
     });
-    setView(document.body.dataset.view || 'gallery');
+    setView(document.body.dataset.view || 'gallery', false);
+    window.addEventListener('resize', applyResponsiveView);
 
     function normalize(s) {
       return s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
