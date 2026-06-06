@@ -8,7 +8,6 @@ doi: "https://nightingaledvs.com/visualizing-as-a-form-of-collective-care/"
 img: "Visualizing-as-a-Form-of-Collective-Care.webp"
 img_width: 700
 img_height: 338
-img_border: true
 redirect_from:
   - /Collective-Care
 ---

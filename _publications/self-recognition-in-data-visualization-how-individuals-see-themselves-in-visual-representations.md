@@ -8,7 +8,6 @@ doi: "https://doi.org/10.26151/espacestemps.net-wztp-cc46"
 img: "Self-Recognition-in-Data-Visualization.webp"
 img_width: 700
 img_height: 990
-img_border: true
 redirect_from:
   - /Self-Recognition
 ---

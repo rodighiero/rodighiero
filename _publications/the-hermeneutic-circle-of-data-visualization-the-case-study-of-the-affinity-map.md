@@ -8,7 +8,6 @@ doi: "https://doi.org/10.5840/techne202081126"
 img: "The-Hermeneutic-Circle-of-Data-Visualization.webp"
 img_width: 700
 img_height: 522
-img_border: true
 redirect_from:
   - /Hermeneutic-Circle
 ---
