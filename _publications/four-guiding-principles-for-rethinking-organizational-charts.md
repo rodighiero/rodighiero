@@ -9,6 +9,7 @@ img: "four-guiding-principles/fig_002.webp"
 figures: true
 img_width: 766
 img_height: 1200
+img_border: true
 redirect_from:
   - /Handbook-of-Digital-and-Computational-Research-Methods
 ---

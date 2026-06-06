@@ -8,6 +8,7 @@ doi: "https://hdl.handle.net/11370/d7e556b3-06df-4c6d-b8fa-5c21003734af"
 img: "Choreography-Design-and-Technology.webp"
 img_width: 700
 img_height: 700
+img_border: true
 redirect_from:
   - /Choreographic-Interface
 ---
