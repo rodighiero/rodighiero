@@ -208,6 +208,7 @@
       transition: background 0.15s ease;
     }
     .publication .card-img img { width: 100%; height: auto; display: block; }
+    .publication .card-img.bordered img { border: 1px solid var(--border); box-sizing: border-box; }
     .card-meta h2 {
       font-size: var(--text-base);
       font-weight: 500;
@@ -380,7 +381,7 @@
       {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.venue }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }}{% endcapture %}
       <div class="publication" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
         {% if publication.img %}
-        <div class="card-img">
+        <div class="card-img{% if publication.img_border %} bordered{% endif %}">
           <img src="/images/{{ publication.img }}" alt="" loading="lazy" width="{{ publication.img_width }}" height="{{ publication.img_height }}">
         </div>
         {% endif %}
