@@ -13,7 +13,8 @@ module Jekyll
             trailing = url[-1] + trailing
             url = url[0..-2]
           end
-          "<a href=\"#{url}\">#{url}</a>#{trailing}"
+          escaped = url.gsub('&', '&amp;')
+          "<a href=\"#{escaped}\">#{escaped}</a>#{trailing}"
         end
       end
     end
