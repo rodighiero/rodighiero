@@ -134,7 +134,8 @@
     .body li { margin-bottom: 0.8rem; padding-left: 0.3em; }
     .body ul li::marker { font-size: 0.7em; }
     .hero { margin: 0 0 2rem; }
-    .hero img { width: 100%; height: auto; display: block; border: 1px solid var(--border); box-sizing: border-box; }
+    .hero img { width: 100%; height: auto; display: block; }
+    .hero.bordered img { border: 1px solid var(--border); box-sizing: border-box; }
     .body figure { margin: 2rem 0; }
     .body figure img { width: 100%; height: auto; display: block; }
     .body figcaption { margin-top: 0.5rem; font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
@@ -206,7 +207,7 @@
   </div>
   {% include bibtex.html item=page %}
   <div class="content">
-    {% if page.img and page.figures != true %}<figure class="hero"><img src="/images/{{ page.img }}" alt="" width="{{ page.img_width }}" height="{{ page.img_height }}"></figure>{% endif %}
+    {% if page.img and page.figures != true %}<figure class="hero{% if page.img_border %} bordered{% endif %}"><img src="/images/{{ page.img }}" alt="" width="{{ page.img_width }}" height="{{ page.img_height }}"></figure>{% endif %}
     {% assign _content_parts = content | split: '<!--more-->' %}
     {% if _content_parts.size > 1 %}<div class="body"><div class="abstract">{{ _content_parts[0] }}</div>{{ _content_parts[1] | autolink_urls }}</div>{% else %}<div class="body">{{ content | autolink_urls }}</div>{% endif %}
   </div>

@@ -8,6 +8,7 @@ doi: "https://research.rug.nl/en/publications/a-visual-translation-of-the-pandem
 img: "A-Visual-Translation-of-the-Pandemic.webp"
 img_width: 700
 img_height: 700
+img_border: true
 redirect_from:
   - /A-Visual-Translation-of-the-Pandemic
   - /Visual-Translation

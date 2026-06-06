@@ -9,6 +9,7 @@ doi: "https://infoscience.epfl.ch/record/209326"
 img: "the-analogous-city-the-map/fig_001.webp"
 img_width: 1500
 img_height: 1497
+img_border: true
 figures: true
 redirect_from:
   - /Analogous-City
