@@ -21,7 +21,7 @@
     var liveMsg = document.getElementById('live-msg');
     document.querySelectorAll('.cite-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        var scope = btn.closest('.col-meta') || btn.closest('article') || document;
+        var scope = btn.closest('.card-meta') || btn.closest('article') || document;
         var data = scope.querySelector('.bibtex-data');
         if (!data) return;
         navigator.clipboard.writeText(data.textContent.trim()).then(function() {
