@@ -46,7 +46,7 @@ Surprise Machines owes its name to Alan Turing’s imitation game, described in 
 
 Surprise Machines thus aims to surprise visitors by showing them about 213,000 digitized images from the Harvard Art Museums’ collection (a number that is slightly smaller than the entire collection as not all the objects went through digitalization). On the one hand, visitors are amazed by the size of the collection; on the other hand, they are astonished by the small number of objects showcased in the HAM building (a quick estimate from the website proves that less than one percent of the objects have been made visible to visitors over the years). In addition, an experienced eye may be surprised by more specific cues, such as the considerable number of Bauhaus drawings or the unique assortments of powdered pigments.
 
-{% include figure.html src="/images/surprise-machines/fig_001.webp" caption="Figure 1. This image shows the complete program of Curatorial A(i)gents, which alternates between weekly digital installations and online discussions with the authors." %}
+{% include figure.html src="/images/surprise-machines-revealing-harvard-art-museums-image-collection/fig_001.webp" caption="Figure 1. This image shows the complete program of Curatorial A(i)gents, which alternates between weekly digital installations and online discussions with the authors." %}
 
 ## How to Map 200,000 Images
 
@@ -62,9 +62,9 @@ The results coming from PixPlot for visualizing the HAM collection were satisfyi
 
 Using a concept developed by Lev Manovich, the fascination of visualizing extensive collections is purely sublime (Manovich 2008), but zooming into details brings information. The attentive use of the interface enables the discovery of specific clusters such as the already-mentioned Bauhaus drawings or powdered pigments. The designers who created the visualization leave room for viewers whose performative insights change from person to person (Drucker 2013).
 
-{% include figure.html src="/images/surprise-machines/fig_002.webp" caption="Figure 2. This network visualization presents Harvard Art Museums’ collection through PixPlot, an open-access software created by the Yale University Digital Humanities Lab. The nebula shows the images in the two-dimensional space by visual similarity." %}
+{% include figure.html src="/images/surprise-machines-revealing-harvard-art-museums-image-collection/fig_002.webp" caption="Figure 2. This network visualization presents Harvard Art Museums’ collection through PixPlot, an open-access software created by the Yale University Digital Humanities Lab. The nebula shows the images in the two-dimensional space by visual similarity." %}
 
-{% include figure.html src="/images/surprise-machines/fig_003.webp" caption="Figure 3. By using the web-based interactive interface, the visitor may zoom into specific areas of the visualization to reveal image clusters of Harvard Art Museums’ collection. In this area showing hand-made portraits, Mahatma Gandhi and Albert Einstein are visible at the top left of the center." %}
+{% include figure.html src="/images/surprise-machines-revealing-harvard-art-museums-image-collection/fig_003.webp" caption="Figure 3. By using the web-based interactive interface, the visitor may zoom into specific areas of the visualization to reveal image clusters of Harvard Art Museums’ collection. In this area showing hand-made portraits, Mahatma Gandhi and Albert Einstein are visible at the top left of the center." %}
 
 ## Designing a Post-Pandemic, Choreographic Interface
 
@@ -78,9 +78,9 @@ Prototyping for Surprise Machines also helped us think through the intuitiveness
 
 The sonification applies and modulates subtle audio textures to the gestures, providing a dynamic score for the dance and reinforcing to the interface actions. The body’s position and acceleration drive changes to the sound in service of marrying physical and digital movement. While the choreographic interface includes visual feedback on the screen (see Figure 5), aural feedback frees the visitor’s visual attention allowing them to concentrate more fully on the projects.
 
-{% include figure.html src="/images/surprise-machines/fig_004.webp" caption="Figure 4. The choreographic interface invites visitors to interact with the Curatorial A(i)gents projects using a gestural vocabulary. This poster by Pablo Castillo shows the gestures for neutral, zoom in and out, scroll down and up, advance right and left, track, select (also used for dragging), switch hands, and refresh." %}
+{% include figure.html src="/images/surprise-machines-revealing-harvard-art-museums-image-collection/fig_004.webp" caption="Figure 4. The choreographic interface invites visitors to interact with the Curatorial A(i)gents projects using a gestural vocabulary. This poster by Pablo Castillo shows the gestures for neutral, zoom in and out, scroll down and up, advance right and left, track, select (also used for dragging), switch hands, and refresh." %}
 
-{% include figure.html src="/images/surprise-machines/fig_005.webp" caption="Figure 5. Surprise Machines test at the Harvard Art Museum’s Lightbox Gallery showing the choreographic interface in action. The figure also clearly illustrates the Trails’ interface based on a limited set of image previews, distinguishable by the white background." %}
+{% include figure.html src="/images/surprise-machines-revealing-harvard-art-museums-image-collection/fig_005.webp" caption="Figure 5. Surprise Machines test at the Harvard Art Museum’s Lightbox Gallery showing the choreographic interface in action. The figure also clearly illustrates the Trails’ interface based on a limited set of image previews, distinguishable by the white background." %}
 
 ## A Substantial Drawback
 
@@ -94,9 +94,9 @@ The Lightbox Gallery finally hosts Surprise Machines during the week of May 17�
 
 Even with the increase in data literacy, new technologies still struggle to enter museum spaces. The Harvard Art Museums transformed a part of the building Piano envisioned as a meeting room into a laboratory dedicated to experimental museology. However, Curatorial A(i)gents and Living by Protocol, the two back-to-back exhibitions curated by metaLAB, were the penultimate programming in the Lightbox Gallery. Conceived in July 2012 and opened in November 2014, the Lightbox Gallery was converted into a quiet lounge for visitors in summer/fall 2022. The reason for this second conversion was twofold: on the one hand, the Lightbox Gallery was seen as a space with a cycle predestined to end; on the other hand, there was a lack of support within the museum, whose funding for staffing and maintenance ceased in 2018. The lack of funding was the primary reason for the closure of the director’s office in July 2021. Although the detachment of the Lightbox Gallery from the main exhibition stories gave great freedom of planning, the truth is that Renzo Piano’s restoration did not consider the presence of digital devices within the museum at all, and the result is a building extraordinarily crafted but classically designed. It means that the Harvard Art Museums may still live without any digital faculty but also that the digital turn has still to reach its full potential in museums. The experience Lightbox Gallery leaves is an increased understanding of experimental museology for the staff and the authors who exhibited in the gallery and new knowledge for designing future spaces.
 
-{% include figure.html src="/images/surprise-machines/fig_006.webp" %}
+{% include figure.html src="/images/surprise-machines-revealing-harvard-art-museums-image-collection/fig_006.webp" %}
 
-{% include figure.html src="/images/surprise-machines/fig_007.webp" caption="Figures 6 and 7. These are two photographs of Surprise Machines, taken by Sarah Newman during the exhibition: the first one shows the nebula of more than 200,000 images from the HAM’s collection, the second one shows a frozen screenshot after zooming in. The latter represents the sampling used to lighten the interface with the remaining images in the background as circles." %}
+{% include figure.html src="/images/surprise-machines-revealing-harvard-art-museums-image-collection/fig_007.webp" caption="Figures 6 and 7. These are two photographs of Surprise Machines, taken by Sarah Newman during the exhibition: the first one shows the nebula of more than 200,000 images from the HAM’s collection, the second one shows a frozen screenshot after zooming in. The latter represents the sampling used to lighten the interface with the remaining images in the background as circles." %}
 
 ## Conclusions
 
