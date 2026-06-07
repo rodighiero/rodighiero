@@ -7,7 +7,7 @@ author: "Dario Rodighiero"
 authors: "Rodighiero, Dario"
 authors_bibtex: "Rodighiero, Dario"
 doi: "https://doi.org/10.11588/DAH.2021.6.77681"
-img: "extending-museum/fig_002.webp"
+img: "extending-museum-beyond-physical-space-a-data-driven-study-of-aldo-rossis-analogous-city-as-a-mobile-museum-object/fig_002.webp"
 img_width: 1980
 img_height: 1481
 figures: true
