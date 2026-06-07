@@ -8,7 +8,7 @@ doi: "https://doi.org/10.1515/pdtc-2025-0066"
 volume: 55
 issue: 1
 pages: "45–53"
-img: "archives-museums-and-installations/fig_002.webp"
+img: "archives-museums-and-installations-aldo-rossis-legacy-in-digital-transition/fig_002.webp"
 figures: true
 img_width: 1329
 img_height: 749
