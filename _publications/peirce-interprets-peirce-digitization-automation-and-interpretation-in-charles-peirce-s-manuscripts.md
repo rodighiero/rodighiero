@@ -106,7 +106,7 @@ This paper has proposed a workflow for engaging with large, heterogeneous manusc
 - Engel, F., M. Queisner, and T. Viola, eds. 2012. _Das bildnerische Denken: Charles S. Peirce_. Berlin: Akademie Verlag.
 - Everett, D. 2021. “Charles Sanders Peirce Was America’s Greatest Thinker.” _Attention to the Unseen_, September 26. https://attentiontotheunseen.com/2021/09/26/charles-sanders-peirce-was-americas-greatest-thinker
 - Farias, P., and J. Queiroz. 2017. “Visualizing Triadic Relations: Diagrams for Charles S. Peirce’s Classifications of Signs.” _Information Design Journal_ 23 (2): 127–147.
-- Feil, S. 2024. _Pragmatismus als Theorie der Vorbegrifflichkeit_. Paderborn: Brill | Fink. https://doi.org/10.30965/9783846768945
+- Feil, S. 2024. _Pragmatismus als Theorie der Vorbegrifflichkeit_. Paderborn: Brill. https://doi.org/10.30965/9783846768945
 - Harvard University. n.d. _Harvard Library_. https://hollis.harvard.edu/
 - Hiippala, T., and J. Bateman. 2022. “Semiotically-Grounded Distant View of Diagrams: Insights from Two Multimodal Corpora.” _Digital Scholarship in the Humanities_ 37: 405–425. https://doi.org/10.1093/llc/fqab063
 - Jariah, R., R. Fathu, and M. P. Amir. 2022. “Social Problems in Drama 13 Reasons Why: Peirce Semiotics Approach.” _TEKSTUAL_ 20: 48. https://doi.org/10.33387/tekstual.v20i1.4508
