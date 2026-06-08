@@ -4,10 +4,10 @@ year: 2026
 venue: "AIUCD"
 type: "conference"
 author: "Alessandro Adamou and Sebastian Feil and Davide Picca and Carlo Teo Pedretti and Dario Rodighiero and Lorenzo Zangari"
-img: "peirce-interprets-peirce-digitization-automation-and-interpretation-in-charles-peirce-s-manuscripts/fig_002.webp"
+img: "peirce-interprets-peirce-digitization-automation-and-interpretation-in-charles-peirce-s-manuscripts/fig_000.webp"
 figures: true
-img_width: 2400
-img_height: 1865
+img_width: 1191
+img_height: 1475
 redirect_from:
   - /Peirce-Interprets-Peirce
   - /peirce-interprets-peirce-digitization-automation-and-interpretation-in-charles-peirces-manuscripts
