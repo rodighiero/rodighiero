@@ -202,9 +202,9 @@
   {% include meta-line.html item=page %}
   <h1>{{ page.title }}</h1>
   {% include authors.html item=page %}
-  {% if page.doi %}<div class="doi"><a href="{{ page.doi }}">{{ page.doi }}</a><button class="cite-btn" type="button">Cite</button></div>{% else %}<div class="doi"><button class="cite-btn" type="button">Cite</button></div>{% endif %}
+  {% if page.doi %}<div class="doi"><a href="{{ page.doi }}">{{ page.doi }}</a><button class="cite-btn" type="button">Cite</button></div>{% endif %}
   </div>
-  {% include bibtex.html item=page %}
+  {% if page.doi %}{% include bibtex.html item=page %}{% endif %}
   <div class="content">
     {% if page.img and page.figures != true %}<figure class="hero"><img src="/images/{{ page.img }}" alt="" width="{{ page.img_width }}" height="{{ page.img_height }}"></figure>{% endif %}
     {% assign _content_parts = content | split: '<!--more-->' %}
