@@ -1,7 +1,7 @@
 ---
 title: "Peirce Interprets Peirce: Digitization, Automation, and Interpretation in Charles Peirce’s Manuscripts"
 year: 2026
-venue: "Annual Conference of the Association for Humanities and Digital Culture (AIUCD)"
+venue: "AIUCD"
 type: "conference"
 author: "Alessandro Adamou and Sebastian Feil and Davide Picca and Carlo Teo Pedretti and Dario Rodighiero and Lorenzo Zangari"
 img: "peirce-interprets-peirce-digitization-automation-and-interpretation-in-charles-peirce-s-manuscripts/fig_002.webp"
