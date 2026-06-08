@@ -121,7 +121,7 @@ Crucially, this infrastructure does not aim to resolve the complexity it present
 - Cohan, Arman, Sergey Feldman, Iz Beltagy, Doug Downey, and Daniel S. Weld. 2020. “SPECTER: Document-Level Representation Learning Using Citation-Informed Transformers.” arXiv:2004.07180 [cs]. <https://arxiv.org/abs/2004.07180>
 - Cover, Thomas, and Peter Hart. 1967. “Nearest Neighbor Pattern Classification.” *IEEE Transactions on Information Theory* 13 (1): 21–27. <https://doi.org/10.1109/tit.1967.1053964>
 - Dewey, John. 1938. *Logic: The Theory of Inquiry*. New York: Holt.
-- Drucker, Johanna. 2021. “Visualization.” In *Uncertain Archives*, edited by Nanna Bonde Thylstrup, Daniela Agostinho, Annie Ring, Catherine D’Ignazio, and Kristin Veel, 561–568. Cambridge, MA: MIT Press. <https://doi.org/10.7551/mitpress/12236.003.006>
+- Drucker, Johanna. 2021. “Visualization.” In *Uncertain Archives*, edited by Nanna Bonde Thylstrup, Daniela Agostinho, Annie Ring, Catherine D’Ignazio, and Kristin Veel, 561–568. Cambridge, MA: MIT Press. <https://doi.org/10.7551/mitpress/12236.003.0061>
 - Freire, Paulo. (1970) 2000. *Pedagogy of the Oppressed*. Translated by Myra Bergman Ramos. 30th anniversary ed. New York: Continuum.
 - González-Márquez, Rita, Luca Schmidt, Benjamin M. Schmidt, Philipp Berens, and Dmitry Kobak. 2024. “The Landscape of Biomedical Research.” *Patterns* 5 (6): 100968. <https://doi.org/10.1016/j.patter.2024.100968>
 - Jacomy, Mathieu, Tommaso Venturini, Sébastien Heymann, and Mathieu Bastian. 2014. “ForceAtlas2, a Continuous Graph Layout Algorithm for Handy Network Visualization Designed for the Gephi Software.” *PLoS ONE* 9 (6): e98679. <https://doi.org/10.1371/journal.pone.0098679>
