@@ -1,0 +1,47 @@
+# Single source of truth for publication types. Used by:
+#   label          — meta lines and homepage search text
+#   schema         — Schema.org @type in publication-page JSON-LD
+#   dc             — DC.type metadata value
+#   citation_venue — HighWire/Google Scholar meta tag carrying the venue (omit to skip)
+#   bibtex         — BibTeX entry type
+#   bibtex_venue   — BibTeX field carrying the venue
+book:
+  label: Book
+  schema: Book
+  dc: book
+  bibtex: book
+  bibtex_venue: publisher
+chapter:
+  label: Book Chapter
+  schema: ScholarlyArticle
+  dc: bookPart
+  citation_venue: citation_book_title
+  bibtex: incollection
+  bibtex_venue: booktitle
+journal:
+  label: Journal Article
+  schema: ScholarlyArticle
+  dc: article
+  citation_venue: citation_journal_title
+  bibtex: article
+  bibtex_venue: journal
+conference:
+  label: Conference Paper
+  schema: ScholarlyArticle
+  dc: conferencePaper
+  citation_venue: citation_conference_title
+  bibtex: inproceedings
+  bibtex_venue: booktitle
+magazine:
+  label: Magazine Article
+  schema: Article
+  dc: article
+  citation_venue: citation_journal_title
+  bibtex: article
+  bibtex_venue: journal
+map:
+  label: Map
+  schema: Map
+  dc: image
+  bibtex: misc
+  bibtex_venue: publisher

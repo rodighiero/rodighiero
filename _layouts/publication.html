@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <script>!function(){var c=localStorage.getItem('colorScheme');if(c)document.documentElement.classList.add(c)}()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {% capture _byline %}{% if page.author %}{{ page.author | replace: ' and ', ', ' }}{% if page.editor %}. Ed. {{ page.editor | replace: ' and ', ', ' }}{% endif %}{% elsif page.editor %}{{ page.editor | replace: ' and ', ', ' }}, eds.{% endif %}{% if page.translator %}. Translated by {{ page.translator | replace: ' and ', ', ' }}{% endif %}{% endcapture %}
+  {% assign _ptype = site.data.publication_types[page.type] %}
+  {% capture _byline %}{% include byline.html item=page %}{% endcapture %}{% assign _byline = _byline | strip %}
   <title>{{ page.title | escape }}{% if _byline != '' %} — {{ _byline | escape }}{% endif %}</title>
   <meta name="description" content="{{ _excerpt }}">
   <meta name="keywords" content="Dario Rodighiero{% if page.venue %}, {{ page.venue }}{% endif %}{% if page.type %}, {{ page.type }}{% endif %}, data visualization, digital humanities, design">
@@ -45,9 +46,7 @@
   <meta name="citation_author" content="Dario Rodighiero">
   {% endif %}
   {% if page.year %}<meta name="citation_publication_date" content="{{ page.year }}">{% endif %}
-  {% case page.type %}{% when 'journal', 'magazine' %}<meta name="citation_journal_title" content="{{ page.venue | escape }}">
-  {% when 'conference' %}<meta name="citation_conference_title" content="{{ page.venue | escape }}">
-  {% when 'chapter' %}<meta name="citation_book_title" content="{{ page.venue | escape }}">{% endcase %}
+  {% if _ptype.citation_venue %}<meta name="{{ _ptype.citation_venue }}" content="{{ page.venue | escape }}">{% endif %}
   {% if page.doi and page.doi contains 'doi.org/' %}<meta name="citation_doi" content="{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}">{% endif %}
   <meta name="citation_abstract_html_url" content="{{ site.url }}{{ page.url }}">
   <meta name="citation_language" content="{{ page.lang | default: 'en' }}">
@@ -64,19 +63,14 @@
   <meta name="DC.description" content="{{ _excerpt | escape }}">
   {% if page.venue %}<meta name="DC.source" content="{{ page.venue | escape }}">{% endif %}
   {% if page.year %}<meta name="DC.date" content="{{ page.year }}">{% endif %}
-  {% case page.type %}{% when 'journal', 'magazine' %}<meta name="DC.type" content="article">
-  {% when 'conference' %}<meta name="DC.type" content="conferencePaper">
-  {% when 'chapter' %}<meta name="DC.type" content="bookPart">
-  {% when 'book' %}<meta name="DC.type" content="book">
-  {% when 'map' %}<meta name="DC.type" content="image">
-  {% else %}<meta name="DC.type" content="text">{% endcase %}
+  <meta name="DC.type" content="{{ _ptype.dc | default: 'text' }}">
   <meta name="DC.format" content="text/html">
   <meta name="DC.language" content="{{ page.lang | default: 'en' }}">
   <meta name="DC.identifier" content="{{ site.url }}{{ page.url }}">
   {% if page.doi %}<meta name="DC.identifier" content="{{ page.doi }}">{% endif %}
   <meta name="DC.publisher" content="Dario Rodighiero">
   <meta name="DCTERMS.isPartOf" content="{{ site.url }}">
-  {% case page.type %}{% when 'book' %}{% assign _schema_type = 'Book' %}{% when 'chapter' %}{% assign _schema_type = 'ScholarlyArticle' %}{% when 'magazine' %}{% assign _schema_type = 'Article' %}{% when 'map' %}{% assign _schema_type = 'Map' %}{% else %}{% assign _schema_type = 'ScholarlyArticle' %}{% endcase %}
+  {% assign _schema_type = _ptype.schema | default: 'ScholarlyArticle' %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
