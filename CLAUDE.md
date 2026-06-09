@@ -15,7 +15,7 @@ No test suite, no asset pipeline, no npm.
 
 This is a Jekyll static site — the personal academic website of Dario Rodighiero at `dariorodighiero.com`.
 
-**Content** lives entirely in `_publications/` as Markdown files, one per publication. Each file's front matter drives everything: `title`, `year`, `venue`, `type` (book / chapter / journal / conference / magazine / map), `author`, `doi`, `img` / `img_width` / `img_height`, and optional `redirect_from` entries. The `layout: publication` is set globally via `defaults:` in `_config.yml`, so individual files do not declare it.
+**Content** lives entirely in `_publications/` as Markdown files, one per publication. Each file's front matter drives everything: `title`, `year`, `venue`, `type` (book / chapter / journal / conference / magazine / map), `author`, `doi`, `img` / `img_width` / `img_height`, and optional `redirect_from` entries. The `type` taxonomy is defined once in `_data/publication_types.yml` (label, Schema.org type, DC.type, citation meta tag, BibTeX entry/venue field) — adding a new type means adding one entry there. The `layout: publication` is set globally via `defaults:` in `_config.yml`, so individual files do not declare it.
 
 The body of each file is the abstract. Full-text articles (the complete published text, not just an abstract) put the lead/abstract paragraph first, then a `<!--more-->` marker, then the full text using `##` for section headings. The layout italicizes the part before `<!--more-->` as the lead. Footnotes/references inside full-text articles use kramdown footnote syntax (`[^1]` … `[^1]:`) and follow **Chicago author-date** style (e.g. `Author, First. Year. *Title*. Place: Publisher.`).
 
