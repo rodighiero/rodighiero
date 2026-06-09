@@ -142,6 +142,8 @@
       .body figure.wide { display: block; width: min(990px, 100vw); max-width: none; margin-left: calc(50% - min(990px, 100vw) / 2); }
       .body figure.wide img { display: block; width: auto; height: auto; max-width: 100%; max-height: 660px; margin: 0 auto; }
       .body figure.wide figcaption { width: calc(min(660px, 100vw) - 3rem); max-width: 100%; margin-left: auto; margin-right: auto; }
+      .body figure.narrow img { width: 50%; margin: 0 auto; }
+      .body figure.narrow figcaption { width: 50%; margin-left: auto; margin-right: auto; }
     }
     .body sup a.footnote { font-size: 0.7em; font-weight: 500; text-decoration: none; padding: 0 0.1em; }
     .body .footnotes { margin-top: 3rem; padding-top: 1.2rem; font-size: var(--text-xs); line-height: var(--lh-normal); color: var(--muted); }
@@ -218,9 +220,11 @@
   {% include common-scripts.html %}
   <script>
     document.querySelectorAll('.body figure img').forEach(function(img) {
+      var fig = img.closest('figure');
+      if (fig.className) return;
       function applyOrientation() {
         if (img.naturalWidth > img.naturalHeight) {
-          img.closest('figure').classList.add('wide');
+          fig.classList.add('wide');
         }
       }
       if (img.complete && img.naturalWidth > 0) {
