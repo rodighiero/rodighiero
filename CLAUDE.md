@@ -21,7 +21,7 @@ The body of each file is the abstract. Full-text articles (the complete publishe
 
 **Quotation marks**: use curly quotes (`“ ”`), never caporali/guillemets (`« »`), for Italian and English text. The only exception is French-language quotations, which keep French guillemets.
 
-**Layouts** are self-contained HTML files with inlined CSS and JS — no external stylesheet or build step:
+**CSS** is split in two: `css/main.css` holds the shared foundation (design tokens in `:root` — type scale, line heights, light/dark colors — plus base typography, `.meta-line`, `.authors`, `.cite-btn`, and the mode toggle), while each layout inlines its own page-specific styles in a `<style>` block. JS is inlined in the layouts; shared snippets (mode toggle, cite buttons) live in `_includes/common-scripts.html`. No build step:
 - `_layouts/home.html` — the only top-level publications page. Two view modes, toggled in the search bar and persisted in `localStorage` under `publicationView`: a **gallery** (custom JS masonry — newest first, packed by shortest column, `GAP_X`/`GAP_Y` in the inline script) and a **list** (4-column grid with abstracts). A single full-width search bar filters across title, authors, editor, translator, venue, year, type label, volume, issue, pages and DOI. The `.at-top` class is added by JS to suppress the top hairline on first-visible (list) or y=0 (gallery) cards. Author/editor/translator lines come from `_includes/authors-home.html`, which strips "Rodighiero" and prefixes with `with` / `edited with` / `translated with` (or `edited by` / `translated by` when Dario is not in the list).
 - `_layouts/publication.html` — individual publication pages. Generates BibTeX in a hidden `<pre>` and copies it to the clipboard on "Cite" button click. Prev/next navigation is computed in Liquid, sorted by year descending then title descending. Uses `_includes/authors.html` (the full citation, not the homepage shorthand).
 
@@ -29,7 +29,12 @@ The body of each file is the abstract. Full-text articles (the complete publishe
 
 **Fonts** are self-hosted under `fonts/` (Nunito). No CDN dependencies.
 
-**Plugins**: `jekyll-redirect-from` (legacy URL redirects), `jekyll-feed` (RSS for the `publications` collection), plus one local plugin in `_plugins/readme_content.rb`.
+**Plugins**: `jekyll-redirect-from` (legacy URL redirects), `jekyll-feed` (RSS for the `publications` collection), plus five local plugins in `_plugins/`:
+- `autolink_urls.rb` — Liquid filter that wraps bare `http(s)://` URLs in anchors when rendering full-text bodies (skips URLs already inside `<a>` tags)
+- `git_mtime.rb` — adds `git_mtime` (last commit date) to each publication and `site.data` for sitemap `lastmod`; needs full git history (the deploy workflow uses `fetch-depth: 0`)
+- `image_size.rb` — Liquid filter returning a WebP's intrinsic pixel dimensions (pure-Ruby parser), used by `_includes/figure.html` to set `width`/`height` and avoid CLS
+- `publication_date.rb` — derives `page.date` from `year` so the RSS feed preserves the homepage sort order
+- `readme_content.rb` — exposes `README.md` as `site.data.readme_content` (see Bio above)
 
 ## SEO
 
