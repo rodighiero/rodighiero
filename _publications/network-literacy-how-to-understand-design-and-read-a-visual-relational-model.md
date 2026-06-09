@@ -43,7 +43,7 @@ From that moment on, networks developed in parallel with the rise of computation
 
 Once networks began circulating in public discourse and media, their visualization became a key mode of interpretation. Design, as Löwgren and Stolterman (2004) argue, makes complex systems legible by highlighting patterns and relations. Manuel Lima (2011) further shows how visual metaphors and aesthetics shape comprehension. What originated in mathematics and sociology now also lives as visual culture, where design plays a central role in how networks are produced and understood.
 
-{% include figure.html src="/publications/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_001.webp" caption="Figure 1. Jacob L. Moreno's original sociogram from Who Shall Survive?, visualizing interpersonal choices in a group to reveal attractions, repulsions, and the emergent social structure. This foundational diagram demonstrates how sociometry uncovers hidden dynamics of affiliation and exclusion within communities (Moreno 1934)." %}
+{% include figure.html src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_001.webp" caption="Figure 1. Jacob L. Moreno's original sociogram from Who Shall Survive?, visualizing interpersonal choices in a group to reveal attractions, repulsions, and the emergent social structure. This foundational diagram demonstrates how sociometry uncovers hidden dynamics of affiliation and exclusion within communities (Moreno 1934)." %}
 
 ## Network Design
 
@@ -59,7 +59,7 @@ In a more technical arena, dimensionality reduction techniques like t-SNE (van d
 
 As these design choices and methods show, every step in network visualization leads naturally to considering how space shapes meaning. Spatial arrangements guide how viewers interpret network structures, turning tabular data into visual patterns. Understanding networks as designed spaces prepares us to explore how spatial thinking influences perception, revealing not just what networks contain but how they communicate insights through their spatial organization.
 
-{% include figure.html src="/publications/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_002.webp" caption="Figure 2. The Grounded AI Map, a large-scale network visualization translating two million scientific articles on artificial intelligence into a walkable 100 m² installation. Clusters are annotated using large language models, enabling visitors to explore and question algorithmic knowledge through interactive bots and a dedicated app (Ficozzi et al. 2025)." %}
+{% include figure.html src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_002.webp" caption="Figure 2. The Grounded AI Map, a large-scale network visualization translating two million scientific articles on artificial intelligence into a walkable 100 m² installation. Clusters are annotated using large language models, enabling visitors to explore and question algorithmic knowledge through interactive bots and a dedicated app (Ficozzi et al. 2025)." %}
 
 ## Spatial Thinking
 
@@ -75,7 +75,7 @@ Reading networks spatially is much like reading a city map: just as a street map
 
 To illustrate these ideas in practice, the next case study, Surprise Machines, explores how experimental network visualizations engage spatial thinking and challenge our expectations.
 
-{% include figure.html src="/publications/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_003.webp" caption="Figure 3. Visualization by Martin Grandjean showing the network of influence among 4,300 philosophers in the English Wikipedia, illustrating how encyclopedic knowledge structures can reveal or obscure intellectual traditions (Grandjean 2014)." %}
+{% include figure.html src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_003.webp" caption="Figure 3. Visualization by Martin Grandjean showing the network of influence among 4,300 philosophers in the English Wikipedia, illustrating how encyclopedic knowledge structures can reveal or obscure intellectual traditions (Grandjean 2014)." %}
 
 ## Surprise Machines
 
@@ -89,7 +89,7 @@ The project foregrounds the viewer's interpretative agency, positioning explorat
 
 Finally, Surprise Machines brings together spatial and design decisions in a way that highlights the playful, performative dimension of network literacy. By choreographing visitors' gestures to interact with the visualization—through a choreographic interface—the project merges physical exploration with digital navigation. This spatial engagement transforms reading a network into a kind of dance, where each movement reshapes the visual field and opens new interpretations. The design choices, from clustering algorithms to interactive transitions, encourage experimentation and surprise, underscoring that networks are not static maps but evolving spaces that respond to viewers' actions. This performative aspect embodies the core of network literacy: understanding that meaning in networks arises not only from data and design but also from how users move through, manipulate, and interpret these complex structures. Surprise Machines thus stands as a testament to how thoughtful spatial and interactive design can transform network visualizations into immersive, interpretative experiences.
 
-{% include figure.html src="/publications/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_004.webp" caption="Figure 4. Surprise Machines visualization of Harvard Art Museums' 200,000+ digitized images, mapping visual similarities to enable visitors to explore the museum's vast collection through unexpected connections and choreographic interaction (Rodighiero et al. 2022)." %}
+{% include figure.html src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_004.webp" caption="Figure 4. Surprise Machines visualization of Harvard Art Museums' 200,000+ digitized images, mapping visual similarities to enable visitors to explore the museum's vast collection through unexpected connections and choreographic interaction (Rodighiero et al. 2022)." %}
 
 ## Conclusion
 

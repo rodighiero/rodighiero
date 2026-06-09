@@ -5,7 +5,7 @@ venue: "Frontiers"
 type: "journal"
 author: "Dominik Balazka and Dario Rodighiero"
 doi: "https://doi.org/10.3389/fdata.2020.00031"
-img: "Big-Data-and-the-Little-Big-Bang.webp"
+img: "publications/Big-Data-and-the-Little-Big-Bang.webp"
 img_width: 700
 img_height: 523
 redirect_from:

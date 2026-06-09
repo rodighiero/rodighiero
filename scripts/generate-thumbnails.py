@@ -2,9 +2,9 @@
 """Generate homepage card thumbnails.
 
 Reads the `img:` front-matter field of every file in _publications/,
-takes the full-size WebP from publications/, and writes a thumbnail
-(max MAX_WIDTH px wide, never upscaled) to thumbnails/ under the same
-relative path. Requires Pillow. Run from the repo root:
+takes the full-size WebP from images/, and writes a thumbnail
+(max MAX_WIDTH px wide, never upscaled) to images/thumbnails/ under
+the same relative path. Requires Pillow. Run from the repo root:
 
     python3 scripts/generate-thumbnails.py
 """
@@ -20,8 +20,8 @@ MAX_WIDTH = 800
 QUALITY = 80
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE = ROOT / "publications"
-DEST = ROOT / "thumbnails"
+SOURCE = ROOT / "images"
+DEST = ROOT / "images" / "thumbnails"
 
 IMG_RE = re.compile(r'^img:\s*"?([^"\n]+?)"?\s*$', re.MULTILINE)
 
