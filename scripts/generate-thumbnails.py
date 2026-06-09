@@ -3,8 +3,9 @@
 
 Reads the `img:` front-matter field of every file in _publications/,
 takes the full-size WebP from images/, and writes a thumbnail
-(max MAX_WIDTH px wide, never upscaled) to images/thumbnails/ under
-the same relative path. Requires Pillow. Run from the repo root:
+(max MAX_WIDTH px wide, never upscaled) to images/thumbnails/,
+named after the publication slug (the .md filename). Requires Pillow.
+Run from the repo root:
 
     python3 scripts/generate-thumbnails.py
 """
@@ -48,7 +49,7 @@ def main():
             print(f"error: missing {src}", file=sys.stderr)
             failures += 1
             continue
-        dst = DEST / rel
+        dst = DEST / f"{md_path.stem}.webp"
         dst.parent.mkdir(parents=True, exist_ok=True)
         with Image.open(src) as im:
             if im.width > MAX_WIDTH:
