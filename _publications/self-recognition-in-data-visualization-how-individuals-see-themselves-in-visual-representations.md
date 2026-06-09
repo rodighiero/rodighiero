@@ -5,7 +5,7 @@ venue: "EspacesTemps.Net"
 type: "journal"
 author: "Dario Rodighiero and Loup Cellard"
 doi: "https://doi.org/10.26151/espacestemps.net-wztp-cc46"
-img: "publications/Self-Recognition-in-Data-Visualization.webp"
+img: "@publications/Self-Recognition-in-Data-Visualization.webp"
 img_width: 700
 img_height: 990
 redirect_from:

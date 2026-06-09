@@ -5,7 +5,7 @@ venue: "Visual Communication"
 type: "journal"
 author: "Dario Rodighiero"
 doi: "https://doi.org/10.1177/14703572241248408"
-img: "publications/In-Praise-of-Visual-Representation.webp"
+img: "@publications/In-Praise-of-Visual-Representation.webp"
 img_width: 700
 img_height: 525
 redirect_from:

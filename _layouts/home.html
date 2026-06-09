@@ -385,7 +385,7 @@
       <div class="publication" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
         {% if publication.img %}
         <div class="card-img{% if publication.img_border %} bordered{% endif %}">
-          <img src="/images/thumbnails/{{ publication.slug }}.webp" alt="" loading="lazy" width="{{ publication.img_width }}" height="{{ publication.img_height }}">
+          <img src="/images/@thumbnails/{{ publication.slug }}.webp" alt="" loading="lazy" width="{{ publication.img_width }}" height="{{ publication.img_height }}">
         </div>
         {% endif %}
         <div class="card-meta">
