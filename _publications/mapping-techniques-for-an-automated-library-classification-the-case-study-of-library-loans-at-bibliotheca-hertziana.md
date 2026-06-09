@@ -5,7 +5,7 @@ venue: "Linking Theory and Practice of Digital Libraries"
 type: "conference"
 author: "Hannah Laureen Casey and Alessandro Adamou and Dario Rodighiero"
 doi: "https://zenodo.org/records/13862868"
-img: "Mapping-Techniques-for-an-Automated-Library-Classification.webp"
+img: "publications/Mapping-Techniques-for-an-Automated-Library-Classification.webp"
 img_width: 700
 img_height: 525
 redirect_from:

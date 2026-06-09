@@ -5,7 +5,7 @@ venue: "Nightingale"
 type: "magazine"
 author: "Manuel Lima and Dario Rodighiero"
 doi: "https://nightingaledvs.com/ars-memorativa-as-the-genesis-of-information-design-a-conversation-with-manuel-lima/"
-img: "Ars-memorativa-as-the-genesis-of-information-design.webp"
+img: "publications/Ars-memorativa-as-the-genesis-of-information-design.webp"
 img_width: 700
 img_height: 868
 ---

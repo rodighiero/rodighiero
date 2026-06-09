@@ -5,7 +5,7 @@ venue: "Nightingale"
 type: "magazine"
 author: "Damla Çay and Dario Rodighiero and Weidi Zhang"
 doi: "https://nightingaledvs.com/visualizing-as-a-form-of-collective-care/"
-img: "Visualizing-as-a-Form-of-Collective-Care.webp"
+img: "publications/Visualizing-as-a-Form-of-Collective-Care.webp"
 img_width: 700
 img_height: 338
 redirect_from:

@@ -5,7 +5,7 @@ venue: "Techné"
 type: "journal"
 author: "Dario Rodighiero and Alberto Romele"
 doi: "https://doi.org/10.5840/techne202081126"
-img: "The-Hermeneutic-Circle-of-Data-Visualization.webp"
+img: "publications/The-Hermeneutic-Circle-of-Data-Visualization.webp"
 img_width: 700
 img_height: 522
 redirect_from:

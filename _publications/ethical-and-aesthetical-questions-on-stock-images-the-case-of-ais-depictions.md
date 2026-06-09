@@ -5,7 +5,7 @@ venue: "Lessico Di Etica Pubblica"
 type: "journal"
 author: "Alberto Romele and Sabina Rosenbergova and Dario Rodighiero"
 doi: "https://www.eticapubblica.it/alberto-romele-dario-rodighiero-sabina-rosenbergova-ethical-and-aesthetical-questions-on-stock-images-the-case-of-ais-depictions/"
-img: "Ethical-and-Aesthetical-Questions-on-Stock-Images.webp"
+img: "publications/Ethical-and-Aesthetical-Questions-on-Stock-Images.webp"
 img_width: 700
 img_height: 700
 redirect_from:

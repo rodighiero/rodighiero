@@ -5,7 +5,7 @@ venue: "ACM Conference on Hypertext and Social Media"
 type: "conference"
 author: "Davide Picca and Antonin Schnyder and Eri Kostina and Alessandro Adamou and Dario Rodighiero and Jeffrey Schnapp"
 doi: "https://pure.rug.nl/ws/portalfiles/portal/780076742/3603163.3609066.pdf"
-img: "Orchestrating-Cultural-Heritage.webp"
+img: "publications/Orchestrating-Cultural-Heritage.webp"
 img_width: 700
 img_height: 587
 redirect_from:

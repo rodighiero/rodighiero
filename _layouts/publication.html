@@ -22,7 +22,7 @@
   <meta property="og:url" content="{{ site.url }}{{ page.url }}">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="{% if page.lang == 'it' %}it_IT{% else %}en_US{% endif %}">
-  {% if page.img %}<meta property="og:image" content="{{ site.url }}/publications/{{ page.img }}">
+  {% if page.img %}<meta property="og:image" content="{{ site.url }}/images/{{ page.img }}">
   <meta property="og:image:alt" content="{{ page.title | escape }}">
   {% if page.img_width %}<meta property="og:image:width" content="{{ page.img_width }}">
   <meta property="og:image:height" content="{{ page.img_height }}">{% endif %}{% else %}<meta property="og:image" content="{{ site.url }}/images/Dario-Rodighiero.webp">
@@ -34,7 +34,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ page.title }}">
   <meta name="twitter:description" content="{{ _excerpt }}">
-  {% if page.img %}<meta name="twitter:image" content="{{ site.url }}/publications/{{ page.img }}">
+  {% if page.img %}<meta name="twitter:image" content="{{ site.url }}/images/{{ page.img }}">
   <meta name="twitter:image:alt" content="{{ page.title | escape }}">{% else %}<meta name="twitter:image" content="{{ site.url }}/images/Dario-Rodighiero.webp">
   <meta name="twitter:image:alt" content="Dario Rodighiero">{% endif %}
   <!-- HighWire Press / Google Scholar citation tags -->
@@ -89,7 +89,7 @@
     {% if page.venue %}"publisher": { "@type": "Organization", "name": "{{ page.venue | escape }}" },{% endif %}
     "url": "{{ site.url }}{{ page.url }}",
     {% if page.doi %}"sameAs": "{{ page.doi }}",{% endif %}
-    {% if page.img %}"image": "{{ site.url }}/publications/{{ page.img }}",{% endif %}
+    {% if page.img %}"image": "{{ site.url }}/images/{{ page.img }}",{% endif %}
     "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ site.url }}{{ page.url }}" },
     "description": "{{ _excerpt | escape }}"
   }
@@ -209,7 +209,7 @@
   </div>
   {% if page.doi %}{% include bibtex.html item=page %}{% endif %}
   <div class="content">
-    {% if page.img and page.figures != true %}<figure class="hero"><img src="/publications/{{ page.img }}" alt="" width="{{ page.img_width }}" height="{{ page.img_height }}"></figure>{% endif %}
+    {% if page.img and page.figures != true %}<figure class="hero"><img src="/images/{{ page.img }}" alt="" width="{{ page.img_width }}" height="{{ page.img_height }}"></figure>{% endif %}
     {% assign _content_parts = content | split: '<!--more-->' %}
     {% if _content_parts.size > 1 %}<div class="body"><div class="abstract">{{ _content_parts[0] }}</div>{{ _content_parts[1] | autolink_urls }}</div>{% else %}<div class="body">{{ content | autolink_urls }}</div>{% endif %}
   </div>
