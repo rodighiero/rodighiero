@@ -12,7 +12,9 @@ class PublicationDateGenerator < Jekyll::Generator
     docs.group_by { |doc| doc.data['year'].to_i }.each do |year, group|
       sorted = group.sort_by { |doc| doc.data['title'].to_s.downcase }
       sorted.each_with_index do |doc, i|
-        doc.data['date'] = Time.new(year, 1, 1, 23, 59, sorted.size - 1 - i)
+        # Add the offset as time arithmetic: a raw seconds argument to
+        # Time.new would raise once a year holds more than 60 titles.
+        doc.data['date'] = Time.new(year, 1, 1, 12, 0, 0) + (sorted.size - 1 - i)
       end
     end
   end
