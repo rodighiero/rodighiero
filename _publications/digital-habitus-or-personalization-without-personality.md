@@ -5,7 +5,7 @@ venue: "HUMANA.MENTE"
 type: "journal"
 author: "Alberto Romele and Dario Rodighiero"
 doi: "https://doi.org/10.5281/zenodo.3950030"
-img: "publications/Digital-Habitus-or-Personalization-without-Personality.webp"
+img: "@publications/Digital-Habitus-or-Personalization-without-Personality.webp"
 img_width: 700
 img_height: 522
 redirect_from:

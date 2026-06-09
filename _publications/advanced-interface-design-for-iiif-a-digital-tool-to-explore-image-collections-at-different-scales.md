@@ -5,7 +5,7 @@ venue: "Umanistica Digitale"
 type: "journal"
 author: "Dario Rodighiero and Alberto Romele and José Higuera Rubio and Celeste Pedro and Matteo Azzi and Giorgio Uboldi"
 doi: "https://doi.org/10.6092/ISSN.2532-8816/17230"
-img: "publications/Advanced-Interface-Design-for-IIIF.webp"
+img: "@publications/Advanced-Interface-Design-for-IIIF.webp"
 img_width: 700
 img_height: 827
 redirect_from:

@@ -3,7 +3,7 @@
 
 Reads the `img:` front-matter field of every file in _publications/,
 takes the full-size WebP from images/, and writes a thumbnail
-(max MAX_WIDTH px wide, never upscaled) to images/thumbnails/,
+(max MAX_WIDTH px wide, never upscaled) to images/@thumbnails/,
 named after the publication slug (the .md filename). Requires Pillow.
 Run from the repo root:
 
@@ -22,7 +22,7 @@ QUALITY = 80
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "images"
-DEST = ROOT / "images" / "thumbnails"
+DEST = ROOT / "images" / "@thumbnails"
 
 IMG_RE = re.compile(r'^img:\s*"?([^"\n]+?)"?\s*$', re.MULTILINE)
 

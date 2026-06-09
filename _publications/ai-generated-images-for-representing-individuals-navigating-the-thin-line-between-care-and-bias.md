@@ -5,7 +5,7 @@ venue: "IEEE VIS Arts Program (VISAP)"
 type: "conference"
 author: "Julia C. Ahrend and Björn Döge and Tom M. Duscher and Dario Rodighiero"
 doi: "https://doi.org/10.48550/arXiv.2509.03071"
-img: "publications/AI-Generated-Images-for-Representing-Individuals.webp"
+img: "@publications/AI-Generated-Images-for-Representing-Individuals.webp"
 img_width: 700
 img_height: 547
 redirect_from:

@@ -5,7 +5,7 @@ venue: "Anthology of Computers and the Humanities"
 type: "conference"
 author: "Carlo Teo Pedretti and Davide Picca and Dario Rodighiero"
 doi: "https://doi.org/10.63744/fkFGJ6wSzDPV"
-img: "publications/Moving-Pictures-of-Thought.webp"
+img: "@publications/Moving-Pictures-of-Thought.webp"
 img_width: 564
 img_height: 564
 redirect_from:

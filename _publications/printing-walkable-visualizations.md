@@ -5,7 +5,7 @@ venue: "Biennial Research Transdisciplinary Imaging Conference"
 type: "conference"
 author: "Dario Rodighiero"
 doi: "https://doi.org/10.6084/m9.figshare.6104693.v2"
-img: "publications/Printing-Walkable-Visualizations.webp"
+img: "@publications/Printing-Walkable-Visualizations.webp"
 img_width: 700
 img_height: 700
 redirect_from:

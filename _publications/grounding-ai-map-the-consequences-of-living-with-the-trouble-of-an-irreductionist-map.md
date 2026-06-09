@@ -5,7 +5,7 @@ venue: "Revue Design Arts Medias"
 type: "journal"
 author: "Matilde Ficozzi and Mathieu Jacomy and Dario Rodighiero and Anne Beaulieu and Anders Kristian Munk"
 doi: "https://journal.dampress.org/issues/design-et-abstractions/grounding-ai-map-the-consequences-of-living-with-the-trouble-of-an-irreductionist-map"
-img: "publications/Grounding-AI-Map.webp"
+img: "@publications/Grounding-AI-Map.webp"
 img_width: 700
 img_height: 700
 figures: true

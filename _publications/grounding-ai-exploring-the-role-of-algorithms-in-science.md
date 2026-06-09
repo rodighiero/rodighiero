@@ -7,7 +7,7 @@ isbn: "978-94-034-3153-6, 978-94-034-3154-3"
 type: "map"
 author: "Matilde Ficozzi and Dario Rodighiero and Mathieu Jacomy and Anders Kristian Munk"
 doi: "https://doi.org/10.21827/69de53fee06e8"
-img: "publications/Grounding-AI.webp"
+img: "@publications/Grounding-AI.webp"
 img_width: 2900
 img_height: 1866
 redirect_from:
