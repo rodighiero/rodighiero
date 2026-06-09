@@ -295,6 +295,10 @@
       body[data-view="list"] .card-img { display: block; float: right; width: 220px; margin: 0 0 1rem 1.5rem; }
       body[data-view="list"] .card-desc { margin-top: 1.2rem; }
     }
+    @media (max-width: 430px) {
+      .header-portrait { float: none; width: 100%; max-width: 320px; margin: 0 0 0.75rem; }
+      .header h1 { clear: left; }
+    }
     @media print {
       @page { margin: 2cm 2.8cm; }
       html, body { font-size: 9pt; }
