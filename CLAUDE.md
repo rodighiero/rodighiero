@@ -31,8 +31,9 @@ The body of each file is the abstract. Full-text articles (the complete publishe
 
 **Fonts** are self-hosted under `fonts/` (Nunito). No CDN dependencies.
 
-**Plugins**: `jekyll-redirect-from` (legacy URL redirects), `jekyll-feed` (RSS for the `publications` collection), plus five local plugins in `_plugins/`:
+**Plugins**: `jekyll-redirect-from` (legacy URL redirects), `jekyll-feed` (RSS for the `publications` collection), plus six local plugins in `_plugins/`:
 - `autolink_urls.rb` — Liquid filter that wraps bare `http(s)://` URLs in anchors when rendering full-text bodies (skips URLs already inside `<a>` tags)
+- `decode_numeric_entities.rb` — Liquid filter turning numeric character references (`&#8217;` / `&#x2019;`) into UTF-8 characters; applied to publication excerpts before `escape_once`, which would double-escape hex entities
 - `git_mtime.rb` — adds `git_mtime` (last commit date) to each publication and `site.data` for sitemap `lastmod`; needs full git history (the deploy workflow uses `fetch-depth: 0`)
 - `image_size.rb` — Liquid filter returning a WebP's intrinsic pixel dimensions (pure-Ruby parser), used by `_includes/figure.html` to set `width`/`height` and avoid CLS
 - `publication_date.rb` — derives `page.date` from `year` so the RSS feed preserves the homepage sort order
