@@ -4,7 +4,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <script>!function(){var c=null,v=null;try{c=localStorage.getItem('colorScheme');v=localStorage.getItem('publicationView')}catch(e){}if(c)document.documentElement.classList.add(c);if(window.innerWidth<=1024)v='gallery';document.documentElement.dataset.initialView=(v==='list'?'list':'gallery')}()</script>
+  {% include head-init.html %}
+  <script>!function(){var v=null;try{v=localStorage.getItem('publicationView')}catch(e){}if(window.innerWidth<=1024)v='gallery';document.documentElement.dataset.initialView=(v==='list'?'list':'gallery')}()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
