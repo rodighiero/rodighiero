@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <script>!function(){var c=localStorage.getItem('colorScheme');if(c)document.documentElement.classList.add(c);var v=window.innerWidth<=1024?'gallery':localStorage.getItem('publicationView');document.documentElement.dataset.initialView=(v==='list'?'list':'gallery')}()</script>
+  <script>!function(){var c=null,v=null;try{c=localStorage.getItem('colorScheme');v=localStorage.getItem('publicationView')}catch(e){}if(c)document.documentElement.classList.add(c);if(window.innerWidth<=1024)v='gallery';document.documentElement.dataset.initialView=(v==='list'?'list':'gallery')}()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
@@ -455,7 +455,7 @@
         p.style.transform = 'translate(' + x + 'px,' + y + 'px)';
         colHeights[minCol] = y + h + GAP_Y;
       });
-      container.style.height = (Math.max.apply(null, colHeights) - GAP_Y) + 'px';
+      container.style.height = Math.max(0, Math.max.apply(null, colHeights) - GAP_Y) + 'px';
     }
     function markFirstVisible() {
       publications.forEach(function(p) { p.classList.remove('at-top'); });
@@ -497,7 +497,9 @@
       if (window.innerWidth <= 1024) {
         if (document.body.dataset.view !== 'gallery') setView('gallery', false);
       } else {
-        var saved = localStorage.getItem('publicationView') === 'list' ? 'list' : 'gallery';
+        var saved;
+        try { saved = localStorage.getItem('publicationView'); } catch (e) {}
+        saved = saved === 'list' ? 'list' : 'gallery';
         if (document.body.dataset.view !== saved) setView(saved, false);
       }
     }

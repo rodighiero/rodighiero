@@ -3,13 +3,13 @@
 <head>
   {% assign _excerpt = page.content | strip_html | truncatewords: 40 %}
   <meta charset="utf-8">
-  <script>!function(){var c=localStorage.getItem('colorScheme');if(c)document.documentElement.classList.add(c)}()</script>
+  <script>!function(){try{var c=localStorage.getItem('colorScheme');if(c)document.documentElement.classList.add(c)}catch(e){}}()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% assign _ptype = site.data.publication_types[page.type] %}
   {% capture _byline %}{% include byline.html item=page %}{% endcapture %}{% assign _byline = _byline | strip %}
   <title>{{ page.title | escape }}{% if _byline != '' %} — {{ _byline | escape }}{% endif %}</title>
-  <meta name="description" content="{{ _excerpt }}">
-  <meta name="keywords" content="Dario Rodighiero{% if page.venue %}, {{ page.venue }}{% endif %}{% if page.type %}, {{ page.type }}{% endif %}, data visualization, digital humanities, design">
+  <meta name="description" content="{{ _excerpt | escape_once }}">
+  <meta name="keywords" content="Dario Rodighiero{% if page.venue %}, {{ page.venue | escape }}{% endif %}{% if page.type %}, {{ page.type }}{% endif %}, data visualization, digital humanities, design">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
@@ -19,7 +19,7 @@
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}/feed/publications.xml">
   <meta property="og:site_name" content="{{ site.title }}">
   <meta property="og:title" content="{{ page.title | escape }}">
-  <meta property="og:description" content="{{ _excerpt }}">
+  <meta property="og:description" content="{{ _excerpt | escape_once }}">
   <meta property="og:url" content="{{ site.url }}{{ page.url }}">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="{% if page.lang == 'it' %}it_IT{% else %}en_US{% endif %}">
@@ -34,7 +34,7 @@
   {% if page.author %}<meta property="article:author" content="{{ page.author | replace: ' and ', ', ' }}">{% endif %}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ page.title | escape }}">
-  <meta name="twitter:description" content="{{ _excerpt }}">
+  <meta name="twitter:description" content="{{ _excerpt | escape_once }}">
   {% if page.img %}<meta name="twitter:image" content="{{ site.url }}/images/{{ page.img }}">
   <meta name="twitter:image:alt" content="{{ page.title | escape }}">{% else %}<meta name="twitter:image" content="{{ site.url }}/images/Dario-Rodighiero.webp">
   <meta name="twitter:image:alt" content="Dario Rodighiero">{% endif %}
@@ -50,7 +50,7 @@
   {% if page.doi and page.doi contains 'doi.org/' %}<meta name="citation_doi" content="{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}">{% endif %}
   <meta name="citation_abstract_html_url" content="{{ site.url }}{{ page.url }}">
   <meta name="citation_language" content="{{ page.lang | default: 'en' }}">
-  {% if page.img %}<meta name="citation_cover_date" content="{{ page.year }}-01-01">{% endif %}
+  {% if page.year %}<meta name="citation_cover_date" content="{{ page.year }}-01-01">{% endif %}
   <!-- Dublin Core -->
   <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
   <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
@@ -60,7 +60,7 @@
   {% endfor %}{% else %}
   <meta name="DC.creator" content="Dario Rodighiero">
   {% endif %}
-  <meta name="DC.description" content="{{ _excerpt | escape }}">
+  <meta name="DC.description" content="{{ _excerpt | escape_once }}">
   {% if page.venue %}<meta name="DC.source" content="{{ page.venue | escape }}">{% endif %}
   {% if page.year %}<meta name="DC.date" content="{{ page.year }}">{% endif %}
   <meta name="DC.type" content="{{ _ptype.dc | default: 'text' }}">
