@@ -6,13 +6,9 @@
       var isDark = html.classList.contains('dark') ||
         (!html.classList.contains('light') && window.matchMedia('(prefers-color-scheme: dark)').matches);
       html.classList.remove('dark', 'light');
-      if (isDark) {
-        html.classList.add('light');
-        localStorage.setItem('colorScheme', 'light');
-      } else {
-        html.classList.add('dark');
-        localStorage.setItem('colorScheme', 'dark');
-      }
+      var next = isDark ? 'light' : 'dark';
+      html.classList.add(next);
+      try { localStorage.setItem('colorScheme', next); } catch (e) {}
     });
   })();
 
