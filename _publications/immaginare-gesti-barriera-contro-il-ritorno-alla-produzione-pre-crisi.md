@@ -1,5 +1,5 @@
 ---
-title: "Immaginare Gesti-Barriera Contro Il Ritorno Alla Produzione Pre-Crisi"
+title: "Immaginare gesti-barriera contro il ritorno alla produzione pre-crisi"
 year: 2020
 venue: "Antinomie"
 type: "magazine"

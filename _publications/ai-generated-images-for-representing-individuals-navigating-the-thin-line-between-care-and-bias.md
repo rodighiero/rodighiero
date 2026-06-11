@@ -1,5 +1,5 @@
 ---
-title: "AI-Generated Images for Representing Individuals: Navigating the Thin Line Between Care and Bias"
+title: "AI-Generated Images for Representing Individuals: Navigating the Thin Line between Care and Bias"
 year: 2025
 venue: "IEEE VIS Arts Program (VISAP)"
 type: "conference"
