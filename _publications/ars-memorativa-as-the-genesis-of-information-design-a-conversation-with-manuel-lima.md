@@ -1,5 +1,5 @@
 ---
-title: "Ars memorativa as the genesis of information design: a conversation with Manuel Lima"
+title: "Ars Memorativa as the Genesis of Information Design: A Conversation with Manuel Lima"
 year: 2021
 venue: "Nightingale"
 type: "magazine"

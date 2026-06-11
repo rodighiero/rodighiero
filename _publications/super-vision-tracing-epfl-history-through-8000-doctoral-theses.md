@@ -1,5 +1,5 @@
 ---
-title: "Super-Vision: Tracing EPFL History Through 8,000 Doctoral Theses"
+title: "Super-Vision: Tracing EPFL History through 8,000 Doctoral Theses"
 year: 2024
 venue: "Journal of Digital History"
 type: "journal"
