@@ -11,14 +11,13 @@ Run from the repo root:
 """
 
 import re
-import shutil
 import sys
 from pathlib import Path
 
 from PIL import Image
 
 MAX_WIDTH = 800
-QUALITY = 80
+QUALITY = 70
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "images"
@@ -51,15 +50,15 @@ def main():
             continue
         dst = DEST / f"{md_path.stem}.webp"
         dst.parent.mkdir(parents=True, exist_ok=True)
+        # Always re-encode: sources are saved at high quality, so even
+        # already-small images shrink a lot at thumbnail quality.
         with Image.open(src) as im:
             if im.width > MAX_WIDTH:
-                im.resize(
+                im = im.resize(
                     (MAX_WIDTH, round(im.height * MAX_WIDTH / im.width)),
                     Image.LANCZOS,
-                ).save(dst, "WEBP", quality=QUALITY, method=6)
-            else:
-                # Already small enough: copy as-is, avoiding a lossy re-encode.
-                shutil.copyfile(src, dst)
+                )
+            im.save(dst, "WEBP", quality=QUALITY, method=6)
         in_kb = src.stat().st_size / 1024
         out_kb = dst.stat().st_size / 1024
         total_in += in_kb

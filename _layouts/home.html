@@ -112,11 +112,9 @@
     ]
   }
   </script>
-  <link rel="preload" href="/css/main.css" as="style">
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="preload" href="/fonts/nunito.css" as="style">
-  <link rel="stylesheet" href="/fonts/nunito.css">
   <style>
+{% include nunito.css %}
+{% include main.css %}
     /* ── Header ── */
     .header {
       display: grid;
@@ -127,11 +125,12 @@
     }
     .header-portrait { width: 100%; height: auto; border-radius: 4px; display: block; margin-bottom: 0.75rem; }
     .header h1 { font-size: var(--text-lg); font-weight: 500; margin: 0.85rem 0 0; line-height: var(--lh-normal); }
-    .header .links { font-size: var(--text-xs); line-height: var(--lh-normal); margin-top: -0.2rem; }
-    .header .links a { display: block; }
+    .header .links { font-size: var(--text-xs); line-height: var(--lh-normal); margin-top: -0.5rem; }
+    /* 0.3rem vertical padding lifts each link above the 24px minimum touch-target size. */
+    .header .links a { display: block; padding: 0.3rem 0; }
     .header .links a::before { content: "· "; }
     .header .icons { display: flex; gap: 0.75rem; margin-top: 1rem; }
-    .header .icons a { display: flex; color: var(--muted); padding: 2px; }
+    .header .icons a { display: flex; color: var(--muted); padding: 4px; }
     .header .icons a:hover { color: var(--fg); }
     .header .icons svg { width: 16px; height: 16px; fill: currentColor; overflow: visible; }
     .header .icons a[aria-label="Zotero"] svg { transform: scale(0.9); }
@@ -321,7 +320,8 @@
   <!-- ── Header ── -->
   <header class="header">
     <div>
-      <img src="/images/Dario-Rodighiero.webp" alt="Dario Rodighiero" class="header-portrait" width="1200" height="800" fetchpriority="high" decoding="async">
+      {%- comment -%} Downsized copy for display; the full-size 1200px original stays for OG cards and JSON-LD. {%- endcomment -%}
+      <img src="/images/Dario-Rodighiero-640.webp" alt="Dario Rodighiero" class="header-portrait" width="640" height="427" fetchpriority="high" decoding="async">
       <h1>Dario Rodighiero</h1>
       <div class="links">
         <a href="https://www.rug.nl/staff/d.rodighiero">University of Groningen</a>
@@ -379,14 +379,17 @@
 
     <!-- ── Publications ── -->
     <div id="publications">
+      {% assign _card_i = 0 %}
       {% assign year_groups = site.publications | group_by: "year" | sort: "name" | reverse %}
       {% for group in year_groups %}{% assign group_publications = group.items | sort: "title" %}{% for publication in group_publications %}
       {% assign _type_label = site.data.publication_types[publication.type].label %}
       {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.venue }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }}{% endcapture %}
       <div class="publication" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
         {% if publication.img %}
+        {% assign _card_i = _card_i | plus: 1 %}
         <div class="card-img{% if publication.img_border %} bordered{% endif %}">
-          <img src="/images/@thumbnails/{{ publication.slug }}.webp" alt="" loading="lazy" width="{{ publication.img_width }}" height="{{ publication.img_height }}">
+          {%- comment -%} The first row (4 columns) is the likely LCP: load it eagerly with high priority; lazy-load below the fold. {%- endcomment -%}
+          <img src="/images/@thumbnails/{{ publication.slug }}.webp" alt="" {% if _card_i <= 4 %}fetchpriority="high"{% elsif _card_i > 8 %}loading="lazy"{% endif %} width="{{ publication.img_width }}" height="{{ publication.img_height }}">
         </div>
         {% endif %}
         <div class="card-meta">
@@ -443,7 +446,12 @@
         p.style.width = colWidth + 'px';
         p.classList.remove('at-top');
       });
+      // Read all heights in one pass (single reflow), then write transforms.
+      var heights = [];
       publications.forEach(function(p) {
+        heights.push(p.style.display === 'none' ? 0 : p.getBoundingClientRect().height);
+      });
+      publications.forEach(function(p, idx) {
         if (p.style.display === 'none') return;
         var minCol = 0;
         for (var i = 1; i < cols; i++) {
@@ -452,9 +460,8 @@
         var x = minCol * (colWidth + GAP_X);
         var y = colHeights[minCol];
         if (y === 0) p.classList.add('at-top');
-        var h = p.getBoundingClientRect().height;
         p.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-        colHeights[minCol] = y + h + GAP_Y;
+        colHeights[minCol] = y + heights[idx] + GAP_Y;
       });
       container.style.height = Math.max(0, Math.max.apply(null, colHeights) - GAP_Y) + 'px';
     }

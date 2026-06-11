@@ -101,11 +101,9 @@
   </script>
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="icon" href="/favicon.ico">
-  <link rel="preload" href="/css/main.css" as="style">
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="preload" href="/fonts/nunito.css" as="style">
-  <link rel="stylesheet" href="/fonts/nunito.css">
   <style>
+{% include nunito.css %}
+{% include main.css %}
     body { max-width: 660px; line-height: var(--lh-normal); }
     h1 { font-size: var(--text-xxl); font-weight: 500; margin: 0.6rem 0 0.6rem; }
     .authors { margin-bottom: 0.6rem; font-size: var(--text-base); }
