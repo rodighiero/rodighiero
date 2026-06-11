@@ -8,7 +8,7 @@ doi: "https://nightingaledvs.com/ars-memorativa-as-the-genesis-of-information-de
 img: "ars-memorativa-as-the-genesis-of-information-design-a-conversation-with-manuel-lima/fig_002.webp"
 figures: true
 img_width: 1024
-img_height: 1373
+img_height: 1333
 ---
 Manuel Lima is one of the most prominent figures of data visualization since the publication of _Visual Complexity_ (Lima 2011). In this conversation, Manuel Lima traces back the origin of data visualization to Ars Memorativa, an ancient mnemonic technique to organize information and facilitate its recall. Going back to the origins is an obsession that brought him to collect and arrange into books images of information design from both physical and digital archives. By doing this, Manuel Lima tackled issues related to digital objects and their creation, use, and preservation, with a point of view capable of combining the passion for visualizing information and the profession of UX designer.
 
@@ -64,7 +64,7 @@ When I was doing research for _Visual Complexity_, it was easier to find a medie
 
 There's this notion that the digital will save us. It's really dangerous because we don't realize how ephemeral the digital really is — how unsafe it is. It's prone to every type of attack. We are seeing this all over the world today. Digital is no guarantee of preservation. It's likely there's less of a guarantee of preservation than paper or stone. When I go to the British Museum, I see incredible examples of preservation in cuneiform texts from Babylonian tablets dating 5,000 years old. Some papers don't even last that long. Do you really think today that we can look back in eight centuries and see anything done today using our digital tools? I have strong doubts about that.
 
-{% include figure.html src="/images/ars-memorativa-as-the-genesis-of-information-design-a-conversation-with-manuel-lima/fig_003.webp" caption="Figure 3. This is a clay tablet from Uruk recording the allocation of beer, dating 3000 BC and preserved by the British Museum. Contrarily to the digital objects that have already disappeared, some clay tablets have lasted more than five millennia to come to our days (The British Museum 3000 BCE)." %}
+{% include figure.html src="/images/ars-memorativa-as-the-genesis-of-information-design-a-conversation-with-manuel-lima/fig_003.webp" caption="Figure 3. This is a clay tablet from Uruk recording the allocation of beer, dating 3000 BC and preserved by the British Museum. Contrarily to the digital objects that have already disappeared, some clay tablets have lasted more than five millennia to come to our days (British Museum n.d.)." %}
 
 **Dario: I totally agree with that. My master thesis project, which is relatively recent, was created with Flash and I can't open it anymore. I preserved the code and some screenshots in my cloud storage.**
 
@@ -86,7 +86,7 @@ I have mixed feelings. New York City will always be a city that we love. And now
 
 - Barabási, Albert-László. 2002. _Linked: The New Science of Networks_. Cambridge, MA: Perseus Publishing.
 - Blair, Ann. 2010. _Too Much to Know: Managing Scholarly Information before the Modern Age_. New Haven, CT: Yale University Press.
-- The British Museum. 3000 BCE. “Tablet Recording the Allocation of Beer.” British Museum Images. <https://www.britishmuseum.org/collection/object/W_1989-0130-4>.
+- British Museum. n.d. “Tablet Recording the Allocation of Beer.” British Museum Images. Accessed August 12, 2021. <https://www.britishmuseum.org/collection/object/W_1989-0130-4>.
 - Higuera Rubio, José, Alberto Romele, Dario Rodighiero, and Celeste Pedro, eds. 2022. _From Wisdom to Data: Philosophical Atlas on the Visual Representations of Knowledge_. Transversal. Porto: University Porto Press.
 - Hubertus, Adrianus Graveur. 1585. “Ordo Universi et Humanarum Scientiarum Prima Monumenta.” Gallica. Accessed August 12, 2021. <https://gallica.bnf.fr/ark:/12148/btv1b55002353x>.
 - Johnson, Steven. 2001. _Emergence: The Connected Lives of Ants, Brains, Cities, and Software_. New York: Scribner.
@@ -94,4 +94,4 @@ I have mixed feelings. New York City will always be a city that we love. And now
 - Lima, Manuel. 2014. _The Book of Trees: Visualizing Branches of Knowledge_. New York: Princeton Architectural Press.
 - Lima, Manuel. 2017. _The Book of Circles: Visualizing Spheres of Knowledge_. New York: Princeton Architectural Press.
 - Rodighiero, Dario. 2021. _Mapping Affinities: Democratizing Data Visualization_. Open-Access English edition. Geneva: Métis Presses. <https://nrs.harvard.edu/URN-3:HUL.INSTREPOS:37368046>.
-- Shedroff, Nathan. (1994) 1999. “Information Interaction Design: A Unified Field Theory of Design.” In _Information Design_, edited by Robert Jacobson. Cambridge, MA: MIT Press.
+- Shedroff, Nathan. (1994) 1999. “Information Interaction Design: A Unified Field Theory of Design.” In _Information Design_, edited by Robert Jacobson, 267–292. Cambridge, MA: MIT Press.
