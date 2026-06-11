@@ -79,7 +79,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 }
 .meta-line .venue { font-style: italic; }
 .authors { font-size: var(--text-xs); line-height: var(--lh-normal); color: var(--fg); }
-.cite-btn { display: inline-flex; background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 0.15rem 0.55rem; font: inherit; font-size: var(--text-xs); cursor: pointer; border-radius: 2px; line-height: var(--lh-normal); }
+.cite-btn { display: inline-flex; background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 0 0.55rem; font: inherit; font-size: var(--text-xs); cursor: pointer; border-radius: 2px; line-height: var(--lh-normal); }
 .cite-btn:hover { color: var(--fg); border-color: var(--border-hover); }
 .cite-btn.copied { color: var(--fg); border-color: var(--fg); }
 
