@@ -84,10 +84,10 @@ I have mixed feelings. New York City will always be a city that we love. And now
 
 ## Bibliography
 
-- Barabási, Albert-László. 2002. _Linked: The New Science of Networks_. Cambridge, MA: Perseus Pub.
+- Barabási, Albert-László. 2002. _Linked: The New Science of Networks_. Cambridge, MA: Perseus Publishing.
 - Blair, Ann. 2010. _Too Much to Know: Managing Scholarly Information before the Modern Age_. New Haven, CT: Yale University Press.
 - The British Museum. 3000 BCE. “Tablet Recording the Allocation of Beer.” British Museum Images. <https://www.britishmuseum.org/collection/object/W_1989-0130-4>.
-- Higuera Rubio, José, Alberto Romele, Dario Rodighiero, and Celeste Pedro, eds. 2022. _From Wisdom to Data: Philosophical Atlas on the Visual Representations of Knowledge_. Transversal. University Porto Press.
+- Higuera Rubio, José, Alberto Romele, Dario Rodighiero, and Celeste Pedro, eds. 2022. _From Wisdom to Data: Philosophical Atlas on the Visual Representations of Knowledge_. Transversal. Porto: University Porto Press.
 - Hubertus, Adrianus Graveur. 1585. “Ordo Universi et Humanarum Scientiarum Prima Monumenta.” Gallica. Accessed August 12, 2021. <https://gallica.bnf.fr/ark:/12148/btv1b55002353x>.
 - Johnson, Steven. 2001. _Emergence: The Connected Lives of Ants, Brains, Cities, and Software_. New York: Scribner.
 - Lima, Manuel. 2011. _Visual Complexity: Mapping Patterns of Information_. New York: Princeton Architectural Press.
