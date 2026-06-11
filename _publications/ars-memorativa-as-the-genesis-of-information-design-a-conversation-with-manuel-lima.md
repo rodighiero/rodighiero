@@ -14,7 +14,7 @@ Manuel Lima is one of the most prominent figures of data visualization since the
 
 <!--more-->
 
-This conversation, which took place between Lisbon and Milan on Wednesday 28 July 2021, comes from a blurb that Manuel Lima wrote for _Mapping Affinities_ (Rodighiero 2021). The discussion is part of the project From Data to Wisdom, and is supported by Fundação para a Ciência e a Tecnologia through the grant POCI-01-0145-FEDER-029717 and the Swiss National Science Foundation through the grant 194442. This text, originally created for the forthcoming book _From Data to Wisdom_ (Higuera Rubio et al. 2022), is published as a preview for _Nightingale_, the journal of the Data Visualization Society.
+This conversation, which took place between Lisbon and Milan on Wednesday 28 July 2021, comes from a blurb that Manuel Lima wrote for _Mapping Affinities_ (Rodighiero 2021). The discussion is part of the project From Data to Wisdom, and is supported by Fundação para a Ciência e a Tecnologia through the grant POCI-01-0145-FEDER-029717 and the Swiss National Science Foundation through the grant 194442. This text, originally created for the forthcoming book _From Wisdom to Data_ (Higuera Rubio et al. 2022), is published as a preview for _Nightingale_, the journal of the Data Visualization Society.
 
 ## How It All Started
 
@@ -79,9 +79,9 @@ The feelings are mixed. New York City will always be a city the family loves, an
 - Barabási, Albert-László. 2002. _Linked: The New Science of Networks_. Cambridge, MA: Perseus Pub.
 - Blair, Ann. 2010. _Too Much to Know: Managing Scholarly Information before the Modern Age_. New Haven, CT: Yale University Press.
 - The British Museum. 3000 BCE. “Tablet Recording the Allocation of Beer.” British Museum Images. <https://www.britishmuseum.org/collection/object/W_1989-0130-4>.
-- Johnson, Steven. 2001. _Emergence: The Connected Lives of Ants, Brains, Cities, and Software_. New York: Scribner.
 - Higuera Rubio, José, Alberto Romele, Dario Rodighiero, and Celeste Pedro, eds. 2022. _From Wisdom to Data: Philosophical Atlas on the Visual Representations of Knowledge_. Transversal. University Porto Press.
 - Hubertus, Adrianus Graveur. 1585. “Ordo Universi et Humanarum Scientiarum Prima Monumenta.” Gallica. Accessed August 12, 2021. <https://gallica.bnf.fr/ark:/12148/btv1b55002353x>.
+- Johnson, Steven. 2001. _Emergence: The Connected Lives of Ants, Brains, Cities, and Software_. New York: Scribner.
 - Lima, Manuel. 2011. _Visual Complexity: Mapping Patterns of Information_. New York: Princeton Architectural Press.
 - Lima, Manuel. 2014. _The Book of Trees: Visualizing Branches of Knowledge_. New York: Princeton Architectural Press.
 - Lima, Manuel. 2017. _The Book of Circles: Visualizing Spheres of Knowledge_. New York: Princeton Architectural Press.
