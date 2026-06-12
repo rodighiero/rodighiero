@@ -134,14 +134,13 @@
 
     /* ── Bio slide shell ── */
     .bio-shell {
-      display: grid;
-      grid-template-rows: 1fr;
+      overflow: hidden;
+      max-height: 60rem;
       margin-bottom: 4.2rem;
-      transition: grid-template-rows 0.4s ease, margin-bottom 0.4s ease;
+      transition: max-height 0.4s ease, margin-bottom 0.4s ease;
     }
-    .bio-shell > .header { overflow: hidden; min-height: 0; }
     html[data-bio-visible="0"] .bio-shell {
-      grid-template-rows: 0fr;
+      max-height: 0;
       margin-bottom: 0;
     }
     @media (prefers-reduced-motion: reduce) {
@@ -333,8 +332,7 @@
       @page { margin: 2cm 2.8cm; }
       html, body { font-size: 9pt; }
       .mode-toggle, .bio-toggle, .header .icons, main, footer { display: none !important; }
-      .bio-shell { display: block !important; margin-bottom: 0 !important; }
-      .bio-shell > .header { overflow: visible !important; }
+      .bio-shell { display: block !important; max-height: none !important; margin-bottom: 0 !important; overflow: visible !important; }
       .header { display: block; padding-bottom: 0; margin-bottom: 0; border-bottom: none; }
       .header-portrait { display: none; }
       .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }
