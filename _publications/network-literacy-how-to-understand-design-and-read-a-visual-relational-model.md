@@ -5,9 +5,9 @@ venue: "Progetto Grafico"
 type: "journal"
 author: "Dario Rodighiero"
 doi: "https://hdl.handle.net/11370/3648f43f-5e55-48a4-b130-6537029226fc"
-img: "network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_001.webp"
-img_width: 1432
-img_height: 1100
+img: "network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_003.webp"
+img_width: 1184
+img_height: 882
 figures: true
 excerpt_separator: "<!--more-->"
 redirect_from:
