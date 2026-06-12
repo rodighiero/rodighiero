@@ -119,7 +119,7 @@
     .bio-toggle {
       position: fixed;
       top: 1.2rem;
-      right: 3.5rem;
+      left: 1.5rem;
       background: none;
       border: none;
       cursor: pointer;
@@ -129,8 +129,14 @@
       z-index: 10;
     }
     .bio-toggle:hover { color: var(--fg); }
-    .bio-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
-    html[data-bio-visible="1"] .bio-toggle { color: var(--fg); }
+    .bio-toggle svg {
+      width: 16px; height: 16px;
+      fill: none; stroke: currentColor; stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round; overflow: visible;
+      transform: rotate(-90deg);
+      transition: transform 0.25s ease;
+    }
+    html[data-bio-visible="1"] .bio-toggle svg { transform: rotate(0deg); }
 
     /* ── Bio slide shell ── */
     .bio-shell {
@@ -346,7 +352,7 @@
   <script>document.body.dataset.view = document.documentElement.dataset.initialView || 'gallery'</script>
   {% include mode-toggle.html %}
   <button class="bio-toggle" type="button" aria-controls="bio" aria-expanded="false" aria-label="Show bio" title="Show bio">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
   </button>
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
 
