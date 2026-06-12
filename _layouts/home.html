@@ -130,8 +130,23 @@
     }
     .bio-toggle:hover { color: var(--fg); }
     .bio-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
-    html[data-bio-visible="0"] .header { display: none; }
     html[data-bio-visible="1"] .bio-toggle { color: var(--fg); }
+
+    /* ── Bio slide shell ── */
+    .bio-shell {
+      display: grid;
+      grid-template-rows: 1fr;
+      margin-bottom: 4.2rem;
+      transition: grid-template-rows 0.4s ease, margin-bottom 0.4s ease;
+    }
+    .bio-shell > .header { overflow: hidden; min-height: 0; }
+    html[data-bio-visible="0"] .bio-shell {
+      grid-template-rows: 0fr;
+      margin-bottom: 0;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bio-shell { transition: none; }
+    }
 
     /* ── Header ── */
     .header {
@@ -139,7 +154,6 @@
       grid-template-columns: 1fr 1fr 1fr 1fr;
       gap: 2rem;
       padding-bottom: 2rem;
-      margin-bottom: 4.2rem;
     }
     .header-portrait { width: 100%; height: auto; border-radius: 4px; display: block; margin-bottom: 0.75rem; }
     .header h1 { font-size: var(--text-lg); font-weight: 500; margin: 0.85rem 0 0; line-height: var(--lh-normal); }
@@ -319,7 +333,8 @@
       @page { margin: 2cm 2.8cm; }
       html, body { font-size: 9pt; }
       .mode-toggle, .bio-toggle, .header .icons, main, footer { display: none !important; }
-      html[data-bio-visible="0"] .header { display: block !important; }
+      .bio-shell { display: block !important; margin-bottom: 0 !important; }
+      .bio-shell > .header { overflow: visible !important; }
       .header { display: block; padding-bottom: 0; margin-bottom: 0; border-bottom: none; }
       .header-portrait { display: none; }
       .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }
@@ -338,7 +353,8 @@
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
 
   <!-- ── Header ── -->
-  <header class="header" id="bio">
+  <div class="bio-shell" id="bio">
+  <header class="header">
     <div>
       {%- comment -%} Downsized copy for display; the full-size 1200px original stays for OG cards and JSON-LD. {%- endcomment -%}
       <img src="/images/Dario-Rodighiero-640.webp" alt="Dario Rodighiero" class="header-portrait" width="640" height="427" fetchpriority="high" decoding="async">
@@ -378,6 +394,7 @@
       {% endif %}
     {% endfor %}
   </header>
+  </div>
 
   <main>
     <!-- ── Search bar ── -->
