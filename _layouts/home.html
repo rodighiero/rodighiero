@@ -117,17 +117,18 @@
 {% include main.css %}
     /* ── Bio toggle ── */
     .bio-toggle {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      width: 28px;
       height: 28px;
       margin: 0 0 0.5rem -6px;
       background: none;
       border: none;
       cursor: pointer;
       color: var(--muted);
-      padding: 2px;
+      padding: 2px 6px 2px 6px;
+      font: inherit;
+      font-size: var(--text-xs);
+      line-height: var(--lh-normal);
     }
     .bio-toggle:hover { color: var(--fg); }
     .bio-toggle svg {
@@ -136,8 +137,22 @@
       stroke-linecap: round; stroke-linejoin: round; overflow: visible;
       transform: rotate(-90deg);
       transition: transform 0.25s ease;
+      flex-shrink: 0;
     }
     html[data-bio-visible="1"] .bio-toggle svg { transform: rotate(0deg); }
+    .bio-toggle-label {
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 6rem;
+      opacity: 1;
+      margin-left: 0.4rem;
+      transition: max-width 0.25s ease, opacity 0.2s ease, margin-left 0.25s ease;
+    }
+    html[data-bio-visible="1"] .bio-toggle-label {
+      max-width: 0;
+      opacity: 0;
+      margin-left: 0;
+    }
 
     /* ── Bio slide shell ── */
     .bio-shell {
@@ -354,6 +369,7 @@
   {% include mode-toggle.html %}
   <button class="bio-toggle" type="button" aria-controls="bio" aria-expanded="false" aria-label="Show bio" title="Show bio">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    <span class="bio-toggle-label" aria-hidden="true">Show bio</span>
   </button>
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
 
