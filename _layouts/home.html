@@ -117,16 +117,17 @@
 {% include main.css %}
     /* ── Bio toggle ── */
     .bio-toggle {
-      position: fixed;
-      top: 1.2rem;
-      left: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      margin: 0 0 0.5rem -6px;
       background: none;
       border: none;
       cursor: pointer;
       color: var(--muted);
       padding: 2px;
-      display: flex;
-      z-index: 10;
     }
     .bio-toggle:hover { color: var(--fg); }
     .bio-toggle svg {
