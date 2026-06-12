@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   {% include head-init.html %}
-  <script>!function(){var v=null;try{v=localStorage.getItem('publicationView')}catch(e){}if(window.innerWidth<=1024)v='gallery';document.documentElement.dataset.initialView=(v==='list'?'list':'gallery')}()</script>
+  <script>!function(){var v=null;try{v=localStorage.getItem('publicationView')}catch(e){}if(window.innerWidth<=1024)v='gallery';document.documentElement.dataset.initialView=(v==='list'?'list':'gallery');var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='1'?'1':'0')}()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
@@ -115,6 +115,24 @@
   <style>
 {% include nunito.css %}
 {% include main.css %}
+    /* ── Bio toggle ── */
+    .bio-toggle {
+      position: fixed;
+      top: 1.2rem;
+      right: 3.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      padding: 2px;
+      display: flex;
+      z-index: 10;
+    }
+    .bio-toggle:hover { color: var(--fg); }
+    .bio-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+    html[data-bio-visible="0"] .header { display: none; }
+    html[data-bio-visible="1"] .bio-toggle { color: var(--fg); }
+
     /* ── Header ── */
     .header {
       display: grid;
@@ -300,7 +318,8 @@
     @media print {
       @page { margin: 2cm 2.8cm; }
       html, body { font-size: 9pt; }
-      .mode-toggle, .header .icons, main, footer { display: none !important; }
+      .mode-toggle, .bio-toggle, .header .icons, main, footer { display: none !important; }
+      html[data-bio-visible="0"] .header { display: block !important; }
       .header { display: block; padding-bottom: 0; margin-bottom: 0; border-bottom: none; }
       .header-portrait { display: none; }
       .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }
@@ -313,10 +332,13 @@
 <body data-view="gallery">
   <script>document.body.dataset.view = document.documentElement.dataset.initialView || 'gallery'</script>
   {% include mode-toggle.html %}
+  <button class="bio-toggle" type="button" aria-controls="bio" aria-expanded="false" aria-label="Show bio" title="Show bio">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+  </button>
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
 
   <!-- ── Header ── -->
-  <header class="header">
+  <header class="header" id="bio">
     <div>
       {%- comment -%} Downsized copy for display; the full-size 1200px original stays for OG cards and JSON-LD. {%- endcomment -%}
       <img src="/images/Dario-Rodighiero-640.webp" alt="Dario Rodighiero" class="header-portrait" width="640" height="427" fetchpriority="high" decoding="async">
@@ -553,6 +575,27 @@
     if (searchInput) {
       searchInput.addEventListener('input', applySearch);
     }
+
+    // ── Bio toggle ──
+    var bioToggle = document.querySelector('.bio-toggle');
+    function setBioVisible(visible, persist) {
+      var v = visible ? '1' : '0';
+      document.documentElement.dataset.bioVisible = v;
+      if (bioToggle) {
+        bioToggle.setAttribute('aria-expanded', visible ? 'true' : 'false');
+        var label = visible ? 'Hide bio' : 'Show bio';
+        bioToggle.setAttribute('aria-label', label);
+        bioToggle.setAttribute('title', label);
+      }
+      if (persist !== false) {
+        try { localStorage.setItem('bioVisible', v); } catch (e) {}
+      }
+      if (document.body.dataset.view === 'gallery') scheduleLayout();
+    }
+    setBioVisible(document.documentElement.dataset.bioVisible === '1', false);
+    if (bioToggle) bioToggle.addEventListener('click', function() {
+      setBioVisible(document.documentElement.dataset.bioVisible !== '1');
+    });
 
     // Make the whole card a target for the publication page,
     // without breaking inline links or text selection.
