@@ -69,8 +69,6 @@ The physical layout was co-designed by Frederick Law Olmsted, whose paths, vista
 
 From its inception, the arboretum embedded data logic into its terrain. Pathways enabled tracking; planting schemes echoed taxonomic structure; and physical labels on trees were mirrored in handwritten ledgers and printed maps. Early curatorial labor involved not only planting and pruning but also extensive annotation, linking botanical care with textual inscription. The arboretum thus became a machine for generating structured knowledge about plant life and death—season after season, year after year (Sargent 1878; Sutton 1970).
 
-{% include figure.html src="/images/living-library-of-trees-mapping-knowledge-ecology-in-arnold-arboretum/fig_002.webp" caption="Figure 2. View from the Arnold Arboretum’s archives, where shelves of records frame a window onto the living collection, underscoring the link between physical documentation and the landscape it describes [Courtesy of the Arnold Arboretum of Harvard University]." %}
-
 ### Archival Depth and Continuity
 
 Few ecological institutions can claim such an extensive and uninterrupted paper trail. At the Arnold Arboretum recordkeeping began with nineteenth-century field notes and accession books, later expanding to typed memos, herbarium slips, card indexes, and more recently digital formats. Each transition left behind layers of metadata and interpretive sediment, resulting in a uniquely palimpsestic archive—layered, rewritten, and never fully erased (Loukissas 2016).
@@ -81,8 +79,6 @@ This richness makes the arboretum a rare example of institutional memory rendere
 
 The physicality of the archive matters too. Much of it still resides in drawers, folders, and cabinets, marked by marginalia, shorthand, and annotations that resist digitization. These analog traces offer glimpses into the tacit practices of past curators—their assumptions, routines, and oversights. By bringing together physical and digital records, this project treats the archive as a multi-format ecology, where informational value lies not only in content but in structure, materiality, and omission.
 
-{% include figure.html src="/images/living-library-of-trees-mapping-knowledge-ecology-in-arnold-arboretum/fig_003.webp" caption="Figure 3. Archival photograph of a curator working with plant specimens in the arboretum’s library, highlighting the skilled labor and meticulous care behind the creation and upkeep of botanical records [Courtesy of the Arnold Arboretum of Harvard University]." %}
-
 ### The Arboretum as a Knowledge System
 
 What makes the Arnold Arboretum more than a well-kept repository of plants is its role as a historical knowledge system—one that encodes the values, priorities, and epistemologies of its time. As Tuers (2022) and Loukissas (2016) observe, botanical data is neither natural nor neutral. Decisions about what to document, how to structure it, and where to store it reflect institutional priorities and infrastructural constraints.
@@ -92,6 +88,10 @@ In Tuers’s terms, the arboretum operates as a “planted catalog,” positione
 The site also bridges cultural and natural epistemologies. It is simultaneously a garden, a park, a laboratory, and a museum. It is public and private, rooted in local soil yet connected to global networks of plant exchange. In this way, it unsettles binaries between nature and culture, objectivity and intimacy, past and present. It is not a passive repository but an active system—one that must be continually interpreted as well as preserved.
 
 Despite this richness, botanical gardens remain underexamined as data infrastructures. They are often treated as ancillary to herbaria or museums rather than complex institutions in their own right. By foregrounding the Arnold Arboretum’s combination of institutional continuity, spatial design, and archival practice, this project contributes to a broader rethinking of how living collections serve as laboratories—not only for ecological science but also for multispecies knowledge-making across generations.
+
+{% include figure.html src="/images/living-library-of-trees-mapping-knowledge-ecology-in-arnold-arboretum/fig_002.webp" caption="Figure 2. View from the Arnold Arboretum’s archives, where shelves of records frame a window onto the living collection, underscoring the link between physical documentation and the landscape it describes [Courtesy of the Arnold Arboretum of Harvard University]." %}
+
+{% include figure.html src="/images/living-library-of-trees-mapping-knowledge-ecology-in-arnold-arboretum/fig_003.webp" caption="Figure 3. Archival photograph of a curator working with plant specimens in the arboretum’s library, highlighting the skilled labor and meticulous care behind the creation and upkeep of botanical records [Courtesy of the Arnold Arboretum of Harvard University]." %}
 
 ## Methodology: Designing a Visual Interface
 
