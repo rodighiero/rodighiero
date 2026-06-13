@@ -415,7 +415,7 @@ sitemap: false
         const si = l.source.i ?? l.source, ti = l.target.i ?? l.target;
         return si === d.i || ti === d.i;
       });
-      nodeSel.select('text').text(n => neighbors.has(n.i) ? truncate(n.title, 28) : '');
+      nodeSel.select('text').text(n => neighbors.has(n.i) ? n.title : '');
     }
     function unhighlight() {
       nodeSel.classed('dimmed', false).classed('highlight', false);
