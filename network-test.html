@@ -194,10 +194,9 @@ sitemap: false
     }
 
     .node .marker {
-      fill: var(--fg);
-      stroke: var(--bg);
-      stroke-width: 1.5;
-      paint-order: stroke;
+      fill: var(--bg);
+      stroke: var(--fg);
+      stroke-width: 0.5;
       cursor: pointer;
     }
     .node text {
@@ -213,14 +212,14 @@ sitemap: false
     }
     .link {
       stroke: var(--fg);
-      stroke-opacity: 0.18;
+      stroke-width: 0.5;
       pointer-events: none;
     }
     .node.dimmed .marker { opacity: 0.18; }
     .node.dimmed text { opacity: 0.18; }
-    .link.dimmed { stroke-opacity: 0.04; }
-    .node.highlight .marker { stroke: var(--fg); stroke-width: 2.5; }
-    .link.highlight { stroke-opacity: 0.7; }
+    .link.dimmed { stroke-opacity: 0.15; }
+    .node.highlight .marker { stroke-width: 1.5; }
+    .link.highlight { stroke-width: 1; }
 
     @media (max-width: 800px) {
       body {
@@ -365,8 +364,7 @@ sitemap: false
       const linkData = linkLayer.selectAll('line').data(links, d => (d.source.i ?? d.source) + ':' + (d.target.i ?? d.target));
       linkData.exit().remove();
       linkSel = linkData.enter().append('line').attr('class', 'link')
-        .merge(linkData)
-        .attr('stroke-width', d => 0.5 + d.value * 3.5);
+        .merge(linkData);
 
       const nodeData = nodeLayer.selectAll('g.node').data(nodes, d => d.i);
       nodeData.exit().remove();
