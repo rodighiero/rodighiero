@@ -202,7 +202,7 @@ sitemap: false
     }
     .node text {
       font-family: var(--font);
-      font-size: 10px;
+      font-size: 9px;
       fill: var(--fg);
       pointer-events: none;
       text-anchor: middle;
@@ -374,9 +374,9 @@ sitemap: false
       nodeEnter.append('circle')
         .attr('class', 'marker')
         .attr('r', NODE_RADIUS);
-      nodeEnter.append('text').attr('dy', -10);
+      nodeEnter.append('text');
       nodeSel = nodeEnter.merge(nodeData);
-      nodeSel.select('text').text('');
+      nodeSel.select('text').selectAll('tspan').remove();
 
       nodeSel
         .on('mouseenter', (e, d) => { showDetails(d); highlight(d); })
@@ -400,6 +400,34 @@ sitemap: false
 
     function truncate(s, n) { return s.length <= n ? s : s.slice(0, n - 1) + '…'; }
 
+    // Split a title into two roughly equal lines on the word boundary that
+    // minimizes the character-length difference. Falls back to one line.
+    function splitTitle(title) {
+      const words = title.split(/\s+/);
+      if (words.length <= 1) return [title];
+      let best = 1, bestDiff = Infinity;
+      for (let i = 1; i < words.length; i++) {
+        const left = words.slice(0, i).join(' ');
+        const right = words.slice(i).join(' ');
+        const diff = Math.abs(left.length - right.length);
+        if (diff < bestDiff) { bestDiff = diff; best = i; }
+      }
+      return [words.slice(0, best).join(' '), words.slice(best).join(' ')];
+    }
+
+    function setLabel(textEl, title) {
+      const sel = d3.select(textEl);
+      sel.selectAll('tspan').remove();
+      if (!title) return;
+      const lines = splitTitle(title);
+      if (lines.length === 1) {
+        sel.append('tspan').attr('x', 0).attr('y', -10).text(lines[0]);
+      } else {
+        sel.append('tspan').attr('x', 0).attr('y', -20).text(lines[0]);
+        sel.append('tspan').attr('x', 0).attr('y', -10).text(lines[1]);
+      }
+    }
+
     function highlight(d) {
       const neighbors = new Set([d.i]);
       links.forEach(l => {
@@ -415,12 +443,14 @@ sitemap: false
         const si = l.source.i ?? l.source, ti = l.target.i ?? l.target;
         return si === d.i || ti === d.i;
       });
-      nodeSel.select('text').text(n => neighbors.has(n.i) ? n.title : '');
+      nodeSel.select('text').each(function(n) {
+        setLabel(this, neighbors.has(n.i) ? n.title : '');
+      });
     }
     function unhighlight() {
       nodeSel.classed('dimmed', false).classed('highlight', false);
       linkSel.classed('dimmed', false).classed('highlight', false);
-      nodeSel.select('text').text('');
+      nodeSel.select('text').each(function() { setLabel(this, ''); });
     }
 
     // ── Details panel ────────────────────────────────────────────────────
