@@ -881,6 +881,7 @@
         selectedNode = null;
         unhighlight();
         details.hidden = true;
+        if (lede) lede.hidden = false;
       });
 
       var LAYOUT_SEED = 1;
@@ -1064,7 +1065,9 @@
       }
 
       var details = document.getElementById('network-details');
+      var lede = document.querySelector('#network-view .lede');
       function showDetails(d) {
+        if (lede) lede.hidden = true;
         var pub = pubs[d.i];
         var connected = new Set();
         links.forEach(function(l) {
