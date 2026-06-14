@@ -713,8 +713,13 @@
     });
 
     // ── View toggle ──
+    // The network view is short (≈ one viewport), so switching to it from a
+    // scrolled gallery/list clamps scrollY to fit, losing the user's position.
+    // Save it per view on leave and restore on return.
+    var savedScroll = {};
     function setView(view, persist) {
       var prev = document.body.dataset.view;
+      if (prev && prev !== view) savedScroll[prev] = window.scrollY;
       document.body.dataset.view = view;
       if (persist !== false) {
         try { localStorage.setItem('publicationView', view); } catch (e) {}
@@ -733,6 +738,16 @@
       } else {
         clearMasonry();
         markFirstVisible();
+      }
+      if (prev && prev !== view && savedScroll[view] !== undefined) {
+        var y = savedScroll[view];
+        var restore = function() { window.scrollTo(0, y); };
+        // Gallery needs masonry to set container height before scroll makes sense.
+        if (view === 'gallery') {
+          requestAnimationFrame(function() { requestAnimationFrame(restore); });
+        } else {
+          requestAnimationFrame(restore);
+        }
       }
     }
     function applyResponsiveView() {
