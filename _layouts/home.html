@@ -315,11 +315,7 @@
 
     /* ── Network view ── */
     #network-view { display: none; }
-    body[data-view="network"] #publications,
-    body[data-view="network"] #no-results { display: none; }
-    body[data-view="network"] .filters-search,
-    body[data-view="network"] .filter-count { display: none; }
-    body[data-view="network"] .filters { justify-content: flex-end; }
+    body[data-view="network"] #publications { display: none; }
     body[data-view="network"] #network-view {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -384,6 +380,8 @@
     #network-view .link.highlight { stroke-width: 1; }
     #network-view .node.dimmed.hover .marker { stroke: var(--fg); }
     #network-view .node.dimmed.hover text { fill: var(--fg); }
+    #network-view .node.filtered-out,
+    #network-view .link.filtered-out { display: none; }
 
     /* Details panel — lives in the first column under the lede. */
     #network-view .details {
@@ -736,18 +734,28 @@
         : 'Showing ' + visible + ' of ' + total;
     }
 
+    var matchedSlugs = null;
+    var networkFilter = null;
+
     function applySearch() {
       var query = searchInput ? searchInput.value : '';
       var tokens = query ? normalize(query).split(/\s+/).filter(Boolean) : [];
       var visible = 0;
+      var matched = new Set();
       publications.forEach(function(p) {
         var match = true;
         for (var i = 0; i < tokens.length; i++) {
           if (p._haystack.indexOf(tokens[i]) === -1) { match = false; break; }
         }
         p.style.display = match ? '' : 'none';
-        if (match) visible++;
+        if (match) {
+          visible++;
+          var slug = p.getAttribute('data-slug');
+          if (slug) matched.add(slug);
+        }
       });
+      matchedSlugs = tokens.length ? matched : null;
+      if (networkFilter) networkFilter(matchedSlugs);
       if (noResults) noResults.hidden = visible !== 0;
       updateCount(visible);
       if (document.body.dataset.view === 'gallery') scheduleLayout();
@@ -1093,6 +1101,22 @@
       }
 
       render();
+
+      networkFilter = function(slugs) {
+        if (!nodeSel) return;
+        if (!slugs) {
+          nodeSel.classed('filtered-out', false);
+          linkSel.classed('filtered-out', false);
+        } else {
+          nodeSel.classed('filtered-out', function(n) { return !slugs.has(n.slug); });
+          linkSel.classed('filtered-out', function(l) {
+            var si = l.source.i != null ? l.source.i : l.source;
+            var ti = l.target.i != null ? l.target.i : l.target;
+            return !slugs.has(nodes[si].slug) || !slugs.has(nodes[ti].slug);
+          });
+        }
+      };
+      networkFilter(matchedSlugs);
 
       window.addEventListener('resize', function() {
         if (document.body.dataset.view !== 'network') return;
