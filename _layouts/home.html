@@ -678,6 +678,7 @@
 
     // ── View toggle ──
     function setView(view, persist) {
+      var prev = document.body.dataset.view;
       document.body.dataset.view = view;
       if (persist !== false) {
         try { localStorage.setItem('publicationView', view); } catch (e) {}
@@ -685,6 +686,9 @@
       viewButtons.forEach(function(b) {
         b.setAttribute('aria-pressed', b.dataset.view === view ? 'true' : 'false');
       });
+      if (prev === 'network' && view !== 'network' && networkClearSelection) {
+        networkClearSelection();
+      }
       if (view === 'gallery') {
         scheduleLayout();
       } else if (view === 'network') {
@@ -728,6 +732,7 @@
 
     var matchedSlugs = null;
     var networkFilter = null;
+    var networkClearSelection = null;
 
     function applySearch() {
       var query = searchInput ? searchInput.value : '';
@@ -870,13 +875,14 @@
       var nodeLayer = root.append('g').attr('class', 'nodes');
       var labelLayer = root.append('g').attr('class', 'labels');
 
-      svg.on('click', function() {
+      networkClearSelection = function() {
         if (selectedNode === null) return;
         selectedNode = null;
         unhighlight();
-        details.hidden = true;
+        if (details) details.hidden = true;
         if (lede) lede.hidden = false;
-      });
+      };
+      svg.on('click', networkClearSelection);
 
       var LAYOUT_SEED = 1;
       function makeRng(seed) {
