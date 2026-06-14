@@ -254,6 +254,7 @@
 
     /* ── Publications (shared) ── */
     #publications { position: relative; }
+    body[data-view="gallery"] #publications:not(.ready) { visibility: hidden; }
     .publication {
       padding: 0.6rem;
       border-radius: 4px;
@@ -656,6 +657,7 @@
         colHeights[minCol] = y + heights[idx] + GAP_Y;
       });
       container.style.height = Math.max(0, Math.max.apply(null, colHeights) - GAP_Y) + 'px';
+      container.classList.add('ready');
     }
     function markFirstVisible() {
       publications.forEach(function(p) { p.classList.remove('at-top'); });
