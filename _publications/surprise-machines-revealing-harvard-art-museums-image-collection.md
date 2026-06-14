@@ -10,7 +10,6 @@ figures: true
 img_width: 700
 img_height: 700
 redirect_from:
-  - /Surprise-Machines-2
   - /Surprise-Machines
   - /Surprise-Machines-for-Harvard-Art-Museums
 ---
