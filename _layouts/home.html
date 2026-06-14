@@ -53,6 +53,7 @@
   <link rel="me" href="https://orcid.org/0000-0002-1405-7062">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="icon" href="/favicon.ico">
+  <link rel="image_src" href="{{ site.url }}/images/Dario-Rodighiero.webp">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -70,7 +71,8 @@
         "url": "{{ site.url }}/",
         "isPartOf": { "@id": "{{ site.url }}/#website" },
         "dateModified": "{{ site.time | date: '%Y-%m-%dT%H:%M:%SZ' }}",
-        "mainEntity": { "@id": "https://orcid.org/0000-0002-1405-7062" }
+        "mainEntity": { "@id": "https://orcid.org/0000-0002-1405-7062" },
+        "primaryImageOfPage": { "@id": "{{ site.url }}/images/Dario-Rodighiero.webp" }
       },
       {
         "@type": "Person",
