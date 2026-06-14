@@ -389,16 +389,17 @@
       stroke-linejoin: round;
     }
     #network-view .link { stroke: var(--fg); stroke-width: 0.5; pointer-events: none; }
-    #network-view .node.dimmed .marker { stroke: var(--muted); }
-    #network-view .labels text.dimmed { fill: var(--muted); }
-    #network-view .link.dimmed { stroke: var(--muted); }
     #network-view .node.highlight .marker { fill: var(--fg); }
     #network-view .link.highlight { stroke-width: 1; }
-    #network-view .node.dimmed.hover .marker { stroke: var(--fg); }
     #network-view .labels text.hover { fill: var(--fg); }
+    /* Click-selection (.dimmed on non-neighbours) and search filter (.filtered-out on non-matches) share the same fade. */
+    #network-view .node.dimmed,
+    #network-view .link.dimmed,
+    #network-view .labels text.dimmed,
     #network-view .node.filtered-out,
     #network-view .link.filtered-out,
     #network-view .labels text.filtered-out { opacity: 0.15; }
+    #network-view .node.dimmed.hover { opacity: 1; }
     #network-view .node.filtered-out { pointer-events: none; }
 
     /* Details panel — replaces the lede in the first column on selection. */
@@ -734,6 +735,11 @@
       } else if (view === 'network') {
         clearMasonry();
         initNetwork();
+        // If buildNetwork already ran on a prior visit, re-apply the search
+        // filter to catch up to any changes made while another view was active.
+        // On first visit networkFilter is still null and buildNetwork's trailing
+        // networkFilter(matchedSlugs) call handles it.
+        if (networkFilter) networkFilter(matchedSlugs);
       } else {
         clearMasonry();
         markFirstVisible();
