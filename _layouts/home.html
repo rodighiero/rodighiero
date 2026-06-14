@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   {% include head-init.html %}
-  <script>!function(){var v=null;try{v=localStorage.getItem('publicationView')}catch(e){}if(window.innerWidth<=1024)v='gallery';document.documentElement.dataset.initialView=(v==='list'?'list':'gallery');var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='1'?'1':'0')}()</script>
+  <script>!function(){var v=null;try{v=localStorage.getItem('publicationView')}catch(e){}if(window.innerWidth<=1024)v='gallery';var ok={gallery:1,list:1,network:1};document.documentElement.dataset.initialView=ok[v]?v:'gallery';var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='1'?'1':'0')}()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
@@ -313,6 +313,131 @@
     body[data-view="list"] .card-meta { grid-column: 1; }
     body[data-view="list"] .card-desc { grid-column: 2 / span 2; }
 
+    /* ── Network view ── */
+    #network-view { display: none; }
+    body[data-view="network"] #publications,
+    body[data-view="network"] #no-results { display: none; }
+    body[data-view="network"] .filters-search,
+    body[data-view="network"] .filter-count { display: none; }
+    body[data-view="network"] .filters { justify-content: flex-end; }
+    body[data-view="network"] #network-view {
+      display: block;
+      position: relative;
+      height: calc(100vh - 9rem);
+      min-height: 520px;
+      margin-bottom: 2rem;
+      background: color-mix(in srgb, var(--fg) 2%, transparent);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    #network-view svg { display: block; width: 100%; height: 100%; }
+    #network-view .hint {
+      position: absolute;
+      bottom: 0.8rem;
+      right: 1.25rem;
+      font-size: var(--text-xxs);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-caps);
+      pointer-events: none;
+    }
+    #network-view .node .hit { fill: transparent; cursor: grab; }
+    #network-view .node .hit:active { cursor: grabbing; }
+    #network-view .node .marker {
+      fill: var(--bg);
+      stroke: var(--fg);
+      stroke-width: 0.5;
+      cursor: pointer;
+      transition: r 0.12s ease;
+      pointer-events: none;
+    }
+    #network-view .node.hover .marker { r: 7; }
+    #network-view .node text {
+      font-family: var(--font);
+      font-size: 9px;
+      fill: var(--fg);
+      cursor: grab;
+      text-anchor: middle;
+      paint-order: stroke;
+      stroke: var(--bg);
+      stroke-width: 3px;
+      stroke-linejoin: round;
+    }
+    #network-view .node text:active { cursor: grabbing; }
+    #network-view .link { stroke: var(--fg); stroke-width: 0.5; pointer-events: none; }
+    #network-view .node.dimmed .marker { stroke: var(--muted); }
+    #network-view .node.dimmed text { fill: var(--muted); }
+    #network-view .link.dimmed { stroke: var(--muted); }
+    #network-view .node.highlight .marker { stroke-width: 1.5; }
+    #network-view .link.highlight { stroke-width: 1; }
+    #network-view .node.dimmed.hover .marker { stroke: var(--fg); }
+    #network-view .node.dimmed.hover text { fill: var(--fg); }
+
+    /* Details overlay (top-right of the stage). */
+    #network-view .details {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 300px;
+      max-width: calc(100% - 2rem);
+      max-height: calc(100% - 2rem);
+      overflow-y: auto;
+      padding: 1rem 1.1rem;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: var(--text-xs);
+      line-height: var(--lh-normal);
+    }
+    #network-view .details[hidden] { display: none; }
+    #network-view .details .publication {
+      position: static;
+      width: auto;
+      padding: 0;
+      cursor: default;
+      background: none;
+      transform: none;
+      border-top: none;
+    }
+    #network-view .details .publication:hover { background: none; }
+    #network-view .details .publication .card-img {
+      width: 100%;
+      margin-bottom: 0.8rem;
+      background: color-mix(in srgb, var(--fg) 4%, transparent);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    #network-view .details .publication .card-meta h2 a:hover { text-decoration: underline; }
+    #network-view .details h3 {
+      font-size: var(--text-xxs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-caps);
+      color: var(--muted);
+      margin: 0 0 0.5rem;
+      font-weight: 500;
+    }
+    #network-view .details .neighbors {
+      margin-top: 0.9rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid var(--border);
+    }
+    #network-view .details .neighbors ol { list-style: none; padding: 0; margin: 0; }
+    #network-view .details .neighbors li {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.7rem;
+    }
+    #network-view .details .neighbors li:last-child { margin-bottom: 0; }
+    #network-view .details .neighbors li .sim {
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+      width: 2.5rem;
+    }
+    #network-view .details .neighbors li .nb-body { min-width: 0; flex: 1; }
+
 
     footer {
       display: grid;
@@ -429,6 +554,9 @@
         <button type="button" data-view="gallery" aria-label="Gallery view" aria-pressed="false">
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
         </button>
+        <button type="button" data-view="network" aria-label="Network view" aria-pressed="false">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><line x1="7" y1="7" x2="17" y2="7" stroke="currentColor" stroke-width="1.5"/><line x1="7" y1="7" x2="12" y2="18" stroke="currentColor" stroke-width="1.5"/><line x1="17" y1="7" x2="12" y2="18" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="7" r="2.5" fill="currentColor"/><circle cx="17" cy="7" r="2.5" fill="currentColor"/><circle cx="12" cy="18" r="2.5" fill="currentColor"/></svg>
+        </button>
         <button type="button" data-view="list" aria-label="List view" aria-pressed="false">
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
         </button>
@@ -442,7 +570,7 @@
       {% for group in year_groups %}{% assign group_publications = group.items | sort: "title" %}{% for publication in group_publications %}
       {% assign _type_label = site.data.publication_types[publication.type].label %}
       {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.venue }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }}{% endcapture %}
-      <div class="publication" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
+      <div class="publication" data-slug="{{ publication.slug }}" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
         {% if publication.img %}
         {% assign _card_i = _card_i | plus: 1 %}
         <div class="card-img{% if publication.img_border %} bordered{% endif %}">
@@ -460,6 +588,14 @@
       {% endfor %}{% endfor %}
     </div>
     <p id="no-results" class="no-results" hidden>No publications match your search.</p>
+
+    <!-- ── Network view (similarity graph) ── -->
+    <div id="network-view" aria-hidden="true">
+      <svg id="net" aria-label="Publication similarity network"></svg>
+      <div class="details" id="network-details" hidden></div>
+      <div class="hint">scroll to zoom · drag nodes · hover to label · click to select</div>
+    </div>
+    <script id="net-data" type="application/json">{{ site.data.network | jsonify }}</script>
   </main>
 
   <footer>
@@ -554,6 +690,9 @@
       });
       if (view === 'gallery') {
         scheduleLayout();
+      } else if (view === 'network') {
+        clearMasonry();
+        initNetwork();
       } else {
         clearMasonry();
         markFirstVisible();
@@ -565,7 +704,7 @@
       } else {
         var saved;
         try { saved = localStorage.getItem('publicationView'); } catch (e) {}
-        saved = saved === 'list' ? 'list' : 'gallery';
+        saved = (saved === 'list' || saved === 'network') ? saved : 'gallery';
         if (document.body.dataset.view !== saved) setView(saved, false);
       }
     }
@@ -649,6 +788,314 @@
         window.location.href = href;
       });
     });
+
+    // ── Network view (lazy) ─────────────────────────────────────────────
+    var networkInited = false;
+    var d3Promise = null;
+    function loadD3() {
+      if (d3Promise) return d3Promise;
+      d3Promise = new Promise(function(resolve, reject) {
+        if (window.d3) return resolve(window.d3);
+        var s = document.createElement('script');
+        s.src = 'https://d3js.org/d3.v7.min.js';
+        s.onload = function() { resolve(window.d3); };
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+      return d3Promise;
+    }
+    function initNetwork() {
+      if (networkInited) return;
+      networkInited = true;
+      loadD3().then(buildNetwork).catch(function(e) {
+        console.error('Could not load d3', e);
+        networkInited = false;
+      });
+    }
+
+    function buildNetwork() {
+      var dataNode = document.getElementById('net-data');
+      if (!dataNode) return;
+      var data = JSON.parse(dataNode.textContent);
+      var pubs = data.nodes;
+      var sim = data.similarity;
+      var N = pubs.length;
+
+      function cardHtmlFor(slug) {
+        var src = document.querySelector('.publication[data-slug="' + CSS.escape(slug) + '"]');
+        if (!src) return '';
+        var clone = src.cloneNode(true);
+        clone.removeAttribute('style');
+        clone.classList.remove('at-top');
+        var desc = clone.querySelector('.card-desc');
+        if (desc) desc.remove();
+        return clone.outerHTML;
+      }
+
+      var NODE_RADIUS = 3;
+      var STRONG_SIM = 0.70;
+      function buildLinks() {
+        var seen = new Set();
+        var links = [];
+        function add(i, j, s) {
+          var key = i < j ? i + ':' + j : j + ':' + i;
+          if (seen.has(key)) return;
+          seen.add(key);
+          links.push({ source: i, target: j, value: s });
+        }
+        for (var i = 0; i < N; i++) {
+          var bestJ = -1, bestS = -Infinity;
+          for (var j = 0; j < N; j++) {
+            if (i === j) continue;
+            var s = sim[i][j];
+            if (s > bestS) { bestS = s; bestJ = j; }
+            if (s > STRONG_SIM) add(i, j, s);
+          }
+          if (bestJ >= 0) add(i, bestJ, bestS);
+        }
+        return links;
+      }
+
+      var svg = d3.select('#net');
+      var stage = document.getElementById('network-view');
+      var root = svg.append('g');
+      var linkLayer = root.append('g').attr('class', 'links');
+      var nodeLayer = root.append('g').attr('class', 'nodes');
+
+      var zoom = d3.zoom().scaleExtent([0.3, 4]).on('zoom', function(e) { root.attr('transform', e.transform); });
+      svg.call(zoom).on('mousedown.zoom', null).on('touchstart.zoom', null).on('touchmove.zoom', null).on('touchend.zoom', null);
+      svg.on('click', function() {
+        if (selectedNode === null) return;
+        selectedNode = null;
+        unhighlight();
+        details.hidden = true;
+      });
+
+      var LAYOUT_SEED = 1;
+      function makeRng(seed) {
+        var s = seed >>> 0;
+        return function() { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; };
+      }
+      var rand = makeRng(LAYOUT_SEED);
+      function dimensions() { return { w: stage.clientWidth, h: stage.clientHeight }; }
+      function seedPosition(n) {
+        var dim = dimensions();
+        n.x = dim.w / 2 + (rand() - 0.5) * Math.min(dim.w, dim.h) * 0.6;
+        n.y = dim.h / 2 + (rand() - 0.5) * Math.min(dim.w, dim.h) * 0.6;
+        n.vx = 0; n.vy = 0;
+      }
+      var nodes = pubs.map(function(p, i) {
+        var n = { i: i, slug: p.slug, title: p.title, year: p.year, type: p.type, typeLabel: p.typeLabel, venue: p.venue, url: p.url };
+        seedPosition(n);
+        return n;
+      });
+
+      var links = [];
+      var linkSel, nodeSel;
+      var sim_, currentCharge = 0, currentSpacing = 30;
+      var selectedNode = null;
+      var highlightedSet = null;
+
+      function tick() {
+        linkSel.attr('x1', function(d) { return d.source.x; }).attr('y1', function(d) { return d.source.y; })
+          .attr('x2', function(d) { return d.target.x; }).attr('y2', function(d) { return d.target.y; });
+        nodeSel.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
+      }
+
+      var GRAVITY = 0.08;
+      function componentLabels() {
+        var adj = Array.from({ length: N }, function() { return []; });
+        links.forEach(function(l) {
+          var a = l.source.i != null ? l.source.i : l.source;
+          var b = l.target.i != null ? l.target.i : l.target;
+          adj[a].push(b); adj[b].push(a);
+        });
+        var comp = new Array(N).fill(-1);
+        var c = 0;
+        for (var i = 0; i < N; i++) {
+          if (comp[i] !== -1) continue;
+          var stack = [i];
+          while (stack.length) {
+            var x = stack.pop();
+            if (comp[x] !== -1) continue;
+            comp[x] = c;
+            adj[x].forEach(function(y) { if (comp[y] === -1) stack.push(y); });
+          }
+          c++;
+        }
+        return comp;
+      }
+      function componentTargets(w, h) {
+        var comp = componentLabels();
+        var numComp = Math.max.apply(null, comp) + 1;
+        var groups = Array.from({ length: numComp }, function() { return []; });
+        comp.forEach(function(c, i) { groups[c].push(i); });
+        groups.sort(function(a, b) { return b.length - a.length; });
+        var targets = new Array(N);
+        (groups[0] || []).forEach(function(i) { targets[i] = { x: w / 2, y: h / 2 }; });
+        var numSatellites = Math.max(1, groups.length - 1);
+        var r = Math.min(w, h) * 0.25;
+        for (var k = 1; k < groups.length; k++) {
+          var angle = (k - 1) / numSatellites * 2 * Math.PI - Math.PI / 2;
+          var cx = w / 2 + Math.cos(angle) * r;
+          var cy = h / 2 + Math.sin(angle) * r;
+          groups[k].forEach(function(i) { targets[i] = { x: cx, y: cy }; });
+        }
+        return targets;
+      }
+      var targets = [];
+      function buildSim() {
+        var dim = dimensions();
+        targets = componentTargets(dim.w, dim.h);
+        sim_ = d3.forceSimulation(nodes)
+          .force('link', d3.forceLink(links).id(function(d) { return d.i; }).distance(function(d) { return 50 + (1 - d.value) * 110; }).strength(function(d) { return 0.3 + d.value * 0.5; }))
+          .force('charge', d3.forceManyBody().strength(currentCharge))
+          .force('x', d3.forceX(function(d) { return targets[d.i].x; }).strength(GRAVITY))
+          .force('y', d3.forceY(function(d) { return targets[d.i].y; }).strength(GRAVITY))
+          .force('collide', d3.forceCollide().radius(NODE_RADIUS + currentSpacing))
+          .on('tick', tick);
+      }
+
+      function render() {
+        links = buildLinks();
+        var linkData = linkLayer.selectAll('line').data(links, function(d) { return (d.source.i != null ? d.source.i : d.source) + ':' + (d.target.i != null ? d.target.i : d.target); });
+        linkData.exit().remove();
+        linkSel = linkData.enter().append('line').attr('class', 'link').merge(linkData);
+
+        var nodeData = nodeLayer.selectAll('g.node').data(nodes, function(d) { return d.i; });
+        nodeData.exit().remove();
+        var nodeEnter = nodeData.enter().append('g').attr('class', 'node');
+        nodeEnter.append('circle').attr('class', 'hit').attr('r', 12);
+        nodeEnter.append('circle').attr('class', 'marker').attr('r', NODE_RADIUS);
+        nodeEnter.append('text');
+        nodeSel = nodeEnter.merge(nodeData);
+        nodeSel.select('text').selectAll('tspan').remove();
+
+        nodeSel
+          .on('mouseenter', function(e, d) {
+            d3.select(this).classed('hover', true);
+            setLabel(d3.select(this).select('text').node(), d.title);
+          })
+          .on('mouseleave', function(e, d) {
+            d3.select(this).classed('hover', false);
+            if (highlightedSet && highlightedSet.has(d.i)) return;
+            setLabel(d3.select(this).select('text').node(), '');
+          })
+          .on('click', function(e, d) {
+            e.stopPropagation();
+            selectedNode = d;
+            showDetails(d);
+            highlight(d);
+          })
+          .call(d3.drag()
+            .on('start', function(e, d) { if (!e.active) sim_.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+            .on('drag', function(e, d) { d.fx = e.x; d.fy = e.y; })
+            .on('end', function(e, d) { if (!e.active) sim_.alphaTarget(0); d.fx = null; d.fy = null; })
+          );
+
+        if (sim_) {
+          sim_.nodes(nodes);
+          sim_.force('link').links(links);
+          sim_.force('charge').strength(currentCharge);
+          sim_.alpha(0.8).restart();
+        } else {
+          buildSim();
+        }
+      }
+
+      function splitTitle(title) {
+        var words = title.split(/\s+/);
+        if (words.length <= 1) return [title];
+        var best = 1, bestDiff = Infinity;
+        for (var i = 1; i < words.length; i++) {
+          var left = words.slice(0, i).join(' ');
+          var right = words.slice(i).join(' ');
+          var diff = Math.abs(left.length - right.length);
+          if (diff < bestDiff) { bestDiff = diff; best = i; }
+        }
+        return [words.slice(0, best).join(' '), words.slice(best).join(' ')];
+      }
+      function setLabel(textEl, title) {
+        var sel = d3.select(textEl);
+        sel.selectAll('tspan').remove();
+        if (!title) return;
+        var lines = splitTitle(title);
+        if (lines.length === 1) {
+          sel.append('tspan').attr('x', 0).attr('y', -10).text(lines[0]);
+        } else {
+          sel.append('tspan').attr('x', 0).attr('y', -20).text(lines[0]);
+          sel.append('tspan').attr('x', 0).attr('y', -10).text(lines[1]);
+        }
+      }
+
+      function highlight(d) {
+        var neighbors = new Set([d.i]);
+        links.forEach(function(l) {
+          var si = l.source.i != null ? l.source.i : l.source;
+          var ti = l.target.i != null ? l.target.i : l.target;
+          if (si === d.i) neighbors.add(ti);
+          if (ti === d.i) neighbors.add(si);
+        });
+        highlightedSet = new Set([d.i]);
+        nodeSel.classed('dimmed', function(n) { return !neighbors.has(n.i); }).classed('highlight', function(n) { return n.i === d.i; });
+        linkSel.classed('dimmed', function(l) {
+          var si = l.source.i != null ? l.source.i : l.source;
+          var ti = l.target.i != null ? l.target.i : l.target;
+          return si !== d.i && ti !== d.i;
+        }).classed('highlight', function(l) {
+          var si = l.source.i != null ? l.source.i : l.source;
+          var ti = l.target.i != null ? l.target.i : l.target;
+          return si === d.i || ti === d.i;
+        });
+        nodeSel.select('text').each(function(n) { setLabel(this, n.i === d.i ? n.title : ''); });
+      }
+      function unhighlight() {
+        highlightedSet = null;
+        nodeSel.classed('dimmed', false).classed('highlight', false);
+        linkSel.classed('dimmed', false).classed('highlight', false);
+        nodeSel.select('text').each(function() { setLabel(this, ''); });
+      }
+
+      var details = document.getElementById('network-details');
+      function showDetails(d) {
+        var pub = pubs[d.i];
+        var connected = new Set();
+        links.forEach(function(l) {
+          var si = l.source.i != null ? l.source.i : l.source;
+          var ti = l.target.i != null ? l.target.i : l.target;
+          if (si === d.i) connected.add(ti);
+          if (ti === d.i) connected.add(si);
+        });
+        var top = [].concat(Array.from(connected))
+          .map(function(j) { return [j, sim[d.i][j]]; })
+          .sort(function(a, b) { return b[1] - a[1]; });
+        var cardHtml = cardHtmlFor(pub.slug);
+        var neighborsHtml = top.length ? (
+          '<div class="neighbors"><h3>Closest by embedding</h3><ol>' +
+          top.map(function(t) {
+            var j = t[0], s = t[1];
+            return '<li><span class="sim">' + s.toFixed(2) + '</span><div class="nb-body"><a href="' + escapeHtml(pubs[j].url) + '">' + escapeHtml(pubs[j].title) + '</a></div></li>';
+          }).join('') +
+          '</ol></div>'
+        ) : '';
+        details.innerHTML = cardHtml + neighborsHtml;
+        details.hidden = false;
+      }
+      function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, function(c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
+      }
+
+      render();
+
+      window.addEventListener('resize', function() {
+        if (document.body.dataset.view !== 'network') return;
+        var dim = dimensions();
+        targets = componentTargets(dim.w, dim.h);
+        sim_.force('x', d3.forceX(function(d) { return targets[d.i].x; }).strength(GRAVITY));
+        sim_.force('y', d3.forceY(function(d) { return targets[d.i].y; }).strength(GRAVITY));
+        sim_.alpha(0.3).restart();
+      });
+    }
   </script>
   {% include common-scripts.html %}
   {% include analytics.html %}
