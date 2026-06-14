@@ -344,10 +344,16 @@
       fill: var(--bg);
       stroke: var(--fg);
       stroke-width: 0.5;
-      transition: r 0.12s ease;
       pointer-events: none;
     }
-    #network-view .node.hover .marker { r: 7; }
+    #network-view .node .ring {
+      fill: none;
+      stroke: var(--fg);
+      stroke-width: 0.5;
+      pointer-events: none;
+      opacity: 0;
+    }
+    #network-view .node.hover .ring { opacity: 1; }
     #network-view .node text {
       font-family: var(--font);
       font-size: var(--text-xs);
@@ -968,6 +974,7 @@
         var nodeEnter = nodeData.enter().append('g').attr('class', 'node');
         nodeEnter.append('circle').attr('class', 'hit').attr('r', 12);
         nodeEnter.append('circle').attr('class', 'marker').attr('r', NODE_RADIUS);
+        nodeEnter.append('circle').attr('class', 'ring').attr('r', NODE_RADIUS + 4);
         nodeEnter.append('text');
         nodeSel = nodeEnter.merge(nodeData);
         nodeSel.select('text').selectAll('tspan').remove();
