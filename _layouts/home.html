@@ -900,6 +900,8 @@
       var highlightedSet = null;
       var LAYOUT_TICKS = 400;
 
+      function bringToFront(el) { el.parentNode.appendChild(el); }
+
       function placeNodes() {
         linkSel.attr('x1', function(d) { return d.source.x; }).attr('y1', function(d) { return d.source.y; })
           .attr('x2', function(d) { return d.target.x; }).attr('y2', function(d) { return d.target.y; });
@@ -982,6 +984,7 @@
         nodeSel
           .on('mouseenter', function(e, d) {
             d3.select(this).classed('hover', true);
+            bringToFront(this);
             setLabel(d3.select(this).select('text').node(), d.title);
           })
           .on('mouseleave', function(e, d) {
@@ -992,6 +995,7 @@
           .on('click', function(e, d) {
             e.stopPropagation();
             selectedNode = d;
+            bringToFront(this);
             showDetails(d);
             highlight(d);
           });
@@ -1086,6 +1090,7 @@
           var g = nodeSel.filter(function(n) { return n.i === idx; });
           li.addEventListener('mouseenter', function() {
             g.classed('hover', true);
+            g.each(function() { bringToFront(this); });
             setLabel(g.select('text').node(), nodes[idx].title);
           });
           li.addEventListener('mouseleave', function() {
