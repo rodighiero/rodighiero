@@ -766,7 +766,20 @@
       }
     }
     viewButtons.forEach(function(b) {
-      b.addEventListener('click', function() { setView(this.dataset.view); });
+      b.addEventListener('click', function() {
+        var clicked = this.dataset.view;
+        if (document.body.dataset.view === clicked) {
+          // Clicking the active view button resets the view: clear the search
+          // filter and, on network, drop any node selection.
+          if (searchInput && searchInput.value) {
+            searchInput.value = '';
+            applySearch();
+          }
+          if (clicked === 'network' && networkClearSelection) networkClearSelection();
+        } else {
+          setView(clicked);
+        }
+      });
     });
     setView(document.body.dataset.view || 'gallery', false);
     window.addEventListener('resize', applyResponsiveView);
