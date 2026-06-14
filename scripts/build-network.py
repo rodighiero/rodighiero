@@ -52,7 +52,11 @@ def parse_pub(path: Path) -> dict | None:
     if len(parts) < 3:
         return None
     fm = yaml.safe_load(parts[1]) or {}
-    body = parts[2].split(EXCERPT_SEPARATOR, 1)[0].strip()
+    body = parts[2].replace(EXCERPT_SEPARATOR, " ").strip()
+    # Drop the bibliography: everything from "## References" / "## Bibliography" to end.
+    body = re.split(r"^##\s+(?:References|Bibliography)\s*$", body, maxsplit=1, flags=re.M)[0]
+    # Kramdown footnote definitions, including indented continuation lines.
+    body = re.sub(r"^\[\^[^\]]+\]:.*(?:\n[ \t]+.*)*", "", body, flags=re.M)
     body = re.sub(r"\[\^[^\]]+\]", "", body)
     body = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", body)
     body = re.sub(r"^#+ .*$", "", body, flags=re.M)
