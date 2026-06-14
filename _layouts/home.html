@@ -1076,12 +1076,29 @@
           '<div class="neighbors"><h3>Closest by embedding</h3><ol>' +
           top.map(function(t) {
             var j = t[0], s = t[1];
-            return '<li><span class="sim">' + s.toFixed(2) + '</span><div class="nb-body"><a href="' + escapeHtml(pubs[j].url) + '">' + escapeHtml(pubs[j].title) + '</a></div></li>';
+            return '<li data-node-i="' + j + '"><span class="sim">' + s.toFixed(2) + '</span><div class="nb-body"><a href="' + escapeHtml(pubs[j].url) + '">' + escapeHtml(pubs[j].title) + '</a></div></li>';
           }).join('') +
           '</ol></div>'
         ) : '';
         details.innerHTML = cardHtml + neighborsHtml;
         details.hidden = false;
+
+        // Hovering a neighbor in the list mirrors hovering its node on the canvas.
+        details.querySelectorAll('.neighbors li').forEach(function(li) {
+          var idx = parseInt(li.dataset.nodeI, 10);
+          if (isNaN(idx)) return;
+          var g = nodeSel.filter(function(n) { return n.i === idx; });
+          li.addEventListener('mouseenter', function() {
+            g.classed('hover', true);
+            setLabel(g.select('text').node(), nodes[idx].title);
+          });
+          li.addEventListener('mouseleave', function() {
+            g.classed('hover', false);
+            if (!highlightedSet || !highlightedSet.has(idx)) {
+              setLabel(g.select('text').node(), '');
+            }
+          });
+        });
       }
       function escapeHtml(s) {
         return String(s).replace(/[&<>"']/g, function(c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
