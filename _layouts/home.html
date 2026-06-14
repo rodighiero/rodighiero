@@ -900,11 +900,12 @@
 
       var links = [];
       var linkSel, nodeSel;
-      var sim_, currentCharge = 0, currentSpacing = 30;
+      var currentCharge = 0, currentSpacing = 30;
       var selectedNode = null;
       var highlightedSet = null;
+      var LAYOUT_TICKS = 400;
 
-      function tick() {
+      function placeNodes() {
         linkSel.attr('x1', function(d) { return d.source.x; }).attr('y1', function(d) { return d.source.y; })
           .attr('x2', function(d) { return d.target.x; }).attr('y2', function(d) { return d.target.y; });
         nodeSel.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
@@ -952,20 +953,23 @@
         return targets;
       }
       var targets = [];
-      function buildSim() {
+      function computeLayout() {
         var dim = dimensions();
         targets = componentTargets(dim.w, dim.h);
-        sim_ = d3.forceSimulation(nodes)
+        var sim = d3.forceSimulation(nodes)
           .force('link', d3.forceLink(links).id(function(d) { return d.i; }).distance(function(d) { return 50 + (1 - d.value) * 110; }).strength(function(d) { return 0.3 + d.value * 0.5; }))
           .force('charge', d3.forceManyBody().strength(currentCharge))
           .force('x', d3.forceX(function(d) { return targets[d.i].x; }).strength(GRAVITY))
           .force('y', d3.forceY(function(d) { return targets[d.i].y; }).strength(GRAVITY))
           .force('collide', d3.forceCollide().radius(NODE_RADIUS + currentSpacing))
-          .on('tick', tick);
+          .stop();
+        for (var i = 0; i < LAYOUT_TICKS; i++) sim.tick();
       }
 
       function render() {
         links = buildLinks();
+        computeLayout();
+
         var linkData = linkLayer.selectAll('line').data(links, function(d) { return (d.source.i != null ? d.source.i : d.source) + ':' + (d.target.i != null ? d.target.i : d.target); });
         linkData.exit().remove();
         linkSel = linkData.enter().append('line').attr('class', 'link').merge(linkData);
@@ -996,14 +1000,7 @@
             highlight(d);
           });
 
-        if (sim_) {
-          sim_.nodes(nodes);
-          sim_.force('link').links(links);
-          sim_.force('charge').strength(currentCharge);
-          sim_.alpha(0.8).restart();
-        } else {
-          buildSim();
-        }
+        placeNodes();
       }
 
       function splitTitle(title) {
@@ -1110,11 +1107,8 @@
 
       window.addEventListener('resize', function() {
         if (document.body.dataset.view !== 'network') return;
-        var dim = dimensions();
-        targets = componentTargets(dim.w, dim.h);
-        sim_.force('x', d3.forceX(function(d) { return targets[d.i].x; }).strength(GRAVITY));
-        sim_.force('y', d3.forceY(function(d) { return targets[d.i].y; }).strength(GRAVITY));
-        sim_.alpha(0.3).restart();
+        computeLayout();
+        placeNodes();
       });
     }
   </script>
