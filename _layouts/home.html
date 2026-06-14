@@ -616,7 +616,6 @@
             <li>Each cleaned title + abstract is embedded as a 384-dimensional vector by the <code>sentence-transformers/all-MiniLM-L6-v2</code> model.</li>
             <li>Pairwise cosine similarity yields a dense matrix over every pair of papers.</li>
             <li>An edge is drawn from each paper to its single strongest neighbour, plus any pair scoring above 0.70.</li>
-            <li>KeyBERT extracts up to eight keyphrases per paper (1–2 grams, MMR diversity 0.5) for the closest-matches sidebar.</li>
             <li>A D3 force simulation lays out the graph; 400 ticks are pre-computed in the browser so the layout appears already settled.</li>
           </ol>
           <p>Hover a node to read its title; click to select it and reveal its closest matches below.</p>
@@ -896,6 +895,7 @@
       }
 
       var NODE_RADIUS = 3;
+      var NODE_SPACING = 30;
       var STRONG_SIM = 0.70;
       function buildLinks() {
         var seen = new Set();
@@ -949,7 +949,7 @@
         n.vx = 0; n.vy = 0;
       }
       var nodes = pubs.map(function(p, i) {
-        var n = { i: i, slug: p.slug, title: p.title, year: p.year, type: p.type, typeLabel: p.typeLabel, venue: p.venue, url: p.url };
+        var n = { i: i, slug: p.slug, title: p.title, url: p.url };
         seedPosition(n);
         return n;
       });
@@ -957,7 +957,6 @@
       var links = [];
       var linkSel, nodeSel, labelSel;
       var labelByIdx = [];
-      var currentCharge = 0, currentSpacing = 30;
       var selectedNode = null;
       var highlightedSet = null;
       var LAYOUT_TICKS = 400;
@@ -1016,10 +1015,9 @@
         targets = componentTargets(dim.w, dim.h);
         var sim = d3.forceSimulation(nodes)
           .force('link', d3.forceLink(links).id(function(d) { return d.i; }).distance(function(d) { return 50 + (1 - d.value) * 110; }).strength(function(d) { return 0.3 + d.value * 0.5; }))
-          .force('charge', d3.forceManyBody().strength(currentCharge))
           .force('x', d3.forceX(function(d) { return targets[d.i].x; }).strength(GRAVITY))
           .force('y', d3.forceY(function(d) { return targets[d.i].y; }).strength(GRAVITY))
-          .force('collide', d3.forceCollide().radius(NODE_RADIUS + currentSpacing))
+          .force('collide', d3.forceCollide().radius(NODE_RADIUS + NODE_SPACING))
           .stop();
         for (var i = 0; i < LAYOUT_TICKS; i++) sim.tick();
       }
@@ -1195,10 +1193,16 @@
       };
       networkFilter(matchedSlugs);
 
+      // Debounce: 400 force ticks per resize event is too expensive during a drag.
+      var resizeTimer = null;
       window.addEventListener('resize', function() {
         if (document.body.dataset.view !== 'network') return;
-        computeLayout();
-        placeNodes();
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          resizeTimer = null;
+          computeLayout();
+          placeNodes();
+        }, 150);
       });
     }
   </script>

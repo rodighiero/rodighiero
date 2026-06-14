@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Build the publication similarity network for the home network view.
 
-Reads publications from _publications/, computes sentence embeddings
-for title + abstract via all-MiniLM-L6-v2, extracts KeyBERT keyphrases
-per document, and computes pairwise cosine similarity plus the top
-shared keyphrases per pair. Writes _data/network.json, which the page
-consumes via Liquid as site.data.network.
+Reads publications from _publications/, machine-translates non-English
+abstracts (cached), embeds title + abstract with all-MiniLM-L6-v2, and
+writes _data/network.json with the node list and a pairwise cosine
+similarity matrix. The home page consumes it via Liquid as
+site.data.network.
 
 Re-run after editing publications:
 
@@ -24,22 +24,14 @@ os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
 
 import numpy as np
 import yaml
-from keybert import KeyBERT
 from sentence_transformers import SentenceTransformer
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBS_DIR = ROOT / "_publications"
-TYPES_FILE = ROOT / "_data" / "publication_types.yml"
 OUT = ROOT / "_data" / "network.json"
 TRANS_CACHE = ROOT / "_data" / "translations-cache.json"
 
 MODEL_NAME = "all-MiniLM-L6-v2"
-TRANSLATOR_MODEL = "Helsinki-NLP/opus-mt-it-en"
-NGRAM_RANGE = (1, 2)
-TOP_KEYWORDS = 8
-TOP_SHARED = 3
-MMR_DIVERSITY = 0.5
-MIN_SHARED_SIM = 0.10
 EXCERPT_SEPARATOR = "<!--more-->"
 TRANSLATE_CHUNK_CHARS = 1800  # Helsinki-NLP has a 512-token limit — chunk on sentences.
 
@@ -67,9 +59,6 @@ def parse_pub(path: Path) -> dict | None:
     return {
         "slug": slug,
         "title": fm.get("title", slug),
-        "year": fm.get("year"),
-        "type": fm.get("type"),
-        "venue": fm.get("venue"),
         "lang": (fm.get("lang") or "en").lower(),
         "url": f"/{slug}",
         "text": f"{fm.get('title', '')}. {body}",
@@ -107,6 +96,7 @@ def translate_pubs(pubs: list[dict]) -> None:
         return
 
     translator = None
+    current_model: str | None = None
     for p in needing:
         h = hashlib.sha256(p["text"].encode("utf-8")).hexdigest()[:16]
         entry = cache.get(p["slug"])
@@ -114,12 +104,12 @@ def translate_pubs(pubs: list[dict]) -> None:
             p["text"] = entry["english"]
             print(f"  cached  {p['slug']}", file=sys.stderr)
             continue
-        if translator is None:
-            print(f"loading translator {TRANSLATOR_MODEL}…", file=sys.stderr)
+        model_name = f"Helsinki-NLP/opus-mt-{p['lang']}-en"
+        if translator is None or current_model != model_name:
+            print(f"loading translator {model_name}…", file=sys.stderr)
             from transformers import pipeline
-            translator = pipeline(
-                "translation", model=f"Helsinki-NLP/opus-mt-{p['lang']}-en"
-            )
+            translator = pipeline("translation", model=model_name)
+            current_model = model_name
         print(f"  translating {p['slug']} ({p['lang']}→en)…", file=sys.stderr)
         en = translate_long(p["text"], translator)
         cache[p["slug"]] = {
@@ -134,14 +124,7 @@ def translate_pubs(pubs: list[dict]) -> None:
 
 
 def main() -> int:
-    types = yaml.safe_load(TYPES_FILE.read_text())
-    pubs: list[dict] = []
-    for p in sorted(PUBS_DIR.glob("*.md")):
-        rec = parse_pub(p)
-        if rec:
-            rec["typeLabel"] = (types.get(rec["type"]) or {}).get("label", rec["type"])
-            pubs.append(rec)
-
+    pubs: list[dict] = [r for r in (parse_pub(p) for p in sorted(PUBS_DIR.glob("*.md"))) if r]
     print(f"loaded {len(pubs)} publications", file=sys.stderr)
 
     non_english = [p for p in pubs if p["lang"] != "en"]
@@ -151,70 +134,23 @@ def main() -> int:
 
     print(f"loading model {MODEL_NAME}…", file=sys.stderr)
     model = SentenceTransformer(MODEL_NAME)
-    kw = KeyBERT(model=model)
 
     print("embedding documents…", file=sys.stderr)
     doc_vecs = model.encode(
         [p["text"] for p in pubs], normalize_embeddings=True, show_progress_bar=False
     )
 
-    print("extracting keyphrases…", file=sys.stderr)
-    keywords: list[list[str]] = []
-    for i, p in enumerate(pubs):
-        kws = kw.extract_keywords(
-            p["text"],
-            keyphrase_ngram_range=NGRAM_RANGE,
-            stop_words="english",
-            use_mmr=True,
-            diversity=MMR_DIVERSITY,
-            top_n=TOP_KEYWORDS,
-        )
-        keywords.append([k for k, _ in kws])
-        print(f"  {i + 1:>2}/{len(pubs)} {p['slug']}: {keywords[-1][:3]}", file=sys.stderr)
-
-    # Cache phrase embeddings: every unique keyphrase across the corpus
-    all_phrases = sorted({kp for kps in keywords for kp in kps})
-    print(f"embedding {len(all_phrases)} unique candidate phrases…", file=sys.stderr)
-    phrase_vecs = model.encode(all_phrases, normalize_embeddings=True, show_progress_bar=False)
-    phrase_idx = {p: i for i, p in enumerate(all_phrases)}
-
     sim = (doc_vecs @ doc_vecs.T).astype(float)
     np.fill_diagonal(sim, 0)
 
-    print("computing shared keyphrases per pair…", file=sys.stderr)
-    shared: dict[str, list[str]] = {}
-    for i in range(len(pubs)):
-        for j in range(i + 1, len(pubs)):
-            if sim[i][j] < MIN_SHARED_SIM:
-                continue
-            candidates = list(dict.fromkeys(keywords[i] + keywords[j]))
-            cv = phrase_vecs[[phrase_idx[c] for c in candidates]]
-            score = (cv @ doc_vecs[i] + cv @ doc_vecs[j]) / 2
-            order = np.argsort(-score)
-            shared[f"{i},{j}"] = [candidates[k] for k in order[:TOP_SHARED]]
-
     nodes = [
-        {
-            "i": i,
-            "slug": p["slug"],
-            "title": p["title"],
-            "year": p["year"],
-            "type": p["type"],
-            "typeLabel": p["typeLabel"],
-            "venue": p["venue"],
-            "url": p["url"],
-            "keywords": keywords[i],
-        }
+        {"i": i, "slug": p["slug"], "title": p["title"], "url": p["url"]}
         for i, p in enumerate(pubs)
     ]
 
     data = {
-        "model": MODEL_NAME,
-        "ngramRange": list(NGRAM_RANGE),
-        "topKeywords": TOP_KEYWORDS,
         "nodes": nodes,
         "similarity": [[round(float(s), 4) for s in row] for row in sim],
-        "shared": shared,
     }
     OUT.write_text(json.dumps(data, ensure_ascii=False))
     print(f"wrote {OUT.relative_to(ROOT)}: {OUT.stat().st_size:,} bytes", file=sys.stderr)
