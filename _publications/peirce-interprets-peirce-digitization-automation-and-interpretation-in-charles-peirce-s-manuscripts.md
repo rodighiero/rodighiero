@@ -11,6 +11,9 @@ img_height: 1475
 redirect_from:
   - /Peirce-Interprets-Peirce
   - /peirce-interprets-peirce-digitization-automation-and-interpretation-in-charles-peirces-manuscripts
+concepts:
+  - digital humanities
+
 ---
 This paper presents a workflow-oriented approach to interpreting Charles S. Peirce’s manuscripts through computational methods. Building on recent high-resolution digitization of the Peirce archive, it combines probabilistic transcription, text analysis, semantic modeling, and data visualization to examine how automation reshapes archival access and interpretive practice. Rather than treating computation as a means of producing static objects, the workflow frames digital archives as mediating research infrastructures that expand the interpretive space while preserving scholarly judgment. By approaching Peirce’s manuscripts as multimodal objects—integrating text, diagrams, and revisions—the paper reflects on philosophical patterns, continuities, and tensions that become visible only at corpus scale. The contribution situates itself within current Digital Humanities debates on openness, mediation, and interpretive accountability, and argues that digitization and automation function as enabling conditions for shared, reflexive interpretation.
 
