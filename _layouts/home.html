@@ -617,7 +617,7 @@
             <li>Each cleaned title + abstract is embedded as a 384-dimensional vector by the <code>sentence-transformers/all-MiniLM-L6-v2</code> model.</li>
             <li>Pairwise cosine similarity yields a dense matrix over every pair of papers.</li>
             <li>An edge is drawn from each paper to its single strongest neighbour, plus any pair scoring above 0.70.</li>
-            <li>A D3 force simulation lays out the graph with link, repulsion, gravity, and collision forces; 600 ticks are pre-computed in the browser so the layout appears already settled.</li>
+            <li>A D3 force simulation lays out the graph with link, repulsion, gravity, and collision forces; 800 ticks are pre-computed in the browser so the layout appears already settled.</li>
           </ol>
           <p>Hover a node to read its title; click to select it and reveal its closest matches below.</p>
         </div>
@@ -914,8 +914,8 @@
       }
 
       var NODE_RADIUS = 3;
-      var NODE_SPACING = 28;
-      var CHARGE_STRENGTH = -120;
+      var NODE_SPACING = 32;
+      var CHARGE_STRENGTH = -200;
       var STRONG_SIM = 0.70;
       function buildLinks() {
         var seen = new Set();
@@ -979,7 +979,7 @@
       var labelByIdx = [];
       var selectedNode = null;
       var highlightedSet = null;
-      var LAYOUT_TICKS = 600;
+      var LAYOUT_TICKS = 800;
 
       function placeNodes() {
         linkSel.attr('x1', function(d) { return d.source.x; }).attr('y1', function(d) { return d.source.y; })
@@ -1035,7 +1035,7 @@
         targets = componentTargets(dim.w, dim.h);
         var sim = d3.forceSimulation(nodes)
           .force('link', d3.forceLink(links).id(function(d) { return d.i; }).distance(function(d) { return 50 + (1 - d.value) * 110; }).strength(function(d) { return 0.3 + d.value * 0.5; }))
-          .force('charge', d3.forceManyBody().strength(CHARGE_STRENGTH).distanceMax(260))
+          .force('charge', d3.forceManyBody().strength(CHARGE_STRENGTH).distanceMax(360))
           .force('x', d3.forceX(function(d) { return targets[d.i].x; }).strength(GRAVITY))
           .force('y', d3.forceY(function(d) { return targets[d.i].y; }).strength(GRAVITY))
           .force('collide', d3.forceCollide().radius(NODE_RADIUS + NODE_SPACING))
@@ -1214,7 +1214,7 @@
       };
       networkFilter(matchedSlugs);
 
-      // Debounce: 600 force ticks per resize event is too expensive during a drag.
+      // Debounce: 800 force ticks per resize event is too expensive during a drag.
       var resizeTimer = null;
       window.addEventListener('resize', function() {
         if (document.body.dataset.view !== 'network') return;
