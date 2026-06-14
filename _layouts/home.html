@@ -336,6 +336,26 @@
       color: var(--muted);
       margin: 0 0 1.5rem;
     }
+    #network-view .lede p { margin: 0 0 0.9rem; }
+    #network-view .lede p:last-child { margin-bottom: 0; }
+    #network-view .lede h3 {
+      font-size: var(--text-xxs);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-caps);
+      color: var(--muted);
+      margin: 1.1rem 0 0.5rem;
+      font-weight: 500;
+    }
+    #network-view .lede ol {
+      margin: 0 0 0.9rem;
+      padding-left: 1.1rem;
+    }
+    #network-view .lede ol li { margin-bottom: 0.35rem; }
+    #network-view .lede ol li:last-child { margin-bottom: 0; }
+    #network-view .lede code {
+      font-family: inherit;
+      color: var(--fg);
+    }
     #network-view .stage {
       grid-column: 2 / -1;
       position: relative;
@@ -587,7 +607,20 @@
     <!-- ── Network view (similarity graph) ── -->
     <div id="network-view" aria-hidden="true">
       <aside class="sidebar">
-        <p class="lede">Each node is a publication. Edges connect each one to its closest neighbors by sentence-embedding similarity (all-MiniLM-L6-v2). Hover a node to read its title; click to select it and reveal its closest matches below.</p>
+        <div class="lede">
+          <p>Each node is one of my publications, placed near the others it most resembles. Similarity is computed offline from the title and abstract of every paper.</p>
+          <h3>How the network is built</h3>
+          <ol>
+            <li>The Markdown files in <code>_publications/</code> are parsed and stripped of footnotes, headings, links, code, and bibliographies.</li>
+            <li>Italian abstracts are machine-translated to English with <code>Helsinki-NLP/opus-mt-it-en</code> and cached on disk.</li>
+            <li>Each cleaned title + abstract is embedded as a 384-dimensional vector by the <code>sentence-transformers/all-MiniLM-L6-v2</code> model.</li>
+            <li>Pairwise cosine similarity yields a dense matrix over every pair of papers.</li>
+            <li>An edge is drawn from each paper to its single strongest neighbour, plus any pair scoring above 0.70.</li>
+            <li>KeyBERT extracts up to eight keyphrases per paper (1–2 grams, MMR diversity 0.5) for the closest-matches sidebar.</li>
+            <li>A D3 force simulation lays out the graph; 400 ticks are pre-computed in the browser so the layout appears already settled.</li>
+          </ol>
+          <p>Hover a node to read its title; click to select it and reveal its closest matches below.</p>
+        </div>
         <div class="details" id="network-details" hidden></div>
       </aside>
       <div class="stage">
