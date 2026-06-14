@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Build the publication similarity network for /network-test/.
+"""Build the publication similarity network for the home network view.
 
 Reads publications from _publications/, computes sentence embeddings
 for title + abstract via all-MiniLM-L6-v2, extracts KeyBERT keyphrases
-per document, and computes pairwise cosine similarity plus per-pair
-shared concepts. Writes _data/network.json, which the page consumes
-via Liquid as site.data.network.
+per document, and computes pairwise cosine similarity plus the top
+shared keyphrases per pair. Writes _data/network.json, which the page
+consumes via Liquid as site.data.network.
 
 Re-run after editing publications:
 
@@ -181,7 +181,7 @@ def main() -> int:
     sim = (doc_vecs @ doc_vecs.T).astype(float)
     np.fill_diagonal(sim, 0)
 
-    print("computing shared concepts per pair…", file=sys.stderr)
+    print("computing shared keyphrases per pair…", file=sys.stderr)
     shared: dict[str, list[str]] = {}
     for i in range(len(pubs)):
         for j in range(i + 1, len(pubs)):
