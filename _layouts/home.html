@@ -589,12 +589,12 @@
     <!-- ── Network view (similarity graph) ── -->
     <div id="network-view" aria-hidden="true">
       <aside class="sidebar">
-        <p class="lede">Each node is a publication. Edges connect each one to its closest neighbors by sentence-embedding similarity (all-MiniLM-L6-v2). Hover a node to read its title; click to select it and reveal its closest matches below. Scroll to zoom.</p>
+        <p class="lede">Each node is a publication. Edges connect each one to its closest neighbors by sentence-embedding similarity (all-MiniLM-L6-v2). Hover a node to read its title; click to select it and reveal its closest matches below.</p>
         <div class="details" id="network-details" hidden></div>
       </aside>
       <div class="stage">
         <svg id="net" aria-label="Publication similarity network"></svg>
-        <div class="hint">scroll to zoom · hover · click</div>
+        <div class="hint">hover · click</div>
       </div>
     </div>
     <script id="net-data" type="application/json">{{ site.data.network | jsonify }}</script>
@@ -874,8 +874,6 @@
       var linkLayer = root.append('g').attr('class', 'links');
       var nodeLayer = root.append('g').attr('class', 'nodes');
 
-      var zoom = d3.zoom().scaleExtent([0.3, 4]).on('zoom', function(e) { root.attr('transform', e.transform); });
-      svg.call(zoom).on('mousedown.zoom', null).on('touchstart.zoom', null).on('touchmove.zoom', null).on('touchend.zoom', null);
       svg.on('click', function() {
         if (selectedNode === null) return;
         selectedNode = null;
