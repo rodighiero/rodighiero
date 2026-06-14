@@ -974,7 +974,7 @@
         var nodeEnter = nodeData.enter().append('g').attr('class', 'node');
         nodeEnter.append('circle').attr('class', 'hit').attr('r', 12);
         nodeEnter.append('circle').attr('class', 'marker').attr('r', NODE_RADIUS);
-        nodeEnter.append('circle').attr('class', 'ring').attr('r', NODE_RADIUS + 4);
+        nodeEnter.append('circle').attr('class', 'ring').attr('r', NODE_RADIUS + 2);
         nodeEnter.append('text');
         nodeSel = nodeEnter.merge(nodeData);
         nodeSel.select('text').selectAll('tspan').remove();
