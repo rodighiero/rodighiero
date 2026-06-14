@@ -354,11 +354,11 @@
       opacity: 0;
     }
     #network-view .node.hover .ring { opacity: 1; }
-    #network-view .node text {
+    #network-view .labels text {
       font-family: var(--font);
       font-size: var(--text-xs);
       fill: var(--fg);
-      cursor: pointer;
+      pointer-events: none;
       text-anchor: middle;
       paint-order: stroke;
       stroke: var(--bg);
@@ -367,14 +367,15 @@
     }
     #network-view .link { stroke: var(--fg); stroke-width: 0.5; pointer-events: none; }
     #network-view .node.dimmed .marker { stroke: var(--muted); }
-    #network-view .node.dimmed text { fill: var(--muted); }
+    #network-view .labels text.dimmed { fill: var(--muted); }
     #network-view .link.dimmed { stroke: var(--muted); }
     #network-view .node.highlight .marker { fill: var(--fg); }
     #network-view .link.highlight { stroke-width: 1; }
     #network-view .node.dimmed.hover .marker { stroke: var(--fg); }
-    #network-view .node.dimmed.hover text { fill: var(--fg); }
+    #network-view .labels text.hover { fill: var(--fg); }
     #network-view .node.filtered-out,
-    #network-view .link.filtered-out { display: none; }
+    #network-view .link.filtered-out,
+    #network-view .labels text.filtered-out { display: none; }
 
     /* Details panel — replaces the lede in the first column on selection. */
     #network-view .details {
@@ -865,6 +866,7 @@
       var root = svg.append('g');
       var linkLayer = root.append('g').attr('class', 'links');
       var nodeLayer = root.append('g').attr('class', 'nodes');
+      var labelLayer = root.append('g').attr('class', 'labels');
 
       svg.on('click', function() {
         if (selectedNode === null) return;
@@ -894,18 +896,18 @@
       });
 
       var links = [];
-      var linkSel, nodeSel;
+      var linkSel, nodeSel, labelSel;
+      var labelByIdx = [];
       var currentCharge = 0, currentSpacing = 30;
       var selectedNode = null;
       var highlightedSet = null;
       var LAYOUT_TICKS = 400;
 
-      function bringToFront(el) { el.parentNode.appendChild(el); }
-
       function placeNodes() {
         linkSel.attr('x1', function(d) { return d.source.x; }).attr('y1', function(d) { return d.source.y; })
           .attr('x2', function(d) { return d.target.x; }).attr('y2', function(d) { return d.target.y; });
         nodeSel.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
+        labelSel.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
       }
 
       var GRAVITY = 0.08;
@@ -977,25 +979,31 @@
         nodeEnter.append('circle').attr('class', 'hit').attr('r', 12);
         nodeEnter.append('circle').attr('class', 'marker').attr('r', NODE_RADIUS);
         nodeEnter.append('circle').attr('class', 'ring').attr('r', NODE_RADIUS + 2);
-        nodeEnter.append('text');
         nodeSel = nodeEnter.merge(nodeData);
-        nodeSel.select('text').selectAll('tspan').remove();
+
+        var labelData = labelLayer.selectAll('text').data(nodes, function(d) { return d.i; });
+        labelData.exit().remove();
+        var labelEnter = labelData.enter().append('text');
+        labelSel = labelEnter.merge(labelData);
+        labelSel.selectAll('tspan').remove();
+        labelByIdx = [];
+        labelSel.each(function(d) { labelByIdx[d.i] = this; });
 
         nodeSel
           .on('mouseenter', function(e, d) {
             d3.select(this).classed('hover', true);
-            bringToFront(this);
-            setLabel(d3.select(this).select('text').node(), d.title);
+            d3.select(labelByIdx[d.i]).classed('hover', true);
+            setLabel(labelByIdx[d.i], d.title);
           })
           .on('mouseleave', function(e, d) {
             d3.select(this).classed('hover', false);
+            d3.select(labelByIdx[d.i]).classed('hover', false);
             if (highlightedSet && highlightedSet.has(d.i)) return;
-            setLabel(d3.select(this).select('text').node(), '');
+            setLabel(labelByIdx[d.i], '');
           })
           .on('click', function(e, d) {
             e.stopPropagation();
             selectedNode = d;
-            bringToFront(this);
             showDetails(d);
             highlight(d);
           });
@@ -1038,6 +1046,7 @@
         });
         highlightedSet = new Set([d.i]);
         nodeSel.classed('dimmed', function(n) { return !neighbors.has(n.i); }).classed('highlight', function(n) { return n.i === d.i; });
+        labelSel.classed('dimmed', function(n) { return !neighbors.has(n.i); });
         linkSel.classed('dimmed', function(l) {
           var si = l.source.i != null ? l.source.i : l.source;
           var ti = l.target.i != null ? l.target.i : l.target;
@@ -1047,13 +1056,14 @@
           var ti = l.target.i != null ? l.target.i : l.target;
           return si === d.i || ti === d.i;
         });
-        nodeSel.select('text').each(function(n) { setLabel(this, n.i === d.i ? n.title : ''); });
+        labelSel.each(function(n) { setLabel(this, n.i === d.i ? n.title : ''); });
       }
       function unhighlight() {
         highlightedSet = null;
         nodeSel.classed('dimmed', false).classed('highlight', false);
+        labelSel.classed('dimmed', false);
         linkSel.classed('dimmed', false).classed('highlight', false);
-        nodeSel.select('text').each(function() { setLabel(this, ''); });
+        labelSel.each(function() { setLabel(this, ''); });
       }
 
       var details = document.getElementById('network-details');
@@ -1090,13 +1100,14 @@
           var g = nodeSel.filter(function(n) { return n.i === idx; });
           li.addEventListener('mouseenter', function() {
             g.classed('hover', true);
-            g.each(function() { bringToFront(this); });
-            setLabel(g.select('text').node(), nodes[idx].title);
+            d3.select(labelByIdx[idx]).classed('hover', true);
+            setLabel(labelByIdx[idx], nodes[idx].title);
           });
           li.addEventListener('mouseleave', function() {
             g.classed('hover', false);
+            d3.select(labelByIdx[idx]).classed('hover', false);
             if (!highlightedSet || !highlightedSet.has(idx)) {
-              setLabel(g.select('text').node(), '');
+              setLabel(labelByIdx[idx], '');
             }
           });
         });
@@ -1111,9 +1122,11 @@
         if (!nodeSel) return;
         if (!slugs) {
           nodeSel.classed('filtered-out', false);
+          labelSel.classed('filtered-out', false);
           linkSel.classed('filtered-out', false);
         } else {
           nodeSel.classed('filtered-out', function(n) { return !slugs.has(n.slug); });
+          labelSel.classed('filtered-out', function(n) { return !slugs.has(n.slug); });
           linkSel.classed('filtered-out', function(l) {
             var si = l.source.i != null ? l.source.i : l.source;
             var ti = l.target.i != null ? l.target.i : l.target;
