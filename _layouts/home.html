@@ -321,20 +321,32 @@
     body[data-view="network"] .filter-count { display: none; }
     body[data-view="network"] .filters { justify-content: flex-end; }
     body[data-view="network"] #network-view {
-      display: block;
-      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 2rem;
       height: calc(100vh - 9rem);
       min-height: 520px;
       margin-bottom: 2rem;
-      background: color-mix(in srgb, var(--fg) 2%, transparent);
-      border-radius: 4px;
+    }
+    #network-view .sidebar {
+      font-size: var(--text-xs);
+      line-height: var(--lh-normal);
+      overflow-y: auto;
+    }
+    #network-view .lede {
+      color: var(--muted);
+      margin: 0 0 1.5rem;
+    }
+    #network-view .stage {
+      grid-column: 2 / -1;
+      position: relative;
       overflow: hidden;
     }
     #network-view svg { display: block; width: 100%; height: 100%; }
     #network-view .hint {
       position: absolute;
       bottom: 0.8rem;
-      right: 1.25rem;
+      right: 0.25rem;
       font-size: var(--text-xxs);
       color: var(--muted);
       text-transform: uppercase;
@@ -373,21 +385,11 @@
     #network-view .node.dimmed.hover .marker { stroke: var(--fg); }
     #network-view .node.dimmed.hover text { fill: var(--fg); }
 
-    /* Details overlay (top-right of the stage). */
+    /* Details panel — lives in the first column under the lede. */
     #network-view .details {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      width: 300px;
-      max-width: calc(100% - 2rem);
-      max-height: calc(100% - 2rem);
-      overflow-y: auto;
-      padding: 1rem 1.1rem;
-      background: color-mix(in srgb, var(--bg) 92%, transparent);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid var(--border);
-      border-radius: 4px;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
       font-size: var(--text-xs);
       line-height: var(--lh-normal);
     }
@@ -591,9 +593,14 @@
 
     <!-- ── Network view (similarity graph) ── -->
     <div id="network-view" aria-hidden="true">
-      <svg id="net" aria-label="Publication similarity network"></svg>
-      <div class="details" id="network-details" hidden></div>
-      <div class="hint">scroll to zoom · drag nodes · hover to label · click to select</div>
+      <aside class="sidebar">
+        <p class="lede">Each node is a publication. Edges connect each one to its closest neighbors by sentence-embedding similarity (all-MiniLM-L6-v2). Hover a node to read its title; click to select it and reveal its closest matches below. Drag nodes to rearrange; scroll to zoom.</p>
+        <div class="details" id="network-details" hidden></div>
+      </aside>
+      <div class="stage">
+        <svg id="net" aria-label="Publication similarity network"></svg>
+        <div class="hint">scroll to zoom · drag · hover · click</div>
+      </div>
     </div>
     <script id="net-data" type="application/json">{{ site.data.network | jsonify }}</script>
   </main>
@@ -857,7 +864,7 @@
       }
 
       var svg = d3.select('#net');
-      var stage = document.getElementById('network-view');
+      var stage = document.querySelector('#network-view .stage');
       var root = svg.append('g');
       var linkLayer = root.append('g').attr('class', 'links');
       var nodeLayer = root.append('g').attr('class', 'nodes');
