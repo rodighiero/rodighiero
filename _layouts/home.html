@@ -349,29 +349,26 @@
       letter-spacing: var(--tracking-caps);
       pointer-events: none;
     }
-    #network-view .node .hit { fill: transparent; cursor: grab; }
-    #network-view .node .hit:active { cursor: grabbing; }
+    #network-view .node .hit { fill: transparent; cursor: pointer; }
     #network-view .node .marker {
       fill: var(--bg);
       stroke: var(--fg);
       stroke-width: 0.5;
-      cursor: pointer;
       transition: r 0.12s ease;
       pointer-events: none;
     }
     #network-view .node.hover .marker { r: 7; }
     #network-view .node text {
       font-family: var(--font);
-      font-size: 9px;
+      font-size: var(--text-xxs);
       fill: var(--fg);
-      cursor: grab;
+      cursor: pointer;
       text-anchor: middle;
       paint-order: stroke;
       stroke: var(--bg);
       stroke-width: 3px;
       stroke-linejoin: round;
     }
-    #network-view .node text:active { cursor: grabbing; }
     #network-view .link { stroke: var(--fg); stroke-width: 0.5; pointer-events: none; }
     #network-view .node.dimmed .marker { stroke: var(--muted); }
     #network-view .node.dimmed text { fill: var(--muted); }
@@ -592,12 +589,12 @@
     <!-- ── Network view (similarity graph) ── -->
     <div id="network-view" aria-hidden="true">
       <aside class="sidebar">
-        <p class="lede">Each node is a publication. Edges connect each one to its closest neighbors by sentence-embedding similarity (all-MiniLM-L6-v2). Hover a node to read its title; click to select it and reveal its closest matches below. Drag nodes to rearrange; scroll to zoom.</p>
+        <p class="lede">Each node is a publication. Edges connect each one to its closest neighbors by sentence-embedding similarity (all-MiniLM-L6-v2). Hover a node to read its title; click to select it and reveal its closest matches below. Scroll to zoom.</p>
         <div class="details" id="network-details" hidden></div>
       </aside>
       <div class="stage">
         <svg id="net" aria-label="Publication similarity network"></svg>
-        <div class="hint">scroll to zoom · drag · hover · click</div>
+        <div class="hint">scroll to zoom · hover · click</div>
       </div>
     </div>
     <script id="net-data" type="application/json">{{ site.data.network | jsonify }}</script>
@@ -1001,12 +998,7 @@
             selectedNode = d;
             showDetails(d);
             highlight(d);
-          })
-          .call(d3.drag()
-            .on('start', function(e, d) { if (!e.active) sim_.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
-            .on('drag', function(e, d) { d.fx = e.x; d.fy = e.y; })
-            .on('end', function(e, d) { if (!e.active) sim_.alphaTarget(0); d.fx = null; d.fy = null; })
-          );
+          });
 
         if (sim_) {
           sim_.nodes(nodes);
