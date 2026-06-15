@@ -627,7 +627,7 @@
             <li>Each cleaned title + abstract is embedded as a 384-dimensional vector by the <code>sentence-transformers/all-MiniLM-L6-v2</code> model.</li>
             <li>Pairwise cosine similarity yields a dense matrix over every pair of papers.</li>
             <li>An edge is drawn from each paper to its single strongest neighbour, plus any pair scoring above 0.70.</li>
-            <li>A D3 force simulation lays out the graph with link, repulsion, gravity, and collision forces; 750 ticks are pre-computed in the browser so the layout appears already settled.</li>
+            <li>A D3 force simulation lays out the graph with link, repulsion, gravity, and collision forces; 1000 ticks are pre-computed in the browser so the layout appears already settled.</li>
           </ol>
           <p>Hover a node to read its title; click to select it and reveal its closest matches below.</p>
         </div>
@@ -955,8 +955,8 @@
       }
 
       var NODE_RADIUS = 3;
-      var NODE_SPACING = 36;
-      var CHARGE_STRENGTH = -170;
+      var NODE_SPACING = 24;
+      var CHARGE_STRENGTH = -280;
       var STRONG_SIM = 0.70;
       function buildLinks() {
         var seen = new Set();
@@ -1020,7 +1020,7 @@
       var labelByIdx = [];
       var selectedNode = null;
       var highlightedSet = null;
-      var LAYOUT_TICKS = 750;
+      var LAYOUT_TICKS = 1000;
 
       function placeNodes() {
         linkSel.attr('x1', function(d) { return d.source.x; }).attr('y1', function(d) { return d.source.y; })
@@ -1075,8 +1075,8 @@
         var dim = dimensions();
         targets = componentTargets(dim.w, dim.h);
         var sim = d3.forceSimulation(nodes)
-          .force('link', d3.forceLink(links).id(function(d) { return d.i; }).distance(function(d) { return 75 + (1 - d.value) * 150; }).strength(function(d) { return 0.3 + d.value * 0.5; }))
-          .force('charge', d3.forceManyBody().strength(CHARGE_STRENGTH).distanceMax(340))
+          .force('link', d3.forceLink(links).id(function(d) { return d.i; }).distance(function(d) { return 35 + (1 - d.value) * 80; }).strength(function(d) { return 0.5 + d.value * 0.5; }))
+          .force('charge', d3.forceManyBody().strength(CHARGE_STRENGTH).distanceMax(520))
           .force('x', d3.forceX(function(d) { return targets[d.i].x; }).strength(GRAVITY))
           .force('y', d3.forceY(function(d) { return targets[d.i].y; }).strength(GRAVITY))
           .force('collide', d3.forceCollide().radius(NODE_RADIUS + NODE_SPACING))
