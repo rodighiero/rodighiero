@@ -331,10 +331,11 @@
     body[data-view="network"] #publications { display: none; }
     body[data-view="network"] #network-view {
       display: grid;
+      /* Match the 4-column rhythm used by the gallery/list views: sidebar = 1 col, stage = 3 cols. */
       grid-template-columns: 1fr 1fr 1fr 1fr;
       gap: 2rem;
-      height: calc(100vh - 9rem);
-      min-height: 520px;
+      height: calc(80vh - 9rem);
+      min-height: 460px;
       margin-bottom: 2rem;
     }
     #network-view .sidebar {
@@ -1020,7 +1021,7 @@
       var labelByIdx = [];
       var selectedNode = null;
       var highlightedSet = null;
-      var LAYOUT_TICKS = 1000;
+      var LAYOUT_TICKS = 1400;
 
       function placeNodes() {
         linkSel.attr('x1', function(d) { return d.source.x; }).attr('y1', function(d) { return d.source.y; })
@@ -1029,7 +1030,7 @@
         labelSel.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
       }
 
-      var GRAVITY = 0.7;
+      var GRAVITY = 2;
       function componentLabels() {
         var adj = Array.from({ length: N }, function() { return []; });
         links.forEach(function(l) {
@@ -1059,13 +1060,16 @@
         comp.forEach(function(c, i) { groups[c].push(i); });
         groups.sort(function(a, b) { return b.length - a.length; });
         var targets = new Array(N);
-        (groups[0] || []).forEach(function(i) { targets[i] = { x: w / 2, y: h / 2 }; });
+        // Anchor the main cluster near the top of the stage (but with breathing
+        // room above so nodes that drift outward don't get clipped at the edge).
+        var cy0 = h * 0.45;
+        (groups[0] || []).forEach(function(i) { targets[i] = { x: w / 2, y: cy0 }; });
         var numSatellites = Math.max(1, groups.length - 1);
         var r = Math.min(w, h) * 0.25;
         for (var k = 1; k < groups.length; k++) {
           var angle = (k - 1) / numSatellites * 2 * Math.PI - Math.PI / 2;
           var cx = w / 2 + Math.cos(angle) * r;
-          var cy = h / 2 + Math.sin(angle) * r;
+          var cy = cy0 + Math.sin(angle) * r;
           groups[k].forEach(function(i) { targets[i] = { x: cx, y: cy }; });
         }
         return targets;
@@ -1075,7 +1079,8 @@
         var dim = dimensions();
         targets = componentTargets(dim.w, dim.h);
         var sim = d3.forceSimulation(nodes)
-          .force('link', d3.forceLink(links).id(function(d) { return d.i; }).distance(function(d) { return 35 + (1 - d.value) * 80; }).strength(function(d) { return 0.5 + d.value * 0.5; }))
+          .alphaDecay(0.005)
+          .force('link', d3.forceLink(links).id(function(d) { return d.i; }).distance(function(d) { return 15 + (1 - d.value) * 45; }).strength(function(d) { return 0.5 + d.value * 0.5; }))
           .force('charge', d3.forceManyBody().strength(CHARGE_STRENGTH).distanceMax(520))
           .force('x', d3.forceX(function(d) { return targets[d.i].x; }).strength(GRAVITY))
           .force('y', d3.forceY(function(d) { return targets[d.i].y; }).strength(GRAVITY))
