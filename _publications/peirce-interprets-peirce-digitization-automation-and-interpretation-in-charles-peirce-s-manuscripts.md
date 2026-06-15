@@ -126,13 +126,13 @@ This paper has proposed a workflow for engaging with large, heterogeneous manusc
 - Peirce, C. S. 1960. _Collected Papers of Charles Sanders Peirce, Vol. I: Principles of Philosophy and Vol. II: Elements of Logic_. Edited by C. Hartshorne and P. Weiss. Cambridge, MA: The Belknap Press of Harvard University Press.
 - Peirce, C. S. 1977. _Semiotic and Significs: The Correspondence between Charles S. Peirce and Victoria Lady Welby_. Edited by C. S. Hardwick. Bloomington: Indiana University Press.
 - Peirce, C. S. 1994. _The Collected Papers of Charles Sanders Peirce_. Edited by J. Deely. Cambridge, MA: Harvard University Press.
-- Peirce Edition Project. 2021. _Peirce Edition Project_. https://peirce.iupui.edu/
+- Peirce Edition Project. 2021. _Peirce Edition Project_.
 - Pflaeging, J., J. Wildfeuer, and J. Bateman, eds. 2021. _Empirical Multimodality Research: Methods, Applications, Implications_. Berlin: De Gruyter. https://doi.org/10.1515/9783110725001-001
 - Picca, D. 2025. “Not Minds, but Signs: Reframing LLMs through Semiotics.” arXiv. https://arxiv.org/abs/2505.17080
 - Picca, D., A. Schnyder, E. Kostina, A. Adamou, D. Rodighiero, and J. Schnapp. 2023. “Orchestrating Cultural Heritage: Exploring the Automated Analysis and Organization of Charles S. Peirce’s PAP Manuscript.” In _Proceedings of the 34th ACM Conference on Hypertext and Social Media_. https://doi.org/10.1145/3603163.3609066
 - Picca, D., and L. Zangari. Submitted. “Framing Large Language Models through Semiotics: A Review.”
 - Roberts, D. D. 2009. _The Existential Graphs of Charles S. Peirce_. Berlin: Mouton de Gruyter.
-- Robin, R. S. 1967. _Robin Catalog_. https://peirce.sitehost.iu.edu/robin/rcatalog.htm
+- Robin, R. S. 1967. _Robin Catalog_.
 - Shanahan, M. 2024. “Talking about Large Language Models.” _Communications of the ACM_ 67 (2): 68–79.
 - Sheriff, J. 1989. _The Fate of Meaning: Charles Peirce, Structuralism, and Literature_. Princeton: Princeton University Press. https://doi.org/10.1515/9781400859979
 - Sonesson, G. 2013. “The Natural History of Branching: Approaches to the Phenomenology of Firstness, Secondness, and Thirdness.” _Signs and Society_ 1 (2): 297–325.

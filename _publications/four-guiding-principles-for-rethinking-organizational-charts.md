@@ -162,7 +162,7 @@ If you want to read more, you can discover the further scope of the Affinity Map
 - Rodighiero, D., P. Rivière, and S. Kenderdine. 2024. "Super-Vision: Tracing EPFL History through 8,000 Doctoral Theses." _Journal of Digital History_ 3 (1).
 - Rodighiero, D., E. Wandl-Vogt, and E. Carsenat. 2022. "A Visual Translation of the Pandemic." _Leonardo_ 55 (3): 297–303. https://doi.org/10.1162/leon_a_02203
 - Romele, A., and D. Rodighiero. 2020. "Digital Habitus or Personalization without Personality." _HUMANA.MENTE Journal of Philosophical Studies_ 13 (37): 98–126. https://doi.org/10/ghm6cn
-- Rosenthal, C. 2013. "Big Data in the Age of the Telegraph." _McKinsey Quarterly_, March 1. http://www.mckinsey.com/business-functions/organization/our-insights/big-data-in-the-age-of-the-telegraph
+- Rosenthal, C. 2013. "Big Data in the Age of the Telegraph." _McKinsey Quarterly_, March 1. https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights/big-data-in-the-age-of-the-telegraph
 - Roussi, A. 2020. "Resisting the Rise of Facial Recognition." _Nature_ 587 (7834): 350–353. https://doi.org/10.1038/d41586-020-03188-2
 - Satariano, A. 2020. "How My Boss Monitors Me While I Work from Home." _The New York Times_, May 6. https://www.nytimes.com/2020/05/06/technology/employee-monitoring-work-from-home-virus.html
 - Schrage, M. 2020. _Recommendation Engines_. Cambridge, MA: MIT Press.
