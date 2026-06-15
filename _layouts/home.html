@@ -193,7 +193,13 @@
     .header .bio-col a { text-decoration: underline; }
 
     /* ── Search bar + view toggle ── */
+    /* Sticky so the view toggle stays reachable without scrolling back up — keeps
+       the three views feeling like one page rather than three. */
     .filters {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--bg);
       margin: 0 0 2rem;
       display: flex;
       align-items: center;
