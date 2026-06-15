@@ -253,6 +253,8 @@
     .view-toggle svg { width: 16px; height: 16px; }
     .no-results { font-size: var(--text-xs); color: var(--muted); padding: 2rem 0; }
     .no-results[hidden] { display: none; }
+    /* Network view fades non-matching nodes in place, so the empty-state copy would duplicate the signal. */
+    body[data-view="network"] .no-results { display: none; }
 
     /* ── Publications (shared) ── */
     #publications { position: relative; }
@@ -715,13 +717,27 @@
     });
 
     // ── View toggle ──
-    // The network view is short (≈ one viewport), so switching to it from a
-    // scrolled gallery/list clamps scrollY to fit, losing the user's position.
-    // Save it per view on leave and restore on return.
-    var savedScroll = {};
+    // Preserve the user's scroll position across view switches. We track the
+    // user's intended scrollY separately from the live one, because the network
+    // view is short (≈ one viewport) and the browser clamps scrollY when we
+    // restore into it. Without separating intent from live position, going
+    // gallery (y=5000) → network (clamps to ~800) → gallery would land at 800.
+    var desiredScroll = window.scrollY || 0;
+    var programmaticScroll = false;
+    window.addEventListener('scroll', function() {
+      if (!programmaticScroll) desiredScroll = window.scrollY;
+    }, { passive: true });
+    function scrollToPreserved(y) {
+      programmaticScroll = true;
+      window.scrollTo(0, y);
+      // The scroll event from scrollTo is async; clear the flag after it fires.
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() { programmaticScroll = false; });
+      });
+    }
     function setView(view, persist) {
       var prev = document.body.dataset.view;
-      if (prev && prev !== view) savedScroll[prev] = window.scrollY;
+      var shouldRestore = prev && prev !== view;
       document.body.dataset.view = view;
       if (persist !== false) {
         try { localStorage.setItem('publicationView', view); } catch (e) {}
@@ -729,6 +745,7 @@
       viewButtons.forEach(function(b) {
         b.setAttribute('aria-pressed', b.dataset.view === view ? 'true' : 'false');
       });
+      updateViewButtonLabels();
       if (prev === 'network' && view !== 'network' && networkClearSelection) {
         networkClearSelection();
       }
@@ -746,9 +763,9 @@
         clearMasonry();
         markFirstVisible();
       }
-      if (prev && prev !== view && savedScroll[view] !== undefined) {
-        var y = savedScroll[view];
-        var restore = function() { window.scrollTo(0, y); };
+      if (shouldRestore) {
+        var target = desiredScroll;
+        var restore = function() { scrollToPreserved(target); };
         // Gallery needs masonry to set container height before scroll makes sense.
         if (view === 'gallery') {
           requestAnimationFrame(function() { requestAnimationFrame(restore); });
@@ -756,6 +773,20 @@
           requestAnimationFrame(restore);
         }
       }
+    }
+    // Hint that clicking the active view button resets the current filter,
+    // since the behaviour is otherwise invisible.
+    function updateViewButtonLabels() {
+      var currentView = document.body.dataset.view;
+      var hasFilter = searchInput && searchInput.value.length > 0;
+      viewButtons.forEach(function(b) {
+        var v = b.dataset.view;
+        var name = v.charAt(0).toUpperCase() + v.slice(1);
+        var resettable = v === currentView && hasFilter;
+        var label = resettable ? 'Clear search filter' : name + ' view';
+        b.setAttribute('aria-label', label);
+        b.setAttribute('title', label);
+      });
     }
     function applyResponsiveView() {
       if (window.innerWidth <= 1024) {
@@ -826,8 +857,10 @@
       if (networkFilter) networkFilter(matchedSlugs);
       if (noResults) noResults.hidden = visible !== 0;
       updateCount(visible);
-      if (document.body.dataset.view === 'gallery') scheduleLayout();
-      else markFirstVisible();
+      updateViewButtonLabels();
+      var v = document.body.dataset.view;
+      if (v === 'gallery') scheduleLayout();
+      else if (v === 'list') markFirstVisible();
     }
 
     applySearch();
