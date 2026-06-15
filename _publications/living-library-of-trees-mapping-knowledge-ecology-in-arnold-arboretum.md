@@ -182,7 +182,7 @@ We thank metaLAB at Harvard for providing an intellectual and collaborative home
 - Jones, Owain, and Paul Cloke. 2008. “Non-human Agencies: Trees in Place and Time.” In *Material Agency: Towards a Non-Anthropocentric Approach*, 79–96. New York: Springer.
 - Latour, Bruno. 1986. “Visualisation and Cognition: Drawing Things Together.” In *Knowledge and Society: Studies in the Sociology of Culture Past and Present*, vol. 6, 1–40. Greenwich, CT: JAI Press.
 - Latour, Bruno, and Steve Woolgar. 1986. *Laboratory Life: The Construction of Scientific Facts*. Princeton, NJ: Princeton University Press.
-- Loukissas, Yanni Alexander. 2016. “A Place for Big Data: Close and Distant Readings of Accessions Data from the Arnold Arboretum.” *Big Data & Society* 3 (2). [doi:10.1177/2053951716661369](https://doi.org/10.1177/2053951716661369).
+- Loukissas, Yanni Alexander. 2016. “A Place for Big Data: Close and Distant Readings of Accessions Data from the Arnold Arboretum.” *Big Data & Society* 3 (2). [doi:10.1177/2053951716661365](https://doi.org/10.1177/2053951716661365).
 - Myers, Natasha. 2015. *Rendering Life Molecular: Models, Modelers, and Excitable Matter*. Durham, NC: Duke University Press.
 - Nanni, Giacomo, Johan Malmstedt, and Dario Rodighiero. 2025. *Arboretum*. [sinanatra.github.io/arboretum](https://sinanatra.github.io/arboretum/).
 - Puig de la Bellacasa, María. 2017. *Matters of Care: Speculative Ethics in More Than Human Worlds*. Minneapolis: University of Minnesota Press.
