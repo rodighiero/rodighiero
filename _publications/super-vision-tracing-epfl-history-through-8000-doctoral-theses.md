@@ -108,10 +108,6 @@ In particular, the most critical thought in the Super-Vision project raises conc
 
 The insights of Super-Vision let the museum visitor thoughtfully look at institutions from an innovative perspective while maintaining a critical eye on data and society. Digital archives already show the potential for future inquiries, and the field of contemporary history needs to be revised through digital means.
 
-## Acknowledgments
-
-This article would not be possible without the financial help of the Swiss National Science Foundation, which funded grant number P400PS_194442, Recommendation System for Academic Mobility. Thanks to Patrick Donaldson and Giulia Bini, who supported the project from its early development. Thanks also to Maxene Graze and Linda Ardenghi, whose editing was invaluable to give the text the final form.
-
 ## References
 
 - Antonelli, Paola, ed. 2008. _Design and the Elastic Mind_. New York: Museum of Modern Art.

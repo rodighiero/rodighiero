@@ -82,10 +82,6 @@ This project highlights the interplay between technology, cultural memory, and n
 
 The possibilities of this approach extend far beyond the Olympics. The same principles of curated data storytelling can be applied to other historical datasets, from migration records to cultural heritage collections, transforming archives into interactive spaces of discovery. As institutions increasingly explore digital historiography, projects like Data Storytelling pave the way for new methods of engaging with the past, bridging data, design, and historical interpretation in ways that make history both accessible and meaningful.
 
-## Acknowledgments
-
-This project was made possible through the support of the Fondazione Museo Storico del Trentino, whose collaboration was essential in bringing Data Storytelling to life. We extend our gratitude to all the contributors and partners involved in the exhibition, whose expertise and dedication enriched the development of this work. A special thanks to Giuseppe Ferrandi, Director of the Fondazione, for his support and commitment to exploring new ways of visualizing history. Their collective efforts have been invaluable in shaping this project.
-
 ## References
 
 - “2026 Winter Olympics.” 2025. In _Wikipedia_. https://en.wikipedia.org/w/index.php?title=2026_Winter_Olympics&oldid=1280112759
