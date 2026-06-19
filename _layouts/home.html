@@ -438,15 +438,11 @@
     #network-view .details .publication:hover { background: none; }
     #network-view .details .publication .card-img {
       width: 100%;
-      max-height: 200px;
       margin-bottom: 0.8rem;
       background: color-mix(in srgb, var(--fg) 4%, transparent);
       border-radius: 2px;
       overflow: hidden;
     }
-    /* Cap the preview so the title and closest-matches list stay visible
-       without relying on the (auto-hidden) sidebar scrollbar. */
-    #network-view .details .publication .card-img img { height: 200px; object-fit: cover; object-position: center; }
     #network-view .details .publication .card-meta h2 a:hover { text-decoration: underline; }
     #network-view .details h3 {
       font-size: var(--text-xxs);
