@@ -165,10 +165,6 @@ Humanities reasoning proved indispensable throughout. It guided the reading of a
 
 Ultimately, the project rests on a dual ambition: to honor the specificity and complexity of the Arnold Arboretum’s historical records, and to model how digital humanities can approach botanical collections not merely as archives of knowledge, but as infrastructures for co-creating meaning across time, species, and disciplines (Loukissas 2016; Star and Ruhleder 1996).
 
-## Acknowledgments
-
-We thank metaLAB at Harvard for providing an intellectual and collaborative home for the work, and in particular its three directors—Jeffrey Schnapp, Annette Jael Lehmann, and Aylin Yildirim Tschoepe—for their encouragement and support throughout the project. We are also grateful to the Arnold Arboretum of Harvard University for granting access to its data and image collections, which form the foundation of this research, and to Matthew Battles, former associate director of metaLAB and now Editor of *Arnoldia*, for his generous insights and support.
-
 ## References
 
 - Advanced Data Visualization Project. 2025. *Advanced Data Visualization Project*. [advp.gsapp.org](https://advp.gsapp.org/).
