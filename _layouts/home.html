@@ -341,6 +341,11 @@
     #network-view .sidebar {
       font-size: var(--text-xs);
       line-height: var(--lh-normal);
+      /* Don't stretch to the stage's fixed height: let the panel grow with its
+         content into the space beside/below the graph, up to the viewport, and
+         only scroll internally when it genuinely exceeds that. */
+      align-self: start;
+      max-height: calc(100vh - 9rem);
       overflow-y: auto;
     }
     #network-view .lede {
@@ -401,17 +406,18 @@
     }
     #network-view .link { stroke: var(--fg); stroke-width: 0.5; pointer-events: none; }
     #network-view .node.highlight .marker { fill: var(--fg); }
+    #network-view .node.connected .marker { stroke: var(--fg); stroke-width: 1.25; }
     #network-view .link.highlight { stroke-width: 1; }
     #network-view .labels text.hover { fill: var(--fg); }
-    /* Click-selection (.dimmed on non-neighbours) and search filter (.filtered-out on non-matches) share the same fade. */
-    #network-view .node.dimmed,
+    /* Click-selection (.dimmed on non-neighbours) and search filter (.filtered-out on non-matches) recolor to muted. */
+    #network-view .node.dimmed .marker,
+    #network-view .node.filtered-out .marker { stroke: var(--muted); }
     #network-view .link.dimmed,
+    #network-view .link.filtered-out { stroke: var(--muted); }
     #network-view .labels text.dimmed,
-    #network-view .node.filtered-out,
-    #network-view .link.filtered-out,
-    #network-view .labels text.filtered-out { opacity: 0.15; }
-    #network-view .node.dimmed.hover,
-    #network-view .labels text.dimmed.hover { opacity: 1; }
+    #network-view .labels text.filtered-out { fill: var(--muted); }
+    #network-view .node.dimmed.hover .marker { stroke: var(--fg); }
+    #network-view .labels text.dimmed.hover { fill: var(--fg); }
     #network-view .node.filtered-out { pointer-events: none; }
 
     /* Details panel — replaces the lede in the first column on selection. */
@@ -432,11 +438,15 @@
     #network-view .details .publication:hover { background: none; }
     #network-view .details .publication .card-img {
       width: 100%;
+      max-height: 200px;
       margin-bottom: 0.8rem;
       background: color-mix(in srgb, var(--fg) 4%, transparent);
       border-radius: 2px;
       overflow: hidden;
     }
+    /* Cap the preview so the title and closest-matches list stay visible
+       without relying on the (auto-hidden) sidebar scrollbar. */
+    #network-view .details .publication .card-img img { height: 200px; object-fit: cover; object-position: center; }
     #network-view .details .publication .card-meta h2 a:hover { text-decoration: underline; }
     #network-view .details h3 {
       font-size: var(--text-xxs);
@@ -1170,7 +1180,7 @@
           if (ti === d.i) neighbors.add(si);
         });
         highlightedSet = new Set([d.i]);
-        nodeSel.classed('dimmed', function(n) { return !neighbors.has(n.i); }).classed('highlight', function(n) { return n.i === d.i; });
+        nodeSel.classed('dimmed', function(n) { return !neighbors.has(n.i); }).classed('highlight', function(n) { return n.i === d.i; }).classed('connected', function(n) { return neighbors.has(n.i) && n.i !== d.i; });
         labelSel.classed('dimmed', function(n) { return !neighbors.has(n.i); });
         linkSel.classed('dimmed', function(l) {
           var si = l.source.i != null ? l.source.i : l.source;
@@ -1185,7 +1195,7 @@
       }
       function unhighlight() {
         highlightedSet = null;
-        nodeSel.classed('dimmed', false).classed('highlight', false);
+        nodeSel.classed('dimmed', false).classed('highlight', false).classed('connected', false);
         labelSel.classed('dimmed', false);
         linkSel.classed('dimmed', false).classed('highlight', false);
         labelSel.each(function() { setLabel(this, ''); });
