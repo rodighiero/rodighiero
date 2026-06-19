@@ -1124,7 +1124,11 @@
           .on('mouseenter', function(e, d) {
             d3.select(this).classed('hover', true);
             d3.select(labelByIdx[d.i]).classed('hover', true);
-            setLabel(labelByIdx[d.i], d.title);
+            // With a node selected, its label sits above it. Flip the hovered
+            // node's label to the side pointing away from the selection so the
+            // two never collide (there are never more than these two labels).
+            var below = selectedNode && selectedNode.i !== d.i && d.y > selectedNode.y;
+            setLabel(labelByIdx[d.i], d.title, below);
           })
           .on('mouseleave', function(e, d) {
             d3.select(this).classed('hover', false);
@@ -1154,13 +1158,16 @@
         }
         return [words.slice(0, best).join(' '), words.slice(best).join(' ')];
       }
-      function setLabel(textEl, title) {
+      function setLabel(textEl, title, below) {
         var sel = d3.select(textEl);
         sel.selectAll('tspan').remove();
         if (!title) return;
         var lines = splitTitle(title);
         if (lines.length === 1) {
-          sel.append('tspan').attr('x', 0).attr('y', -10).text(lines[0]);
+          sel.append('tspan').attr('x', 0).attr('y', below ? 18 : -10).text(lines[0]);
+        } else if (below) {
+          sel.append('tspan').attr('x', 0).attr('y', 18).text(lines[0]);
+          sel.append('tspan').attr('x', 0).attr('y', 28).text(lines[1]);
         } else {
           sel.append('tspan').attr('x', 0).attr('y', -20).text(lines[0]);
           sel.append('tspan').attr('x', 0).attr('y', -10).text(lines[1]);
