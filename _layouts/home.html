@@ -641,7 +641,7 @@
             <li>Each cleaned title + abstract is embedded as a 384-dimensional vector by the <code>sentence-transformers/all-MiniLM-L6-v2</code> model.</li>
             <li>Pairwise cosine similarity yields a dense matrix over every pair of papers.</li>
             <li>An edge is drawn from each paper to its single strongest neighbour, plus any pair scoring above 0.70.</li>
-            <li>A D3 force simulation lays out the graph with link, repulsion, gravity, and collision forces; 1000 ticks are pre-computed in the browser so the layout appears already settled.</li>
+            <li>A D3 force simulation lays out the graph with link, repulsion, gravity, and collision forces; the arrangement is pre-computed offline so it loads already settled.</li>
           </ol>
           <p>Hover a node to read its title; click to select it and reveal its closest matches below.</p>
         </div>
@@ -955,7 +955,6 @@
       var data = JSON.parse(dataNode.textContent);
       var pubs = data.nodes;
       var sim = data.similarity;
-      var N = pubs.length;
 
       function cardHtmlFor(slug) {
         var src = document.querySelector('.publication[data-slug="' + CSS.escape(slug) + '"]');
@@ -969,30 +968,8 @@
       }
 
       var NODE_RADIUS = 3;
-      var NODE_SPACING = 24;
-      var CHARGE_STRENGTH = -280;
-      var STRONG_SIM = 0.70;
-      function buildLinks() {
-        var seen = new Set();
-        var links = [];
-        function add(i, j, s) {
-          var key = i < j ? i + ':' + j : j + ':' + i;
-          if (seen.has(key)) return;
-          seen.add(key);
-          links.push({ source: i, target: j, value: s });
-        }
-        for (var i = 0; i < N; i++) {
-          var bestJ = -1, bestS = -Infinity;
-          for (var j = 0; j < N; j++) {
-            if (i === j) continue;
-            var s = sim[i][j];
-            if (s > bestS) { bestS = s; bestJ = j; }
-            if (s > STRONG_SIM) add(i, j, s);
-          }
-          if (bestJ >= 0) add(i, bestJ, bestS);
-        }
-        return links;
-      }
+      // Canonical canvas the positions were baked into (scripts/layout-network.js).
+      var CANVAS = data.canvas || { w: 856, h: 600 };
 
       var svg = d3.select('#net');
       var stage = document.querySelector('#network-view .stage');
@@ -1010,31 +987,24 @@
       };
       svg.on('click', networkClearSelection);
 
-      var LAYOUT_SEED = 1;
-      function makeRng(seed) {
-        var s = seed >>> 0;
-        return function() { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; };
-      }
-      var rand = makeRng(LAYOUT_SEED);
       function dimensions() { return { w: stage.clientWidth, h: stage.clientHeight }; }
-      function seedPosition(n) {
-        var dim = dimensions();
-        n.x = dim.w / 2 + (rand() - 0.5) * Math.min(dim.w, dim.h) * 0.6;
-        n.y = dim.h / 2 + (rand() - 0.5) * Math.min(dim.w, dim.h) * 0.6;
-        n.vx = 0; n.vy = 0;
-      }
+      // Positions are precomputed offline at canonical canvas size (bx, by);
+      // fitLayout() scales them into the live stage at render time.
       var nodes = pubs.map(function(p, i) {
-        var n = { i: i, slug: p.slug, title: p.title, url: p.url };
-        seedPosition(n);
-        return n;
+        return { i: i, slug: p.slug, title: p.title, url: p.url, bx: p.x, by: p.y };
       });
 
-      var links = [];
+      // Baked links: resolve integer endpoints to node refs (the force
+      // simulation used to do this in the browser). Only the endpoints are
+      // needed now — edges are drawn straight and neighbour ranking reads the
+      // similarity matrix directly.
+      var links = data.links.map(function(l) {
+        return { source: nodes[l.source], target: nodes[l.target] };
+      });
       var linkSel, nodeSel, labelSel;
       var labelByIdx = [];
       var selectedNode = null;
       var highlightedSet = null;
-      var LAYOUT_TICKS = 1400;
 
       function placeNodes() {
         linkSel.attr('x1', function(d) { return d.source.x; }).attr('y1', function(d) { return d.source.y; })
@@ -1043,68 +1013,23 @@
         labelSel.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
       }
 
-      var GRAVITY = 2;
-      function componentLabels() {
-        var adj = Array.from({ length: N }, function() { return []; });
-        links.forEach(function(l) {
-          var a = l.source.i != null ? l.source.i : l.source;
-          var b = l.target.i != null ? l.target.i : l.target;
-          adj[a].push(b); adj[b].push(a);
-        });
-        var comp = new Array(N).fill(-1);
-        var c = 0;
-        for (var i = 0; i < N; i++) {
-          if (comp[i] !== -1) continue;
-          var stack = [i];
-          while (stack.length) {
-            var x = stack.pop();
-            if (comp[x] !== -1) continue;
-            comp[x] = c;
-            adj[x].forEach(function(y) { if (comp[y] === -1) stack.push(y); });
-          }
-          c++;
-        }
-        return comp;
-      }
-      function componentTargets(w, h) {
-        var comp = componentLabels();
-        var numComp = Math.max.apply(null, comp) + 1;
-        var groups = Array.from({ length: numComp }, function() { return []; });
-        comp.forEach(function(c, i) { groups[c].push(i); });
-        groups.sort(function(a, b) { return b.length - a.length; });
-        var targets = new Array(N);
-        // Anchor the main cluster near the top of the stage (but with breathing
-        // room above so nodes that drift outward don't get clipped at the edge).
-        var cy0 = h * 0.45;
-        (groups[0] || []).forEach(function(i) { targets[i] = { x: w / 2, y: cy0 }; });
-        var numSatellites = Math.max(1, groups.length - 1);
-        var r = Math.min(w, h) * 0.25;
-        for (var k = 1; k < groups.length; k++) {
-          var angle = (k - 1) / numSatellites * 2 * Math.PI - Math.PI / 2;
-          var cx = w / 2 + Math.cos(angle) * r;
-          var cy = cy0 + Math.sin(angle) * r;
-          groups[k].forEach(function(i) { targets[i] = { x: cx, y: cy }; });
-        }
-        return targets;
-      }
-      var targets = [];
-      function computeLayout() {
+      // Fit the precomputed canonical-canvas positions (bx, by) into the live
+      // stage: uniform scale + center (object-fit: contain), so markers, labels
+      // and link strokes keep their fixed pixel sizes. Runs once at render and
+      // again on resize — no force simulation in the browser anymore.
+      function fitLayout() {
         var dim = dimensions();
-        targets = componentTargets(dim.w, dim.h);
-        var sim = d3.forceSimulation(nodes)
-          .alphaDecay(0.005)
-          .force('link', d3.forceLink(links).id(function(d) { return d.i; }).distance(function(d) { return 15 + (1 - d.value) * 45; }).strength(function(d) { return 0.5 + d.value * 0.5; }))
-          .force('charge', d3.forceManyBody().strength(CHARGE_STRENGTH).distanceMax(520))
-          .force('x', d3.forceX(function(d) { return targets[d.i].x; }).strength(GRAVITY))
-          .force('y', d3.forceY(function(d) { return targets[d.i].y; }).strength(GRAVITY))
-          .force('collide', d3.forceCollide().radius(NODE_RADIUS + NODE_SPACING))
-          .stop();
-        for (var i = 0; i < LAYOUT_TICKS; i++) sim.tick();
+        var scale = Math.min(dim.w / CANVAS.w, dim.h / CANVAS.h);
+        var offX = (dim.w - CANVAS.w * scale) / 2;
+        var offY = (dim.h - CANVAS.h * scale) / 2;
+        nodes.forEach(function(n) {
+          n.x = offX + n.bx * scale;
+          n.y = offY + n.by * scale;
+        });
       }
 
       function render() {
-        links = buildLinks();
-        computeLayout();
+        fitLayout();
 
         var linkData = linkLayer.selectAll('line').data(links, function(d) { return (d.source.i != null ? d.source.i : d.source) + ':' + (d.target.i != null ? d.target.i : d.target); });
         linkData.exit().remove();
@@ -1280,14 +1205,15 @@
       };
       networkFilter(matchedSlugs);
 
-      // Debounce: 600 force ticks per resize event is too expensive during a drag.
+      // Debounce: re-fit the baked layout to the new stage size (cheap — just a
+      // scale + translate, no simulation).
       var resizeTimer = null;
       window.addEventListener('resize', function() {
         if (document.body.dataset.view !== 'network') return;
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function() {
           resizeTimer = null;
-          computeLayout();
+          fitLayout();
           placeNodes();
         }, 150);
       });
