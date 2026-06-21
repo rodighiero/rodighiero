@@ -178,6 +178,7 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   {% include mode-toggle.html %}
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
   {% assign _year_groups = site.publications | group_by: "year" | sort: "name" | reverse %}
@@ -191,7 +192,7 @@
     {% if _p.url == page.url %}{% assign _found = true %}{% endif %}
     {% unless _found %}{% assign _prev = _p %}{% endunless %}
   {% endfor %}
-  <main>
+  <main id="main" tabindex="-1">
   {% include publication-nav.html modifier="publication-nav-top" label="Project navigation" %}
   <article>
   <div class="title-block">
