@@ -528,6 +528,7 @@
 </head>
 <body data-view="gallery">
   <script>document.body.dataset.view = document.documentElement.dataset.initialView || 'gallery'</script>
+  <a class="skip-link" href="#main">Skip to content</a>
   {% include mode-toggle.html %}
   <button class="bio-toggle" type="button" aria-controls="bio" aria-expanded="false" aria-label="Show bio" title="Show bio">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
@@ -579,7 +580,7 @@
   </header>
   </div>
 
-  <main>
+  <main id="main" tabindex="-1">
     <!-- ── Search bar ── -->
     <div class="filters">
       <label class="filters-search" aria-label="Search publications">
