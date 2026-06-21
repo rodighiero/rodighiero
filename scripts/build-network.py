@@ -17,6 +17,7 @@ import hashlib
 import json
 import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -30,6 +31,27 @@ ROOT = Path(__file__).resolve().parent.parent
 PUBS_DIR = ROOT / "_publications"
 OUT = ROOT / "_data" / "network.json"
 TRANS_CACHE = ROOT / "_data" / "translations-cache.json"
+LAYOUT_SCRIPT = ROOT / "scripts" / "layout-network.js"
+
+
+def precompute_layout(nodes: list[dict], similarity: list[list[float]]) -> dict:
+    """Bake the force-directed layout offline via the shared Node script.
+
+    layout-network.js reuses the exact d3-force config the browser used to run
+    at render time, so the home page can draw the graph already settled without
+    running the simulation client-side. Returns {canvas, positions, links}.
+    """
+    payload = json.dumps({"nodes": nodes, "similarity": similarity})
+    proc = subprocess.run(
+        ["node", str(LAYOUT_SCRIPT)],
+        input=payload,
+        capture_output=True,
+        text=True,
+    )
+    if proc.returncode != 0:
+        sys.stderr.write(proc.stderr)
+        raise SystemExit("layout-network.js failed — is Node installed?")
+    return json.loads(proc.stdout)
 
 MODEL_NAME = "all-MiniLM-L6-v2"
 EXCERPT_SEPARATOR = "<!--more-->"
@@ -147,10 +169,18 @@ def main() -> int:
         {"i": i, "slug": p["slug"], "title": p["title"], "url": p["url"]}
         for i, p in enumerate(pubs)
     ]
+    similarity = [[round(float(s), 4) for s in row] for row in sim]
+
+    print("baking layout (node)…", file=sys.stderr)
+    layout = precompute_layout(nodes, similarity)
+    for node, (x, y) in zip(nodes, layout["positions"]):
+        node["x"], node["y"] = x, y
 
     data = {
         "nodes": nodes,
-        "similarity": [[round(float(s), 4) for s in row] for row in sim],
+        "similarity": similarity,
+        "canvas": layout["canvas"],
+        "links": layout["links"],
     }
     OUT.write_text(json.dumps(data, ensure_ascii=False))
     print(f"wrote {OUT.relative_to(ROOT)}: {OUT.stat().st_size:,} bytes", file=sys.stderr)
