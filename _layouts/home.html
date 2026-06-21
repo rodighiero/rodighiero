@@ -418,7 +418,10 @@
     #network-view .labels text.filtered-out { fill: var(--muted); }
     #network-view .node.dimmed.hover .marker { stroke: var(--fg); }
     #network-view .labels text.dimmed.hover { fill: var(--fg); }
-    #network-view .node.filtered-out { pointer-events: none; }
+    /* Search filter: fade non-matches out so the on/off signal is visible (a thin
+       muted stroke alone is imperceptible on these tiny markers). */
+    #network-view .node.filtered-out { pointer-events: none; opacity: 0.3; }
+    #network-view .link.filtered-out { opacity: 0.3; }
 
     /* Details panel — replaces the lede in the first column on selection. */
     #network-view .details {
