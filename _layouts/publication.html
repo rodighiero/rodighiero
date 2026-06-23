@@ -81,7 +81,7 @@
     "name": {{ page.title | jsonify }},
     {% if page.author %}{% assign _authors = page.author | split: ' and ' %}{% if _authors.size == 1 %}"author": { "@type": "Person", "name": {{ page.author | jsonify }} },{% else %}"author": [{% for _a in _authors %}{ "@type": "Person", "name": {{ _a | jsonify }} }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}{% else %}"author": { "@type": "Person", "name": "Dario Rodighiero", "url": "{{ site.url }}" },{% endif %}
     {% if page.year and page.year != "Forthcoming" %}"datePublished": "{{ page.year }}",{% endif %}
-    {% if page.venue %}"publisher": { "@type": "Organization", "name": {{ page.venue | jsonify }} },{% endif %}
+    {% if page.venue or page.publisher %}"publisher": { "@type": "Organization", "name": {{ page.publisher | default: page.venue | jsonify }} },{% endif %}
     "url": "{{ site.url }}{{ page.url }}",
     {% if page.doi %}"sameAs": "{{ page.doi }}",{% endif %}
     {% if page.img %}"image": "{{ site.url }}/images/{{ page.img }}",{% endif %}
