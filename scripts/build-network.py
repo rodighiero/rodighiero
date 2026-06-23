@@ -54,6 +54,9 @@ def precompute_layout(nodes: list[dict], similarity: list[list[float]]) -> dict:
     return json.loads(proc.stdout)
 
 MODEL_NAME = "all-MiniLM-L6-v2"
+# all-MiniLM-L6-v2 defaults to a 256 word-piece window but its architecture
+# tops out at 512; raise it so longer abstracts/full texts inform the embedding.
+MAX_SEQ_LENGTH = 512
 EXCERPT_SEPARATOR = "<!--more-->"
 TRANSLATE_CHUNK_CHARS = 1800  # Helsinki-NLP has a 512-token limit — chunk on sentences.
 
@@ -156,6 +159,7 @@ def main() -> int:
 
     print(f"loading model {MODEL_NAME}…", file=sys.stderr)
     model = SentenceTransformer(MODEL_NAME)
+    model.max_seq_length = MAX_SEQ_LENGTH
 
     print("embedding documents…", file=sys.stderr)
     doc_vecs = model.encode(
