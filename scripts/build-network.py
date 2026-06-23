@@ -2,7 +2,7 @@
 """Build the publication similarity network for the home network view.
 
 Reads publications from _publications/, machine-translates non-English
-abstracts (cached), embeds title + abstract with all-MiniLM-L6-v2, and
+abstracts (cached), embeds title + abstract with BAAI/bge-base-en-v1.5, and
 writes _data/network.json with the node list and a pairwise cosine
 similarity matrix. The home page consumes it via Liquid as
 site.data.network.
@@ -53,9 +53,9 @@ def precompute_layout(nodes: list[dict], similarity: list[list[float]]) -> dict:
         raise SystemExit("layout-network.js failed — is Node installed?")
     return json.loads(proc.stdout)
 
-MODEL_NAME = "all-MiniLM-L6-v2"
-# all-MiniLM-L6-v2 defaults to a 256 word-piece window but its architecture
-# tops out at 512; raise it so longer abstracts/full texts inform the embedding.
+MODEL_NAME = "BAAI/bge-base-en-v1.5"
+# bge-base-en-v1.5 has a 512 word-piece window; cap inputs there so longer
+# abstracts/full texts inform the embedding (the model clamps to its own max).
 MAX_SEQ_LENGTH = 512
 EXCERPT_SEPARATOR = "<!--more-->"
 TRANSLATE_CHUNK_CHARS = 1800  # Helsinki-NLP has a 512-token limit — chunk on sentences.

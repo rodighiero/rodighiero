@@ -638,9 +638,9 @@
           <ol>
             <li>The Markdown files in <code>_publications/</code> are parsed and stripped of footnotes, headings, links, code, and bibliographies.</li>
             <li>Italian abstracts are machine-translated to English with <code>Helsinki-NLP/opus-mt-it-en</code> and cached on disk.</li>
-            <li>Each cleaned title + abstract is embedded as a 384-dimensional vector by the <code>sentence-transformers/all-MiniLM-L6-v2</code> model.</li>
+            <li>Each cleaned title + abstract is embedded as a 768-dimensional vector by the <code>BAAI/bge-base-en-v1.5</code> model.</li>
             <li>Pairwise cosine similarity yields a dense matrix over every pair of papers.</li>
-            <li>An edge is drawn from each paper to its single strongest neighbour, plus any pair scoring above 0.70.</li>
+            <li>An edge is drawn from each paper to its single strongest neighbour, unless even that best score falls below 0.70, in which case the paper stays unconnected.</li>
             <li>A D3 force simulation lays out the graph with link, repulsion, gravity, and collision forces; the arrangement is pre-computed offline so it loads already settled.</li>
           </ol>
           <p>Hover a node to read its title; click to select it and reveal its closest matches below.</p>

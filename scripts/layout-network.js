@@ -26,7 +26,7 @@ const d3 = require(path.resolve(__dirname, '..', 'js', 'd3.v7.min.js'));
 const NODE_RADIUS = 3;
 const NODE_SPACING = 24;
 const CHARGE_STRENGTH = -280;
-const STRONG_SIM = 0.80;
+const STRONG_SIM = 0.70;
 const GRAVITY = 2;
 const LAYOUT_SEED = 1;
 const LAYOUT_TICKS = 1400;
@@ -69,7 +69,8 @@ function main(input) {
     return n;
   });
 
-  // ── buildLinks: strongest neighbour per node + every pair above STRONG_SIM ──
+  // ── buildLinks: each node's single strongest neighbour, but only if that
+  // best similarity clears STRONG_SIM — otherwise the node is left unconnected ──
   const seen = new Set();
   const links = [];
   function add(i, j, v) {
@@ -82,11 +83,9 @@ function main(input) {
     let bestJ = -1, bestS = -Infinity;
     for (let j = 0; j < N; j++) {
       if (i === j) continue;
-      const v = sim[i][j];
-      if (v > bestS) { bestS = v; bestJ = j; }
-      if (v > STRONG_SIM) add(i, j, v);
+      if (sim[i][j] > bestS) { bestS = sim[i][j]; bestJ = j; }
     }
-    if (bestJ >= 0) add(i, bestJ, bestS);
+    if (bestJ >= 0 && bestS > STRONG_SIM) add(i, bestJ, bestS);
   }
 
   // ── Component anchoring targets (uses link indices; run before forceLink) ──
