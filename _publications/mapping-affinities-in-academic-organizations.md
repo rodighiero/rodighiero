@@ -1,9 +1,10 @@
 ---
 title: "Mapping Affinities in Academic Organizations"
 year: 2018
-venue: "Frontiers"
+venue: "Frontiers in Research Metrics and Analytics"
 type: "journal"
 author: "Dario Rodighiero and Frédéric Kaplan and Boris Beaude"
+volume: "3"
 doi: "https://doi.org/10.3389/frma.2018.00004"
 img: "@publications/Mapping-Affinities-in-Academic-Organizations.webp"
 img_width: 700

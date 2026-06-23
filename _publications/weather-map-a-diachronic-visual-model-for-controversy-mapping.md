@@ -1,9 +1,13 @@
 ---
 title: "Weather Map: A Diachronic Visual Model for Controversy Mapping"
 year: 2023
-venue: "De Gruyter"
+venue: "Zoomland: Exploring Scale in Digital History and Humanities"
+publisher: "De Gruyter"
 type: "chapter"
 author: "Dario Rodighiero and Jean Daniélou"
+place: "Berlin"
+pages: "449–466"
+isbn: "978-3-11-131777-9"
 doi: "https://doi.org/10.1515/9783111317779-017"
 img: "@publications/Weather-Map.webp"
 img_width: 700

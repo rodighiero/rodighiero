@@ -609,7 +609,7 @@
       {% assign year_groups = site.publications | group_by: "year" | sort: "name" | reverse %}
       {% for group in year_groups %}{% assign group_publications = group.items | sort: "title" %}{% for publication in group_publications %}
       {% assign _type_label = site.data.publication_types[publication.type].label %}
-      {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.venue }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }}{% endcapture %}
+      {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }}{% endcapture %}
       <div class="publication" data-slug="{{ publication.slug }}" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
         {% if publication.img %}
         {% assign _card_i = _card_i | plus: 1 %}
