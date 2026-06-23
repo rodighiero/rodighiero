@@ -152,7 +152,7 @@ Among many data visualizations that are scaring the world, the cartography of CO
 - Dinoi, Marco. 2008. *Lo sguardo e l’evento: i media, la memoria, il cinema*. Firenze: Le Lettere.
 - Dondis, Donis A. (1973) 1975. *A Primer of Visual Literacy*. Cambridge, MA: MIT Press.
 - Dong, Ensheng, Hongru Du, and Lauren Gardner. 2020. “An Interactive Web-Based Dashboard to Track COVID-19 in Real Time.” *The Lancet Infectious Diseases* 20 (5): 533–34. [doi:10/ggnsjk](https://doi.org/10/ggnsjk).
-- Dur, Banu İnanç Uyan. 2014. “Data Visualization and Infographics in Visual Communication Design Education at the Age of Information.” *Journal of Arts and Humanities*, no. 5: 12.
+- Dur, Banu İnanç Uyan. 2014. “Data Visualization and Infographics in Visual Communication Design Education at the Age of Information.” *Journal of Arts and Humanities* 3 (5).
 - Foley, Becca. 2021. “Becca Foley on Twitter.” Twitter, February 21. [twitter.com/beccapfoley/status/1363338950518206472](https://twitter.com/beccapfoley/status/1363338950518206472).
 - Gagnon, Francis. 2021. “Voilà: Francis Gagnon on Twitter.” Twitter, February 21. [twitter.com/chezVoila/status/1363530540092186627](https://twitter.com/chezVoila/status/1363530540092186627).
 - Giaccardi, Chiara, Jérôme Bourdon, Nico Carpentier, et al. 2020. “Learning from the Virus: The Impact of the Pandemic on Communication, Media and Performing Arts Disciplinary Fields. A Round-Table.” *Comunicazioni Sociali*, no. 2: 157–69. [doi:10/ghqvkd](https://doi.org/10/ghqvkd).
