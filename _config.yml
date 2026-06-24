@@ -5,7 +5,6 @@ url: https://dariorodighiero.com
 goatcounter_code: fumoseaffabulazioni
 
 plugins:
-  - jekyll-redirect-from
   - jekyll-feed
 
 feed:
