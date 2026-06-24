@@ -1142,7 +1142,7 @@
           .slice(0, 3);
         var cardHtml = cardHtmlFor(pub.slug);
         var neighborsHtml = top.length ? (
-          '<div class="neighbors"><h3>Closest by embedding</h3><ol>' +
+          '<div class="neighbors"><h3>Three closest by embedding</h3><ol>' +
           top.map(function(t) {
             var j = t[0], s = t[1];
             return '<li data-node-i="' + j + '"><span class="sim">' + s.toFixed(2) + '</span><div class="nb-body"><a href="' + escapeHtml(pubs[j].url) + '">' + escapeHtml(pubs[j].title) + '</a></div></li>';
