@@ -14,8 +14,6 @@ img_width: 700
 img_height: 525
 figures: true
 excerpt_separator: "<!--more-->"
-redirect_from:
-  - /Weather-Map
 ---
 The Weather Map is a visual model to investigate public debates on media. Relying on the Media Cloud archives, the visual model transforms a simple query into a sophisticated visualization by employing the visual grammar of synoptic weather charts. Peaks of pressure and clashes between airmasses are used to describe the conflicts in media through the temporal dimension, diving into the human and non-human dynamics that make the controversy alive. The Weather Map was conceived as a digital tool to help students and scholars analyze public debates, according to the controversy mapping field founded by Bruno Latour. In particular, the visual model pushes the boundaries of network visualization, exploring advanced techniques of graphic design. The outcome is a web-based application developed in JavaScript and Python at the disposal of education and research.
 

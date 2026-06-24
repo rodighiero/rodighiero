@@ -9,8 +9,6 @@ img: "@publications/Printing-Walkable-Visualizations.webp"
 img_width: 1200
 img_height: 1607
 figures: true
-redirect_from:
-  - /Walkable-Visualizations
 ---
 This article concerns a specific actor in the actualization process, the media. The conventional media for visualizations is the computer screen, a visual device that supports the practices of design and reading. However, visualizations also appear in other ways, for example as posters, articles, books, or projections. This article focuses, in particular, on a pretty unusual medium called floor or walkable visualization.
 

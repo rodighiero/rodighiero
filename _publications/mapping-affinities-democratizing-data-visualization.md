@@ -8,8 +8,6 @@ doi: "https://library.oapen.org/handle/20.500.12657/91793"
 img: "@publications/Mapping-Affinities.webp"
 img_width: 700
 img_height: 858
-redirect_from:
-  - /Mapping-Affinities
 ---
 Organizations are complex systems whose members leave behind a wealth of digital traces, yet the metrics commonly used to read them—the h-index, the impact factor, and similar indicators—tend to rank individuals rather than reveal the collaborative dynamics that hold a collective together. This book proposes affinity as an alternative lens. Affinities take many forms, from shared interests and committee memberships to co-teaching and co-authoring, and they can be both actual, when a collaboration has already taken place, and potential, when a tie is plausible but not yet realized. Translating affinities into a visual representation produces a space where these two dimensions coexist, offering managers and scholars alike a tool to explore the present and plan future synergies, both top-down and bottom-up. Drawing on five years of design research at the École Polytechnique Fédérale de Lausanne (EPFL), the book develops a data visualization method that reconciles the humanities with technology in the spirit of a new European Bauhaus.
 
