@@ -1004,7 +1004,6 @@
       var linkSel, nodeSel, labelSel;
       var labelByIdx = [];
       var selectedNode = null;
-      var highlightedSet = null;
 
       function placeNodes() {
         linkSel.attr('x1', function(d) { return d.source.x; }).attr('y1', function(d) { return d.source.y; })
@@ -1055,16 +1054,11 @@
           .on('mouseenter', function(e, d) {
             d3.select(this).classed('hover', true);
             d3.select(labelByIdx[d.i]).classed('hover', true);
-            // With a node selected, its label sits above it. Flip the hovered
-            // node's label to the side pointing away from the selection so the
-            // two never collide (there are never more than these two labels).
-            var below = selectedNode && selectedNode.i !== d.i && d.y > selectedNode.y;
-            setLabel(labelByIdx[d.i], d.title, below);
+            setLabel(labelByIdx[d.i], d.title);
           })
           .on('mouseleave', function(e, d) {
             d3.select(this).classed('hover', false);
             d3.select(labelByIdx[d.i]).classed('hover', false);
-            if (highlightedSet && highlightedSet.has(d.i)) return;
             setLabel(labelByIdx[d.i], '');
           })
           .on('click', function(e, d) {
@@ -1089,16 +1083,15 @@
         }
         return [words.slice(0, best).join(' '), words.slice(best).join(' ')];
       }
-      function setLabel(textEl, title, below) {
+      // Titles always render above the node: single line at y=-10, or a balanced
+      // two-line split at y=-20/-10. No above/below flip — placement is consistent.
+      function setLabel(textEl, title) {
         var sel = d3.select(textEl);
         sel.selectAll('tspan').remove();
         if (!title) return;
         var lines = splitTitle(title);
         if (lines.length === 1) {
-          sel.append('tspan').attr('x', 0).attr('y', below ? 18 : -10).text(lines[0]);
-        } else if (below) {
-          sel.append('tspan').attr('x', 0).attr('y', 18).text(lines[0]);
-          sel.append('tspan').attr('x', 0).attr('y', 28).text(lines[1]);
+          sel.append('tspan').attr('x', 0).attr('y', -10).text(lines[0]);
         } else {
           sel.append('tspan').attr('x', 0).attr('y', -20).text(lines[0]);
           sel.append('tspan').attr('x', 0).attr('y', -10).text(lines[1]);
@@ -1113,7 +1106,6 @@
           if (si === d.i) neighbors.add(ti);
           if (ti === d.i) neighbors.add(si);
         });
-        highlightedSet = new Set([d.i]);
         nodeSel.classed('dimmed', function(n) { return !neighbors.has(n.i); }).classed('highlight', function(n) { return n.i === d.i; }).classed('connected', function(n) { return neighbors.has(n.i) && n.i !== d.i; });
         labelSel.classed('dimmed', function(n) { return !neighbors.has(n.i); });
         linkSel.classed('dimmed', function(l) {
@@ -1125,10 +1117,11 @@
           var ti = l.target.i != null ? l.target.i : l.target;
           return si === d.i || ti === d.i;
         });
-        labelSel.each(function(n) { setLabel(this, n.i === d.i ? n.title : ''); });
+        // No pinned label on the selected node — its title lives in the details
+        // panel, and the canvas shows a floating title only while hovering, so
+        // at most one label is ever visible and two can never overlap.
       }
       function unhighlight() {
-        highlightedSet = null;
         nodeSel.classed('dimmed', false).classed('highlight', false).classed('connected', false);
         labelSel.classed('dimmed', false);
         linkSel.classed('dimmed', false).classed('highlight', false);
@@ -1140,16 +1133,13 @@
       function showDetails(d) {
         if (lede) lede.hidden = true;
         var pub = pubs[d.i];
-        var connected = new Set();
-        links.forEach(function(l) {
-          var si = l.source.i != null ? l.source.i : l.source;
-          var ti = l.target.i != null ? l.target.i : l.target;
-          if (si === d.i) connected.add(ti);
-          if (ti === d.i) connected.add(si);
-        });
-        var top = [].concat(Array.from(connected))
-          .map(function(j) { return [j, sim[d.i][j]]; })
-          .sort(function(a, b) { return b[1] - a[1]; });
+        // Always rank the full similarity row and show the three closest papers,
+        // regardless of whether a baked link connects them.
+        var top = sim[d.i]
+          .map(function(s, j) { return [j, s]; })
+          .filter(function(t) { return t[0] !== d.i; })
+          .sort(function(a, b) { return b[1] - a[1]; })
+          .slice(0, 3);
         var cardHtml = cardHtmlFor(pub.slug);
         var neighborsHtml = top.length ? (
           '<div class="neighbors"><h3>Closest by embedding</h3><ol>' +
@@ -1175,9 +1165,7 @@
           li.addEventListener('mouseleave', function() {
             g.classed('hover', false);
             d3.select(labelByIdx[idx]).classed('hover', false);
-            if (!highlightedSet || !highlightedSet.has(idx)) {
-              setLabel(labelByIdx[idx], '');
-            }
+            setLabel(labelByIdx[idx], '');
           });
         });
       }
