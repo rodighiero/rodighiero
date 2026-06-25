@@ -100,5 +100,3 @@ In this enlightening interview with Lins Derry, a pioneering researcher at the i
 - Derry, Lins, Jordan Kruguer, Maximilian C. Mueller, and Jeffrey Schnapp. 2022. “Designing a Choreographic Interface during COVID-19.” In *Proceedings of the 8th International Conference on Movement and Computing (MOCO ’22)*. New York: Association for Computing Machinery. [doi:10.1145/3537972.3538020](https://doi.org/10.1145/3537972.3538020).
 - Latour, Bruno. 2013. *An Inquiry into Modes of Existence: An Anthropology of the Moderns*. Cambridge, MA: Harvard University Press.
 - Rodighiero, Dario, Lins Derry, Douglas Duhaime, Jordan Kruguer, Maximilian C. Mueller, Christopher Pietsch, Jeffrey Schnapp, and Jeff Steward. 2022. “Surprise Machines: Revealing Harvard Art Museums’ Image Collection.” *Information Design Journal* 27 (1): 21–34. [doi:10.1075/idj.22013.rod](https://doi.org/10.1075/idj.22013.rod).
-</content>
-</invoke>
