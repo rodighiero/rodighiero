@@ -102,52 +102,52 @@ Beyond the technical merits, Surprise Machines is a collective project developed
 
 - American Museum of Natural History. (2020) 2022. *Collectionscope*. [github.com/amnh-sciviz/collectionscope](https://github.com/amnh-sciviz/collectionscope).
 - Barabási, Albert-László, Mónica Bello, Julia Kluge-Fabényi, et al. 2020. *Hidden Patterns: Visualizing Networks at BarabásiLab*. Edited by Alanna Stang and Peter Weibel. Berlin: Hatje Cantz Verlag.
-- Benedetti, A. 2022. "Browsing and Visualizing Collections of Images." YouTube, January 5. [youtube.com/watch?v=bprSgiqZj00](https://www.youtube.com/watch?v=bprSgiqZj00).
-- Birkle, Carmen, and Birgit Däwes. 2019. "'Old Media Don't Go Away, They Mutate': An Interview with Jeffrey Schnapp." *Amerikastudien/American Studies* 64 (1): 111–25. [doi:10.33675/AMST/2019/1/10](https://doi.org/10.33675/AMST/2019/1/10).
-- Bludau, Marian-Jakob, Marian Dörk, and Frank Heidmann. 2021. "Relational Perspectives as Situated Visualizations of Art Collections." *Digital Scholarship in the Humanities* 36 (Supplement 2): ii17–ii29. [doi:10.1093/llc/fqab003](https://doi.org/10.1093/llc/fqab003).
-- Börner, Katy, Adam Maltese, Russell Nelson Balliet, and Joe Heimlich. 2016. "Investigating Aspects of Data Visualization Literacy Using 20 Information Visualizations and 273 Science Museum Visitors." *Information Visualization* 15 (3): 198–213. [doi:10.1177/1473871615594652](https://doi.org/10.1177/1473871615594652).
-- Bostock, Michael, Vadim Ogievetsky, and Jeffrey Heer. 2011. "D3: Data-Driven Documents." *IEEE Transactions on Visualization and Computer Graphics* 17 (12): 2301–9. [doi:10.1109/TVCG.2011.185](https://doi.org/10.1109/TVCG.2011.185).
-- Champion, Erik Malcolm. 2016. "Digital Humanities Is Text Heavy, Visualization Light, and Simulation Poor." *Digital Scholarship in the Humanities*: i25–i32. [doi:10.1093/llc/fqw053](https://doi.org/10.1093/llc/fqw053).
+- Benedetti, A. 2022. “Browsing and Visualizing Collections of Images.” YouTube, January 5. [youtube.com/watch?v=bprSgiqZj00](https://www.youtube.com/watch?v=bprSgiqZj00).
+- Birkle, Carmen, and Birgit Däwes. 2019. “‘Old Media Don’t Go Away, They Mutate’: An Interview with Jeffrey Schnapp.” *Amerikastudien/American Studies* 64 (1): 111–25. [doi:10.33675/AMST/2019/1/10](https://doi.org/10.33675/AMST/2019/1/10).
+- Bludau, Marian-Jakob, Marian Dörk, and Frank Heidmann. 2021. “Relational Perspectives as Situated Visualizations of Art Collections.” *Digital Scholarship in the Humanities* 36 (Supplement 2): ii17–ii29. [doi:10.1093/llc/fqab003](https://doi.org/10.1093/llc/fqab003).
+- Börner, Katy, Adam Maltese, Russell Nelson Balliet, and Joe Heimlich. 2016. “Investigating Aspects of Data Visualization Literacy Using 20 Information Visualizations and 273 Science Museum Visitors.” *Information Visualization* 15 (3): 198–213. [doi:10.1177/1473871615594652](https://doi.org/10.1177/1473871615594652).
+- Bostock, Michael, Vadim Ogievetsky, and Jeffrey Heer. 2011. “D3: Data-Driven Documents.” *IEEE Transactions on Visualization and Computer Graphics* 17 (12): 2301–9. [doi:10.1109/TVCG.2011.185](https://doi.org/10.1109/TVCG.2011.185).
+- Champion, Erik Malcolm. 2016. “Digital Humanities Is Text Heavy, Visualization Light, and Simulation Poor.” *Digital Scholarship in the Humanities*: i25–i32. [doi:10.1093/llc/fqw053](https://doi.org/10.1093/llc/fqw053).
 - Crawford, Kate, and Trevor Paglen. 2019. *Excavating AI: The Politics of Images in Machine Learning Training Sets*. AI Now Institute. [excavating.ai](https://excavating.ai).
-- Crockett, Dennis. 2019. "IVPY: Iconographic Visualization Inside Computational Notebooks." *International Journal for Digital Art History* 4: 3.60–3.79. [doi:10.11588/dah.2019.4.66401](https://doi.org/10.11588/DAH.2019.4.66401).
-- Cuno, James B., ed. 1996. *Harvard's Art Museums: 100 Years of Collecting*. Cambridge, MA: Harvard University Art Museums.
+- Crockett, Dennis. 2019. “IVPY: Iconographic Visualization Inside Computational Notebooks.” *International Journal for Digital Art History* 4: 3.60–3.79. [doi:10.11588/dah.2019.4.66401](https://doi.org/10.11588/DAH.2019.4.66401).
+- Cuno, James B., ed. 1996. *Harvard’s Art Museums: 100 Years of Collecting*. Cambridge, MA: Harvard University Art Museums.
 - Danchilla, Brian. 2012. *Beginning WebGL for HTML5*. Berkeley, CA: Apress. [doi:10.1007/978-1-4302-3997-0](https://doi.org/10.1007/978-1-4302-3997-0).
-- Derry, Lins, Jordan Kruguer, Maximilian Mueller, and Jeffrey Schnapp. 2022. "Designing a Choreographic Interface during Covid-19." *Movement and Computing Conference*. [doi:10.1145/3537972.3538020](https://doi.org/10.1145/3537972.3538020).
+- Derry, Lins, Jordan Kruguer, Maximilian Mueller, and Jeffrey Schnapp. 2022. “Designing a Choreographic Interface during Covid-19.” *Movement and Computing Conference*. [doi:10.1145/3537972.3538020](https://doi.org/10.1145/3537972.3538020).
 - Diagne, Cyril, Nicolas Barradeau, and Simon Doury. 2018. *T-SNE Map*. Experiments with Google. [experiments.withgoogle.com/t-sne-map](https://experiments.withgoogle.com/t-sne-map).
-- DiMaggio, Paul, and Eszter Hargittai. 2001. *From the "Digital Divide" to "Digital Inequality": Studying Internet Use as Penetration Increases*. Princeton, NJ: Center for Arts and Cultural Policy Studies, Princeton University.
-- Drucker, Johanna. 2013. "Performative Materiality and Theoretical Approaches to Interface." *Digital Humanities Quarterly* 7 (1). [digitalhumanities.org/dhq/vol/7/1/000143/000143.html](http://www.digitalhumanities.org/dhq/vol/7/1/000143/000143.html).
+- DiMaggio, Paul, and Eszter Hargittai. 2001. *From the “Digital Divide” to “Digital Inequality”: Studying Internet Use as Penetration Increases*. Princeton, NJ: Center for Arts and Cultural Policy Studies, Princeton University.
+- Drucker, Johanna. 2013. “Performative Materiality and Theoretical Approaches to Interface.” *Digital Humanities Quarterly* 7 (1). [digitalhumanities.org/dhq/vol/7/1/000143/000143.html](http://www.digitalhumanities.org/dhq/vol/7/1/000143/000143.html).
 - Duhaime, Douglas. (2017) 2021. *PixPlot*. Yale Digital Humanities Lab. [github.com/YaleDHLab/pix-plot](https://github.com/YaleDHLab/pix-plot).
 - Foster, Hal. 2011. *The Art-Architecture Complex*. London: Verso.
 - Geismar, Haidy. 2018. *Museum Object Lessons for the Digital Age*. London: UCL Press. [doi:10.2307/j.ctv1xz0wz](https://doi.org/10.2307/j.ctv1xz0wz).
 - Harvard Art Museums. 2012. *International Image Interoperability Framework at Harvard University*. [iiif.harvard.edu](https://iiif.harvard.edu/).
-- Impett, Leonardo, and Franco Moretti. 2017. "Totentanz: Operationalizing Aby Warburg's Pathosformeln." *New Left Review* 107: 68–97.
-- Jacomy, Mathieu, Tommaso Venturini, Sebastien Heymann, and Mathieu Bastian. 2014. "ForceAtlas2, a Continuous Graph Layout Algorithm for Handy Network Visualization Designed for the Gephi Software." *PLoS ONE* 9 (6). [doi:10.1371/journal.pone.0098679](https://doi.org/10.1371/journal.pone.0098679).
+- Impett, Leonardo, and Franco Moretti. 2017. “Totentanz: Operationalizing Aby Warburg’s Pathosformeln.” *New Left Review* 107: 68–97.
+- Jacomy, Mathieu, Tommaso Venturini, Sebastien Heymann, and Mathieu Bastian. 2014. “ForceAtlas2, a Continuous Graph Layout Algorithm for Handy Network Visualization Designed for the Gephi Software.” *PLoS ONE* 9 (6). [doi:10.1371/journal.pone.0098679](https://doi.org/10.1371/journal.pone.0098679).
 - Jodidio, Philip. 2014. *Piano: Renzo Piano Building Workshop, Complete Works, 1966–Today*. Cologne: Taschen.
-- Karjus, Andres, Mar Canet Solà, Tillmann Ohm, Sebastian E. Ahnert, and Maximilian Schich. 2022. "Compression Ensembles Quantify Aesthetic Complexity and the Evolution of Visual Art." arXiv. [doi:10.48550/arXiv.2205.10271](https://doi.org/10.48550/arXiv.2205.10271).
-- Kenderdine, Sarah, Ingrid Mason, and Lily Hibberd. 2021. "Computational Archives for Experimental Museology," 3–18. [doi:10.1007/978-3-030-83647-4_1](https://doi.org/10.1007/978-3-030-83647-4_1).
-- Klinke, Harald. 2021. "V-Lab Workshop: Visual Analysis in Cultural Data – Image Plots and t-SNE Maps Made Easy." History of Art Department, October 28.
+- Karjus, Andres, Mar Canet Solà, Tillmann Ohm, Sebastian E. Ahnert, and Maximilian Schich. 2022. “Compression Ensembles Quantify Aesthetic Complexity and the Evolution of Visual Art.” arXiv. [doi:10.48550/arXiv.2205.10271](https://doi.org/10.48550/arXiv.2205.10271).
+- Kenderdine, Sarah, Ingrid Mason, and Lily Hibberd. 2021. “Computational Archives for Experimental Museology,” 3–18. [doi:10.1007/978-3-030-83647-4_1](https://doi.org/10.1007/978-3-030-83647-4_1).
+- Klinke, Harald. 2021. “V-Lab Workshop: Visual Analysis in Cultural Data – Image Plots and t-SNE Maps Made Easy.” History of Art Department, October 28.
 - Kräutli, Florian. 2016. *Visualising Cultural Data: Exploring Digital Collections through Timeline Visualisations*. PhD thesis, Royal College of Art.
 - Latour, Bruno. 1988. *The Pasteurization of France*. Translated by Alan Sheridan and John Law. Cambridge, MA: Harvard University Press.
 - Lima, Manuel. 2011. *Visual Complexity: Mapping Patterns of Information*. New York: Princeton Architectural Press.
-- Maaten, Laurens van der, and Geoffrey Hinton. 2008. "Visualizing Data Using t-SNE." *Journal of Machine Learning Research* 9 (86): 2579–605. [jmlr.org/papers/v9/vandermaaten08a.html](http://jmlr.org/papers/v9/vandermaaten08a.html).
+- Maaten, Laurens van der, and Geoffrey Hinton. 2008. “Visualizing Data Using t-SNE.” *Journal of Machine Learning Research* 9 (86): 2579–605. [jmlr.org/papers/v9/vandermaaten08a.html](http://jmlr.org/papers/v9/vandermaaten08a.html).
 - Maizels, Mike, and Chelsea Qiu, eds. 2020. *Curatorial A(i)gents*. Cambridge, MA: metaLAB (at) Harvard. [printedmatter.org/catalog/57243](https://www.printedmatter.org/catalog/57243/).
-- Manovich, Lev. 2008. "Data Visualization as New Abstraction and Anti-Sublime." In *Small Tech: The Culture of Digital Tools*, edited by Byron Hawk, David M. Rieder, and Ollie O. Oviedo. Minneapolis: University of Minnesota Press.
+- Manovich, Lev. 2008. “Data Visualization as New Abstraction and Anti-Sublime.” In *Small Tech: The Culture of Digital Tools*, edited by Byron Hawk, David M. Rieder, and Ollie O. Oviedo. Minneapolis: University of Minnesota Press.
 - ———. 2020. *Cultural Analytics*. Cambridge, MA: MIT Press. [doi:10.7551/mitpress/11214.001.0001](https://doi.org/10.7551/mitpress/11214.001.0001).
-- Manzini, Ezio. 2016. "Design Culture and Dialogic Design." *Design Issues* 32 (1): 52–59. [doi:10.1162/DESI_a_00364](https://doi.org/10.1162/DESI_a_00364).
+- Manzini, Ezio. 2016. “Design Culture and Dialogic Design.” *Design Issues* 32 (1): 52–59. [doi:10.1162/DESI_a_00364](https://doi.org/10.1162/DESI_a_00364).
 - McCully, Emily Arnold. 2019. *Dreaming in Code: Ada Byron Lovelace, Computer Pioneer*. Somerville, MA: Candlewick Press.
-- McInnes, Leland, John Healy, and James Melville. 2018. "UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction." arXiv. [doi:10.48550/arXiv.1802.03426](https://doi.org/10.48550/arXiv.1802.03426).
+- McInnes, Leland, John Healy, and James Melville. 2018. “UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction.” arXiv. [doi:10.48550/arXiv.1802.03426](https://doi.org/10.48550/arXiv.1802.03426).
 - metaLAB. 2022. *metaLAB (at) Harvard & FU Berlin*. [mlml.io](https://mlml.io/).
-- Moon, Christy Y. E., and Dario Rodighiero. 2020. "Mapping as a Contemporary Instrument for Orientation in Conferences." *Atti del IX Convegno Annuale AIUCD. La svolta inevitabile: sfide e prospettive per l'informatica umanistica*. [doi:10.5281/zenodo.3611340](https://doi.org/10.5281/zenodo.3611340).
-- O'Shea, Keiron, and Ryan Nash. 2015. "An Introduction to Convolutional Neural Networks." arXiv. [arxiv.org/abs/1511.08458](https://arxiv.org/abs/1511.08458).
+- Moon, Christy Y. E., and Dario Rodighiero. 2020. “Mapping as a Contemporary Instrument for Orientation in Conferences.” *Atti del IX Convegno Annuale AIUCD. La svolta inevitabile: sfide e prospettive per l’informatica umanistica*. [doi:10.5281/zenodo.3611340](https://doi.org/10.5281/zenodo.3611340).
+- O’Shea, Keiron, and Ryan Nash. 2015. “An Introduction to Convolutional Neural Networks.” arXiv. [arxiv.org/abs/1511.08458](https://arxiv.org/abs/1511.08458).
 - Pietsch, Christopher. (2018) 2022. *VIKUS Viewer*. [github.com/cpietsch/vikus-viewer](https://github.com/cpietsch/vikus-viewer).
 - Rodighiero, Dario. 2021a. *Mapping Affinities: Democratizing Data Visualization*. Open-access English edition. Geneva: Métis Presses. [doi:10.37866/0563-99-9](https://doi.org/10.37866/0563-99-9).
-- ———. 2021b. "Ars Memorativa as the Genesis of Information Design: A Conversation with Manuel Lima." *Nightingale*, August 18. [nightingaledvs.com/ars-memorativa](https://nightingaledvs.com/ars-memorativa-as-the-genesis-of-information-design-a-conversation-with-manuel-lima/). [doi:10.31235/osf.io/k5unq](https://doi.org/10.31235/osf.io/k5unq).
-- Rodighiero, Dario, Eveline Wandl-Vogt, and Elian Carsenat. 2021. "Making Visible the Invisible Work of Scientists during the Covid-19 Pandemic." *Visual Culture Studies* 2. [doi:10.31235/osf.io/m4uht](https://doi.org/10.31235/osf.io/m4uht).
-- ———. 2022. "A Visual Translation of the Pandemic." *Leonardo* 55 (3). [doi:10.1162/leon_a_02203](https://doi.org/10.1162/leon_a_02203).
-- Russakovsky, Olga, Jia Deng, Hao Su, et al. 2015. "ImageNet Large Scale Visual Recognition Challenge." arXiv. [doi:10.1007/s11263-015-0816-y](https://doi.org/10.1007/s11263-015-0816-y).
-- Seguin, Benoit. 2018. "The Replica Project: Building a Visual Search Engine for Art Historians." *XRDS: Crossroads, The ACM Magazine for Students* 24 (3): 24–29. [doi:10.1145/3186653](https://doi.org/10.1145/3186653).
-- Snydman, Stuart, Robert Sanderson, and Tom Cramer. 2015. "The International Image Interoperability Framework (IIIF): A Community & Technology Approach for Web-Based Images." *Archiving Conference 2015*: 16–21. [doi:10.2352/issn.2168-3204.2015.12.1.art00005](https://doi.org/10.2352/issn.2168-3204.2015.12.1.art00005).
+- ———. 2021b. “Ars Memorativa as the Genesis of Information Design: A Conversation with Manuel Lima.” *Nightingale*, August 18. [nightingaledvs.com/ars-memorativa](https://nightingaledvs.com/ars-memorativa-as-the-genesis-of-information-design-a-conversation-with-manuel-lima/). [doi:10.31235/osf.io/k5unq](https://doi.org/10.31235/osf.io/k5unq).
+- Rodighiero, Dario, Eveline Wandl-Vogt, and Elian Carsenat. 2021. “Making Visible the Invisible Work of Scientists during the Covid-19 Pandemic.” *Visual Culture Studies* 2. [doi:10.31235/osf.io/m4uht](https://doi.org/10.31235/osf.io/m4uht).
+- ———. 2022. “A Visual Translation of the Pandemic.” *Leonardo* 55 (3). [doi:10.1162/leon_a_02203](https://doi.org/10.1162/leon_a_02203).
+- Russakovsky, Olga, Jia Deng, Hao Su, et al. 2015. “ImageNet Large Scale Visual Recognition Challenge.” arXiv. [doi:10.1007/s11263-015-0816-y](https://doi.org/10.1007/s11263-015-0816-y).
+- Seguin, Benoit. 2018. “The Replica Project: Building a Visual Search Engine for Art Historians.” *XRDS: Crossroads, The ACM Magazine for Students* 24 (3): 24–29. [doi:10.1145/3186653](https://doi.org/10.1145/3186653).
+- Snydman, Stuart, Robert Sanderson, and Tom Cramer. 2015. “The International Image Interoperability Framework (IIIF): A Community & Technology Approach for Web-Based Images.” *Archiving Conference 2015*: 16–21. [doi:10.2352/issn.2168-3204.2015.12.1.art00005](https://doi.org/10.2352/issn.2168-3204.2015.12.1.art00005).
 - Steward, Jeff. (2015) 2021. *API Documentation*. Harvard Art Museums. [github.com/harvardartmuseums/api-docs](https://github.com/harvardartmuseums/api-docs).
-- Turing, Alan M. 1950. "Computing Machinery and Intelligence." *Mind* LIX (236): 433–60. [doi:10.1093/mind/LIX.236.433](https://doi.org/10.1093/mind/LIX.236.433).
+- Turing, Alan M. 1950. “Computing Machinery and Intelligence.” *Mind* LIX (236): 433–60. [doi:10.1093/mind/LIX.236.433](https://doi.org/10.1093/mind/LIX.236.433).
 - Vane, Olivia. 2019. *Timeline Design for Visualising Cultural Heritage Data*. PhD thesis, Royal College of Art.
-- Weaver, Warren. 1948. "Science and Complexity." *American Scientist* 36 (4): 536–44. [jstor.org/stable/27826254](https://www.jstor.org/stable/27826254).
+- Weaver, Warren. 1948. “Science and Complexity.” *American Scientist* 36 (4): 536–44. [jstor.org/stable/27826254](https://www.jstor.org/stable/27826254).
