@@ -1,7 +1,7 @@
 ---
 title: "From Wisdom to Data: Philosophical Atlas on Visual Representations of Knowledge"
 year: 2022
-venue: "Porto University Press"
+venue: "University of Porto Press"
 type: "book"
 editor: "José Higuera Rubio and Alberto Romele and Dario Rodighiero and Celeste Pedro"
 doi: "https://www.up.pt/press/books/978-989-746-315-0"
