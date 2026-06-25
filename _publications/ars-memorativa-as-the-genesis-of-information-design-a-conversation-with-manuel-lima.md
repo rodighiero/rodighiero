@@ -82,7 +82,7 @@ I have mixed feelings. New York City will always be a city that we love. And now
 
 **Dario: I look forward to your book next year and hope there will be time to meet you in person. It has been a pleasure.**
 
-## Bibliography
+## References
 
 - Barabási, Albert-László. 2002. _Linked: The New Science of Networks_. Cambridge, MA: Perseus Publishing.
 - Blair, Ann. 2010. _Too Much to Know: Managing Scholarly Information before the Modern Age_. New Haven, CT: Yale University Press.

@@ -97,7 +97,7 @@ One of the most recent developments in this landscape is the use of artificial i
 
 Cultivating network literacy, then, is not only about learning to design or read networks but also about working critically with AI as a collaborator in the production of meaning. For designers, this means making informed and creative choices while remaining attentive to the epistemic and ethical consequences of automated interpretation. Just as reading the codex once transformed cultural literacy, learning to read and question AI-augmented networks may become an equally transformative skill for our age. The challenge ahead is to integrate these tools without erasing human interpretation, ensuring that networks remain spaces for dialogue between computational insight and human imagination.
 
-## Bibliography
+## References
 
 - Barabási, Albert-László. 2002. *Linked: The New Science of Networks*. Cambridge, MA: Perseus Pub.
 - Barabási, Albert-László, Mónica Bello, Julia Kluge-Fabényi, et al. 2020. *Hidden Patterns: Visualizing Networks at BarabásiLab*. Edited by Alanna Stang and Peter Weibel. Berlin: Hatje Cantz Verlag.
