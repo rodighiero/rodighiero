@@ -94,7 +94,7 @@ In this enlightening interview with Lins Derry, a pioneering researcher at the i
 
 **Lins:** Thank you, Dario, for guiding the conversation. Having the opportunity to reflect on the choreographic interface in relation to Surprise Machines, one of the Curatorial A(i)gents projects that set out to visualize the entire Harvard Art Museums’ image collection, and Data Sensorium made me realize a few things. That my work generally involves shaping movement as information for computer systems to understand or moving information, whether through interfacing with data visualizations or dancing data. Excited to see how these approaches might converge in future collaborations together, while continuing to locate new experiments in physical spaces like museums!
 
-## Bibliography
+## References
 
 - Derry, Lins. 2023. “Data Embodiment: Approaching the Body as a Choreographic Medium for Performing Abstract Data.” *International Journal of Performance Arts and Digital Media* 19 (1): 60–82. [doi:10.1080/14794713.2023.2175105](https://doi.org/10.1080/14794713.2023.2175105).
 - Derry, Lins, Jordan Kruguer, Maximilian C. Mueller, and Jeffrey Schnapp. 2022. “Designing a Choreographic Interface during COVID-19.” In *Proceedings of the 8th International Conference on Movement and Computing (MOCO ’22)*. New York: Association for Computing Machinery. [doi:10.1145/3537972.3538020](https://doi.org/10.1145/3537972.3538020).

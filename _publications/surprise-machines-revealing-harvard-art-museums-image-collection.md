@@ -98,7 +98,7 @@ Even with the increase in data literacy, new technologies still struggle to ente
 
 Beyond the technical merits, Surprise Machines is a collective project developed in a stimulating research community above all. Resting on a solid curatorship philosophy, the project embraces a collaborative spirit that finds its most prominent expression in the choreographic interface. Although the latter was not part of the exhibition due to technical limitations, it is valuable to look at failures from a future perspective. Failures are indeed necessary sources of knowledge, as was the case with the closure of the Lightbox Gallery after a life cycle of about ten years. When thinking about a project such as Surprise Machines, it is necessary not to isolate the data visualization from the context. Authors, organizations, buildings, and technologies are among the human and non-human actors that provide extraordinary richness and unpredictability to the outcome. In a research environment where works become increasingly sectoral and specific, it is essential to consider multidisciplinarity as one of the most noteworthy qualities of a laboratory (Manzini 2016), and irreductionism as an inexhaustible source of creativity and inspiration (Latour 1988).
 
-## Bibliography
+## References
 
 - American Museum of Natural History. (2020) 2022. *Collectionscope*. [github.com/amnh-sciviz/collectionscope](https://github.com/amnh-sciviz/collectionscope).
 - Barabási, Albert-László, Mónica Bello, Julia Kluge-Fabényi, et al. 2020. *Hidden Patterns: Visualizing Networks at BarabásiLab*. Edited by Alanna Stang and Peter Weibel. Berlin: Hatje Cantz Verlag.
