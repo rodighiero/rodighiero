@@ -72,9 +72,9 @@ In this enlightening interview with Lins Derry, a pioneering researcher at the i
 
 **Dario: What kind of feedback were you triggering with the movements in this project? Was it video, sound, or a mix of both?**
 
-**Lins:** At the moment, there’s a digital dashboard containing the movement score as text, two data visualizations, and the choreographic interface that all update as Isabel moves through the dance. That’s the extent of the feedback system for now, but to your question, introducing some sound or video projection that’s less nerdy and more aesthetic would be an amazing next step. For instance, when the storm gesture is performed, there could be a thunderous sound in a sonification score.
+**Lins:** At the moment, there’s a digital dashboard containing the movement score as text, two data visualizations, and the choreographic interface that all update as Isabelle moves through the dance. That’s the extent of the feedback system for now, but to your question, introducing some sound or video projection that’s less nerdy and more aesthetic would be an amazing next step. For instance, when the storm gesture is performed, there could be a thunderous sound in a sonification score.
 
-**Dario: If I understand correctly, the sensing aspect of these projects is confined to the camera’s presence. And we know we can create beautiful things with it. So, I’d like to ask if you could expand a bit the capturing through devices. What has the experience of using the camera been like? What are the limitations? And are there other methodologies or capture devices you’re interested in exploring?**
+**Dario: If I understand correctly, the sensing aspect of these projects is confined to the camera’s presence. And we know we can create beautiful things with it. So, I’d like to ask if you could expand a bit on capturing through devices. What has the experience of using the camera been like? What are the limitations? And are there other methodologies or capture devices you’re interested in exploring?**
 
 **Lins:** We chose the webcam because it was simple to use and wouldn’t require any body contact, which was crucial for maintaining social distancing. This is what ultimately led us into the realm of gestural interfaces. I’m curious about experimenting with other motion capture devices, especially low-fidelity ones where their latencies could provide more space for creating interesting feedback loops. This would be less for a strict control system like we had for Curatorial A(i)gents and more for something artistic and expressive.
 
@@ -88,7 +88,7 @@ In this enlightening interview with Lins Derry, a pioneering researcher at the i
 
 **Dario: I think it’s beautiful to have this moment of writing in which, actually, you’re not moving, but you are expressing yourself through a different medium. I was just curious to know if you developed these arguments in the papers you publish about your projects.**
 
-**Lins:** I have! Perhaps a nice moment to highlight the following papers on the projects we discussed: Data Embodiment: Approaching the Body as a Choreographic Medium for Performing Abstract Data (Derry 2023), Surprise Machines: Revealing Harvard Art Museums’ Image Collection (Rodighiero et al. 2022), and Designing a Choreographic Interface During COVID-19 (Derry et al. 2022).
+**Lins:** I have! Perhaps a nice moment to highlight the following papers on the projects we discussed: “Data Embodiment: Approaching the Body as a Choreographic Medium for Performing Abstract Data” (Derry 2023), “Surprise Machines: Revealing Harvard Art Museums’ Image Collection” (Rodighiero et al. 2022), and “Designing a Choreographic Interface during COVID-19” (Derry et al. 2022).
 
 **Dario: Thank you for sharing your journey and insights with us, Lins. Your work is a vivid example of how interdisciplinary approaches can enrich our understanding and interaction with choreography, design, and technology.**
 
