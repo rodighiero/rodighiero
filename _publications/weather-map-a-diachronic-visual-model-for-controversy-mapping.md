@@ -12,6 +12,7 @@ doi: "https://doi.org/10.1515/9783111317779-017"
 img: "@publications/Weather-Map.webp"
 img_width: 700
 img_height: 525
+thumb: "weather-map-a-diachronic-visual-model-for-controversy-mapping/fig_002.webp"
 figures: true
 excerpt_separator: "<!--more-->"
 ---
