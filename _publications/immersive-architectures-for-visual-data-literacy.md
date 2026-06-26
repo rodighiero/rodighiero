@@ -28,7 +28,7 @@ The coronavirus disease triggered an event characterized by a continuous data fl
 
 It has been almost three years since the first COVID-19 cases appeared, and institutions still collect data to make them publicly available for reuse (Wilkinson et al. 2016). For example, Johns Hopkins University’s contribution was commendable: they established an information system collecting information on many aspects of COVID-19, including an extensive dataset of scientific literature (Wang et al. 2020). They also designed many data visualizations to grasp the phenomenon’s complexity from a visual perspective. Among these data visualizations, the best-known representation is undoubtedly the map of infections, which is still present in our minds today (see Figure 1).
 
-{% include figure.html src="/images/immersive-architectures-for-visual-data-literacy/fig_001.webp" caption="Figure 1. The dashboard created by Johns Hopkins University has accompanied us throughout the pandemic. The map gained high visibility over time, making the website a reference for scientists and Internet users interested in the pandemic." %}
+{% include figure.html class="full" src="/images/immersive-architectures-for-visual-data-literacy/fig_001.webp" caption="Figure 1. The dashboard created by Johns Hopkins University has accompanied us throughout the pandemic. The map gained high visibility over time, making the website a reference for scientists and Internet users interested in the pandemic." %}
 
 ## One First Response to COVID-19
 
@@ -48,7 +48,7 @@ The idea was elegantly simple: to visualize the scientific literature on coronav
 
 The plan was to overcome the computational limit through the technology provided by Ars Electronica, an Austrian institute active in the field of new media art that organizes a festival in Linz every year. The institute houses the Ars Electronica Center, a museum whose primary function is to offer visitors interactive experiments at the intersection of art, technology, and society. The Ars Electronica Center operates the Deep Space 8K, an interactive theater which can accommodate spectators in an immersive space. Two 16-by-9-meter projections create a feeling of immersion by merging on the stage, as described in Figure 3 (Sick-Leitner 2015). Such a projection system extends a computer equipped with powerful graphics cards capable of handling heavy graphics rendering in a resolution of 8,192 by 4,320 pixels. As a result, the advanced technology of Deep Space 8K was the only way at our disposal to render 600,000 coronavirus-related publications in a unique and complex data visualization.
 
-{% include figure.html src="/images/immersive-architectures-for-visual-data-literacy/fig_003.webp" caption="Figure 3. This schema summarizes the composition of the Deep Space 8K in the Ars Electronica Center. Eight devices project a large image on the stage’s floor and wall. Visitors experience an immersive visual from the surrounding balconies or the seats positioned at the entrance." %}
+{% include figure.html class="full" src="/images/immersive-architectures-for-visual-data-literacy/fig_003.webp" caption="Figure 3. This schema summarizes the composition of the Deep Space 8K in the Ars Electronica Center. Eight devices project a large image on the stage’s floor and wall. Visitors experience an immersive visual from the surrounding balconies or the seats positioned at the entrance." %}
 
 ## Design Process
 
