@@ -61,7 +61,7 @@ A targeted evaluation was conducted on approximately 200 manuscript pages sample
 
 The manuscript pages were then transcribed zero-shot with Google Gemini Flash 3. In a post-processing phase, an inline diplomatic markup scheme for TEI P5 has been employed, with the goal of preserving authorial revisions (deletions, insertions, substitutions). The resulting machine-generated corpus now provides a homogeneous basis for corpus-scale analyses across Peirce’s archive.
 
-Subsequent studies extended this line of inquiry to the visual and multimodal dimensions of the manuscripts. Computational pipelines developed within the project enabled the extraction and evaluation of visual features from Peirce’s diagrams, with a particular focus on Existential Graphs (Pedretti et al. 2025, n.d.). Using Vision–Language Models, this work assessed the capacity of contemporary systems to recognize diagrammatic forms and visual regularities.
+Subsequent studies extended this line of inquiry to the visual and multimodal dimensions of the manuscripts. Computational pipelines developed within the project enabled the extraction and evaluation of visual features from Peirce’s diagrams, with a particular focus on Existential Graphs (Pedretti et al. 2025, forthcoming). Using Vision–Language Models, this work assessed the capacity of contemporary systems to recognize diagrammatic forms and visual regularities.
 
 Peirce claimed that “all necessary reasoning is diagrammatic” (CP 5.162) and described his visual logic system, the Existential Graphs, as “moving pictures of thought” (CP 4.8). His manuscripts embody this conviction in pages where text and visual elements intertwine, employing as many as four colors to make critical logical distinctions (Keeler 2020a). The manuscript page is a single semiotic surface that conventional printed editions have rendered only partially (Keeler 2020b). On the full digitized corpus, a CLIP-based classifier trained on 1,317 manually annotated pages identified 1,519 pages (9.7%) containing visual elements, concentrated in the Logic and Mathematics categories; the density peaks in the 1895–1899 period, with 50.6% of Logic pages and 92.3% of Mathematics pages containing diagrams, in correspondence with Peirce’s intensive development of the Existential Graphs (Pedretti et al. 2025).
 
@@ -69,9 +69,9 @@ Machine-generated outputs (transcriptions, diagram detections, classifications) 
 
 {% include figure.html src="/images/peirce-interprets-peirce-digitization-automation-and-interpretation-in-charles-peirce-s-manuscripts/fig_002.webp" caption="Figure 2. Fine-tuned YOLOv8m output showing diagram (blue) and text block (light blue) detection on MS 431." %}
 
-Moreover, testing five Vision–Language Models on 27 manually annotated Existential Graphs covering Alpha and Beta variants, the results show strong performance at the morphological level (counting cuts, lines, spots) and at the relational level (containment, connection), but systematic failure at the representational level, where the diagram must be read as a logical formula (Pedretti et al., n.d.). Even when prompts stated Peirce’s endoporeutic (from the outside to the inside) reading procedure, the models produced errors of scope and negation, reading “Some man is not wounded” as “No man is wounded” or collapsing ∃y∀x into ∀x∃y.
+Moreover, testing five Vision–Language Models on 27 manually annotated Existential Graphs covering Alpha and Beta variants, the results show strong performance at the morphological level (counting cuts, lines, spots) and at the relational level (containment, connection), but systematic failure at the representational level, where the diagram must be read as a logical formula (Pedretti et al., forthcoming). Even when prompts stated Peirce’s endoporeutic (from the outside to the inside) reading procedure, the models produced errors of scope and negation, reading “Some man is not wounded” as “No man is wounded” or collapsing ∃y∀x into ∀x∃y.
 
-This empirical gap is further clarified by theoretical work examining the relationship between semiotics and large language models (Picca and Zangari, n.d.). That analysis situates contemporary AI systems within a semiotic perspective, showing how their pattern-based operations intersect with, but remain distinct from, Peirce’s account of sign processes and reasoning. Read together, the results suggest that computational systems can effectively support the organization, comparison, and exploration of Peirce’s manuscripts, while interpretive reasoning remains anchored in semiotic analysis and philosophical judgment.
+This empirical gap is further clarified by theoretical work examining the relationship between semiotics and large language models (Picca and Zangari, forthcoming). That analysis situates contemporary AI systems within a semiotic perspective, showing how their pattern-based operations intersect with, but remain distinct from, Peirce’s account of sign processes and reasoning. Read together, the results suggest that computational systems can effectively support the organization, comparison, and exploration of Peirce’s manuscripts, while interpretive reasoning remains anchored in semiotic analysis and philosophical judgment.
 
 A first public prototype of the resulting digital edition[^1] has been developed using TEI Publisher v10 as a platform. Each manuscript page is rendered alongside its IIIF facsimile, with authorial revisions resolved interactively from the underlying TEI markup (see Figure 3). The prototype serves a double purpose: as a scholarly access point to the transcribed corpus, and as a testbed for further layers—e.g., critical apparatus and ontology-driven annotations linking textual and diagrammatic elements—that will be integrated in the subsequent phases of the project. Moreover, by making the edition available at this intermediate stage the transcribed material is exposed as an object of scholarly verification rather than as a black-box output, allowing domain experts to inspect, annotate, and eventually correct this baseline.
 
@@ -93,48 +93,48 @@ This paper has proposed a workflow for engaging with large, heterogeneous manusc
 
 ## References
 
-- Atkin, A. 2013. “Peirce’s Theory of Signs.” In _The Stanford Encyclopedia of Philosophy_, edited by E. N. Zalta. https://plato.stanford.edu/entries/peirce-semiotics/
-- Bateman, J. 2018. “Peircean Semiotics and Multimodality: Towards a New Synthesis.” _Multimodal Communication_ 7.
-- Bella, M., G. Maddalena, and A. De Tienne. 2016. “What Is Happening to the Peirce Project?” _European Journal of Pragmatism and American Philosophy_ 8 (2). https://doi.org/10.4000/ejpap.664
-- Bellucci, F., and A. Pietarinen. 2024. “Existential Graphs: History and Interpretation.” In _The Oxford Handbook of Charles S. Peirce_ (online), edited by C. de Waal. Oxford: Oxford Academic. https://doi.org/10.1093/oxfordhb/9780197548561.013.16
-- Burch, R. 2021. “Charles Sanders Peirce.” In _The Stanford Encyclopedia of Philosophy_ (Summer 2022), edited by E. N. Zalta. Stanford: Metaphysics Research Lab, Stanford University. https://plato.stanford.edu/archives/sum2022/entries/peirce/
-- Ciula, A., Ø. Eide, C. Marras, and P. Sahle. 2023. _Modelling Between Digital and Humanities: Thinking in Practice_. Cambridge: Open Book Publishers. https://doi.org/10.11647/OBP.0369
-- Cristalli, C. 2022. “Unconscious Inferences in Perception in Early Experimental Psychology: From Wundt to Peirce.” _Journal of the History of the Behavioral Sciences_ 58 (4): 432–448. https://doi.org/10.1002/jhbs.22211
-- Engel, F., M. Queisner, and T. Viola, eds. 2012. _Das bildnerische Denken: Charles S. Peirce_. Berlin: Akademie Verlag.
-- Everett, D. 2021. “Charles Sanders Peirce Was America’s Greatest Thinker.” _Attention to the Unseen_, September 26. https://attentiontotheunseen.com/2021/09/26/charles-sanders-peirce-was-americas-greatest-thinker
-- Farias, P., and J. Queiroz. 2017. “Visualizing Triadic Relations: Diagrams for Charles S. Peirce’s Classifications of Signs.” _Information Design Journal_ 23 (2): 127–147.
-- Feil, S. 2024. _Pragmatismus als Theorie der Vorbegrifflichkeit_. Paderborn: Brill. https://doi.org/10.30965/9783846768945
+- Atkin, Albert. 2013. “Peirce’s Theory of Signs.” In _The Stanford Encyclopedia of Philosophy_, edited by Edward N. Zalta. https://plato.stanford.edu/entries/peirce-semiotics/
+- Bateman, John. 2018. “Peircean Semiotics and Multimodality: Towards a New Synthesis.” _Multimodal Communication_ 7.
+- Bella, Michela, Giovanni Maddalena, and André De Tienne. 2016. “What Is Happening to the Peirce Project?” _European Journal of Pragmatism and American Philosophy_ 8 (2). https://doi.org/10.4000/ejpap.664
+- Bellucci, Francesco, and Ahti-Veikko Pietarinen. 2024. “Existential Graphs: History and Interpretation.” In _The Oxford Handbook of Charles S. Peirce_ (online), edited by Cornelis de Waal. Oxford: Oxford Academic. https://doi.org/10.1093/oxfordhb/9780197548561.013.16
+- Burch, Robert. 2021. “Charles Sanders Peirce.” In _The Stanford Encyclopedia of Philosophy_ (Summer 2022), edited by Edward N. Zalta. Stanford: Metaphysics Research Lab, Stanford University. https://plato.stanford.edu/archives/sum2022/entries/peirce/
+- Ciula, Arianna, Øyvind Eide, Cristina Marras, and Patrick Sahle. 2023. _Modelling Between Digital and Humanities: Thinking in Practice_. Cambridge: Open Book Publishers. https://doi.org/10.11647/OBP.0369
+- Cristalli, Claudia. 2022. “Unconscious Inferences in Perception in Early Experimental Psychology: From Wundt to Peirce.” _Journal of the History of the Behavioral Sciences_ 58 (4): 432–448. https://doi.org/10.1002/jhbs.22211
+- Engel, Franz, Moritz Queisner, and Tullio Viola, eds. 2012. _Das bildnerische Denken: Charles S. Peirce_. Berlin: Akademie Verlag.
+- Everett, Daniel. 2021. “Charles Sanders Peirce Was America’s Greatest Thinker.” _Attention to the Unseen_, September 26. https://attentiontotheunseen.com/2021/09/26/charles-sanders-peirce-was-americas-greatest-thinker
+- Farias, Priscila, and João Queiroz. 2017. “Visualizing Triadic Relations: Diagrams for Charles S. Peirce’s Classifications of Signs.” _Information Design Journal_ 23 (2): 127–147.
+- Feil, Sebastian. 2024. _Pragmatismus als Theorie der Vorbegrifflichkeit_. Paderborn: Brill. https://doi.org/10.30965/9783846768945
 - Harvard University. n.d. _Harvard Library_. https://hollis.harvard.edu/
-- Hiippala, T., and J. Bateman. 2022. “Semiotically-Grounded Distant View of Diagrams: Insights from Two Multimodal Corpora.” _Digital Scholarship in the Humanities_ 37: 405–425. https://doi.org/10.1093/llc/fqab063
-- Jariah, R., R. Fathu, and M. P. Amir. 2022. “Social Problems in Drama 13 Reasons Why: Peirce Semiotics Approach.” _TEKSTUAL_ 20: 48. https://doi.org/10.33387/tekstual.v20i1.4508
-- Jockers, M. L. 2013. _Macroanalysis: Digital Methods and Literary History_. Urbana: University of Illinois Press. https://doi.org/10.5406/illinois/9780252037528.001.0001
-- Kahle, P., S. Colutto, G. Hackl, and G. Mühlberger. 2017. “Transkribus: A Service Platform for Transcription, Recognition and Retrieval of Historical Documents.” In _Proceedings of the 14th IAPR International Conference on Document Analysis and Recognition (ICDAR)_, 19–24. https://doi.org/10.1109/ICDAR.2017.307
-- Keeler, M. 2020a. “Pragmatically Improving Access to Peirce’s Archive.” _Chinese Semiotic Studies_ 16 (1): 167–187. https://doi.org/10.1515/css-2020-0009
-- Keeler, M. 2020b. “The Hidden Treasure of C. S. Peirce’s Manuscripts.” _Chinese Semiotic Studies_ 16 (1): 155–166. https://doi.org/10.1515/css-2020-0008
-- Keeler, M., and C. Kloesel. 1997. “Communication, Semiotic Continuity, and the Margins of the Peircean Text.” In _Margins of the Text_, edited by D. Greetham. Ann Arbor: University of Michigan Press. http://conceptualgraphs.org/revelator/web/papers/keelermargins1997.pdf
-- Liszka, J. 2021. _Charles Peirce on Ethics, Esthetics and the Normative Sciences_. London: Routledge. https://doi.org/10.4324/9781003160892
-- Liszka, J. J. 1996. _A General Introduction to the Semiotic of Charles Sanders Peirce_. Bloomington: Indiana University Press.
-- Mazur, L., and I. Sticksel. 2021. “An Empirical Study of Psychology and Logic: Abduction and Belief as Normalizing Habits of Positive Expectation.” _New Ideas in Psychology_ 63: 100874. https://doi.org/10.1016/j.newideapsych.2021.100874
-- Nöth, W. 2016. “Habits, Habit of Change, and the Habit of Habit Change According to Peirce.” In _Consensus on Peirce’s Concept of Habit_, edited by D. E. West and M. Anderson, 35–63. Cham: Springer.
-- Pape, H. 1990. “Charles S. Peirce on Objects of Thought and Representation.” _Noûs_ 24 (3): 375–395.
-- Pape, H. 2015. _Charles S. Peirce zur Einführung_. 2nd ed. Hamburg: Junius.
-- Pedretti, C. T., D. Picca, and D. Rodighiero. 2025. “Moving Pictures of Thought: Extracting Visual Knowledge in Charles S. Peirce’s Manuscripts with Vision-Language Models.” In _Anthology of Computers and the Humanities_, vol. 3, edited by T. Arnold, M. Fantoli, and R. Ros, 1454–1467. https://doi.org/10.63744/fkFGJ6wSzDPV
-- Pedretti, C. T., D. Picca, D. Rodighiero, S. Feil, and A. Adamou. Forthcoming. “Moving Pictures of Thought: Evaluating Vision-Language Models on Peirce’s Existential Graphs.” _Journal of Digital History_.
-- Peirce, C. S. 1955. “Logic as Semiotic: The Theory of Signs.” In _Philosophical Writings of Peirce_, edited by Justus Buchler, 98–105. New York: Dover Publications.
-- Peirce, C. S. 1960. _Collected Papers of Charles Sanders Peirce, Vol. I: Principles of Philosophy and Vol. II: Elements of Logic_. Edited by C. Hartshorne and P. Weiss. Cambridge, MA: The Belknap Press of Harvard University Press.
-- Peirce, C. S. 1977. _Semiotic and Significs: The Correspondence between Charles S. Peirce and Victoria Lady Welby_. Edited by C. S. Hardwick. Bloomington: Indiana University Press.
-- Peirce, C. S. 1994. _The Collected Papers of Charles Sanders Peirce_. Edited by J. Deely. Cambridge, MA: Harvard University Press.
+- Hiippala, Tuomo, and John Bateman. 2022. “Semiotically-Grounded Distant View of Diagrams: Insights from Two Multimodal Corpora.” _Digital Scholarship in the Humanities_ 37: 405–425. https://doi.org/10.1093/llc/fqab063
+- Jariah, Ratu Ainun, Fathu Rahman, and M. Amir P. 2022. “Social Problems in Drama 13 Reasons Why: Peirce Semiotics Approach.” _TEKSTUAL_ 20: 48. https://doi.org/10.33387/tekstual.v20i1.4508
+- Jockers, Matthew L. 2013. _Macroanalysis: Digital Methods and Literary History_. Urbana: University of Illinois Press. https://doi.org/10.5406/illinois/9780252037528.001.0001
+- Kahle, Philip, Sebastian Colutto, Günter Hackl, and Günter Mühlberger. 2017. “Transkribus: A Service Platform for Transcription, Recognition and Retrieval of Historical Documents.” In _Proceedings of the 14th IAPR International Conference on Document Analysis and Recognition (ICDAR)_, 19–24. https://doi.org/10.1109/ICDAR.2017.307
+- Keeler, Mary. 2020a. “Pragmatically Improving Access to Peirce’s Archive.” _Chinese Semiotic Studies_ 16 (1): 167–187. https://doi.org/10.1515/css-2020-0009
+- Keeler, Mary. 2020b. “The Hidden Treasure of C. S. Peirce’s Manuscripts.” _Chinese Semiotic Studies_ 16 (1): 155–166. https://doi.org/10.1515/css-2020-0008
+- Keeler, Mary, and Christian Kloesel. 1997. “Communication, Semiotic Continuity, and the Margins of the Peircean Text.” In _Margins of the Text_, edited by David Greetham. Ann Arbor: University of Michigan Press. http://conceptualgraphs.org/revelator/web/papers/keelermargins1997.pdf
+- Liszka, James Jakób. 1996. _A General Introduction to the Semiotic of Charles Sanders Peirce_. Bloomington: Indiana University Press.
+- Liszka, James Jakób. 2021. _Charles Peirce on Ethics, Esthetics and the Normative Sciences_. London: Routledge. https://doi.org/10.4324/9781003160892
+- Mazur, Lucas, and Ida Sticksel. 2021. “An Empirical Study of Psychology and Logic: Abduction and Belief as Normalizing Habits of Positive Expectation.” _New Ideas in Psychology_ 63: 100874. https://doi.org/10.1016/j.newideapsych.2021.100874
+- Nöth, Winfried. 2016. “Habits, Habit of Change, and the Habit of Habit Change According to Peirce.” In _Consensus on Peirce’s Concept of Habit_, edited by Donna E. West and Myrdene Anderson, 35–63. Cham: Springer.
+- Pape, Helmut. 1990. “Charles S. Peirce on Objects of Thought and Representation.” _Noûs_ 24 (3): 375–395.
+- Pape, Helmut. 2015. _Charles S. Peirce zur Einführung_. 2nd ed. Hamburg: Junius.
+- Pedretti, Carlo Teo, Davide Picca, and Dario Rodighiero. 2025. “Moving Pictures of Thought: Extracting Visual Knowledge in Charles S. Peirce’s Manuscripts with Vision-Language Models.” In _Anthology of Computers and the Humanities_, vol. 3, edited by Taylor Arnold, Margherita Fantoli, and Ruben Ros, 1454–1467. https://doi.org/10.63744/fkFGJ6wSzDPV
+- Pedretti, Carlo Teo, Davide Picca, Dario Rodighiero, Sebastian Feil, and Alessandro Adamou. Forthcoming. “Moving Pictures of Thought: Evaluating Vision-Language Models on Peirce’s Existential Graphs.” _Journal of Digital History_.
+- Peirce, Charles S. 1955. “Logic as Semiotic: The Theory of Signs.” In _Philosophical Writings of Peirce_, edited by Justus Buchler, 98–105. New York: Dover Publications.
+- Peirce, Charles S. 1960. _Collected Papers of Charles Sanders Peirce, Vol. I: Principles of Philosophy and Vol. II: Elements of Logic_. Edited by Charles Hartshorne and Paul Weiss. Cambridge, MA: The Belknap Press of Harvard University Press.
+- Peirce, Charles S. 1977. _Semiotic and Significs: The Correspondence between Charles S. Peirce and Victoria Lady Welby_. Edited by Charles S. Hardwick. Bloomington: Indiana University Press.
+- Peirce, Charles S. 1994. _The Collected Papers of Charles Sanders Peirce_. Edited by John Deely. Cambridge, MA: Harvard University Press.
 - Peirce Edition Project. 2021. _Peirce Edition Project_.
-- Pflaeging, J., J. Wildfeuer, and J. Bateman, eds. 2021. _Empirical Multimodality Research: Methods, Applications, Implications_. Berlin: De Gruyter. https://doi.org/10.1515/9783110725001-001
-- Picca, D. 2025. “Not Minds, but Signs: Reframing LLMs through Semiotics.” arXiv. https://arxiv.org/abs/2505.17080
-- Picca, D., A. Schnyder, E. Kostina, A. Adamou, D. Rodighiero, and J. Schnapp. 2023. “Orchestrating Cultural Heritage: Exploring the Automated Analysis and Organization of Charles S. Peirce’s PAP Manuscript.” In _Proceedings of the 34th ACM Conference on Hypertext and Social Media_. https://doi.org/10.1145/3603163.3609066
-- Picca, D., and L. Zangari. Submitted. “Framing Large Language Models through Semiotics: A Review.”
-- Roberts, D. D. 2009. _The Existential Graphs of Charles S. Peirce_. Berlin: Mouton de Gruyter.
-- Robin, R. S. 1967. _Robin Catalog_.
-- Shanahan, M. 2024. “Talking about Large Language Models.” _Communications of the ACM_ 67 (2): 68–79.
-- Sheriff, J. 1989. _The Fate of Meaning: Charles Peirce, Structuralism, and Literature_. Princeton: Princeton University Press. https://doi.org/10.1515/9781400859979
-- Sonesson, G. 2013. “The Natural History of Branching: Approaches to the Phenomenology of Firstness, Secondness, and Thirdness.” _Signs and Society_ 1 (2): 297–325.
-- Stjernfelt, F. 2007. _Diagrammatology: An Investigation on the Borderlines of Phenomenology, Ontology, and Semiotics_. Dordrecht: Springer.
-- Strand, T. 2022. “A Semiotic Model of Learning.” _Chinese Semiotic Studies_ 17: 153–162.
-- Underwood, T. 2019. _Distant Horizons: Digital Evidence and Literary Change_. Chicago: University of Chicago Press. https://doi.org/10.7208/chicago/9780226612973.001.0001
-- Zhang, Y. 2019. “A Semiotic Study on Print Advertisements of Luxury Perfume Brands for Women.” _Asian Journal of Social Sciences Studies_ 4 (1). https://doi.org/10.20849/ajsss.v4i1.540
+- Pflaeging, Jana, Janina Wildfeuer, and John Bateman, eds. 2021. _Empirical Multimodality Research: Methods, Applications, Implications_. Berlin: De Gruyter. https://doi.org/10.1515/9783110725001-001
+- Picca, Davide. 2025. “Not Minds, but Signs: Reframing LLMs through Semiotics.” arXiv. https://arxiv.org/abs/2505.17080
+- Picca, Davide, Antonin Schnyder, Eri Kostina, Alessandro Adamou, Dario Rodighiero, and Jeffrey Schnapp. 2023. “Orchestrating Cultural Heritage: Exploring the Automated Analysis and Organization of Charles S. Peirce’s PAP Manuscript.” In _Proceedings of the 34th ACM Conference on Hypertext and Social Media_. https://doi.org/10.1145/3603163.3609066
+- Picca, Davide, and Lorenzo Zangari. Forthcoming. “Framing Large Language Models through Semiotics: A Review.”
+- Roberts, Don D. 2009. _The Existential Graphs of Charles S. Peirce_. Berlin: Mouton de Gruyter.
+- Robin, Richard S. 1967. _Robin Catalog_.
+- Shanahan, Murray. 2024. “Talking about Large Language Models.” _Communications of the ACM_ 67 (2): 68–79.
+- Sheriff, John. 1989. _The Fate of Meaning: Charles Peirce, Structuralism, and Literature_. Princeton: Princeton University Press. https://doi.org/10.1515/9781400859979
+- Sonesson, Göran. 2013. “The Natural History of Branching: Approaches to the Phenomenology of Firstness, Secondness, and Thirdness.” _Signs and Society_ 1 (2): 297–325.
+- Stjernfelt, Frederik. 2007. _Diagrammatology: An Investigation on the Borderlines of Phenomenology, Ontology, and Semiotics_. Dordrecht: Springer.
+- Strand, Torill. 2022. “A Semiotic Model of Learning.” _Chinese Semiotic Studies_ 17: 153–162.
+- Underwood, Ted. 2019. _Distant Horizons: Digital Evidence and Literary Change_. Chicago: University of Chicago Press. https://doi.org/10.7208/chicago/9780226612973.001.0001
+- Zhang, Yuping. 2019. “A Semiotic Study on Print Advertisements of Luxury Perfume Brands for Women.” _Asian Journal of Social Sciences Studies_ 4 (1). https://doi.org/10.20849/ajsss.v4i1.540
