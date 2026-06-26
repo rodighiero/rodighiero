@@ -10,6 +10,7 @@ doi: "https://doi.org/10.5281/zenodo.5115621"
 img: "@publications/Making-Visible-the-Invisible-Work-of-Scientists-during-the-COVID-19-Pandemic.webp"
 img_width: 700
 img_height: 700
+thumb: "making-visible-the-invisible-work-of-scientists-during-the-covid-19-pandemic/fig_005.webp"
 figures: true
 excerpt_separator: "<!--more-->"
 ---
@@ -61,7 +62,7 @@ Data visualizations that can be associated with performance are meant to be imag
 
 Even if the impact of this specific data visualization has never been verified, there is a good chance that its image is now part of the western culture in the very meaning given by W.J.T. Mitchell. In the book Image Science, Mitchell clearly states, “The picture is a material object, a thing you can burn or break or tear. An image is what appears in a picture, and what survives its destruction—in memory, in narrative, in copies and traces in other media.” (Mitchell 2015) In this sense, flattening the curve becomes part of our visual memory, going beyond the pictorial representation of a pandemic.
 
-{% include figure.html src="/images/making-visible-the-invisible-work-of-scientists-during-the-covid-19-pandemic/fig_002.webp" caption="Figure 2. Flattening the curve can be considered the motto of the coronavirus pandemic. The image showing the limit of hospitals at maximum capacity (Thunström et al. 2020) is part of our culture now. This data visualization has been widely used by the media to remind people to keep social distancing." %}
+{% include figure.html class="narrow" src="/images/making-visible-the-invisible-work-of-scientists-during-the-covid-19-pandemic/fig_002.webp" caption="Figure 2. Flattening the curve can be considered the motto of the coronavirus pandemic. The image showing the limit of hospitals at maximum capacity (Thunström et al. 2020) is part of our culture now. This data visualization has been widely used by the media to remind people to keep social distancing." %}
 
 ### 3) Memory, the History of Pandemics
 
