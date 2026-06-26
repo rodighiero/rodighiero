@@ -614,8 +614,10 @@
         {% if publication.img %}
         {% assign _card_i = _card_i | plus: 1 %}
         <div class="card-img{% if publication.img_border %} bordered{% endif %}">
-          {%- comment -%} The first row (4 columns) is the likely LCP: load it eagerly with high priority; lazy-load below the fold. {%- endcomment -%}
-          <img src="/images/@thumbnails/{{ publication.slug }}.webp" alt="" {% if _card_i <= 4 %}fetchpriority="high"{% elsif _card_i > 8 %}loading="lazy"{% endif %} width="{{ publication.img_width }}" height="{{ publication.img_height }}">
+          {%- comment -%} The first row (4 columns) is the likely LCP: load it eagerly with high priority; lazy-load below the fold. Reserve space from the thumbnail's own dimensions (it can differ from the full-size img), falling back to the front-matter size. {%- endcomment -%}
+          {%- assign _thumb = '/images/@thumbnails/' | append: publication.slug | append: '.webp' -%}
+          {%- assign _thumb_dims = _thumb | image_size -%}
+          <img src="{{ _thumb }}" alt="" {% if _card_i <= 4 %}fetchpriority="high"{% elsif _card_i > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width | default: publication.img_width }}" height="{{ _thumb_dims.height | default: publication.img_height }}">
         </div>
         {% endif %}
         <div class="card-meta">
