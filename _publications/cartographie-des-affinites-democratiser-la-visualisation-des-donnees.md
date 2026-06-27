@@ -4,6 +4,7 @@ year: 2021
 venue: "Métis Presses"
 type: "book"
 lang: fr
+translation_of: mapping-affinities-democratizing-data-visualization
 author: "Dario Rodighiero"
 translator: "Martine Sgard"
 preface: "Jeffrey T. Schnapp"

@@ -15,6 +15,7 @@ figures: true
 img_width: 700
 img_height: 700
 lang: it
+translation_of: surprise-machines-revealing-harvard-art-museums-image-collection
 ---
 Surprise Machines è un progetto di museologia sperimentale che rende visibile l’insieme delle immagini d’archivio conservate nei musei d’arte dell’Università di Harvard, in inglese Harvard Art Museums. Con l’idea di rendere visibile ai visitatori dei musei una collezione di più di 200.000 oggetti, la ricerca esplora potenzialità e limiti dell’intelligenza artificiale nel rappresentare un grande insieme di immagini. Inserito nell’esposizione Curatorial A(i)gents, organizzata dal metaLAB (at) Harvard, il progetto ha il fine ultimo di stupire rivelando l’estensione di un archivio non direttamente accessibile ai visitatori dei musei. Per amplificare questo effetto di sorpresa, l’installazione museale è arricchita da un’interfaccia coreografica che collega la gestualità dei visitatori a sguardi unici sulla collezione di immagini.
 

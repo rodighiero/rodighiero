@@ -34,14 +34,22 @@ TRANS_CACHE = ROOT / "_data" / "translations-cache.json"
 LAYOUT_SCRIPT = ROOT / "scripts" / "layout-network.js"
 
 
-def precompute_layout(nodes: list[dict], similarity: list[list[float]]) -> dict:
+def precompute_layout(
+    nodes: list[dict], similarity: list[list[float]], translations: dict[int, int]
+) -> dict:
     """Bake the force-directed layout offline via the shared Node script.
 
     layout-network.js reuses the exact d3-force config the browser used to run
     at render time, so the home page can draw the graph already settled without
-    running the simulation client-side. Returns {canvas, positions, links}.
+    running the simulation client-side. `translations` maps a translation node's
+    index to its original's index: those nodes join the simulation as regular
+    nodes but their only edge is a forced 1.00 link to the original (no
+    similarity edge), so the layout arranges them appended to their source.
+    Returns {canvas, positions, links}.
     """
-    payload = json.dumps({"nodes": nodes, "similarity": similarity})
+    payload = json.dumps(
+        {"nodes": nodes, "similarity": similarity, "translations": translations}
+    )
     proc = subprocess.run(
         ["node", str(LAYOUT_SCRIPT)],
         input=payload,
@@ -86,6 +94,7 @@ def parse_pub(path: Path) -> dict | None:
         "slug": slug,
         "title": fm.get("title", slug),
         "lang": (fm.get("lang") or "en").lower(),
+        "translation_of": fm.get("translation_of"),
         "url": f"/{slug}",
         "text": f"{fm.get('title', '')}. {body}",
     }
@@ -153,6 +162,19 @@ def main() -> int:
     pubs: list[dict] = [r for r in (parse_pub(p) for p in sorted(PUBS_DIR.glob("*.md"))) if r]
     print(f"loaded {len(pubs)} publications", file=sys.stderr)
 
+    # Validate translation_of references up front: each must point to an
+    # existing publication that is not itself a translation.
+    by_slug = {p["slug"]: p for p in pubs}
+    for p in pubs:
+        src = p.get("translation_of")
+        if not src:
+            continue
+        orig = by_slug.get(src)
+        if orig is None:
+            raise SystemExit(f"{p['slug']}: translation_of '{src}' not found in _publications/")
+        if orig.get("translation_of"):
+            raise SystemExit(f"{p['slug']}: translation_of '{src}' is itself a translation")
+
     non_english = [p for p in pubs if p["lang"] != "en"]
     if non_english:
         print(f"translating {len(non_english)} non-English publications…", file=sys.stderr)
@@ -176,10 +198,29 @@ def main() -> int:
     ]
     similarity = [[round(float(s), 4) for s in row] for row in sim]
 
-    print("baking layout (node)…", file=sys.stderr)
-    layout = precompute_layout(nodes, similarity)
+    # ── Translations join the layout, appended to their originals ──
+    # A publication with `translation_of` is the same work in another language.
+    # It takes part in the force layout as a regular node, but its only edge is a
+    # forced 1.00 link to its original (translations are not similarity-link
+    # candidates for any node), so the simulation arranges it beside — and
+    # collision-separated from — its source. The full similarity matrix still
+    # covers every node, so the page's "three closest" panel works for them too.
+    slug_idx = {p["slug"]: i for i, p in enumerate(pubs)}
+    translations = {
+        i: slug_idx[p["translation_of"]]
+        for i, p in enumerate(pubs)
+        if p.get("translation_of")
+    }
+
+    print(
+        f"baking layout (node) — {len(nodes)} nodes, {len(translations)} translations…",
+        file=sys.stderr,
+    )
+    layout = precompute_layout(nodes, similarity, translations)
     for node, (x, y) in zip(nodes, layout["positions"]):
         node["x"], node["y"] = x, y
+    for i in translations:
+        nodes[i]["tr"] = True
 
     data = {
         "nodes": nodes,

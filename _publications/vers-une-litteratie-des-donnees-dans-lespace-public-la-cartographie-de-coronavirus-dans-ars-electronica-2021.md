@@ -15,6 +15,7 @@ img_height: 525
 thumb: "immersive-architectures-for-visual-data-literacy/fig_000.webp"
 figures: true
 lang: fr
+translation_of: immersive-architectures-for-visual-data-literacy
 excerpt_separator: "<!--more-->"
 ---
 Le processus de datafication qui est en train de transformer la société nous permet d’observer la pandémie d’un point de vue global. Cet article fournit un exemple d’architecture immersive dans laquelle la littérature scientifique sur le coronavirus a été révélée pendant le festival Ars Electronica 2021. Tel un ciel étoilé, une visualisation en réseau représentant plus de 600 000 articles a été présentée dans le théâtre Deep Space 8K, où les spectateurs ont été accompagnés dans le sujet. L’étude de cas de la Cartographie 3D du COVID-19 illustre une nouvelle façon de présenter les données dans l’espace public pour encourager les conversations et les réflexions, invitant ainsi le lecteur à s’interroger quant aux nouvelles formes de muséologie expérimentale liées à la data.

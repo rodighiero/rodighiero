@@ -407,6 +407,9 @@
       stroke-linejoin: round;
     }
     #network-view .link { stroke: var(--fg); stroke-width: 0.5; pointer-events: none; }
+    /* A translation is the same work in another language: an ordinary node,
+       set apart only by a more pronounced dashed edge to its original. */
+    #network-view .link.translation { stroke-width: 0.9; stroke-dasharray: 3 2.5; }
     #network-view .node.highlight .marker { fill: var(--fg); }
     #network-view .node.connected .marker { stroke: var(--fg); stroke-width: 1.25; }
     #network-view .link.highlight { stroke-width: 1; }
@@ -640,11 +643,12 @@
           <h3>How the network is built</h3>
           <ol>
             <li>The Markdown files in <code>_publications/</code> are parsed and stripped of footnotes, headings, links, code, and bibliographies.</li>
-            <li>Italian abstracts are machine-translated to English with <code>Helsinki-NLP/opus-mt-it-en</code> and cached on disk.</li>
+            <li>Italian and French abstracts are machine-translated to English with <code>Helsinki-NLP/opus-mt-{it,fr}-en</code> and cached on disk.</li>
             <li>Each cleaned title + abstract is embedded as a 768-dimensional vector by the <code>BAAI/bge-base-en-v1.5</code> model.</li>
             <li>Pairwise cosine similarity yields a dense matrix over every pair of papers.</li>
             <li>An edge is drawn from each paper to its single strongest neighbour, unless even that best score falls below 0.70, in which case the paper stays unconnected.</li>
             <li>A D3 force simulation lays out the graph with link, repulsion, gravity, and collision forces; the arrangement is pre-computed offline so it loads already settled.</li>
+            <li>A paper that is a translation of another is laid out as a regular node but joined only to its original, by a forced edge drawn dashed, rather than linked by similarity.</li>
           </ol>
           <p>Hover a node to read its title; click to select it and reveal its closest matches below.</p>
         </div>
@@ -994,7 +998,7 @@
       // Positions are precomputed offline at canonical canvas size (bx, by);
       // fitLayout() scales them into the live stage at render time.
       var nodes = pubs.map(function(p, i) {
-        return { i: i, slug: p.slug, title: p.title, url: p.url, bx: p.x, by: p.y };
+        return { i: i, slug: p.slug, title: p.title, url: p.url, bx: p.x, by: p.y, tr: !!p.tr };
       });
 
       // Baked links: resolve integer endpoints to node refs (the force
@@ -1002,7 +1006,8 @@
       // needed now — edges are drawn straight and neighbour ranking reads the
       // similarity matrix directly.
       var links = data.links.map(function(l) {
-        return { source: nodes[l.source], target: nodes[l.target] };
+        var s = nodes[l.source], t = nodes[l.target];
+        return { source: s, target: t, translation: !!(s.tr || t.tr) };
       });
       var linkSel, nodeSel, labelSel;
       var labelByIdx = [];
@@ -1036,6 +1041,7 @@
         var linkData = linkLayer.selectAll('line').data(links, function(d) { return (d.source.i != null ? d.source.i : d.source) + ':' + (d.target.i != null ? d.target.i : d.target); });
         linkData.exit().remove();
         linkSel = linkData.enter().append('line').attr('class', 'link').merge(linkData);
+        linkSel.classed('translation', function(d) { return !!d.translation; });
 
         var nodeData = nodeLayer.selectAll('g.node').data(nodes, function(d) { return d.i; });
         nodeData.exit().remove();
