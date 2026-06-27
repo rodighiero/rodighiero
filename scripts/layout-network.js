@@ -55,6 +55,20 @@ function main(input) {
   const sim = data.similarity;
   const N = pubs.length;
 
+  // Translations: index → original index. They lay out as regular nodes but
+  // their sole edge is a forced 1.00 link to their original, and they are never
+  // a similarity-link candidate for anyone else (so an original links to its
+  // strongest distinct neighbour, not to its own translation).
+  const isTrans = new Array(N).fill(false);
+  const transOf = new Array(N).fill(-1);
+  if (data.translations) {
+    Object.keys(data.translations).forEach(function (k) {
+      const t = +k;
+      isTrans[t] = true;
+      transOf[t] = data.translations[k];
+    });
+  }
+
   // Seeded RNG — identical LCG to the former makeRng() in home.html.
   let s = LAYOUT_SEED >>> 0;
   function rand() { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }
@@ -70,7 +84,8 @@ function main(input) {
   });
 
   // ── buildLinks: each node's single strongest neighbour, but only if that
-  // best similarity clears STRONG_SIM — otherwise the node is left unconnected ──
+  // best similarity clears STRONG_SIM — otherwise the node is left unconnected.
+  // Translation nodes instead get a forced 1.00 link to their original. ──
   const seen = new Set();
   const links = [];
   function add(i, j, v) {
@@ -80,9 +95,10 @@ function main(input) {
     links.push({ source: i, target: j, value: v });
   }
   for (let i = 0; i < N; i++) {
+    if (isTrans[i]) { add(i, transOf[i], 1); continue; }
     let bestJ = -1, bestS = -Infinity;
     for (let j = 0; j < N; j++) {
-      if (i === j) continue;
+      if (i === j || isTrans[j]) continue;
       if (sim[i][j] > bestS) { bestS = sim[i][j]; bestJ = j; }
     }
     if (bestJ >= 0 && bestS > STRONG_SIM) add(i, bestJ, bestS);
