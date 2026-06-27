@@ -6,6 +6,7 @@ type: "journal"
 author: "Dario Rodighiero and Lins Derry and Douglas Duhaime and Jordan Kruguer and Maximilian C. Mueller and Christopher Pietsch and Jeffrey T. Schnapp and Jeff Steward and metaLAB."
 doi: "https://doi.org/10.1075/idj.22013.rod"
 img: "@publications/Surprise-Machines.webp"
+thumb: "surprise-machines-revealing-harvard-art-museums-image-collection/fig_006.webp"
 figures: true
 img_width: 700
 img_height: 700
