@@ -70,8 +70,9 @@ def parse_pub(path: Path) -> dict | None:
         return None
     fm = yaml.safe_load(parts[1]) or {}
     body = parts[2].replace(EXCERPT_SEPARATOR, " ").strip()
-    # Drop the bibliography: everything from "## References" / "## Bibliography" to end.
-    body = re.split(r"^##\s+(?:References|Bibliography)\s*$", body, maxsplit=1, flags=re.M)[0]
+    # Drop the bibliography: everything from "## References" / "## Bibliography"
+    # (or the French "## Références" / "## Bibliographie") to end.
+    body = re.split(r"^##\s+(?:References|Bibliography|Références|Bibliographie)\s*$", body, maxsplit=1, flags=re.M)[0]
     # Kramdown footnote definitions, including indented continuation lines.
     body = re.sub(r"^\[\^[^\]]+\]:.*(?:\n[ \t]+.*)*", "", body, flags=re.M)
     body = re.sub(r"\[\^[^\]]+\]", "", body)

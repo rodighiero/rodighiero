@@ -27,7 +27,7 @@ De nos jours, nombre de nos actions sont transformées en informations digitales
 >
 > — Johanna Drucker
 
-## Preface
+## Préface
 
 Le cœur de l’ouvrage de Dario Rodighiero, intitulé _Cartographie des affinités_, est une étude de cas : celle d’un projet très pointu visant à cartographier les recherches en cours à l’EPFL, l’École polytechnique fédérale de Lausanne, en Suisse.
 
@@ -67,7 +67,7 @@ Contrairement aux autres systèmes de mesure qui renforcent le classement entre 
 
 Cet ouvrage est le fruit de cinq années de travail à l’École polytechnique fédérale de Lausanne (EPFL) au cours desquels le projet de cartographie des affinités a été mené par une approche fondée sur la conception graphique, c’est-à-dire par des moyens visuels, qui sont la seule solution permettant de gérer l’énorme masse de données que les humains produisent de manière exponentielle. L’innovation de ce travail réside moins dans la question elle-même que dans la tentative de concilier sciences humaines et technologie dans une démarche pluridisciplinaire évoquant l’esprit d’un Bauhaus contemporain.
 
-## References
+## Références
 
 - Akrich, Madeleine, Michel Callon, and Bruno Latour. 2006. _Sociologie de la traduction: textes fondateurs_. Collection Sciences Sociales. Paris: École des Mines de Paris.
 - Armstrong, Helen, ed. 2016. _Digital Design Theory: Readings from the Field_. First edition. New York: Princeton Architectural Press.
