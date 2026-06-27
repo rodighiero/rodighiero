@@ -8,6 +8,7 @@ volume: "23"
 issue: "3"
 doi: "https://doi.org/10.1177/14703572241248408"
 img: "@publications/In-Praise-of-Visual-Representation.webp"
+thumb: "in-praise-of-visual-representation-an-inquiry-into-text-analysis-and-network-visualization-for-charting-scientific-communities/fig_003.webp"
 img_width: 700
 img_height: 525
 figures: true
