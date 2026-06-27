@@ -86,6 +86,7 @@
     {% if page.doi %}"sameAs": "{{ page.doi }}",{% endif %}
     {% if page.img %}"image": "{{ site.url }}/images/{{ page.img }}",{% endif %}
     "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ site.url }}{{ page.url }}" },
+    "inLanguage": "{{ page.lang | default: 'en' }}",
     "description": {{ _excerpt | jsonify }}
   }
   </script>

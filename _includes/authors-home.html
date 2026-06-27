@@ -97,6 +97,35 @@
   {%- endif -%}
 {%- endif -%}
 
+{%- assign intro_part = "" -%}
+{%- if include.item.preface -%}
+  {%- assign in_raw = include.item.preface | split: " and " -%}
+  {%- assign in_had_me = false -%}
+  {%- assign in_kept = "" -%}
+  {%- for n in in_raw -%}
+    {%- assign n_trim = n | strip -%}
+    {%- if n_trim contains me -%}
+      {%- assign in_had_me = true -%}
+    {%- else -%}
+      {%- if in_kept == "" -%}{%- assign in_kept = n_trim -%}
+      {%- else -%}{%- assign in_kept = in_kept | append: SEP | append: n_trim -%}{%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if in_kept != "" -%}
+    {%- assign in_arr = in_kept | split: SEP -%}
+    {%- assign in_list = "" -%}
+    {%- for n in in_arr -%}
+      {%- if forloop.first -%}{%- assign in_list = n -%}
+      {%- elsif forloop.last -%}{%- assign in_list = in_list | append: " and " | append: n -%}
+      {%- else -%}{%- assign in_list = in_list | append: ", " | append: n -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if in_had_me -%}{%- assign intro_part = "preface with " | append: in_list -%}
+    {%- else -%}{%- assign intro_part = "preface by " | append: in_list -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+
 {%- comment -%} Capitalize first letter only when a part follows a period. {%- endcomment -%}
 {%- assign out = "" -%}
 {%- if auth_part != "" -%}{%- assign out = auth_part -%}{%- endif -%}
@@ -113,6 +142,13 @@
     {%- assign tr_rest = tr_part | slice: 1, 9999 -%}
     {%- assign out = out | append: ". " | append: tr_first | append: tr_rest -%}
   {%- else -%}{%- assign out = tr_part -%}{%- endif -%}
+{%- endif -%}
+{%- if intro_part != "" -%}
+  {%- if out != "" -%}
+    {%- assign in_first = intro_part | slice: 0, 1 | upcase -%}
+    {%- assign in_rest = intro_part | slice: 1, 9999 -%}
+    {%- assign out = out | append: ". " | append: in_first | append: in_rest -%}
+  {%- else -%}{%- assign out = intro_part -%}{%- endif -%}
 {%- endif -%}
 
 {%- if out != "" -%}<div class="authors">{{ out }}</div>{%- endif -%}

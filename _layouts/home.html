@@ -587,7 +587,7 @@
     <div class="filters">
       <label class="filters-search" aria-label="Search publications">
         <svg class="filter-search-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
-        <input type="search" id="search-input" placeholder="Search publications by title, author, venue, year, type…" autocomplete="off">
+        <input type="search" id="search-input" placeholder="Search publications by title, author, venue, year, type, language…" autocomplete="off">
       </label>
       <span class="filter-count" id="filter-count" aria-live="polite"></span>
       <div class="view-toggle" role="group" aria-label="View">
@@ -609,7 +609,8 @@
       {% assign year_groups = site.publications | group_by: "year" | sort: "name" | reverse %}
       {% for group in year_groups %}{% assign group_publications = group.items | sort: "title" %}{% for publication in group_publications %}
       {% assign _type_label = site.data.publication_types[publication.type].label %}
-      {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }}{% endcapture %}
+      {% capture _lang_terms %}{% if publication.lang == 'it' %}italian italiano{% elsif publication.lang == 'fr' %}french français francais{% else %}english{% endif %}{% endcapture %}
+      {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ _lang_terms }}{% endcapture %}
       <div class="publication" data-slug="{{ publication.slug }}" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
         {% if publication.img %}
         {% assign _card_i = _card_i | plus: 1 %}
