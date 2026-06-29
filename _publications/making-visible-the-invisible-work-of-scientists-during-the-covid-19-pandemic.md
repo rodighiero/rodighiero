@@ -158,7 +158,7 @@ Among many data visualizations that are scaring the world, the cartography of CO
 - Gagnon, Francis. 2021. “Voilà: Francis Gagnon on Twitter.” Twitter, February 21. [twitter.com/chezVoila/status/1363530540092186627](https://twitter.com/chezVoila/status/1363530540092186627).
 - Giaccardi, Chiara, Jérôme Bourdon, Nico Carpentier, et al. 2020. “Learning from the Virus: The Impact of the Pandemic on Communication, Media and Performing Arts Disciplinary Fields. A Round-Table.” *Comunicazioni Sociali*, no. 2: 157–69. [doi:10/ghqvkd](https://doi.org/10/ghqvkd).
 - Goody, Jack. 1973. “Evolution and Communication: The Domestication of the Savage Mind.” *The British Journal of Sociology* 24 (1): 1. [doi:10/bkrfgs](https://doi.org/10/bkrfgs).
-- Guichard, Eric. 2018. “Linux.” In *Abécédaire des mondes lettrés*. [abecedaire.enssib.fr/l/linux/notices/140](http://abecedaire.enssib.fr/l/linux/notices/140).
+- Guichard, Eric. 2018. “Linux.” In *Abécédaire des mondes lettrés*.
 - Hand, D. J. 2008. *Statistics: A Very Short Introduction*. Very Short Introductions 196. Oxford: Oxford University Press.
 - Hobbs, Robert Carleton. 2004. *Mark Lombardi: Global Networks*. New York: Independent Curators International.
 - Horowitz, Jason, and Fabio Bucciarelli. 2020. “The Lost Days That Made Bergamo a Coronavirus Tragedy.” *The New York Times*, November 29. [nytimes.com/2020/11/29/world/europe/coronavirus-bergamo-italy.html](https://www.nytimes.com/2020/11/29/world/europe/coronavirus-bergamo-italy.html).

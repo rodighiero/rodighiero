@@ -2,8 +2,11 @@ module Jekyll
   module AutolinkFilter
     # Group 1 swallows existing anchors and any other HTML tag, so URLs
     # inside attributes (src, href, data-*) are never wrapped; only bare
-    # URLs in text (group 2) get autolinked.
-    URL_RE = /(<a\b[^>]*>.*?<\/a>|<[^>]*>)|(https?:\/\/[^\s<>"]+)/m
+    # URLs in text (group 2) get autolinked.   (non-breaking space) is
+    # excluded explicitly: kramdown inserts one before the footnote return
+    # arrow, and Ruby's \s does not match it, so without this the URL would
+    # swallow the nbsp (and a preceding period).
+    URL_RE = /(<a\b[^>]*>.*?<\/a>|<[^>]*>)|(https?:\/\/[^\s\u00A0<>"]+)/m
 
     def autolink_urls(input)
       input.to_s.gsub(URL_RE) do |match|

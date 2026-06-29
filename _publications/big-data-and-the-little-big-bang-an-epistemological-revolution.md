@@ -211,7 +211,7 @@ The widespread talk about “revolution” placed big data in a sort of virgin t
 
 - Ahonen, Pertti. 2015. “Institutionalizing big data methods in social and political research.” *Big Data Soc.* 2: 1–12. [doi:10.1177/2053951715591224](https://doi.org/10.1177/2053951715591224).
 - Ames, Morgan G. 2018. “Deconstructing the algorithmic sublime.” *Big Data Soc.* 5: 1–4. [doi:10.1177/2053951718779194](https://doi.org/10.1177/2053951718779194).
-- Anderson, Chris. 2008. *The end of theory: the data deluge makes the scientific method obsolete*. In: *WIRED*. Available online at: http://www.wired.com/science/discoveries/magazine/16-07/pb_theory (accessed November 1, 2016).
+- Anderson, Chris. 2008. *The end of theory: the data deluge makes the scientific method obsolete*. In: *WIRED* (accessed November 1, 2016).
 - Andrejevic, Mark. 2014. “The big data divide.” *Int. J. Commun.* 8: 1673–1689.
 - Arbesman, Samuel. 2013. Five myths about big data, in *The Washington Post*. Available online at: https://www.washingtonpost.com/opinions/five-myths-about-big-data/2013/08/15/64a0dd0a-e044-11e2-963a-72d740e88c12_story.html (accessed November 8, 2016).
 - Bail, Christopher A. 2015. “Lost in a random forest: using big data to study rare events.” *Big Data Soc.* 2: 1–3. [doi:10.1177/2053951715604333](https://doi.org/10.1177/2053951715604333).
@@ -241,13 +241,13 @@ The widespread talk about “revolution” placed big data in a sort of virgin t
 - Dyche, Jill. 2012. Big data “Eurekas!” don’t just happen, in *Harvard Business Review*. Available online at: https://hbr.org/2012/11/eureka-doesnt-just-happen (accessed November 1, 2016).
 - Eisenstein, Elizabeth L. 1983. *The Printing Revolution in Early Modern Europe*. Cambridge: Cambridge University Press.
 - Ekstrom, Matt. 2013. N=All: 3 reasons why HR should be all in on big data, in *Sourcecon*. Available online at: https://www.sourcecon.com/nall-3-reasons-why-hr-should-be-all-in-on-big-data/ (accessed May 2, 2018).
-- European Commission. 2020. White Paper on Artificial Intelligence. A European approach to excellence and trust. Available online at: https://ec.europa.eu/info/sites/info/files/commission-white-paper-artificial-intelligence-feb2020_en.pdf (accessed July 20, 2020).
+- European Commission. 2020. White Paper on Artificial Intelligence. A European approach to excellence and trust (accessed July 20, 2020).
 - Favaretto, Maddalena, Eva De Clercq, Christophe Olivier Schneble, and Bernice Simone Elger. 2020. “What is your definition of big data? Researchers’ understanding of the phenomenon of the decade.” *PLoS ONE* 15: e0228987. [doi:10.1371/journal.pone.0228987](https://doi.org/10.1371/journal.pone.0228987).
 - Floridi, Luciano. 2012. “Big data and their epistemological challenge.” *Philos. Technol.* 25: 435–437. [doi:10.1007/s13347-012-0093-4](https://doi.org/10.1007/s13347-012-0093-4).
 - Floridi, Luciano. 2014. *The Fourth Revolution. How the Infosphere is Reshaping Human Reality*. New York: Oxford University Press.
 - Frické, Martin. 2014. “Big data and its epistemology.” *J. Assoc. Inform. Sci. Technol.* 66: 651–661. [doi:10.1002/asi.23212](https://doi.org/10.1002/asi.23212).
 - Fuchs, Christian. 2011. “A contribution to the critique of the political economy of google.” *Fast Capitalism* 8: 263. [doi:10.32855/fcapital.201101.006](https://doi.org/10.32855/fcapital.201101.006).
-- Gaubert, James. 2017. The real reason why facebook introduced “Reactions, in *The Digital Diary*. Available online at: https://www.the-digital-diary.com/single-post/James-Gaubert-The-Real-Reason-Why-Facebook-Introduced-Reactions (accessed September 25, 2017).
+- Gaubert, James. 2017. The real reason why facebook introduced “Reactions, in *The Digital Diary* (accessed September 25, 2017).
 - Gelman, Andrew. 2013. “Ethics and statistics: it’s too hard to publish criticisms and obtain data for replication.” *Chance* 26: 49–52. [doi:10.1080/09332480.2013.845455](https://doi.org/10.1080/09332480.2013.845455).
 - Ginsberg, Jeremy, Matthew H. Mohebbi, Rajan S. Patel, Lynnette Brammer, Mark S. Smolinski, and Larry Brilliant. 2009. “Detecting influenza epidemics using search engine query data.” *Nature* 457: 1012–1014. [doi:10.1038/nature07634](https://doi.org/10.1038/nature07634).
 - Goldberg, Amir. 2015. “In defense of forensic social science.” *Big Data Soc.* 2: 1–3. [doi:10.1177/2053951715601145](https://doi.org/10.1177/2053951715601145).
@@ -261,7 +261,7 @@ The widespread talk about “revolution” placed big data in a sort of virgin t
 - Hauge, Michelle V., Mark D. Stevenson, D. Kim Rossmo, and Steven C. Le Comber. 2016. “Tagging banksy: using geographic profiling to investigate a modern art mystery.” *J. Spat. Sci.* 61: 185–190. [doi:10.1080/14498596.2016.1138246](https://doi.org/10.1080/14498596.2016.1138246).
 - Hekler, Eric B., Predrag Klasnja, Guillaume Chevance, Natalie M. Golaszewski, Dana Lewis, and Ida Sim. 2019. “Why we need a small data paradigm.” *BMC Med.* 17: 133. [doi:10.1186/s12916-019-1366-x](https://doi.org/10.1186/s12916-019-1366-x).
 - Jan, Bilal, Haleem Farman, Murad Khan, Muhammad Imran, Ihtesham Ul Islam, Awais Ahmad, Shaukat Ali, and Gwanggil Jeon. 2019. “Deep learning in big data analytics: a comparative study.” *Compute. Elect. Eng.* 75: 275–287. [doi:10.1016/j.compeleceng.2017.12.009](https://doi.org/10.1016/j.compeleceng.2017.12.009).
-- Jenkins, Tiffany. 2013. Don’t count on big data for answers, in *The Scotsman*. Available online at: http://www.scotsman.com/news/opinion/tiffany-jenkins-don-t-count-on-big-data-for-answers-1-2785890 (accessed November 1, 2016).
+- Jenkins, Tiffany. 2013. Don’t count on big data for answers, in *The Scotsman* (accessed November 1, 2016).
 - Johnson, Jeffrey Alan. 2014. “From open data to information justice.” *Ethics Inform. Technol.* 16: 263–274. [doi:10.1007/s10676-014-9351-8](https://doi.org/10.1007/s10676-014-9351-8).
 - Jones, Matthew. 2019. “What we talk about when we talk about (big) data.” *J. Strategic Inform. Syst.* 28: 3–16. [doi:10.1016/j.jsis.2018.10.005](https://doi.org/10.1016/j.jsis.2018.10.005).
 - Kaplan, Frédéric, and Isabella di Lenardo. 2017. “Big data of the past.” *Front. Digit. Human.* 4: 12. [doi:10.3389/fdigh.2017.00012](https://doi.org/10.3389/fdigh.2017.00012).
@@ -287,12 +287,12 @@ The widespread talk about “revolution” placed big data in a sort of virgin t
 - Lowrie, Ian. 2017. “Algorithmic rationality: epistemology and efficiency in the data sciences.” *Big Data Soc.* 4: 1–13. [doi:10.1177/2053951717700925](https://doi.org/10.1177/2053951717700925).
 - Mager, Astrid. 2011. Algorithmic Ideology. *How capitalist society shapes search engines. Inform. Commun. Soc.*15, 769–787. [doi:10.1080/1369118X.2012.676056](https://doi.org/10.1080/1369118X.2012.676056).
 - Mager, Astrid. 2014. “Defining algorithmic ideology: using ideology critique to scrutinize corporate search engines.” *Triple C* 12: 28–39. [doi:10.31269/triplec.v12i1.439](https://doi.org/10.31269/triplec.v12i1.439).
-- Manovich, Lev. 2011. *Trending: the promises and the challenges of big social data. Manovich*. Available online at: http://manovich.net/content/04-projects/067-trending-the-promises-and-the-challenges-of-big-social-data/64-article-2011.pdf (accessed November 1, 2016).
+- Manovich, Lev. 2011. *Trending: the promises and the challenges of big social data. Manovich* (accessed November 1, 2016).
 - Mayer-Schönberger, Viktor, and Kenneth Cukier. 2013a. *Big Data. A Revolution That Will Transform How We Live, Work, and Think*. Boston, MA; New York, NY: Eamon Dolan Book/Houghton Mifflin Harcourt.
 - Mayer-Schönberger, Viktor, and Kenneth Cukier. 2013b. *With big data, we are creating artificial intelligence that no human can understand. Quartz*. Available online at: http://qz.com/65925/with-big-data-we-are-creating-artificial-intelligences-that-no-human-can-understand/ (accessed November 4, 2016).
 - McDermott, Yvonne. 2017. “Conceptualising the right to data protection in an era of big data.” *Big Data Soc.* 4: 1–7. [doi:10.1177/2053951716686994](https://doi.org/10.1177/2053951716686994).
 - McFarland, Daniel A, and H Richard McFarland. 2015. “Big data and the danger of being precisely inaccurate.” *Big Data Soc.* 2: 1–4. [doi:10.1177/2053951715602495](https://doi.org/10.1177/2053951715602495).
-- Mercer, Ollie. 2019. *Big data requires bigger hardware. TDAN*. Available online at: https://tdan.com/big-data-requires-bigger-hardware/24339 (accessed April 2, 2020).
+- Mercer, Ollie. 2019. *Big data requires bigger hardware. TDAN* (accessed April 2, 2020).
 - Metcalf, Jacob, and Kate Crawford. 2016. “Where are human subjects in big data research? The emerging ethics divide.” *Big Data Soc.* 3: 1–14. [doi:10.1177/2053951716650211](https://doi.org/10.1177/2053951716650211).
 - Miller, Harvey J. 2010. The data avalanche is here. *Shouldn’t we be digging? J. Reg. Sci.*50, 181–201. [doi:10.1111/j.1467-9787.2009.00641.x](https://doi.org/10.1111/j.1467-9787.2009.00641.x).
 - Mowshowitz, Abbe. 1984. Computers and the myth of neutrality, in *Proceedings of the ACM 12th Annual Computer Science Conference on SIGCSE Symposium* (Philadelphia, PA), 85–92. [doi:10.1145/800014.808144](https://doi.org/10.1145/800014.808144).
@@ -314,7 +314,7 @@ The widespread talk about “revolution” placed big data in a sort of virgin t
 - Shaw, Ryan. 2015. “Big data and reality.” *Big Data Soc.* 2: 1–4. [doi:10.1177/2053951715608877](https://doi.org/10.1177/2053951715608877).
 - Shu, Xiaoling. 2020. *Knowledge Discovery in the Social Sciences. A Data Mining Approach*. Oakland, CA: University of California Press. [doi:10.2307/j.ctvw1d683](https://doi.org/10.2307/j.ctvw1d683).
 - Smith, Barry C. 2019. “Big data and us: human-data interactions.” *Eur. Rev.* 27: 357–377. [doi:10.1017/S1062798719000048](https://doi.org/10.1017/S1062798719000048).
-- Steadman, Ian. 2013. Big data and the death of the theorist, in *WIRED.* Available online at: http://www.wired.co.uk/article/big-data-end-of-theory (accessed November 1, 2016).
+- Steadman, Ian. 2013. Big data and the death of the theorist, in *WIRED* (accessed November 1, 2016).
 - Strasser, Bruno J. 2012. “Data-driven sciences: from wonder cabinet to electronics databases.” *Stud. Hist. Philos. Biol. Biomed. Sci.* 43: 85–87. [doi:10.1016/j.shpsc.2011.10.009](https://doi.org/10.1016/j.shpsc.2011.10.009).
 - Strom, David. 2012. Big data makes things better, in *Dice*. Available online at: http://insights.dice.com/2012/08/03/big-data-makes-things-better/ (accessed November 1, 2016).
 - Succi, Sauro, and Peter V. Coveney. 2019. “Big data: the end of the scientific method? Philos. Trans. R. Soc.” *A* 377: 1–15. [doi:10.1098/rsta.2018.0145](https://doi.org/10.1098/rsta.2018.0145).
@@ -322,7 +322,7 @@ The widespread talk about “revolution” placed big data in a sort of virgin t
 - Tani, Tommaso. 2019. L’incidenza dei big data e del machine learning sui principi alla base del Regolamento Europeo per la tutela dei dati personali (2016/679/UE) e proposte per una nuova normativa in tema di privacy, in *Società Delle Tecnologie Esponenziali e General Data Protection Regulation: Profili critici Nella Protezione Dei Dati*, ed Bonavita S. (Milano: Ledizioni Ledi Publishing), 35–66. [doi:10.4000/books.ledizioni.3946](https://doi.org/10.4000/books.ledizioni.3946).
 - Taylor, Linnet, and Fran Meissner. 2019. “A crisis of opportunity: market-making, big data, and the consolidation of migration as risk.” *Antipode* 52: 270–290. [doi:10.1111/anti.12583](https://doi.org/10.1111/anti.12583).
 - Taylor, Linnet, Ralph Schroeder, and Eric Meyer. 2014. “Emerging practices and perspectives on big data analysis in economics: bigger and better or more of the same?.” *Big Data Soc.* 1: 1–10. [doi:10.1177/2053951714536877](https://doi.org/10.1177/2053951714536877).
-- ten Bosch, Olav, Dick Windmeijer, Arnout van Delden, and Guido van den Heuvel. 2018. Web scraping meets survey design: combining forces,*Presented at BigSurv18 Conference, 26 October, Barcelona*. Available online at: https://www.bigsurv18.org/conf18/uploads/73/61/20180820_BigSurv_WebscrapingMeetsSurveyDesign.pdf (accessed July 25, 2020).
+- ten Bosch, Olav, Dick Windmeijer, Arnout van Delden, and Guido van den Heuvel. 2018. Web scraping meets survey design: combining forces,*Presented at BigSurv18 Conference, 26 October, Barcelona* (accessed July 25, 2020).
 - Tian, Enqing. 2020. “A prospect for the geographical research of sport in the age of big data.” *Sport Soc.* 23: 159–169. [doi:10.1080/17430437.2018.1555233](https://doi.org/10.1080/17430437.2018.1555233).
 - Torrecilla, José L., and Juan Romo. 2018. “Data learning from big data.” *Stat. Probabil. Lett.* 136: 15–19. [doi:10.1016/j.spl.2018.02.038](https://doi.org/10.1016/j.spl.2018.02.038).
 - Trabucchi, Daniel, and Tommaso Buganza. 2019. “Data-driven innovation: switching the perspective on big data.” *Eur. J. Innov. Manag.* 22: 23–40. [doi:10.1108/EJIM-01-2018-0017](https://doi.org/10.1108/EJIM-01-2018-0017).

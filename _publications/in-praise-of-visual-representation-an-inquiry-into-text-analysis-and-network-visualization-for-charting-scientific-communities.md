@@ -78,7 +78,7 @@ In conclusion, this text presents a series of experiments that explore the poten
 - Hatch, Mary Jo, and Ann L. Cunliffe. 2013. *Organization Theory: Modern, Symbolic, and Postmodern Perspectives*. 3rd ed. Oxford: Oxford University Press.
 - Honnibal, Matthew, Ines Montani, Sofie Van Landeghem, et al. (2014) 2024. “spaCy: Industrial-Strength Natural Language Processing in Python.” Python.
 - Ingold, Tim. 2007. *Lines: A Brief History*. Abingdon: Routledge.
-- Latour, Bruno. 2014. “Rematerializing Humanities: Thanks to Digital Traces.” Presented at the Digital Humanities Conference, Lausanne. [dh2014.org/videos/opening-night-bruno-latour](http://dh2014.org/videos/opening-night-bruno-latour/).
+- Latour, Bruno. 2014. “Rematerializing Humanities: Thanks to Digital Traces.” Presented at the Digital Humanities Conference, Lausanne.
 - Lima, Manuel. 2011. *Visual Complexity: Mapping Patterns of Information*. New York: Princeton Architectural Press.
 - Manning, Christopher D., and Hinrich Schütze. 1999. *Foundations of Statistical Natural Language Processing*. Cambridge, MA: MIT Press.
 - Matthews, Peter H. 2003. *Linguistics: A Very Short Introduction*. Very Short Introductions. Oxford: Oxford University Press.
@@ -99,5 +99,5 @@ In conclusion, this text presents a series of experiments that explore the poten
 - Rodighiero, Dario, Eveline Wandl-Vogt, and Elian Carsenat. 2022. “A Visual Translation of the Pandemic.” *Leonardo* 55 (3): 297–303.
 - Schrage, Michael. 2020. *Recommendation Engines*. Essential Knowledge Series. Cambridge, MA: MIT Press.
 - Van der Maaten, Laurens, and Geoffrey Hinton. 2008. “Visualizing Data Using t-SNE.” *Journal of Machine Learning Research* 9 (86): 2579–2605. [jmlr.org/papers/v9/vandermaaten08a.html](http://jmlr.org/papers/v9/vandermaaten08a.html).
-- Von Glasersfeld, Ernst. 1992. “Why I Consider Myself a Cybernetician.” *Cybernetics and Human Knowing* 1 (1): 21–25. [vonglasersfeld.com/140](http://www.vonglasersfeld.com/140).
+- Von Glasersfeld, Ernst. 1992. “Why I Consider Myself a Cybernetician.” *Cybernetics and Human Knowing* 1 (1): 21–25.
 - Wittgenstein, Ludwig. (1952) 2009. *Philosophical Investigations*. Translated by G. E. M. Anscombe et al. 4th ed. Oxford: Blackwell Publishing.
