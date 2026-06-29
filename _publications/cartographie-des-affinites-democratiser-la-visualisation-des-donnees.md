@@ -139,7 +139,7 @@ Cet ouvrage est le fruit de cinq années de travail à l’École polytechnique 
 - Johnson, Richard. 1986. “What Is Cultural Studies Anyway?” _Social Text_, 16: 38. https://doi.org/10/c94v2w
 - Kanas, Nick. 2012. _Star Maps: A History, Artistry, and Cartography_. Second edition. Springer-Praxis Books in Popular Astronomy. New York: Springer.
 - Kaplan, Frédéric. 2012. “How Books Will Become Machines.” In _Lire demain: Des manuscrits antiques à l’ère digitale_, 27–44. PPUR. https://infoscience.epfl.ch/record/181629/files/Kaplan%20-%20How%20Books%20Will%20Become%20Machines.pdf
-- Kaplan, Frédéric. 2015. “Les technologies absorbantes.” Presented at Le design de l’attention: Création et Automatisation, Centre Pompidou, June 4. https://iri.centrepompidou.fr/evenement/le-designde-lattention
+- Kaplan, Frédéric. 2015. “Les technologies absorbantes.” Presented at Le design de l’attention: Création et Automatisation, Centre Pompidou, June 4.
 - King, D. Brett, and Michael Wertheimer. 2005. _Max Wertheimer & Gestalt Theory_. New Brunswick: Transaction Publishers.
 - King’s College London. 2017. “Elena Pierazzo’s Webpage.” https://kclpure.kcl.ac.uk/portal/en/persons/elena-pierazzo(79e611df-2a08-4dcd-8541-a0e912ec63c1).html
 - Latour, Bruno. 1999. “Circulating Reference: Sampling the Soil in the Amazon Forest.” In _Pandora’s Hope: Essays on the Reality of Science Studies_, 24–79. Cambridge, MA: Harvard University Press.
