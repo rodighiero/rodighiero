@@ -27,7 +27,7 @@ const NODE_RADIUS = 3;
 const NODE_SPACING = 24;
 const CHARGE_STRENGTH = -280;
 const STRONG_SIM = 0.70;
-const GRAVITY = 2;
+const GRAVITY = 1.2;
 const LAYOUT_SEED = 1;
 const LAYOUT_TICKS = 1400;
 
