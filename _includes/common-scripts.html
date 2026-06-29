@@ -16,6 +16,7 @@
   (function() {
     var liveMsg = document.getElementById('live-msg');
     document.querySelectorAll('.cite-btn').forEach(function(btn) {
+      var label = btn.textContent;
       btn.addEventListener('click', function() {
         var scope = btn.closest('.card-meta') || btn.closest('article') || document;
         var data = scope.querySelector('.bibtex-data');
@@ -25,7 +26,7 @@
           btn.classList.add('copied');
           if (liveMsg) liveMsg.textContent = 'BibTeX citation copied to clipboard.';
           setTimeout(function() {
-            btn.textContent = 'Cite';
+            btn.textContent = label;
             btn.classList.remove('copied');
             if (liveMsg) liveMsg.textContent = '';
           }, 1500);
@@ -33,4 +34,9 @@
       });
     });
   })();
+
+  // Print buttons
+  document.querySelectorAll('.print-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { window.print(); });
+  });
 </script>
