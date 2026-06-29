@@ -4,6 +4,8 @@
   - Author:    "with X and Y"  (empty if Dario was solo)
   - Editor:    "edited with X and Y"  (Dario among editors)
                "edited by X and Y"    (Dario absent from editors)
+               Shown only when Dario has no co-author (sole-authored);
+               suppressed here when co-authors exist. Always on the pub page.
   - Translator unchanged: "translated by X and Y"
   - Lists join with ", " and "and" before the last name (no Oxford comma).
 {%- endcomment -%}
@@ -67,6 +69,8 @@
     {%- endif -%}
   {%- endif -%}
 {%- endif -%}
+{%- comment -%} Editors only surface on the homepage when Dario has no co-author. {%- endcomment -%}
+{%- if auth_part != "" -%}{%- assign ed_part = "" -%}{%- endif -%}
 
 {%- assign tr_part = "" -%}
 {%- if include.item.translator -%}

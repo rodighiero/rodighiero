@@ -4,6 +4,7 @@ year: 2025
 venue: "Per–Forming Spaces"
 type: "chapter"
 author: "Lins Derry and Dario Rodighiero"
+editor: "Letizia Bollini"
 doi: "https://hdl.handle.net/11370/d7e556b3-06df-4c6d-b8fa-5c21003734af"
 img: "@publications/Choreography-Design-and-Technology.webp"
 img_width: 700

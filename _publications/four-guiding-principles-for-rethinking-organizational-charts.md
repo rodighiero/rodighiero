@@ -4,6 +4,9 @@ year: 2026
 venue: "Handbook of Digital and Computational Research Methods"
 type: "chapter"
 author: "Dario Rodighiero"
+editor: "Anders Koed Madsen and Anders Kristian Munk"
+publisher: "Edward Elgar Publishing"
+place: "Cheltenham"
 doi: "https://hdl.handle.net/11370/6021c844-43e3-4fe8-b3c2-b8afa1361872"
 img: "four-guiding-principles-for-rethinking-organizational-charts/fig_002.webp"
 figures: true

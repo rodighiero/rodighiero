@@ -4,6 +4,7 @@ year: 2026
 venue: "Études digitales"
 type: "journal"
 author: "Dario Rodighiero"
+editor: "Tyler Reigeluth"
 place: "Paris"
 issue: "17"
 pages: "25–41"
