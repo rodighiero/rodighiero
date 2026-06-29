@@ -111,8 +111,9 @@
     h1 { font-size: var(--text-xxl); font-weight: 500; margin: 0.6rem 0 0.6rem; }
     .authors { margin-bottom: 0.6rem; font-size: var(--text-base); }
     .meta-line { line-height: var(--lh-loose); }
-    .doi { font-size: var(--text-xs); line-height: var(--lh-loose); margin-bottom: 2rem; }
-    .doi a { text-decoration: underline; }
+    .doi { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; font-size: var(--text-xs); line-height: var(--lh-loose); margin-bottom: 2rem; }
+    .doi a, .doi button { display: inline-flex; background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 0.3rem 0.55rem; border-radius: 2px; line-height: var(--lh-normal); text-decoration: none; font: inherit; font-size: var(--text-xs); cursor: pointer; }
+    .doi a:hover, .doi button:hover { color: var(--fg); border-color: var(--border-hover); }
     .content {
       margin-top: 2rem;
       padding-top: 1.5rem;
@@ -165,7 +166,7 @@
     footer.editorial-note { margin-top: 4rem; padding-top: 1.5rem; font-size: var(--text-xs); color: var(--muted); font-style: italic; }
     footer.editorial-note p { margin: 0; }
     @media print {
-      .mode-toggle, .publication-nav, .cite-btn, .bibtex-data, [hidden] { display: none !important; }
+      .mode-toggle, .publication-nav, .doi, .bibtex-data, [hidden] { display: none !important; }
       /* horizontal spacing — body padding (sides render on every page) */
       body { padding: 0 4cm !important; max-width: none !important; margin: 0 !important; }
       .title-block, .body { max-width: none !important; }
@@ -182,7 +183,6 @@
       .body figure.data-table { page-break-inside: auto; break-inside: auto; }
       .body figure.data-table thead { display: table-header-group; }
     }
-    .cite-btn { margin-left: 0.8rem; vertical-align: baseline; }
     .publication-nav { font-size: var(--text-xs); color: var(--muted); }
     .publication-nav-top { margin-bottom: 3rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
     .publication-nav-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
@@ -218,7 +218,7 @@
   {% include meta-line.html item=page %}
   <h1>{{ page.title }}</h1>
   {% include authors.html item=page %}
-  {% if page.doi %}<div class="doi"><a href="{{ page.doi }}">{{ page.doi }}</a><button class="cite-btn" type="button">Cite</button></div>{% endif %}
+  {% if page.doi %}<div class="doi"><a href="{{ page.doi }}">{% if page.doi contains 'doi.org/' %}{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}URL{% endif %}</a><button class="cite-btn" type="button">BibTeX</button><button class="print-btn" type="button">Print</button></div>{% endif %}
   </div>
   {% if page.doi %}{% include bibtex.html item=page %}{% endif %}
   <div class="content">
