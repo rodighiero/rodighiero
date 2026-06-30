@@ -141,9 +141,16 @@
        column in the markdown header (e.g. |:--|--:|). */
     .body figure.data-table { overflow-x: auto; }
     .body figure.data-table table { width: 100%; border-collapse: collapse; font-size: var(--text-xs); line-height: var(--lh-normal); font-variant-numeric: tabular-nums; }
-    .body figure.data-table th, .body figure.data-table td { padding: 0.4rem 0.7rem; border-bottom: 1px solid var(--border); }
-    .body figure.data-table thead th { font-weight: 500; color: var(--fg); border-bottom: 1px solid var(--fg); white-space: nowrap; }
+    .body figure.data-table th, .body figure.data-table td { padding: 0.4rem 0.7rem; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    .body figure.data-table thead th { font-weight: 500; color: var(--fg); border-bottom: 1px solid var(--fg); }
     .body figure.data-table tbody tr:last-child td { border-bottom: 1px solid var(--fg); }
+    /* opt back into wrapping for tables with long-form prose cells: class="data-table wrap" */
+    .body figure.data-table.wrap th, .body figure.data-table.wrap td { white-space: normal; }
+    /* …but keep the first (label) column on one line */
+    .body figure.data-table.wrap th:first-child, .body figure.data-table.wrap td:first-child { white-space: nowrap; }
+    /* Displayed equations in full-text bodies — a centered formula via
+       <p class="equation"><span class="eq-formula">…</span></p>. */
+    .body p.equation { display: flex; justify-content: center; align-items: baseline; margin: 1.6rem 0; }
     @media screen {
       .body figure.wide { display: block; width: min(990px, 100vw); max-width: none; margin-left: calc(50% - min(990px, 100vw) / 2); }
       .body figure.wide img { display: block; width: auto; height: auto; max-width: 100%; max-height: 660px; margin: 0 auto; }
