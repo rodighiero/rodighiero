@@ -146,6 +146,17 @@
     .body figure.data-table tbody tr:last-child td { border-bottom: 1px solid var(--fg); }
     /* opt back into wrapping for tables with long-form prose cells: class="data-table wrap" */
     .body figure.data-table.wrap th, .body figure.data-table.wrap td { white-space: normal; }
+    /* tables that pair data with images (class="data-table media"): cells hold
+       an <img> plus a stacked info column; center images, align rows middle.
+       Explicit per-column widths override the generic `.body figure img`
+       width:100% so the taxonomy icon and map keep a sensible display size. */
+    .body figure.data-table.media td, .body figure.data-table.media th { white-space: normal; vertical-align: middle; }
+    /* size the table to its content and center it, rather than stretching to the
+       full `wide` canvas — the fixed-size images otherwise leave empty gaps */
+    .body figure.data-table.media table { width: auto; margin-left: auto; margin-right: auto; }
+    .body figure.data-table.media td img { display: block; height: auto; margin: 0.25rem auto; }
+    .body figure.data-table.media td:nth-child(2) img { width: 200px; max-width: 100%; }
+    .body figure.data-table.media td:nth-child(3) img { width: 300px; max-width: 100%; }
     /* …but keep the first (label) column on one line */
     .body figure.data-table.wrap th:first-child, .body figure.data-table.wrap td:first-child { white-space: nowrap; }
     /* Displayed equations in full-text bodies — a centered formula via

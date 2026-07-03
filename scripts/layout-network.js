@@ -24,10 +24,10 @@ const d3 = require(path.resolve(__dirname, '..', 'js', 'd3.v7.min.js'));
 
 // ── Layout constants (formerly in _layouts/home.html) ──
 const NODE_RADIUS = 3;
-const NODE_SPACING = 24;
+const NODE_SPACING = 30;
 const CHARGE_STRENGTH = -280;
 const STRONG_SIM = 0.70;
-const GRAVITY = 1.2;
+const GRAVITY = 0.9;
 const LAYOUT_SEED = 1;
 const LAYOUT_TICKS = 1400;
 
