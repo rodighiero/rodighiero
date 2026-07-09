@@ -256,7 +256,7 @@
     .view-toggle button:hover { color: var(--fg); }
     .view-toggle button[aria-pressed="true"] {
       color: var(--fg);
-      background: color-mix(in srgb, var(--fg) 10%, transparent);
+      background: var(--tint-active);
     }
     .view-toggle svg { width: 16px; height: 16px; }
     .no-results { font-size: var(--text-xs); color: var(--muted); padding: 2rem 0; }
@@ -286,7 +286,7 @@
     .card-meta h2 a { color: inherit; text-decoration: none; }
     .card-meta h2 a:focus-visible { outline: none; }
     .publication:hover,
-    .publication:has(.card-meta h2 a:focus-visible) { background: color-mix(in srgb, var(--fg) 5%, transparent); }
+    .publication:has(.card-meta h2 a:focus-visible) { background: var(--tint-hover); }
     .publication:has(.card-meta h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
     .card-meta .meta-line { font-size: var(--text-xxs); line-height: var(--lh-loose); }
     .card-meta .authors { margin-top: 0.4rem; }
@@ -301,10 +301,11 @@
       width: 100%;
       will-change: transform;
     }
-    body[data-view="gallery"] .publication .card-img {
+    body[data-view="gallery"] .publication .card-img,
+    #network-view .details .publication .card-img {
       width: 100%;
       margin-bottom: 0.8rem;
-      background: color-mix(in srgb, var(--fg) 4%, transparent);
+      background: var(--tint-surface);
       border-radius: 2px;
       overflow: hidden;
     }
@@ -444,13 +445,6 @@
       border-top: none;
     }
     #network-view .details .publication:hover { background: none; }
-    #network-view .details .publication .card-img {
-      width: 100%;
-      margin-bottom: 0.8rem;
-      background: color-mix(in srgb, var(--fg) 4%, transparent);
-      border-radius: 2px;
-      overflow: hidden;
-    }
     #network-view .details .publication .card-meta h2 a:hover { text-decoration: underline; }
     #network-view .details h3 {
       font-size: var(--text-xxs);

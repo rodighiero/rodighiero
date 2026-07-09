@@ -23,6 +23,9 @@
   --muted: rgba(0,0,0,0.7);
   --border: rgba(0,0,0,0.2);
   --border-hover: rgba(0,0,0,0.5);
+  --tint-surface: color-mix(in srgb, var(--fg) 4%, transparent);
+  --tint-hover: color-mix(in srgb, var(--fg) 5%, transparent);
+  --tint-active: color-mix(in srgb, var(--fg) 10%, transparent);
 }
 @media (prefers-color-scheme: dark) {
   :root {
