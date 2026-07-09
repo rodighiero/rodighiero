@@ -120,8 +120,7 @@ function main(input) {
     }
     c++;
   }
-  const numComp = Math.max.apply(null, comp) + 1;
-  const groups = Array.from({ length: numComp }, function () { return []; });
+  const groups = Array.from({ length: c }, function () { return []; });
   comp.forEach(function (cc, i) { groups[cc].push(i); });
   groups.sort(function (a, b) { return b.length - a.length; });
   const targets = new Array(N);
