@@ -1,4 +1,4 @@
 <figure{% if include.class %} class="{{ include.class }}"{% endif %}>
-  {% assign _dims = include.src | image_size %}<img src="{{ include.src }}" alt="{{ include.alt }}"{% if _dims.width %} width="{{ _dims.width }}" height="{{ _dims.height }}"{% endif %} loading="lazy" decoding="async">
+  {% assign _dims = include.src | image_size %}{% assign _alt = include.alt | default: include.caption %}<img src="{{ include.src }}" alt="{{ _alt }}"{% if _dims.width %} width="{{ _dims.width }}" height="{{ _dims.height }}"{% endif %} loading="lazy" decoding="async">
   {% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}
 </figure>
