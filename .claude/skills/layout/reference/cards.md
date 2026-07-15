@@ -72,7 +72,7 @@ handler and its `mousedown` `preventDefault`.
 
 ## The two actions the click handler knows
 
-`data-action` carries `view:<gallery|network>` (the network tile) or `cluster:<id>` (the six
+`data-action` carries `view:<gallery|network>` (the network tile) or `cluster:<id>` (the seven
 cluster tiles), and the handler in `home.html` reads exactly those two. `_data/home_cards.yml`
 once fed arbitrary `type:` and `search:` tiles as well; nothing set one, so the data key, the
 verbs and the include's fallback-to-a-hash path are gone. A `?type=` URL still filters — it is
