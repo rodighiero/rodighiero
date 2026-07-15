@@ -139,6 +139,15 @@
     .body figure { margin: 2rem 0; }
     .body figure img { width: 100%; height: auto; display: block; }
     .body figcaption { margin-top: 0.5rem; font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
+    /* Multi-panel figures (see _includes/figure-group.html): each panel keeps
+       its own natural width (centered, capped at the text column) so unequal
+       panels are no longer stretched to a shared box. */
+    .body figure.figure-group .subfig { margin: 0 0 1.5rem; }
+    .body figure.figure-group .subfig:last-child { margin-bottom: 0; }
+    .body figure.figure-group .subfig img { width: auto; max-width: 100%; margin: 0 auto; }
+    /* three-quarter narrows the panels to 75% of the text column (matching the
+       single-image width modifier); the shared caption keeps full width. */
+    .body figure.figure-group.three-quarter .subfig img { max-width: 75%; }
     /* Data tables in full-text bodies — wrap any markdown table in
        <figure class="data-table" markdown="1"> … <figcaption>…</figcaption></figure>
        so it inherits the figure margin/caption styling; alignment is set per
@@ -177,10 +186,13 @@
          75% (both centered) */
       .body figure.data-table.narrow table { width: 50%; margin: 0 auto; }
       .body figure.data-table.three-quarter table { width: 75%; margin: 0 auto; }
-      /* captions track the figure/table width (centered), so a narrowed
-         figure and its caption stay visually coupled */
+      /* narrow captions track the figure width (centered) so figure and
+         caption stay visually coupled; three-quarter captions span the full
+         text column for readability */
       .body figure.narrow figcaption { width: 50%; margin-left: auto; margin-right: auto; }
-      .body figure.three-quarter figcaption { width: 75%; margin-left: auto; margin-right: auto; }
+      /* table captions always span the full text column, even when the table
+         itself is narrowed */
+      .body figure.data-table figcaption { width: auto; margin-left: 0; margin-right: 0; }
     }
     .body sup a.footnote { font-size: 0.7em; font-weight: 500; text-decoration: none; padding: 0 0.1em; }
     .body .footnotes { margin-top: 3rem; padding-top: 1.2rem; font-size: var(--text-xs); line-height: var(--lh-normal); color: var(--muted); }

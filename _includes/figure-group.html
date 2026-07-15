@@ -1,0 +1,25 @@
+{%- comment -%}
+Multi-panel figure: stacks several images under one shared caption — replaces
+rasters that baked the sub-images into a single merged bitmap, so each panel
+keeps its own natural width instead of being stretched to a shared box.
+
+Params (pipe-delimited lists align by position):
+  images   — required, e.g. "slug/fig_002a.webp|slug/fig_002b.webp"
+  alts     — optional per-panel alt text (falls back to the caption)
+  caption  — optional shared caption
+  class    — optional extra classes on the <figure>
+{%- endcomment -%}
+{%- assign _imgs = include.images | split: "|" -%}
+{%- assign _alts = include.alts | split: "|" -%}
+<figure class="figure-group{% if include.class %} {{ include.class }}{% endif %}">
+  {%- for src in _imgs -%}
+    {%- assign _src = src | strip -%}
+    {%- assign _full = "/images/" | append: _src -%}
+    {%- assign _dims = _full | image_size -%}
+    {%- assign _alt = _alts[forloop.index0] | default: include.caption -%}
+    <div class="subfig">
+      <img src="{{ _full }}" alt="{{ _alt | strip }}"{% if _dims.width %} width="{{ _dims.width }}" height="{{ _dims.height }}"{% endif %} loading="lazy" decoding="async">
+    </div>
+  {%- endfor -%}
+  {%- if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif -%}
+</figure>
