@@ -1018,11 +1018,15 @@
       // stage: uniform scale + center (object-fit: contain), so markers, labels
       // and link strokes keep their fixed pixel sizes. Runs once at render and
       // again on resize — no force simulation in the browser anymore.
+      // LABEL_HEADROOM nudges everything down: labels are drawn above their
+      // node (see setLabel's negative tspan y), so a node sitting right at
+      // the canvas top would otherwise have its label clipped by the stage edge.
+      var LABEL_HEADROOM = 16;
       function fitLayout() {
         var dim = dimensions();
         var scale = Math.min(dim.w / CANVAS.w, dim.h / CANVAS.h);
         var offX = (dim.w - CANVAS.w * scale) / 2;
-        var offY = (dim.h - CANVAS.h * scale) / 2;
+        var offY = (dim.h - CANVAS.h * scale) / 2 + LABEL_HEADROOM;
         nodes.forEach(function(n) {
           n.x = offX + n.bx * scale;
           n.y = offY + n.by * scale;
