@@ -1021,7 +1021,7 @@
       // LABEL_HEADROOM nudges everything down: labels are drawn above their
       // node (see setLabel's negative tspan y), so a node sitting right at
       // the canvas top would otherwise have its label clipped by the stage edge.
-      var LABEL_HEADROOM = 16;
+      var LABEL_HEADROOM = 32;
       function fitLayout() {
         var dim = dimensions();
         var scale = Math.min(dim.w / CANVAS.w, dim.h / CANVAS.h);
