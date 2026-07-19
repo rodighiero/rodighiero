@@ -5,10 +5,7 @@ venue: "Nightingale"
 type: "magazine"
 author: "Manuel Lima and Dario Rodighiero"
 doi: "https://nightingaledvs.com/ars-memorativa-as-the-genesis-of-information-design-a-conversation-with-manuel-lima/"
-img: "ars-memorativa-as-the-genesis-of-information-design-a-conversation-with-manuel-lima/fig_002.webp"
-figures: true
-img_width: 1024
-img_height: 1344
+thumb: "ars-memorativa-as-the-genesis-of-information-design-a-conversation-with-manuel-lima/fig_002.webp"
 ---
 Manuel Lima is one of the most prominent figures of data visualization since the publication of _Visual Complexity_ (Lima 2011). In this conversation, Manuel Lima traces back the origin of data visualization to Ars Memorativa, an ancient mnemonic technique to organize information and facilitate its recall. Going back to the origins is an obsession that brought him to collect and arrange into books images of information design from both physical and digital archives. By doing this, Manuel Lima tackled issues related to digital objects and their creation, use, and preservation, with a point of view capable of combining the passion for visualizing information and the profession of UX designer.
 

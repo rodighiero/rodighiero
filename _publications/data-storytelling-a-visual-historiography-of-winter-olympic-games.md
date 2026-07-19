@@ -4,10 +4,7 @@ year: Forthcoming
 venue: "Pictologic"
 type: "chapter"
 author: "Dario Rodighiero and Kim Albrecht and Giacomo Nanni and Jeffrey T. Schnapp and Sabina Rosenbergova"
-img: "data-storytelling-a-visual-historiography-of-winter-olympic-games/fig_001.webp"
-img_width: 2000
-img_height: 1500
-figures: true
+thumb: "data-storytelling-a-visual-historiography-of-winter-olympic-games/fig_001.webp"
 excerpt_separator: "<!--more-->"
 ---
 The Data Storytelling project presents a novel approach to visual historiography, using interactive data visualization to reinterpret the history of the Winter Olympic Games. Developed as part of the Performance exhibition at the Gallerie di Piedicastello in Trento, this project transforms historical records into immersive narratives, allowing audiences to explore macro-level patterns alongside micro-level athlete trajectories. By bridging digital curation with historical analysis, Data Storytelling challenges conventional representations of Olympic history, shifting focus from national achievements to personal stories and institutional change. Through two interactive applications, All Together Now and One by One, the project extends the historical exploration into an immersive, spatial experience. The design foregrounds the role of data in structuring historical narratives, making visible the geopolitical, social, and cultural dynamics that shape the winter sports. By embedding curation within visualization, the project also raises critical questions about the inclusivity and selectivity of data-driven storytelling. In doing so, Data Storytelling not only redefines how Olympic records are accessed and understood but also demonstrates the broader potential of digital tools in rethinking historical knowledge and visual historiography.

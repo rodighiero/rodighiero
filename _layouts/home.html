@@ -609,13 +609,13 @@
       {% capture _lang_terms %}{% if publication.lang == 'it' %}italian italiano{% elsif publication.lang == 'fr' %}french français francais{% else %}english{% endif %}{% endcapture %}
       {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ _lang_terms }}{% endcapture %}
       <div class="publication" data-slug="{{ publication.slug }}" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
-        {% if publication.img %}
+        {% if publication.thumb %}
         {% assign _card_i = _card_i | plus: 1 %}
         <div class="card-img{% if publication.img_border %} bordered{% endif %}">
-          {%- comment -%} The first row (4 columns) is the likely LCP: load it eagerly with high priority; lazy-load below the fold. Reserve space from the thumbnail's own dimensions (it can differ from the full-size img), falling back to the front-matter size. {%- endcomment -%}
+          {%- comment -%} The first row (4 columns) is the likely LCP: load it eagerly with high priority; lazy-load below the fold. Reserve space from the thumbnail's own dimensions. {%- endcomment -%}
           {%- assign _thumb = '/images/@thumbnails/' | append: publication.slug | append: '.webp' -%}
           {%- assign _thumb_dims = _thumb | image_size -%}
-          <img src="{{ _thumb }}" alt="" {% if _card_i <= 4 %}fetchpriority="high"{% elsif _card_i > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width | default: publication.img_width }}" height="{{ _thumb_dims.height | default: publication.img_height }}">
+          <img src="{{ _thumb }}" alt="" {% if _card_i <= 4 %}fetchpriority="high"{% elsif _card_i > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width }}" height="{{ _thumb_dims.height }}">
         </div>
         {% endif %}
         <div class="card-meta">

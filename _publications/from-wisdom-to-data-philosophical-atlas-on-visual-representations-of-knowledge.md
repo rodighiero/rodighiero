@@ -5,10 +5,10 @@ venue: "University of Porto Press"
 type: "book"
 editor: "José Higuera Rubio and Alberto Romele and Dario Rodighiero and Celeste Pedro"
 doi: "https://www.up.pt/press/books/978-989-746-315-0"
-img: "@publications/From-Wisdom-to-Data.webp"
-img_width: 700
-img_height: 1016
+thumb: "@publications/From-Wisdom-to-Data.webp"
 ---
+{% include figure.html src="/images/@publications/From-Wisdom-to-Data.webp" %}
+
 This book collects results from the research project “From Data to Wisdom. Philosophizing Data Visualizations in the Middle Ages and Early Modernity,” funded by the FCT (Fundação para a Ciência e a Tecnologia), POCI-01-0145-FEDER-029717. The project had a double purpose: (1) to create a repository of medieval visualizations of information and knowledge, proposing a distinction between different kinds of representation: relational schemes, knowledge-experience simulations, data (storage/indices/tables/charts), elemental schemes, text-diagrams, and demonstrative graphics; and (2) to make these visualizations interact with modern and contemporary visualizations, in particular contemporary data visualizations. More generally, the aim of the project was to show how the history of Western thought is not only a history of texts but also (and perhaps increasingly) a history of images and visual representations of concepts and knowledge.
 
 <!--more-->

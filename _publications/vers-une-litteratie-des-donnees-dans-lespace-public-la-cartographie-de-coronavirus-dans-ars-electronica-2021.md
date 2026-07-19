@@ -10,11 +10,7 @@ issue: "17"
 pages: "25–41"
 isbn: "978-2-406-19980-9"
 doi: "https://doi.org/10.48611/isbn.978-2-406-19980-9.p.0025"
-img: "@publications/Immersive-Architectures-for-Visual-Data-Literacy.webp"
-img_width: 700
-img_height: 525
 thumb: "immersive-architectures-for-visual-data-literacy/fig_000.webp"
-figures: true
 lang: fr
 translation_of: immersive-architectures-for-visual-data-literacy
 excerpt_separator: "<!--more-->"

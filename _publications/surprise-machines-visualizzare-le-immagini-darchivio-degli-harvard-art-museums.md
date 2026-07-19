@@ -10,10 +10,7 @@ place: "Rome"
 volume: 80
 pages: "207–220"
 doi: "https://doi.org/10.13133/9788893774482"
-img: "@publications/Surprise-Machines.webp"
-figures: true
-img_width: 700
-img_height: 700
+thumb: "@publications/Surprise-Machines.webp"
 lang: it
 translation_of: surprise-machines-revealing-harvard-art-museums-image-collection
 ---
