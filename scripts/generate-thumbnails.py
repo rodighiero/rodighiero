@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 """Generate homepage card thumbnails.
 
-Reads the `img:` front-matter field of every file in _publications/
-(or the optional `thumb:` override, when the homepage card should use a
-different image than the full-size/social `img:` — e.g. a figure from the
-article body), takes that full-size WebP from images/, and writes a
-thumbnail (max MAX_WIDTH px wide, never upscaled) to images/@thumbnails/,
-named after the publication slug (the .md filename). Requires Pillow.
-Run from the repo root:
+Reads the `thumb:` front-matter field of every file in _publications/
+(the card + social image — often a figure from the article body), takes that
+full-size WebP from images/, and writes a thumbnail (max MAX_WIDTH px wide,
+never upscaled) to images/@thumbnails/, named after the publication slug
+(the .md filename). Requires Pillow. Run from the repo root:
 
     python3 scripts/generate-thumbnails.py
 """
@@ -25,17 +23,16 @@ ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "images"
 DEST = ROOT / "images" / "@thumbnails"
 
-IMG_RE = re.compile(r'^img:\s*"?([^"\n]+?)"?\s*$', re.MULTILINE)
 THUMB_RE = re.compile(r'^thumb:\s*"?([^"\n]+?)"?\s*$', re.MULTILINE)
 
 
 def front_matter_img(md_path):
-    """Return the thumbnail source path: `thumb:` if set, else `img:`."""
+    """Return the thumbnail source path from the `thumb:` front-matter field."""
     text = md_path.read_text(encoding="utf-8")
     parts = text.split("---", 2)
     if len(parts) < 3:
         return None
-    match = THUMB_RE.search(parts[1]) or IMG_RE.search(parts[1])
+    match = THUMB_RE.search(parts[1])
     return match.group(1) if match else None
 
 
@@ -45,7 +42,7 @@ def main():
     for md_path in sorted((ROOT / "_publications").glob("*.md")):
         rel = front_matter_img(md_path)
         if not rel:
-            print(f"warning: no img in {md_path.name}", file=sys.stderr)
+            print(f"warning: no thumb in {md_path.name}", file=sys.stderr)
             continue
         src = SOURCE / rel
         if not src.is_file():

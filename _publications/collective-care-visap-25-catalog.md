@@ -5,11 +5,10 @@ venue: "IEEE VIS Conference, Vienna"
 type: "book"
 author: "Damla Çay and Dario Rodighiero and Weidi Zhang and Martina R. Fröschl and Peter Mindek and Beatrice Gobbo"
 doi: "https://visap.net/2025/downloads/visap-2025-booklet.pdf"
-img: "@publications/Collective-Care-VISAP-25-Catalog.webp"
-img_width: 700
-img_height: 541
+thumb: "@publications/Collective-Care-VISAP-25-Catalog.webp"
 img_border: true
 ---
+{% include figure.html src="/images/@publications/Collective-Care-VISAP-25-Catalog.webp" %}
 
 Care is easy to recognize on a personal level, especially when it appears in the small, attentive gestures woven into daily life. We see it when someone nurses a sick friend, tends a garden, or stitches a quilt by hand. Each act is marked by presence, patience, and a quiet commitment expressed through attention. It takes form through deliberate actions that often go unnoticed yet carry enduring meaning. But what does care look like when it scales up across complex systems where the risks are greater, the people more dispersed, and the consequences harder to trace?
 
