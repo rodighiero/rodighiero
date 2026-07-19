@@ -10,7 +10,6 @@ translator: "Martine Sgard"
 preface: "Jeffrey T. Schnapp"
 doi: "https://www.metispresses.ch/fr/cartographie-des-affinites"
 thumb: "@cards/Cartographie-des-Affinites.webp"
-excerpt_separator: "<!--more-->"
 ---
 {% include figure.html src="/images/@cards/Cartographie-des-Affinites.webp" %}
 
