@@ -9,10 +9,10 @@ author: "Dario Rodighiero"
 translator: "Martine Sgard"
 preface: "Jeffrey T. Schnapp"
 doi: "https://www.metispresses.ch/fr/cartographie-des-affinites"
-thumb: "@publications/Cartographie-des-Affinites.webp"
+thumb: "@cards/Cartographie-des-Affinites.webp"
 excerpt_separator: "<!--more-->"
 ---
-{% include figure.html src="/images/@publications/Cartographie-des-Affinites.webp" %}
+{% include figure.html src="/images/@cards/Cartographie-des-Affinites.webp" %}
 
 De nos jours, nombre de nos actions sont transformées en informations digitales, que nous pouvons utiliser pour dessiner des diagrammes qui décrivent des fonctionnements complexes, tels ceux des institutions. La visualisation de données permet de démêler cette complexité. L’ouvrage nous introduit à la lecture des systèmes complexes par le biais du concept d’affinité : l’alchimie qui réunit les personnes et les rend créatives et productives. La cartographie des affinités est une méthode de visualisation des données permettant d’observer les dynamiques d’une organisation subdivisée en systèmes complexes : institutions, universités, gouvernements, etc. Il s’agit d’un outil graphique fondé sur la variable de la collaboration. Cartographier les affinités est, selon l’auteur, un instrument pour déchiffrer des organisations complexes et les améliorer, mais également, par l’insertion des individus sur ces cartes, une manière de les aider à comprendre comment évoluer dans la vie au sein d’une institution. L’ouvrage affronte cette problématique avec un cas d’étude concernant l’École polytechnique fédérale de Lausanne. Les données provenant des actions des chercheurs de l’institution lausannoise sont réunies et transformées en une carte innovatrice et attrayante.
 
