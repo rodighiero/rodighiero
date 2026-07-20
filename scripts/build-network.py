@@ -193,7 +193,7 @@ def main() -> int:
     np.fill_diagonal(sim, 0)
 
     nodes = [
-        {"i": i, "slug": p["slug"], "title": p["title"], "url": p["url"]}
+        {"i": i, "slug": p["slug"], "title": p["title"], "url": p["url"], "lang": p["lang"]}
         for i, p in enumerate(pubs)
     ]
     similarity = [[round(float(s), 4) for s in row] for row in sim]
