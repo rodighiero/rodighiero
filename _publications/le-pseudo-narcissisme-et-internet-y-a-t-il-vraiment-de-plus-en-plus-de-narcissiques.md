@@ -5,6 +5,7 @@ venue: "Anthropocene 2050"
 type: "magazine"
 author: "Alexandre Rigal and Dario Rodighiero"
 lang: fr
+translation_of: are-we-all-narcissists-the-pseudo-narcissism-of-the-internet
 doi: "https://doi.org/10.31235/osf.io/fsj3z"
 thumb: "le-pseudo-narcissisme-et-internet-y-a-t-il-vraiment-de-plus-en-plus-de-narcissiques/fig_001.webp"
 ---

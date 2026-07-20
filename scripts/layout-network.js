@@ -24,11 +24,11 @@ const d3 = require(path.resolve(__dirname, '..', 'js', 'd3.v7.min.js'));
 
 // ── Layout constants (formerly in _layouts/home.html) ──
 const NODE_RADIUS = 3;
-const NODE_SPACING = 30;
-const CHARGE_STRENGTH = -280;
+const NODE_SPACING = 27;
+const CHARGE_STRENGTH = -250;
 const STRONG_SIM = 0.70;
 const GRAVITY = 0.9;
-const LAYOUT_SEED = 1;
+const LAYOUT_SEED = 7;
 const LAYOUT_TICKS = 1400;
 
 // Canonical stage the layout is baked into. Approximates a desktop `.stage`
@@ -69,6 +69,14 @@ function main(input) {
     });
   }
 
+  // No non-English publication — translation or original — is ever a
+  // similarity-link candidate for anyone else. Cross-lingual embeddings (the
+  // non-English text is machine-translated before embedding) are noisier
+  // matches than same-language ones, so restricting candidacy to English
+  // keeps edges meaningful; a non-English node still finds its own best
+  // English neighbour when it is the source of the search.
+  const isNonEnglish = pubs.map(function (p) { return (p.lang || 'en') !== 'en'; });
+
   // Seeded RNG — identical LCG to the former makeRng() in home.html.
   let s = LAYOUT_SEED >>> 0;
   function rand() { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }
@@ -83,9 +91,12 @@ function main(input) {
     return n;
   });
 
-  // ── buildLinks: each node's single strongest neighbour, but only if that
-  // best similarity clears STRONG_SIM — otherwise the node is left unconnected.
-  // Translation nodes instead get a forced 1.00 link to their original. ──
+  // ── buildLinks: the core network is English-only. Each English node gets a
+  // link to its single strongest English neighbour, but only if that best
+  // similarity clears STRONG_SIM — otherwise it is left unconnected. Non-
+  // English publications are then attached on top: a translation gets a
+  // forced 1.00 link to its original; any other non-English original does
+  // not search for a match at all and stays unconnected. ──
   const seen = new Set();
   const links = [];
   function add(i, j, v) {
@@ -96,9 +107,10 @@ function main(input) {
   }
   for (let i = 0; i < N; i++) {
     if (isTrans[i]) { add(i, transOf[i], 1); continue; }
+    if (isNonEnglish[i]) continue;
     let bestJ = -1, bestS = -Infinity;
     for (let j = 0; j < N; j++) {
-      if (i === j || isTrans[j]) continue;
+      if (i === j || isNonEnglish[j]) continue;
       if (sim[i][j] > bestS) { bestS = sim[i][j]; bestJ = j; }
     }
     if (bestJ >= 0 && bestS > STRONG_SIM) add(i, bestJ, bestS);

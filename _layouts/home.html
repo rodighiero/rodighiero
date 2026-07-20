@@ -1152,7 +1152,10 @@
           '<div class="neighbors"><h3>Three closest by embedding</h3><ol>' +
           top.map(function(t) {
             var j = t[0], s = t[1];
-            return '<li data-node-i="' + j + '"><span class="sim">' + s.toFixed(2) + '</span><div class="nb-body"><a href="' + escapeHtml(pubs[j].url) + '">' + escapeHtml(pubs[j].title) + '</a></div></li>';
+            // Floor rather than round: a score just under STRONG_SIM must never
+            // display as if it cleared it (e.g. 0.6983 should read 0.69, not 0.70).
+            var sDisplay = (Math.floor(s * 100) / 100).toFixed(2);
+            return '<li data-node-i="' + j + '"><span class="sim">' + sDisplay + '</span><div class="nb-body"><a href="' + escapeHtml(pubs[j].url) + '">' + escapeHtml(pubs[j].title) + '</a></div></li>';
           }).join('') +
           '</ol></div>'
         ) : '';
