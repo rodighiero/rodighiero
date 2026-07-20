@@ -623,7 +623,7 @@
           <h2><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
           {% include authors-home.html item=publication %}
         </div>
-        <div class="card-desc">{{ publication.excerpt }}</div>
+        <div class="card-desc">{{ publication.excerpt | strip_leading_figure }}</div>
       </div>
       {% endfor %}{% endfor %}
     </div>
