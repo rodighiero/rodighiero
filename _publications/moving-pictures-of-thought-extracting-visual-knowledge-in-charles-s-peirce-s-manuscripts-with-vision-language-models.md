@@ -137,7 +137,7 @@ On the validation set (111 pages), the fine-tuned YOLOv8m model achieved a mean 
 
 </figure>
 
-{% include figure.html src="/images/moving-pictures-of-thought-extracting-visual-knowledge-in-charles-s-peirce-s-manuscripts-with-vision-language-models/fig_005.webp" caption="Figure 5. Output of the fine-tuned YOLOv8m model on an autograph manuscript dated 1902. MS Am 1632 (430), Box 29, Folder 28, Series I. Manuscripts, D. Logic. Houghton Library, Harvard University. Photo: © Houghton Library. Persistent URL: http://nrs.harvard.edu/urn-3:FHCL.HOUGH:12491033. The model correctly identifies and segments “diagram” (blue) and “text_block” (light blue) regions, providing the structured data used for subsequent annotation and VLM analysis." %}
+{% include figure.html class="wide" src="/images/moving-pictures-of-thought-extracting-visual-knowledge-in-charles-s-peirce-s-manuscripts-with-vision-language-models/fig_005.webp" caption="Figure 5. Output of the fine-tuned YOLOv8m model on an autograph manuscript dated 1902. MS Am 1632 (430), Box 29, Folder 28, Series I. Manuscripts, D. Logic. Houghton Library, Harvard University. Photo: © Houghton Library. Persistent URL: http://nrs.harvard.edu/urn-3:FHCL.HOUGH:12491033. The model correctly identifies and segments “diagram” (blue) and “text_block” (light blue) regions, providing the structured data used for subsequent annotation and VLM analysis." %}
 
 ### Preliminary VLM Evaluation
 

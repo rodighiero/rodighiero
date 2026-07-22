@@ -37,7 +37,7 @@ From that moment on, networks developed in parallel with the rise of computation
 
 Once networks began circulating in public discourse and media, their visualization became a key mode of interpretation. Design, as Löwgren and Stolterman (2004) argue, makes complex systems legible by highlighting patterns and relations. Manuel Lima (2011) further shows how visual metaphors and aesthetics shape comprehension. What originated in mathematics and sociology now also lives as visual culture, where design plays a central role in how networks are produced and understood.
 
-{% include figure.html src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_001.webp" caption="Figure 1. Jacob L. Moreno’s original sociogram from Who Shall Survive?, visualizing interpersonal choices in a group to reveal attractions, repulsions, and the emergent social structure. This foundational diagram demonstrates how sociometry uncovers hidden dynamics of affiliation and exclusion within communities (Moreno 1934)." %}
+{% include figure.html class="wide" src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_001.webp" caption="Figure 1. Jacob L. Moreno’s original sociogram from Who Shall Survive?, visualizing interpersonal choices in a group to reveal attractions, repulsions, and the emergent social structure. This foundational diagram demonstrates how sociometry uncovers hidden dynamics of affiliation and exclusion within communities (Moreno 1934)." %}
 
 ## Network Design
 
@@ -69,7 +69,7 @@ Reading networks spatially is much like reading a city map: just as a street map
 
 To illustrate these ideas in practice, the next case study, Surprise Machines, explores how experimental network visualizations engage spatial thinking and challenge our expectations.
 
-{% include figure.html src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_003.webp" caption="Figure 3. Visualization by Martin Grandjean showing the network of influence among 4,300 philosophers in the English Wikipedia, illustrating how encyclopedic knowledge structures can reveal or obscure intellectual traditions (Grandjean 2014)." %}
+{% include figure.html class="wide" src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_003.webp" caption="Figure 3. Visualization by Martin Grandjean showing the network of influence among 4,300 philosophers in the English Wikipedia, illustrating how encyclopedic knowledge structures can reveal or obscure intellectual traditions (Grandjean 2014)." %}
 
 ## Surprise Machines
 
