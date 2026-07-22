@@ -19,6 +19,10 @@ module Jekyll
       @cache ||= {}
     end
 
+    def self.clear_cache
+      @cache = {}
+    end
+
     def self.read(path)
       return nil unless File.file?(path)
       File.open(path, 'rb') { |f| parse(f) }
@@ -49,3 +53,9 @@ module Jekyll
 end
 
 Liquid::Template.register_filter(Jekyll::ImageSizeFilter)
+
+# Clear cache at the start of each build to prevent memory leaks in long-running
+# jekyll serve sessions. Also ensures deleted images don't return stale cached data.
+Jekyll::Hooks.register :site, :pre_render do |site|
+  Jekyll::ImageSizeFilter.clear_cache
+end
