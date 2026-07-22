@@ -1,4 +1,4 @@
-require 'shellwords'
+require 'open3'
 
 # Adds git_mtime (last commit date as YYYY-MM-DD) to each publication doc
 # and to site.data, for accurate sitemap lastmod values. Falls back to
@@ -19,7 +19,12 @@ class GitMtimeGenerator < Jekyll::Generator
   private
 
   def git_mtime(path)
-    out = `git log -1 --format=%cd --date=short -- #{Shellwords.escape(path)} 2>/dev/null`.strip
-    out.empty? ? nil : out
+    stdout, status = Open3.capture2(
+      'git', 'log', '-1', '--format=%cd', '--date=short', '--', path
+    )
+    status.success? && !stdout.empty? ? stdout.strip : nil
+  rescue Errno::ENOENT
+    Jekyll.logger.warn 'GitMtimeGenerator:', 'git not found on PATH'
+    nil
   end
 end
