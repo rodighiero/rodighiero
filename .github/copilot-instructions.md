@@ -61,6 +61,7 @@ Every publication requires:
 Optional enrichment fields (non-display; affect BibTeX & search index):
 - `editor`, `translator`, `preface` (byline contributors; joined with `with`/`by` in rendering)
 - `publisher`, `place` (→ BibTeX `address`), `volume`, `issue`, `pages`, `isbn`, `doi`
+- `month`, `day` (1-12 and 1-31; for precise RSS feed ordering within a year; defaults to 1)
 - `lang: it` or `lang: fr` (defaults to English; affects `og:locale` and citation meta tags)
 - `img_border: true` (draws hairline around card)
 
