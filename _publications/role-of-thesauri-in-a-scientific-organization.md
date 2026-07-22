@@ -1,7 +1,7 @@
 ---
 title: "Role of Thesauri in a Scientific Organization"
 year: 2009
-venue: "Networks of Design: Proceedings of the 2008 Annual International Conference of the Design History Society (UK)"
+venue: "Networks of Design"
 type: "conference"
 author: "Carlo Ferigato and Giuseppe Merlo and Daniela Panfili and Dario Rodighiero"
 editor: "Fiona Hackney and Jonathan Glynne and Viv Minton"
