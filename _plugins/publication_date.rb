@@ -1,5 +1,12 @@
-# Sets page.date from page.year for publications, preserving the homepage
-# sort order (year desc, then alphabetical within each year) in the feed.
+# Sets page.date from page.year (+ optional month, day) for publications,
+# preserving the homepage sort order (year desc, then alphabetical within each year)
+# in the RSS feed.
+#
+# Front matter support:
+#   year: 2024              # Required
+#   month: 6                # Optional (1-12; default 1)
+#   day: 15                 # Optional (1-31; default 1)
+#
 # Within a year, alphabetically-first titles get a slightly later timestamp
 # so they appear first in the feed (which sorts newest-first).
 class PublicationDateGenerator < Jekyll::Generator
@@ -19,9 +26,11 @@ class PublicationDateGenerator < Jekyll::Generator
           # Jekyll's future-date filter and drop the page from the build.
           doc.data['date'] = site.time - i
         else
+          month = (doc.data['month'] || 1).to_i.clamp(1, 12)
+          day = (doc.data['day'] || 1).to_i.clamp(1, 31)
           # Add the offset as time arithmetic: a raw seconds argument to
-          # Time.new would raise once a year holds more than 60 titles.
-          doc.data['date'] = Time.new(year, 1, 1, 12, 0, 0) + (sorted.size - 1 - i)
+          # Time.new would raise once a year holds more than 86400 titles.
+          doc.data['date'] = Time.new(year, month, day, 12, 0, 0) + (sorted.size - 1 - i)
         end
       end
     end
