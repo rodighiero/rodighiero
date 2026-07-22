@@ -39,7 +39,7 @@ Da quel momento in poi, le reti si svilupparono in parallelo con l’aumento del
 
 Quando le reti iniziarono a circolare nel discorso pubblico e nei media, la loro visualizzazione divenne una modalità chiave di interpretazione. Come sostengono Löwgren e Stolterman (2004), il design rende leggibili i sistemi complessi mettendo in evidenza schemi e relazioni. Manuel Lima (2011) mostra inoltre come le metafore visive e l’estetica plasmino la comprensione. Ciò che era nato in matematica e sociologia vive ora anche come cultura visiva, dove il design ha un ruolo centrale nel modo in cui le reti vengono prodotte e comprese.
 
-{% include figure.html src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_001.webp" caption="Figura 1. Sociogramma originale di Jacob L. Moreno tratto da Who Shall Survive?, che visualizza le scelte interpersonali di un gruppo per rivelare attrazioni, repulsioni e la struttura sociale emergente. Questo diagramma fondativo mostra come la sociometria sveli dinamiche nascoste di affiliazione ed esclusione all’interno delle comunità (Moreno 1934)." %}
+{% include figure.html class="wide" src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_001.webp" caption="Figura 1. Sociogramma originale di Jacob L. Moreno tratto da Who Shall Survive?, che visualizza le scelte interpersonali di un gruppo per rivelare attrazioni, repulsioni e la struttura sociale emergente. Questo diagramma fondativo mostra come la sociometria sveli dinamiche nascoste di affiliazione ed esclusione all’interno delle comunità (Moreno 1934)." %}
 
 ## Design di reti
 
@@ -71,7 +71,7 @@ Leggere le reti spazialmente è un po’ come leggere la mappa di una città: co
 
 Per illustrare queste idee nella pratica, il caso di studio successivo, Surprise Machines, esplora come le visualizzazioni di rete sperimentali attivino il pensiero spaziale e mettano alla prova le nostre aspettative.
 
-{% include figure.html src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_003.webp" caption="Figura 3. Visualizzazione di Martin Grandjean che mostra la rete di influenza tra 4.300 filosofi nella Wikipedia inglese, illustrando come le strutture enciclopediche della conoscenza possano rivelare o oscurare le tradizioni intellettuali (Grandjean 2014)." %}
+{% include figure.html class="wide" src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_003.webp" caption="Figura 3. Visualizzazione di Martin Grandjean che mostra la rete di influenza tra 4.300 filosofi nella Wikipedia inglese, illustrando come le strutture enciclopediche della conoscenza possano rivelare o oscurare le tradizioni intellettuali (Grandjean 2014)." %}
 
 ## Surprise Machines
 

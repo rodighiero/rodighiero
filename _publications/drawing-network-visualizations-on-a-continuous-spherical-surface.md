@@ -77,7 +77,7 @@ The lexical cartography is based on vocabulary similarity, inferred from papers.
 
 The case study of the Digital Humanities Conference (DH2019) confirms the issue of centrality raised in these pages. Despite the high connectivity of lexical ties, a set of authors is always confined towards the network’s borders (see Figure 1). The rich connectivity of DH2019 makes the conference a perfect example to demonstrate the efficacy of the spherical layout.
 
-{% include figure.html src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_001.webp" caption="Figure 1. This network visualization represents the Digital Humanities Conference that took place in 2019 in Utrecht, Netherlands. The visualization is composed of authors connected by their common terminology. Despite the high connectivity, some scholars are nonetheless placed on the edges, transforming the network into a sort of ranking." %}
+{% include figure.html class="wide" src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_001.webp" caption="Figure 1. This network visualization represents the Digital Humanities Conference that took place in 2019 in Utrecht, Netherlands. The visualization is composed of authors connected by their common terminology. Despite the high connectivity, some scholars are nonetheless placed on the edges, transforming the network into a sort of ranking." %}
 
 ## Drawing on the Spherical Surface
 
@@ -127,15 +127,15 @@ The darkened zone of the Mercator projection (see Figure 6) shows how the networ
 
 Many are the cartographic projections that have been conceived over time. Each of them allows the viewer to see different aspects of the Earth, which also means exploring different forms in this context. The orthographic (Figure 3), the Mercator (Figure 6), and the quincuncial (Figure 7) projections are the most relevant ones in terms of spatial transformation and continuity. However, the d3 library allowed us to explore more unusual projections, which are hereinafter presented in a showcase that is intentionally more aesthetic than rational. These projections are called Waterman’s Butterfly (Figure 8), Conic Equal-Area (Figure 9), Dodecahedral (Figure 10), Icosahedral (Figure 11), and Lee’s Tetrahedral (Figure 12). By a fortunate coincidence, this selection made on personal taste represents a series of geometrical volumes. That means that, potentially, these network visualizations can be printed and mounted with glue.
 
-{% include figure.html src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_008.webp" caption="Figure 8. Butterfly of Waterman." %}
+{% include figure.html class="wide" src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_008.webp" caption="Figure 8. Butterfly of Waterman." %}
 
-{% include figure.html src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_009.webp" caption="Figure 9. Conic equal-area." %}
+{% include figure.html class="wide" src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_009.webp" caption="Figure 9. Conic equal-area." %}
 
-{% include figure.html src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_010.webp" caption="Figure 10. Dodecahedral." %}
+{% include figure.html class="wide" src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_010.webp" caption="Figure 10. Dodecahedral." %}
 
-{% include figure.html src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_011.webp" caption="Figure 11. Icosahedral." %}
+{% include figure.html class="wide" src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_011.webp" caption="Figure 11. Icosahedral." %}
 
-{% include figure.html src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_012.webp" caption="Figure 12. Lee’s tetrahedral." %}
+{% include figure.html class="wide" src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_012.webp" caption="Figure 12. Lee’s tetrahedral." %}
 
 ## Conclusions
 

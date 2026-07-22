@@ -70,7 +70,7 @@ La cartographie lexicale est basée sur la fréquence des mots, qui peut être c
 
 L’étude de la conférence en humanités numériques qui s’est tenue à Utrecht (DH2019) confirme la question de la centralité soulevée dans ces pages. Malgré la forte connectivité des liens lexicaux, un ensemble d’auteurs était confiné vers les frontières du réseau, bien qu’aucun de ces auteurs ne mérite d’être éloigné du centre (voir figure 1). Bien que le lexique soit la langue partagée qui rassemble le collectif scientifique, une forme de discrimination visuelle sépare les conférenciers au centre depuis les collègues plus éloignés dans un espace qui manque de continuité.
 
-{% include figure.html src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_001.webp" caption="Figure 1. Cette visualisation de réseau représente la conférence sur les humanités numériques qui a eu lieu en 2019 à Utrecht, aux Pays-Bas. La visualisation est composée de conférenciers reliés par leur terminologie commune. Bien que la connectivité soit élevée, certains chercheurs sont de toute façon placés sur les bords, transformant le réseau en une sorte de classement." %}
+{% include figure.html class="wide" src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_001.webp" caption="Figure 1. Cette visualisation de réseau représente la conférence sur les humanités numériques qui a eu lieu en 2019 à Utrecht, aux Pays-Bas. La visualisation est composée de conférenciers reliés par leur terminologie commune. Bien que la connectivité soit élevée, certains chercheurs sont de toute façon placés sur les bords, transformant le réseau en une sorte de classement." %}
 
 ## Dessiner sur la surface sphérique
 

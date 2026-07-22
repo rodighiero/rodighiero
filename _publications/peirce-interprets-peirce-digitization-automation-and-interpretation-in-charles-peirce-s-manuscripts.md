@@ -64,7 +64,7 @@ Peirce claimed that “all necessary reasoning is diagrammatic” (CP 5.162) and
 
 Machine-generated outputs (transcriptions, diagram detections, classifications) are anchored on the IIIF canvas of each manuscript page through the Web Annotation Data Model. Each bounding box produced by YOLOv8m layout segmentation becomes an annotation linking a canvas region to a semantic class; 1,139 diagram and 874 text-block boxes were annotated across 443 pages for training (see Figure 2). The IIIF Manifest thus becomes an editorial surface where diagrams, logical notation, sketches, and other visual elements sit alongside the transcription, without altering the underlying facsimile.
 
-{% include figure.html src="/images/peirce-interprets-peirce-digitization-automation-and-interpretation-in-charles-peirce-s-manuscripts/fig_002.webp" caption="Figure 2. Fine-tuned YOLOv8m output showing diagram (blue) and text block (light blue) detection on MS 431." %}
+{% include figure.html class="wide" src="/images/peirce-interprets-peirce-digitization-automation-and-interpretation-in-charles-peirce-s-manuscripts/fig_002.webp" caption="Figure 2. Fine-tuned YOLOv8m output showing diagram (blue) and text block (light blue) detection on MS 431." %}
 
 Moreover, testing five Vision–Language Models on 27 manually annotated Existential Graphs covering Alpha and Beta variants, the results show strong performance at the morphological level (counting cuts, lines, spots) and at the relational level (containment, connection), but systematic failure at the representational level, where the diagram must be read as a logical formula (Pedretti et al., forthcoming). Even when prompts stated Peirce’s endoporeutic (from the outside to the inside) reading procedure, the models produced errors of scope and negation, reading “Some man is not wounded” as “No man is wounded” or collapsing ∃y∀x into ∀x∃y.
 
@@ -72,7 +72,7 @@ This empirical gap is further clarified by theoretical work examining the relati
 
 A first public prototype of the resulting digital edition[^1] has been developed using TEI Publisher v10 as a platform. Each manuscript page is rendered alongside its IIIF facsimile, with authorial revisions resolved interactively from the underlying TEI markup (see Figure 3). The prototype serves a double purpose: as a scholarly access point to the transcribed corpus, and as a testbed for further layers—e.g., critical apparatus and ontology-driven annotations linking textual and diagrammatic elements—that will be integrated in the subsequent phases of the project. Moreover, by making the edition available at this intermediate stage the transcribed material is exposed as an object of scholarly verification rather than as a black-box output, allowing domain experts to inspect, annotate, and eventually correct this baseline.
 
-{% include figure.html src="/images/peirce-interprets-peirce-digitization-automation-and-interpretation-in-charles-peirce-s-manuscripts/fig_003.webp" caption="Figure 3. Diplomatic TEI transcription of MS 491, aligned with the IIIF facsimile." %}
+{% include figure.html class="wide" src="/images/peirce-interprets-peirce-digitization-automation-and-interpretation-in-charles-peirce-s-manuscripts/fig_003.webp" caption="Figure 3. Diplomatic TEI transcription of MS 491, aligned with the IIIF facsimile." %}
 
 [^1]: The digital edition is available at <https://peirce.humanitiesconnect.net>.
 
