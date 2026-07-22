@@ -615,7 +615,7 @@
           {%- comment -%} The first row (4 columns) is the likely LCP: load it eagerly with high priority; lazy-load below the fold. Reserve space from the thumbnail's own dimensions. {%- endcomment -%}
           {%- assign _thumb = '/images/@thumbnails/' | append: publication.slug | append: '.webp' -%}
           {%- assign _thumb_dims = _thumb | image_size -%}
-          <img src="{{ _thumb }}" alt="" {% if _card_i <= 4 %}fetchpriority="high"{% elsif _card_i > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width }}" height="{{ _thumb_dims.height }}">
+          <img src="{{ _thumb }}" alt="{{ publication.title | escape }}{% if publication.year %} — {{ publication.year }}{% endif %}" {% if _card_i <= 4 %}fetchpriority="high"{% elsif _card_i > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width }}" height="{{ _thumb_dims.height }}">
         </div>
         {% endif %}
         <div class="card-meta">
