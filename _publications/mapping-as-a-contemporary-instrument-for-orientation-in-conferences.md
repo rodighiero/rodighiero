@@ -31,7 +31,7 @@ First, the XML data of DH2019 were cleaned for a more accurate analysis utilizin
 
 The arrays of tokens associated with authors are then computed via the Term Frequency – Inverse Document Frequency algorithm, also known as TF-IDF (Luhn 1957; Sparck Jones 1972). TF-IDF extracts the most relevant terms for each author by counting the frequency of each term with respect to the inverse frequency of the entire collection of words. The list of terms for each author is then shortened to the fifteen most relevant terms in order to simplify the visual computation. Table 1 shows a sample concerning the scholar Frédéric Kaplan.
 
-<figure class="data-table narrow" markdown="1">
+<figure class="data-table half" markdown="1">
 
 | Token | Value |
 |:--|--:|

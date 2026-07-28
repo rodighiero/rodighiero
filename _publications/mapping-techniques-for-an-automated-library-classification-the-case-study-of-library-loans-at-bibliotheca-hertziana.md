@@ -92,7 +92,7 @@ However, there are some notable fluctuations that can be observed. There was a p
 
 Beyond the evolution of Bibliotheca Hertziana’s collection, it is interesting to notice how loan activity was meticulously documented and maintained for both internal and external users (see Table 1). This policy was upheld until 2019, when a change restricted the documentation of loans exclusively to researchers internal to the institute. This case study focuses on these internal users because the current loan policy prevents external loans from being documented. However, the available dataset allows retracing the connection between book signatures and the identification numbers of internal users. Most libraries delete personal information after a brief period, so retrieving a decade’s worth of library loan data is highly unusual. Due to legitimate concerns about user confidentiality, loan data are not made public, and user identifiers have been anonymised for this research.
 
-<figure class="data-table narrow" markdown="1">
+<figure class="data-table half" markdown="1">
 
 | Loan data | Number of users | Total loans | Number of books |
 |:--|--:|--:|--:|

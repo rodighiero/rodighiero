@@ -39,7 +39,7 @@ The case study centralizes on Peirce’s renowned manuscript, PAP (Prolegomena f
 
 The data obtained from this analysis was utilized for various purposes, as will be outlined in Section 4. High-level information about the entire text was acquired by merging all the pages into a single document. Depending on requirements, individual pages were examined separately or aggregated for comparison. For instance, the network illustrated in Section 4.2 was constructed from a knowledge graph extracted from all manuscript pages referred to as PAP, combined into a single file. Non-textual information was excluded from this analysis to focus entirely on text, as Peirce’s diagrams warrant a project in their own right. All the subsequent initial studies were conducted without considering potential contributions from these graphical elements.
 
-<figure class="data-table narrow" markdown="1">
+<figure class="data-table half" markdown="1">
 
 | Section | Page Number | Word Count | Word Percent |
 |:--|--:|--:|--:|

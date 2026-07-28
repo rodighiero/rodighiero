@@ -100,7 +100,7 @@ To create the collection, we followed an iterative method. Kahn began collecting
 
 Yixuan Zhang, a graduate student with training in public health and computer science, responded to this request. Zhang had independently begun collecting examples of pandemic-related data visualization as part of her doctoral research. Zhang had devised metadata for Kahn’s examples, using an ad hoc classification scheme that captured an article’s publisher, language, source type, date, visualization types, interaction characteristics, and subject. Zhang also collected examples for her own research, focusing on data visualization types. They merged their examples and examined the two lists as a single collection, then went through several iterations to develop a more formal scheme of data visualization types, as well as visual and interaction techniques. The subject categories were developed heuristically by examining patterns in this early collection (see Table 1). Zhang returned to her PhD research, modified the metadata schema according to her needs, and independently developed her own set of examples (Zhang et al. 2021).
 
-<figure class="data-table narrow" markdown="1">
+<figure class="data-table half" markdown="1">
 
 | Type | Subtype | Attribute | Subattribute |
 |:--|:--|:--|:--|
@@ -236,7 +236,7 @@ COVIC also represents an individual leading a small team, to assemble and share 
 
 As we look toward closing the collection process when the pandemic ends, we propose ways we can apply what we have gathered to serve the purposes of design research. The publication dates of the figures will support a variety of chronological views. The constant use of some visualization types that lend themselves to expressing time-series data, such as line charts, can be contrasted with the ebb and flow of types well suited to location data, such as cartograms and bubble maps. Exploring the effect of similar figures with and without interaction—a static line chart comparing the case numbers in three countries versus an interactive line chart presenting case numbers for all countries that can be selected, filtered, and clicked on to display the numbers behind each point—will expose relative strengths and weaknesses of print and online visualizations. By selecting the figures for a single publisher or a country, students will quickly see the quality of art directions and a culture’s preferred color palettes. Students can analyze the perception, brand, and cultural features of visualization color. The scientific illustrations of the virus, vaccines, and the human immune system are a rich problem space for examining information design principles and technique. They contain a range of visual representation strategies generated under enormous pressure to explain the invisible to general and scientific audiences. Their strategies range from abstraction to symbolism to 3D models presented in single-frame, narrative flows, and video animation styles.
 
-<figure class="data-table narrow" markdown="1">
+<figure class="data-table half" markdown="1">
 
 | Resource | URL |
 |:--|:--|
