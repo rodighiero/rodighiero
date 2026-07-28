@@ -28,7 +28,7 @@ const NODE_SPACING = 27;
 const CHARGE_STRENGTH = -250;
 const STRONG_SIM = 0.70;
 const GRAVITY = 0.9;
-const LAYOUT_SEED = 7;
+const LAYOUT_SEED = 13;
 const LAYOUT_TICKS = 1400;
 
 // Canonical stage the layout is baked into. Approximates a desktop `.stage`
