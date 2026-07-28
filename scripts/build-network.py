@@ -171,12 +171,14 @@ def main() -> int:
         file=sys.stderr,
     )
     layout = precompute_layout(nodes, similarity, translations)
+    print(f"layout seed: {layout.get('seed')}", file=sys.stderr)
     for node, (x, y) in zip(nodes, layout["positions"]):
         node["x"], node["y"] = x, y
     for i in translations:
         nodes[i]["tr"] = True
 
     data = {
+        "seed": layout.get("seed"),
         "nodes": nodes,
         "similarity": similarity,
         "canvas": layout["canvas"],
