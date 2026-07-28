@@ -44,6 +44,11 @@ jobs:
             --exclude 'sitehost\.iu\.edu'
             --exclude 'dhii\.asia'
             --exclude 'kclpure\.kcl\.ac\.uk'
+            --exclude 'peirce\.iupui\.edu'
+            --exclude 'hollisarchives\.lib\.harvard\.edu'
+            --exclude 'krisis\.eu'
+            --exclude 'artefaktum\.hu'
+            --exclude 'assembla\.com'
             './_site/*.html'
           fail: false
       - name: Annotate broken links with source context

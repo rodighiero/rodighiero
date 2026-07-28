@@ -144,4 +144,4 @@ Carlo Ferigato contributed in many ways on SIRS, especially on the mapping speci
 - Löwgren, Jonas, and Erik Stolterman. 2004. *Thoughtful Interaction Design: A Design Perspective on Information Technology*. Cambridge, MA: MIT Press.
 - Mayr, Philipp, and Vivien Petras. 2008. “Cross-Concordances: Terminology Mapping and Its Effectiveness for Information Retrieval.” Paper presented at the IFLA World Library and Information Congress, Québec.
 - Spence, Robert. 2007. *Information Visualization: Design for Interaction*. 2nd ed. Harlow: Pearson/Prentice Hall.
-- Thesaurus Tool Code. 2009. Accessed March 12, 2009. https://www.assembla.com/wiki/show/thesaurusToolCode/.
+- Thesaurus Tool Code. 2009. Accessed March 12, 2009. https://www.assembla.com/wiki/show/thesaurusToolCode/ ([archived](https://web.archive.org/web/20081201171140/http://www.assembla.com/wiki/show/thesaurusToolCode)).
