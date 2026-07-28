@@ -3,10 +3,11 @@
  * Precompute the home network view's force-directed layout.
  *
  * Reads {nodes, similarity} as JSON on stdin and writes
- * {canvas, positions, links} as JSON on stdout. It reuses the EXACT same
- * d3-force configuration, seed, and constants the browser used to run at
- * render time, so the baked positions are identical to what _layouts/home.html
- * produced live — only now they are computed once, offline.
+ * {seed, canvas, positions, links} as JSON on stdout, running the d3-force
+ * simulation offline so the home page can draw the graph already settled.
+ * The seed is randomized per build, so every run produces a fresh arrangement
+ * (re-run to reroll); the settled cloud is then normalized to fit the canvas
+ * with a uniform margin, so any seed yields a balanced, non-overflowing layout.
  *
  * Invoked automatically at the end of scripts/build-network.py. Standalone:
  *     node scripts/layout-network.js < _data/network.json
@@ -28,7 +29,11 @@ const NODE_SPACING = 27;
 const CHARGE_STRENGTH = -250;
 const STRONG_SIM = 0.70;
 const GRAVITY = 0.9;
-const LAYOUT_SEED = 13;
+// Randomized per build: each run produces a fresh arrangement (re-run to
+// reroll). The settled cloud is normalized to fit the canvas afterwards, so
+// any seed yields a usable, non-overflowing layout. The seed used is printed
+// to stderr and stored in the output as `seed` for reference.
+const LAYOUT_SEED = (Math.random() * 0x100000000) >>> 0;
 const LAYOUT_TICKS = 1400;
 
 // Canonical stage the layout is baked into. Approximates a desktop `.stage`
@@ -38,6 +43,9 @@ const LAYOUT_TICKS = 1400;
 // at a desktop size the scale stays ≈ 1 and markers/labels keep their rhythm.
 const CANVAS_W = 856;
 const CANVAS_H = 600;
+// Uniform margin kept clear on every side when the settled layout is
+// normalized to fit the canvas.
+const FIT_MARGIN = 40;
 
 function readStdin() {
   return new Promise(function (resolve, reject) {
@@ -161,11 +169,30 @@ function main(input) {
     .stop();
   for (let i = 0; i < LAYOUT_TICKS; i++) simulation.tick();
 
+  // Normalize the settled cloud to fit the canvas with a uniform margin, so
+  // every (randomized) seed yields a balanced, non-overflowing layout. Uniform
+  // scale preserves the shape; the translation centers it. The page then
+  // fit-scales this canvas into the live stage as before.
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  nodes.forEach(function (n) {
+    if (n.x < minX) minX = n.x;
+    if (n.x > maxX) maxX = n.x;
+    if (n.y < minY) minY = n.y;
+    if (n.y > maxY) maxY = n.y;
+  });
+  const spanX = Math.max(1, maxX - minX);
+  const spanY = Math.max(1, maxY - minY);
+  const fit = Math.min((CANVAS_W - 2 * FIT_MARGIN) / spanX, (CANVAS_H - 2 * FIT_MARGIN) / spanY);
+  const tx = (CANVAS_W - spanX * fit) / 2 - minX * fit;
+  const ty = (CANVAS_H - spanY * fit) / 2 - minY * fit;
+  nodes.forEach(function (n) { n.x = n.x * fit + tx; n.y = n.y * fit + ty; });
+
   const positions = nodes.map(function (n) {
     return [Math.round(n.x * 100) / 100, Math.round(n.y * 100) / 100];
   });
 
   process.stdout.write(JSON.stringify({
+    seed: LAYOUT_SEED,
     canvas: { w: CANVAS_W, h: CANVAS_H },
     positions: positions,
     links: links,
