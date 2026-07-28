@@ -164,7 +164,7 @@ As with all technologies, the Affinity Map remains ambiguous and ‘multistable�
 - Deleuze, Gilles, and Claire Parnet. 2007. _Dialogues II_. New York: Columbia University Press.
 - Flusser, Vilém. 2007. “Crisis of Linearity.” _Boot Print_ 1 (1): 19–21.
 - Giardino, Valeria, and Gabriel Greenberg. 2015. “Introduction: Varieties of Iconicity.” _Review of Philosophy and Psychology_ 6 (1): 1–25.
-- Gray, Jonathan. 2018. “Three Aspects of Data Worlds.” _Krisis: Journal for Contemporary Philosophy_. http://krisis.eu/three-aspects-of-data-worlds/.
+- Gray, Jonathan. 2018. “Three Aspects of Data Worlds.” _Krisis: Journal for Contemporary Philosophy_. http://krisis.eu/three-aspects-of-data-worlds/ ([archived](https://web.archive.org/web/20201110174341/https://krisis.eu/three-aspects-of-data-worlds/)).
 - Hertig, Hans-Peter. 2016. _Universities, Rankings and the Dynamics of Global Higher Education_. London: Palgrave Macmillan.
 - Ihde, Don. 1990. _Technology and the Lifeworld: From Garden to Earth_. Bloomington: Indiana University Press.
 - Ihde, Don. 1998. _Expanding Hermeneutics: Visualism in Science_. Evanston, IL: Northwestern University Press.
