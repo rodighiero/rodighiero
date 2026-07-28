@@ -5,8 +5,6 @@ class FrontMatterValidator < Jekyll::Generator
   priority :high
 
   REQUIRED_FIELDS = %w[title year venue type author thumb].freeze
-  # Accept DOI, arXiv, hdl (handle), zenodo, EPFL, URLs as valid identifier patterns
-  DOI_PATTERN = %r{\Ahttps?://(doi\.org|arxiv\.org|hdl\.handle\.net|zenodo\.org|infoscience\.epfl\.ch|library\.oapen\.org|publications\.jrc\.ec\.europa\.eu|pure\.rug\.nl|nightingaledvs\.com|metispresses\.ch|visap\.net|eticapubblica\.it|networkcultures\.org|antinomie\.it|journal\.dampress\.org|www\.up\.pt|www\.metispresses\.ch)}.freeze
 
   def generate(site)
     @site = site
