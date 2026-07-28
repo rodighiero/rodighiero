@@ -109,7 +109,7 @@ Some data visualizations are created to prove facts, others to allow exploration
 - Francis, W. Nelson. 1967. *The English Language: An Introduction*. 2nd ed. London: English Universities Press.
 - Gibson, James J. 2015. *The Ecological Approach to Visual Perception*. Classic Editions. New York and London: Psychology Press.
 - Goody, Jack. 1973. “Evolution and Communication: The Domestication of the Savage Mind.” *The British Journal of Sociology* 24 (1): 1. [doi:10/bkrfgs](https://doi.org/10/bkrfgs).
-- Guichard, Eric. 2018. “Linux.” In *Abécédaire des mondes lettrés*. [abecedaire.enssib.fr/l/linux/notices/140](http://abecedaire.enssib.fr/l/linux/notices/140).
+- Guichard, Eric. 2018. “Linux.” In *Abécédaire des mondes lettrés*. [abecedaire.enssib.fr/l/linux/notices/140](http://abecedaire.enssib.fr/l/linux/notices/140) ([archived](https://web.archive.org/web/20220217024858/http://abecedaire.enssib.fr/l/linux/notices/140)).
 - Heskett, John. 2005. *Design: A Very Short Introduction*. Very Short Introductions. Oxford: Oxford University Press.
 - Kubrick, Stanley, dir. 1964. *Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb*. Columbia Pictures.
 - Latour, Bruno. 1996. *Aramis, or the Love of Technology*. Translated by Catherine Porter. Cambridge, MA: Harvard University Press.
