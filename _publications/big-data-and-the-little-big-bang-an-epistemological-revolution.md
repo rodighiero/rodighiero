@@ -20,7 +20,7 @@ This unprecedented abundance has been addressed over the years using expressions
 
 First references to “big data” appear already in 1993 (see Table 1), but it is only in 2012 that the literature about the topic started to grow exponentially. Despite the increased relevance of the subject and the various challenges raised by big data, papers that engaged directly and explicitly with underlying epistemological issues remain a minority—roughly 0.5% of publications.
 
-<figure class="data-table narrow" markdown="1">
+<figure class="data-table half" markdown="1">
 
 | Year | No | Yes | Total |
 |:--|--:|--:|--:|

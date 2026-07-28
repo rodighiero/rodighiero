@@ -33,7 +33,7 @@ The Heideggerian human-world relations that guide our perception of the world ar
 
 Data visualizations map textual and numeric information through personal computers. Although the art of visualizing information dates back centuries (Yates 1954), the digital turn of the 20th century marked a significant moment by welcoming the term “data visualization” in the universal language. Its rise takes place during the 1980s (see Figure 1) when Edward Tufte gathers a heterogeneous group of practitioners through a series of books (Tufte 2001).
 
-{% include figure.html class="narrow" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_001.webp" caption="Figure 1. The Google N-Gram graph shows the frequency of the term “data visualization” over time. The increase of the 1980s points out the moment in which data visualizations become widely used." %}
+{% include figure.html class="half" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_001.webp" caption="Figure 1. The Google N-Gram graph shows the frequency of the term “data visualization” over time. The increase of the 1980s points out the moment in which data visualizations become widely used." %}
 
 Data visualizations come from a design process, which can be less or more elaborate according to the amount of information displayed. They are artifacts that result from a series of transformations and endeavors driven by a designer (Neurath and Kinross 2009). Visualizations make visible the information that otherwise would be impossible to see in accordance with the decision taken (Manovich 2008).
 

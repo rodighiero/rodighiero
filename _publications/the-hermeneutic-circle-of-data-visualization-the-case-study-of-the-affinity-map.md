@@ -32,7 +32,7 @@ Postphenomenology is a branch of philosophy of technology that deals with techno
 
 Don Ihde (1990) distinguished among four kinds of technologically mediated human-world relations. The first is embodied relations: their specificity lies in the fact that, after a certain period of adaptation, technologies become almost transparent in use. This is the case, for instance, of a pair of glasses that almost ‘disappear’ with use. The second is hermeneutic relations, in which technology gives a representation of the world that must be ‘interpreted’ in order to be accessible. Typical cases are maps, thermometers, and flight instruments. The third kind is alterity relations, which is when the relationship with the world is shortly suspended and the technology is treated as the main interlocutor or competitor. This, for example, could be video games or any form of artificial intelligence. Finally, there are background relations, in which the technology establishes the conditions for our relation to the world. For example, heating and lighting systems enable a specific kind of being in the world that would otherwise seem impossible in specific conditions, such as winter, darkness, et cetera. These four relations are graphically represented in Table 1.
 
-<figure class="data-table narrow" markdown="1">
+<figure class="data-table half" markdown="1">
 
 | Relation | Diagram |
 |:--|:--|
@@ -47,7 +47,7 @@ Don Ihde (1990) distinguished among four kinds of technologically mediated human
 
 Several critiques and variations of this fourfold distinction have been proposed. Peter-Paul Verbeek (2011, 140) introduced for instance the notion of cyborg relations to describe situations in which the boundaries between technologies and human beings are blurred in a physical way, as in the case of psychopharmaceuticals and neural implants. Such examples represent a radicalization of technological embodiment where technology is not limited to acting as a mediator between humans and the world, but it is incorporated into human bodies so that they constitute new, hybrid beings. Verbeek also spoke of immersion relations, in which technologies do not merge with the human body, but rather with the environment. Toilets, beds, and even cities are examples of smart environments (Rosenberger and Verbeek 2015, 21–22).
 
-<figure class="data-table narrow" markdown="1">
+<figure class="data-table half" markdown="1">
 
 | Relation | Diagram |
 |:--|:--|
@@ -107,7 +107,7 @@ Ricoeur’s three forms of mimesis are prefiguration, configuration, and reconfi
 
 The analogy between the Ricoeurian triple mimesis and the dynamics beyond the Affinity Map is clear. The scientific practice of scholars is disposed to be traced and datafied. The resulting digital traces are then emplotted into information systems and transferred to data visualizations to be diagrammatically revealed. Data visualizations are successively ‘returned’ to the scholars who are not indifferent to their visual representations, just as they are not indifferent to bibliometrics and rankings. In other words, data visualizations induce the reconfiguration of the scholars’ datafied identities as scholars and, consequently, of their scholarly practices. The modification of these practices induces changes in the visualization as new traces are written, iteration after iteration. The most evident difference between the Affinity Map and a classic text is that data visualizations are never static. Indeed, in the case of the hermeneutic circle of data visualization, the ‘reader’ is also one of the authors. In the style of postphenomenological linear diagrams, iterativity might be represented in several ways:
 
-<figure class="data-table narrow" markdown="1">
+<figure class="data-table half" markdown="1">
 
 | Diagram |
 |:--|

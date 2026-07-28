@@ -287,7 +287,7 @@ The Affinity Map is, therefore, a way to communicate to the external public what
 
 The Affinity Map assessment was based on a series of interviews with ENAC members. Nine subjects were selected according to their institute and role in order to have a homogeneous feedback of the entire school. In particular, we chose three types of positions: the full professor who leads a laboratory, the tenure-track professor who directs a unit equally but has to be confirmed, and the senior scientist who is the first professor assistant. We chose those senior profiles because we considered them more appropriate to evaluate the representation of both the individuals and the utter collective. As a consequence, selecting on seniority allowed us to find scholars that know the organization more precisely than others. The interviewees are summarized in Table 1 where names were replaced by letters to respect their privacy.
 
-<figure class="data-table narrow" markdown="1">
+<figure class="data-table half" markdown="1">
 
 | | Full professor | Tenure-track prof. | Senior scientist |
 |:--|:--:|:--:|:--:|
@@ -303,7 +303,7 @@ Interviewees were aware of the Affinity Map as were all the ENAC members. Indeed
 
 At the time of interviews, the selected scholars interacted with the carpet or the digital application at least once. However, meetings were organized even in the case they did not interact with the visualization. They were usually set up in the scholar’s personal office to facilitate a comfortable situation. One of the authors was selected to do the interviews in order to keep the conversation informal. Two objects were used during the meetings, a laptop featuring the most recent Affinity Map version and a sheet with the questions scholars were invited to answer. These questions were structured in four sections as illustrated in Table 2. Three sections focused on the different map’s levels: respectively for the individuals, the laboratory neighborhood, and the whole organization. Another section dealt with audiences. As a result, the interviews were organized to comprehend the level of users’ satisfaction according to the level of the zoom. The questions about the audiences toward the end were expressly open with the intention of focusing on the interviewee’s most passionate subjects.
 
-<figure class="data-table narrow" markdown="1">
+<figure class="data-table half" markdown="1">
 
 | Section | # | Question |
 |:--|:--:|:--|
@@ -347,7 +347,7 @@ The interview structure is merged with interviewees as shown in Table 3. The tab
 
 </figure>
 
-<figure class="data-table narrow" markdown="1">
+<figure class="data-table half" markdown="1">
 
 | Scholar-question | Commentary |
 |:--|:--|

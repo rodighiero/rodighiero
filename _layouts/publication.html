@@ -178,20 +178,22 @@
       .body figure.wide { display: block; width: min(990px, 100vw); max-width: none; margin-left: calc(50% - min(990px, 100vw) / 2); }
       .body figure.wide img { display: block; width: auto; height: auto; max-width: 100%; max-height: 660px; margin: 0 auto; }
       .body figure.wide figcaption { width: calc(min(660px, 100vw) - 3rem); max-width: 100%; margin-left: auto; margin-right: auto; }
-      .body figure.narrow img { width: 50%; margin: 0 auto; }
+      .body figure.narrow img { width: 33%; margin: 0 auto; }
+      .body figure.half img { width: 50%; margin: 0 auto; }
       .body figure.three-quarter img { width: 75%; margin: 0 auto; }
       .body figure.full img { width: 100%; margin: 0 auto; }
-      /* same width-modifier vocabulary as images: narrow 50%, three-quarter
-         75% (both centered) */
-      .body figure.data-table.narrow table { width: 50%; margin: 0 auto; }
+      /* same width-modifier vocabulary as images: narrow 33%, half 50%,
+         three-quarter 75% (all centered) */
+      .body figure.data-table.half table { width: 50%; margin: 0 auto; }
       .body figure.data-table.three-quarter table { width: 75%; margin: 0 auto; }
       /* Caption width clamps between 3/4 and the full text column: figures and
          tables narrowed to 1/2 or 3/4 get a 3/4-width centered caption (never
          cramped to the figure's own 1/2), so a short caption stays readable
          while figure and caption remain visually coupled. */
       .body figure.narrow figcaption,
+      .body figure.half figcaption,
       .body figure.three-quarter figcaption,
-      .body figure.data-table.narrow figcaption,
+      .body figure.data-table.half figcaption,
       .body figure.data-table.three-quarter figcaption { width: 75%; margin-left: auto; margin-right: auto; }
       /* full-width (and wide) tables keep a full-width caption */
       .body figure.data-table figcaption { width: auto; margin-left: 0; margin-right: 0; }
