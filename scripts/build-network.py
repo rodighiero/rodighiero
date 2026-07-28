@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 """Build the publication similarity network for the home network view.
 
-Reads publications from _publications/, machine-translates non-English
-abstracts (cached), embeds title + abstract with BAAI/bge-base-en-v1.5, and
-writes _data/network.json with the node list and a pairwise cosine
-similarity matrix. The home page consumes it via Liquid as
+Reads publications from _publications/, embeds title + abstract with
+BAAI/bge-base-en-v1.5, and writes _data/network.json with the node list and
+a pairwise cosine similarity matrix. The home page consumes it via Liquid as
 site.data.network.
+
+Only English-language publications are embedded and compared — the
+similarity network is English-only. Non-English publications still appear
+as nodes (positioned by the same force layout) but are never a similarity
+source or candidate, so they have no "closest by embedding" data; a
+non-English publication that is a human translation of an English one
+(`translation_of` in its front matter) is instead pinned beside its
+original by a forced edge.
 
 Re-run after editing publications:
 
@@ -13,7 +20,6 @@ Re-run after editing publications:
 """
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import re
@@ -30,7 +36,6 @@ from sentence_transformers import SentenceTransformer
 ROOT = Path(__file__).resolve().parent.parent
 PUBS_DIR = ROOT / "_publications"
 OUT = ROOT / "_data" / "network.json"
-TRANS_CACHE = ROOT / "_data" / "translations-cache.json"
 LAYOUT_SCRIPT = ROOT / "scripts" / "layout-network.js"
 
 
@@ -65,8 +70,11 @@ MODEL_NAME = "BAAI/bge-base-en-v1.5"
 # bge-base-en-v1.5 has a 512 word-piece window; cap inputs there so longer
 # abstracts/full texts inform the embedding (the model clamps to its own max).
 MAX_SEQ_LENGTH = 512
+# Pin inference to CPU by default: a single small-batch encode of ~50 short
+# documents gains nothing from the Apple MPS (GPU) backend but inherits its
+# first-call warm-up cost. Override with NETWORK_DEVICE=mps|cuda if needed.
+DEVICE = os.environ.get("NETWORK_DEVICE", "cpu")
 EXCERPT_SEPARATOR = "<!--more-->"
-TRANSLATE_CHUNK_CHARS = 1800  # Helsinki-NLP has a 512-token limit — chunk on sentences.
 
 
 def parse_pub(path: Path) -> dict | None:
@@ -100,64 +108,6 @@ def parse_pub(path: Path) -> dict | None:
     }
 
 
-def translate_long(text: str, translator) -> str:
-    """Translate text potentially longer than the model's 512-token window."""
-    if len(text) <= TRANSLATE_CHUNK_CHARS:
-        return translator(text, max_length=512)[0]["translation_text"]
-    sentences = re.split(r"(?<=[.!?])\s+", text)
-    chunks: list[str] = []
-    cur = ""
-    for s in sentences:
-        if len(cur) + len(s) > TRANSLATE_CHUNK_CHARS and cur:
-            chunks.append(cur)
-            cur = s
-        else:
-            cur = f"{cur} {s}".strip()
-    if cur:
-        chunks.append(cur)
-    return " ".join(
-        translator(c, max_length=512)[0]["translation_text"] for c in chunks
-    )
-
-
-def translate_pubs(pubs: list[dict]) -> None:
-    """Translate non-English publications to English in place, with on-disk caching."""
-    cache: dict = {}
-    if TRANS_CACHE.exists():
-        cache = json.loads(TRANS_CACHE.read_text())
-
-    needing = [p for p in pubs if p["lang"] != "en"]
-    if not needing:
-        return
-
-    translator = None
-    current_model: str | None = None
-    for p in needing:
-        h = hashlib.sha256(p["text"].encode("utf-8")).hexdigest()[:16]
-        entry = cache.get(p["slug"])
-        if entry and entry.get("hash") == h and entry.get("lang") == p["lang"]:
-            p["text"] = entry["english"]
-            print(f"  cached  {p['slug']}", file=sys.stderr)
-            continue
-        model_name = f"Helsinki-NLP/opus-mt-{p['lang']}-en"
-        if translator is None or current_model != model_name:
-            print(f"loading translator {model_name}…", file=sys.stderr)
-            from transformers import pipeline
-            translator = pipeline("translation", model=model_name)
-            current_model = model_name
-        print(f"  translating {p['slug']} ({p['lang']}→en)…", file=sys.stderr)
-        en = translate_long(p["text"], translator)
-        cache[p["slug"]] = {
-            "hash": h,
-            "lang": p["lang"],
-            "english": en,
-            "source_preview": p["text"][:160] + ("…" if len(p["text"]) > 160 else ""),
-        }
-        p["text"] = en
-
-    TRANS_CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=2))
-
-
 def main() -> int:
     pubs: list[dict] = [r for r in (parse_pub(p) for p in sorted(PUBS_DIR.glob("*.md"))) if r]
     print(f"loaded {len(pubs)} publications", file=sys.stderr)
@@ -175,21 +125,24 @@ def main() -> int:
         if orig.get("translation_of"):
             raise SystemExit(f"{p['slug']}: translation_of '{src}' is itself a translation")
 
-    non_english = [p for p in pubs if p["lang"] != "en"]
-    if non_english:
-        print(f"translating {len(non_english)} non-English publications…", file=sys.stderr)
-        translate_pubs(pubs)
-
     print(f"loading model {MODEL_NAME}…", file=sys.stderr)
-    model = SentenceTransformer(MODEL_NAME)
+    model = SentenceTransformer(MODEL_NAME, device=DEVICE)
     model.max_seq_length = MAX_SEQ_LENGTH
 
-    print("embedding documents…", file=sys.stderr)
-    doc_vecs = model.encode(
-        [p["text"] for p in pubs], normalize_embeddings=True, show_progress_bar=False
+    # The similarity network is English-only: non-English publications are
+    # never embedded (no machine translation) and their similarity rows stay
+    # zero — they still appear in the graph as nodes (see the translations
+    # block below and layout-network.js's isNonEnglish handling) but are
+    # never a similarity source or candidate.
+    en_idx = [i for i, p in enumerate(pubs) if p["lang"] == "en"]
+    print(f"embedding {len(en_idx)} English-language documents…", file=sys.stderr)
+    en_vecs = model.encode(
+        [pubs[i]["text"] for i in en_idx], normalize_embeddings=True, show_progress_bar=False
     )
 
-    sim = (doc_vecs @ doc_vecs.T).astype(float)
+    sim = np.zeros((len(pubs), len(pubs)))
+    idx = np.array(en_idx)
+    sim[np.ix_(idx, idx)] = en_vecs @ en_vecs.T
     np.fill_diagonal(sim, 0)
 
     nodes = [
@@ -202,9 +155,10 @@ def main() -> int:
     # A publication with `translation_of` is the same work in another language.
     # It takes part in the force layout as a regular node, but its only edge is a
     # forced 1.00 link to its original (translations are not similarity-link
-    # candidates for any node), so the simulation arranges it beside — and
-    # collision-separated from — its source. The full similarity matrix still
-    # covers every node, so the page's "three closest" panel works for them too.
+    # candidates for any node, and — like every non-English publication — were
+    # never embedded, so they have no "closest by embedding" data of their own),
+    # so the simulation arranges it beside — and collision-separated from — its
+    # source.
     slug_idx = {p["slug"]: i for i, p in enumerate(pubs)}
     translations = {
         i: slug_idx[p["translation_of"]]

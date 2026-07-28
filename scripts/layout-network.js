@@ -69,12 +69,10 @@ function main(input) {
     });
   }
 
-  // No non-English publication — translation or original — is ever a
-  // similarity-link candidate for anyone else. Cross-lingual embeddings (the
-  // non-English text is machine-translated before embedding) are noisier
-  // matches than same-language ones, so restricting candidacy to English
-  // keeps edges meaningful; a non-English node still finds its own best
-  // English neighbour when it is the source of the search.
+  // Non-English publications are never embedded (the similarity network is
+  // English-only), so their similarity row is all zeros — they are never a
+  // link source or candidate for anyone else. They still take part in the
+  // layout as regular nodes (see isTrans above for translation duplicates).
   const isNonEnglish = pubs.map(function (p) { return (p.lang || 'en') !== 'en'; });
 
   // Seeded RNG — identical LCG to the former makeRng() in home.html.

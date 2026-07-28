@@ -637,8 +637,7 @@
           <h3>How the network is built</h3>
           <ol>
             <li>The Markdown files in <code>_publications/</code> are parsed and stripped of footnotes, headings, links, code, and bibliographies.</li>
-            <li>Italian and French abstracts are machine-translated to English with <code>Helsinki-NLP/opus-mt-{it,fr}-en</code> and cached on disk.</li>
-            <li>Each cleaned title + abstract is embedded as a 768-dimensional vector by the <code>BAAI/bge-base-en-v1.5</code> model.</li>
+            <li>Each cleaned English-language title + abstract is embedded as a 768-dimensional vector by the <code>BAAI/bge-base-en-v1.5</code> model; the network is English-only, so Italian and French publications are not embedded.</li>
             <li>Pairwise cosine similarity yields a dense matrix over every pair of papers.</li>
             <li>An edge is drawn from each paper to its single strongest neighbour, unless even that best score falls below 0.70, in which case the paper stays unconnected.</li>
             <li>A D3 force simulation lays out the graph with link, repulsion, gravity, and collision forces; the arrangement is pre-computed offline so it loads already settled.</li>
@@ -1140,9 +1139,12 @@
       function showDetails(d) {
         if (lede) lede.hidden = true;
         var pub = pubs[d.i];
-        // Always rank the full similarity row and show the three closest papers,
-        // regardless of whether a baked link connects them.
-        var top = sim[d.i]
+        // The similarity network is English-only (see build-network.py): a
+        // non-English publication was never embedded, so its row is all
+        // zeros and has no meaningful "closest by embedding" data to show.
+        // Otherwise rank the full similarity row, regardless of whether a
+        // baked link connects them.
+        var top = pub.lang && pub.lang !== 'en' ? [] : sim[d.i]
           .map(function(s, j) { return [j, s]; })
           .filter(function(t) { return t[0] !== d.i; })
           .sort(function(a, b) { return b[1] - a[1]; })
