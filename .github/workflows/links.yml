@@ -39,6 +39,11 @@ jobs:
             --exclude 'doi\.org'
             --exclude 'washingtonpost\.com'
             --exclude 'mckinsey\.com'
+            --exclude '4open\.science'
+            --exclude 'gsapp\.org'
+            --exclude 'sitehost\.iu\.edu'
+            --exclude 'dhii\.asia'
+            --exclude 'kclpure\.kcl\.ac\.uk'
             './_site/*.html'
           fail: false
       - name: Annotate broken links with source context
