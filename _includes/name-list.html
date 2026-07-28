@@ -1,0 +1,37 @@
+{%- comment -%}
+  Formats one byline name list for the homepage (see authors-home.html).
+  Params:
+    include.raw          - raw " and "-joined name string (a front-matter field)
+    include.prefix_with  - prefix used when "Rodighiero" IS in the list (e.g. "with ")
+    include.prefix_by    - prefix used when "Rodighiero" is NOT in the list (e.g. "edited by ")
+  Strips "Rodighiero", joins the rest with ", " + a final " and " (no Oxford comma).
+  Outputs nothing when raw is empty or Dario is the only name.
+{%- endcomment -%}
+{%- assign me = "Rodighiero" -%}
+{%- assign SEP = "|||SEP|||" -%}
+{%- if include.raw -%}
+  {%- assign raw_arr = include.raw | split: " and " -%}
+  {%- assign had_me = false -%}
+  {%- assign kept = "" -%}
+  {%- for n in raw_arr -%}
+    {%- assign n_trim = n | strip -%}
+    {%- if n_trim contains me -%}
+      {%- assign had_me = true -%}
+    {%- else -%}
+      {%- if kept == "" -%}{%- assign kept = n_trim -%}
+      {%- else -%}{%- assign kept = kept | append: SEP | append: n_trim -%}{%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if kept != "" -%}
+    {%- assign arr = kept | split: SEP -%}
+    {%- assign list = "" -%}
+    {%- for n in arr -%}
+      {%- if forloop.first -%}{%- assign list = n -%}
+      {%- elsif forloop.last -%}{%- assign list = list | append: " and " | append: n -%}
+      {%- else -%}{%- assign list = list | append: ", " | append: n -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if had_me -%}{{ include.prefix_with }}{{ list }}
+    {%- else -%}{{ include.prefix_by }}{{ list }}{%- endif -%}
+  {%- endif -%}
+{%- endif -%}
