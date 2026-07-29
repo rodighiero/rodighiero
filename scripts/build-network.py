@@ -76,6 +76,52 @@ MAX_SEQ_LENGTH = 512
 DEVICE = os.environ.get("NETWORK_DEVICE", "cpu")
 EXCERPT_SEPARATOR = "<!--more-->"
 
+# ── Body-text scrubbing for the embedder ──────────────────────────────────────
+# _clean_body() reduces a Markdown abstract/body to plain prose so only meaningful
+# words reach the model. Patterns are compiled once here and applied in the order
+# below; ordering matters (e.g. links are unwrapped before parentheses are pulled,
+# emphasis after tags). Publication *titles* are cleaned separately, if at all.
+_BIB_HEADING   = re.compile(r"^##\s+(?:References|Bibliography|Références|Bibliographie)\s*$", re.M)
+_FOOTNOTE_DEF  = re.compile(r"^\[\^[^\]]+\]:.*(?:\n[ \t]+.*)*", re.M)  # def + indented continuations
+_FOOTNOTE_REF  = re.compile(r"\[\^[^\]]+\]")                           # inline [^n]
+_MD_LINK       = re.compile(r"\[([^\]]+)\]\([^)]+\)")                  # [text](url) → text
+_PAREN         = re.compile(r"\([^()]*\)")                             # (aside); looped for nesting
+_LIST_MARKER   = re.compile(r"(?<![^\s:;,–—-])[0-9a-zA-Z]{1,3}\)\s*")  # leftover "a) " / "1) "
+_HEADING       = re.compile(r"^#+ .*$", re.M)
+_INLINE_CODE   = re.compile(r"`([^`]+)`")
+_HTML_TAG      = re.compile(r"<[^>]+>")
+_LIQUID        = re.compile(r"\{%.*?%\}|\{\{.*?\}\}", re.S)            # {% … %} / {{ … }}
+_BLOCKQUOTE    = re.compile(r"^(?:[ \t]*>[ \t]?)+", re.M)             # "> " / nested "> > "
+_EMPHASIS      = (
+    (re.compile(r"\*\*([^*]+)\*\*"), r"\1"),          # **bold**
+    (re.compile(r"__([^_]+)__"), r"\1"),              # __bold__
+    (re.compile(r"\*([^*]+)\*"), r"\1"),              # *italic*
+    (re.compile(r"(?<!\w)_([^_]+)_(?!\w)"), r"\1"),   # _italic_ (word-boundary only)
+)
+_WHITESPACE    = re.compile(r"\s+")
+_SPACE_BEFORE_PUNCT = re.compile(r"\s+([.,;:!?])")
+
+
+def _clean_body(body: str) -> str:
+    """Strip Markdown/Liquid scaffolding and reference apparatus, leaving prose."""
+    body = _BIB_HEADING.split(body, maxsplit=1)[0]  # drop the bibliography onward
+    body = _FOOTNOTE_DEF.sub("", body)
+    body = _FOOTNOTE_REF.sub("", body)
+    body = _MD_LINK.sub(r"\1", body)
+    while _PAREN.search(body):                       # citations, figure refs, "(EPFL)", …
+        body = _PAREN.sub("", body)
+    body = _LIST_MARKER.sub("", body)
+    body = _HEADING.sub("", body)
+    body = _INLINE_CODE.sub(r"\1", body)
+    body = _HTML_TAG.sub("", body)
+    body = _LIQUID.sub("", body)
+    body = _BLOCKQUOTE.sub("", body)
+    for pat, repl in _EMPHASIS:
+        body = pat.sub(repl, body)
+    body = _WHITESPACE.sub(" ", body).strip()
+    body = _SPACE_BEFORE_PUNCT.sub(r"\1", body)      # tidy "tools ." → "tools."
+    return body
+
 
 def parse_pub(path: Path) -> dict | None:
     text = path.read_text(encoding="utf-8")
@@ -85,18 +131,7 @@ def parse_pub(path: Path) -> dict | None:
     if len(parts) < 3:
         return None
     fm = yaml.safe_load(parts[1]) or {}
-    body = parts[2].replace(EXCERPT_SEPARATOR, " ").strip()
-    # Drop the bibliography: everything from "## References" / "## Bibliography"
-    # (or the French "## Références" / "## Bibliographie") to end.
-    body = re.split(r"^##\s+(?:References|Bibliography|Références|Bibliographie)\s*$", body, maxsplit=1, flags=re.M)[0]
-    # Kramdown footnote definitions, including indented continuation lines.
-    body = re.sub(r"^\[\^[^\]]+\]:.*(?:\n[ \t]+.*)*", "", body, flags=re.M)
-    body = re.sub(r"\[\^[^\]]+\]", "", body)
-    body = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", body)
-    body = re.sub(r"^#+ .*$", "", body, flags=re.M)
-    body = re.sub(r"`([^`]+)`", r"\1", body)
-    body = re.sub(r"<[^>]+>", "", body)
-    body = re.sub(r"\s+", " ", body).strip()
+    body = _clean_body(parts[2].replace(EXCERPT_SEPARATOR, " ").strip())
     slug = path.stem
     return {
         "slug": slug,
