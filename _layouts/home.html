@@ -636,12 +636,12 @@
           <p>Each node is one of my publications, placed near the others it most resembles. Similarity is computed offline from the title and abstract of every paper.</p>
           <h3>How the network is built</h3>
           <ol>
-            <li>The Markdown files in <code>_publications/</code> are parsed and stripped of footnotes, headings, links, code, and bibliographies.</li>
-            <li>Each cleaned English-language title + abstract is embedded as a 768-dimensional vector by the <code>BAAI/bge-base-en-v1.5</code> model; the network is English-only, so Italian and French publications are not embedded.</li>
-            <li>Pairwise cosine similarity yields a dense matrix over every pair of papers.</li>
-            <li>An edge is drawn from each paper to its single strongest neighbour, unless even that best score falls below 0.70, in which case the paper stays unconnected.</li>
-            <li>A D3 force simulation lays out the graph with link, repulsion, gravity, and collision forces; the arrangement is pre-computed offline so it loads already settled.</li>
-            <li>A paper that is a translation of another is laid out as a regular node but joined only to its original, by a forced edge drawn dashed, rather than linked by similarity.</li>
+            <li>Each file in <code>_publications/</code> is stripped to plain prose — no footnotes, headings, links, tags, emphasis, parentheticals, or bibliography.</li>
+            <li>The English title + abstract is embedded as a 768-dimensional vector by <code>BAAI/bge-base-en-v1.5</code>; Italian and French papers are left out.</li>
+            <li>Cosine similarity is computed for every pair of papers.</li>
+            <li>Each paper links to its single strongest neighbour — unless that score is below 0.70, leaving it unconnected.</li>
+            <li>A translation is a regular node tied to its original by a dashed forced edge, not by similarity.</li>
+            <li>A D3 force simulation, pre-computed offline, lays out the graph so it loads already settled.</li>
           </ol>
           <p>Hover a node to read its title; click to select it and reveal its closest matches below.</p>
         </div>
