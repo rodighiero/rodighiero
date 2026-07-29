@@ -43,7 +43,7 @@ In this phase, which is the investigative part of the design process, we identif
 The design process started with these basic elements. The users:
 
 - The researcher, who should be able to retrieve the journal articles, the bibliographic references to books and journals, relevant scientific websites, and JRC publications in his specific field of interest;
-- The thematic programme leader, who should be able to retrieve information about scientific institutions active in a specific field, relevant EU policy documents, and descriptions of the main JRC research themes in the relevant policy area or in the specific scientific field;
+- The thematic program leader, who should be able to retrieve information about scientific institutions active in a specific field, relevant EU policy documents, and descriptions of the main JRC research themes in the relevant policy area or in the specific scientific field;
 - The JRC Action leader, who should be able to retrieve European legislation, supported by JRC actions, and the internal publications output in support of the former.
 
 The investigation of users’ needs led us to identify three information sources whose items were designated as documents:
@@ -62,7 +62,7 @@ Since each document is classified according to its source, referring to a differ
 
 Once we gathered the basic design elements, the information was translated in scenarios. In the process of writing these scenarios, we realized the importance of integrating the three different types of indexes and documents. Thus, when we started sketching the interface, the Focus+Context paradigm (Spence 2007) was introduced as a natural way to manage the quantity of information while keeping it contextually relevant.
 
-Two assumptions were made early on: the contextual relevance of information and the adaptability of the interface. On one hand, to keep the contextual relevance of information visible to the user, the SIRS interface space should include all indexes and all documents at all times. On the other hand, to provide an adaptive interface to the variable user focus, the screen organization should be elastic in order to accommodate the movement of users’ attention. The first assumption implied a rational spatial organization of the screen in modules, and the second dictated the behaviour of the geometric characteristics of these modules, which we call frames.
+Two assumptions were made early on: the contextual relevance of information and the adaptability of the interface. On one hand, to keep the contextual relevance of information visible to the user, the SIRS interface space should include all indexes and all documents at all times. On the other hand, to provide an adaptive interface to the variable user focus, the screen organization should be elastic in order to accommodate the movement of users’ attention. The first assumption implied a rational spatial organization of the screen in modules, and the second dictated the behavior of the geometric characteristics of these modules, which we call frames.
 
 Each frame is rectangular and tagged by a label, which indexes the content. The first division reflects the source composition: index on the left and documents on the right, according to the direction of western writing. Then, each frame splits horizontally or vertically as needed for inserting three indexes and three document sets. Indexes are aligned vertically and documents horizontally.
 

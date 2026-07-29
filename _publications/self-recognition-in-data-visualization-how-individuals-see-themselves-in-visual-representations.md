@@ -57,7 +57,7 @@ Using this case study to support the argumentation, this section presents the fi
 
 ## Digital Identity
 
-The first phase of self-recognition happens in information systems, whose main task is keeping safe computer records and serve them on demand. Although they could appear as functional storage technologies, information systems are non-human agents intertwined part of the social environment. They can certify information in society, for example, by labelling the status of individuals. This characteristic makes them a sort of technical authority.
+The first phase of self-recognition happens in information systems, whose main task is keeping safe computer records and serve them on demand. Although they could appear as functional storage technologies, information systems are non-human agents intertwined part of the social environment. They can certify information in society, for example, by labeling the status of individuals. This characteristic makes them a sort of technical authority.
 
 If information systems can certify personal information, it is more than legitimate to wonder who controls them. This question leads us to think about the complexity of digital authorship (Keen 1981, 28). An information system is usually maintained and updated by one organization, which is stirred by a management team through decision-making. This management implements policies that regulate data in terms of heterogeneity, accessibility, and ethics. A government, for example, certifies citizenship by saving a record in a database, which extends the capacity of the federal organism.
 

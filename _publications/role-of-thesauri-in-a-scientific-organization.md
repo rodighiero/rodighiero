@@ -26,9 +26,9 @@ A controlled vocabulary ordered by a set of relations between its index terms is
 
 In this work, we deal with specific thesauri designed for the Joint Research Centre of the European Commission (the JRC) and discuss their use from three perspectives, in the sections “Networks of People,” “Networks of Terms and People,” and “Networks of Terms” below. By network of terms we mean the thesaurus together with its history and the choices made while designing it. We claim that a thesaurus is more than a formal language used in Library Science as a tool for the “manipulation of classes” of documents: it captures some of the characters of the community it serves. As a network of terms, a thesaurus can be used in many ways — for keeping a collection of documents ordered, for measuring the consistency and quality of a collection, and as a formal mediation language for information retrieval purposes.
 
-Upon a thesaurus two more networks can be built. In “Networks of Terms and People,” the relations between people and descriptors are analysed; these relations link people to subjects of interest much as in a recommender system. In “Networks of People,” we describe the organization for which the thesauri were designed, aiming to describe the mutual relations between the structure of a thesaurus and the structure of the organization. In “Networks of Terms,” a thesaurus for nuclear science developed by a group of indexers and researchers in the same community (Euratom Thesaurus 1966, 1967) is described in detail, and the project for a new thesaurus for the JRC is presented.
+Upon a thesaurus two more networks can be built. In “Networks of Terms and People,” the relations between people and descriptors are analyzed; these relations link people to subjects of interest much as in a recommender system. In “Networks of People,” we describe the organization for which the thesauri were designed, aiming to describe the mutual relations between the structure of a thesaurus and the structure of the organization. In “Networks of Terms,” a thesaurus for nuclear science developed by a group of indexers and researchers in the same community (Euratom Thesaurus 1966, 1967) is described in detail, and the project for a new thesaurus for the JRC is presented.
 
-The practical outcome of our work is the design of a new information retrieval system for the JRC, based on the new thesaurus presented in “Networks of Terms.” This system, called SIRS (Scientific Information Retrieval System), is built by considering both the history of the JRC and the analysis of a thesaurus as a formal language, as in “Networks of Terms and People.” While performing this task, we used as conceptual tools some of the Communication Disciplines introduced by Carl Adam Petri (1977, 2001) for analysing computerized systems seen as a “general medium for strictly organized information flow.” Our work in designing SIRS is reported in “SIRS Thesauri.” Conclusions and ideas for continuing our work are reported in the last section.
+The practical outcome of our work is the design of a new information retrieval system for the JRC, based on the new thesaurus presented in “Networks of Terms.” This system, called SIRS (Scientific Information Retrieval System), is built by considering both the history of the JRC and the analysis of a thesaurus as a formal language, as in “Networks of Terms and People.” While performing this task, we used as conceptual tools some of the Communication Disciplines introduced by Carl Adam Petri (1977, 2001) for analyzing computerized systems seen as a “general medium for strictly organized information flow.” Our work in designing SIRS is reported in “SIRS Thesauri.” Conclusions and ideas for continuing our work are reported in the last section.
 
 ## Networks of People
 
@@ -36,7 +36,7 @@ By network of people we consider the professional relations among the members of
 
 > After consulting the Scientific and Technical Committee, the Commission shall establish a Joint Nuclear Research Centre. This Centre shall ensure that the research programmes and other tasks assigned to it by the Commission are carried out. It shall also ensure that a uniform nuclear terminology and a standard system of measurements are established. (Euratom Treaty 1957, art. 8)
 
-After a period of stability in the research themes from 1962 to 1971, a progressive enlargement of the fields of research occurred, together with a strong dependence of the research themes on policy acts and multi-annual work programmes approved by the Council.
+After a period of stability in the research themes from 1962 to 1971, a progressive enlargement of the fields of research occurred, together with a strong dependence of the research themes on policy acts and multi-annual work programs approved by the Council.
 
 Concerning the scientific activities of the Italian establishment of the JRC, its present activities are illustrated by the organizational chart in Figure 1. A comparison with the scientific activities reported by Gueben (1962) shows a deep enlargement of interests:
 
@@ -48,9 +48,9 @@ While the JRC research themes in 1962 and the Euratom Thesaurus could be superpo
 
 ## Networks of Terms and People
 
-We assume that coordination among people participating in an organization is performed via language. The role of language in organizations, and its use as a modelling tool, is a deep subject of study. A survey of approaches based on linguistics, philology and pragmatics is reported in Bazerman and Paradis (1991). From the perspective of computer science, models of conversations have been used as representatives of organizations since the design of the program Coordinator (Winograd and Flores 1986), and originated a rich debate in the world of Computer Supported Cooperative Work (CSCW), well summarized by Giorgio De Michelis (2007). In these approaches, organizations are represented through the conversations of their members; this type of representation does not touch the individual terms used in conversations, but some high-level representation of the conversations themselves. Applications using some sort of controlled vocabulary already exist — these are called recommender systems (see the content-based methods in Adomavicius and Tuzhilin 2005), where people are represented by index terms.
+We assume that coordination among people participating in an organization is performed via language. The role of language in organizations, and its use as a modeling tool, is a deep subject of study. A survey of approaches based on linguistics, philology and pragmatics is reported in Bazerman and Paradis (1991). From the perspective of computer science, models of conversations have been used as representatives of organizations since the design of the program Coordinator (Winograd and Flores 1986), and originated a rich debate in the world of Computer Supported Cooperative Work (CSCW), well summarized by Giorgio De Michelis (2007). In these approaches, organizations are represented through the conversations of their members; this type of representation does not touch the individual terms used in conversations, but some high-level representation of the conversations themselves. Applications using some sort of controlled vocabulary already exist — these are called recommender systems (see the content-based methods in Adomavicius and Tuzhilin 2005), where people are represented by index terms.
 
-In this work, we assume the existence of a formal language, a controlled vocabulary endowed with binary relations. The resulting relational structure — the thesaurus — is our modelling tool. Our use of a thesaurus as a linguistic representation tool is a compromise between the explicit representation of conversations and the simple use of index terms for representing people.
+In this work, we assume the existence of a formal language, a controlled vocabulary endowed with binary relations. The resulting relational structure — the thesaurus — is our modeling tool. Our use of a thesaurus as a linguistic representation tool is a compromise between the explicit representation of conversations and the simple use of index terms for representing people.
 
 A thesaurus can be seen as representative of an organization in the following three ways:
 
@@ -88,7 +88,7 @@ The history of the JRC, the evolution of its research themes, and the progressiv
 
 These language games have the general character of inquirer–indexer games played at three levels. The first level concerns the collection of documents, the traditional extent of a controlled language. The second level concerns the internal organization of the JRC, and acts as a kind of recommender system since it groups different activities around the same term. The third level is intimately related to the existence of the JRC and associates its research themes with the general policy indications of the European Union.
 
-In the following sections we analyse these language games in more detail and propose three distinct thesauri for them, representing three distinct perspectives on the JRC — the internal organization, the policy, and the general research index. We then briefly describe how these three thesauri are integrated.
+In the following sections we analyze these language games in more detail and propose three distinct thesauri for them, representing three distinct perspectives on the JRC — the internal organization, the policy, and the general research index. We then briefly describe how these three thesauri are integrated.
 
 ### Internal Organization
 
@@ -113,7 +113,7 @@ In 1981 the European Parliament and the Publications Office decided to establish
 
 ### General Research Index
 
-The Dewey Decimal Classification (DDC) was conceived by Melvil Dewey in 1873 and published for the first time in 1876 (Dewey 1996). The DDC system is one of the most widely used library classification systems, strictly based on a hierarchical structure supported by decimal-number labelling.
+The Dewey Decimal Classification (DDC) was conceived by Melvil Dewey in 1873 and published for the first time in 1876 (Dewey 1996). The DDC system is one of the most widely used library classification systems, strictly based on a hierarchical structure supported by decimal-number labeling.
 
 ### Integration of Thesauri
 
@@ -131,7 +131,7 @@ The SIRS interface is dynamic and designed in agreement with the Focus+Context p
 
 ## Conclusion
 
-We described our view on the role that a formal language for information retrieval and classification plays in modelling an organization, across three layers:
+We described our view on the role that a formal language for information retrieval and classification plays in modeling an organization, across three layers:
 
 1. Layer of people. How the history of an organization gives birth to a network of terms, and changes it.
 2. Layer of terms and people. From the plain proximity of people’s interests, reached through common indexes, to the more complex role of the network of terms as a mediation language between inquirers and indexers.
@@ -139,7 +139,7 @@ We described our view on the role that a formal language for information retriev
 
 We then used this analysis for the design of an information retrieval system, aiming to make explicit relations such as research themes to policy, or the mutual closeness of research themes. In doing so, we drew on conceptual tools from library science, pragmatics, information retrieval and computer science.
 
-More work remains to be done, since we have only shallowly touched the problem of a thesaurus as a mediation language: its use as a mediation language between humans and non-humans, and among non-humans, is still to be undertaken. Moreover, a precise analysis of the translation (Latour 1996) of classification and retrieval disciplines to the computerized world remains to be done as well. We aim to continue our work in this direction, by analysing the historical development of the first formats for automatic library interchange of bibliographic data (MARC 1975) and the first tools for distributed indexing (Harvest 1999), reading their history in the light of thesauri seen as a main component of formal mediation languages.
+More work remains to be done, since we have only shallowly touched the problem of a thesaurus as a mediation language: its use as a mediation language between humans and non-humans, and among non-humans, is still to be undertaken. Moreover, a precise analysis of the translation (Latour 1996) of classification and retrieval disciplines to the computerized world remains to be done as well. We aim to continue our work in this direction, by analyzing the historical development of the first formats for automatic library interchange of bibliographic data (MARC 1975) and the first tools for distributed indexing (Harvest 1999), reading their history in the light of thesauri seen as a main component of formal mediation languages.
 
 ## References
 
