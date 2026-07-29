@@ -70,13 +70,13 @@ _Fabio Reinhart. Translated by Christopher Stead._
 
 Hereafter, some notes to guide visitors. Words and diagrams reveal the authors’ principal compositional choices.
 
-Cities materialise the multiple, disparate and changing lives of generations of inhabitants, as individuals and in groups; from whom they accept requirements, desires, acquaintances… dreams, fears, hopes and still more yet: everything, to cut it short. More so, they mark the changes imposed by the vagaries of fate, capable of exaltation or annihilation, through the irresponsible slightness of indifference. Complexity is naturally co-substantive of the city.
+Cities materialize the multiple, disparate and changing lives of generations of inhabitants, as individuals and in groups; from whom they accept requirements, desires, acquaintances… dreams, fears, hopes and still more yet: everything, to cut it short. More so, they mark the changes imposed by the vagaries of fate, capable of exaltation or annihilation, through the irresponsible slightness of indifference. Complexity is naturally co-substantive of the city.
 
 {% include figure.html src="/images/the-analogous-city-the-map/fig_003.webp" class="three-quarter" alt="Reinhart’s schematic of the composition: the inhabitant’s domestic room with its ceiling lamp and window at the left, and the central machine of gears, pinions and flywheels." %}
 
-This, its first distinctive characteristic of undefinable magnitude, is immediately evident from its heterogeneous, multiple and contradictory togetherness: heterogeneous its representation, form and scale dimensions; multiple its contours, orientations, centres, symmetries and vanishing points; contradictory and conflictual its ordering principles.
+This, its first distinctive characteristic of undefinable magnitude, is immediately evident from its heterogeneous, multiple and contradictory togetherness: heterogeneous its representation, form and scale dimensions; multiple its contours, orientations, centers, symmetries and vanishing points; contradictory and conflictual its ordering principles.
 
-The first apparition is theatrical and baroque. A mysterious figure – Angel? Youth? Beauty? Messenger, in the mind of the authors – greets and solicits in singular manner the gaze of every visitor directly indicating, with a peremptory gesture of fore-arm and finger, the centre of the composition amidst racks, pinions, gears, pins and the flywheels of an unstoppable machine.
+The first apparition is theatrical and baroque. A mysterious figure – Angel? Youth? Beauty? Messenger, in the mind of the authors – greets and solicits in singular manner the gaze of every visitor directly indicating, with a peremptory gesture of fore-arm and finger, the center of the composition amidst racks, pinions, gears, pins and the flywheels of an unstoppable machine.
 
 {% include figure.html src="/images/the-analogous-city-the-map/fig_004.webp" class="three-quarter" alt="Reinhart’s diagram of the radial plan layout of the Analogous City." %}
 
@@ -106,7 +106,7 @@ Directly into the plan layout is introduced a second point of access.
 
 {% include figure.html src="/images/the-analogous-city-the-map/fig_008.webp" class="three-quarter" alt="Reinhart’s diagram lettering the plan’s superimposed parts — the real city (B), the city of memory (C), the ideal city (D) — and the concealed Castelgrande access (A)." %}
 
-It is concealed and secret, as was then our very lively hope of executing the restoration project for Castelgrande in Bellinzona (A). An aerial trellis beam leading along the stratification of defensive battlements, and an aerial spiral stair suspended over the remains of the corner tower, would have reinstated the walkways and the tower without recourse to reconstruction techniques; would have pitted provisional human endeavour and precarious manufacture against longer periods of history, against the permanence of deep-rooted historical demands; would have fused, into one, the emotional experiences induced by vertiginous distances, both spatial and temporal.
+It is concealed and secret, as was then our very lively hope of executing the restoration project for Castelgrande in Bellinzona (A). An aerial trellis beam leading along the stratification of defensive battlements, and an aerial spiral stair suspended over the remains of the corner tower, would have reinstated the walkways and the tower without recourse to reconstruction techniques; would have pitted provisional human endeavor and precarious manufacture against longer periods of history, against the permanence of deep-rooted historical demands; would have fused, into one, the emotional experiences induced by vertiginous distances, both spatial and temporal.
 
 Trellis beam and spiral stair would have been an excellent opportunity for a visitor desirous to grasp the spirit of the city they are about to visit, to understand how the city can be transformed yet at the same time retain its own character unaltered, conserve its memory of self.
 
@@ -136,13 +136,13 @@ The map is an interpretation of the picture panel, a sort of re-invention within
 
 Briefly, regarding this issue, just two observations:
 
-The two-by-two metre format of the original picture panel responds to contingencies, the exhibition event, and the space in which it was to be hung.
+The two-by-two meter format of the original picture panel responds to contingencies, the exhibition event, and the space in which it was to be hung.
 
 The dimensional factor alone involves aspects of disparity. Requiring vertical display, it determines viewers’ standing positions, postures and movements; even conditioning perception, hence too the potential to understand.
 
-For example, the viewer’s eye-level coincides with the horizontal datum spanning the centre, the floor beneath the viewer’s feet corresponds to the pictorial plane over which four figures below the Pleiades move forward. Spatial conditions help the spectator recognise his or her own positioning in relation to the work.
+For example, the viewer’s eye-level coincides with the horizontal datum spanning the center, the floor beneath the viewer’s feet corresponds to the pictorial plane over which four figures below the Pleiades move forward. Spatial conditions help the spectator recognize his or her own positioning in relation to the work.
 
-The picture panel was devised for a public attending the International Architecture Exhibition of the 1976 Venice Biennale. Today it stands witness to those faculties that the authors considered legitimate to ascribe to a public, typically educated, accustomed to recognising figurative conventions through historical and artistic elements rooted in time and space, even if distant.
+The picture panel was devised for a public attending the International Architecture Exhibition of the 1976 Venice Biennale. Today it stands witness to those faculties that the authors considered legitimate to ascribe to a public, typically educated, accustomed to recognizing figurative conventions through historical and artistic elements rooted in time and space, even if distant.
 
 These days the picture-cum-map is a more versatile tool, fitting the pocket.
 
