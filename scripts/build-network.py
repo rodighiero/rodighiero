@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Build the publication similarity network for the home network view.
 
-Reads publications from _publications/, embeds title + abstract with
-BAAI/bge-base-en-v1.5, and writes _data/network.json with the node list and
+Reads publications from _publications/, embeds title + full text with
+Alibaba-NLP/gte-base-en-v1.5, and writes _data/network.json with the node list and
 a pairwise cosine similarity matrix. The home page consumes it via Liquid as
 site.data.network.
 
@@ -66,13 +66,14 @@ def precompute_layout(
         raise SystemExit("layout-network.js failed — is Node installed?")
     return json.loads(proc.stdout)
 
-MODEL_NAME = "BAAI/bge-base-en-v1.5"
-# bge-base-en-v1.5 has a 512 word-piece window; cap inputs there so longer
-# abstracts/full texts inform the embedding (the model clamps to its own max).
-MAX_SEQ_LENGTH = 512
-# Pin inference to CPU by default: a single small-batch encode of ~50 short
-# documents gains nothing from the Apple MPS (GPU) backend but inherits its
-# first-call warm-up cost. Override with NETWORK_DEVICE=mps|cuda if needed.
+MODEL_NAME = "Alibaba-NLP/gte-base-en-v1.5"
+# gte-base-en-v1.5 has an 8192 word-piece window, so full-text articles inform
+# the embedding instead of being truncated to their first few hundred tokens
+# (the previous bge-base-en-v1.5 capped at 512, discarding 90%+ of long papers).
+MAX_SEQ_LENGTH = 8192
+# Default to CPU for portability. Encoding the corpus at MAX_SEQ_LENGTH is the
+# slow step (minutes, since full-text articles run up to several thousand
+# tokens); on Apple Silicon, NETWORK_DEVICE=mps (or cuda) speeds it up.
 DEVICE = os.environ.get("NETWORK_DEVICE", "cpu")
 EXCERPT_SEPARATOR = "<!--more-->"
 
@@ -161,7 +162,7 @@ def main() -> int:
             raise SystemExit(f"{p['slug']}: translation_of '{src}' is itself a translation")
 
     print(f"loading model {MODEL_NAME}…", file=sys.stderr)
-    model = SentenceTransformer(MODEL_NAME, device=DEVICE)
+    model = SentenceTransformer(MODEL_NAME, device=DEVICE, trust_remote_code=True)
     model.max_seq_length = MAX_SEQ_LENGTH
 
     # The similarity network is English-only: non-English publications are

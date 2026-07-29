@@ -27,7 +27,7 @@ const d3 = require(path.resolve(__dirname, '..', 'js', 'd3.v7.min.js'));
 const NODE_RADIUS = 3;
 const NODE_SPACING = 27;
 const CHARGE_STRENGTH = -250;
-const STRONG_SIM = 0.70;
+const STRONG_SIM = 0.60;
 const GRAVITY = 0.9;
 // Randomized per build: each run produces a fresh arrangement (re-run to
 // reroll). The settled cloud is normalized to fit the canvas afterwards, so
