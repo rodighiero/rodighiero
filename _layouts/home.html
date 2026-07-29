@@ -637,9 +637,9 @@
           <h3>How the network is built</h3>
           <ol>
             <li>Each file in <code>_publications/</code> is stripped to plain prose — no footnotes, headings, links, tags, emphasis, parentheticals, or bibliography.</li>
-            <li>The English title + abstract is embedded as a 768-dimensional vector by <code>BAAI/bge-base-en-v1.5</code>; Italian and French papers are left out.</li>
+            <li>The English title and full text is embedded as a 768-dimensional vector by <code>Alibaba-NLP/gte-base-en-v1.5</code> (8192-token window); Italian and French papers are left out.</li>
             <li>Cosine similarity is computed for every pair of papers.</li>
-            <li>Each paper links to its single strongest neighbour — unless that score is below 0.70, leaving it unconnected.</li>
+            <li>Each paper links to its single strongest neighbour — unless that score is below 0.60, leaving it unconnected.</li>
             <li>A translation is a regular node tied to its original by a dashed forced edge, not by similarity.</li>
             <li>A D3 force simulation, pre-computed offline, lays out the graph so it loads already settled.</li>
           </ol>
@@ -1155,7 +1155,7 @@
           top.map(function(t) {
             var j = t[0], s = t[1];
             // Floor rather than round: a score just under STRONG_SIM must never
-            // display as if it cleared it (e.g. 0.6983 should read 0.69, not 0.70).
+            // display as if it cleared it (e.g. 0.5983 should read 0.59, not 0.60).
             var sDisplay = (Math.floor(s * 100) / 100).toFixed(2);
             return '<li data-node-i="' + j + '"><span class="sim">' + sDisplay + '</span><div class="nb-body"><a href="' + escapeHtml(pubs[j].url) + '">' + escapeHtml(pubs[j].title) + '</a></div></li>';
           }).join('') +
