@@ -67,7 +67,7 @@ For this reason, theory has to be combined with practice to produce solid resear
 
 ## References
 
-- Boccioni, Umberto. 1914. _Manifesto of Futurist Sculpture_.
+- Boccioni, Umberto. 1912. _Manifesto of Futurist Sculpture_.
 - Drucker, Johanna. 2011. “Humanities Approaches to Graphical Display.” _Digital Humanities Quarterly_ 5 (1): 1–21.
 - Holme, Petter, and Jari Saramäki, eds. 2013. _Temporal Networks_. Understanding Complex Systems. Berlin, Heidelberg: Springer.
 - Ingold, Tim. 2007. _Lines: A Brief History_. London: Routledge.
