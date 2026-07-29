@@ -1090,17 +1090,17 @@
         return [words.slice(0, best).join(' '), words.slice(best).join(' ')];
       }
       // Titles always render above the node: single line at y=-10, or a balanced
-      // two-line split at y=-20/-10. No above/below flip — placement is consistent.
+      // two-line split at y=-25/-12. No above/below flip — placement is consistent.
       function setLabel(textEl, title) {
         var sel = d3.select(textEl);
         sel.selectAll('tspan').remove();
         if (!title) return;
         var lines = splitTitle(title);
         if (lines.length === 1) {
-          sel.append('tspan').attr('x', 0).attr('y', -10).text(lines[0]);
+          sel.append('tspan').attr('x', 0).attr('y', -12).text(lines[0]);
         } else {
-          sel.append('tspan').attr('x', 0).attr('y', -20).text(lines[0]);
-          sel.append('tspan').attr('x', 0).attr('y', -10).text(lines[1]);
+          sel.append('tspan').attr('x', 0).attr('y', -25).text(lines[0]);
+          sel.append('tspan').attr('x', 0).attr('y', -12).text(lines[1]);
         }
       }
 
