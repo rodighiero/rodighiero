@@ -25,9 +25,20 @@ const d3 = require(path.resolve(__dirname, '..', 'js', 'd3.v7.min.js'));
 
 // ── Layout constants (formerly in _layouts/home.html) ──
 const NODE_RADIUS = 3;
-const NODE_SPACING = 27;
-const CHARGE_STRENGTH = -250;
+// Collide radius = NODE_RADIUS + NODE_SPACING. Labels render only on hover (one
+// at a time, plus a selection's neighbours), so this spacing governs marker/
+// click separation, not label legibility — kept tight enough that linked nodes
+// pull into visibly distinct cluster knots rather than a uniform blob.
+const NODE_SPACING = 18;
+const CHARGE_STRENGTH = -280;
 const STRONG_SIM = 0.60;
+// Mutual k-nearest-neighbour: an English node pair is linked only when each
+// ranks the other within its top MUTUAL_K most-similar English neighbours (and
+// the similarity clears STRONG_SIM). This makes every similarity edge
+// reciprocal — no one-sided "nearest neighbour" links — and lets a node carry
+// more than one edge, so genuine clusters form. A handful of nodes with no
+// reciprocated neighbour are left unconnected by design.
+const MUTUAL_K = 2;
 const GRAVITY = 0.9;
 // Randomized per build: each run produces a fresh arrangement (re-run to
 // reroll). The settled cloud is normalized to fit the canvas afterwards, so
@@ -35,6 +46,16 @@ const GRAVITY = 0.9;
 // to stderr and stored in the output as `seed` for reference.
 const LAYOUT_SEED = (Math.random() * 0x100000000) >>> 0;
 const LAYOUT_TICKS = 1400;
+// Link-distance shaping (forceLink): distance = LINK_DIST_BASE + (1−sim)*LINK_DIST_SPAN.
+const LINK_DIST_BASE = 10;
+const LINK_DIST_SPAN = 38;
+const CHARGE_DISTANCE_MAX = 520;
+// Component-anchoring strategy: 'center' (all nodes share one gravity well) or
+// 'ring' (largest component centred, others pinned around it on a perimeter
+// ring). The mutual-kNN graph is many small components with no dominant hub, so
+// 'ring' scatters the singletons into a perimeter halo — 'center' lets clusters
+// settle as islands with unconnected nodes filling the gaps.
+const ANCHOR = 'center';
 
 // Canonical stage the layout is baked into. Approximates a desktop `.stage`
 // box: body max-width 1200 − 2×1.5rem padding → 1152 content; the network grid
@@ -97,12 +118,16 @@ function main(input) {
     return n;
   });
 
-  // ── buildLinks: the core network is English-only. Each English node gets a
-  // link to its single strongest English neighbour, but only if that best
-  // similarity clears STRONG_SIM — otherwise it is left unconnected. Non-
-  // English publications are then attached on top: a translation gets a
-  // forced 1.00 link to its original; any other non-English original does
-  // not search for a match at all and stays unconnected. ──
+  // ── buildLinks: the core network is English-only and uses mutual k-nearest-
+  // neighbour edges. For each English node we rank the other English nodes by
+  // similarity; a pair (i, j) is linked only when j is within i's top MUTUAL_K
+  // AND i is within j's top MUTUAL_K, and sim clears STRONG_SIM. This keeps
+  // every similarity edge reciprocal and lets a node carry several edges, so
+  // real clusters emerge (a node whose top picks never reciprocate stays
+  // unconnected — that is the intended cost of mutuality). Non-English
+  // publications are then attached on top: a translation gets a forced 1.00
+  // link to its original; any other non-English original does not search for a
+  // match at all and stays unconnected. ──
   const seen = new Set();
   const links = [];
   function add(i, j, v) {
@@ -111,15 +136,26 @@ function main(input) {
     seen.add(key);
     links.push({ source: i, target: j, value: v });
   }
+  // Per-English-node ranking of the other English nodes, most similar first.
+  const topK = new Array(N).fill(null);
+  for (let i = 0; i < N; i++) {
+    if (isNonEnglish[i] || isTrans[i]) continue;
+    const cands = [];
+    for (let j = 0; j < N; j++) {
+      if (i === j || isNonEnglish[j] || isTrans[j]) continue;
+      cands.push(j);
+    }
+    cands.sort(function (a, b) { return sim[i][b] - sim[i][a]; });
+    topK[i] = cands.slice(0, MUTUAL_K);
+  }
   for (let i = 0; i < N; i++) {
     if (isTrans[i]) { add(i, transOf[i], 1); continue; }
     if (isNonEnglish[i]) continue;
-    let bestJ = -1, bestS = -Infinity;
-    for (let j = 0; j < N; j++) {
-      if (i === j || isNonEnglish[j]) continue;
-      if (sim[i][j] > bestS) { bestS = sim[i][j]; bestJ = j; }
-    }
-    if (bestJ >= 0 && bestS > STRONG_SIM) add(i, bestJ, bestS);
+    topK[i].forEach(function (j) {
+      if (sim[i][j] <= STRONG_SIM) return;      // similarity floor
+      if (topK[j] && topK[j].indexOf(i) !== -1)  // reciprocated?
+        add(i, j, sim[i][j]);
+    });
   }
 
   // ── Component anchoring targets (uses link indices; run before forceLink) ──
@@ -143,14 +179,26 @@ function main(input) {
   groups.sort(function (a, b) { return b.length - a.length; });
   const targets = new Array(N);
   const cy0 = CANVAS_H * 0.45;
-  (groups[0] || []).forEach(function (i) { targets[i] = { x: CANVAS_W / 2, y: cy0 }; });
-  const numSatellites = Math.max(1, groups.length - 1);
-  const r = Math.min(CANVAS_W, CANVAS_H) * 0.25;
-  for (let k = 1; k < groups.length; k++) {
-    const angle = (k - 1) / numSatellites * 2 * Math.PI - Math.PI / 2;
-    const cx = CANVAS_W / 2 + Math.cos(angle) * r;
-    const cy = cy0 + Math.sin(angle) * r;
-    groups[k].forEach(function (i) { targets[i] = { x: cx, y: cy }; });
+  if (ANCHOR === 'center') {
+    // Single shared gravity well: every node is pulled to the same centre and
+    // charge/collide spread them into one balanced cloud. Linked nodes cohere
+    // via forceLink into islands; unconnected nodes fill the gaps rather than
+    // being exiled to a perimeter ring. Suits a many-small-components graph
+    // (mutual-kNN) where there is no single dominant hub.
+    for (let i = 0; i < N; i++) targets[i] = { x: CANVAS_W / 2, y: cy0 };
+  } else {
+    // Ring anchoring: the largest component sits at the centre, every other
+    // component is pinned around it on a ring. Suits one big hub + a few
+    // satellites; degrades to a scattered halo when components are many.
+    (groups[0] || []).forEach(function (i) { targets[i] = { x: CANVAS_W / 2, y: cy0 }; });
+    const numSatellites = Math.max(1, groups.length - 1);
+    const r = Math.min(CANVAS_W, CANVAS_H) * 0.25;
+    for (let k = 1; k < groups.length; k++) {
+      const angle = (k - 1) / numSatellites * 2 * Math.PI - Math.PI / 2;
+      const cx = CANVAS_W / 2 + Math.cos(angle) * r;
+      const cy = cy0 + Math.sin(angle) * r;
+      groups[k].forEach(function (i) { targets[i] = { x: cx, y: cy }; });
+    }
   }
 
   // forceLink mutates link.source/target into node refs — give it a copy so the
@@ -160,9 +208,9 @@ function main(input) {
   const simulation = d3.forceSimulation(nodes)
     .alphaDecay(0.005)
     .force('link', d3.forceLink(simLinks).id(function (d) { return d.i; })
-      .distance(function (d) { return 15 + (1 - d.value) * 45; })
+      .distance(function (d) { return LINK_DIST_BASE + (1 - d.value) * LINK_DIST_SPAN; })
       .strength(function (d) { return 0.5 + d.value * 0.5; }))
-    .force('charge', d3.forceManyBody().strength(CHARGE_STRENGTH).distanceMax(520))
+    .force('charge', d3.forceManyBody().strength(CHARGE_STRENGTH).distanceMax(CHARGE_DISTANCE_MAX))
     .force('x', d3.forceX(function (d) { return targets[d.i].x; }).strength(GRAVITY))
     .force('y', d3.forceY(function (d) { return targets[d.i].y; }).strength(GRAVITY))
     .force('collide', d3.forceCollide().radius(NODE_RADIUS + NODE_SPACING))
