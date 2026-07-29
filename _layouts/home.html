@@ -637,11 +637,11 @@
           <h3>How the network is built</h3>
           <ol>
             <li>Each file in <code>_publications/</code> is stripped to plain prose — no footnotes, headings, links, tags, emphasis, parentheticals, or bibliography.</li>
-            <li>The English title and full text is embedded as a 768-dimensional vector by <code>Alibaba-NLP/gte-base-en-v1.5</code> (8192-token window); Italian and French papers are left out.</li>
-            <li>Cosine similarity is computed for every pair of papers.</li>
-            <li>Each paper links to its single strongest neighbour — unless that score is below 0.60, leaving it unconnected.</li>
-            <li>A translation is a regular node tied to its original by a dashed forced edge, not by similarity.</li>
-            <li>A D3 force simulation, pre-computed offline, lays out the graph so it loads already settled.</li>
+            <li>The English title and full text is embedded as a 768-dimensional vector by <code>Alibaba-NLP/gte-base-en-v1.5</code>; Italian and French papers are left out.</li>
+            <li>Cosine similarity is then computed between every pair of embedded papers, scoring how closely their vectors align.</li>
+            <li>Edges follow a mutual <em>k</em>-nearest-neighbour rule (<em>k</em>&nbsp;=&nbsp;2): a pair links only when each ranks the other among its two closest and both clear 0.60.</li>
+            <li>A translation stays a regular node but is tied to its original by a dashed forced edge rather than by measured similarity.</li>
+            <li>A D3 force simulation, pre-computed offline, arranges the nodes so the graph loads already settled.</li>
           </ol>
           <p>Hover a node to read its title; click to select it and reveal its closest matches below.</p>
         </div>
