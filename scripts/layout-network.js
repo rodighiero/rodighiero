@@ -31,7 +31,7 @@ const NODE_RADIUS = 3;
 // pull into visibly distinct cluster knots rather than a uniform blob.
 const NODE_SPACING = 18;
 const CHARGE_STRENGTH = -280;
-const STRONG_SIM = 0.60;
+const STRONG_SIM = 0.65;
 // Mutual k-nearest-neighbour: an English node pair is linked only when each
 // ranks the other within its top MUTUAL_K most-similar English neighbours (and
 // the similarity clears STRONG_SIM). This makes every similarity edge
@@ -45,8 +45,11 @@ const MUTUAL_K = 2;
 // clears FALLBACK_SIM — so a publication similar to nothing stays honestly
 // isolated rather than collecting a spurious link. These rescue edges are
 // one-directional and weaker than the reciprocal backbone, so they are flagged
-// (`fb`) and drawn at reduced opacity by the page. Set to the STRONG_SIM floor:
-// the fallback relaxes the *mutuality* requirement, not the similarity floor.
+// (`fb`) and drawn at reduced opacity by the page. Kept below STRONG_SIM so the
+// fallback forms a distinct weaker tier (a rescue link just above FALLBACK_SIM
+// is faint, while the reciprocal backbone clears the higher STRONG_SIM), not a
+// back door into the backbone: it relaxes both mutuality and the floor, but
+// only for a node that would otherwise be isolated.
 const FALLBACK_SIM = 0.60;
 const GRAVITY = 0.9;
 // Randomized per build: each run produces a fresh arrangement (re-run to

@@ -643,7 +643,7 @@
             <li>Each file in <code>_publications/</code> is stripped to plain prose — no footnotes, headings, links, tags, emphasis, parentheticals, or bibliography.</li>
             <li>The English title and full text is embedded as a 768-dimensional vector by <code>Alibaba-NLP/gte-base-en-v1.5</code>; Italian and French papers are left out.</li>
             <li>Cosine similarity is then computed between every pair of embedded papers, scoring how closely their vectors align.</li>
-            <li>Edges follow a mutual <em>k</em>-nearest-neighbour rule (<em>k</em>&nbsp;=&nbsp;2): a pair links only when each ranks the other among its two closest and both clear 0.60.</li>
+            <li>Edges follow a mutual <em>k</em>-nearest-neighbour rule (<em>k</em>&nbsp;=&nbsp;2): a pair links only when each ranks the other among its two closest and their similarity clears 0.65.</li>
             <li>A node left with no reciprocated neighbour keeps a single faint edge to its closest match above 0.60; one similar to nothing stays unconnected.</li>
             <li>A translation stays a regular node but is tied to its original by a dashed forced edge rather than by measured similarity.</li>
             <li>A D3 force simulation, pre-computed offline, arranges the nodes so the graph loads already settled.</li>
@@ -1161,7 +1161,7 @@
           top.map(function(t) {
             var j = t[0], s = t[1];
             // Floor rather than round: a score just under STRONG_SIM must never
-            // display as if it cleared it (e.g. 0.5983 should read 0.59, not 0.60).
+            // display as if it cleared it (e.g. 0.6483 should read 0.64, not 0.65).
             var sDisplay = (Math.floor(s * 100) / 100).toFixed(2);
             return '<li data-node-i="' + j + '"><span class="sim">' + sDisplay + '</span><div class="nb-body"><a href="' + escapeHtml(pubs[j].url) + '">' + escapeHtml(pubs[j].title) + '</a></div></li>';
           }).join('') +
