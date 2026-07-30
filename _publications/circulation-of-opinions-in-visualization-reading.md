@@ -1,7 +1,7 @@
 ---
 title: "Circulation of Opinions in Visualization Reading"
 year: 2016
-venue: "Valuable Visualization of Healthcare Information: From the Quantified Self Data to Conversations"
+venue: "Valuable Visualization of Healthcare Information"
 type: "conference"
 author: "Dario Rodighiero"
 editor: "Federico Cabitza and Daniela Fogli and Massimiliano Giacomin and Angela Locoro"
