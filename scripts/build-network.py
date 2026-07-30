@@ -20,6 +20,7 @@ Re-run after editing publications:
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -37,6 +38,35 @@ ROOT = Path(__file__).resolve().parent.parent
 PUBS_DIR = ROOT / "_publications"
 OUT = ROOT / "_data" / "network.json"
 LAYOUT_SCRIPT = ROOT / "scripts" / "layout-network.js"
+# Local, gitignored embedding cache: maps a per-document key (model + seq length
+# + cleaned text hash) to its 768-dim vector, so re-runs only encode documents
+# whose text actually changed. Byte-identical to a full re-embed — same numbers,
+# same graph — but turns "I added one article" from a full-corpus encode into a
+# single-document one, and a no-content-change re-run skips model loading
+# entirely. Delete the file to force a clean rebuild.
+CACHE_PATH = ROOT / "scripts" / ".embedding-cache.npz"
+
+
+def _cache_key(text: str) -> str:
+    """Content hash keyed to the model + window, so either change invalidates it."""
+    h = hashlib.sha256()
+    h.update(f"{MODEL_NAME}\x00{MAX_SEQ_LENGTH}\x00".encode("utf-8"))
+    h.update(text.encode("utf-8"))
+    return h.hexdigest()
+
+
+def _load_cache() -> dict[str, np.ndarray]:
+    if not CACHE_PATH.exists():
+        return {}
+    try:
+        with np.load(CACHE_PATH) as z:
+            return {k: z[k] for k in z.files}
+    except Exception:  # a corrupt/incompatible cache is just rebuilt
+        return {}
+
+
+def _save_cache(cache: dict[str, np.ndarray]) -> None:
+    np.savez(CACHE_PATH, **cache)
 
 
 def precompute_layout(
@@ -71,9 +101,10 @@ MODEL_NAME = "Alibaba-NLP/gte-base-en-v1.5"
 # the embedding instead of being truncated to their first few hundred tokens
 # (the previous bge-base-en-v1.5 capped at 512, discarding 90%+ of long papers).
 MAX_SEQ_LENGTH = 8192
-# Default to CPU for portability. Encoding the corpus at MAX_SEQ_LENGTH is the
-# slow step (minutes, since full-text articles run up to several thousand
-# tokens); on Apple Silicon, NETWORK_DEVICE=mps (or cuda) speeds it up.
+# Default to CPU for portability. Encoding at MAX_SEQ_LENGTH is the slow step
+# (full-text articles run up to several thousand tokens), but the embedding
+# cache (see CACHE_PATH) means only changed documents are re-encoded; on Apple
+# Silicon, NETWORK_DEVICE=mps (or cuda) speeds up the cold/first encode.
 DEVICE = os.environ.get("NETWORK_DEVICE", "cpu")
 EXCERPT_SEPARATOR = "<!--more-->"
 
@@ -161,24 +192,41 @@ def main() -> int:
         if orig.get("translation_of"):
             raise SystemExit(f"{p['slug']}: translation_of '{src}' is itself a translation")
 
-    print(f"loading model {MODEL_NAME}…", file=sys.stderr)
-    model = SentenceTransformer(MODEL_NAME, device=DEVICE, trust_remote_code=True)
-    model.max_seq_length = MAX_SEQ_LENGTH
-
     # The similarity network is English-only: non-English publications are
     # never embedded (no machine translation) and their similarity rows stay
     # zero — they still appear in the graph as nodes (see the translations
     # block below and layout-network.js's isNonEnglish handling) but are
     # never a similarity source or candidate.
     en_idx = [i for i, p in enumerate(pubs) if p["lang"] == "en"]
-    print(f"embedding {len(en_idx)} English-language documents…", file=sys.stderr)
-    en_vecs = model.encode(
-        [pubs[i]["text"] for i in en_idx], normalize_embeddings=True, show_progress_bar=False
+    en_texts = [pubs[i]["text"] for i in en_idx]
+    keys = [_cache_key(t) for t in en_texts]
+
+    # Encode only what the cache is missing; a run with no text changes never
+    # loads the model at all.
+    cache = _load_cache()
+    missing = [(k, t) for k, t in zip(keys, en_texts) if k not in cache]
+    print(
+        f"embedding {len(en_idx)} English-language documents — "
+        f"{len(en_idx) - len(missing)} cached, {len(missing)} to encode…",
+        file=sys.stderr,
     )
+    if missing:
+        print(f"loading model {MODEL_NAME}…", file=sys.stderr)
+        model = SentenceTransformer(MODEL_NAME, device=DEVICE, trust_remote_code=True)
+        model.max_seq_length = MAX_SEQ_LENGTH
+        new_vecs = model.encode(
+            [t for _, t in missing], normalize_embeddings=True, show_progress_bar=False
+        )
+        for (k, _), v in zip(missing, new_vecs):
+            cache[k] = np.asarray(v, dtype=np.float32)
+        _save_cache({k: cache[k] for k in keys})  # persist, pruning stale entries
+
+    en_vecs = np.vstack([cache[k] for k in keys]) if keys else np.zeros((0, 0))
 
     sim = np.zeros((len(pubs), len(pubs)))
     idx = np.array(en_idx)
-    sim[np.ix_(idx, idx)] = en_vecs @ en_vecs.T
+    if len(idx):
+        sim[np.ix_(idx, idx)] = en_vecs @ en_vecs.T
     np.fill_diagonal(sim, 0)
 
     nodes = [
