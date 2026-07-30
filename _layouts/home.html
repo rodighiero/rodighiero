@@ -411,9 +411,13 @@
     /* A translation is the same work in another language: an ordinary node,
        set apart only by a more pronounced dashed edge to its original. */
     #network-view .link.translation { stroke-width: 0.9; stroke-dasharray: 3 2.5; }
+    /* A fallback is a one-directional rescue edge for a node with no reciprocated
+       neighbour: drawn faint so the mutual backbone stays visually dominant. */
+    #network-view .link.fallback { opacity: 0.3; }
     #network-view .node.highlight .marker { fill: var(--fg); }
     #network-view .node.connected .marker { stroke: var(--fg); stroke-width: 1.25; }
     #network-view .link.highlight { stroke-width: 1; }
+    #network-view .link.fallback.highlight { opacity: 1; }
     #network-view .labels text.hover { fill: var(--fg); }
     /* Click-selection (.dimmed on non-neighbours) and search filter (.filtered-out on non-matches) recolor to muted. */
     #network-view .node.dimmed .marker,
@@ -640,6 +644,7 @@
             <li>The English title and full text is embedded as a 768-dimensional vector by <code>Alibaba-NLP/gte-base-en-v1.5</code>; Italian and French papers are left out.</li>
             <li>Cosine similarity is then computed between every pair of embedded papers, scoring how closely their vectors align.</li>
             <li>Edges follow a mutual <em>k</em>-nearest-neighbour rule (<em>k</em>&nbsp;=&nbsp;2): a pair links only when each ranks the other among its two closest and both clear 0.60.</li>
+            <li>A node left with no reciprocated neighbour keeps a single faint edge to its closest match above 0.60; one similar to nothing stays unconnected.</li>
             <li>A translation stays a regular node but is tied to its original by a dashed forced edge rather than by measured similarity.</li>
             <li>A D3 force simulation, pre-computed offline, arranges the nodes so the graph loads already settled.</li>
           </ol>
@@ -1000,7 +1005,7 @@
       // similarity matrix directly.
       var links = data.links.map(function(l) {
         var s = nodes[l.source], t = nodes[l.target];
-        return { source: s, target: t, translation: !!(s.tr || t.tr) };
+        return { source: s, target: t, translation: !!(s.tr || t.tr), fallback: !!l.fb };
       });
       var linkSel, nodeSel, labelSel;
       var labelByIdx = [];
@@ -1038,7 +1043,8 @@
         var linkData = linkLayer.selectAll('line').data(links, function(d) { return (d.source.i != null ? d.source.i : d.source) + ':' + (d.target.i != null ? d.target.i : d.target); });
         linkData.exit().remove();
         linkSel = linkData.enter().append('line').attr('class', 'link').merge(linkData);
-        linkSel.classed('translation', function(d) { return !!d.translation; });
+        linkSel.classed('translation', function(d) { return !!d.translation; })
+          .classed('fallback', function(d) { return !!d.fallback; });
 
         var nodeData = nodeLayer.selectAll('g.node').data(nodes, function(d) { return d.i; });
         nodeData.exit().remove();

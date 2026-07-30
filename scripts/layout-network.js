@@ -39,6 +39,15 @@ const STRONG_SIM = 0.60;
 // more than one edge, so genuine clusters form. A handful of nodes with no
 // reciprocated neighbour are left unconnected by design.
 const MUTUAL_K = 2;
+// Nearest-neighbour fallback: an English node that the mutual-kNN rule leaves
+// with no edge at all (and that is not tied to a translation) is given a single
+// edge to its most-similar English neighbour, but only if that similarity
+// clears FALLBACK_SIM — so a publication similar to nothing stays honestly
+// isolated rather than collecting a spurious link. These rescue edges are
+// one-directional and weaker than the reciprocal backbone, so they are flagged
+// (`fb`) and drawn at reduced opacity by the page. Set to the STRONG_SIM floor:
+// the fallback relaxes the *mutuality* requirement, not the similarity floor.
+const FALLBACK_SIM = 0.60;
 const GRAVITY = 0.9;
 // Randomized per build: each run produces a fresh arrangement (re-run to
 // reroll). The settled cloud is normalized to fit the canvas afterwards, so
@@ -123,18 +132,22 @@ function main(input) {
   // similarity; a pair (i, j) is linked only when j is within i's top MUTUAL_K
   // AND i is within j's top MUTUAL_K, and sim clears STRONG_SIM. This keeps
   // every similarity edge reciprocal and lets a node carry several edges, so
-  // real clusters emerge (a node whose top picks never reciprocate stays
-  // unconnected — that is the intended cost of mutuality). Non-English
-  // publications are then attached on top: a translation gets a forced 1.00
-  // link to its original; any other non-English original does not search for a
-  // match at all and stays unconnected. ──
+  // real clusters emerge. A node whose top picks never reciprocate would stay
+  // unconnected, so a nearest-neighbour fallback (see below) then gives each
+  // such node one weaker edge to its strongest match above FALLBACK_SIM —
+  // unless it is similar to nothing, in which case it stays isolated by design.
+  // Non-English publications are then attached on top: a translation gets a
+  // forced 1.00 link to its original; any other non-English original does not
+  // search for a match at all and stays unconnected. ──
   const seen = new Set();
   const links = [];
-  function add(i, j, v) {
+  function add(i, j, v, fb) {
     const key = i < j ? i + ':' + j : j + ':' + i;
     if (seen.has(key)) return;
     seen.add(key);
-    links.push({ source: i, target: j, value: v });
+    const link = { source: i, target: j, value: v };
+    if (fb) link.fb = true;   // nearest-neighbour fallback edge (drawn fainter)
+    links.push(link);
   }
   // Per-English-node ranking of the other English nodes, most similar first.
   const topK = new Array(N).fill(null);
@@ -156,6 +169,29 @@ function main(input) {
       if (topK[j] && topK[j].indexOf(i) !== -1)  // reciprocated?
         add(i, j, sim[i][j]);
     });
+  }
+
+  // ── Nearest-neighbour fallback ──
+  // Any English node still carrying no edge (no reciprocated mutual neighbour,
+  // and not attached to a translation) is linked to its single most-similar
+  // English neighbour when that similarity clears FALLBACK_SIM. Degree counts
+  // every edge added so far (mutual + forced translation edges), so a node that
+  // is already visibly connected — including via a dashed translation edge — is
+  // not rescued. degree is updated as we go, so two mutually-isolated nodes that
+  // pick each other share one edge and neither collects a second.
+  const degree = new Array(N).fill(0);
+  links.forEach(function (l) { degree[l.source]++; degree[l.target]++; });
+  for (let i = 0; i < N; i++) {
+    if (isNonEnglish[i] || isTrans[i] || degree[i] > 0) continue;
+    let best = -1, bestSim = -Infinity;
+    for (let j = 0; j < N; j++) {
+      if (i === j || isNonEnglish[j] || isTrans[j]) continue;
+      if (sim[i][j] > bestSim) { bestSim = sim[i][j]; best = j; }
+    }
+    if (best !== -1 && bestSim > FALLBACK_SIM) {
+      add(i, best, sim[i][best], true);
+      degree[i]++; degree[best]++;
+    }
   }
 
   // ── Component anchoring targets (uses link indices; run before forceLink) ──
