@@ -39,6 +39,12 @@ magazine:
   citation_venue: citation_journal_title
   bibtex: article
   bibtex_venue: journal
+interview:
+  label: Interview
+  schema: Article
+  dc: interview
+  bibtex: misc
+  bibtex_venue: publisher
 map:
   label: Map
   schema: Map
