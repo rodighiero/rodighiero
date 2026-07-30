@@ -8,6 +8,7 @@
                suppressed here when co-authors exist. Always on the pub page.
   - Translator unchanged: "translated by X and Y"
   - Preface:   "preface with / preface by X and Y"
+  - Interview: "interview with / interview by X and Y" (interviewer of an interview)
   - Lists join with ", " and "and" before the last name (no Oxford comma).
   The per-field formatting (split, strip Dario, re-join) is delegated to
   name-list.html; this file only assembles the parts and capitalizes each
@@ -27,6 +28,9 @@
 
 {%- capture intro_part -%}{%- include name-list.html raw=include.item.preface prefix_with="preface with " prefix_by="preface by " -%}{%- endcapture -%}
 {%- assign intro_part = intro_part | strip -%}
+
+{%- capture iv_part -%}{%- include name-list.html raw=include.item.interviewer prefix_with="interview with " prefix_by="interview by " -%}{%- endcapture -%}
+{%- assign iv_part = iv_part | strip -%}
 
 {%- comment -%} Capitalize first letter only when a part follows a period. {%- endcomment -%}
 {%- assign out = "" -%}
@@ -51,6 +55,13 @@
     {%- assign in_rest = intro_part | slice: 1, 9999 -%}
     {%- assign out = out | append: ". " | append: in_first | append: in_rest -%}
   {%- else -%}{%- assign out = intro_part -%}{%- endif -%}
+{%- endif -%}
+{%- if iv_part != "" -%}
+  {%- if out != "" -%}
+    {%- assign iv_first = iv_part | slice: 0, 1 | upcase -%}
+    {%- assign iv_rest = iv_part | slice: 1, 9999 -%}
+    {%- assign out = out | append: ". " | append: iv_first | append: iv_rest -%}
+  {%- else -%}{%- assign out = iv_part -%}{%- endif -%}
 {%- endif -%}
 
 {%- if out != "" -%}<div class="authors">{{ out }}</div>{%- endif -%}
