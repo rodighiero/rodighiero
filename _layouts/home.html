@@ -396,6 +396,9 @@
       opacity: 0;
     }
     #network-view .node.hover .ring { opacity: 1; }
+    /* Keyboard focus reuses the hover ring as its visible indicator. */
+    #network-view .node:focus { outline: none; }
+    #network-view .node:focus-visible .ring { opacity: 1; }
     #network-view .labels text {
       font-family: var(--font);
       font-size: var(--text-xs);
@@ -894,6 +897,20 @@
       searchInput.addEventListener('input', applySearch);
     }
 
+    // Keyboard: "/" jumps to the search box; Esc clears it while focused.
+    document.addEventListener('keydown', function(e) {
+      if (!searchInput) return;
+      var t = e.target;
+      var typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
+      if (e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        e.preventDefault();
+        searchInput.focus();
+      } else if (e.key === 'Escape' && t === searchInput && searchInput.value) {
+        searchInput.value = '';
+        applySearch();
+      }
+    });
+
     // ── Bio toggle ──
     var bioToggle = document.querySelector('.bio-toggle');
     function setBioVisible(visible, persist) {
@@ -1048,11 +1065,15 @@
 
         var nodeData = nodeLayer.selectAll('g.node').data(nodes, function(d) { return d.i; });
         nodeData.exit().remove();
-        var nodeEnter = nodeData.enter().append('g').attr('class', 'node');
+        // Nodes are focusable buttons so the graph is keyboard- and screen-reader
+        // reachable; the gallery/list views carry the same publications as a fallback.
+        var nodeEnter = nodeData.enter().append('g').attr('class', 'node')
+          .attr('tabindex', 0).attr('role', 'button');
         nodeEnter.append('circle').attr('class', 'hit').attr('r', 12);
         nodeEnter.append('circle').attr('class', 'marker').attr('r', NODE_RADIUS);
         nodeEnter.append('circle').attr('class', 'ring').attr('r', NODE_RADIUS + 2);
         nodeSel = nodeEnter.merge(nodeData);
+        nodeSel.attr('aria-label', function(d) { return d.title; });
 
         var labelData = labelLayer.selectAll('text').data(nodes, function(d) { return d.i; });
         labelData.exit().remove();
@@ -1078,6 +1099,28 @@
             selectedNode = d;
             showDetails(d);
             highlight(d);
+          })
+          // Keyboard parity: focus previews the title (like hover); Enter/Space
+          // selects (like click); Esc drops the selection.
+          .on('focus', function(e, d) {
+            d3.select(this).classed('hover', true);
+            d3.select(labelByIdx[d.i]).classed('hover', true);
+            setLabel(labelByIdx[d.i], d.title);
+          })
+          .on('blur', function(e, d) {
+            d3.select(this).classed('hover', false);
+            d3.select(labelByIdx[d.i]).classed('hover', false);
+            setLabel(labelByIdx[d.i], '');
+          })
+          .on('keydown', function(e, d) {
+            if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+              e.preventDefault();
+              selectedNode = d;
+              showDetails(d);
+              highlight(d);
+            } else if (e.key === 'Escape' && networkClearSelection) {
+              networkClearSelection();
+            }
           });
 
         placeNodes();

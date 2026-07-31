@@ -129,6 +129,22 @@
     .body .abstract { font-style: italic; color: var(--muted); margin-bottom: 2rem; }
     .body h2 { font-size: var(--text-lg); font-weight: 500; margin: 3rem 0 0.8rem; color: var(--fg); }
     .body h3 { font-size: var(--text-base); font-weight: 700; margin: 2rem 0 0.6rem; color: var(--fg); }
+    /* Hover-reveal section anchor: sits in the left gutter, deep-links the heading. */
+    .body h2, .body h3 { position: relative; scroll-margin-top: 1.5rem; }
+    .body .heading-anchor {
+      position: absolute;
+      left: -0.85em;
+      top: 0.08em;
+      color: var(--muted);
+      font-weight: 400;
+      text-decoration: none;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+    .body h2:hover .heading-anchor, .body h3:hover .heading-anchor { opacity: 1; }
+    .body .heading-anchor:hover { color: var(--fg); }
+    /* No left gutter on narrow screens — hide rather than risk horizontal overflow. */
+    @media (max-width: 719px) { .body .heading-anchor { display: none; } }
     .body blockquote { margin: 1.5rem 0 1.5rem 0; padding-left: 1.2rem; color: var(--fg); font-style: italic; }
     .body blockquote p { margin-bottom: 0; }
     .body strong { font-weight: 500; color: var(--fg); }
@@ -209,7 +225,7 @@
     footer.editorial-note { margin-top: 4rem; padding-top: 1.5rem; font-size: var(--text-xs); color: var(--muted); font-style: italic; }
     footer.editorial-note p { margin: 0; }
     @media print {
-      .mode-toggle, .publication-nav, .doi, .bibtex-data, [hidden] { display: none !important; }
+      .mode-toggle, .publication-nav, .doi, .bibtex-data, .heading-anchor, [hidden] { display: none !important; }
       /* horizontal spacing — body padding (sides render on every page) */
       body { padding: 0 4cm !important; max-width: none !important; margin: 0 !important; }
       .title-block, .body { max-width: none !important; }
@@ -297,6 +313,20 @@
           setTimeout(resolve, 5000);
         });
       })).then(function() { window.print(); });
+    });
+
+    // Section anchors: append a hover-reveal link to each article heading so
+    // sections can be deep-linked. Kept out of the tab order (aria-hidden,
+    // tabindex -1) — it's a pointer convenience; the headings themselves carry
+    // the structure for keyboard and assistive tech.
+    document.querySelectorAll('.body h2[id], .body h3[id]').forEach(function(h) {
+      var a = document.createElement('a');
+      a.className = 'heading-anchor';
+      a.href = '#' + h.id;
+      a.textContent = '#';
+      a.tabIndex = -1;
+      a.setAttribute('aria-hidden', 'true');
+      h.appendChild(a);
     });
   </script>
   {% include analytics.html %}
