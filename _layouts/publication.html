@@ -277,9 +277,9 @@
   {% include meta-line.html item=page %}
   <h1>{{ page.title }}</h1>
   {% include authors.html item=page %}
-  {% if page.doi %}<div class="doi"><a href="{{ page.doi }}">{% if page.doi contains 'doi.org/' %}{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}URL{% endif %}</a><button class="cite-btn" type="button">BibTeX</button><button class="print-btn" type="button">Print</button></div>{% endif %}
+  {% if page.doi %}<div class="doi"><a href="{{ page.doi }}">{% if page.doi contains 'doi.org/' %}{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}URL{% endif %}</a><button class="cite-ref-btn" type="button">Cite</button><button class="cite-btn" type="button">BibTeX</button><button class="print-btn" type="button">Print</button></div>{% endif %}
   </div>
-  {% if page.doi %}{% include bibtex.html item=page %}{% endif %}
+  {% if page.doi %}{% include bibtex.html item=page %}{% include citation.html item=page %}{% endif %}
   <div class="content">
     {% assign _content_parts = content | split: '<!--more-->' %}
     {% if _content_parts.size > 1 %}<div class="body"><div class="abstract">{{ _content_parts[0] }}</div>{{ _content_parts[1] | autolink_urls }}</div>{% else %}<div class="body">{{ content | autolink_urls }}</div>{% endif %}

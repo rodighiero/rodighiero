@@ -1,0 +1,55 @@
+{%- comment -%}
+Formatted Chicago author-date reference for the "Cite" button, emitted as a
+hidden <pre> and copied to the clipboard (see common-scripts.html). Plain text:
+titles are not italicised — the reader can style them after pasting.
+
+Primary contributor is the author, or the editor(s) when there is no author.
+The first name is inverted (Family, Given); the rest stay in normal order, with
+a serial comma before "and". Formatting branches on the publication type.
+{%- endcomment -%}
+{%- assign _item = include.item -%}
+{%- if _item.author -%}
+  {%- assign _people = _item.author | split: ' and ' -%}
+  {%- assign _roleword = '' -%}
+{%- elsif _item.editor -%}
+  {%- assign _people = _item.editor | split: ' and ' -%}
+  {%- if _people.size > 1 -%}{%- assign _roleword = ', eds' -%}{%- else -%}{%- assign _roleword = ', ed' -%}{%- endif -%}
+{%- else -%}
+  {%- assign _people = '' | split: '§' -%}
+  {%- assign _roleword = '' -%}
+{%- endif -%}
+{%- capture _authors -%}
+{%- for p in _people -%}
+{%- assign _p = p | strip -%}
+{%- if forloop.first -%}
+{%- assign _words = _p | split: ' ' -%}
+{%- assign _family = _words | last -%}
+{%- capture _given -%}{% for w in _words %}{% unless forloop.last %}{{ w }} {% endunless %}{% endfor %}{%- endcapture -%}
+{%- assign _given = _given | strip -%}
+{{ _family }}{%- if _given != '' -%}, {{ _given }}{%- endif -%}
+{%- elsif forloop.last -%}, and {{ _p }}
+{%- else -%}, {{ _p }}
+{%- endif -%}
+{%- endfor -%}
+{%- endcapture -%}
+{%- assign _t = _item.type -%}
+{%- comment -%} For books/maps the venue field holds the publisher; for chapters/conferences it holds the booktitle, so don't reuse it as the publisher there. {%- endcomment -%}
+{%- if _t == 'book' or _t == 'map' -%}{%- assign _pub = _item.publisher | default: _item.venue -%}{%- else -%}{%- assign _pub = _item.publisher -%}{%- endif -%}
+{%- comment -%} Drop the title-final period when the title already ends in ? or !. {%- endcomment -%}
+{%- assign _tlast = _item.title | slice: -1, 1 -%}
+{%- if _tlast == '?' or _tlast == '!' -%}{%- assign _dot = '' -%}{%- else -%}{%- assign _dot = '.' -%}{%- endif -%}
+{%- comment -%} Give the author block exactly one terminal period, even when a name already ends in one (e.g. an author string ending in "metaLAB."). {%- endcomment -%}
+{%- assign _authblock = _authors | append: _roleword -%}
+{%- assign _ablast = _authblock | slice: -1, 1 -%}
+{%- unless _ablast == '.' -%}{%- assign _authblock = _authblock | append: '.' -%}{%- endunless -%}
+{%- capture _ref -%}
+{{ _authblock }} {{ _item.year }}.
+{%- if _t == 'book' or _t == 'map' %} {{ _item.title }}{{ _dot }}{% if _item.translator %} Translated by {{ _item.translator }}.{% endif %}{% if _item.place %} {{ _item.place }}:{% endif %} {{ _pub }}.
+{%- elsif _t == 'journal' or _t == 'magazine' %} “{{ _item.title }}{{ _dot }}” {{ _item.venue }}{% if _item.volume %} {{ _item.volume }}{% endif %}{% if _item.issue %} ({{ _item.issue }}){% endif %}{% if _item.pages %}: {{ _item.pages }}{% endif %}.
+{%- elsif _t == 'chapter' or _t == 'conference' %} “{{ _item.title }}{{ _dot }}” In {{ _item.venue }}{% if _item.editor and _item.author %}, edited by {{ _item.editor }}{% endif %}{% if _item.pages %}, {{ _item.pages }}{% endif %}.{% if _item.place %} {{ _item.place }}:{% endif %}{% if _pub %} {{ _pub }}.{% endif %}
+{%- elsif _t == 'interview' %} “{{ _item.title }}{{ _dot }}”{% if _item.interviewer %} Interview by {{ _item.interviewer }}.{% endif %}{% if _item.venue %} {{ _item.venue }}.{% endif %}
+{%- else %} “{{ _item.title }}{{ _dot }}”{% if _item.venue %} {{ _item.venue }}.{% endif %}
+{%- endif -%}
+{%- if _item.doi %} {% if _item.doi contains 'doi.org/' %}https://doi.org/{{ _item.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}{{ _item.doi }}{% endif %}.{% endif -%}
+{%- endcapture -%}
+<pre class="citation-data" hidden>{{ _ref | normalize_whitespace | replace: ' .', '.' | replace: ' :', ':' | strip }}</pre>
