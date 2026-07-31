@@ -375,6 +375,20 @@
       font-family: inherit;
       color: var(--fg);
     }
+    /* Inline edge sample echoing the three link styles drawn on the graph:
+       solid (mutual backbone), faint (fallback rescue), dashed (translation). */
+    #network-view .lede .edge-sample {
+      display: inline-block;
+      width: 34px;
+      height: 8px;
+      margin-left: 0.35em;
+      vertical-align: -1px;
+      overflow: visible;
+    }
+    #network-view .lede .edge-sample line { stroke: var(--fg); stroke-width: 1.2; }
+    #network-view .lede .edge-sample circle { fill: var(--bg); stroke: var(--fg); stroke-width: 1; }
+    #network-view .lede .edge-sample.fallback line { opacity: 0.35; }
+    #network-view .lede .edge-sample.translation line { stroke-dasharray: 3 2.5; stroke-width: 1.4; }
     #network-view .stage {
       grid-column: 2 / -1;
       position: relative;
@@ -646,9 +660,9 @@
             <li>Each file in <code>_publications/</code> is stripped to plain prose — no footnotes, headings, links, tags, emphasis, parentheticals, or bibliography.</li>
             <li>The English title and full text is embedded as a 768-dimensional vector by <code>Alibaba-NLP/gte-base-en-v1.5</code>; Italian and French papers are left out.</li>
             <li>Cosine similarity is then computed between every pair of embedded papers, scoring how closely their vectors align.</li>
-            <li>Edges follow a mutual <em>k</em>-nearest-neighbour rule (<em>k</em>&nbsp;=&nbsp;2): a pair links only when each ranks the other among its two closest and their similarity clears 0.65.</li>
-            <li>A node left with no reciprocated neighbour keeps a single faint edge to its closest match above 0.60; one similar to nothing stays unconnected.</li>
-            <li>A translation stays a regular node but is tied to its original by a dashed forced edge rather than by measured similarity.</li>
+            <li>Edges follow a mutual <em>k</em>-nearest-neighbour rule (<em>k</em>&nbsp;=&nbsp;2): a pair links only when each ranks the other among its two closest and their similarity clears 0.65.<svg class="edge-sample" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
+            <li>A node left with no reciprocated neighbour keeps a single faint edge to its closest match above 0.60; one similar to nothing stays unconnected.<svg class="edge-sample fallback" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
+            <li>A translation stays a regular node but is tied to its original by a dashed forced edge rather than by measured similarity.<svg class="edge-sample translation" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
             <li>A D3 force simulation, pre-computed offline, arranges the nodes so the graph loads already settled.</li>
           </ol>
           <p>Hover a node to read its title; click to select it and reveal its closest matches below.</p>
@@ -897,7 +911,9 @@
       searchInput.addEventListener('input', applySearch);
     }
 
-    // Keyboard: "/" jumps to the search box; Esc clears it while focused.
+    // Keyboard: "/" jumps to the search box. Esc is a global reset — from any
+    // view and any focus/selection state it clears the search input and drops
+    // any network node selection or focus.
     document.addEventListener('keydown', function(e) {
       if (!searchInput) return;
       var t = e.target;
@@ -905,9 +921,11 @@
       if (e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
         e.preventDefault();
         searchInput.focus();
-      } else if (e.key === 'Escape' && t === searchInput && searchInput.value) {
-        searchInput.value = '';
-        applySearch();
+      } else if (e.key === 'Escape') {
+        if (searchInput.value) { searchInput.value = ''; applySearch(); }
+        if (networkClearSelection) networkClearSelection();
+        var active = document.activeElement;
+        if (active && active.classList && active.classList.contains('node')) active.blur();
       }
     });
 
@@ -1085,6 +1103,12 @@
 
         nodeSel
           .on('mouseenter', function(e, d) {
+            // Mouse takes over from the keyboard: drop the previously
+            // tab-focused node so only the hovered one stays lit.
+            var active = document.activeElement;
+            if (active && active !== this && active.classList && active.classList.contains('node')) {
+              active.blur();
+            }
             d3.select(this).classed('hover', true);
             d3.select(labelByIdx[d.i]).classed('hover', true);
             setLabel(labelByIdx[d.i], d.title);
@@ -1239,11 +1263,16 @@
       networkFilter = function(slugs) {
         if (!nodeSel) return;
         if (!slugs) {
-          nodeSel.classed('filtered-out', false);
+          // No filter: every node is tab-reachable again.
+          nodeSel.classed('filtered-out', false).attr('tabindex', 0).attr('aria-hidden', null);
           labelSel.classed('filtered-out', false);
           linkSel.classed('filtered-out', false);
         } else {
-          nodeSel.classed('filtered-out', function(n) { return !slugs.has(n.slug); });
+          // While filtering, drop non-matches out of the tab order and from AT,
+          // so keyboard navigation follows the same nodes the search surfaces.
+          nodeSel.classed('filtered-out', function(n) { return !slugs.has(n.slug); })
+            .attr('tabindex', function(n) { return slugs.has(n.slug) ? 0 : -1; })
+            .attr('aria-hidden', function(n) { return slugs.has(n.slug) ? null : 'true'; });
           labelSel.classed('filtered-out', function(n) { return !slugs.has(n.slug); });
           linkSel.classed('filtered-out', function(l) {
             var si = l.source.i != null ? l.source.i : l.source;
