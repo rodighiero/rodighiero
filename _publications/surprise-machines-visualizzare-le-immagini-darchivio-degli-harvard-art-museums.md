@@ -3,7 +3,7 @@ title: "Surprise Machines: visualizzare le immagini d’archivio degli Harvard A
 year: 2026
 venue: "Archivi dei disegni di architettura: Fruizioni contemporanee"
 type: "chapter"
-author: "Dario Rodighiero and Lins Derry and Douglas Duhaime and Jordan Kruguer and Maximilian C. Mueller and Christopher Pietsch and Jeffrey T. Schnapp and Jeff Steward and metaLAB."
+author: "Dario Rodighiero and Lins Derry and Douglas Duhaime and Jordan Kruguer and Maximilian C. Mueller and Christopher Pietsch and Jeffrey T. Schnapp and Jeff Steward and metaLAB"
 editor: "Alekos Diacodimitri and Barbara Tetti"
 publisher: "Sapienza Università Editrice"
 place: "Rome"
