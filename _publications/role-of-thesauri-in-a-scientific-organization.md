@@ -8,7 +8,6 @@ editor: "Fiona Hackney and Jonathan Glynne and Viv Minton"
 publisher: "Universal-Publishers"
 place: "Boca Raton, FL"
 pages: "301–9"
-isbn: "978-1-59942-906-9"
 doi: "https://publications.jrc.ec.europa.eu/repository/handle/JRC48348"
 thumb: "role-of-thesauri-in-a-scientific-organization/fig_002.webp"
 ---

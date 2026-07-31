@@ -8,7 +8,6 @@ editor: "Federico Cabitza and Daniela Fogli and Massimiliano Giacomin and Angela
 doi: "https://ceur-ws.org/Vol-1658/paper3.pdf"
 publisher: "CEUR-WS.org"
 place: "Bari"
-volume: "1658"
 pages: "13–19"
 thumb: "circulation-of-opinions-in-visualization-reading/fig_002.webp"
 ---

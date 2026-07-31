@@ -7,7 +7,7 @@ lang: fr
 author: "Alexandre Rigal and Dario Rodighiero"
 publisher: "Comité français de cartographie"
 issue: "225"
-pages: "33-41"
+pages: "33–41"
 doi: "https://infoscience.epfl.ch/record/214582/"
 thumb: "trajectoire-d-une-representation-cartographique-en-reseau/fig_001.webp"
 ---

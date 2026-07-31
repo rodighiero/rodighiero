@@ -4,8 +4,6 @@ year: 2022
 venue: "International Journal for Digital Art History"
 type: "journal"
 author: "Dario Rodighiero"
-authors: "Rodighiero, Dario"
-authors_bibtex: "Rodighiero, Dario"
 doi: "https://doi.org/10.11588/DAH.2021.6.77681"
 thumb: "extending-museum-beyond-physical-space-a-data-driven-study-of-aldo-rossis-analogous-city-as-a-mobile-museum-object/fig_002.webp"
 ---

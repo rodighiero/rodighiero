@@ -7,7 +7,6 @@ author: "Alexandre Rigal and Dario Rodighiero"
 editor: "José Higuera Rubio and Alberto Romele and Dario Rodighiero and Celeste Pedro"
 publisher: "University of Porto Press"
 place: "Porto"
-isbn: "978-989-746-315-0"
 doi: "https://doi.org/10.31235/osf.io/qrhzu"
 thumb: "are-we-all-narcissists-the-pseudo-narcissism-of-the-internet/fig_002.webp"
 ---

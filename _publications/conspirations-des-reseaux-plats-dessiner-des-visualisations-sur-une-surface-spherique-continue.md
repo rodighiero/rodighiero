@@ -1,6 +1,6 @@
 ---
 title: "Conspirations des réseaux plats. Dessiner des visualisations sur une surface sphérique continue"
-year: 2022
+year: 2020
 venue: "Études digitales"
 type: "journal"
 author: "Dario Rodighiero"

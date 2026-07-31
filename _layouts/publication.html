@@ -225,7 +225,7 @@
     footer.editorial-note { margin-top: 4rem; padding-top: 1.5rem; font-size: var(--text-xs); color: var(--muted); font-style: italic; }
     footer.editorial-note p { margin: 0; }
     @media print {
-      .mode-toggle, .publication-nav, .doi, .bibtex-data, .heading-anchor, [hidden] { display: none !important; }
+      .mode-toggle, .publication-nav, .doi, .citation-data, .heading-anchor, [hidden] { display: none !important; }
       /* horizontal spacing — body padding (sides render on every page) */
       body { padding: 0 4cm !important; max-width: none !important; margin: 0 !important; }
       .title-block, .body { max-width: none !important; }
@@ -277,9 +277,9 @@
   {% include meta-line.html item=page %}
   <h1>{{ page.title }}</h1>
   {% include authors.html item=page %}
-  {% if page.doi %}<div class="doi"><a href="{{ page.doi }}">{% if page.doi contains 'doi.org/' %}{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}URL{% endif %}</a><button class="cite-ref-btn" type="button">Cite</button><button class="cite-btn" type="button">BibTeX</button><button class="print-btn" type="button">Print</button></div>{% endif %}
+  {% if page.doi %}<div class="doi"><a href="{{ page.doi }}">{% if page.doi contains 'doi.org/' %}{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}URL{% endif %}</a><button class="cite-ref-btn" type="button">Cite</button><button class="print-btn" type="button">Print</button></div>{% endif %}
   </div>
-  {% if page.doi %}{% include bibtex.html item=page %}{% include citation.html item=page %}{% endif %}
+  {% if page.doi %}{% include citation.html item=page %}{% endif %}
   <div class="content">
     {% assign _content_parts = content | split: '<!--more-->' %}
     {% if _content_parts.size > 1 %}<div class="body"><div class="abstract">{{ _content_parts[0] }}</div>{{ _content_parts[1] | autolink_urls }}</div>{% else %}<div class="body">{{ content | autolink_urls }}</div>{% endif %}
