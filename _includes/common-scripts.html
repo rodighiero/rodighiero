@@ -12,7 +12,7 @@
     });
   })();
 
-  // Copy buttons: formatted citation and BibTeX
+  // Copy button: formatted citation
   (function() {
     var liveMsg = document.getElementById('live-msg');
     function wire(selector, sourceClass, doneMsg) {
@@ -36,7 +36,6 @@
       });
     }
     wire('.cite-ref-btn', 'citation-data', 'Citation copied to clipboard.');
-    wire('.cite-btn', 'bibtex-data', 'BibTeX citation copied to clipboard.');
   })();
 
   // Print buttons

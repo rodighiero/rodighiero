@@ -7,7 +7,6 @@ author: "Dario Rodighiero and Lins Derry and Douglas Duhaime and Jordan Kruguer 
 editor: "Alekos Diacodimitri and Barbara Tetti"
 publisher: "Sapienza Università Editrice"
 place: "Rome"
-volume: 80
 pages: "207–220"
 doi: "https://doi.org/10.13133/9788893774482"
 thumb: "surprise-machines-revealing-harvard-art-museums-image-collection/fig_002.webp"

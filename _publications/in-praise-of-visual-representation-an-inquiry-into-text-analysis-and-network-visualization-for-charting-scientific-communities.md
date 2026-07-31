@@ -6,6 +6,7 @@ type: "journal"
 author: "Dario Rodighiero"
 volume: "23"
 issue: "3"
+pages: "513–526"
 doi: "https://doi.org/10.1177/14703572241248408"
 thumb: "in-praise-of-visual-representation-an-inquiry-into-text-analysis-and-network-visualization-for-charting-scientific-communities/fig_003.webp"
 ---

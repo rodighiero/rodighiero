@@ -8,7 +8,6 @@ editor: "Nathalie Fridzema and Anya Shchetvina"
 publisher: "Institute of Network Cultures"
 place: "Amsterdam"
 pages: "24–25"
-isbn: "9789083672168"
 doi: "https://networkcultures.org/blog/publication/network-notion-7-imagining-the-internets-a-collaborative-glossary/"
 thumb: "@cards/Visual-Abstraction.webp"
 ---

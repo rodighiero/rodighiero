@@ -8,7 +8,6 @@ editor: "Tyler Reigeluth"
 place: "Paris"
 issue: "17"
 pages: "25–41"
-isbn: "978-2-406-19980-9"
 doi: "https://doi.org/10.48611/isbn.978-2-406-19980-9.p.0025"
 thumb: "immersive-architectures-for-visual-data-literacy/fig_000.webp"
 lang: fr

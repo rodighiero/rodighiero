@@ -8,7 +8,6 @@ author: "Dario Rodighiero and Jean Daniélou"
 editor: "Florentina Armaselu and Andreas Fickers"
 place: "Berlin"
 pages: "449–466"
-isbn: "978-3-11-131777-9"
 doi: "https://doi.org/10.1515/9783111317779-017"
 thumb: "weather-map-a-diachronic-visual-model-for-controversy-mapping/fig_002.webp"
 ---

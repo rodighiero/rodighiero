@@ -10,7 +10,6 @@ translation_of: ethical-and-aesthetical-questions-on-stock-images-the-case-of-ai
 doi: "https://doi.org/10.53136/97912218049286"
 publisher: "Aracne"
 place: "Roma"
-isbn: "979-12-218-0492-8"
 pages: "103–125"
 thumb: "ethical-and-aesthetical-questions-on-stock-images-the-case-of-ais-depictions/fig_006.webp"
 ---
