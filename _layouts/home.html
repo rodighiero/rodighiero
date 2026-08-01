@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   {% include head-init.html %}
-  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='list'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}if(window.innerWidth<=1024)v='gallery';var ok={gallery:1,list:1,network:1};document.documentElement.dataset.initialView=ok[v]?v:'gallery';var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='1'?'1':'0')}()</script>
+  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='list'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}if(window.innerWidth<=1024)v='gallery';var ok={gallery:1,network:1};/* TEMP: list view disabled */document.documentElement.dataset.initialView=ok[v]?v:'gallery';var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='1'?'1':'0')}()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
@@ -259,6 +259,8 @@
       background: var(--tint-active);
     }
     .view-toggle svg { width: 16px; height: 16px; }
+    /* TEMP: list (abstracts) view hidden — remove this rule to restore it. */
+    .view-toggle button[data-view="list"] { display: none; }
     .no-results { font-size: var(--text-xs); color: var(--muted); padding: 2rem 0; }
     .no-results[hidden] { display: none; }
     /* Network view fades non-matching nodes in place, so the empty-state copy would duplicate the signal. */
@@ -323,6 +325,10 @@
       border-radius: 0;
     }
     .pub-badge-star { margin-right: 0.35em; }
+    /* The tab is anchored to the meta line and the card's right border, which only
+       holds in the gallery masonry. In list view the card is a 4-column grid (meta is
+       just column 1), so hide the tab there — the card's frame + tint already mark it. */
+    body[data-view="list"] .pub-badge { display: none; }
 
     /* ── Special cards (news + action tiles; shown in gallery only) ── */
     .special-card {
@@ -968,7 +974,7 @@
         if (saved !== 'list' && saved !== 'network') {
           try { saved = localStorage.getItem('publicationView'); } catch (e) {}
         }
-        saved = (saved === 'list' || saved === 'network') ? saved : 'gallery';
+        saved = (saved === 'network') ? saved : 'gallery'; /* TEMP: list view disabled */
         if (document.body.dataset.view !== saved) setView(saved, false);
       }
     }
