@@ -1,0 +1,31 @@
+# Special cards on the homepage gallery (see the "Special cards" section in CLAUDE.md).
+#
+# `news`  — a single pinned announcement card. Omit the block (or leave `text`
+#           empty) to render no news card.
+# `actions` — clickable tiles embedded in the gallery. Each `action` is either
+#           `view:<gallery|list|network>` (switches view) or
+#           `type:<publication-type>` (filters the gallery to that front-matter
+#           `type`, e.g. map / book / chapter / journal / conference / magazine /
+#           interview). An empty list renders no action cards.
+#
+# Both are currently disabled — the homepage shows only the featured book.
+# To re-enable, fill in `news.text` and/or add entries under `actions`, e.g.:
+#
+#   news:
+#     eyebrow: News
+#     date: 2026-07-01
+#     text: "Short announcement text."
+#     link: /publications/some-slug/
+#     link_text: Read more
+#
+#   actions:
+#     - label: Explore the network
+#       sublabel: See how the work connects
+#       action: view:network
+#     - label: Maps
+#       sublabel: Cartographic pieces
+#       action: type:map
+
+news:
+
+actions: []
