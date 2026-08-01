@@ -110,12 +110,6 @@ function main(input) {
     });
   }
 
-  // Non-English publications are never embedded (the similarity network is
-  // English-only), so their similarity row is all zeros — they are never a
-  // link source or candidate for anyone else. They still take part in the
-  // layout as regular nodes (see isTrans above for translation duplicates).
-  const isNonEnglish = pubs.map(function (p) { return (p.lang || 'en') !== 'en'; });
-
   // Seeded RNG — identical LCG to the former makeRng() in home.html.
   let s = LAYOUT_SEED >>> 0;
   function rand() { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }
@@ -130,8 +124,9 @@ function main(input) {
     return n;
   });
 
-  // ── buildLinks: the core network is English-only and uses mutual k-nearest-
-  // neighbour edges. For each English node we rank the other English nodes by
+  // ── buildLinks: the core network uses mutual k-nearest-neighbour edges over
+  // all original works (English + non-English originals, which share one
+  // embedding space). For each original we rank the other originals by
   // similarity; a pair (i, j) is linked only when j is within i's top MUTUAL_K
   // AND i is within j's top MUTUAL_K, and sim clears STRONG_SIM. This keeps
   // every similarity edge reciprocal and lets a node carry several edges, so
@@ -139,9 +134,9 @@ function main(input) {
   // unconnected, so a nearest-neighbour fallback (see below) then gives each
   // such node one weaker edge to its strongest match above FALLBACK_SIM —
   // unless it is similar to nothing, in which case it stays isolated by design.
-  // Non-English publications are then attached on top: a translation gets a
-  // forced 1.00 link to its original; any other non-English original does not
-  // search for a match at all and stays unconnected. ──
+  // Translations do not take part in this similarity search: each gets a forced
+  // 1.00 link to its original instead (a cross-language edge is otherwise drawn
+  // just like a native one). ──
   const seen = new Set();
   const links = [];
   function add(i, j, v, fb) {
@@ -152,13 +147,13 @@ function main(input) {
     if (fb) link.fb = true;   // nearest-neighbour fallback edge (drawn fainter)
     links.push(link);
   }
-  // Per-English-node ranking of the other English nodes, most similar first.
+  // Per-original ranking of the other originals, most similar first.
   const topK = new Array(N).fill(null);
   for (let i = 0; i < N; i++) {
-    if (isNonEnglish[i] || isTrans[i]) continue;
+    if (isTrans[i]) continue;
     const cands = [];
     for (let j = 0; j < N; j++) {
-      if (i === j || isNonEnglish[j] || isTrans[j]) continue;
+      if (i === j || isTrans[j]) continue;
       cands.push(j);
     }
     cands.sort(function (a, b) { return sim[i][b] - sim[i][a]; });
@@ -166,7 +161,6 @@ function main(input) {
   }
   for (let i = 0; i < N; i++) {
     if (isTrans[i]) { add(i, transOf[i], 1); continue; }
-    if (isNonEnglish[i]) continue;
     topK[i].forEach(function (j) {
       if (sim[i][j] <= STRONG_SIM) return;      // similarity floor
       if (topK[j] && topK[j].indexOf(i) !== -1)  // reciprocated?
@@ -175,9 +169,9 @@ function main(input) {
   }
 
   // ── Nearest-neighbour fallback ──
-  // Any English node still carrying no edge (no reciprocated mutual neighbour,
-  // and not attached to a translation) is linked to its single most-similar
-  // English neighbour when that similarity clears FALLBACK_SIM. Degree counts
+  // Any original still carrying no edge (no reciprocated mutual neighbour, and
+  // not attached to a translation) is linked to its single most-similar
+  // neighbour when that similarity clears FALLBACK_SIM. Degree counts
   // every edge added so far (mutual + forced translation edges), so a node that
   // is already visibly connected — including via a dashed translation edge — is
   // not rescued. degree is updated as we go, so two mutually-isolated nodes that
@@ -185,10 +179,10 @@ function main(input) {
   const degree = new Array(N).fill(0);
   links.forEach(function (l) { degree[l.source]++; degree[l.target]++; });
   for (let i = 0; i < N; i++) {
-    if (isNonEnglish[i] || isTrans[i] || degree[i] > 0) continue;
+    if (isTrans[i] || degree[i] > 0) continue;
     let best = -1, bestSim = -Infinity;
     for (let j = 0; j < N; j++) {
-      if (i === j || isNonEnglish[j] || isTrans[j]) continue;
+      if (i === j || isTrans[j]) continue;
       if (sim[i][j] > bestSim) { bestSim = sim[i][j]; best = j; }
     }
     if (best !== -1 && bestSim > FALLBACK_SIM) {

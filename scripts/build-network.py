@@ -2,17 +2,17 @@
 """Build the publication similarity network for the home network view.
 
 Reads publications from _publications/, embeds title + full text with
-Alibaba-NLP/gte-base-en-v1.5, and writes _data/network.json with the node list and
-a pairwise cosine similarity matrix. The home page consumes it via Liquid as
+Alibaba-NLP/gte-base-en-v1.5, and writes _data/network.json with the baked
+force-layout node list (positions), the link list, and each node's `related`
+array (its three closest works). The home page consumes it via Liquid as
 site.data.network.
 
-Only English-language publications are embedded and compared — the
-similarity network is English-only. Non-English publications still appear
-as nodes (positioned by the same force layout) but are never a similarity
-source or candidate, so they have no "closest by embedding" data; a
-non-English publication that is a human translation of an English one
-(`translation_of` in its front matter) is instead pinned beside its
-original by a forced edge.
+Every ORIGINAL work is embedded in one space — English natively, non-English
+originals via machine translation — so all originals are first-class similarity
+nodes and can carry graph edges. A translation is not embedded: it borrows its
+source's vector and is pinned beside it by a forced dashed edge. The per-node
+`related` list is the single "three closest" source, shared by the network
+selection panel and the publication pages.
 
 Re-run after editing publications:
 
@@ -278,14 +278,12 @@ def main() -> int:
         if orig.get("translation_of"):
             raise SystemExit(f"{p['slug']}: translation_of '{src}' is itself a translation")
 
-    # The similarity *network* stays English-only: the graph layout, its links
-    # and the home page's click panel are built solely from `en_vecs`/`sim`
-    # below, so non-English publications keep zero similarity rows and appear
-    # only as nodes (see the translations block below and layout-network.js's
-    # isNonEnglish handling). Separately — for the per-page "related"
-    # suggestions further down — non-English ORIGINALS are machine-translated to
-    # English and embedded in the same space; those translated vectors feed the
-    # `related` lists only, never `sim`, so the network stays byte-identical.
+    # Embed every ORIGINAL work into one space: English publications natively,
+    # and (below) non-English originals after machine translation. Translations
+    # are never embedded — duplicates of their source, they borrow its vector for
+    # the `related` lists and are attached to it by a forced dashed edge. The
+    # `similarity` matrix and the graph are built from these original vectors;
+    # non-English originals are first-class similarity nodes.
     en_idx = [i for i, p in enumerate(pubs) if p["lang"] == "en"]
     en_texts = [pubs[i]["text"] for i in en_idx]
     keys = [_cache_key(t) for t in en_texts]
@@ -334,32 +332,23 @@ def main() -> int:
             cache[k] = np.asarray(v, dtype=np.float32)
         _save_cache({k: cache[k] for k in all_keys})  # persist, pruning stale entries
 
-    en_vecs = np.vstack([cache[k] for k in keys]) if keys else np.zeros((0, 0))
-
-    sim = np.zeros((len(pubs), len(pubs)))
-    idx = np.array(en_idx)
-    if len(idx):
-        sim[np.ix_(idx, idx)] = en_vecs @ en_vecs.T
-    np.fill_diagonal(sim, 0)
-
     nodes = [
         {"i": i, "slug": p["slug"], "title": p["title"], "url": p["url"], "lang": p["lang"]}
         for i, p in enumerate(pubs)
     ]
-    similarity = [[round(float(s), 4) for s in row] for row in sim]
 
-    # ── Per-document "related" suggestions ──
-    # Every document now has a vector in the English embedding space (English
-    # natively; non-English originals via translation; a translation borrows its
-    # source's vector, being the same work). List each document's RELATED_K
-    # closest publications. Candidates are *every* publication, translations
-    # included — so a page can surface the same work in another language (its own
-    # translation/source ranks at ~1.00 and leads the list). Only the page itself
-    # is excluded, and each *work* appears at most once: a translation shares its
-    # source's vector, so the two tie, and the tie is broken toward the original
-    # (a translation of some other work only fills a slot when its work isn't
-    # already represented). This feeds the publication pages only; `similarity`/
-    # the graph are untouched.
+    # ── One embedding space, one cosine matrix, two consumers ──
+    # Give every publication a vector: an original its own (English native or
+    # non-English machine-translated), a translation its source's (same work).
+    # The resulting `sim` serves both:
+    #   • the graph layout — layout-network.js skips translation nodes, so their
+    #     rows/columns are simply never read and the links match an originals-only
+    #     matrix exactly;
+    #   • each node's `related` list — its RELATED_K closest works, the single
+    #     "three closest" shared by the publication pages and the network panel.
+    def _work(p: dict) -> str:
+        return p.get("translation_of") or p["slug"]
+
     vec_by_slug: dict[str, np.ndarray] = {
         pubs[i]["slug"]: cache[keys[j]] for j, i in enumerate(en_idx)
     }
@@ -369,16 +358,19 @@ def main() -> int:
         if p.get("translation_of"):
             vec_by_slug[p["slug"]] = vec_by_slug[p["translation_of"]]
 
-    def _work(p: dict) -> str:
-        return p.get("translation_of") or p["slug"]
+    mat = np.vstack([vec_by_slug[p["slug"]] for p in pubs])  # normalized rows
+    sim = mat @ mat.T
+    np.fill_diagonal(sim, 0)
+    similarity = [[round(float(s), 4) for s in row] for row in sim]
 
-    cand_mat = np.vstack([vec_by_slug[p["slug"]] for p in pubs])
+    # `related`: rank every other publication by cosine, but keep each *work*
+    # once — a translation ties its source (shared vector), and the tie breaks
+    # toward the original, so a translated work's own counterpart leads at ~1.00
+    # without a work ever taking two slots.
     for d, node in enumerate(nodes):
-        scores = cand_mat @ vec_by_slug[pubs[d]["slug"]]  # cosine (all normalized)
-        # score desc, then originals before their translations on a tie
         order = sorted(
             (i for i in range(len(pubs)) if i != d),
-            key=lambda i: (-scores[i], 1 if pubs[i].get("translation_of") else 0, i),
+            key=lambda i: (-sim[d][i], 1 if pubs[i].get("translation_of") else 0, i),
         )
         ranked, seen = [], set()
         for i in order:
@@ -386,7 +378,7 @@ def main() -> int:
             if w in seen:
                 continue
             seen.add(w)
-            ranked.append((float(scores[i]), i))
+            ranked.append(i)
             if len(ranked) == RELATED_K:
                 break
         node["related"] = [
@@ -395,9 +387,9 @@ def main() -> int:
                 "title": pubs[i]["title"],
                 "url": pubs[i]["url"],
                 "lang": pubs[i]["lang"],
-                "sim": round(s, 4),
+                "sim": round(float(sim[d][i]), 4),
             }
-            for s, i in ranked
+            for i in ranked
         ]
 
     # ── Translations join the layout, appended to their originals ──
@@ -426,10 +418,13 @@ def main() -> int:
     for i in translations:
         nodes[i]["tr"] = True
 
+    # `similarity` is intentionally not persisted: it is consumed only by
+    # precompute_layout (above), and the browser reads each node's `related`
+    # list — the single "three closest" source shared with the publication
+    # pages — so shipping the full matrix would be dead weight.
     data = {
         "seed": layout.get("seed"),
         "nodes": nodes,
-        "similarity": similarity,
         "canvas": layout["canvas"],
         "links": layout["links"],
     }

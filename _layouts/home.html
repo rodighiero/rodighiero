@@ -658,7 +658,7 @@
           <h3>How the network is built</h3>
           <ol>
             <li>Each file in <code>_publications/</code> is stripped to plain prose — no footnotes, headings, links, tags, emphasis, parentheticals, or bibliography.</li>
-            <li>The English title and full text is embedded as a 768-dimensional vector by <code>Alibaba-NLP/gte-base-en-v1.5</code>; Italian and French papers are left out.</li>
+            <li>The title and full text is embedded as a 768-dimensional vector by <code>Alibaba-NLP/gte-base-en-v1.5</code>; Italian and French originals are first machine-translated to English, so every original shares one space.</li>
             <li>Cosine similarity is then computed between every pair of embedded papers, scoring how closely their vectors align.</li>
             <li>Edges follow a mutual <em>k</em>-nearest-neighbour rule (<em>k</em>&nbsp;=&nbsp;2): a pair links only when each ranks the other among its two closest and their similarity clears 0.65.<svg class="edge-sample" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
             <li>A node left with no reciprocated neighbour keeps a single faint edge to its closest match above 0.60; one similar to nothing stays unconnected.<svg class="edge-sample fallback" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
@@ -994,7 +994,8 @@
       if (!dataNode) return;
       var data = JSON.parse(dataNode.textContent);
       var pubs = data.nodes;
-      var sim = data.similarity;
+      var idxBySlug = {};
+      pubs.forEach(function(p, i) { idxBySlug[p.slug] = i; });
 
       function cardHtmlFor(slug) {
         var src = document.querySelector('.publication[data-slug="' + CSS.escape(slug) + '"]');
@@ -1036,8 +1037,8 @@
 
       // Baked links: resolve integer endpoints to node refs (the force
       // simulation used to do this in the browser). Only the endpoints are
-      // needed now — edges are drawn straight and neighbour ranking reads the
-      // similarity matrix directly.
+      // needed now — edges are drawn straight and the closest-matches panel
+      // reads each node's baked `related` list.
       var links = data.links.map(function(l) {
         var s = nodes[l.source], t = nodes[l.target];
         return { source: s, target: t, translation: !!(s.tr || t.tr), fallback: !!l.fb };
@@ -1212,16 +1213,13 @@
       function showDetails(d) {
         if (lede) lede.hidden = true;
         var pub = pubs[d.i];
-        // The similarity network is English-only (see build-network.py): a
-        // non-English publication was never embedded, so its row is all
-        // zeros and has no meaningful "closest by embedding" data to show.
-        // Otherwise rank the full similarity row, regardless of whether a
-        // baked link connects them.
-        var top = pub.lang && pub.lang !== 'en' ? [] : sim[d.i]
-          .map(function(s, j) { return [j, s]; })
-          .filter(function(t) { return t[0] !== d.i; })
-          .sort(function(a, b) { return b[1] - a[1]; })
-          .slice(0, 3);
+        // "Three closest" is the very same all-languages `related` list the
+        // publication pages show (built once in build-network.py — machine-
+        // translated into one embedding space, deduplicated by work). Map each
+        // entry to its node index for the hover-mirroring below.
+        var top = (pub.related || [])
+          .map(function(r) { return [idxBySlug[r.slug], r.sim]; })
+          .filter(function(t) { return t[0] != null; });
         var cardHtml = cardHtmlFor(pub.slug);
         var neighborsHtml = top.length ? (
           '<div class="neighbors"><h3>Three closest by embedding</h3><ol>' +
