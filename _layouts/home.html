@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   {% include head-init.html %}
-  <script>!function(){var v=null;try{v=localStorage.getItem('publicationView')}catch(e){}if(window.innerWidth<=1024)v='gallery';var ok={gallery:1,list:1,network:1};document.documentElement.dataset.initialView=ok[v]?v:'gallery';var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='1'?'1':'0')}()</script>
+  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='list'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}if(window.innerWidth<=1024)v='gallery';var ok={gallery:1,list:1,network:1};document.documentElement.dataset.initialView=ok[v]?v:'gallery';var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='1'?'1':'0')}()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
@@ -777,12 +777,29 @@
         requestAnimationFrame(function() { programmaticScroll = false; });
       });
     }
+    // Reflect the current view + search into the URL query string (via
+    // replaceState, so it never adds history entries) to make any state
+    // shareable and deep-linkable. Only user-initiated changes call this;
+    // initial load and responsive coercion leave an incoming shared URL untouched.
+    function updateURL() {
+      if (!window.history || !history.replaceState) return;
+      var params;
+      try { params = new URLSearchParams(location.search); } catch (e) { return; }
+      var view = document.body.dataset.view;
+      if (view && view !== 'gallery') params.set('view', view); else params.delete('view');
+      var q = searchInput ? searchInput.value.trim() : '';
+      if (q) params.set('q', q); else params.delete('q');
+      var qs = params.toString();
+      history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
+    }
+
     function setView(view, persist) {
       var prev = document.body.dataset.view;
       var shouldRestore = prev && prev !== view;
       document.body.dataset.view = view;
       if (persist !== false) {
         try { localStorage.setItem('publicationView', view); } catch (e) {}
+        updateURL();
       }
       viewButtons.forEach(function(b) {
         b.setAttribute('aria-pressed', b.dataset.view === view ? 'true' : 'false');
@@ -835,7 +852,10 @@
         if (document.body.dataset.view !== 'gallery') setView('gallery', false);
       } else {
         var saved;
-        try { saved = localStorage.getItem('publicationView'); } catch (e) {}
+        try { saved = new URLSearchParams(location.search).get('view'); } catch (e) {}
+        if (saved !== 'list' && saved !== 'network') {
+          try { saved = localStorage.getItem('publicationView'); } catch (e) {}
+        }
         saved = (saved === 'list' || saved === 'network') ? saved : 'gallery';
         if (document.body.dataset.view !== saved) setView(saved, false);
       }
@@ -849,6 +869,7 @@
           if (searchInput && searchInput.value) {
             searchInput.value = '';
             applySearch();
+            updateURL();
           }
           if (clicked === 'network' && networkClearSelection) networkClearSelection();
         } else {
@@ -905,10 +926,16 @@
       else if (v === 'list') markFirstVisible();
     }
 
+    if (searchInput) {
+      try {
+        var _initialQ = new URLSearchParams(location.search).get('q');
+        if (_initialQ) searchInput.value = _initialQ;
+      } catch (e) {}
+    }
     applySearch();
 
     if (searchInput) {
-      searchInput.addEventListener('input', applySearch);
+      searchInput.addEventListener('input', function() { applySearch(); updateURL(); });
     }
 
     // Keyboard: "/" jumps to the search box. Esc is a global reset — from any
@@ -922,7 +949,7 @@
         e.preventDefault();
         searchInput.focus();
       } else if (e.key === 'Escape') {
-        if (searchInput.value) { searchInput.value = ''; applySearch(); }
+        if (searchInput.value) { searchInput.value = ''; applySearch(); updateURL(); }
         if (networkClearSelection) networkClearSelection();
         var active = document.activeElement;
         if (active && active.classList && active.classList.contains('node')) active.blur();
