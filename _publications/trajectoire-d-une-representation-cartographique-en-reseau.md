@@ -9,7 +9,7 @@ publisher: "Comité français de cartographie"
 issue: "225"
 pages: "33–41"
 doi: "https://infoscience.epfl.ch/record/214582/"
-thumb: "trajectoire-d-une-representation-cartographique-en-reseau/fig_001.webp"
+thumb: "trajectoire-d-une-representation-cartographique-en-reseau/fig_002.webp"
 ---
 Dans le cadre de la « Conférence internationale des Humanités Numériques » qui s’est tenue en 2014 à Lausanne, nous avons réalisé une représentation. Celle-ci est une cartographie en réseau des auteurs et des mots-clés de la conférence. Les cartes résultantes sont reproduites sur divers objets : bâche, tapis, ouvrages, posters, tasses. Ces derniers avaient pour fonction de susciter l’intérêt des auteurs et leur identification au champ des humanités numériques. La qualité de la cartographie en réseau est qu’elle exclut peu d’acteurs et dans notre cas peu de participants. De ce fait un grand nombre de participants à la conférence a pu se trouver sur la représentation et par là prendre part au collectif suggéré par les liens de la cartographie. Par ces reproductions, qui ne sont jamais vraiment mécaniques, la représentation a circulé en alimentant des interprétations qui tracent les contours d’un collectif propre à la conférence. Les traces fabriquées par les participants — commentaires de la cartographie, photos, souvenirs, tweets, etc. — permettent de suivre la trajectoire de la représentation. Par conséquent, savoir si la représentation a réussi revient à enquêter sur l’étendue et la qualité de sa trajectoire entre les épreuves. L’enjeu de cet article est donc d’enquêter sur le design cartographique en tant qu’art du rassemblement, grâce aux outils du design cartographique.
 
