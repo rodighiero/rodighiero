@@ -277,7 +277,7 @@
   {% include meta-line.html item=page %}
   <h1>{{ page.title }}</h1>
   {% include authors.html item=page %}
-  {% if page.doi %}<div class="doi"><a href="{{ page.doi }}">{% if page.doi contains 'doi.org/' %}{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}URL{% endif %}</a><button class="cite-ref-btn" type="button">Cite</button><button class="print-btn" type="button">Print</button></div>{% endif %}
+  {% if page.doi %}<div class="doi"><button class="cite-ref-btn" type="button">Cite</button><button class="print-btn" type="button">Print</button><a href="{{ page.doi }}">{% if page.doi contains 'doi.org/' %}{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}URL{% endif %}</a></div>{% endif %}
   </div>
   {% if page.doi %}{% include citation.html item=page %}{% endif %}
   <div class="content">
