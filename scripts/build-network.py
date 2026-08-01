@@ -69,6 +69,70 @@ def _save_cache(cache: dict[str, np.ndarray]) -> None:
     np.savez(CACHE_PATH, **cache)
 
 
+def _load_trans_cache() -> dict[str, str]:
+    if not TRANS_CACHE_PATH.exists():
+        return {}
+    try:
+        return json.loads(TRANS_CACHE_PATH.read_text(encoding="utf-8"))
+    except Exception:  # a corrupt cache is just rebuilt
+        return {}
+
+
+def _save_trans_cache(cache: dict[str, str]) -> None:
+    TRANS_CACHE_PATH.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
+
+
+def _get_translator(lang: str, models: dict) -> tuple:
+    """Lazily load the opus-mt tokenizer/model for a source language."""
+    if lang not in models:
+        from transformers import MarianMTModel, MarianTokenizer
+
+        name = OPUS_MODELS[lang]
+        print(f"loading translator {name}…", file=sys.stderr)
+        models[lang] = (
+            MarianTokenizer.from_pretrained(name),
+            MarianMTModel.from_pretrained(name),
+        )
+    return models[lang]
+
+
+def _translate(text: str, lang: str, cache: dict[str, str], models: dict) -> str:
+    """Machine-translate `text` (in `lang`) to English, cached per source text.
+
+    opus-mt has a ~512-token window, so the (already scrubbed, single-line) prose
+    is split on sentence boundaries and packed into character-budgeted chunks
+    that are translated in batches and rejoined. Deterministic (beam search, no
+    sampling), so a given source text always yields the same English.
+    """
+    if lang not in OPUS_MODELS:
+        raise SystemExit(f"no opus-mt model configured for language '{lang}'")
+    key = hashlib.sha256(f"{OPUS_MODELS[lang]}\x00{text}".encode("utf-8")).hexdigest()
+    if key in cache:
+        return cache[key]
+
+    chunks: list[str] = []
+    cur = ""
+    for sent in _SENT_SPLIT.split(text):
+        if cur and len(cur) + len(sent) + 1 > _TRANS_CHARS:
+            chunks.append(cur)
+            cur = sent
+        else:
+            cur = f"{cur} {sent}".strip()
+    if cur:
+        chunks.append(cur)
+
+    tok, mdl = _get_translator(lang, models)
+    out: list[str] = []
+    for i in range(0, len(chunks), 8):
+        batch = chunks[i : i + 8]
+        enc = tok(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
+        gen = mdl.generate(**enc, max_length=512, num_beams=4)
+        out.extend(tok.batch_decode(gen, skip_special_tokens=True))
+    result = " ".join(out)
+    cache[key] = result
+    return result
+
+
 def precompute_layout(
     nodes: list[dict], similarity: list[list[float]], translations: dict[int, int]
 ) -> dict:
@@ -107,6 +171,28 @@ MAX_SEQ_LENGTH = 8192
 # Silicon, NETWORK_DEVICE=mps (or cuda) speeds up the cold/first encode.
 DEVICE = os.environ.get("NETWORK_DEVICE", "cpu")
 EXCERPT_SEPARATOR = "<!--more-->"
+
+# ── Per-document "related" suggestions ────────────────────────────────────────
+# The similarity *network* (graph layout + links + the home page's click panel)
+# stays English-only and unchanged. Independently, every publication page shows
+# its three closest works — and for that a non-English publication needs a
+# vector in the *same* English embedding space. We get there by machine
+# translation (Option A): a non-English ORIGINAL is translated to English with a
+# small offline opus-mt model and embedded like any English document; a
+# TRANSLATION reuses its English source's vector (it is the same work), so no
+# machine translation of translations is needed. Only fr/it originals exist
+# today; add a model here if another source language appears.
+OPUS_MODELS = {
+    "fr": "Helsinki-NLP/opus-mt-fr-en",
+    "it": "Helsinki-NLP/opus-mt-it-en",
+}
+# Committed network.json is the artifact; this translation cache (like the
+# embedding cache) is a local, gitignored accelerator keyed by model + source
+# text, so re-runs re-translate only originals whose text changed.
+TRANS_CACHE_PATH = ROOT / "scripts" / ".translation-cache.json"
+RELATED_K = 3            # suggestions shown per publication
+_SENT_SPLIT = re.compile(r"(?<=[.!?])\s+")
+_TRANS_CHARS = 1200      # per-chunk char budget, kept well under the 512-token window
 
 # ── Body-text scrubbing for the embedder ──────────────────────────────────────
 # _clean_body() reduces a Markdown abstract/body to plain prose so only meaningful
@@ -192,22 +278,49 @@ def main() -> int:
         if orig.get("translation_of"):
             raise SystemExit(f"{p['slug']}: translation_of '{src}' is itself a translation")
 
-    # The similarity network is English-only: non-English publications are
-    # never embedded (no machine translation) and their similarity rows stay
-    # zero — they still appear in the graph as nodes (see the translations
-    # block below and layout-network.js's isNonEnglish handling) but are
-    # never a similarity source or candidate.
+    # The similarity *network* stays English-only: the graph layout, its links
+    # and the home page's click panel are built solely from `en_vecs`/`sim`
+    # below, so non-English publications keep zero similarity rows and appear
+    # only as nodes (see the translations block below and layout-network.js's
+    # isNonEnglish handling). Separately — for the per-page "related"
+    # suggestions further down — non-English ORIGINALS are machine-translated to
+    # English and embedded in the same space; those translated vectors feed the
+    # `related` lists only, never `sim`, so the network stays byte-identical.
     en_idx = [i for i, p in enumerate(pubs) if p["lang"] == "en"]
     en_texts = [pubs[i]["text"] for i in en_idx]
     keys = [_cache_key(t) for t in en_texts]
 
+    # Non-English originals (a non-English publication that is not itself a
+    # translation): translate → English, so they can be embedded alongside the
+    # English works and ranked against them for suggestions.
+    ne_orig_idx = [
+        i for i, p in enumerate(pubs) if p["lang"] != "en" and not p.get("translation_of")
+    ]
+    trans_cache = _load_trans_cache()
+    translators: dict = {}
+    ne_texts: list[str] = []
+    if ne_orig_idx:
+        print(
+            f"translating {len(ne_orig_idx)} non-English original(s) to English…",
+            file=sys.stderr,
+        )
+        for i in ne_orig_idx:
+            ne_texts.append(
+                _translate(pubs[i]["text"], pubs[i]["lang"], trans_cache, translators)
+            )
+        if translators:  # persist only if a model actually ran
+            _save_trans_cache(trans_cache)
+    ne_keys = [_cache_key(t) for t in ne_texts]
+
     # Encode only what the cache is missing; a run with no text changes never
     # loads the model at all.
     cache = _load_cache()
-    missing = [(k, t) for k, t in zip(keys, en_texts) if k not in cache]
+    all_keys, all_texts = keys + ne_keys, en_texts + ne_texts
+    missing = [(k, t) for k, t in zip(all_keys, all_texts) if k not in cache]
     print(
-        f"embedding {len(en_idx)} English-language documents — "
-        f"{len(en_idx) - len(missing)} cached, {len(missing)} to encode…",
+        f"embedding {len(all_texts)} documents "
+        f"({len(en_idx)} English + {len(ne_orig_idx)} translated) — "
+        f"{len(all_texts) - len(missing)} cached, {len(missing)} to encode…",
         file=sys.stderr,
     )
     if missing:
@@ -219,7 +332,7 @@ def main() -> int:
         )
         for (k, _), v in zip(missing, new_vecs):
             cache[k] = np.asarray(v, dtype=np.float32)
-        _save_cache({k: cache[k] for k in keys})  # persist, pruning stale entries
+        _save_cache({k: cache[k] for k in all_keys})  # persist, pruning stale entries
 
     en_vecs = np.vstack([cache[k] for k in keys]) if keys else np.zeros((0, 0))
 
@@ -234,6 +347,58 @@ def main() -> int:
         for i, p in enumerate(pubs)
     ]
     similarity = [[round(float(s), 4) for s in row] for row in sim]
+
+    # ── Per-document "related" suggestions ──
+    # Every document now has a vector in the English embedding space (English
+    # natively; non-English originals via translation; a translation borrows its
+    # source's vector, being the same work). List each document's RELATED_K
+    # closest publications. Candidates are *every* publication, translations
+    # included — so a page can surface the same work in another language (its own
+    # translation/source ranks at ~1.00 and leads the list). Only the page itself
+    # is excluded, and each *work* appears at most once: a translation shares its
+    # source's vector, so the two tie, and the tie is broken toward the original
+    # (a translation of some other work only fills a slot when its work isn't
+    # already represented). This feeds the publication pages only; `similarity`/
+    # the graph are untouched.
+    vec_by_slug: dict[str, np.ndarray] = {
+        pubs[i]["slug"]: cache[keys[j]] for j, i in enumerate(en_idx)
+    }
+    for j, i in enumerate(ne_orig_idx):
+        vec_by_slug[pubs[i]["slug"]] = cache[ne_keys[j]]
+    for p in pubs:  # a translation borrows its source's vector
+        if p.get("translation_of"):
+            vec_by_slug[p["slug"]] = vec_by_slug[p["translation_of"]]
+
+    def _work(p: dict) -> str:
+        return p.get("translation_of") or p["slug"]
+
+    cand_mat = np.vstack([vec_by_slug[p["slug"]] for p in pubs])
+    for d, node in enumerate(nodes):
+        scores = cand_mat @ vec_by_slug[pubs[d]["slug"]]  # cosine (all normalized)
+        # score desc, then originals before their translations on a tie
+        order = sorted(
+            (i for i in range(len(pubs)) if i != d),
+            key=lambda i: (-scores[i], 1 if pubs[i].get("translation_of") else 0, i),
+        )
+        ranked, seen = [], set()
+        for i in order:
+            w = _work(pubs[i])
+            if w in seen:
+                continue
+            seen.add(w)
+            ranked.append((float(scores[i]), i))
+            if len(ranked) == RELATED_K:
+                break
+        node["related"] = [
+            {
+                "slug": pubs[i]["slug"],
+                "title": pubs[i]["title"],
+                "url": pubs[i]["url"],
+                "lang": pubs[i]["lang"],
+                "sim": round(s, 4),
+            }
+            for s, i in ranked
+        ]
 
     # ── Translations join the layout, appended to their originals ──
     # A publication with `translation_of` is the same work in another language.
