@@ -293,8 +293,77 @@
     .card-desc p { font-size: var(--text-xs); margin: 0; color: var(--muted); line-height: var(--lh-normal); }
     .card-desc em, .card-desc i, .card-desc cite { font-style: normal; }
 
+    /* ── Featured publication (pinned + badged, in place) ── */
+    /* A full outline framing the card (drawn inside via a negative offset so it
+       doesn't affect the masonry column width). */
+    .publication.featured { position: relative; background: var(--tint-active); border: 1px solid var(--border-hover); border-radius: 4px; padding-bottom: 0.9rem; }
+    .publication.featured:hover { background: var(--tint-active); }
+    /* "Featured" tab: the page background flowing in from the right. Anchored to the
+       meta line (so it aligns with the year/type/venue row regardless of the cover
+       height), it overhangs the card's right padding + 1px border and paints over it,
+       so the tab's white reaches the card's outer edge and merges seamlessly with the
+       page background. Border only on top/left/bottom; open on the right. */
+    .publication.featured .card-meta { position: relative; }
+    .pub-badge {
+      position: absolute;
+      top: 0;
+      right: calc(-0.6rem - 1px);
+      z-index: 1;
+      font-size: var(--text-xxs);
+      font-weight: 700;
+      letter-spacing: var(--tracking-caps);
+      text-transform: uppercase;
+      /* All-caps ride high in the line box, so add more top padding than bottom. */
+      line-height: 1;
+      padding: 0.42rem 0.55rem 0.26rem;
+      background: var(--bg);
+      color: var(--fg);
+      border: 1px solid var(--border-hover);
+      border-right: none;
+      border-radius: 0;
+    }
+    .pub-badge-star { margin-right: 0.35em; }
+
+    /* ── Special cards (news + action tiles; shown in gallery only) ── */
+    .special-card {
+      box-sizing: border-box;
+      text-align: left;
+      padding: 0.9rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--tint-surface);
+      font-family: inherit;
+      color: inherit;
+    }
+    .special-eyebrow {
+      display: block;
+      font-size: var(--text-xxs);
+      letter-spacing: var(--tracking-caps);
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+    .special-text { font-size: var(--text-xs); line-height: var(--lh-normal); margin: 0; }
+    .special-link {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: var(--text-xs);
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid var(--border-hover);
+    }
+    .special-link:hover { border-bottom-color: var(--fg); }
+    .action-card { display: block; width: 100%; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; }
+    .action-card:hover { background: var(--tint-hover); border-color: var(--border-hover); }
+    .action-card:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+    .action-label { display: block; font-size: var(--text-base); font-weight: 500; line-height: var(--lh-tight); }
+    .action-sublabel { display: block; margin-top: 0.2rem; font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
+    /* Special cards belong to the gallery only; the list grid and network view hide them. */
+    body[data-view="list"] .special-card { display: none !important; }
+
     /* ── Gallery view (masonry) ── */
-    body[data-view="gallery"] .publication {
+    body[data-view="gallery"] .publication,
+    body[data-view="gallery"] .special-card {
       position: absolute;
       top: 0;
       left: 0;
@@ -328,6 +397,12 @@
     body[data-view="list"] .card-img { grid-column: 4; grid-row: 1; }
     body[data-view="list"] .card-meta { grid-column: 1; }
     body[data-view="list"] .card-desc { grid-column: 2 / span 2; }
+    /* Featured keeps its full 4-sided border in every view (override the gallery/list
+       top-hairline logic, which otherwise recolours or removes the top edge). */
+    body[data-view="gallery"] .publication.featured,
+    body[data-view="gallery"] .publication.featured.at-top,
+    body[data-view="list"] .publication.featured,
+    body[data-view="list"] .publication.featured.at-top { border-top: 1px solid var(--border-hover); }
 
     /* ── Network view ── */
     #network-view { display: none; }
@@ -623,13 +698,39 @@
 
     <!-- ── Publications ── -->
     <div id="publications">
+      {%- comment -%} Special cards (non-.publication tiles): a pinned news announcement and
+      clickable action cards. They live in the gallery flow but carry the .special-card class so
+      the count / search / network logic (which queries .publication) ignores them. See
+      _data/home_cards.yml. {%- endcomment -%}
+      {% assign _news = site.data.home_cards.news %}
+      {% if _news and _news.text and _news.text != '' %}
+      <div class="special-card news-card">
+        <span class="special-eyebrow">{{ _news.eyebrow | default: 'News' }}{% if _news.date %} · <time datetime="{{ _news.date | date_to_xmlschema }}">{{ _news.date | date: '%B %Y' }}</time>{% endif %}</span>
+        <p class="special-text">{{ _news.text }}</p>
+        {% if _news.link and _news.link != '' %}<a class="special-link" href="{{ _news.link }}">{{ _news.link_text | default: 'Read more' }} →</a>{% endif %}
+      </div>
+      {% endif %}
+      {% for _action in site.data.home_cards.actions %}
+      <button type="button" class="special-card action-card" data-action="{{ _action.action }}">
+        <span class="action-label">{{ _action.label }}</span>
+        {% if _action.sublabel %}<span class="action-sublabel">{{ _action.sublabel }}</span>{% endif %}
+      </button>
+      {% endfor %}
+
+      {%- comment -%} One ordered list — featured works first (pinned to the column tops), then the
+      rest in year-desc / title-asc order — so a single card block renders every card and the
+      _card_i priority counter stays correct. {%- endcomment -%}
       {% assign _card_i = 0 %}
+      {% assign featured_pubs = site.publications | where: "featured", true | sort: "year" | reverse %}
       {% assign year_groups = site.publications | group_by: "year" | sort: "name" | reverse %}
-      {% for group in year_groups %}{% assign group_publications = group.items | sort: "title" %}{% for publication in group_publications %}
+      {% assign rest_pubs = "" | split: "" %}
+      {% for group in year_groups %}{% assign _gp = group.items | sort: "title" | where_exp: "p", "p.featured != true" %}{% assign rest_pubs = rest_pubs | concat: _gp %}{% endfor %}
+      {% assign ordered_pubs = featured_pubs | concat: rest_pubs %}
+      {% for publication in ordered_pubs %}
       {% assign _type_label = site.data.publication_types[publication.type].label %}
       {% capture _lang_terms %}{% if publication.lang == 'it' %}italian italiano{% elsif publication.lang == 'fr' %}french français francais{% else %}english{% endif %}{% endcapture %}
       {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.interviewer }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ _lang_terms }}{% endcapture %}
-      <div class="publication" data-slug="{{ publication.slug }}" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
+      <div class="publication{% if publication.featured %} featured{% endif %}" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
         {% if publication.thumb %}
         {% assign _card_i = _card_i | plus: 1 %}
         <div class="card-img{% if publication.img_border %} bordered{% endif %}">
@@ -640,13 +741,14 @@
         </div>
         {% endif %}
         <div class="card-meta">
+          {% if publication.featured %}<span class="pub-badge"><span class="pub-badge-star" aria-hidden="true">★</span>Featured</span>{% endif %}
           {% include meta-line.html item=publication %}
           <h2><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
           {% include authors-home.html item=publication %}
         </div>
         <div class="card-desc">{{ publication.excerpt | strip_leading_figure }}</div>
       </div>
-      {% endfor %}{% endfor %}
+      {% endfor %}
     </div>
     <p id="no-results" class="no-results" hidden>No publications match your search.</p>
 
@@ -689,6 +791,10 @@
     var container = document.getElementById('publications');
     var viewButtons = document.querySelectorAll('.view-toggle button');
     var total = publications.length;
+    // Masonry packs both real publication cards and the .special-card tiles (news +
+    // action cards); count/search/network keep operating on .publication only.
+    var tiles = container ? container.querySelectorAll(':scope > .publication, :scope > .special-card') : publications;
+    var specialCards = container ? container.querySelectorAll('.special-card') : [];
 
     // ── Masonry layout (gallery only) ──
     var GAP_X = 24;
@@ -701,7 +807,7 @@
     }
     function clearMasonry() {
       container.style.height = '';
-      publications.forEach(function(p) {
+      tiles.forEach(function(p) {
         p.style.width = '';
         p.style.transform = '';
         p.classList.remove('at-top');
@@ -714,20 +820,25 @@
       var cols = columnCount(window.innerWidth);
       var colWidth = (containerWidth - GAP_X * (cols - 1)) / cols;
       var colHeights = new Array(cols).fill(0);
-      publications.forEach(function(p) {
+      tiles.forEach(function(p) {
         p.style.width = colWidth + 'px';
         p.classList.remove('at-top');
       });
       // Read all heights in one pass (single reflow), then write transforms.
       var heights = [];
-      publications.forEach(function(p) {
+      tiles.forEach(function(p) {
         heights.push(p.style.display === 'none' ? 0 : p.getBoundingClientRect().height);
       });
-      publications.forEach(function(p, idx) {
+      tiles.forEach(function(p, idx) {
         if (p.style.display === 'none') return;
         var minCol = 0;
-        for (var i = 1; i < cols; i++) {
-          if (colHeights[i] < colHeights[minCol]) minCol = i;
+        if (p.classList.contains('featured')) {
+          // Pin the featured card to the rightmost (4th, when present) column.
+          minCol = cols - 1;
+        } else {
+          for (var i = 1; i < cols; i++) {
+            if (colHeights[i] < colHeights[minCol]) minCol = i;
+          }
         }
         var x = minCol * (colWidth + GAP_X);
         var y = colHeights[minCol];
@@ -789,6 +900,7 @@
       if (view && view !== 'gallery') params.set('view', view); else params.delete('view');
       var q = searchInput ? searchInput.value.trim() : '';
       if (q) params.set('q', q); else params.delete('q');
+      if (activeType) params.set('type', activeType); else params.delete('type');
       var qs = params.toString();
       history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
     }
@@ -837,7 +949,7 @@
     // since the behaviour is otherwise invisible.
     function updateViewButtonLabels() {
       var currentView = document.body.dataset.view;
-      var hasFilter = searchInput && searchInput.value.length > 0;
+      var hasFilter = (searchInput && searchInput.value.length > 0) || activeType !== null;
       viewButtons.forEach(function(b) {
         var v = b.dataset.view;
         var name = v.charAt(0).toUpperCase() + v.slice(1);
@@ -865,9 +977,10 @@
         var clicked = this.dataset.view;
         if (document.body.dataset.view === clicked) {
           // Clicking the active view button resets the view: clear the search
-          // filter and, on network, drop any node selection.
-          if (searchInput && searchInput.value) {
-            searchInput.value = '';
+          // filter (text + type) and, on network, drop any node selection.
+          if ((searchInput && searchInput.value) || activeType !== null) {
+            if (searchInput) searchInput.value = '';
+            activeType = null;
             applySearch();
             updateURL();
           }
@@ -898,10 +1011,12 @@
     var matchedSlugs = null;
     var networkFilter = null;
     var networkClearSelection = null;
+    var activeType = null; // publication-type filter set by an action card / ?type= URL param
 
     function applySearch() {
       var query = searchInput ? searchInput.value : '';
       var tokens = query ? normalize(query).split(/\s+/).filter(Boolean) : [];
+      var filterActive = tokens.length > 0 || activeType !== null;
       var visible = 0;
       var matched = new Set();
       publications.forEach(function(p) {
@@ -909,6 +1024,7 @@
         for (var i = 0; i < tokens.length; i++) {
           if (p._haystack.indexOf(tokens[i]) === -1) { match = false; break; }
         }
+        if (match && activeType !== null && p.dataset.type !== activeType) match = false;
         p.style.display = match ? '' : 'none';
         if (match) {
           visible++;
@@ -916,7 +1032,9 @@
           if (slug) matched.add(slug);
         }
       });
-      matchedSlugs = tokens.length ? matched : null;
+      // Special cards are chrome, not results: hide them whenever a filter is active.
+      specialCards.forEach(function(c) { c.style.display = filterActive ? 'none' : ''; });
+      matchedSlugs = filterActive ? matched : null;
       if (networkFilter) networkFilter(matchedSlugs);
       if (noResults) noResults.hidden = visible !== 0;
       updateCount(visible);
@@ -926,13 +1044,27 @@
       else if (v === 'list') markFirstVisible();
     }
 
-    if (searchInput) {
-      try {
-        var _initialQ = new URLSearchParams(location.search).get('q');
-        if (_initialQ) searchInput.value = _initialQ;
-      } catch (e) {}
-    }
+    try {
+      var _params = new URLSearchParams(location.search);
+      if (searchInput) { var _initialQ = _params.get('q'); if (_initialQ) searchInput.value = _initialQ; }
+      var _initialType = _params.get('type');
+      if (_initialType) activeType = _initialType;
+    } catch (e) {}
     applySearch();
+
+    // Action cards: switch view (view:<name>) or toggle a type filter (type:<name>).
+    document.querySelectorAll('.action-card[data-action]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var a = (btn.dataset.action || '').split(':');
+        if (a[0] === 'view' && a[1]) {
+          setView(a[1]);
+        } else if (a[0] === 'type' && a[1]) {
+          activeType = (activeType === a[1]) ? null : a[1];
+          applySearch();
+          updateURL();
+        }
+      });
+    });
 
     if (searchInput) {
       searchInput.addEventListener('input', function() { applySearch(); updateURL(); });
@@ -949,7 +1081,7 @@
         e.preventDefault();
         searchInput.focus();
       } else if (e.key === 'Escape') {
-        if (searchInput.value) { searchInput.value = ''; applySearch(); updateURL(); }
+        if (searchInput.value || activeType !== null) { searchInput.value = ''; activeType = null; applySearch(); updateURL(); }
         if (networkClearSelection) networkClearSelection();
         var active = document.activeElement;
         if (active && active.classList && active.classList.contains('node')) active.blur();
