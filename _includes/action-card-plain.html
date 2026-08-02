@@ -8,9 +8,7 @@ Params:
   include.act     — explicit action string (e.g. "cluster:3"); falls back to action.action
   include.slugs   — array of member slugs for a cluster filter (joined into data-slugs); optional
   include.filterlabel — short label shown in the search box when this filter is active (data-filter-label); optional
-  include.class   — optional extra wrapper class:
-                      (none)        → flows in the gallery masonry among the publications
-                      `net-return`  → the network sidebar's back-to-gallery card
+  include.class   — optional extra wrapper class (none by default; flows in the gallery masonry among the publications)
 `year: now` renders the live build year; a literal string renders as-is (a range like
 "2015–2026" is shown plain rather than wrapped in <time>); omit it for a year-less card.
 {%- endcomment -%}
