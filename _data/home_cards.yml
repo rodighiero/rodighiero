@@ -6,10 +6,14 @@
 #           `view:<gallery|list|network>` (switches view) or
 #           `type:<publication-type>` (filters the gallery to that front-matter
 #           `type`, e.g. map / book / chapter / journal / conference / magazine /
-#           interview). An empty list renders no action cards.
+#           interview). An empty list renders no action cards. An optional
+#           `pin: featured` on an action renders it directly beneath the featured
+#           publication, pinned to the same (rightmost) gallery column, instead of
+#           at the top of the gallery. Unpinned actions render at the top.
 #
-# Both are currently disabled — the homepage shows only the featured book.
-# To re-enable, fill in `news.text` and/or add entries under `actions`, e.g.:
+# The news card is disabled — the homepage shows the featured book plus one
+# pinned action card that enters the network view. To add a news card, fill in
+# `news.text`; add more tiles under `actions`, e.g.:
 #
 #   news:
 #     eyebrow: News
@@ -19,13 +23,15 @@
 #     link_text: Read more
 #
 #   actions:
-#     - label: Explore the network
-#       sublabel: See how the work connects
-#       action: view:network
 #     - label: Maps
 #       sublabel: Cartographic pieces
 #       action: type:map
 
 news:
 
-actions: []
+actions:
+  - eyebrow: Visualization
+    venue: Publication network
+    label: Explore how the works are organized by research area and how their concepts overlap
+    action: view:network
+    pin: featured

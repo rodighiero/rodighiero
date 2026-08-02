@@ -364,6 +364,13 @@
     .action-card:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
     .action-label { display: block; font-size: var(--text-base); font-weight: 500; line-height: var(--lh-tight); }
     .action-sublabel { display: block; margin-top: 0.2rem; font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
+    /* .card-plain: an action card styled like a plain gallery publication card (no image,
+       no tile frame) — a top hairline, matching padding, and the meta/title/sub rows. */
+    .action-card.card-plain { padding: 0.6rem; border: none; border-radius: 4px; background: none; }
+    .action-card.card-plain:hover { background: var(--tint-hover); }
+    body[data-view="gallery"] .action-card.card-plain { border-top: 1px solid var(--border); padding-top: 0.6rem; }
+    .card-plain .card-title { display: block; font-size: var(--text-base); font-weight: 500; margin: 0.3rem 0 0; line-height: var(--lh-tight); }
+    .card-plain .card-sub { display: block; margin-top: 0.4rem; font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
     /* Special cards belong to the gallery only; the list grid and network view hide them. */
     body[data-view="list"] .special-card { display: none !important; }
 
@@ -716,11 +723,17 @@
         {% if _news.link and _news.link != '' %}<a class="special-link" href="{{ _news.link }}">{{ _news.link_text | default: 'Read more' }} →</a>{% endif %}
       </div>
       {% endif %}
+      {%- comment -%} Unpinned action cards render at the top; actions with `pin: featured`
+      are held back and rendered beneath the featured publication (see the ordered loop
+      below), so they share the pinned rightmost column. {%- endcomment -%}
+      {% assign _pinned_actions = site.data.home_cards.actions | where: "pin", "featured" %}
       {% for _action in site.data.home_cards.actions %}
+      {% unless _action.pin %}
       <button type="button" class="special-card action-card" data-action="{{ _action.action }}">
         <span class="action-label">{{ _action.label }}</span>
         {% if _action.sublabel %}<span class="action-sublabel">{{ _action.sublabel }}</span>{% endif %}
       </button>
+      {% endunless %}
       {% endfor %}
 
       {%- comment -%} One ordered list — featured works first (pinned to the column tops), then the
@@ -754,6 +767,19 @@
         </div>
         <div class="card-desc">{{ publication.excerpt | strip_leading_figure }}</div>
       </div>
+      {%- comment -%} After the last featured card, drop in the pinned action cards so masonry
+      stacks them directly beneath it in the same rightmost column (class pin-last). {%- endcomment -%}
+      {% if featured_pubs.size > 0 and forloop.index == featured_pubs.size %}
+      {% for _action in _pinned_actions %}
+      <button type="button" class="special-card action-card card-plain pin-last" data-action="{{ _action.action }}">
+        <span class="card-meta">
+          <span class="meta-line"><time datetime="{{ site.time | date: '%Y' }}">{{ site.time | date: '%Y' }}</time>{% if _action.eyebrow %} · {{ _action.eyebrow }}{% endif %}{% if _action.venue %}<br><span class="venue">{{ _action.venue }}</span>{% endif %}</span>
+          <span class="card-title">{{ _action.label }}</span>
+          {% if _action.sublabel %}<span class="card-sub">{{ _action.sublabel }}</span>{% endif %}
+        </span>
+      </button>
+      {% endfor %}
+      {% endif %}
       {% endfor %}
     </div>
     <p id="no-results" class="no-results" hidden>No publications match your search.</p>
@@ -838,8 +864,10 @@
       tiles.forEach(function(p, idx) {
         if (p.style.display === 'none') return;
         var minCol = 0;
-        if (p.classList.contains('featured')) {
-          // Pin the featured card to the rightmost (4th, when present) column.
+        if (p.classList.contains('featured') || p.classList.contains('pin-last')) {
+          // Pin the featured card — and any action card tied to it (.pin-last) — to the
+          // rightmost (4th, when present) column. Since .pin-last sits right after the
+          // featured card in DOM order, it stacks directly beneath it.
           minCol = cols - 1;
         } else {
           for (var i = 1; i < cols; i++) {
