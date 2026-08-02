@@ -295,41 +295,6 @@
     .card-desc p { font-size: var(--text-xs); margin: 0; color: var(--muted); line-height: var(--lh-normal); }
     .card-desc em, .card-desc i, .card-desc cite { font-style: normal; }
 
-    /* ── Featured publication (pinned + badged, in place) ── */
-    /* A full outline framing the card (drawn inside via a negative offset so it
-       doesn't affect the masonry column width). */
-    .publication.featured { position: relative; background: var(--tint-active); border: 1px solid var(--border-hover); border-radius: 4px; padding-bottom: 0.9rem; }
-    .publication.featured:hover { background: var(--tint-active); }
-    /* "Featured" tab: the page background flowing in from the right. Anchored to the
-       meta line (so it aligns with the year/type/venue row regardless of the cover
-       height), it overhangs the card's right padding + 1px border and paints over it,
-       so the tab's white reaches the card's outer edge and merges seamlessly with the
-       page background. Border only on top/left/bottom; open on the right. */
-    .publication.featured .card-meta { position: relative; }
-    .pub-badge {
-      position: absolute;
-      top: 0;
-      right: calc(-0.6rem - 1px);
-      z-index: 1;
-      font-size: var(--text-xxs);
-      font-weight: 700;
-      letter-spacing: var(--tracking-caps);
-      text-transform: uppercase;
-      /* All-caps ride high in the line box, so add more top padding than bottom. */
-      line-height: 1;
-      padding: 0.42rem 0.55rem 0.26rem;
-      background: var(--bg);
-      color: var(--fg);
-      border: 1px solid var(--border-hover);
-      border-right: none;
-      border-radius: 0;
-    }
-    .pub-badge-star { margin-right: 0.35em; }
-    /* The tab is anchored to the meta line and the card's right border, which only
-       holds in the gallery masonry. In list view the card is a 4-column grid (meta is
-       just column 1), so hide the tab there — the card's frame + tint already mark it. */
-    body[data-view="list"] .pub-badge { display: none; }
-
     /* ── Special cards (news + action tiles; shown in gallery only) ── */
     .special-card {
       box-sizing: border-box;
@@ -359,18 +324,24 @@
       border-bottom: 1px solid var(--border-hover);
     }
     .special-link:hover { border-bottom-color: var(--fg); }
-    .action-card { display: block; width: 100%; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; }
+    .action-card { display: block; width: 100%; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; -webkit-user-select: none; user-select: none; }
     .action-card:hover { background: var(--tint-hover); border-color: var(--border-hover); }
     .action-card:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
     .action-label { display: block; font-size: var(--text-base); font-weight: 500; line-height: var(--lh-tight); }
     .action-sublabel { display: block; margin-top: 0.2rem; font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
     /* .card-plain: an action card styled like a plain gallery publication card (no image,
        no tile frame) — a top hairline, matching padding, and the meta/title/sub rows. */
-    .action-card.card-plain { padding: 0.6rem; border: none; border-radius: 4px; background: none; }
-    .action-card.card-plain:hover { background: var(--tint-hover); }
-    body[data-view="gallery"] .action-card.card-plain { border-top: 1px solid var(--border); padding-top: 0.6rem; }
-    .card-plain .card-title { display: block; font-size: var(--text-base); font-weight: 500; margin: 0.3rem 0 0; line-height: var(--lh-tight); }
+    .action-card.card-plain { padding: 0.6rem; border: 1px solid var(--border); border-radius: 4px; background: none; }
+    .action-card.card-plain:hover { background: var(--tint-hover); border-color: var(--border-hover); }
+    /* Match the publication card exactly: a block wrapper + block meta-line so the meta-line's
+       bottom margin and the title's top margin collapse to the same meta→title gap (its inline
+       <span> box would otherwise lay the lines out inline and widen that gap). */
+    .card-plain .card-meta { display: block; }
+    .card-plain .meta-line { display: block; }
+    .card-plain .card-title { display: block; font-size: var(--text-base); font-weight: 400; font-style: italic; margin: 0.3rem 0 0; line-height: var(--lh-tight); }
     .card-plain .card-sub { display: block; margin-top: 0.4rem; font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
+    /* The network sidebar's "back to gallery" card sits above the lede. */
+    .net-return { margin-top: 1.5rem; }
     /* Special cards belong to the gallery only; the list grid and network view hide them. */
     body[data-view="list"] .special-card { display: none !important; }
 
@@ -410,12 +381,6 @@
     body[data-view="list"] .card-img { grid-column: 4; grid-row: 1; }
     body[data-view="list"] .card-meta { grid-column: 1; }
     body[data-view="list"] .card-desc { grid-column: 2 / span 2; }
-    /* Featured keeps its full 4-sided border in every view (override the gallery/list
-       top-hairline logic, which otherwise recolours or removes the top edge). */
-    body[data-view="gallery"] .publication.featured,
-    body[data-view="gallery"] .publication.featured.at-top,
-    body[data-view="list"] .publication.featured,
-    body[data-view="list"] .publication.featured.at-top { border-top: 1px solid var(--border-hover); }
 
     /* ── Network view ── */
     #network-view { display: none; }
@@ -442,16 +407,26 @@
     #network-view .lede {
       color: var(--muted);
       margin: 0 0 1.5rem;
+      /* Same footprint/spacing as the plain cards, but no border or background. */
+      padding: 0.6rem;
     }
     #network-view .lede p { margin: 0 0 0.9rem; }
     #network-view .lede p:last-child { margin-bottom: 0; }
-    #network-view .lede h3 {
+    /* Card pattern: a small caps meta line, then the title in the card-title face. */
+    #network-view .lede .lede-eyebrow {
+      display: block;
       font-size: var(--text-xxs);
       text-transform: uppercase;
       letter-spacing: var(--tracking-caps);
       color: var(--muted);
-      margin: 1.1rem 0 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+    #network-view .lede .lede-title {
+      color: var(--fg);
+      font-size: var(--text-base);
+      line-height: var(--lh-tight);
       font-weight: 500;
+      margin: 0 0 0.9rem;
     }
     #network-view .lede ol {
       margin: 0 0 0.9rem;
@@ -538,10 +513,13 @@
     #network-view .node.filtered-out { pointer-events: none; opacity: 0.3; }
     #network-view .link.filtered-out { opacity: 0.3; }
 
-    /* Details panel — replaces the lede in the first column on selection. */
+    /* Details panel — replaces the lede in the first column on selection. Same 0.6rem
+       padding as the lede and the plain cards, so the selected publication's text lines
+       up with the text inside those cards rather than sitting flush to the sidebar edge. */
     #network-view .details {
       font-size: var(--text-xs);
       line-height: var(--lh-normal);
+      padding: 0.6rem;
     }
     #network-view .details[hidden] { display: none; }
     #network-view .details .publication {
@@ -563,10 +541,10 @@
       margin: 0 0 0.5rem;
       font-weight: 500;
     }
+    /* Selected document + its closest matches: separated by margin whitespace like the
+       list/page rhythm, no hairline border. */
     #network-view .details .neighbors {
-      margin-top: 0.9rem;
-      padding-top: 0.9rem;
-      border-top: 1px solid var(--border);
+      margin-top: 1.5rem;
     }
     #network-view .details .neighbors ol { list-style: none; padding: 0; margin: 0; }
     #network-view .details .neighbors li {
@@ -713,8 +691,14 @@
     <div id="publications">
       {%- comment -%} Special cards (non-.publication tiles): a pinned news announcement and
       clickable action cards. They live in the gallery flow but carry the .special-card class so
-      the count / search / network logic (which queries .publication) ignores them. See
-      _data/home_cards.yml. {%- endcomment -%}
+      the count / search / network logic (which queries .publication) ignores them. Placement of
+      home_cards actions: `pin: first` renders here as the very first tile (before the forthcoming
+      publications); an unpinned action renders as a plain tile at the top. The research-cluster
+      filter cards are NOT from home_cards — they are generated automatically from
+      site.data.network.clusters and merged into the dated flow below (each just before its newest
+      member). See _data/home_cards.yml and scripts/build-network.py. {%- endcomment -%}
+      {% assign _first_actions = site.data.home_cards.actions | where: "pin", "first" %}
+      {% for _action in _first_actions %}{% include action-card-plain.html action=_action class="" %}{% endfor %}
       {% assign _news = site.data.home_cards.news %}
       {% if _news and _news.text and _news.text != '' %}
       <div class="special-card news-card">
@@ -723,10 +707,6 @@
         {% if _news.link and _news.link != '' %}<a class="special-link" href="{{ _news.link }}">{{ _news.link_text | default: 'Read more' }} →</a>{% endif %}
       </div>
       {% endif %}
-      {%- comment -%} Unpinned action cards render at the top; actions with `pin: featured`
-      are held back and rendered beneath the featured publication (see the ordered loop
-      below), so they share the pinned rightmost column. {%- endcomment -%}
-      {% assign _pinned_actions = site.data.home_cards.actions | where: "pin", "featured" %}
       {% for _action in site.data.home_cards.actions %}
       {% unless _action.pin %}
       <button type="button" class="special-card action-card" data-action="{{ _action.action }}">
@@ -736,20 +716,32 @@
       {% endunless %}
       {% endfor %}
 
-      {%- comment -%} One ordered list — featured works first (pinned to the column tops), then the
-      rest in year-desc / title-asc order — so a single card block renders every card and the
-      _card_i priority counter stays correct. {%- endcomment -%}
+      {%- comment -%} One ordered list in year-desc / title-asc order (Forthcoming first), so a
+      single card block renders every card and the _card_i priority counter stays correct. {%- endcomment -%}
       {% assign _card_i = 0 %}
-      {% assign featured_pubs = site.publications | where: "featured", true | sort: "year" | reverse %}
       {% assign year_groups = site.publications | group_by: "year" | sort: "name" | reverse %}
-      {% assign rest_pubs = "" | split: "" %}
-      {% for group in year_groups %}{% assign _gp = group.items | sort: "title" | where_exp: "p", "p.featured != true" %}{% assign rest_pubs = rest_pubs | concat: _gp %}{% endfor %}
-      {% assign ordered_pubs = featured_pubs | concat: rest_pubs %}
+      {% assign ordered_pubs = "" | split: "" %}
+      {% for group in year_groups %}{% assign _gp = group.items | sort: "title" %}{% assign ordered_pubs = ordered_pubs | concat: _gp %}{% endfor %}
+      {% assign _clusters_az = site.data.network.clusters | sort: 'label' %}
+      {% assign _net_done = false %}
       {% for publication in ordered_pubs %}
+      {%- comment -%} A network-view card leads the dated flow: emit it once, right after the
+      forthcoming works (before the first publication carrying a real year). {%- endcomment -%}
+      {% if _net_done == false and publication.year != 'Forthcoming' %}
+      {% include action-card-plain.html eyebrow="View" venue="Publication network" label="Every publication becomes a node in a single map. Each one sits beside the others it most resembles by full text. A landscape of the whole body of work you can wander through." act="view:network" year="now" %}
+      {% assign _net_done = true %}
+      {% endif %}
+      {%- comment -%} Auto cluster filter cards are distributed by the midpoint of their span:
+      build-network.py records `anchor_slug` — the first publication at or below the cluster's
+      mid-year (always a real publication) — so a 2015–2025 cluster renders around the 2020 works.
+      Emit before that anchor; iterating alphabetically by label stacks cards that share a slot. {%- endcomment -%}
+      {% for _cluster in _clusters_az %}{% if _cluster.anchor_slug == publication.slug %}
+      {% include action-card-plain.html eyebrow="Filter" venue="Research cluster" label=_cluster.title act=_cluster.action slugs=_cluster.slugs year=_cluster.span filterlabel=_cluster.filter_label %}
+      {% endif %}{% endfor %}
       {% assign _type_label = site.data.publication_types[publication.type].label %}
       {% capture _lang_terms %}{% if publication.lang == 'it' %}italian italiano{% elsif publication.lang == 'fr' %}french français francais{% else %}english{% endif %}{% endcapture %}
       {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.interviewer }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ _lang_terms }}{% endcapture %}
-      <div class="publication{% if publication.featured %} featured{% endif %}" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
+      <div class="publication" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
         {% if publication.thumb %}
         {% assign _card_i = _card_i | plus: 1 %}
         <div class="card-img{% if publication.img_border %} bordered{% endif %}">
@@ -760,26 +752,12 @@
         </div>
         {% endif %}
         <div class="card-meta">
-          {% if publication.featured %}<span class="pub-badge"><span class="pub-badge-star" aria-hidden="true">★</span>Featured</span>{% endif %}
           {% include meta-line.html item=publication %}
           <h2><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
           {% include authors-home.html item=publication %}
         </div>
         <div class="card-desc">{{ publication.excerpt | strip_leading_figure }}</div>
       </div>
-      {%- comment -%} After the last featured card, drop in the pinned action cards so masonry
-      stacks them directly beneath it in the same rightmost column (class pin-last). {%- endcomment -%}
-      {% if featured_pubs.size > 0 and forloop.index == featured_pubs.size %}
-      {% for _action in _pinned_actions %}
-      <button type="button" class="special-card action-card card-plain pin-last" data-action="{{ _action.action }}">
-        <span class="card-meta">
-          <span class="meta-line"><time datetime="{{ site.time | date: '%Y' }}">{{ site.time | date: '%Y' }}</time>{% if _action.eyebrow %} · {{ _action.eyebrow }}{% endif %}{% if _action.venue %}<br><span class="venue">{{ _action.venue }}</span>{% endif %}</span>
-          <span class="card-title">{{ _action.label }}</span>
-          {% if _action.sublabel %}<span class="card-sub">{{ _action.sublabel }}</span>{% endif %}
-        </span>
-      </button>
-      {% endfor %}
-      {% endif %}
       {% endfor %}
     </div>
     <p id="no-results" class="no-results" hidden>No publications match your search.</p>
@@ -788,20 +766,27 @@
     <div id="network-view">
       <aside class="sidebar">
         <div class="lede">
-          <p>Each node is one of my publications, placed near the others it most resembles. Similarity is computed offline from the title and abstract of every paper.</p>
-          <h3>How the network is built</h3>
+          <span class="lede-eyebrow"><time datetime="{{ site.time | date: '%Y' }}">{{ site.time | date: '%Y' }}</time> · View<br>How the Network Is Built</span>
+          <p class="lede-title">A Map of the Publications by Full-Text Similarity</p>
           <ol>
-            <li>Each file in <code>_publications/</code> is stripped to plain prose — no footnotes, headings, links, tags, emphasis, parentheticals, or bibliography.</li>
-            <li>The title and full text is embedded as a 768-dimensional vector by <code>Alibaba-NLP/gte-base-en-v1.5</code>; Italian and French originals are first machine-translated to English, so every original shares one space.</li>
-            <li>Cosine similarity is then computed between every pair of embedded papers, scoring how closely their vectors align.</li>
-            <li>Edges follow a mutual <em>k</em>-nearest-neighbour rule (<em>k</em>&nbsp;=&nbsp;2): a pair links only when each ranks the other among its two closest and their similarity clears 0.65.<svg class="edge-sample" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
-            <li>A node left with no reciprocated neighbour keeps a single faint edge to its closest match above 0.60; one similar to nothing stays unconnected.<svg class="edge-sample fallback" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
-            <li>A translation stays a regular node but is tied to its original by a dashed forced edge rather than by measured similarity.<svg class="edge-sample translation" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
-            <li>A D3 force simulation, pre-computed offline, arranges the nodes so the graph loads already settled.</li>
+            <li>Each file in <code>_publications/</code> is stripped to plain prose — no footnotes, headings, links, or markup.</li>
+            <li>Its text becomes a 768-dimension vector via <code>gte-base-en-v1.5</code>; non-English originals are machine-translated first.</li>
+            <li>Cosine similarity is measured between every pair of embedded papers.</li>
+            <li>Edges use mutual nearest neighbours (<em>k</em>&nbsp;=&nbsp;2): each ranks the other in its top two, above 0.65.<svg class="edge-sample" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
+            <li>A node with no mutual match keeps one faint edge to its closest above 0.60, or none.<svg class="edge-sample fallback" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
+            <li>A translation stays a node, tied to its original by a dashed forced edge, not by similarity.<svg class="edge-sample translation" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
+            <li>A pre-computed D3 force simulation lays out the nodes, so the graph loads already settled.</li>
           </ol>
           <p>Hover a node to read its title; click to select it and reveal its closest matches below.</p>
         </div>
         <div class="details" id="network-details" hidden></div>
+        {%- comment -%} A card mirroring the gallery's network-view card, but pointing back to the
+        cascade gallery. It sits after both panels — and only the lede OR the details shows at a
+        time — so it reads as "back to the gallery" under whichever is open (the steps by default,
+        the selected document and its closest matches once a node is picked). Lives in the sidebar
+        (outside #publications), so the gallery-only hide rules don't touch it; the shared
+        action-card click handler wires it. {%- endcomment -%}
+        {% include action-card-plain.html class="net-return" year="now" eyebrow="View" venue="Publication gallery" label="Back to the publication gallery. Every work as a cascading column of cards, newest first. The whole collection at a glance." act="view:gallery" %}
       </aside>
       <div class="stage">
         <svg id="net" aria-label="Publication similarity network"></svg>
@@ -864,15 +849,8 @@
       tiles.forEach(function(p, idx) {
         if (p.style.display === 'none') return;
         var minCol = 0;
-        if (p.classList.contains('featured') || p.classList.contains('pin-last')) {
-          // Pin the featured card — and any action card tied to it (.pin-last) — to the
-          // rightmost (4th, when present) column. Since .pin-last sits right after the
-          // featured card in DOM order, it stacks directly beneath it.
-          minCol = cols - 1;
-        } else {
-          for (var i = 1; i < cols; i++) {
-            if (colHeights[i] < colHeights[minCol]) minCol = i;
-          }
+        for (var i = 1; i < cols; i++) {
+          if (colHeights[i] < colHeights[minCol]) minCol = i;
         }
         var x = minCol * (colWidth + GAP_X);
         var y = colHeights[minCol];
@@ -932,9 +910,13 @@
       try { params = new URLSearchParams(location.search); } catch (e) { return; }
       var view = document.body.dataset.view;
       if (view && view !== 'gallery') params.set('view', view); else params.delete('view');
-      var q = searchInput ? searchInput.value.trim() : '';
+      // The box holds a filter label (not a query) while a structured filter is active,
+      // so persist ?type/?cluster then, not ?q.
+      var structured = activeType !== null || activeClusterId !== null;
+      var q = (!structured && searchInput) ? searchInput.value.trim() : '';
       if (q) params.set('q', q); else params.delete('q');
       if (activeType) params.set('type', activeType); else params.delete('type');
+      if (activeClusterId) params.set('cluster', activeClusterId); else params.delete('cluster');
       var qs = params.toString();
       history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
     }
@@ -983,7 +965,7 @@
     // since the behaviour is otherwise invisible.
     function updateViewButtonLabels() {
       var currentView = document.body.dataset.view;
-      var hasFilter = (searchInput && searchInput.value.length > 0) || activeType !== null;
+      var hasFilter = (searchInput && searchInput.value.length > 0) || activeType !== null || activeCluster !== null;
       viewButtons.forEach(function(b) {
         var v = b.dataset.view;
         var name = v.charAt(0).toUpperCase() + v.slice(1);
@@ -1011,10 +993,12 @@
         var clicked = this.dataset.view;
         if (document.body.dataset.view === clicked) {
           // Clicking the active view button resets the view: clear the search
-          // filter (text + type) and, on network, drop any node selection.
-          if ((searchInput && searchInput.value) || activeType !== null) {
+          // filter (text + type + cluster) and, on network, drop any node selection.
+          if ((searchInput && searchInput.value) || activeType !== null || activeCluster !== null) {
             if (searchInput) searchInput.value = '';
             activeType = null;
+            clearClusterFilter();
+            activeFilterLabel = null;
             applySearch();
             updateURL();
           }
@@ -1046,11 +1030,18 @@
     var networkFilter = null;
     var networkClearSelection = null;
     var activeType = null; // publication-type filter set by an action card / ?type= URL param
+    var activeCluster = null;   // Set of member slugs for the active cluster filter, or null
+    var activeClusterId = null; // its cluster id (string), for the ?cluster= URL param
+    var activeFilterLabel = null; // label shown in the search box while a type/cluster filter is active
 
     function applySearch() {
-      var query = searchInput ? searchInput.value : '';
+      // While a structured filter (type/cluster) is active the search box holds that
+      // filter's label, not a free-text query — so its text is ignored for matching and
+      // the type/slug filter alone drives the results.
+      var structured = activeType !== null || activeCluster !== null;
+      var query = (!structured && searchInput) ? searchInput.value : '';
       var tokens = query ? normalize(query).split(/\s+/).filter(Boolean) : [];
-      var filterActive = tokens.length > 0 || activeType !== null;
+      var filterActive = tokens.length > 0 || structured;
       var visible = 0;
       var matched = new Set();
       publications.forEach(function(p) {
@@ -1059,6 +1050,7 @@
           if (p._haystack.indexOf(tokens[i]) === -1) { match = false; break; }
         }
         if (match && activeType !== null && p.dataset.type !== activeType) match = false;
+        if (match && activeCluster !== null && !activeCluster.has(p.getAttribute('data-slug'))) match = false;
         p.style.display = match ? '' : 'none';
         if (match) {
           visible++;
@@ -1082,26 +1074,112 @@
       var _params = new URLSearchParams(location.search);
       if (searchInput) { var _initialQ = _params.get('q'); if (_initialQ) searchInput.value = _initialQ; }
       var _initialType = _params.get('type');
-      if (_initialType) activeType = _initialType;
+      if (_initialType) {
+        activeType = _initialType;
+        // Reflect the filter as its label in the box (no focus on load).
+        var _tEl = document.querySelector('.action-card[data-action="type:' + _initialType + '"]');
+        activeFilterLabel = (_tEl && _tEl.dataset.filterLabel) || _initialType;
+        if (searchInput) searchInput.value = activeFilterLabel;
+      }
+      var _initialCluster = _params.get('cluster');
+      if (_initialCluster) {
+        var _cEl = document.querySelector('.action-card[data-action="cluster:' + _initialCluster + '"]');
+        if (_cEl && _cEl.dataset.slugs) {
+          activeCluster = new Set(_cEl.dataset.slugs.split(' ')); activeClusterId = _initialCluster;
+          activeFilterLabel = _cEl.dataset.filterLabel || '';
+          if (searchInput) searchInput.value = activeFilterLabel;
+        }
+      }
     } catch (e) {}
     applySearch();
 
-    // Action cards: switch view (view:<name>) or toggle a type filter (type:<name>).
+    // Action cards: switch view (view:<name>), toggle a type filter (type:<name>), run a
+    // free-text query (search:<terms>), or toggle a cluster filter (cluster:<id>, whose member
+    // slugs ride on the card's data-slugs). Split on the FIRST colon only, so a search value may
+    // itself contain colons/spaces. The three content filters are mutually exclusive.
+    function clearClusterFilter() { activeCluster = null; activeClusterId = null; }
+    // Show a structured filter's label in the search box (cursor at the end) so the whole
+    // filter is managed there: the user deletes the text to clear it. Clearing wipes the box.
+    function showFilterInInput(label) {
+      activeFilterLabel = label;
+      if (!searchInput) return;
+      searchInput.value = label;
+      searchInput.focus();
+      var n = searchInput.value.length;
+      try { searchInput.setSelectionRange(n, n); } catch (e) {}
+    }
+    function clearFilterInput() {
+      activeFilterLabel = null;
+      if (searchInput) searchInput.value = '';
+    }
     document.querySelectorAll('.action-card[data-action]').forEach(function(btn) {
+      // The card hides itself when it applies a filter; a mousedown here would otherwise
+      // start a text selection that lingers across the publications behind it (visible on
+      // reset). Suppressing the default mousedown stops the selection at its source.
+      btn.addEventListener('mousedown', function(e) { e.preventDefault(); });
       btn.addEventListener('click', function() {
-        var a = (btn.dataset.action || '').split(':');
-        if (a[0] === 'view' && a[1]) {
-          setView(a[1]);
-        } else if (a[0] === 'type' && a[1]) {
-          activeType = (activeType === a[1]) ? null : a[1];
+        var raw = btn.dataset.action || '';
+        var i = raw.indexOf(':');
+        var verb = i === -1 ? raw : raw.slice(0, i);
+        var val = i === -1 ? '' : raw.slice(i + 1);
+        if (verb === 'view' && val) {
+          setView(val);
+        } else if (verb === 'type' && val) {
+          activeType = (activeType === val) ? null : val;
+          clearClusterFilter();
+          if (activeType) showFilterInInput(btn.dataset.filterLabel || val); else clearFilterInput();
           applySearch();
           updateURL();
+        } else if (verb === 'search' && val && searchInput) {
+          searchInput.value = (searchInput.value === val) ? '' : val; // click again to clear
+          activeType = null;
+          clearClusterFilter();
+          activeFilterLabel = null; // this is a real free-text query, not a filter label
+          applySearch();
+          updateURL();
+        } else if (verb === 'cluster' && val) {
+          if (activeClusterId === val) {
+            clearClusterFilter();
+            clearFilterInput();
+          } else {
+            activeCluster = btn.dataset.slugs ? new Set(btn.dataset.slugs.split(' ')) : null;
+            activeClusterId = val;
+            activeType = null;
+            showFilterInInput(btn.dataset.filterLabel || '');
+          }
+          applySearch();
+          updateURL();
+        }
+        // A filter card sits partway down the flow; after filtering, jump back to the
+        // top so the (now shorter) result set starts in view rather than scrolled past.
+        // applySearch() relayouts the masonry on the next frame (which changes page
+        // height and would abort a smooth scroll), so scroll after that, instantly.
+        if (verb === 'type' || verb === 'search' || verb === 'cluster') {
+          desiredScroll = 0;
+          requestAnimationFrame(function() {
+            requestAnimationFrame(function() { scrollToPreserved(0); });
+          });
         }
       });
     });
 
     if (searchInput) {
-      searchInput.addEventListener('input', function() { applySearch(); updateURL(); });
+      searchInput.addEventListener('input', function() {
+        // While the box shows a type/cluster label, backspacing from the end (a shorter
+        // prefix of the label) keeps the filter; it's released only when the box is fully
+        // cleared or a letter is typed (the text no longer prefixes the label) — the
+        // remaining text then becomes a normal free-text search.
+        if (activeType !== null || activeCluster !== null) {
+          var v = searchInput.value;
+          if (v === '' || activeFilterLabel === null || activeFilterLabel.indexOf(v) !== 0) {
+            activeType = null;
+            clearClusterFilter();
+            activeFilterLabel = null;
+          }
+        }
+        applySearch();
+        updateURL();
+      });
     }
 
     // Keyboard: "/" jumps to the search box. Esc is a global reset — from any
@@ -1115,10 +1193,14 @@
         e.preventDefault();
         searchInput.focus();
       } else if (e.key === 'Escape') {
-        if (searchInput.value || activeType !== null) { searchInput.value = ''; activeType = null; applySearch(); updateURL(); }
+        if (searchInput.value || activeType !== null || activeCluster !== null) { searchInput.value = ''; activeType = null; clearClusterFilter(); activeFilterLabel = null; applySearch(); updateURL(); }
         if (networkClearSelection) networkClearSelection();
         var active = document.activeElement;
         if (active && active.classList && active.classList.contains('node')) active.blur();
+        // Drop any lingering text selection (e.g. from clicking a card) so the reset
+        // doesn't leave the page looking selected.
+        var sel = window.getSelection && window.getSelection();
+        if (sel && sel.removeAllRanges) sel.removeAllRanges();
       }
     });
 

@@ -194,6 +194,203 @@ RELATED_K = 3            # suggestions shown per publication
 _SENT_SPLIT = re.compile(r"(?<=[.!?])\s+")
 _TRANS_CHARS = 1200      # per-chunk char budget, kept well under the 512-token window
 
+# ── Auto clusters → homepage filter cards ─────────────────────────────────────
+# Connected components of the baked similarity-link graph are treated as research
+# clusters; each component of at least MIN_CLUSTER_SIZE works becomes a homepage
+# filter card, auto-labeled by TF-IDF over its members' text. See build_clusters().
+MIN_CLUSTER_SIZE = 3
+CLUSTER_TERMS = 3        # supporting keywords kept per cluster (label is terms[0])
+_WORD_RE = re.compile(r"[a-zàâäçéèêëîïôöùûüÿœ']{4,}")
+# Domain-generic and multilingual function words are filtered before TF-IDF so a
+# cluster's distinctive vocabulary (peirce, rossi, affinity, covid…) rises to the
+# top. Includes English filler, this corpus's ubiquitous domain terms (visual,
+# data, network…), and common French/Italian stopwords (labels span all three).
+_CLUSTER_STOP = set(
+    """a an and or of to in for on with as by from is are be was were this that these those
+    we our us using use used it its their they them can more most into at than not only also
+    such other about between within across over under out up off two one three first second
+    new each any all how what when where which who whom whose why while their there here
+    visual data information design paper article study research work works
+    figure figures based approach method methods model models tool tools case study studies
+    through via toward towards make making made give given show shown see seen read reading
+    le la les un une des du de et en est qui que qui pour dans sont avec sur ils elle nous vous
+    leur ses aux ces cette dun dune plus comme mais ou ont nos vos leurs cet
+    il lo gli che per con della delle degli dei nel nella nelle una uno non piu come sono anche
+    questo questa questi queste dal dei alla allo agli sul sulla suoi loro""".split()
+)
+
+# The card *text* (each cluster's hand-written `title` and short `filter_label`) is
+# layered on afterwards by scripts/build-cards.py, which keys off the auto TF-IDF
+# `label` this file emits. main() invokes it once the structural JSON is written, so
+# a full network build still produces complete cards; rewording a card alone is a
+# fast `python3 scripts/build-cards.py` with no model in the loop.
+
+
+def _tokens(text: str) -> list[str]:
+    """Lowercase word tokens (4+ letters, accents kept), function words dropped."""
+    return [w for w in _WORD_RE.findall(text.lower()) if w not in _CLUSTER_STOP]
+
+
+def _uf(n: int, links: list[dict]) -> list[int]:
+    """Union-find over the links; returns each node's (flattened) component root."""
+    parent = list(range(n))
+
+    def find(x: int) -> int:
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    for l in links:
+        parent[find(l["source"])] = find(l["target"])
+    return [find(i) for i in range(n)]
+
+
+def _year_key(year) -> float:
+    """Sort key placing 'Forthcoming'/unknown newest; numeric years by value."""
+    try:
+        return float(year)
+    except (TypeError, ValueError):
+        return float("inf")  # Forthcoming / missing sorts as the newest
+
+
+def build_clusters(pubs: list[dict], links: list[dict]) -> list[dict]:
+    """Turn connected components of the similarity graph into labeled clusters.
+
+    Each component with >= MIN_CLUSTER_SIZE works becomes a cluster; its label and
+    supporting terms come from a TF-IDF ranking (unigrams + adjacent bigrams) over
+    the members' cleaned text against the whole corpus, so a component's distinctive
+    vocabulary names it. Emits, per cluster: id, label, terms, member slugs, the
+    newest member's slug (for placement), the year span, and the size — ordered by
+    size descending. Deterministic: components and text are seed-independent.
+
+    Two tiers of edge decide clusters. A cluster only **qualifies** on the
+    **mutual** backbone — the reciprocal mutual-kNN edges plus the forced
+    translation edges: a component needs >= MIN_CLUSTER_SIZE **original** works
+    (translations never count toward the size) joined by those strong edges alone to
+    become a cluster (the weak one-directional fallback links `fb` would otherwise
+    glue isolated nodes on and inflate grab-bag components).
+    Once a cluster qualifies, its **membership** is broadened along the fallback
+    edges — pulling in nodes that reach the cluster only through a rescue link — so
+    the filter card also covers them. A fallback edge is followed only when it does
+    not merge two separate mutual clusters (an ambiguous bridge), in which case the
+    qualifying clusters keep their mutual members and the fallback link is ignored.
+    """
+    n = len(pubs)
+    # Per-document term counts (unigrams + bigrams) and document frequencies.
+    doc_terms: list[dict[str, int]] = []
+    df: dict[str, int] = {}
+    for p in pubs:
+        toks = _tokens(p["text"])
+        grams = list(toks)
+        grams += [f"{toks[k]} {toks[k + 1]}" for k in range(len(toks) - 1)]
+        counts: dict[str, int] = {}
+        for g in grams:
+            counts[g] = counts.get(g, 0) + 1
+        doc_terms.append(counts)
+        for g in counts:
+            df[g] = df.get(g, 0) + 1
+
+    def label_terms(members: list[int]) -> list[str]:
+        score: dict[str, float] = {}
+        for i in members:
+            for term, tf in doc_terms[i].items():
+                idf = np.log(n / (1 + df[term]))
+                score[term] = score.get(term, 0.0) + tf * idf
+        ranked = sorted(score, key=lambda t: -score[t])
+        unigrams = [t for t in ranked if " " not in t]
+        top_uni = set(unigrams[:6])
+        # Prefer a two-word label, but only a *real* phrase: it must recur (df ≥ 2)
+        # and both its words must themselves be top unigrams of this cluster — so
+        # "surprise machines" / "analogous city" qualify while a chance adjacency
+        # like "cartography covid" (cartography isn't a top term here) is rejected,
+        # falling back to the top unigram ("covid").
+        def good_bigram(b: str) -> bool:
+            a, c = b.split(" ", 1)
+            return df.get(b, 0) >= 2 and a in top_uni and c in top_uni
+
+        label = next((t for t in ranked[:10] if " " in t and good_bigram(t)), "")
+        if not label:
+            label = unigrams[0] if unigrams else ""
+        terms: list[str] = []
+        for t in unigrams:
+            if t in label:
+                continue
+            terms.append(t)
+            if len(terms) == CLUSTER_TERMS:
+                break
+        return [label, *terms]
+
+    # A translation is the same work as its original, so it never counts toward a
+    # cluster's size — neither for qualification nor in the reported `size`. It stays
+    # a member (its slug is kept, so its gallery card lights up when filtering).
+    is_trans = [bool(pubs[i].get("translation_of")) for i in range(n)]
+
+    def n_works(members: list[int]) -> int:
+        return sum(1 for i in members if not is_trans[i])
+
+    # Mutual backbone (qualification) vs. full graph incl. fallback (expansion).
+    mutual = [l for l in links if not l.get("fb")]
+    mroot = _uf(n, mutual)
+    froot = _uf(n, links)
+    mgroups: dict[int, list[int]] = {}
+    for i in range(n):
+        mgroups.setdefault(mroot[i], []).append(i)
+    full_members: dict[int, list[int]] = {}
+    for i in range(n):
+        full_members.setdefault(froot[i], []).append(i)
+    # Roots of the qualifying mutual clusters (counting original works only, not
+    # translations), and how many seeds share each full component.
+    seed_roots = [r for r, m in mgroups.items() if n_works(m) >= MIN_CLUSTER_SIZE]
+    seeds_per_full: dict[int, list[int]] = {}
+    for r in seed_roots:
+        seeds_per_full.setdefault(froot[r], []).append(r)
+
+    clusters = []
+    for r in seed_roots:
+        fr = froot[r]
+        # Expand along fallback edges only when this cluster is the sole seed in its
+        # full component; an ambiguous bridge between two seeds keeps mutual members.
+        members = full_members[fr] if len(seeds_per_full[fr]) == 1 else mgroups[r]
+        ordered = sorted(members, key=lambda i: (-_year_key(pubs[i]["year"]), pubs[i]["title"]))
+        years = [int(pubs[i]["year"]) for i in members if str(pubs[i]["year"]).isdigit()]
+        ys, ye = (min(years), max(years)) if years else (None, None)
+        lt = label_terms(members)
+        label = lt[0].title()
+        # `title`/`filter_label` are added later by build-cards.py (keyed on `label`).
+        clusters.append(
+            {
+                "label": label,
+                "terms": lt[1:],
+                "slugs": [pubs[i]["slug"] for i in ordered],
+                "year_start": ys,
+                "year_end": ye,
+                "span": f"{ys}–{ye}" if ys is not None else "",
+                "size": n_works(members),
+            }
+        )
+    clusters.sort(key=lambda c: -c["size"])
+    for k, c in enumerate(clusters):
+        c["id"] = k
+        c["action"] = f"cluster:{k}"
+
+    # Anchor each cluster to the **midpoint of its span** so the cards spread through
+    # the timeline instead of piling at one end (anchoring on year_start pushes them
+    # all low, on year_end all to the top). The gallery lists works year-descending, so
+    # `anchor_slug` is the first publication at or below the span's mid-year — the card
+    # renders at the head of that year (or the nearest older year that has one). An
+    # undated cluster (mid = -inf) falls back to the oldest work, so the anchor always
+    # names a real publication and the homepage needs no separate append pass.
+    gallery = sorted(pubs, key=lambda p: (-_year_key(p["year"]), p["title"]))
+    oldest = gallery[-1]["slug"] if gallery else ""
+    for c in clusters:
+        ys, ye = c["year_start"], c["year_end"]
+        mid = (ys + ye) / 2 if ys is not None else float("-inf")
+        c["anchor_slug"] = next(
+            (p["slug"] for p in gallery if _year_key(p["year"]) <= mid), oldest
+        )
+    return clusters
+
 # ── Body-text scrubbing for the embedder ──────────────────────────────────────
 # _clean_body() reduces a Markdown abstract/body to plain prose so only meaningful
 # words reach the model. Patterns are compiled once here and applied in the order
@@ -254,6 +451,7 @@ def parse_pub(path: Path) -> dict | None:
     return {
         "slug": slug,
         "title": fm.get("title", slug),
+        "year": fm.get("year"),
         "lang": (fm.get("lang") or "en").lower(),
         "translation_of": fm.get("translation_of"),
         "url": f"/{slug}",
@@ -418,18 +616,33 @@ def main() -> int:
     for i in translations:
         nodes[i]["tr"] = True
 
+    # Auto clusters (connected components of the baked links, labeled by TF-IDF)
+    # drive the homepage's research-cluster filter cards — see build_clusters().
+    clusters = build_clusters(pubs, layout["links"])
+    print(
+        f"clusters (size ≥ {MIN_CLUSTER_SIZE}): "
+        + ", ".join(f"{c['label']}·{c['size']}" for c in clusters),
+        file=sys.stderr,
+    )
+
     # `similarity` is intentionally not persisted: it is consumed only by
     # precompute_layout (above), and the browser reads each node's `related`
     # list — the single "three closest" source shared with the publication
-    # pages — so shipping the full matrix would be dead weight.
+    # pages — so shipping the full matrix would be dead weight. `clusters` is
+    # persisted: it drives the homepage's auto filter cards.
     data = {
         "seed": layout.get("seed"),
         "nodes": nodes,
         "canvas": layout["canvas"],
         "links": layout["links"],
+        "clusters": clusters,
     }
     OUT.write_text(json.dumps(data, ensure_ascii=False))
     print(f"wrote {OUT.relative_to(ROOT)}: {OUT.stat().st_size:,} bytes", file=sys.stderr)
+
+    # Layer the card text (titles/filter labels) on top — a separate, model-free
+    # step so it can also be re-run alone. See scripts/build-cards.py.
+    subprocess.run([sys.executable, str(Path(__file__).parent / "build-cards.py")], check=True)
     return 0
 
 

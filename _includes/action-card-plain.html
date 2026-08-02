@@ -1,0 +1,31 @@
+{%- comment -%}
+Plain action card (looks like a gallery publication card with no image). Fields come either
+from an action hash (include.action, from _data/home_cards.yml) or as explicit params that
+override it — so the same card renders manual home_cards entries and auto network clusters.
+Params:
+  include.action  — action hash {year, eyebrow, venue, label, sublabel, action}; optional
+  include.year / eyebrow / venue / label / sublabel — explicit overrides
+  include.act     — explicit action string (e.g. "cluster:3"); falls back to action.action
+  include.slugs   — array of member slugs for a cluster filter (joined into data-slugs); optional
+  include.filterlabel — short label shown in the search box when this filter is active (data-filter-label); optional
+  include.class   — optional extra wrapper class:
+                      (none)        → flows in the gallery masonry among the publications
+                      `net-return`  → the network sidebar's back-to-gallery card
+`year: now` renders the live build year; a literal string renders as-is (a range like
+"2015–2026" is shown plain rather than wrapped in <time>); omit it for a year-less card.
+{%- endcomment -%}
+{%- assign _a = include.action -%}
+{%- assign _yr = include.year | default: _a.year -%}
+{%- if _yr == 'now' -%}{%- assign _yr = site.time | date: '%Y' -%}{%- endif -%}
+{%- assign _eyebrow = include.eyebrow | default: _a.eyebrow -%}
+{%- assign _venue = include.venue | default: _a.venue -%}
+{%- assign _label = include.label | default: _a.label -%}
+{%- assign _sublabel = include.sublabel | default: _a.sublabel -%}
+{%- assign _act = include.act | default: _a.action -%}
+<button type="button" class="special-card action-card card-plain {{ include.class }}" data-action="{{ _act }}"{% if include.slugs %} data-slugs="{{ include.slugs | join: ' ' }}"{% endif %}{% if include.filterlabel %} data-filter-label="{{ include.filterlabel }}"{% endif %}>
+  <span class="card-meta">
+    <span class="meta-line">{% if _yr %}{% if _yr contains '–' or _yr contains '-' %}<span>{{ _yr }}</span>{% else %}<time datetime="{{ _yr }}">{{ _yr }}</time>{% endif %}{% if _eyebrow %} · {% endif %}{% endif %}{{ _eyebrow }}{% if _venue %}<br><span class="venue">{{ _venue }}</span>{% endif %}</span>
+    <span class="card-title">{{ _label }}</span>
+    {% if _sublabel %}<span class="card-sub">{{ _sublabel }}</span>{% endif %}
+  </span>
+</button>

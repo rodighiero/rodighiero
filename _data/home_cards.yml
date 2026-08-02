@@ -7,13 +7,11 @@
 #           `type:<publication-type>` (filters the gallery to that front-matter
 #           `type`, e.g. map / book / chapter / journal / conference / magazine /
 #           interview). An empty list renders no action cards. An optional
-#           `pin: featured` on an action renders it directly beneath the featured
-#           publication, pinned to the same (rightmost) gallery column, instead of
-#           at the top of the gallery. Unpinned actions render at the top.
+#           `pin: first` renders an action as the leading gallery tile (before the
+#           forthcoming works); unpinned actions render at the top.
 #
-# The news card is disabled — the homepage shows the featured book plus one
-# pinned action card that enters the network view. To add a news card, fill in
-# `news.text`; add more tiles under `actions`, e.g.:
+# The news card is disabled. To add one, fill in `news.text`; add more tiles under
+# `actions`, e.g.:
 #
 #   news:
 #     eyebrow: News
@@ -29,9 +27,17 @@
 
 news:
 
-actions:
-  - eyebrow: Visualization
-    venue: Publication network
-    label: Explore how the works are organized by research area and how their concepts overlap
-    action: view:network
-    pin: featured
+actions: []
+  # The research-cluster filter cards are now generated automatically from the network
+  # graph (see scripts/build-network.py → network.json `clusters`, rendered in
+  # _layouts/home.html); they are no longer listed here.
+  #
+  # Manual action cards can still be added: each `action` is `view:<gallery|list|network>`,
+  # `type:<publication-type>`, or `search:<terms>`; an optional `pin: first` renders it as
+  # the leading gallery tile. Example (a network-view lead card):
+  #   - year: now
+  #     eyebrow: Filter
+  #     venue: Publication network
+  #     label: Explore how the works are organized by research area
+  #     action: view:network
+  #     pin: first

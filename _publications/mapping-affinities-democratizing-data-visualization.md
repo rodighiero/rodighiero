@@ -1,7 +1,6 @@
 ---
 title: "Mapping Affinities: Democratizing Data Visualization"
 year: 2021
-featured: true
 venue: "Métis Presses"
 type: "book"
 author: "Dario Rodighiero"
