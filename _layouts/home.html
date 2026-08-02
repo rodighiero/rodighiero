@@ -340,8 +340,6 @@
     .card-plain .meta-line { display: block; }
     .card-plain .card-title { display: block; font-size: var(--text-base); font-weight: 400; font-style: italic; margin: 0.3rem 0 0; line-height: var(--lh-tight); }
     .card-plain .card-sub { display: block; margin-top: 0.4rem; font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
-    /* The network sidebar's "back to gallery" card sits above the lede. */
-    .net-return { margin-top: 1.5rem; }
     /* Special cards belong to the gallery only; the list grid and network view hide them. */
     body[data-view="list"] .special-card { display: none !important; }
 
@@ -780,13 +778,6 @@
           <p>Hover a node to read its title; click to select it and reveal its closest matches below.</p>
         </div>
         <div class="details" id="network-details" hidden></div>
-        {%- comment -%} A card mirroring the gallery's network-view card, but pointing back to the
-        cascade gallery. It sits after both panels — and only the lede OR the details shows at a
-        time — so it reads as "back to the gallery" under whichever is open (the steps by default,
-        the selected document and its closest matches once a node is picked). Lives in the sidebar
-        (outside #publications), so the gallery-only hide rules don't touch it; the shared
-        action-card click handler wires it. {%- endcomment -%}
-        {% include action-card-plain.html class="net-return" label="Back to the publication gallery. Every work as a cascading column of cards, newest first. The whole collection at a glance." act="view:gallery" %}
       </aside>
       <div class="stage">
         <svg id="net" aria-label="Publication similarity network"></svg>
