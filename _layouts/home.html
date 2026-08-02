@@ -360,28 +360,6 @@
       border-radius: 2px;
       overflow: hidden;
     }
-    /* Card delimiter. A standalone line in the gap ABOVE each stacked gallery
-       card, sized to the card image — a pseudo-element positioned outside the
-       card box, so it does not change the card's own top spacing. Play with the
-       --delim-* knobs below. Suppressed on the first card of each column (.at-top). */
-    body[data-view="gallery"] .publication {
-      --delim-weight: 1px;            /* line thickness */
-      --delim-width: 50%;             /* line length (100% = full image width), centered */
-      --delim-color: var(--border);   /* solid color, or swap for a gradient */
-      --delim-gap: 0.4rem;            /* space between the line and the card top */
-    }
-    body[data-view="gallery"] .publication::before {
-      content: "";
-      position: absolute;
-      bottom: 100%;                   /* sit above the card's top edge... */
-      margin-bottom: var(--delim-gap); /* ...pushed up by the gap, outside the card box */
-      left: 50%;
-      transform: translateX(-50%);
-      width: var(--delim-width);
-      height: var(--delim-weight);
-      background: var(--delim-color);
-    }
-    body[data-view="gallery"] .publication.at-top::before { content: none; }
     body[data-view="gallery"] .card-desc { display: none; }
 
     /* ── List view ── */
@@ -826,7 +804,6 @@
 
     // ── Masonry layout (gallery only) ──
     var GAP_X = 24;
-    var GAP_Y = 48;
     function columnCount(w) {
       if (w < 640) return 1;
       if (w < 1024) return 2;
@@ -847,6 +824,7 @@
       var containerWidth = container.clientWidth;
       var cols = columnCount(window.innerWidth);
       var colWidth = (containerWidth - GAP_X * (cols - 1)) / cols;
+      var gapY = colWidth / 4; // vertical gap between stacked tiles = 1/4 of a card's width
       var colHeights = new Array(cols).fill(0);
       tiles.forEach(function(p) {
         p.style.width = colWidth + 'px';
@@ -867,9 +845,9 @@
         var y = colHeights[minCol];
         if (y === 0) p.classList.add('at-top');
         p.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-        colHeights[minCol] = y + heights[idx] + GAP_Y;
+        colHeights[minCol] = y + heights[idx] + gapY;
       });
-      container.style.height = Math.max(0, Math.max.apply(null, colHeights) - GAP_Y) + 'px';
+      container.style.height = Math.max(0, Math.max.apply(null, colHeights) - gapY) + 'px';
       container.classList.add('ready');
     }
     function markFirstVisible() {
