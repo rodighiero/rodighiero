@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   {% include head-init.html %}
-  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='list'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}if(window.innerWidth<=1024)v='gallery';var ok={gallery:1,network:1};/* TEMP: list view disabled */document.documentElement.dataset.initialView=ok[v]?v:'gallery';var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='1'?'1':'0')}()</script>
+  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}if(window.innerWidth<=1024)v='gallery';var ok={gallery:1,network:1};document.documentElement.dataset.initialView=ok[v]?v:'gallery';var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='1'?'1':'0')}()</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
@@ -259,8 +259,6 @@
       background: var(--tint-active);
     }
     .view-toggle svg { width: 16px; height: 16px; }
-    /* TEMP: list (abstracts) view hidden — remove this rule to restore it. */
-    .view-toggle button[data-view="list"] { display: none; }
     .no-results { font-size: var(--text-xs); color: var(--muted); padding: 2rem 0; }
     .no-results[hidden] { display: none; }
     /* Network view fades non-matching nodes in place, so the empty-state copy would duplicate the signal. */
@@ -308,8 +306,6 @@
     .card-meta h2 a { color: inherit; text-decoration: none; }
     .card-meta h2 a:focus-visible { outline: none; }
     .publication:has(.card-meta h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
-    .card-desc p { font-size: var(--text-xs); margin: 0; color: var(--muted); line-height: var(--lh-normal); }
-    .card-desc em, .card-desc i, .card-desc cite { font-style: normal; }
 
     /* ── Special cards (news + action tiles; shown in gallery only) ── */
     .special-card {
@@ -352,8 +348,7 @@
     .card-plain .card-meta,
     .card-plain .meta-line { display: block; }
     .card-plain .card-sub { font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
-    /* Special cards belong to the gallery only; the list grid and network view hide them. */
-    body[data-view="list"] .special-card { display: none !important; }
+    /* Special cards belong to the gallery only; the network view hides them. */
 
     /* ── Gallery view (masonry) ── */
     body[data-view="gallery"] .publication,
@@ -372,30 +367,13 @@
       border-radius: 2px;
       overflow: hidden;
     }
-    body[data-view="gallery"] .card-desc { display: none; }
-
-    /* ── List view ── */
-    body[data-view="list"] .publication {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: 2rem;
-      margin: 0 -1rem 3rem;
-      padding: 1rem 1rem 0.6rem;
-      align-items: start;
-      border-top: 1px solid var(--border);
-    }
-    body[data-view="list"] .publication.at-top { border-top: none; padding-top: 0.6rem; }
-    body[data-view="list"] .publication:last-child { margin-bottom: 0; }
-    body[data-view="list"] .card-img { grid-column: 4; grid-row: 1; }
-    body[data-view="list"] .card-meta { grid-column: 1; }
-    body[data-view="list"] .card-desc { grid-column: 2 / span 2; }
 
     /* ── Network view ── */
     #network-view { display: none; }
     body[data-view="network"] #publications { display: none; }
     body[data-view="network"] #network-view {
       display: grid;
-      /* Match the 4-column rhythm used by the gallery/list views: sidebar = 1 col, stage = 3 cols. */
+      /* Match the 4-column rhythm used by the gallery view: sidebar = 1 col, stage = 3 cols. */
       grid-template-columns: 1fr 1fr 1fr 1fr;
       gap: 2rem;
       height: calc(80vh - 9rem);
@@ -600,9 +578,6 @@
       .filter-count, .view-toggle { display: none; }
       /* Mobile: drop the action / cluster / network tiles (the news card stays). */
       .special-card:not(.news-card) { display: none !important; }
-      body[data-view="list"] .publication { display: block; overflow: hidden; }
-      body[data-view="list"] .card-img { display: block; float: right; width: 220px; margin: 0 0 1rem 1.5rem; }
-      body[data-view="list"] .card-desc { margin-top: 1.2rem; }
     }
     @media (max-width: 430px) {
       .header-portrait { float: none; width: 100%; max-width: 320px; margin: 0 0 0.75rem; }
@@ -688,9 +663,6 @@
         <button type="button" data-view="gallery" aria-label="Gallery view" aria-pressed="false">
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
         </button>
-        <button type="button" data-view="list" aria-label="List view" aria-pressed="false">
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
-        </button>
         <button type="button" data-view="network" aria-label="Network view" aria-pressed="false">
           <svg aria-hidden="true" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.3" fill="currentColor"><line x1="21" y1="12" x2="16.5" y2="4"/><line x1="16.5" y1="4" x2="7.5" y2="4"/><line x1="7.5" y1="4" x2="3" y2="12"/><line x1="3" y1="12" x2="7.5" y2="20"/><line x1="7.5" y1="20" x2="16.5" y2="20"/><line x1="16.5" y1="20" x2="21" y2="12"/><line x1="12" y1="12" x2="21" y2="12"/><line x1="12" y1="12" x2="7.5" y2="4"/><line x1="12" y1="12" x2="7.5" y2="20"/><circle cx="12" cy="12" r="2.3" stroke="none"/><circle cx="21" cy="12" r="1.9" stroke="none"/><circle cx="16.5" cy="4" r="1.9" stroke="none"/><circle cx="7.5" cy="4" r="1.9" stroke="none"/><circle cx="3" cy="12" r="1.9" stroke="none"/><circle cx="7.5" cy="20" r="1.9" stroke="none"/><circle cx="16.5" cy="20" r="1.9" stroke="none"/></svg>
         </button>
@@ -761,7 +733,6 @@
           <h2><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
           {% include authors-home.html item=publication %}
         </div>
-        <div class="card-desc">{{ publication.excerpt | strip_leading_figure }}</div>
       </div>
       {% endfor %}
     </div>
@@ -824,7 +795,6 @@
       tiles.forEach(function(p) {
         p.style.width = '';
         p.style.transform = '';
-        p.classList.remove('at-top');
       });
     }
     function layoutMasonry() {
@@ -837,7 +807,6 @@
       var colHeights = new Array(cols).fill(0);
       tiles.forEach(function(p) {
         p.style.width = colWidth + 'px';
-        p.classList.remove('at-top');
       });
       // Read all heights in one pass (single reflow), then write transforms.
       var heights = [];
@@ -854,21 +823,11 @@
         }
         var x = minCol * (colWidth + GAP_X);
         var y = colHeights[minCol];
-        if (y === 0) p.classList.add('at-top');
         p.style.transform = 'translate(' + x + 'px,' + y + 'px)';
         colHeights[minCol] = y + heights[idx] + gapY;
       });
       container.style.height = Math.max(0, Math.max.apply(null, colHeights) - gapY) + 'px';
       container.classList.add('ready');
-    }
-    function markFirstVisible() {
-      publications.forEach(function(p) { p.classList.remove('at-top'); });
-      for (var i = 0; i < publications.length; i++) {
-        if (publications[i].style.display !== 'none') {
-          publications[i].classList.add('at-top');
-          break;
-        }
-      }
     }
     var layoutScheduled = false;
     function scheduleLayout() {
@@ -946,9 +905,6 @@
         // On first visit networkFilter is still null and buildNetwork's trailing
         // networkFilter(matchedSlugs) call handles it.
         if (networkFilter) networkFilter(matchedSlugs);
-      } else {
-        clearMasonry();
-        markFirstVisible();
       }
       if (shouldRestore) {
         var target = desiredScroll;
@@ -981,10 +937,10 @@
       } else {
         var saved;
         try { saved = new URLSearchParams(location.search).get('view'); } catch (e) {}
-        if (saved !== 'list' && saved !== 'network') {
+        if (saved !== 'network') {
           try { saved = localStorage.getItem('publicationView'); } catch (e) {}
         }
-        saved = (saved === 'network') ? saved : 'gallery'; /* TEMP: list view disabled */
+        saved = (saved === 'network') ? saved : 'gallery';
         if (document.body.dataset.view !== saved) setView(saved, false);
       }
     }
@@ -1067,7 +1023,6 @@
       updateViewButtonLabels();
       var v = document.body.dataset.view;
       if (v === 'gallery') scheduleLayout();
-      else if (v === 'list') markFirstVisible();
     }
 
     try {
@@ -1277,9 +1232,6 @@
         if (!src) return '';
         var clone = src.cloneNode(true);
         clone.removeAttribute('style');
-        clone.classList.remove('at-top');
-        var desc = clone.querySelector('.card-desc');
-        if (desc) desc.remove();
         return clone.outerHTML;
       }
 
