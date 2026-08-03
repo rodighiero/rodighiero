@@ -336,7 +336,7 @@
       border-bottom: 1px solid var(--border-hover);
     }
     .special-link:hover { border-bottom-color: var(--fg); }
-    .action-card { display: block; width: 100%; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; -webkit-user-select: none; user-select: none; }
+    .action-card { display: block; width: 100%; -webkit-user-select: none; user-select: none; }
     .action-card:hover { border-color: var(--border-hover); }
     .action-card:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
     /* .card-plain draws the shared card base above (padding, radius, hover, title
@@ -348,7 +348,6 @@
     .card-plain .card-meta,
     .card-plain .meta-line { display: block; }
     .card-plain .card-sub { font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
-    /* Special cards belong to the gallery only; the network view hides them. */
 
     /* ── Gallery view (masonry) ── */
     body[data-view="gallery"] .publication,
