@@ -269,29 +269,45 @@
     /* ── Publications (shared) ── */
     #publications { position: relative; }
     body[data-view="gallery"] #publications:not(.ready) { visibility: hidden; }
-    .publication {
+    /* ── Card base: publication tiles and plain action/cluster cards share one
+       set of metrics — padding, radius, hover, title size/margin, sub-row gap and
+       the meta-line. They keep two deliberate differences: the publication title
+       is bold roman and the tile is frameless; the action title is italic and its
+       tile carries a hairline border (see the action-card block below). ── */
+    .publication,
+    .action-card.card-plain {
       padding: 0.6rem;
       border-radius: 4px;
       cursor: pointer;
-      transition: background 0.15s ease;
+      transition: background 0.15s ease, border-color 0.15s ease;
     }
-    .publication .card-img img { width: 100%; height: auto; display: block; }
-    .publication .card-img.bordered img { border: 1px solid var(--border); box-sizing: border-box; }
-    .card-meta h2 {
+    .publication:hover,
+    .publication:has(.card-meta h2 a:focus-visible),
+    .action-card.card-plain:hover { background: var(--tint-hover); }
+
+    /* Shared title metrics; only weight/style differ per card (bold vs italic). */
+    .card-meta h2,
+    .card-plain .card-title {
       font-size: var(--text-base);
-      font-weight: 500;
       margin: 0.3rem 0 0;
       line-height: var(--lh-tight);
-      display: inline-block;
-      max-width: 100%;
     }
+    .card-meta h2 { font-weight: 500; display: inline-block; max-width: 100%; }
+    .card-plain .card-title { display: block; font-weight: 400; font-style: italic; }
+
+    /* Shared sub-row gap: publication authors / action sub-label sit the same
+       distance below the title. */
+    .card-meta .authors,
+    .card-plain .card-sub { margin-top: 0.4rem; }
+
+    /* Shared meta-line (both cards wrap it in .card-meta). */
+    .card-meta .meta-line { font-size: var(--text-xxs); line-height: var(--lh-loose); }
+
+    .publication .card-img img { width: 100%; height: auto; display: block; }
+    .publication .card-img.bordered img { border: 1px solid var(--border); box-sizing: border-box; }
     .card-meta h2 a { color: inherit; text-decoration: none; }
     .card-meta h2 a:focus-visible { outline: none; }
-    .publication:hover,
-    .publication:has(.card-meta h2 a:focus-visible) { background: var(--tint-hover); }
     .publication:has(.card-meta h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
-    .card-meta .meta-line { font-size: var(--text-xxs); line-height: var(--lh-loose); }
-    .card-meta .authors { margin-top: 0.4rem; }
     .card-desc p { font-size: var(--text-xs); margin: 0; color: var(--muted); line-height: var(--lh-normal); }
     .card-desc em, .card-desc i, .card-desc cite { font-style: normal; }
 
@@ -325,21 +341,17 @@
     }
     .special-link:hover { border-bottom-color: var(--fg); }
     .action-card { display: block; width: 100%; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; -webkit-user-select: none; user-select: none; }
-    .action-card:hover { background: var(--tint-hover); border-color: var(--border-hover); }
+    .action-card:hover { border-color: var(--border-hover); }
     .action-card:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
-    .action-label { display: block; font-size: var(--text-base); font-weight: 500; line-height: var(--lh-tight); }
-    .action-sublabel { display: block; margin-top: 0.2rem; font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
-    /* .card-plain: an action card styled like a plain gallery publication card (no image,
-       no tile frame) — a top hairline, matching padding, and the meta/title/sub rows. */
-    .action-card.card-plain { padding: 0.6rem; border: 1px solid var(--border); border-radius: 4px; background: none; }
-    .action-card.card-plain:hover { background: var(--tint-hover); border-color: var(--border-hover); }
-    /* Match the publication card exactly: a block wrapper + block meta-line so the meta-line's
-       bottom margin and the title's top margin collapse to the same meta→title gap (its inline
-       <span> box would otherwise lay the lines out inline and widen that gap). */
-    .card-plain .card-meta { display: block; }
+    /* .card-plain draws the shared card base above (padding, radius, hover, title
+       and sub-row metrics); it adds only what makes an action card distinct — the
+       hairline tile border — and forces block layout on the meta wrapper/rows so
+       the meta→title gap collapses to the same value as a publication card (an
+       inline <span> box would otherwise lay the lines out inline and widen it). */
+    .action-card.card-plain { border: 1px solid var(--border); background: none; }
+    .card-plain .card-meta,
     .card-plain .meta-line { display: block; }
-    .card-plain .card-title { display: block; font-size: var(--text-base); font-weight: 400; font-style: italic; margin: 0.3rem 0 0; line-height: var(--lh-tight); }
-    .card-plain .card-sub { display: block; margin-top: 0.4rem; font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
+    .card-plain .card-sub { font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
     /* Special cards belong to the gallery only; the list grid and network view hide them. */
     body[data-view="list"] .special-card { display: none !important; }
 
@@ -704,12 +716,7 @@
       </div>
       {% endif %}
       {% for _action in site.data.home_cards.actions %}
-      {% unless _action.pin %}
-      <button type="button" class="special-card action-card" data-action="{{ _action.action }}">
-        <span class="action-label">{{ _action.label }}</span>
-        {% if _action.sublabel %}<span class="action-sublabel">{{ _action.sublabel }}</span>{% endif %}
-      </button>
-      {% endunless %}
+      {% unless _action.pin %}{% include action-card-plain.html action=_action class="" %}{% endunless %}
       {% endfor %}
 
       {%- comment -%} One ordered list in year-desc / title-asc order (Forthcoming first), so a
