@@ -307,16 +307,21 @@
     .card-meta h2 a:focus-visible { outline: none; }
     .publication:has(.card-meta h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
 
-    /* ── Special cards (news + action tiles; shown in gallery only) ── */
+    /* ── Special cards (news + action tiles; shown in gallery only) ──
+       .special-card carries only the shared element resets (the action tiles are
+       <button>s); the boxed surface look belongs to the news card alone — action
+       tiles draw the plain card base + hairline border via .card-plain below. */
     .special-card {
       box-sizing: border-box;
       text-align: left;
+      font-family: inherit;
+      color: inherit;
+    }
+    .news-card {
       padding: 0.9rem 1rem;
       border: 1px solid var(--border);
       border-radius: 6px;
       background: var(--tint-surface);
-      font-family: inherit;
-      color: inherit;
     }
     .special-eyebrow {
       display: block;
@@ -341,9 +346,10 @@
     .action-card:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
     /* .card-plain draws the shared card base above (padding, radius, hover, title
        and sub-row metrics); it adds only what makes an action card distinct — the
-       hairline tile border — and forces block layout on the meta wrapper/rows so
-       the meta→title gap collapses to the same value as a publication card (an
-       inline <span> box would otherwise lay the lines out inline and widen it). */
+       hairline tile border (background: none clears the UA <button> face) — and
+       forces block layout on the meta wrapper/rows so the meta→title gap collapses
+       to the same value as a publication card (an inline <span> box would
+       otherwise lay the lines out inline and widen it). */
     .action-card.card-plain { border: 1px solid var(--border); background: none; }
     .card-plain .card-meta,
     .card-plain .meta-line { display: block; }
