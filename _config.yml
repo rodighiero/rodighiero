@@ -9,6 +9,7 @@ plugins:
 
 feed:
   posts_limit: 1000
+  excerpt_only: true          # feed carries each publication's abstract (excerpt) only, not the full body
   path: /feed/posts.xml       # jekyll-feed always emits a posts feed; park it here (empty), deleted in deploy.yml
   collections:
     publications:
