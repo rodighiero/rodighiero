@@ -29,6 +29,9 @@ jobs:
       - run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+      # jekyll-feed always emits a posts feed (no toggle); it's parked empty at
+      # /feed/posts.xml (see _config.yml) while the real feed is /feed.xml — drop it.
+      - run: rm -f _site/feed/posts.xml
       - uses: actions/upload-pages-artifact@v5
 
   deploy:

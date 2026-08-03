@@ -9,8 +9,10 @@ plugins:
 
 feed:
   posts_limit: 1000
+  path: /feed/posts.xml       # jekyll-feed always emits a posts feed; park it here (empty), deleted in deploy.yml
   collections:
-    - publications
+    publications:
+      path: /feed.xml         # the real feed at the conventional location
 
 collections:
   publications:
