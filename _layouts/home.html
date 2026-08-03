@@ -598,6 +598,8 @@
       .header .icons { margin-bottom: 0.6rem; }
       .header .bio-col { clear: left; margin-top: 1rem; }
       .filter-count, .view-toggle { display: none; }
+      /* Mobile: drop the action / cluster / network tiles (the news card stays). */
+      .special-card:not(.news-card) { display: none !important; }
       body[data-view="list"] .publication { display: block; overflow: hidden; }
       body[data-view="list"] .card-img { display: block; float: right; width: 220px; margin: 0 0 1rem 1.5rem; }
       body[data-view="list"] .card-desc { margin-top: 1.2rem; }
@@ -843,7 +845,9 @@
         heights.push(p.style.display === 'none' ? 0 : p.getBoundingClientRect().height);
       });
       tiles.forEach(function(p, idx) {
-        if (p.style.display === 'none') return;
+        // Skip tiles hidden inline (search/view state) or via CSS (a media query
+        // hides the action cards on mobile; offsetParent is null when display:none).
+        if (p.style.display === 'none' || p.offsetParent === null) return;
         var minCol = 0;
         for (var i = 1; i < cols; i++) {
           if (colHeights[i] < colHeights[minCol]) minCol = i;
