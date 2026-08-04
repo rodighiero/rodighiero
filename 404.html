@@ -40,6 +40,14 @@ permalink: /404.html
     <h1>Page not found</h1>
     <p>This page no longer exists. Go back to the <a href="https://dariorodighiero.com">homepage</a>.</p>
   </div>
+  {%- comment -%}
+    Report the missing URL to GoatCounter instead of the canonical above. count.js
+    derives its path from link[rel=canonical] when it points at this host, which would
+    log every 404 as the homepage — inflating "/" and hiding which dead links people
+    follow. A `path` callback overrides that; it must be set before the async count.js
+    runs, and count.js keeps an existing window.goatcounter object.
+  {%- endcomment -%}
+  <script>window.goatcounter = {path: function () { return '404: ' + location.pathname }}</script>
   {% include analytics.html %}
 </body>
 </html>
