@@ -1,5 +1,8 @@
 // GoatCounter: https://www.goatcounter.com
 // This file is released under the ISC license: https://opensource.org/licenses/ISC
+//
+// Vendored verbatim from https://gc.zgo.at/count.js — do NOT edit; to update,
+// re-download from that URL and diff. Retrieved 2026-08-04.
 ;(function() {
 	'use strict';
 
