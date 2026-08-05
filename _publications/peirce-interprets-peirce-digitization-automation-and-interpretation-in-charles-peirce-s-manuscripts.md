@@ -74,7 +74,7 @@ A first public prototype of the resulting digital edition[^1] has been developed
 
 {% include figure.html class="wide" src="/images/peirce-interprets-peirce-digitization-automation-and-interpretation-in-charles-peirce-s-manuscripts/fig_003.webp" caption="Figure 3. Diplomatic TEI transcription of MS 491, aligned with the IIIF facsimile." %}
 
-[^1]: The digital edition is available at <https://peirce.humanitiesconnect.net>.
+[^1]: The digital edition is available at peirce.humanitiesconnect.net.
 
 ## Discussion
 

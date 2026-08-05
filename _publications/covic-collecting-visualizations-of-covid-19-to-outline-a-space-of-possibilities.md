@@ -256,7 +256,7 @@ We hope the collection will become a field for continuing critique of comparison
 - Alaska Resources Library & Information Services (ARLIS). n.d. “Exxon Valdez Oil Spill.”
 - _The American Influenza Epidemic of 1918: A Digital Encyclopedia_. n.d. University of Michigan Center for the History of Medicine and Michigan Publishing. <https://www.influenzaarchive.org/>.
 - Bourne, Charles P., and Trudi Bellardo Hahn. 2003. _A History of Online Information Services, 1963–1976_. Cambridge, MA: MIT Press.
-- _Collection of COVID-19 Visualization Worldwide_. n.d. Peking University Visualization Lab. <http://vis.pku.edu.cn/covid19vis_collection/#/>.
+- _Collection of COVID-19 Visualization Worldwide_. n.d. Peking University Visualization Lab.
 - Dong, Ensheng, Hongru Du, and Lauren Gardner. 2020. “An Interactive Web-Based Dashboard to Track COVID-19 in Real Time.” _The Lancet Infectious Diseases_ 20 (5): 533–34. <https://doi.org/10.1016/S1473-3099(20)30120-1>.
 - _Hurricane Digital Memory Bank_. n.d. Roy Rosenzweig Center for History and New Media, George Mason University. <http://hurricanearchive.org/>.
 - “Inside the New York Times’ Photo Morgue, A Possible New Life for Print.” 2012. WNYC. <https://www.wnyc.org/story/206643-wnyc-tumblr/>.
