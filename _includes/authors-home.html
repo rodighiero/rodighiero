@@ -32,11 +32,11 @@
 {%- capture iv_part -%}{%- include name-list.html raw=include.item.interviewer prefix_with="interview with " prefix_by="interview by " -%}{%- endcapture -%}
 {%- assign iv_part = iv_part | strip -%}
 
-{%- comment -%} Capitalize first letter only when a part follows a period. {%- endcomment -%}
-{%- assign _parts_joined = ed_part | append: "~~~" | append: tr_part | append: "~~~" | append: intro_part | append: "~~~" | append: iv_part -%}
-{%- assign parts = _parts_joined | split: "~~~" -%}
+{%- comment -%} Join the five parts with ". ", capitalizing each one that follows a
+period. Liquid has no array literal, so the parts are appended with a sentinel and
+split back apart; empty parts fall out in the loop. {%- endcomment -%}
+{%- assign parts = auth_part | append: "~~~" | append: ed_part | append: "~~~" | append: tr_part | append: "~~~" | append: intro_part | append: "~~~" | append: iv_part | split: "~~~" -%}
 {%- assign out = "" -%}
-{%- if auth_part != "" -%}{%- assign out = auth_part -%}{%- endif -%}
 {%- for part in parts -%}
   {%- if part != "" -%}
     {%- if out != "" -%}

@@ -26,9 +26,10 @@ rest join with a serial comma via the same join-and.html name-list.html uses. {%
 {%- capture _given -%}{% for w in _words %}{% unless forloop.last %}{{ w }} {% endunless %}{% endfor %}{%- endcapture -%}
 {%- assign _given = _given | strip -%}
 {%- capture _first_formatted -%}{{ _family }}{%- if _given != '' -%}, {{ _given }}{%- endif -%}{%- endcapture -%}
+{%- comment -%} split on an absent sentinel is Liquid's only way to wrap one string
+in an array, so the inverted first name can lead the list the rest joins onto. {%- endcomment -%}
 {%- assign _rest_people = _people | slice: 1, 9999 -%}
-{%- assign _first_arr = _first_formatted | split: "~~~" -%}
-{%- assign _display_people = _first_arr | concat: _rest_people -%}
+{%- assign _display_people = _first_formatted | split: "~~~" | concat: _rest_people -%}
 {%- capture _authors -%}{%- include join-and.html items=_display_people serial_comma=true -%}{%- endcapture -%}
 {%- assign _t = _item.type -%}
 {%- comment -%} For books/maps the venue field holds the publisher; for chapters/conferences it holds the booktitle, so don't reuse it as the publisher there. {%- endcomment -%}

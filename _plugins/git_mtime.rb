@@ -8,27 +8,26 @@ class GitMtimeGenerator < Jekyll::Generator
   priority :high
 
   def generate(site)
-    docs = site.collections['publications']&.docs
-    if docs
-      dates = git_mtimes_by_path(site, '_publications')
-      docs.each do |doc|
-        doc.data['git_mtime'] = dates[doc.relative_path] ||
-                                "#{doc.data['year']}-01-01"
-      end
+    @source = site.source
+    collection = site.collections['publications']
+    docs = collection&.docs || []
+    dates = git_mtimes_under(collection&.relative_directory || '_publications')
+    docs.each do |doc|
+      doc.data['git_mtime'] = dates[doc.relative_path] || "#{doc.data['year']}-01-01"
     end
-    site.data['git_mtime'] = git_mtime('.') ||
-                             Time.now.utc.strftime('%Y-%m-%d')
+    site.data['git_mtime'] = git_mtime('.') || Time.now.utc.strftime('%Y-%m-%d')
   end
 
   private
 
   # One `git log` walk covering every file under `dir`, instead of a
-  # separate subprocess per document (61+ forks/build otherwise).
-  def git_mtimes_by_path(site, dir)
-    stdout, status = Open3.capture2(
-      'git', 'log', '--name-only', '--pretty=format:%x00%cd', '--date=short', '--', dir
+  # separate subprocess per document (61+ forks/build otherwise). Keys are
+  # paths relative to the repo root, matching Document#relative_path.
+  def git_mtimes_under(dir)
+    stdout, status = capture_git(
+      'log', '--name-only', '--pretty=format:%x00%cd', '--date=short', '--', dir
     )
-    return {} unless status.success?
+    return {} unless status&.success?
 
     dates = {}
     stdout.split("\0").each do |chunk|
@@ -37,21 +36,25 @@ class GitMtimeGenerator < Jekyll::Generator
       next unless date
 
       # git log is newest-first, so the first date seen per path wins.
-      lines.each { |file| dates[file.strip] ||= date unless file.strip.empty? }
+      lines.each do |line|
+        file = line.strip
+        dates[file] ||= date unless file.empty?
+      end
     end
     dates
-  rescue Errno::ENOENT
-    Jekyll.logger.warn 'GitMtimeGenerator:', 'git not found on PATH'
-    {}
   end
 
   def git_mtime(path)
-    stdout, status = Open3.capture2(
-      'git', 'log', '-1', '--format=%cd', '--date=short', '--', path
-    )
-    status.success? && !stdout.empty? ? stdout.strip : nil
+    stdout, status = capture_git('log', '-1', '--format=%cd', '--date=short', '--', path)
+    status&.success? && !stdout.empty? ? stdout.strip : nil
+  end
+
+  # Always runs in the site source, so the relative paths above do not depend
+  # on the working directory Jekyll happened to be invoked from.
+  def capture_git(*args)
+    Open3.capture2('git', *args, chdir: @source)
   rescue Errno::ENOENT
     Jekyll.logger.warn 'GitMtimeGenerator:', 'git not found on PATH'
-    nil
+    ['', nil]
   end
 end
