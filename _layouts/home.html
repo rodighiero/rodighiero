@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   {% include head-init.html %}
-  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}if(window.innerWidth<=1024)v='gallery';var ok={gallery:1,network:1};document.documentElement.dataset.initialView=ok[v]?v:'gallery';var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='1'?'1':'0')}()</script>
+  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}if(window.innerWidth<=1024)v='gallery';var ok={gallery:1,network:1};document.documentElement.dataset.initialView=ok[v]?v:'gallery';var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='0'?'0':'1')}()</script>
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
   <meta name="keywords" content="Dario Rodighiero, data visualization, digital humanities, Science and Technology Studies, University of Groningen, Berkman Klein Center, metaLAB Harvard, mapping, information design">
@@ -590,7 +590,7 @@
   <script>document.body.dataset.view = document.documentElement.dataset.initialView || 'gallery'</script>
   <a class="skip-link" href="#main">Skip to content</a>
   {% include mode-toggle.html %}
-  <button class="bio-toggle" type="button" aria-controls="bio" aria-expanded="false" aria-label="Show bio" title="Show bio">
+  <button class="bio-toggle" type="button" aria-controls="bio" aria-expanded="true" aria-label="Hide bio" title="Hide bio">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
     <span class="bio-toggle-label" aria-hidden="true">Show bio</span>
   </button>
