@@ -16,9 +16,28 @@ module OrderedPublications
   def self.order(docs)
     docs.sort_by { |doc| sort_key(doc) }
   end
+
+  # Only what publication-nav.html reads. Storing the neighbouring Document
+  # itself would make each pair reference the other through page data, so a
+  # plain hash keeps the graph acyclic.
+  def self.nav_ref(doc)
+    doc && { 'url' => doc.url, 'title' => doc.data['title'] }
+  end
+
+  # Give each document its neighbours up front, so the publication layout can
+  # read page.prev_pub / page.next_pub instead of scanning the whole ordered
+  # list in Liquid on every one of the 61 pages.
+  def self.link_neighbours(ordered)
+    ordered.each_with_index do |doc, i|
+      doc.data['prev_pub'] = nav_ref(i.zero? ? nil : ordered[i - 1])
+      doc.data['next_pub'] = nav_ref(ordered[i + 1])
+    end
+  end
 end
 
 Jekyll::Hooks.register :site, :post_read do |site|
   docs = site.collections['publications']&.docs || []
-  site.data['ordered_publications'] = OrderedPublications.order(docs)
+  ordered = OrderedPublications.order(docs)
+  OrderedPublications.link_neighbours(ordered)
+  site.data['ordered_publications'] = ordered
 end
