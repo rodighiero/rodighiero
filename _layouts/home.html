@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  {% include head-init.html %}
+  {% include head-common.html %}
   <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}if(window.innerWidth<=1024)v='gallery';var ok={gallery:1,network:1};document.documentElement.dataset.initialView=ok[v]?v:'gallery';var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='0'?'0':'1')}()</script>
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">

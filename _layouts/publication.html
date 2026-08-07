@@ -4,7 +4,7 @@
   {% assign _excerpt = page.content | strip_html | decode_numeric_entities | truncatewords: 22 | truncate: 160 %}
   {% assign _excerpt_attr = _excerpt | escape_once %}
   <meta charset="utf-8">
-  {% include head-init.html %}
+  {% include head-common.html %}
   {% assign _ptype = site.data.publication_types[page.type] %}
   {% capture _byline %}{% include byline.html item=page %}{% endcapture %}{% assign _byline = _byline | strip %}
   {%- comment -%} Full byline is used in the page body via authors.html; here in <title> it's capped to keep the tag within Google's ~60-char display budget on multi-author papers. {%- endcomment -%}
