@@ -6,18 +6,10 @@
   <meta charset="utf-8">
   {% include head-init.html %}
   <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}if(window.innerWidth<=1024)v='gallery';var ok={gallery:1,network:1};document.documentElement.dataset.initialView=ok[v]?v:'gallery';var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='1'?'1':'0')}()</script>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
-  <meta name="author" content="Dario Rodighiero">
   <meta name="keywords" content="Dario Rodighiero, data visualization, digital humanities, Science and Technology Studies, University of Groningen, Berkman Klein Center, metaLAB Harvard, mapping, information design">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-  <meta name="color-scheme" content="light dark">
   <link rel="canonical" href="{{ site.url }}/">
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml">
-  <meta property="og:site_name" content="{{ site.title }}">
   <meta property="og:title" content="{{ _page_title }}">
   <meta property="og:description" content="{{ _meta_desc }}">
   <meta property="og:url" content="{{ site.url }}/">
@@ -27,7 +19,6 @@
   <meta property="og:image:alt" content="Dario Rodighiero">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="800">
-  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ _page_title }}">
   <meta name="twitter:description" content="{{ _meta_desc }}">
   <meta name="twitter:image" content="{{ site.url }}/images/Dario-Rodighiero.webp">
@@ -35,9 +26,6 @@
   <meta property="profile:first_name" content="Dario">
   <meta property="profile:last_name" content="Rodighiero">
   <meta property="profile:username" content="rodighiero">
-  <!-- Dublin Core -->
-  <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
-  <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
   <meta name="DC.title" content="{{ _page_title }}">
   <meta name="DC.creator" content="Dario Rodighiero">
   <meta name="DC.subject" content="Data Visualization; Digital Humanities; Science and Technology Studies; Information Design; Mapping">
@@ -51,10 +39,6 @@
   <link rel="me" href="https://github.com/rodighiero/">
   <link rel="me" href="https://www.linkedin.com/in/dariorodighiero/">
   <link rel="me" href="https://orcid.org/0000-0002-1405-7062">
-  <link rel="icon" href="/images/@icons/favicon.ico" sizes="any">
-  <link rel="icon" href="/images/@icons/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/images/@icons/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
   <link rel="image_src" href="{{ site.url }}/images/Dario-Rodighiero.webp">
   <script type="application/ld+json">
   {
@@ -876,13 +860,20 @@
       if (view && view !== 'gallery') params.set('view', view); else params.delete('view');
       // The box holds a filter label (not a query) while a structured filter is active,
       // so persist ?type/?cluster then, not ?q.
-      var structured = activeType !== null || activeClusterId !== null;
+      var structured = structuredFilterActive();
       var q = (!structured && searchInput) ? searchInput.value.trim() : '';
       if (q) params.set('q', q); else params.delete('q');
       if (activeType) params.set('type', activeType); else params.delete('type');
       if (activeClusterId) params.set('cluster', activeClusterId); else params.delete('cluster');
       var qs = params.toString();
       history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
+    }
+    // Debounced wrapper for keystroke-driven callers: the URL itself is never
+    // read back mid-typing, so there's no need to sync it on every keystroke.
+    var urlUpdateTimer = null;
+    function scheduleURLUpdate() {
+      clearTimeout(urlUpdateTimer);
+      urlUpdateTimer = setTimeout(updateURL, 200);
     }
 
     function setView(view, persist) {
@@ -926,7 +917,7 @@
     // since the behaviour is otherwise invisible.
     function updateViewButtonLabels() {
       var currentView = document.body.dataset.view;
-      var hasFilter = (searchInput && searchInput.value.length > 0) || activeType !== null || activeCluster !== null;
+      var hasFilter = (searchInput && searchInput.value.length > 0) || structuredFilterActive();
       viewButtons.forEach(function(b) {
         var v = b.dataset.view;
         var name = v.charAt(0).toUpperCase() + v.slice(1);
@@ -955,7 +946,7 @@
         if (document.body.dataset.view === clicked) {
           // Clicking the active view button resets the view: clear the search
           // filter (text + type + cluster) and, on network, drop any node selection.
-          if ((searchInput && searchInput.value) || activeType !== null || activeCluster !== null) {
+          if ((searchInput && searchInput.value) || structuredFilterActive()) {
             if (searchInput) searchInput.value = '';
             activeType = null;
             clearClusterFilter();
@@ -995,11 +986,16 @@
     var activeClusterId = null; // its cluster id (string), for the ?cluster= URL param
     var activeFilterLabel = null; // label shown in the search box while a type/cluster filter is active
 
+    // True while a type or cluster filter (as opposed to free-text search) is active.
+    function structuredFilterActive() {
+      return activeType !== null || activeCluster !== null;
+    }
+
     function applySearch() {
       // While a structured filter (type/cluster) is active the search box holds that
       // filter's label, not a free-text query — so its text is ignored for matching and
       // the type/slug filter alone drives the results.
-      var structured = activeType !== null || activeCluster !== null;
+      var structured = structuredFilterActive();
       var query = (!structured && searchInput) ? searchInput.value : '';
       var tokens = query ? normalize(query).split(/\s+/).filter(Boolean) : [];
       var filterActive = tokens.length > 0 || structured;
@@ -1129,7 +1125,7 @@
         // prefix of the label) keeps the filter; it's released only when the box is fully
         // cleared or a letter is typed (the text no longer prefixes the label) — the
         // remaining text then becomes a normal free-text search.
-        if (activeType !== null || activeCluster !== null) {
+        if (structuredFilterActive()) {
           var v = searchInput.value;
           if (v === '' || activeFilterLabel === null || activeFilterLabel.indexOf(v) !== 0) {
             activeType = null;
@@ -1138,7 +1134,7 @@
           }
         }
         applySearch();
-        updateURL();
+        scheduleURLUpdate();
       });
     }
 
@@ -1153,7 +1149,7 @@
         e.preventDefault();
         searchInput.focus();
       } else if (e.key === 'Escape') {
-        if (searchInput.value || activeType !== null || activeCluster !== null) { searchInput.value = ''; activeType = null; clearClusterFilter(); activeFilterLabel = null; applySearch(); updateURL(); }
+        if (searchInput.value || structuredFilterActive()) { searchInput.value = ''; activeType = null; clearClusterFilter(); activeFilterLabel = null; applySearch(); updateURL(); }
         if (networkClearSelection) networkClearSelection();
         var active = document.activeElement;
         if (active && active.classList && active.classList.contains('node')) active.blur();
@@ -1232,12 +1228,21 @@
       var idxBySlug = {};
       pubs.forEach(function(p, i) { idxBySlug[p.slug] = i; });
 
+      // The gallery card markup for a given slug never changes post-load, so
+      // cache each clone's HTML instead of re-querying and re-cloning the DOM
+      // on every node selection.
+      var cardHtmlCache = {};
       function cardHtmlFor(slug) {
+        if (slug in cardHtmlCache) return cardHtmlCache[slug];
         var src = document.querySelector('.publication[data-slug="' + CSS.escape(slug) + '"]');
-        if (!src) return '';
-        var clone = src.cloneNode(true);
-        clone.removeAttribute('style');
-        return clone.outerHTML;
+        var html = '';
+        if (src) {
+          var clone = src.cloneNode(true);
+          clone.removeAttribute('style');
+          html = clone.outerHTML;
+        }
+        cardHtmlCache[slug] = html;
+        return html;
       }
 
       var NODE_RADIUS = 3;
@@ -1305,10 +1310,17 @@
         });
       }
 
+      // D3 mutates a link's source/target from a node index into the node
+      // object itself after the first render, so either shape can show up
+      // here depending on whether this runs before or after that swap.
+      function endpoints(l) {
+        return [l.source.i != null ? l.source.i : l.source, l.target.i != null ? l.target.i : l.target];
+      }
+
       function render() {
         fitLayout();
 
-        var linkData = linkLayer.selectAll('line').data(links, function(d) { return (d.source.i != null ? d.source.i : d.source) + ':' + (d.target.i != null ? d.target.i : d.target); });
+        var linkData = linkLayer.selectAll('line').data(links, function(d) { var e = endpoints(d); return e[0] + ':' + e[1]; });
         linkData.exit().remove();
         linkSel = linkData.enter().append('line').attr('class', 'link').merge(linkData);
         linkSel.classed('translation', function(d) { return !!d.translation; })
@@ -1413,21 +1425,18 @@
       function highlight(d) {
         var neighbors = new Set([d.i]);
         links.forEach(function(l) {
-          var si = l.source.i != null ? l.source.i : l.source;
-          var ti = l.target.i != null ? l.target.i : l.target;
+          var e = endpoints(l), si = e[0], ti = e[1];
           if (si === d.i) neighbors.add(ti);
           if (ti === d.i) neighbors.add(si);
         });
         nodeSel.classed('dimmed', function(n) { return !neighbors.has(n.i); }).classed('highlight', function(n) { return n.i === d.i; }).classed('connected', function(n) { return neighbors.has(n.i) && n.i !== d.i; });
         labelSel.classed('dimmed', function(n) { return !neighbors.has(n.i); });
         linkSel.classed('dimmed', function(l) {
-          var si = l.source.i != null ? l.source.i : l.source;
-          var ti = l.target.i != null ? l.target.i : l.target;
-          return si !== d.i && ti !== d.i;
+          var e = endpoints(l);
+          return e[0] !== d.i && e[1] !== d.i;
         }).classed('highlight', function(l) {
-          var si = l.source.i != null ? l.source.i : l.source;
-          var ti = l.target.i != null ? l.target.i : l.target;
-          return si === d.i || ti === d.i;
+          var e = endpoints(l);
+          return e[0] === d.i || e[1] === d.i;
         });
         // No pinned label on the selected node — its title lives in the details
         // panel, and the canvas shows a floating title only while hovering, so
@@ -1505,9 +1514,8 @@
             .attr('aria-hidden', function(n) { return slugs.has(n.slug) ? null : 'true'; });
           labelSel.classed('filtered-out', function(n) { return !slugs.has(n.slug); });
           linkSel.classed('filtered-out', function(l) {
-            var si = l.source.i != null ? l.source.i : l.source;
-            var ti = l.target.i != null ? l.target.i : l.target;
-            return !slugs.has(nodes[si].slug) || !slugs.has(nodes[ti].slug);
+            var e = endpoints(l);
+            return !slugs.has(nodes[e[0]].slug) || !slugs.has(nodes[e[1]].slug);
           });
         }
       };
