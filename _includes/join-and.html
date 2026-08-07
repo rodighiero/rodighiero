@@ -1,0 +1,20 @@
+{%- comment -%}
+  Joins an array of strings with ", " and "and" before the last item —
+  shared by name-list.html (homepage byline) and citation.html (Chicago
+  reference). Each item is stripped before joining.
+  Params:
+    include.items         - array of strings to join
+    include.serial_comma  - truthy for ", and X" (Chicago style);
+                             falsy for " and X" (no Oxford comma)
+{%- endcomment -%}
+{%- assign _out = "" -%}
+{%- for _n in include.items -%}
+  {%- assign _n = _n | strip -%}
+  {%- if forloop.first -%}{%- assign _out = _n -%}
+  {%- elsif forloop.last -%}
+    {%- if include.serial_comma -%}{%- assign _out = _out | append: ", and " | append: _n -%}
+    {%- else -%}{%- assign _out = _out | append: " and " | append: _n -%}{%- endif -%}
+  {%- else -%}{%- assign _out = _out | append: ", " | append: _n -%}
+  {%- endif -%}
+{%- endfor -%}
+{{- _out -}}
