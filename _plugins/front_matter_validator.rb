@@ -50,19 +50,8 @@ class FrontMatterValidator < Jekyll::Generator
     end
 
     # Validate month/day if present
-    if data['month']
-      month = data['month'].to_i
-      unless month >= 1 && month <= 12
-        @warnings << "#{slug}: month '#{month}' is out of range (1-12), will be clamped"
-      end
-    end
-
-    if data['day']
-      day = data['day'].to_i
-      unless day >= 1 && day <= 31
-        @warnings << "#{slug}: day '#{day}' is out of range (1-31), will be clamped"
-      end
-    end
+    check_range(data, slug, 'month', 1, 12)
+    check_range(data, slug, 'day', 1, 31)
 
     # Validate DOI format if present (accept any https:// URL)
     if data['doi'] && !data['doi'].to_s.start_with?('https://', 'http://')
@@ -80,6 +69,15 @@ class FrontMatterValidator < Jekyll::Generator
     # Validate ISSN format if present (journals have this)
     if data['issn'] && !data['issn'].to_s.match?(/\A\d{4}-\d{4}\z/)
       @warnings << "#{slug}: issn '#{data['issn']}' doesn't match format XXXX-XXXX"
+    end
+  end
+
+  def check_range(data, slug, field, min, max)
+    return unless data[field]
+
+    value = data[field].to_i
+    unless value >= min && value <= max
+      @warnings << "#{slug}: #{field} '#{value}' is out of range (#{min}-#{max}), will be clamped"
     end
   end
 

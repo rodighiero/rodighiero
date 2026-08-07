@@ -10,10 +10,10 @@ never upscaled) to images/@thumbnails/, named after the publication slug
     python3 scripts/generate-thumbnails.py
 """
 
-import re
 import sys
 from pathlib import Path
 
+import yaml
 from PIL import Image
 
 MAX_WIDTH = 800
@@ -23,8 +23,6 @@ ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "images"
 DEST = ROOT / "images" / "@thumbnails"
 
-THUMB_RE = re.compile(r'^thumb:\s*"?([^"\n]+?)"?\s*$', re.MULTILINE)
-
 
 def front_matter_img(md_path):
     """Return the thumbnail source path from the `thumb:` front-matter field."""
@@ -32,8 +30,8 @@ def front_matter_img(md_path):
     parts = text.split("---", 2)
     if len(parts) < 3:
         return None
-    match = THUMB_RE.search(parts[1])
-    return match.group(1) if match else None
+    fm = yaml.safe_load(parts[1]) or {}
+    return fm.get("thumb")
 
 
 def main():

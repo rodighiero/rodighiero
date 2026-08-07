@@ -33,35 +33,18 @@
 {%- assign iv_part = iv_part | strip -%}
 
 {%- comment -%} Capitalize first letter only when a part follows a period. {%- endcomment -%}
+{%- assign _parts_joined = ed_part | append: "~~~" | append: tr_part | append: "~~~" | append: intro_part | append: "~~~" | append: iv_part -%}
+{%- assign parts = _parts_joined | split: "~~~" -%}
 {%- assign out = "" -%}
 {%- if auth_part != "" -%}{%- assign out = auth_part -%}{%- endif -%}
-{%- if ed_part != "" -%}
-  {%- if out != "" -%}
-    {%- assign ed_first = ed_part | slice: 0, 1 | upcase -%}
-    {%- assign ed_rest = ed_part | slice: 1, 9999 -%}
-    {%- assign out = out | append: ". " | append: ed_first | append: ed_rest -%}
-  {%- else -%}{%- assign out = ed_part -%}{%- endif -%}
-{%- endif -%}
-{%- if tr_part != "" -%}
-  {%- if out != "" -%}
-    {%- assign tr_first = tr_part | slice: 0, 1 | upcase -%}
-    {%- assign tr_rest = tr_part | slice: 1, 9999 -%}
-    {%- assign out = out | append: ". " | append: tr_first | append: tr_rest -%}
-  {%- else -%}{%- assign out = tr_part -%}{%- endif -%}
-{%- endif -%}
-{%- if intro_part != "" -%}
-  {%- if out != "" -%}
-    {%- assign in_first = intro_part | slice: 0, 1 | upcase -%}
-    {%- assign in_rest = intro_part | slice: 1, 9999 -%}
-    {%- assign out = out | append: ". " | append: in_first | append: in_rest -%}
-  {%- else -%}{%- assign out = intro_part -%}{%- endif -%}
-{%- endif -%}
-{%- if iv_part != "" -%}
-  {%- if out != "" -%}
-    {%- assign iv_first = iv_part | slice: 0, 1 | upcase -%}
-    {%- assign iv_rest = iv_part | slice: 1, 9999 -%}
-    {%- assign out = out | append: ". " | append: iv_first | append: iv_rest -%}
-  {%- else -%}{%- assign out = iv_part -%}{%- endif -%}
-{%- endif -%}
+{%- for part in parts -%}
+  {%- if part != "" -%}
+    {%- if out != "" -%}
+      {%- assign part_first = part | slice: 0, 1 | upcase -%}
+      {%- assign part_rest = part | slice: 1, 9999 -%}
+      {%- assign out = out | append: ". " | append: part_first | append: part_rest -%}
+    {%- else -%}{%- assign out = part -%}{%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
 
 {%- if out != "" -%}<div class="authors">{{ out }}</div>{%- endif -%}

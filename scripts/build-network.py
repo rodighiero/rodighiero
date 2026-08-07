@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 import re
 import subprocess
@@ -246,6 +247,14 @@ def _uf(n: int, links: list[dict]) -> list[int]:
     return [find(i) for i in range(n)]
 
 
+def _group_by_root(n: int, root: list[int]) -> dict[int, list[int]]:
+    """Group node indices 0..n-1 by their union-find root."""
+    groups: dict[int, list[int]] = {}
+    for i in range(n):
+        groups.setdefault(root[i], []).append(i)
+    return groups
+
+
 def _year_key(year) -> float:
     """Sort key placing 'Forthcoming'/unknown newest; numeric years by value."""
     try:
@@ -295,7 +304,7 @@ def build_clusters(pubs: list[dict], links: list[dict]) -> list[dict]:
         score: dict[str, float] = {}
         for i in members:
             for term, tf in doc_terms[i].items():
-                idf = np.log(n / (1 + df[term]))
+                idf = math.log(n / (1 + df[term]))
                 score[term] = score.get(term, 0.0) + tf * idf
         ranked = sorted(score, key=lambda t: -score[t])
         unigrams = [t for t in ranked if " " not in t]
@@ -333,12 +342,8 @@ def build_clusters(pubs: list[dict], links: list[dict]) -> list[dict]:
     mutual = [l for l in links if not l.get("fb")]
     mroot = _uf(n, mutual)
     froot = _uf(n, links)
-    mgroups: dict[int, list[int]] = {}
-    for i in range(n):
-        mgroups.setdefault(mroot[i], []).append(i)
-    full_members: dict[int, list[int]] = {}
-    for i in range(n):
-        full_members.setdefault(froot[i], []).append(i)
+    mgroups = _group_by_root(n, mroot)
+    full_members = _group_by_root(n, froot)
     # Roots of the qualifying mutual clusters (counting original works only, not
     # translations), and how many seeds share each full component.
     seed_roots = [r for r, m in mgroups.items() if n_works(m) >= MIN_CLUSTER_SIZE]
