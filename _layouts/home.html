@@ -590,9 +590,9 @@
       .mode-toggle, .bio-toggle, .header .icons, main, footer { display: none !important; }
       /* display:block drops the collapsing grid, so the bio always prints in
          full even when it is collapsed on screen. */
-      .bio-shell { display: block !important; margin-bottom: 0 !important; overflow: visible !important; }
+      .bio-shell { display: block !important; margin-bottom: 0 !important; }
       .bio-shell > * { overflow: visible !important; }
-      .header { display: block; padding-bottom: 0; margin-bottom: 0; border-bottom: none; }
+      .header { display: block; margin-bottom: 0; border-bottom: none; }
       .header-portrait { display: none; }
       .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }
       .header .links, .header .bio-col { font-size: 8.5pt; }
@@ -700,10 +700,9 @@
       {%- comment -%} One ordered list in year-desc / title-asc order (Forthcoming first), so a
       single card block renders every card and the _card_i priority counter stays correct. {%- endcomment -%}
       {% assign _card_i = 0 %}
-      {% assign ordered_pubs = site.data.ordered_publications %}
       {% assign _clusters_az = site.data.network.clusters | sort: 'label' %}
       {% assign _net_done = false %}
-      {% for publication in ordered_pubs %}
+      {% for publication in site.data.ordered_publications %}
       {%- comment -%} A network-view card leads the dated flow: emit it once, right after the
       forthcoming works (before the first publication carrying a real year). {%- endcomment -%}
       {% if _net_done == false and publication.year != 'Forthcoming' %}
@@ -877,12 +876,12 @@
       var q = (!structured && searchInput) ? searchInput.value.trim() : '';
       if (q) params.set('q', q); else params.delete('q');
       if (activeType) params.set('type', activeType); else params.delete('type');
-      if (activeClusterId) params.set('cluster', activeClusterId); else params.delete('cluster');
+      if (activeCluster) params.set('cluster', activeCluster.id); else params.delete('cluster');
       var qs = params.toString();
       history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
     }
-    // Debounced wrapper for keystroke-driven callers: the URL itself is never
-    // read back mid-typing, so there's no need to sync it on every keystroke.
+    // Debounced for the search box: the URL is never read back mid-typing, so
+    // there's no need to sync it on every keystroke.
     var urlUpdateTimer = null;
     function scheduleURLUpdate() {
       clearTimeout(urlUpdateTimer);
@@ -995,8 +994,9 @@
     var networkFilter = null;
     var networkClearSelection = null;
     var activeType = null; // publication-type filter set by an action card / ?type= URL param
-    var activeCluster = null;   // Set of member slugs for the active cluster filter, or null
-    var activeClusterId = null; // its cluster id (string), for the ?cluster= URL param
+    // Active cluster filter as one value — { id, slugs } or null — so the id and its
+    // member slugs cannot drift apart (they were two variables that could disagree).
+    var activeCluster = null;
     var activeFilterLabel = null; // label shown in the search box while a type/cluster filter is active
 
     // True while a type or cluster filter (as opposed to free-text search) is active.
@@ -1020,7 +1020,7 @@
           if (p._haystack.indexOf(tokens[i]) === -1) { match = false; break; }
         }
         if (match && activeType !== null && p.dataset.type !== activeType) match = false;
-        if (match && activeCluster !== null && !activeCluster.has(p.getAttribute('data-slug'))) match = false;
+        if (match && activeCluster !== null && !activeCluster.slugs.has(p.getAttribute('data-slug'))) match = false;
         p.style.display = match ? '' : 'none';
         if (match) {
           visible++;
@@ -1054,7 +1054,7 @@
       if (_initialCluster) {
         var _cEl = document.querySelector('.action-card[data-action="cluster:' + _initialCluster + '"]');
         if (_cEl && _cEl.dataset.slugs) {
-          activeCluster = new Set(_cEl.dataset.slugs.split(' ')); activeClusterId = _initialCluster;
+          activeCluster = { id: _initialCluster, slugs: new Set(_cEl.dataset.slugs.split(' ')) };
           activeFilterLabel = _cEl.dataset.filterLabel || '';
           if (searchInput) searchInput.value = activeFilterLabel;
         }
@@ -1066,7 +1066,7 @@
     // free-text query (search:<terms>), or toggle a cluster filter (cluster:<id>, whose member
     // slugs ride on the card's data-slugs). Split on the FIRST colon only, so a search value may
     // itself contain colons/spaces. The three content filters are mutually exclusive.
-    function clearClusterFilter() { activeCluster = null; activeClusterId = null; }
+    function clearClusterFilter() { activeCluster = null; }
     // Show a structured filter's label in the search box (cursor at the end) so the whole
     // filter is managed there: the user deletes the text to clear it. Clearing wipes the box.
     function showFilterInInput(label) {
@@ -1107,12 +1107,11 @@
           applySearch();
           updateURL();
         } else if (verb === 'cluster' && val) {
-          if (activeClusterId === val) {
+          if (activeCluster && activeCluster.id === val) {
             clearClusterFilter();
             clearFilterInput();
-          } else {
-            activeCluster = btn.dataset.slugs ? new Set(btn.dataset.slugs.split(' ')) : null;
-            activeClusterId = val;
+          } else if (btn.dataset.slugs) {
+            activeCluster = { id: val, slugs: new Set(btn.dataset.slugs.split(' ')) };
             activeType = null;
             showFilterInInput(btn.dataset.filterLabel || '');
           }
@@ -1323,17 +1322,10 @@
         });
       }
 
-      // D3 mutates a link's source/target from a node index into the node
-      // object itself after the first render, so either shape can show up
-      // here depending on whether this runs before or after that swap.
-      function endpoints(l) {
-        return [l.source.i != null ? l.source.i : l.source, l.target.i != null ? l.target.i : l.target];
-      }
-
       function render() {
         fitLayout();
 
-        var linkData = linkLayer.selectAll('line').data(links, function(d) { var e = endpoints(d); return e[0] + ':' + e[1]; });
+        var linkData = linkLayer.selectAll('line').data(links, function(d) { return d.source.i + ':' + d.target.i; });
         linkData.exit().remove();
         linkSel = linkData.enter().append('line').attr('class', 'link').merge(linkData);
         linkSel.classed('translation', function(d) { return !!d.translation; })
@@ -1438,18 +1430,15 @@
       function highlight(d) {
         var neighbors = new Set([d.i]);
         links.forEach(function(l) {
-          var e = endpoints(l), si = e[0], ti = e[1];
-          if (si === d.i) neighbors.add(ti);
-          if (ti === d.i) neighbors.add(si);
+          if (l.source.i === d.i) neighbors.add(l.target.i);
+          if (l.target.i === d.i) neighbors.add(l.source.i);
         });
         nodeSel.classed('dimmed', function(n) { return !neighbors.has(n.i); }).classed('highlight', function(n) { return n.i === d.i; }).classed('connected', function(n) { return neighbors.has(n.i) && n.i !== d.i; });
         labelSel.classed('dimmed', function(n) { return !neighbors.has(n.i); });
         linkSel.classed('dimmed', function(l) {
-          var e = endpoints(l);
-          return e[0] !== d.i && e[1] !== d.i;
+          return l.source.i !== d.i && l.target.i !== d.i;
         }).classed('highlight', function(l) {
-          var e = endpoints(l);
-          return e[0] === d.i || e[1] === d.i;
+          return l.source.i === d.i || l.target.i === d.i;
         });
         // No pinned label on the selected node — its title lives in the details
         // panel, and the canvas shows a floating title only while hovering, so
@@ -1527,8 +1516,7 @@
             .attr('aria-hidden', function(n) { return slugs.has(n.slug) ? null : 'true'; });
           labelSel.classed('filtered-out', function(n) { return !slugs.has(n.slug); });
           linkSel.classed('filtered-out', function(l) {
-            var e = endpoints(l);
-            return !slugs.has(nodes[e[0]].slug) || !slugs.has(nodes[e[1]].slug);
+            return !slugs.has(l.source.slug) || !slugs.has(l.target.slug);
           });
         }
       };

@@ -16,8 +16,10 @@ class PublicationDateGenerator < Jekyll::Generator
     docs = site.collections['publications']&.docs
     return unless docs
 
-    docs.group_by { |doc| doc.data['year'].to_i }.each do |year, group|
-      sorted = group.sort_by { |doc| doc.data['title'].to_s.downcase }
+    # Grouping the canonically ordered list keeps each year's titles in exactly
+    # the order the homepage shows (see OrderedPublications), so the feed and the
+    # gallery can never disagree.
+    OrderedPublications.order(docs).group_by { |doc| doc.data['year'].to_i }.each do |year, sorted|
       sorted.each_with_index do |doc, i|
         if year.zero?
           # A non-numeric year (e.g. "Forthcoming") yields 0. Date it at build

@@ -114,59 +114,53 @@ def _chunk_text(text: str) -> list[str]:
 
 
 def _translate_many(
-    items: list[tuple[int, str, str]], cache: dict[str, str], models: dict
-) -> dict[int, str]:
-    """Machine-translate multiple (index, lang, text) items to English, cached per
-    source text. Deterministic (beam search, no sampling), so a given source text
-    always yields the same English.
+    items: list[tuple[str, str]], cache: dict[str, str], models: dict
+) -> list[str]:
+    """Machine-translate (lang, text) pairs to English, returned in input order and
+    cached per source text. Deterministic (beam search, no sampling), so a given
+    source text always yields the same English.
 
     Documents needing translation are grouped by language (one opus-mt model per
     language) and their sentence chunks are pooled into one flat list per
     language before batching, so a batch of 8 can span several documents
     instead of being capped at one document's own (often under-8) chunk count.
     """
-    results: dict[int, str] = {}
-    pending: dict[int, tuple[str, str]] = {}  # idx -> (lang, text), cache misses only
-    keys: dict[int, str] = {}
-    for idx, lang, text in items:
+    out: list[str | None] = [None] * len(items)
+    # Cache misses only, bucketed by language: pos -> where the result belongs.
+    todo: dict[str, list[tuple[int, str, str]]] = {}  # lang -> [(pos, key, text)]
+    for pos, (lang, text) in enumerate(items):
         if lang not in OPUS_MODELS:
             raise SystemExit(f"no opus-mt model configured for language '{lang}'")
         key = hashlib.sha256(f"{OPUS_MODELS[lang]}\x00{text}".encode("utf-8")).hexdigest()
-        keys[idx] = key
-        if key in cache:
-            results[idx] = cache[key]
+        cached = cache.get(key)
+        if cached is None:
+            todo.setdefault(lang, []).append((pos, key, text))
         else:
-            pending[idx] = (lang, text)
+            out[pos] = cached
 
-    by_lang: dict[str, list[int]] = {}
-    for idx, (lang, _text) in pending.items():
-        by_lang.setdefault(lang, []).append(idx)
-
-    for lang, idxs in by_lang.items():
+    for lang, entries in todo.items():
         tok, mdl = _get_translator(lang, models)
-        doc_chunk_counts: dict[int, int] = {}
-        flat_chunks: list[str] = []
-        for idx in idxs:
-            doc_chunks = _chunk_text(pending[idx][1])
-            doc_chunk_counts[idx] = len(doc_chunks)
-            flat_chunks.extend(doc_chunks)
+        # Chunk every document first, recording each one's span in the pooled list.
+        spans: list[tuple[int, str, int, int]] = []  # (pos, key, start, end)
+        chunks: list[str] = []
+        for pos, key, text in entries:
+            start = len(chunks)
+            chunks.extend(_chunk_text(text))
+            spans.append((pos, key, start, len(chunks)))
 
-        flat_out: list[str] = []
-        for i in range(0, len(flat_chunks), 8):
-            batch = flat_chunks[i : i + 8]
+        translated: list[str] = []
+        for i in range(0, len(chunks), 8):
+            batch = chunks[i : i + 8]
             enc = tok(batch, return_tensors="pt", padding=True, truncation=True, max_length=512)
             gen = mdl.generate(**enc, max_length=512, num_beams=4)
-            flat_out.extend(tok.batch_decode(gen, skip_special_tokens=True))
+            translated.extend(tok.batch_decode(gen, skip_special_tokens=True))
 
-        cursor = 0
-        for idx in idxs:
-            n = doc_chunk_counts[idx]
-            result = " ".join(flat_out[cursor : cursor + n])
-            cursor += n
-            cache[keys[idx]] = result
-            results[idx] = result
+        for pos, key, start, end in spans:
+            result = " ".join(translated[start:end])
+            cache[key] = result
+            out[pos] = result
 
-    return results
+    return out
 
 
 def precompute_layout(
@@ -540,12 +534,11 @@ def main() -> int:
             f"translating {len(ne_orig_idx)} non-English original(s) to English…",
             file=sys.stderr,
         )
-        translated = _translate_many(
-            [(i, pubs[i]["lang"], pubs[i]["text"]) for i in ne_orig_idx],
+        ne_texts = _translate_many(
+            [(pubs[i]["lang"], pubs[i]["text"]) for i in ne_orig_idx],
             trans_cache,
             translators,
         )
-        ne_texts = [translated[i] for i in ne_orig_idx]
         if translators:  # persist only if a model actually ran
             _save_trans_cache(trans_cache)
     ne_keys = [_cache_key(t) for t in ne_texts]
