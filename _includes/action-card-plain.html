@@ -8,6 +8,8 @@ Params:
   include.act     — explicit action string (e.g. "cluster:3"); falls back to action.action
   include.slugs   — array of member slugs for a cluster filter (joined into data-slugs); optional
   include.filterlabel — short label shown in the search box when this filter is active (data-filter-label); optional
+  include.media   — filename of an include to render above the text as the card's image
+                    (e.g. "network-preview.svg"); optional
   include.class   — optional extra wrapper class (none by default; flows in the gallery masonry among the publications)
 `year: now` renders the live build year; a literal string renders as-is (a range like
 "2015–2026" is shown plain rather than wrapped in <time>); omit it for a year-less card.
@@ -21,6 +23,7 @@ Params:
 {%- assign _sublabel = include.sublabel | default: _a.sublabel -%}
 {%- assign _act = include.act | default: _a.action -%}
 <button type="button" class="special-card action-card card-plain {{ include.class }}" data-action="{{ _act }}"{% if include.slugs %} data-slugs="{{ include.slugs | join: ' ' }}"{% endif %}{% if include.filterlabel %} data-filter-label="{{ include.filterlabel }}"{% endif %}>
+  {%- if include.media -%}<span class="card-media">{% include {{ include.media }} %}</span>{%- endif -%}
   <span class="card-meta">
     {%- if _yr or _eyebrow or _venue -%}
     <span class="meta-line">{% if _yr %}{% if _yr contains '–' or _yr contains '-' %}<span>{{ _yr }}</span>{% else %}<time datetime="{{ _yr }}">{{ _yr }}</time>{% endif %}{% if _eyebrow %} · {% endif %}{% endif %}{{ _eyebrow }}{% if _venue %}<br><span class="venue">{{ _venue }}</span>{% endif %}</span>
