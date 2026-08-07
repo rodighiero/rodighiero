@@ -685,9 +685,7 @@
       {%- comment -%} One ordered list in year-desc / title-asc order (Forthcoming first), so a
       single card block renders every card and the _card_i priority counter stays correct. {%- endcomment -%}
       {% assign _card_i = 0 %}
-      {% assign year_groups = site.publications | group_by: "year" | sort: "name" | reverse %}
-      {% assign ordered_pubs = "" | split: "" %}
-      {% for group in year_groups %}{% assign _gp = group.items | sort: "title" %}{% assign ordered_pubs = ordered_pubs | concat: _gp %}{% endfor %}
+      {% assign ordered_pubs = site.data.ordered_publications %}
       {% assign _clusters_az = site.data.network.clusters | sort: 'label' %}
       {% assign _net_done = false %}
       {% for publication in ordered_pubs %}
