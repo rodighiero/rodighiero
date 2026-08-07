@@ -142,27 +142,39 @@
       margin-left: 0;
     }
 
-    /* ── Bio slide shell ── */
+    /* ── Bio slide shell ──
+       grid-template-rows 1fr→0fr animates to the content's *actual* height, so
+       the motion matches what you see. (A max-height transition animates to a
+       fixed upper bound instead: with the bio well under 60rem, opening finished
+       early and closing stalled before snapping shut.) The single child carries
+       min-height:0 + overflow:hidden so the row can actually be clipped to zero. */
     .bio-shell {
-      overflow: hidden;
-      max-height: 60rem;
-      margin-bottom: 4.2rem;
-      transition: max-height 0.4s ease, margin-bottom 0.4s ease;
+      display: grid;
+      grid-template-rows: 1fr;
+      /* Carries the header's former 2rem bottom padding as well (see .header):
+         a collapsing grid child must have no vertical padding, or that padding
+         becomes a floor the row can never shrink past. */
+      margin-bottom: 6.2rem;
+      transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  margin-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
+    .bio-shell > * { min-height: 0; overflow: hidden; }
     html[data-bio-visible="0"] .bio-shell {
-      max-height: 0;
+      grid-template-rows: 0fr;
       margin-bottom: 0;
     }
     @media (prefers-reduced-motion: reduce) {
       .bio-shell { transition: none; }
     }
 
-    /* ── Header ── */
+    /* ── Header ──
+       No bottom padding: this is .bio-shell's collapsing grid child, and padding
+       would keep the row from reaching zero. The 2rem lives in .bio-shell's
+       margin-bottom instead, which animates with it. */
     .header {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
       gap: 2rem;
-      padding-bottom: 2rem;
     }
     .header-portrait { width: 100%; height: auto; border-radius: 4px; display: block; margin-bottom: 0.75rem; }
     .header h1 { font-size: var(--text-lg); font-weight: 500; margin: 0.85rem 0 0; line-height: var(--lh-normal); }
@@ -576,7 +588,10 @@
       @page { margin: 2cm 2.8cm; }
       html, body { font-size: 9pt; }
       .mode-toggle, .bio-toggle, .header .icons, main, footer { display: none !important; }
-      .bio-shell { display: block !important; max-height: none !important; margin-bottom: 0 !important; overflow: visible !important; }
+      /* display:block drops the collapsing grid, so the bio always prints in
+         full even when it is collapsed on screen. */
+      .bio-shell { display: block !important; margin-bottom: 0 !important; overflow: visible !important; }
+      .bio-shell > * { overflow: visible !important; }
       .header { display: block; padding-bottom: 0; margin-bottom: 0; border-bottom: none; }
       .header-portrait { display: none; }
       .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }
