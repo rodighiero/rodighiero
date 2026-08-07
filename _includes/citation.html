@@ -26,8 +26,9 @@ rest join with a serial comma via the same join-and.html name-list.html uses. {%
 {%- capture _given -%}{% for w in _words %}{% unless forloop.last %}{{ w }} {% endunless %}{% endfor %}{%- endcapture -%}
 {%- assign _given = _given | strip -%}
 {%- capture _first_formatted -%}{{ _family }}{%- if _given != '' -%}, {{ _given }}{%- endif -%}{%- endcapture -%}
-{%- comment -%} split on an absent sentinel is Liquid's only way to wrap one string
-in an array, so the inverted first name can lead the list the rest joins onto. {%- endcomment -%}
+{%- comment -%} Splitting on the absent "~~~" sentinel is Liquid's only way to wrap
+one string in an array (same convention as name-list.html), so the inverted first
+name can lead the list the rest joins onto. {%- endcomment -%}
 {%- assign _rest_people = _people | slice: 1, 9999 -%}
 {%- assign _display_people = _first_formatted | split: "~~~" | concat: _rest_people -%}
 {%- capture _authors -%}{%- include join-and.html items=_display_people serial_comma=true -%}{%- endcapture -%}
