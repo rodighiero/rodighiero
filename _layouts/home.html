@@ -351,6 +351,23 @@
     .card-plain .meta-line { display: block; }
     .card-plain .card-sub { font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
 
+    /* Card media slot (the network card's miniature). Matches .card-img's framing
+       so an action tile with an image sits consistently among the publications.
+       The graph carries its own white ground in both themes, like the covers and
+       photographs beside it, so no surface tint sits behind it. */
+    .card-plain .card-media {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.8rem;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .card-plain .card-media .network-preview {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
     /* ── Gallery view (masonry) ── */
     body[data-view="gallery"] .publication,
     body[data-view="gallery"] .special-card {
@@ -706,7 +723,7 @@
       {%- comment -%} A network-view card leads the dated flow: emit it once, right after the
       forthcoming works (before the first publication carrying a real year). {%- endcomment -%}
       {% if _net_done == false and publication.year != 'Forthcoming' %}
-      {% include action-card-plain.html eyebrow="View" venue="Publication network" label="A body of work rarely announces its own shape. This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." act="view:network" year="now" %}
+      {% include action-card-plain.html eyebrow="View" venue="Publication network" label="A body of work rarely announces its own shape. This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." act="view:network" year="now" media="network-preview.svg" %}
       {% assign _net_done = true %}
       {% endif %}
       {%- comment -%} Auto cluster filter cards are distributed by the midpoint of their span:
