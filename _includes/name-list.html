@@ -8,7 +8,10 @@
   Outputs nothing when raw is empty or Dario is the only name.
 {%- endcomment -%}
 {%- assign me = "Rodighiero" -%}
-{%- assign SEP = "|||SEP|||" -%}
+{%- comment -%} Liquid has no array literal, so names are appended with a sentinel
+and split back apart. "~~~" is the convention across the byline includes (see also
+authors-home.html, citation.html); it never occurs in the front matter it splits. {%- endcomment -%}
+{%- assign SEP = "~~~" -%}
 {%- if include.raw -%}
   {%- assign raw_arr = include.raw | split: " and " -%}
   {%- assign had_me = false -%}

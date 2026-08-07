@@ -33,8 +33,9 @@
 {%- assign iv_part = iv_part | strip -%}
 
 {%- comment -%} Join the five parts with ". ", capitalizing each one that follows a
-period. Liquid has no array literal, so the parts are appended with a sentinel and
-split back apart; empty parts fall out in the loop. {%- endcomment -%}
+period. The parts are appended with the "~~~" sentinel and split back apart (the
+byline includes' convention for building an array — see name-list.html); empty
+parts fall out in the loop. {%- endcomment -%}
 {%- assign parts = auth_part | append: "~~~" | append: ed_part | append: "~~~" | append: tr_part | append: "~~~" | append: intro_part | append: "~~~" | append: iv_part | split: "~~~" -%}
 {%- assign out = "" -%}
 {%- for part in parts -%}
