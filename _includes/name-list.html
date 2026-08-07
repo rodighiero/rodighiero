@@ -24,13 +24,7 @@
   {%- endfor -%}
   {%- if kept != "" -%}
     {%- assign arr = kept | split: SEP -%}
-    {%- assign list = "" -%}
-    {%- for n in arr -%}
-      {%- if forloop.first -%}{%- assign list = n -%}
-      {%- elsif forloop.last -%}{%- assign list = list | append: " and " | append: n -%}
-      {%- else -%}{%- assign list = list | append: ", " | append: n -%}
-      {%- endif -%}
-    {%- endfor -%}
+    {%- capture list -%}{%- include join-and.html items=arr -%}{%- endcapture -%}
     {%- if had_me -%}{{ include.prefix_with }}{{ list }}
     {%- else -%}{{ include.prefix_by }}{{ list }}{%- endif -%}
   {%- endif -%}
