@@ -306,11 +306,14 @@
     /* Shared meta-line (both cards wrap it in .card-meta). */
     .card-meta .meta-line { font-size: var(--text-xxs); line-height: var(--lh-loose); }
 
-    /* Whatever fills a media slot spans it and keeps its own aspect ratio. .card-media
-       only ever appears inside an action/filter card, so it needs no ancestor qualifier. */
-    .publication .card-img img,
+    /* Whatever fills a media slot spans it and keeps its own aspect ratio. .card-media is
+       the one wrapper class for both content types — a publication's <img> thumbnail or
+       an action/filter's inlined SVG miniature — so no ancestor qualifier is needed: an
+       <img> only ever occurs in the former, `.network-preview`/`.bordered` only in the mix
+       that actually uses them. */
+    .card-media img,
     .card-media .network-preview { width: 100%; height: auto; display: block; }
-    .publication .card-img.bordered img { border: 1px solid var(--border); }
+    .card-media.bordered img { border: 1px solid var(--border); }
     .card-meta h2 a { color: inherit; text-decoration: none; }
     .card-meta h2 a:focus-visible { outline: none; }
 
@@ -347,9 +350,9 @@
       will-change: transform;
     }
     /* The media slot above a card's text — a publication thumbnail, or an action/filter
-       card's inlined graph miniature — framed once, so either sits the same among the tiles. */
-    body[data-view="gallery"] .publication .card-img,
-    #network-view .details .publication .card-img,
+       card's inlined graph miniature — framed once, so either sits the same among the tiles.
+       One bare .card-media rule now covers both the live gallery tile and its clone in the
+       network-view sidebar, since both carry the same class. */
     .card-media {
       display: block;
       width: 100%;
@@ -359,8 +362,7 @@
     }
     /* A thumbnail rests on a tint while it loads; a miniature must not — its ground is
        transparent so the inlined SVG inherits the page (see Network view in CLAUDE.md). */
-    body[data-view="gallery"] .publication .card-img,
-    #network-view .details .publication .card-img { background: var(--tint-surface); }
+    .publication .card-media { background: var(--tint-surface); }
 
     /* ── Network view ── */
     #network-view { display: none; }
@@ -718,7 +720,7 @@
       <div class="card publication" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
         {% if publication.thumb %}
         {% assign _card_i = _card_i | plus: 1 %}
-        <div class="card-img{% if publication.img_border %} bordered{% endif %}">
+        <div class="card-media{% if publication.img_border %} bordered{% endif %}">
           {%- comment -%} The first row (4 columns) is the likely LCP: load it eagerly with high priority; lazy-load below the fold. Reserve space from the thumbnail's own dimensions. {%- endcomment -%}
           {%- assign _thumb = '/images/@thumbnails/' | append: publication.slug | append: '.webp' -%}
           {%- assign _thumb_dims = _thumb | image_size -%}
@@ -1042,13 +1044,13 @@
       if (_initialType) {
         activeType = _initialType;
         // Reflect the filter as its label in the box (no focus on load).
-        var _tEl = document.querySelector('.action[data-action="type:' + _initialType + '"]');
+        var _tEl = document.querySelector('[data-action="type:' + _initialType + '"]');
         activeFilterLabel = (_tEl && _tEl.dataset.filterLabel) || _initialType;
         if (searchInput) searchInput.value = activeFilterLabel;
       }
       var _initialCluster = _params.get('cluster');
       if (_initialCluster) {
-        var _cEl = document.querySelector('.filter[data-action="cluster:' + _initialCluster + '"]');
+        var _cEl = document.querySelector('[data-action="cluster:' + _initialCluster + '"]');
         if (_cEl && _cEl.dataset.slugs) {
           activeCluster = { id: _initialCluster, slugs: new Set(_cEl.dataset.slugs.split(' ')) };
           activeFilterLabel = _cEl.dataset.filterLabel || '';
@@ -1077,7 +1079,7 @@
       activeFilterLabel = null;
       if (searchInput) searchInput.value = '';
     }
-    document.querySelectorAll('.action[data-action], .filter[data-action]').forEach(function(btn) {
+    document.querySelectorAll('[data-action]').forEach(function(btn) {
       // The card hides itself when it applies a filter; a mousedown here would otherwise
       // start a text selection that lingers across the publications behind it (visible on
       // reset). Suppressing the default mousedown stops the selection at its source.
