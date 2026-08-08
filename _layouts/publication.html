@@ -96,10 +96,8 @@
     body { max-width: 660px; line-height: var(--lh-normal); }
     h1 { font-size: var(--text-xxl); font-weight: 500; margin: 0.6rem 0 0.6rem; }
     .authors { margin-bottom: 0.6rem; font-size: var(--text-base); }
-    .card-meta { line-height: var(--lh-loose); }
     .doi { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; font-size: var(--text-xs); line-height: var(--lh-loose); margin-bottom: 2rem; }
-    .doi a, .doi button { display: inline-flex; background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 0.3rem 0.55rem; border-radius: 2px; line-height: var(--lh-normal); text-decoration: none; font: inherit; font-size: var(--text-xs); cursor: pointer; }
-    .doi a:hover, .doi button:hover { color: var(--fg); border-color: var(--border-hover); }
+    .doi .pill-btn { padding: 0.3rem 0.55rem; }
     .content {
       margin-top: 2rem;
       padding-top: 1.5rem;
@@ -176,10 +174,11 @@
       .body figure.wide { display: block; width: min(990px, 100vw); max-width: none; margin-left: calc(50% - min(990px, 100vw) / 2); }
       .body figure.wide img { display: block; width: auto; height: auto; max-width: 100%; max-height: 660px; margin: 0 auto; }
       .body figure.wide figcaption { width: calc(min(660px, 100vw) - 3rem); max-width: 100%; margin-left: auto; margin-right: auto; }
-      .body figure.narrow img { width: 33%; margin: 0 auto; }
-      .body figure.half img { width: 50%; margin: 0 auto; }
-      .body figure.three-quarter img { width: 75%; margin: 0 auto; }
-      .body figure.full img { width: 100%; margin: 0 auto; }
+      .body figure:is(.narrow, .half, .three-quarter, .full) img { margin: 0 auto; }
+      .body figure.narrow img { width: 33%; }
+      .body figure.half img { width: 50%; }
+      .body figure.three-quarter img { width: 75%; }
+      .body figure.full img { width: 100%; }
       /* same width-modifier vocabulary as images: narrow 33%, half 50%,
          three-quarter 75% (all centered) */
       .body figure.data-table.half table { width: 50%; margin: 0 auto; }
@@ -188,11 +187,7 @@
          tables narrowed to 1/2 or 3/4 get a 3/4-width centered caption (never
          cramped to the figure's own 1/2), so a short caption stays readable
          while figure and caption remain visually coupled. */
-      .body figure.narrow figcaption,
-      .body figure.half figcaption,
-      .body figure.three-quarter figcaption,
-      .body figure.data-table.half figcaption,
-      .body figure.data-table.three-quarter figcaption { width: 75%; margin-left: auto; margin-right: auto; }
+      .body figure:is(.narrow, .half, .three-quarter, .data-table.half, .data-table.three-quarter) figcaption { width: 75%; margin-left: auto; margin-right: auto; }
       /* full-width (and wide) tables keep a full-width caption */
       .body figure.data-table figcaption { width: auto; margin-left: 0; margin-right: 0; }
     }
@@ -226,8 +221,8 @@
     .publication-nav { font-size: var(--text-xs); color: var(--muted); }
     .publication-nav-top { margin-bottom: 3rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
     .publication-nav-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
-    .publication-nav a { color: inherit; text-decoration: none; }
-    .publication-nav a:hover { color: var(--fg); text-decoration: underline; }
+    .publication-nav a, .related-pubs a { color: inherit; text-decoration: none; }
+    .publication-nav a:hover, .related-pubs a:hover { color: var(--fg); text-decoration: underline; }
     .publication-nav .nav-prev a, .publication-nav .nav-next a { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .publication-nav .nav-label { font-size: var(--text-xs); display: inline-block; }
     .publication-nav .nav-all { text-align: center; font-size: var(--text-xs); }
@@ -239,8 +234,6 @@
     .related-pubs ul { list-style: none; margin: 0; padding: 0; }
     .related-pubs li { font-size: var(--text-base); line-height: var(--lh-normal); margin-bottom: 0.5rem; }
     .related-pubs li:last-child { margin-bottom: 0; }
-    .related-pubs a { color: inherit; text-decoration: none; }
-    .related-pubs a:hover { color: var(--fg); text-decoration: underline; }
     .related-pubs .related-lang { color: var(--muted); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.03em; }
   </style>
 </head>
@@ -259,7 +252,7 @@
   {% include meta-line.html item=page %}
   <h1>{{ page.title }}</h1>
   {% include authors.html item=page %}
-  {% if page.doi %}<div class="doi"><button class="cite-ref-btn" type="button">Cite</button><button class="print-btn" type="button">Print</button><a href="{{ page.doi }}">{% if page.doi contains 'doi.org/' %}{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}URL{% endif %}</a></div>{% endif %}
+  {% if page.doi %}<div class="doi"><button class="cite-ref-btn pill-btn" type="button">Cite</button><button class="print-btn pill-btn" type="button">Print</button><a class="pill-btn" href="{{ page.doi }}">{% if page.doi contains 'doi.org/' %}{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}URL{% endif %}</a></div>{% endif %}
   </div>
   {% if page.doi %}{% include citation.html item=page %}{% endif %}
   <div class="content">
