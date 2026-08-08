@@ -15,27 +15,24 @@
   // Copy button: formatted citation
   (function() {
     var liveMsg = document.getElementById('live-msg');
-    function wire(selector, sourceClass, doneMsg) {
-      document.querySelectorAll(selector).forEach(function(btn) {
-        var label = btn.textContent;
-        btn.addEventListener('click', function() {
-          var scope = btn.closest('.card-meta') || btn.closest('article') || document;
-          var data = scope.querySelector('.' + sourceClass);
-          if (!data) return;
-          navigator.clipboard.writeText(data.textContent.trim()).then(function() {
-            btn.textContent = 'Copied!';
-            btn.classList.add('copied');
-            if (liveMsg) liveMsg.textContent = doneMsg;
-            setTimeout(function() {
-              btn.textContent = label;
-              btn.classList.remove('copied');
-              if (liveMsg) liveMsg.textContent = '';
-            }, 1500);
-          });
+    document.querySelectorAll('.cite-ref-btn').forEach(function(btn) {
+      var label = btn.textContent;
+      btn.addEventListener('click', function() {
+        var scope = btn.closest('.card-meta') || btn.closest('article') || document;
+        var data = scope.querySelector('.citation-data');
+        if (!data) return;
+        navigator.clipboard.writeText(data.textContent.trim()).then(function() {
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          if (liveMsg) liveMsg.textContent = 'Citation copied to clipboard.';
+          setTimeout(function() {
+            btn.textContent = label;
+            btn.classList.remove('copied');
+            if (liveMsg) liveMsg.textContent = '';
+          }, 1500);
         });
       });
-    }
-    wire('.cite-ref-btn', 'citation-data', 'Citation copied to clipboard.');
+    });
   })();
 
   // Print buttons

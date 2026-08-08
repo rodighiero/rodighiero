@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   {% include head-common.html %}
-  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}if(window.innerWidth<=1024)v='gallery';var ok={gallery:1,network:1};document.documentElement.dataset.initialView=ok[v]?v:'gallery';var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='0'?'0':'1')}()</script>
+  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}var ok={gallery:1,network:1};var pref=ok[v]?v:'gallery';document.documentElement.dataset.preferredView=pref;document.documentElement.dataset.initialView=(window.innerWidth<=1024)?'gallery':pref;var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='0'?'0':'1')}()</script>
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
   <meta name="keywords" content="Dario Rodighiero, data visualization, digital humanities, Science and Technology Studies, University of Groningen, Berkman Klein Center, metaLAB Harvard, mapping, information design">
@@ -891,14 +891,18 @@
       document.body.dataset.view = view;
       if (persist !== false) {
         try { localStorage.setItem('publicationView', view); } catch (e) {}
+        // Keep in sync with the pre-paint head script's resolved preference (see
+        // <head>), so a responsive resize back to desktop width restores this
+        // choice rather than the value that was current at page load.
+        document.documentElement.dataset.preferredView = view;
         updateURL();
       }
       viewButtons.forEach(function(b) {
         b.setAttribute('aria-pressed', b.dataset.view === view ? 'true' : 'false');
       });
       updateViewButtonLabels();
-      if (prev === 'network' && view !== 'network' && networkClearSelection) {
-        networkClearSelection();
+      if (prev === 'network' && view !== 'network' && networkApi) {
+        networkApi.clearSelection();
       }
       if (view === 'gallery') {
         scheduleLayout();
@@ -907,9 +911,9 @@
         initNetwork();
         // If buildNetwork already ran on a prior visit, re-apply the search
         // filter to catch up to any changes made while another view was active.
-        // On first visit networkFilter is still null and buildNetwork's trailing
-        // networkFilter(matchedSlugs) call handles it.
-        if (networkFilter) networkFilter(matchedSlugs);
+        // On first visit networkApi is still null and buildNetwork's trailing
+        // networkApi.filter(matchedSlugs) call handles it.
+        if (networkApi) networkApi.filter(matchedSlugs);
       }
       if (shouldRestore) {
         var target = desiredScroll;
@@ -940,13 +944,10 @@
       if (window.innerWidth <= 1024) {
         if (document.body.dataset.view !== 'gallery') setView('gallery', false);
       } else {
-        var saved;
-        try { saved = new URLSearchParams(location.search).get('view'); } catch (e) {}
-        if (saved !== 'network') {
-          try { saved = localStorage.getItem('publicationView'); } catch (e) {}
-        }
-        saved = (saved === 'network') ? saved : 'gallery';
-        if (document.body.dataset.view !== saved) setView(saved, false);
+        // Restore the resolved preference from <head> (kept in sync by setView),
+        // rather than re-deriving it from the URL/localStorage a second time.
+        var preferred = document.documentElement.dataset.preferredView || 'gallery';
+        if (document.body.dataset.view !== preferred) setView(preferred, false);
       }
     }
     // Clears the search input and any structured (type/cluster) filter, shared by
@@ -968,7 +969,7 @@
           if ((searchInput && searchInput.value) || structuredFilterActive()) {
             resetFilters();
           }
-          if (clicked === 'network' && networkClearSelection) networkClearSelection();
+          if (clicked === 'network' && networkApi) networkApi.clearSelection();
         } else {
           setView(clicked);
         }
@@ -993,8 +994,10 @@
     }
 
     var matchedSlugs = null;
-    var networkFilter = null;
-    var networkClearSelection = null;
+    // Set once buildNetwork() finishes initializing (see below): { filter(slugs), clearSelection() }.
+    // One object rather than two independently-nullable globals, so callers can't
+    // observe one half wired up before the other.
+    var networkApi = null;
     var activeType = null; // publication-type filter set by an action card / ?type= URL param
     // Active cluster filter as one value — { id, slugs } or null — so the id and its
     // member slugs cannot drift apart (they were two variables that could disagree).
@@ -1033,7 +1036,7 @@
       // Special cards are chrome, not results: hide them whenever a filter is active.
       specialCards.forEach(function(c) { c.style.display = filterActive ? 'none' : ''; });
       matchedSlugs = filterActive ? matched : null;
-      if (networkFilter) networkFilter(matchedSlugs);
+      if (networkApi) networkApi.filter(matchedSlugs);
       if (noResults) noResults.hidden = visible !== 0;
       updateCount(visible);
       updateViewButtonLabels();
@@ -1164,7 +1167,7 @@
         searchInput.focus();
       } else if (e.key === 'Escape') {
         if (searchInput.value || structuredFilterActive()) resetFilters();
-        if (networkClearSelection) networkClearSelection();
+        if (networkApi) networkApi.clearSelection();
         var active = document.activeElement;
         if (active && active.classList && active.classList.contains('node')) active.blur();
         // Drop any lingering text selection (e.g. from clicking a card) so the reset
@@ -1270,14 +1273,14 @@
       var nodeLayer = root.append('g').attr('class', 'nodes');
       var labelLayer = root.append('g').attr('class', 'labels');
 
-      networkClearSelection = function() {
+      function clearSelection() {
         if (selectedNode === null) return;
         selectedNode = null;
         unhighlight();
         if (details) details.hidden = true;
         if (lede) lede.hidden = false;
-      };
-      svg.on('click', networkClearSelection);
+      }
+      svg.on('click', clearSelection);
 
       function dimensions() { return { w: stage.clientWidth, h: stage.clientHeight }; }
       // Positions are precomputed offline at canonical canvas size (bx, by);
@@ -1296,7 +1299,15 @@
       });
       var linkSel, nodeSel, labelSel;
       var labelByIdx = [];
+      var nodeByIdx = [];
       var selectedNode = null;
+
+      // Precomputed once so highlight() doesn't rescan every link per click.
+      var neighborsByIdx = nodes.map(function() { return []; });
+      links.forEach(function(l) {
+        neighborsByIdx[l.source.i].push(l.target.i);
+        neighborsByIdx[l.target.i].push(l.source.i);
+      });
 
       function placeNodes() {
         linkSel.attr('x1', function(d) { return d.source.x; }).attr('y1', function(d) { return d.source.y; })
@@ -1344,6 +1355,8 @@
         nodeEnter.append('circle').attr('class', 'ring').attr('r', NODE_RADIUS + 2);
         nodeSel = nodeEnter.merge(nodeData);
         nodeSel.attr('aria-label', function(d) { return d.title; });
+        nodeByIdx = [];
+        nodeSel.each(function(d) { nodeByIdx[d.i] = this; });
 
         var labelData = labelLayer.selectAll('text').data(nodes, function(d) { return d.i; });
         labelData.exit().remove();
@@ -1383,8 +1396,8 @@
               selectedNode = d;
               showDetails(d);
               highlight(d);
-            } else if (e.key === 'Escape' && networkClearSelection) {
-              networkClearSelection();
+            } else if (e.key === 'Escape') {
+              clearSelection();
             }
           });
 
@@ -1426,11 +1439,8 @@
       }
 
       function highlight(d) {
-        var neighbors = new Set([d.i]);
-        links.forEach(function(l) {
-          if (l.source.i === d.i) neighbors.add(l.target.i);
-          if (l.target.i === d.i) neighbors.add(l.source.i);
-        });
+        var neighbors = new Set(neighborsByIdx[d.i]);
+        neighbors.add(d.i);
         nodeSel.classed('dimmed', function(n) { return !neighbors.has(n.i); }).classed('highlight', function(n) { return n.i === d.i; }).classed('connected', function(n) { return neighbors.has(n.i) && n.i !== d.i; });
         labelSel.classed('dimmed', function(n) { return !neighbors.has(n.i); });
         linkSel.classed('dimmed', function(l) {
@@ -1480,7 +1490,7 @@
         details.querySelectorAll('.neighbors li').forEach(function(li) {
           var idx = parseInt(li.dataset.nodeI, 10);
           if (isNaN(idx)) return;
-          var g = nodeSel.filter(function(n) { return n.i === idx; });
+          var g = d3.select(nodeByIdx[idx]);
           li.addEventListener('mouseenter', function() { setNodeHover(g, idx, true); });
           li.addEventListener('mouseleave', function() { setNodeHover(g, idx, false); });
         });
@@ -1491,7 +1501,7 @@
 
       render();
 
-      networkFilter = function(slugs) {
+      function filter(slugs) {
         if (!nodeSel) return;
         if (!slugs) {
           // No filter: every node is tab-reachable again.
@@ -1509,8 +1519,11 @@
             return !slugs.has(l.source.slug) || !slugs.has(l.target.slug);
           });
         }
-      };
-      networkFilter(matchedSlugs);
+      }
+      // Both halves of the module's public surface are ready together, so external
+      // callers never see one wired up without the other (see networkApi above).
+      networkApi = { filter: filter, clearSelection: clearSelection };
+      networkApi.filter(matchedSlugs);
 
       // Debounce: re-fit the baked layout to the new stage size (cheap — just a
       // scale + translate, no simulation).
