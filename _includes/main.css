@@ -7,7 +7,6 @@
   --text-xs:   0.75rem;
   --text-base: 1rem;
   --text-lg:   1.25rem;
-  --text-xl:   1.5rem;
   --text-xxl:  2rem;
 
   /* Line heights */
@@ -98,9 +97,8 @@ main:focus { outline: none; }
   margin-bottom: 0.3rem;
 }
 .card-meta .venue { font-style: italic; }
-/* The line under a card title: a publication's authors, or an action or filter card's
-   description (.card-text). One rule, so the two never drift apart. */
-.authors, .card-text { font-size: var(--text-xs); line-height: var(--lh-normal); color: var(--fg); }
+/* The line under a card title: an action or filter card's description. */
+.card-text { font-size: var(--text-xs); line-height: var(--lh-normal); color: var(--fg); }
 .cite-ref-btn { display: inline-flex; background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 0 0.55rem; font: inherit; font-size: var(--text-xs); cursor: pointer; border-radius: 2px; line-height: var(--lh-normal); }
 .cite-ref-btn:hover { color: var(--fg); border-color: var(--border-hover); }
 .cite-ref-btn.copied { color: var(--fg); border-color: var(--fg); }
@@ -128,8 +126,6 @@ main:focus { outline: none; }
 }
 html.dark .mode-toggle .icon-sun { display: flex; }
 html.dark .mode-toggle .icon-moon { display: none; }
-html.light .mode-toggle .icon-sun { display: none; }
-html.light .mode-toggle .icon-moon { display: flex; }
 
 @media print {
   :root, html.dark, html.light { color-scheme: light !important; }
