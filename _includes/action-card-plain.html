@@ -22,6 +22,12 @@ Params:
 {%- assign _label = include.label | default: _a.label -%}
 {%- assign _sublabel = include.sublabel | default: _a.sublabel -%}
 {%- assign _act = include.act | default: _a.action -%}
+{%- comment -%} Two kinds of special card: a cluster tile applies a filter (.filter);
+everything else (view/type/search) triggers a one-off action (.action). {%- endcomment -%}
+{%- assign _is_cluster = false -%}
+{%- if _act contains 'cluster:' -%}{%- assign _is_cluster = true -%}{%- endif -%}
+{%- assign _kind = 'action' -%}
+{%- if _is_cluster -%}{%- assign _kind = 'filter' -%}{%- endif -%}
 {%- comment -%} GoatCounter event tracking: count.js auto-binds a click listener to any element
 carrying data-goatcounter-click, using its value as the event path. Only the network-view card and
 the auto cluster cards get one, matching the two interactions worth measuring on this template.
@@ -29,12 +35,8 @@ Cluster cards are tracked by their title (the same text the card shows), not the
 the GoatCounter dashboard reads as "Peirce Manuscripts" rather than "cluster:3". {%- endcomment -%}
 {%- assign _gc_click = '' -%}
 {%- if _act == 'view:network' -%}{%- assign _gc_click = 'network-view' -%}
-{%- elsif _act contains 'cluster:' -%}{%- assign _gc_click = _label -%}
+{%- elsif _is_cluster -%}{%- assign _gc_click = _label -%}
 {%- endif -%}
-{%- comment -%} Two kinds of special card: a cluster tile applies a filter (.filter);
-everything else (view/type/search) triggers a one-off action (.action). {%- endcomment -%}
-{%- assign _kind = 'action' -%}
-{%- if _act contains 'cluster:' -%}{%- assign _kind = 'filter' -%}{%- endif -%}
 <button type="button" class="card {{ _kind }} {{ include.class }}" data-action="{{ _act }}"{% if include.slugs %} data-slugs="{{ include.slugs | join: ' ' }}"{% endif %}{% if include.filterlabel %} data-filter-label="{{ include.filterlabel }}"{% endif %}{% if _gc_click != '' %} data-goatcounter-click="{{ _gc_click }}"{% endif %}>
   {%- if include.media -%}<span class="card-media">{% include {{ include.media }} %}</span>{%- endif -%}
   {%- if _yr or _eyebrow or _venue -%}

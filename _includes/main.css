@@ -98,7 +98,7 @@ main:focus { outline: none; }
   margin-bottom: 0.3rem;
 }
 .card-meta .venue { font-style: italic; }
-/* The line under a card title: a publication's authors, or an action card's
+/* The line under a card title: a publication's authors, or an action or filter card's
    description (.card-text). One rule, so the two never drift apart. */
 .authors, .card-text { font-size: var(--text-xs); line-height: var(--lh-normal); color: var(--fg); }
 .cite-ref-btn { display: inline-flex; background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 0 0.55rem; font: inherit; font-size: var(--text-xs); cursor: pointer; border-radius: 2px; line-height: var(--lh-normal); }
