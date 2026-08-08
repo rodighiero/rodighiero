@@ -265,10 +265,11 @@
     body[data-view="gallery"] #publications:not(.ready) { visibility: hidden; }
     /* ── Card base: publication tiles and plain action/cluster cards both carry the
        .card class, which holds their common metrics — padding, radius, cursor, hover —
-       plus (below) title size/margin, sub-row gap and the meta-line. They keep two
-       deliberate differences on top: the publication title is bold roman and the tile
-       is frameless; the action title is italic and its tile carries a hairline border
-       (see the action/filter block below). ── */
+       plus (below) title size/margin, sub-row gap and the meta-line. They keep deliberate
+       differences on top: the publication title is bold roman and the tile is frameless;
+       the action/filter title is regular weight (roman for .action, italic for .filter,
+       marking a cluster as a distinct kind of trigger) and its tile carries a hairline
+       border (see the action/filter block below). ── */
     .card {
       padding: 0.6rem;
       border-radius: 4px;
@@ -291,7 +292,7 @@
       max-width: 100%;
     }
     .publication .card-title { font-weight: 500; }
-    .action .card-title,
+    .action .card-title { font-weight: 400; }
     .filter .card-title { font-weight: 400; font-style: italic; }
 
     /* Shared sub-row: a publication's authors and an action/filter card's description sit
