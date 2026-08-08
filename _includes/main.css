@@ -102,6 +102,10 @@ main:focus { outline: none; }
 .card-meta .venue { font-style: italic; }
 /* The line under a card title: an action or filter card's description. */
 .card-text { font-size: var(--text-xs); line-height: var(--lh-normal); color: var(--fg); }
+/* Opt-in hairline frame for a thumbnail/figure image (publication front matter's
+   img_border, or a figure's class="bordered"). Shared by home.html's .card-media
+   and publication.html's .body figure. */
+.bordered img { border: 1px solid var(--border); }
 /* Shared pill-button chrome — applied alongside behavioral hook classes
    like .cite-ref-btn/.print-btn, so JS selectors stay decoupled from style. */
 .pill-btn { display: inline-flex; background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 0 0.55rem; font: inherit; font-size: var(--text-xs); cursor: pointer; border-radius: 2px; line-height: var(--lh-normal); text-decoration: none; }

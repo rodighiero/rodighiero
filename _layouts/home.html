@@ -309,7 +309,6 @@
        that actually uses them. */
     .card-media img,
     .card-media .network-preview { width: 100%; height: auto; display: block; }
-    .card-media.bordered img { border: 1px solid var(--border); }
     /* The title link is the only <h2> on the page, so it needs no ancestor qualifier either;
        main.css's `a { color: inherit; text-decoration: none; }` already covers its base look.
        No underline on hover either: the whole card already signals clickability (background
@@ -444,19 +443,13 @@
     }
     #network-view svg { display: block; width: 100%; height: 100%; }
     #network-view .node .hit { fill: transparent; cursor: pointer; }
-    #network-view .node .marker {
-      fill: var(--bg);
+    #network-view :is(.node .marker, .node .ring, .link) {
       stroke: var(--fg);
       stroke-width: 0.5;
       pointer-events: none;
     }
-    #network-view .node .ring {
-      fill: none;
-      stroke: var(--fg);
-      stroke-width: 0.5;
-      pointer-events: none;
-      opacity: 0;
-    }
+    #network-view .node .marker { fill: var(--bg); }
+    #network-view .node .ring { fill: none; opacity: 0; }
     #network-view .node.hover .ring { opacity: 1; }
     /* Keyboard focus reuses the hover ring as its visible indicator. */
     #network-view .node:focus { outline: none; }
@@ -472,7 +465,6 @@
       stroke-width: 3px;
       stroke-linejoin: round;
     }
-    #network-view .link { stroke: var(--fg); stroke-width: 0.5; pointer-events: none; }
     /* A translation is the same work in another language: an ordinary node,
        set apart only by a more pronounced dashed edge to its original. */
     #network-view .link.translation { stroke-width: 0.9; stroke-dasharray: 3 2.5; }
