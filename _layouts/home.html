@@ -698,7 +698,7 @@
       {%- comment -%} A network-view card leads the dated flow: emit it once, right after the
       forthcoming works (before the first publication carrying a real year). {%- endcomment -%}
       {% if _net_done == false and publication.year != 'Forthcoming' %}
-      {% include action-card-plain.html eyebrow="View" venue="Publication network" label="The Shape of a Body of Work" sublabel="This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." act="view:network" year="now" media="network-preview.svg" %}
+      {% include action-card-plain.html eyebrow="Action" venue="Publication network" label="The Shape of a Body of Work" sublabel="This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." act="view:network" year="now" media="network-preview.svg" %}
       {% assign _net_done = true %}
       {% endif %}
       {%- comment -%} Auto cluster filter cards are distributed by the midpoint of their span:
