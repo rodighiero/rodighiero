@@ -263,21 +263,20 @@
     /* ── Publications (shared) ── */
     #publications { position: relative; }
     body[data-view="gallery"] #publications:not(.ready) { visibility: hidden; }
-    /* ── Card base: publication tiles and plain action/cluster cards share one
-       set of metrics — padding, radius, hover, title size/margin, sub-row gap and
-       the meta-line. They keep two deliberate differences: the publication title
-       is bold roman and the tile is frameless; the action title is italic and its
-       tile carries a hairline border (see the action-card block below). ── */
-    .publication,
-    .action-card.special-card {
+    /* ── Card base: publication tiles and plain action/cluster cards both carry the
+       .card class, which holds their common metrics — padding, radius, cursor, hover —
+       plus (below) title size/margin, sub-row gap and the meta-line. They keep two
+       deliberate differences on top: the publication title is bold roman and the tile
+       is frameless; the action title is italic and its tile carries a hairline border
+       (see the action-card block below). ── */
+    .card {
       padding: 0.6rem;
       border-radius: 4px;
       cursor: pointer;
       transition: background 0.15s ease, border-color 0.15s ease;
     }
-    .publication:hover,
-    .publication:has(.card-meta h2 a:focus-visible),
-    .action-card.special-card:hover { background: var(--tint-hover); }
+    .card:hover,
+    .publication:has(.card-meta h2 a:focus-visible) { background: var(--tint-hover); }
 
     /* Every card titles itself with .card-title (publication: <h2>, action: <span>),
        so one rule sets the box as well as the type; only weight/style differ per card.
@@ -353,10 +352,9 @@
     .action-card:hover { border-color: var(--border-hover); }
     .action-card:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
     /* An action/cluster tile takes the shared card base above (padding, radius, hover,
-       title and sub-row metrics, via .action-card.special-card) and adds only what makes
-       it distinct: the hairline border (background: none clears the UA <button> face),
-       plus block display for the rows of its <span> markup, which a publication card's
-       <div>s have by default. */
+       title and sub-row metrics, via .card) and adds only what makes it distinct: the
+       hairline border (background: none clears the UA <button> face), plus block display
+       for the rows of its <span> markup, which a publication card's <div>s have by default. */
     .action-card.special-card { border: 1px solid var(--border); background: none; }
     .special-card .card-meta,
     .special-card .meta-line,
@@ -747,7 +745,7 @@
       {% assign _type_label = site.data.publication_types[publication.type].label %}
       {% capture _lang_terms %}{% if publication.lang == 'it' %}italian italiano{% elsif publication.lang == 'fr' %}french français francais{% else %}english{% endif %}{% endcapture %}
       {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.interviewer }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ _lang_terms }}{% endcapture %}
-      <div class="publication" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
+      <div class="card publication" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
         {% if publication.thumb %}
         {% assign _card_i = _card_i | plus: 1 %}
         <div class="card-img{% if publication.img_border %} bordered{% endif %}">
