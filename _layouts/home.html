@@ -279,40 +279,42 @@
     .publication:has(.card-meta h2 a:focus-visible),
     .action-card.card-plain:hover { background: var(--tint-hover); }
 
-    /* Shared title metrics; only weight/style differ per card (bold vs italic). */
-    .card-meta h2,
-    .card-plain .card-title {
+    /* Every card titles itself with .card-title (publication: <h2>, action: <span>),
+       so one rule sets the box as well as the type; only weight/style differ per card.
+       `inline-block` is load-bearing: its top margin does not collapse with the meta
+       line's bottom margin, so the gap above a title is 0.3 + 0.3rem — a block title
+       would collapse the pair to 0.3rem and sit tighter than the publication beside it. */
+    .card-title {
       font-size: var(--text-base);
       margin: 0.3rem 0 0;
       line-height: var(--lh-tight);
+      display: inline-block;
+      max-width: 100%;
     }
-    .card-meta h2 { font-weight: 500; display: inline-block; max-width: 100%; }
-    .card-plain .card-title { display: block; font-weight: 400; font-style: italic; }
+    .publication .card-title { font-weight: 500; }
+    .card-plain .card-title { font-weight: 400; font-style: italic; }
 
-    /* Shared sub-row gap: publication authors / action sub-label sit the same
-       distance below the title. */
+    /* Shared sub-row: a publication's authors and an action card's description sit
+       the same distance below the title and share one typography — main.css sets the
+       type on `.authors, .card-sub` together, so only the gap belongs here. */
     .card-meta .authors,
     .card-plain .card-sub { margin-top: 0.4rem; }
 
     /* Shared meta-line (both cards wrap it in .card-meta). */
     .card-meta .meta-line { font-size: var(--text-xxs); line-height: var(--lh-loose); }
 
-    .publication .card-img img { width: 100%; height: auto; display: block; }
-    .publication .card-img.bordered img { border: 1px solid var(--border); box-sizing: border-box; }
+    /* Whatever fills a media slot spans it and keeps its own aspect ratio. */
+    .publication .card-img img,
+    .card-plain .card-media .network-preview { width: 100%; height: auto; display: block; }
+    .publication .card-img.bordered img { border: 1px solid var(--border); }
     .card-meta h2 a { color: inherit; text-decoration: none; }
     .card-meta h2 a:focus-visible { outline: none; }
     .publication:has(.card-meta h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
 
     /* ── Special cards (news + action tiles; shown in gallery only) ──
-       .special-card carries only the shared element resets (the action tiles are
-       <button>s); the boxed surface look belongs to the news card alone — action
-       tiles draw the plain card base + hairline border via .card-plain below. */
-    .special-card {
-      box-sizing: border-box;
-      text-align: left;
-      font-family: inherit;
-      color: inherit;
-    }
+       .special-card needs no rule of its own: it only marks the tiles the count /
+       search / network logic must skip, and tells the masonry to place them. The boxed
+       surface belongs to the news card alone. */
     .news-card {
       padding: 0.9rem 1rem;
       border: 1px solid var(--border);
@@ -337,36 +339,26 @@
       border-bottom: 1px solid var(--border-hover);
     }
     .special-link:hover { border-bottom-color: var(--fg); }
-    .action-card { display: block; width: 100%; -webkit-user-select: none; user-select: none; }
+    /* An action tile is a <button>: undo the UA's centered text and its own font/color. */
+    .action-card {
+      display: block;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+      color: inherit;
+      -webkit-user-select: none;
+      user-select: none;
+    }
     .action-card:hover { border-color: var(--border-hover); }
     .action-card:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
-    /* .card-plain draws the shared card base above (padding, radius, hover, title
-       and sub-row metrics); it adds only what makes an action card distinct — the
-       hairline tile border (background: none clears the UA <button> face) — and
-       forces block layout on the meta wrapper/rows so the meta→title gap collapses
-       to the same value as a publication card (an inline <span> box would
-       otherwise lay the lines out inline and widen it). */
+    /* .card-plain takes the shared card base above (padding, radius, hover, title and
+       sub-row metrics) and adds only what makes an action tile distinct: the hairline
+       border (background: none clears the UA <button> face), plus block display for the
+       rows of its <span> markup, which a publication card's <div>s have by default. */
     .action-card.card-plain { border: 1px solid var(--border); background: none; }
     .card-plain .card-meta,
-    .card-plain .meta-line { display: block; }
-    .card-plain .card-sub { font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
-
-    /* Card media slot (the network card's miniature). Matches .card-img's framing
-       so an action tile with an image sits consistently among the publications.
-       The graph carries its own white ground in both themes, like the covers and
-       photographs beside it, so no surface tint sits behind it. */
-    .card-plain .card-media {
-      display: block;
-      width: 100%;
-      margin-bottom: 0.8rem;
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .card-plain .card-media .network-preview {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
+    .card-plain .meta-line,
+    .card-plain .card-sub { display: block; }
 
     /* ── Gallery view (masonry) ── */
     body[data-view="gallery"] .publication,
@@ -377,14 +369,21 @@
       width: 100%;
       will-change: transform;
     }
+    /* The media slot above a card's text — a publication thumbnail, or an action card's
+       inlined graph miniature — framed once, so either sits the same among the tiles. */
     body[data-view="gallery"] .publication .card-img,
-    #network-view .details .publication .card-img {
+    #network-view .details .publication .card-img,
+    .card-plain .card-media {
+      display: block;
       width: 100%;
       margin-bottom: 0.8rem;
-      background: var(--tint-surface);
       border-radius: 2px;
       overflow: hidden;
     }
+    /* A thumbnail rests on a tint while it loads; a miniature must not — its ground is
+       transparent so the inlined SVG inherits the page (see Network view in CLAUDE.md). */
+    body[data-view="gallery"] .publication .card-img,
+    #network-view .details .publication .card-img { background: var(--tint-surface); }
 
     /* ── Network view ── */
     #network-view { display: none; }
@@ -718,20 +717,30 @@
       single card block renders every card and the _card_i priority counter stays correct. {%- endcomment -%}
       {% assign _card_i = 0 %}
       {% assign _clusters_az = site.data.network.clusters | sort: 'label' %}
+      {% assign _cluster_n = 0 %}
       {% assign _net_done = false %}
       {% for publication in site.data.ordered_publications %}
       {%- comment -%} A network-view card leads the dated flow: emit it once, right after the
       forthcoming works (before the first publication carrying a real year). {%- endcomment -%}
       {% if _net_done == false and publication.year != 'Forthcoming' %}
-      {% include action-card-plain.html eyebrow="View" venue="Publication network" label="A body of work rarely announces its own shape. This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." act="view:network" year="now" media="network-preview.svg" %}
+      {% include action-card-plain.html eyebrow="View" venue="Publication network" label="The Shape of a Body of Work" sublabel="This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." act="view:network" year="now" media="network-preview.svg" %}
       {% assign _net_done = true %}
       {% endif %}
       {%- comment -%} Auto cluster filter cards are distributed by the midpoint of their span:
       build-network.py records `anchor_slug` — the first publication at or below the cluster's
       mid-year (always a real publication) — so a 2015–2025 cluster renders around the 2020 works.
-      Emit before that anchor; iterating alphabetically by label stacks cards that share a slot. {%- endcomment -%}
+      Emit before that anchor; iterating alphabetically by label stacks cards that share a slot.
+      Each card carries its own miniature of the graph (network-cluster-<id>.svg, generated beside
+      network-preview.svg): the same map in the same frame with the cluster lit and the rest faded,
+      so the tiles are small multiples and each one previews what clicking it does. The meta line
+      numbers them in the order they are emitted (`_cluster_n`) — so a reader scanning down the
+      gallery meets cluster 1, 2, 3… in sequence — not by the cluster's internal `id`, which is
+      discovery order in build-network.py and would look arbitrary on the page. {%- endcomment -%}
       {% for _cluster in _clusters_az %}{% if _cluster.anchor_slug == publication.slug %}
-      {% include action-card-plain.html eyebrow="Filter" venue="Research cluster" label=_cluster.title act=_cluster.action slugs=_cluster.slugs year=_cluster.span filterlabel=_cluster.filter_label %}
+      {% assign _cluster_n = _cluster_n | plus: 1 %}
+      {% capture _cluster_media %}network-cluster-{{ _cluster.id }}.svg{% endcapture %}
+      {% capture _cluster_venue %}Research cluster {{ _cluster_n }}{% endcapture %}
+      {% include action-card-plain.html eyebrow="Filter" venue=_cluster_venue label=_cluster.title sublabel=_cluster.description act=_cluster.action slugs=_cluster.slugs year=_cluster.span filterlabel=_cluster.filter_label media=_cluster_media %}
       {% endif %}{% endfor %}
       {% assign _type_label = site.data.publication_types[publication.type].label %}
       {% capture _lang_terms %}{% if publication.lang == 'it' %}italian italiano{% elsif publication.lang == 'fr' %}french français francais{% else %}english{% endif %}{% endcapture %}
@@ -748,7 +757,7 @@
         {% endif %}
         <div class="card-meta">
           {% include meta-line.html item=publication %}
-          <h2><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
+          <h2 class="card-title"><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
           {% include authors-home.html item=publication %}
         </div>
       </div>

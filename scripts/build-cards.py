@@ -4,16 +4,17 @@
 The heavy network math — embeddings, force layout, and cluster **membership** —
 lives in build-network.py, which writes each cluster's structural fields
 (id, label, terms, slugs, years, span, size, anchor_slug). This script owns only
-the **presentation**: the hand-written card `title` and the short `filter_label`
-shown in the search box. Because it needs no model, it runs in a blink, so a card
-reword is a one-second `python3 scripts/build-cards.py` instead of a full rebuild.
+the **presentation**: the hand-written card `title` and `description`, plus the
+short `filter_label` shown in the search box. Because it needs no model, it runs in
+a blink, so a card reword is a one-second `python3 scripts/build-cards.py` instead
+of a full rebuild.
 
   python3 scripts/build-cards.py     # cards only — reads & rewrites network.json
   build-network.py                   # runs the full network build, then calls this
 
 Keys are the auto TF-IDF `label` each cluster carries; a cluster without an entry
-falls back to a generated template. If a label shifts because membership changed,
-update its key here (build-network.py prints the current labels).
+falls back to that label and a generated description. If a label shifts because
+membership changed, update its key here (build-network.py prints the current labels).
 """
 from __future__ import annotations
 
@@ -24,39 +25,51 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "_data" / "network.json"
 
-# Editable, hand-written card titles, grounded in each cluster's mutual (strong-edge)
-# core. Three short sentences per card, each with a fixed scope:
-#   1. Subject  — the thing studied.
-#   2. Approach — what the work does to it (method, gesture, lens).
-#   3. Stakes   — why it matters (the insight or question it opens).
-CLUSTER_TITLES = {
-    "Analogous City": "Aldo Rossi collaged the city of memory in 1976. These projects restage it across archives, museums, installations, and data-driven study. A modernist monument returns for the digital age.",
-    "Affinity": "Something quiet draws researchers toward one another. These projects visualize the hidden ties that bind them into productive, creative communities. A way of seeing what holds a community together.",
-    "Covid": "A pandemic unfolds through the eyes of the scientists who tracked it. These projects collect, translate, and give form to work that would otherwise stay invisible. A global crisis becomes something we can look at.",
-    "Peirce Manuscripts": "Charles S. Peirce filled thousands of pages with hand-drawn diagrams. These projects digitize, transcribe, and interpret them with vision-language models. Machines learn to read what only scholars once could.",
-    "Représentation": "Researchers cite and gather in shifting constellations. These projects turn conferences into networks of authors linked by their shared vocabulary. A field takes shape before your eyes.",
-}
-
-# Short label shown in the search box when a cluster filter is active (data-filter-label),
-# overriding the auto TF-IDF label. The `label` itself is left unchanged (it still keys
-# CLUSTER_TITLES, sorts alphabetically, and identifies the cluster).
-CLUSTER_LABELS = {
-    "Affinity": "Mapping Affinities",
-    "Covid": "Covid-19 Cartography",
-    "Représentation": "Mapping Scientific Communities",
+# Editable, hand-written card text, grounded in each cluster's mutual (strong-edge)
+# core. A card reads like a publication card — a short title over a quieter
+# description — so each entry is written to that shape:
+#   title       — the subject, as a name: what the cluster is about.
+#   description — two short sentences: what the work does to it (method, gesture,
+#                 lens), then why it matters (the insight or question it opens).
+#   filter      — optional; the chip shown in the search box when the filter is
+#                 active. Defaults to the title, which is normally the right name.
+CLUSTER_CARDS = {
+    "Analogous City": {
+        "title": "Analogous City",
+        "description": "Aldo Rossi’s 1976 collage of the city of memory, restaged across archives, museums, and installations. A modernist monument returns for the digital age.",
+    },
+    "Affinity": {
+        "title": "Mapping Affinities",
+        "description": "Visualizing the quiet ties that draw researchers toward one another. A way of seeing what holds a community together.",
+    },
+    "Covid": {
+        "title": "Covid-19 Cartography",
+        "description": "Collecting and giving form to the work of the scientists who tracked the pandemic. A global crisis becomes something we can look at.",
+    },
+    "Peirce Manuscripts": {
+        "title": "Peirce Manuscripts",
+        "description": "Digitizing and interpreting thousands of hand-drawn diagrams with vision-language models. Machines learn to read what only scholars once could.",
+    },
+    "Représentation": {
+        "title": "Mapping Science",
+        "description": "Turning conferences into networks of authors linked by a shared vocabulary. A field takes shape before your eyes.",
+    },
 }
 
 
 def enrich_clusters(clusters: list[dict]) -> list[dict]:
-    """Add `title` and `filter_label` to each cluster from its auto `label`."""
+    """Add `title`, `description` and `filter_label` to each cluster from its auto `label`."""
     for c in clusters:
         label = c["label"]
-        c["filter_label"] = CLUSTER_LABELS.get(label, label)
-        c["title"] = CLUSTER_TITLES.get(
-            label,
-            f"Explore the {label} cluster — {c['size']} works "
-            f"drawn together by {', '.join(c.get('terms', []))}",
+        card = CLUSTER_CARDS.get(label, {})
+        # Without an entry, fall back to the auto label and a template drawn from
+        # the cluster's own TF-IDF terms — never a blank card.
+        c["title"] = card.get("title", label)
+        c["description"] = card.get(
+            "description",
+            f"{c['size']} works drawn together by {', '.join(c.get('terms', []))}.",
         )
+        c["filter_label"] = card.get("filter", c["title"])
     return clusters
 
 
