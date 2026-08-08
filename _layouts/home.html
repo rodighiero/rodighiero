@@ -266,10 +266,9 @@
     /* ── Card base: publication tiles and plain action/cluster cards all carry the
        .card class, which holds everything they have in common — padding, radius,
        cursor, hover/focus feedback, gallery positioning — plus (below) title
-       size/margin, sub-row gap and the meta-line. They keep two deliberate differences
-       on top: the publication title is bold and the tile is frameless; the
-       action/filter title is regular weight and its tile carries a hairline border
-       (see the action/filter block below). ── */
+       size/weight/margin, sub-row gap and the meta-line. The one deliberate difference
+       left is the frame: a publication tile is frameless, an action/filter tile carries
+       a hairline border (see the action/filter block below). ── */
     .card {
       padding: 0.6rem;
       border-radius: 4px;
@@ -282,19 +281,18 @@
     .publication:has(.card-meta h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
 
     /* Every card titles itself with .card-title (publication: <h2>, action/filter: <span>),
-       so one rule sets the box, type and default weight; only the publication overrides it.
+       so one rule sets the box, type and weight for all three kinds.
        `inline-block` is load-bearing: its top margin does not collapse with the meta
        line's bottom margin, so the gap above a title is 0.3 + 0.3rem — a block title
        would collapse the pair to 0.3rem and sit tighter than the publication beside it. */
     .card-title {
       font-size: var(--text-base);
-      font-weight: 400;
+      font-weight: 500;
       margin: 0.3rem 0 0;
       line-height: var(--lh-tight);
       display: inline-block;
       max-width: 100%;
     }
-    .publication .card-title { font-weight: 500; }
 
     /* Shared sub-row: a publication's authors and an action/filter card's description sit
        the same distance below the title and share one typography — main.css sets the
