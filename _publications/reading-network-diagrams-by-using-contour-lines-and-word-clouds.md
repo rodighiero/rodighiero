@@ -37,7 +37,7 @@ In addition, the speakers’ terms associated with each cluster were collected a
 
 All of these graphical elements are finally organized through two layers of zooming, revealing detail according to Ben Shneiderman’s renowned mantra, “overview first, zoom and filter, then details on demand” (Shneiderman 1996). In the beginning, the viewer sees contour lines and a word cloud. One potential scenario is that the viewer notices a familiar word that encourages them to zoom into a specific cluster. After zooming in, contour lines and word clouds fade out to leave room for speakers’ names and their contextual lexicon. At this point, the viewer might click on a specific author for further details associated with them, such as their own terms, or the number of publications.
 
-{% include figure.html class="wide" src="/images/reading-network-diagrams-by-using-contour-lines-and-word-clouds/fig_001.webp" caption="Figure 1. The Cartography of SPT2021 shows conference speakers according to their lexical similarity. The thematic clusters created by their linguistic distance are displayed using contour lines and word clouds. The web app is available at rodighiero.github.io/SPT2021." %}
+{% include figure-single.html class="wide" src="/images/reading-network-diagrams-by-using-contour-lines-and-word-clouds/fig_001.webp" caption="Figure 1. The Cartography of SPT2021 shows conference speakers according to their lexical similarity. The thematic clusters created by their linguistic distance are displayed using contour lines and word clouds. The web app is available at rodighiero.github.io/SPT2021." %}
 
 ## A Way of Seeing
 

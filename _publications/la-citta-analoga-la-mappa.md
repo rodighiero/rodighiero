@@ -35,7 +35,7 @@ Ogni processo di storicizzazione ha i suoi tempi e finora i frammenti della Citt
 
 I riferimenti della Città Analoga sono stati estratti da libri esistenti, gran parte del lavoro archeologico si è svolto nelle biblioteche e negli archivi, sia materiali che digitali. Immedesimandomi negli architetti della città, ho cercato di recuperare tutte quelle pubblicazioni che da loro sono state con cura scelte, fotocopiate, ritagliate e assemblate nella creazione di questo collage collettivo, conservato ora nei sotterranei del Centre Pompidou, a Parigi (Figura 1).
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_001.webp" class="three-quarter" caption="Figura 1. La città analoga ricostruita dai documenti raccolti nel corso della ricerca." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_001.webp" class="three-quarter" caption="Figura 1. La città analoga ricostruita dai documenti raccolti nel corso della ricerca." %}
 
 Tutti i riferimenti bibliografici sono quindi pubblicazioni già esistenti nella primavera del 1976, quando La Città Analoga è stata composta. I riferimenti che appaiono posteriori, sono riconducibili agli archivi privati degli autori stessi.
 
@@ -49,7 +49,7 @@ Il lavoro ha richiesto tempo e passione. All’inizio i riferimenti arrivavano v
 
 La mappa è parte di un’installazione digitale presente all’esposizione. L’installazione consiste in un tavolo, sulla cui superficie è riprodotta La Città Analoga e dalla quale, grazie alle tecniche di augmented reality, è possibile estrudere tutti i riferimenti che la compongono e renderli interattivi: inquadrando il piano con il tablet, lo schermo ripropone la ripresa della fotocamera arricchita di riferimenti virtuali. Questi elementi sono i segni che compongono la città analoga. Essi fluttuano sovrapposti ai riferimenti del piano, invitando a scoprire ed esplorare il collage della Città Analoga, attraverso la decostruzione (Figura 2).
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_002.webp" class="three-quarter" caption="Figura 2. La città analoga ricostruita dai ritagli dei documenti originali." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_002.webp" class="three-quarter" caption="Figura 2. La città analoga ricostruita dai ritagli dei documenti originali." %}
 
 La mappa, nella sua forma di pubblicazione, propone una situazione analoga a quella del museo: scaricando l’applicazione, è possibile interagire con la mappa riproponendo a casa l’esperienza che i visitatori fanno al museo.
 
@@ -72,19 +72,19 @@ Di seguito, alcune annotazioni utili all’orientamento dei visitatori. Parole e
 
 Le città materializzano le molteplici, disparate e mutevoli vite individuali e collettive di generazioni di abitanti; ne accolgono esigenze, desideri, conoscenze... Sogni, paure, speranze, e molto altro ancora: tutto, per farla breve. Inoltre ne registrano i mutamenti imposti dalle bizzarrie della sorte, capaci di esaltare o annientare con l’irresponsabile leggerezza dell’indifferenza. La complessità è connaturata alla città.
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_003.webp" class="three-quarter" alt="Schema di Reinhart della composizione: la stanza domestica dell’abitante con la sua lampada a soffitto e la finestra a sinistra, e la macchina centrale di ingranaggi, ruote dentate e volani." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_003.webp" class="three-quarter" alt="Schema di Reinhart della composizione: la stanza domestica dell’abitante con la sua lampada a soffitto e la finestra a sinistra, e la macchina centrale di ingranaggi, ruote dentate e volani." %}
 
 Questo primo tratto distintivo di inenarrabile enormità è alluso al primo colpo d’occhio dall’eterogeneo, molteplice, contraddittorio insieme: eterogenee le rappresentazioni, le forme e le scale dimensionali; molteplici le linee compositive, le direzioni, i centri, le simmetrie e i punti di fuga; contraddittori e conflittuali i principi ordinatori.
 
 L’incipit è teatrale e barocco. Una figura misteriosa – un angelo? La giovinezza? La bellezza? Il nunzio, per gli autori – accoglie e interpella singolarmente ogni visitatore con lo sguardo e, con il gesto perentorio di braccio e indice protesi, lo indirizza direttamente al centro della composizione tra cremagliere, ruote dentate, perni e volani di una macchina inarrestabile.
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_004.webp" class="three-quarter" alt="Diagramma di Reinhart della planimetria radiale della Città Analoga." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_004.webp" class="three-quarter" alt="Diagramma di Reinhart della planimetria radiale della Città Analoga." %}
 
 Alla percezione del suo moto perpetuo dovrebbero provvedere i principi della psicologia della forma (della Gestaltpsychologie); gli autori vi hanno fatto affidamento. Hanno pure confidato che, per una specie di induzione, i conoscitori dell’opera di Jean Tinguely la sentissero pure stridere, ansimare, sbuffare e gemere.
 
 L’impianto della tavola è spaziale.
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_005.webp" class="three-quarter" alt="Diagramma di Reinhart dell’impianto spaziale della tavola, con gli assi x, y e z che distinguono il piano verticale della planimetria e della veduta cittadina dal piano orizzontale delle acque." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_005.webp" class="three-quarter" alt="Diagramma di Reinhart dell’impianto spaziale della tavola, con gli assi x, y e z che distinguono il piano verticale della planimetria e della veduta cittadina dal piano orizzontale delle acque." %}
 
 Sul piano verticale (xz) è raffigurata la planimetria e parte della veduta cittadina. Dietro, implicito, è l’ignoto, buio spazio siderale dal quale affiora il nunzio. D’innanzi è collocato quanto “sta prima” della città: l’orografia e l’uomo, impasto di ragione e sentimento.
 
@@ -92,19 +92,19 @@ Dal piano orizzontale (xy), corrispondente alla superficie delle acque, emerge l
 
 D’innanzi si erge e distende il primo piano, elemento canonico della veduta.
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_006.webp" class="three-quarter" alt="Diagramma di Reinhart che isola gli oggetti d’affezione raccolti su un piedistallo in basso a destra della composizione." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_006.webp" class="three-quarter" alt="Diagramma di Reinhart che isola gli oggetti d’affezione raccolti su un piedistallo in basso a destra della composizione." %}
 
 Lo compongono la razionalità di solidi regolari necessaria al governo dello spazio, l’ordine dell’architettura, complice di ragione e sentimento e, infine, gli oggetti d’affezione, tabernacoli dei sentimenti.
 
 La veduta descrive la prima e immediata immagine della città e la rapporta al territorio.
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_007.webp" class="three-quarter" alt="Diagramma di Reinhart della veduta, con la città rapportata al proprio territorio." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_007.webp" class="three-quarter" alt="Diagramma di Reinhart della veduta, con la città rapportata al proprio territorio." %}
 
 Alla Città Analoga si giunge dalle acque, come dire “dal mare”, da ogni dove. Vi si accede attraverso la nuova porta cittadina, esempio di analogia e chiave di interpretazione della tavola.
 
 Un secondo accesso immette direttamente nella planimetria.
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_008.webp" class="three-quarter" alt="Diagramma di Reinhart che identifica con lettere le parti sovrapposte della planimetria — la città reale (B), la città della memoria (C), la città ideale (D) — e l’accesso celato al Castelgrande (A)." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_008.webp" class="three-quarter" alt="Diagramma di Reinhart che identifica con lettere le parti sovrapposte della planimetria — la città reale (B), la città della memoria (C), la città ideale (D) — e l’accesso celato al Castelgrande (A)." %}
 
 È celato e segreto come era allora vivissima la nostra speranza di realizzare il progetto di restauro per il Castel Grande di Bellinzona (A). Un aereo traliccio, percorribile tra la stratificazione delle mura difensive, e un’aerea scaletta a chiocciola, sospesa sopra i resti della torre angolare, avrebbero restituito i camminamenti e la torre senza ricorrere a ricostruzioni; avrebbero contrapposto la provvisorietà dell’uomo e la precarietà dei manufatti ai tempi lunghi della storia, alla permanenza di profonde e radicate esigenze storiche; avrebbero fuso in un’unica esperienza le emozioni prodotte da vertiginose distanze spaziali e temporali.
 

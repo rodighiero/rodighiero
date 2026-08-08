@@ -33,7 +33,7 @@ Each process of establishing a historical identity requires a certain time and s
 
 The references of The Analogous City have been extracted from existing books; a significant part of the archaeological work has been done in both traditional and digital libraries and archives. By identifying myself with the architects of the city, I have tried to recover all publications that the authors selected, photocopied, cut out and put carefully together in creating this collective collage, now kept in the basements of the Centre Pompidou in Paris (Figure 1).
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_001.webp" class="three-quarter" caption="Figure 1. The references identified during the research, returned to their exact positions within the original collage." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_001.webp" class="three-quarter" caption="Figure 1. The references identified during the research, returned to their exact positions within the original collage." %}
 
 For this reason, all bibliographic references already existed as publications in the Spring of 1976, when The Analogous City was composed. Any references from a subsequent date are ascribable to the private archives of the authors.
 
@@ -49,7 +49,7 @@ The work has required time and passion. Initially, references arrived quickly, b
 
 The map is part of a digital installation within the exhibition. The installation consists of a table, on top of which The Analogous City has been reproduced and from which, with the use of augmented reality technology, it has been possible to extrude all references that compose it, so as to make them interactive: by framing the map with a tablet, the camera framing is displayed on the screen, enriched with virtual references. These elements are the signs that form The Analogous City. Superimposed upon the references of the plan, they fluctuate and invite the viewer to discover and explore the collage of The Analogous City, by means of a deconstruction (Figure 2).
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_002.webp" class="three-quarter" caption="Figure 2. The entry point of the museum’s augmented-reality application, where the references appear as floating elements above the artwork." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_002.webp" class="three-quarter" caption="Figure 2. The entry point of the museum’s augmented-reality application, where the references appear as floating elements above the artwork." %}
 
 As a publication, the map offers a similar experience as the installation exhibited at the museum: by downloading the application, it is possible to interact with the map, which replicates at home what visitors have experienced at the museum.
 
@@ -72,19 +72,19 @@ Hereafter, some notes to guide visitors. Words and diagrams reveal the authors�
 
 Cities materialize the multiple, disparate and changing lives of generations of inhabitants, as individuals and in groups; from whom they accept requirements, desires, acquaintances… dreams, fears, hopes and still more yet: everything, to cut it short. More so, they mark the changes imposed by the vagaries of fate, capable of exaltation or annihilation, through the irresponsible slightness of indifference. Complexity is naturally co-substantive of the city.
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_003.webp" class="three-quarter" alt="Reinhart’s schematic of the composition: the inhabitant’s domestic room with its ceiling lamp and window at the left, and the central machine of gears, pinions and flywheels." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_003.webp" class="three-quarter" alt="Reinhart’s schematic of the composition: the inhabitant’s domestic room with its ceiling lamp and window at the left, and the central machine of gears, pinions and flywheels." %}
 
 This, its first distinctive characteristic of undefinable magnitude, is immediately evident from its heterogeneous, multiple and contradictory togetherness: heterogeneous its representation, form and scale dimensions; multiple its contours, orientations, centers, symmetries and vanishing points; contradictory and conflictual its ordering principles.
 
 The first apparition is theatrical and baroque. A mysterious figure – Angel? Youth? Beauty? Messenger, in the mind of the authors – greets and solicits in singular manner the gaze of every visitor directly indicating, with a peremptory gesture of fore-arm and finger, the center of the composition amidst racks, pinions, gears, pins and the flywheels of an unstoppable machine.
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_004.webp" class="three-quarter" alt="Reinhart’s diagram of the radial plan layout of the Analogous City." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_004.webp" class="three-quarter" alt="Reinhart’s diagram of the radial plan layout of the Analogous City." %}
 
 Gestalt principles of form psychology ought to cater for the perception of its perpetual movement. The authors counted on that. They also confided that it induced a sensation of sorts in Jean Tinguely connoisseurs, such that they even felt it screech, pant, puff, and groan.
 
 The picture panel has a spatial layout.
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_005.webp" class="three-quarter" alt="Reinhart’s diagram of the panel’s spatial layout, its x, y and z axes distinguishing the vertical plane of the plan and city landscape from the horizontal plane of the waters." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_005.webp" class="three-quarter" alt="Reinhart’s diagram of the panel’s spatial layout, its x, y and z axes distinguishing the vertical plane of the plan and city landscape from the horizontal plane of the waters." %}
 
 In the vertical plane (xz) is shown the plan layout with partial view of the city landscape. Implicit is the dark, unknown, outer space beyond that from which the messenger emerges. In front is figured whatever “came before” the city: the lie of the land and mankind, a blend of reason and sentiment.
 
@@ -92,19 +92,19 @@ From the horizontal plane (xy), corresponding to expanses of water, emerges the 
 
 Rising up front, the foreground, canonical element of the landscape view, distends itself.
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_006.webp" class="three-quarter" alt="Reinhart’s diagram isolating the objects of affection gathered on a pedestal at the lower right of the composition." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_006.webp" class="three-quarter" alt="Reinhart’s diagram isolating the objects of affection gathered on a pedestal at the lower right of the composition." %}
 
 This composes with the rationality of regular solids, needed to govern space and order architecture in complicity with reason and sentiment; finally with objects of affection as tabernacles of sentiment.
 
 The landscape view as the first, immediate, image of ‘city’ in relation to ‘territory’.
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_007.webp" class="three-quarter" alt="Reinhart’s diagram of the landscape view, the city set in relation to its territory." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_007.webp" class="three-quarter" alt="Reinhart’s diagram of the landscape view, the city set in relation to its territory." %}
 
 One reaches the Analogous City across the water, as if “by sea”, from wherever. One enters it through the new city-gate… an example of analogy and key to interpreting the picture panel.
 
 Directly into the plan layout is introduced a second point of access.
 
-{% include figure.html src="/images/the-analogous-city-the-map/fig_008.webp" class="three-quarter" alt="Reinhart’s diagram lettering the plan’s superimposed parts — the real city (B), the city of memory (C), the ideal city (D) — and the concealed Castelgrande access (A)." %}
+{% include figure-single.html src="/images/the-analogous-city-the-map/fig_008.webp" class="three-quarter" alt="Reinhart’s diagram lettering the plan’s superimposed parts — the real city (B), the city of memory (C), the ideal city (D) — and the concealed Castelgrande access (A)." %}
 
 It is concealed and secret, as was then our very lively hope of executing the restoration project for Castelgrande in Bellinzona (A). An aerial trellis beam leading along the stratification of defensive battlements, and an aerial spiral stair suspended over the remains of the corner tower, would have reinstated the walkways and the tower without recourse to reconstruction techniques; would have pitted provisional human endeavor and precarious manufacture against longer periods of history, against the permanence of deep-rooted historical demands; would have fused, into one, the emotional experiences induced by vertiginous distances, both spatial and temporal.
 

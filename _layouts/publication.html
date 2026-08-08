@@ -4,10 +4,10 @@
   {% assign _excerpt = page.content | strip_html | decode_numeric_entities | truncatewords: 22 | truncate: 160 %}
   {% assign _excerpt_attr = _excerpt | escape_once %}
   <meta charset="utf-8">
-  {% include head-common.html %}
+  {% include site-head.html %}
   {% assign _ptype = site.data.publication_types[page.type] %}
-  {% capture _byline %}{% include byline.html item=page %}{% endcapture %}{% assign _byline = _byline | strip %}
-  {%- comment -%} Full byline is used in the page body via authors.html; here in <title> it's capped to keep the tag within Google's ~60-char display budget on multi-author papers. {%- endcomment -%}
+  {% capture _byline %}{% include byline-text.html item=page %}{% endcapture %}{% assign _byline = _byline | strip %}
+  {%- comment -%} Full byline is used in the page body via byline-full.html; here in <title> it's capped to keep the tag within Google's ~60-char display budget on multi-author papers. {%- endcomment -%}
   {% assign _title_names = page.author | default: page.editor | split: ' and ' %}
   {% assign _title_byline = _byline %}
   {% if _title_names.size > 2 %}{% assign _title_byline = _title_names[0] | append: ' et al.' %}{% endif %}
@@ -91,8 +91,8 @@
   }
   </script>
   <style>
-{% include nunito.css %}
-{% include main.css %}
+{% include styles-font.css %}
+{% include styles-base.css %}
     body { max-width: 660px; line-height: var(--lh-normal); }
     h1 { font-size: var(--text-xxl); font-weight: 500; margin: 0.6rem 0 0.6rem; }
     .authors { margin-bottom: 0.6rem; font-size: var(--text-base); }
@@ -238,7 +238,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  {% include mode-toggle.html %}
+  {% include site-toggle.html %}
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
   {%- comment -%} Neighbours in the canonical order come precomputed from
   _plugins/ordered_publications.rb. {%- endcomment -%}
@@ -250,10 +250,10 @@
   <div class="title-block">
   {% include card-meta.html item=page %}
   <h1>{{ page.title }}</h1>
-  {% include authors.html item=page %}
+  {% include byline-full.html item=page %}
   {% if page.doi %}<div class="doi"><button class="cite-ref-btn pill-btn" type="button">Cite</button><button class="print-btn pill-btn" type="button">Print</button><a class="pill-btn" href="{{ page.doi }}">{% if page.doi contains 'doi.org/' %}{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}URL{% endif %}</a></div>{% endif %}
   </div>
-  {% if page.doi %}{% include citation.html item=page %}{% endif %}
+  {% if page.doi %}{% include citation-block.html item=page %}{% endif %}
   <div class="content">
     {% assign _content_parts = content | split: '<!--more-->' %}
     {% if _content_parts.size > 1 %}<div class="body"><div class="abstract">{{ _content_parts[0] }}</div>{{ _content_parts[1] | autolink_urls }}</div>{% else %}<div class="body">{{ content | autolink_urls }}</div>{% endif %}
@@ -274,7 +274,7 @@
   {% include publication-nav.html modifier="publication-nav-footer" label="Project navigation, end of page" %}
   </main>
 
-  {% include common-scripts.html %}
+  {% include site-scripts.html %}
   <script>
     // Ensure all lazy-loaded figures are fetched before printing.
     // beforeprint flips them to eager; for Cmd/Ctrl+P we intercept and await loading first so menu-initiated prints capture the images too.
@@ -314,6 +314,6 @@
       h.appendChild(a);
     });
   </script>
-  {% include analytics.html %}
+  {% include site-analytics.html %}
 </body>
 </html>

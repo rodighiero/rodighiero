@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  {% include head-common.html %}
+  {% include site-head.html %}
   <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}var ok={gallery:1,network:1};var pref=ok[v]?v:'gallery';document.documentElement.dataset.preferredView=pref;document.documentElement.dataset.initialView=(window.innerWidth<=1024)?'gallery':pref;var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='0'?'0':'1')}()</script>
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
@@ -101,8 +101,8 @@
   }
   </script>
   <style>
-{% include nunito.css %}
-{% include main.css %}
+{% include styles-font.css %}
+{% include styles-base.css %}
     /* ── Bio toggle ── */
     .bio-toggle {
       display: inline-flex;
@@ -590,7 +590,7 @@
 <body data-view="gallery">
   <script>document.body.dataset.view = document.documentElement.dataset.initialView || 'gallery'</script>
   <a class="skip-link" href="#main">Skip to content</a>
-  {% include mode-toggle.html %}
+  {% include site-toggle.html %}
   <button class="bio-toggle" type="button" aria-controls="bio" aria-expanded="true" aria-label="Hide bio" title="Hide bio">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
     <span class="bio-toggle-label" aria-hidden="true">Show bio</span>
@@ -674,9 +674,9 @@
       into the dated flow below (each just before its newest member). See _data/home_cards.yml
       and scripts/build-network.py. {%- endcomment -%}
       {% assign _first_actions = site.data.home_cards.actions | where: "pin", "first" %}
-      {% for _action in _first_actions %}{% include action-card-plain.html action=_action class="" %}{% endfor %}
+      {% for _action in _first_actions %}{% include card-action.html action=_action class="" %}{% endfor %}
       {% for _action in site.data.home_cards.actions %}
-      {% unless _action.pin %}{% include action-card-plain.html action=_action class="" %}{% endunless %}
+      {% unless _action.pin %}{% include card-action.html action=_action class="" %}{% endunless %}
       {% endfor %}
 
       {%- comment -%} One ordered list in year-desc / title-asc order (Forthcoming first), so a
@@ -689,7 +689,7 @@
       {%- comment -%} A network-view card leads the dated flow: emit it once, right after the
       forthcoming works (before the first publication carrying a real year). {%- endcomment -%}
       {% if _net_done == false and publication.year != 'Forthcoming' %}
-      {% include action-card-plain.html eyebrow="Action" venue="Publication network" label="The Shape of a Body of Work" sublabel="This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." act="view:network" year="now" media="network-preview.svg" %}
+      {% include card-action.html eyebrow="Action" venue="Publication network" label="The Shape of a Body of Work" sublabel="This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." act="view:network" year="now" media="network-preview.svg" %}
       {% assign _net_done = true %}
       {% endif %}
       {%- comment -%} Auto cluster filter cards are distributed by the midpoint of their span:
@@ -706,7 +706,7 @@
       {% assign _cluster_n = _cluster_n | plus: 1 %}
       {% capture _cluster_media %}network-cluster-{{ _cluster.id }}.svg{% endcapture %}
       {% capture _cluster_venue %}Research cluster {{ _cluster_n }}{% endcapture %}
-      {% include action-card-plain.html eyebrow="Filter" venue=_cluster_venue label=_cluster.title sublabel=_cluster.description act=_cluster.action slugs=_cluster.slugs year=_cluster.span filterlabel=_cluster.filter_label media=_cluster_media %}
+      {% include card-action.html eyebrow="Filter" venue=_cluster_venue label=_cluster.title sublabel=_cluster.description act=_cluster.action slugs=_cluster.slugs year=_cluster.span filterlabel=_cluster.filter_label media=_cluster_media %}
       {% endif %}{% endfor %}
       {% assign _type_label = site.data.publication_types[publication.type].label %}
       {% capture _lang_terms %}{% if publication.lang == 'it' %}italian italiano{% elsif publication.lang == 'fr' %}french français francais{% else %}english{% endif %}{% endcapture %}
@@ -723,7 +723,7 @@
         {% endif %}
         {% include card-meta.html item=publication %}
         <h2 class="card-title"><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
-        {% include authors-home.html item=publication %}
+        {% include byline-home.html item=publication %}
       </div>
       {% endfor %}
     </div>
@@ -1537,7 +1537,7 @@
       });
     }
   </script>
-  {% include common-scripts.html %}
-  {% include analytics.html %}
+  {% include site-scripts.html %}
+  {% include site-analytics.html %}
 </body>
 </html>

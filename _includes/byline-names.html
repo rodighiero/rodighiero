@@ -1,5 +1,5 @@
 {%- comment -%}
-  Formats one byline name list for the homepage (see authors-home.html).
+  Formats one byline name list for the homepage (see byline-home.html).
   Params:
     include.raw          - raw " and "-joined name string (a front-matter field)
     include.prefix_with  - prefix used when "Rodighiero" IS in the list (e.g. "with ")
@@ -10,7 +10,7 @@
 {%- assign me = "Rodighiero" -%}
 {%- comment -%} Liquid has no array literal, so names are appended with a sentinel
 and split back apart. "~~~" is the convention across the byline includes (see also
-authors-home.html, citation.html); it never occurs in the front matter it splits. {%- endcomment -%}
+byline-home.html, citation-block.html); it never occurs in the front matter it splits. {%- endcomment -%}
 {%- assign SEP = "~~~" -%}
 {%- if include.raw -%}
   {%- assign raw_arr = include.raw | split: " and " -%}
