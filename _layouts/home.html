@@ -721,7 +721,7 @@
           <img src="{{ _thumb }}" alt="{{ publication.title | escape }}{% if publication.year %} — {{ publication.year }}{% endif %}" {% if _card_i <= 4 %}fetchpriority="high"{% elsif _card_i > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width }}" height="{{ _thumb_dims.height }}">
         </div>
         {% endif %}
-        {% include meta-line.html item=publication %}
+        {% include card-meta.html item=publication %}
         <h2 class="card-title"><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
         {% include authors-home.html item=publication %}
       </div>
