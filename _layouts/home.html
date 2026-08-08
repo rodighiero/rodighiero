@@ -263,12 +263,13 @@
     /* ── Publications (shared) ── */
     #publications { position: relative; }
     body[data-view="gallery"] #publications:not(.ready) { visibility: hidden; }
-    /* ── Card base: publication tiles and plain action/cluster cards both carry the
-       .card class, which holds their common metrics — padding, radius, cursor, hover —
-       plus (below) title size/margin, sub-row gap and the meta-line. They keep two
-       deliberate differences on top: the publication title is bold and the tile is
-       frameless; the action/filter title is regular weight and its tile carries a
-       hairline border (see the action/filter block below). ── */
+    /* ── Card base: publication tiles and plain action/cluster cards all carry the
+       .card class, which holds everything they have in common — padding, radius,
+       cursor, hover/focus feedback, gallery positioning — plus (below) title
+       size/margin, sub-row gap and the meta-line. They keep two deliberate differences
+       on top: the publication title is bold and the tile is frameless; the
+       action/filter title is regular weight and its tile carries a hairline border
+       (see the action/filter block below). ── */
     .card {
       padding: 0.6rem;
       border-radius: 4px;
@@ -276,42 +277,42 @@
       transition: background 0.15s ease, border-color 0.15s ease;
     }
     .card:hover,
-    .publication:has(.card-meta h2 a:focus-visible) { background: var(--tint-hover); }
+    .publication:has(.card-meta h2 a:focus-visible) { background: var(--tint-hover); border-color: var(--border-hover); }
+    .card:focus-visible,
+    .publication:has(.card-meta h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
 
-    /* Every card titles itself with .card-title (publication: <h2>, action: <span>),
-       so one rule sets the box as well as the type; only weight/style differ per card.
+    /* Every card titles itself with .card-title (publication: <h2>, action/filter: <span>),
+       so one rule sets the box, type and default weight; only the publication overrides it.
        `inline-block` is load-bearing: its top margin does not collapse with the meta
        line's bottom margin, so the gap above a title is 0.3 + 0.3rem — a block title
        would collapse the pair to 0.3rem and sit tighter than the publication beside it. */
     .card-title {
       font-size: var(--text-base);
+      font-weight: 400;
       margin: 0.3rem 0 0;
       line-height: var(--lh-tight);
       display: inline-block;
       max-width: 100%;
     }
     .publication .card-title { font-weight: 500; }
-    .action .card-title,
-    .filter .card-title { font-weight: 400; }
 
     /* Shared sub-row: a publication's authors and an action/filter card's description sit
        the same distance below the title and share one typography — main.css sets the
-       type on `.authors, .card-sub` together, so only the gap belongs here. */
+       type on `.authors, .card-sub` together, so only the gap belongs here. .card-sub only
+       ever appears inside an action/filter card, so it needs no ancestor qualifier. */
     .card-meta .authors,
-    .action .card-sub,
-    .filter .card-sub { margin-top: 0.4rem; }
+    .card-sub { margin-top: 0.4rem; }
 
     /* Shared meta-line (both cards wrap it in .card-meta). */
     .card-meta .meta-line { font-size: var(--text-xxs); line-height: var(--lh-loose); }
 
-    /* Whatever fills a media slot spans it and keeps its own aspect ratio. */
+    /* Whatever fills a media slot spans it and keeps its own aspect ratio. .card-media
+       only ever appears inside an action/filter card, so it needs no ancestor qualifier. */
     .publication .card-img img,
-    .action .card-media .network-preview,
-    .filter .card-media .network-preview { width: 100%; height: auto; display: block; }
+    .card-media .network-preview { width: 100%; height: auto; display: block; }
     .publication .card-img.bordered img { border: 1px solid var(--border); }
     .card-meta h2 a { color: inherit; text-decoration: none; }
     .card-meta h2 a:focus-visible { outline: none; }
-    .publication:has(.card-meta h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
 
     /* ── Special cards (shown in gallery only) ── Two kinds: .action (a one-off
        view/type/search trigger) and .filter (a cluster tile, which sets a persistent
@@ -320,7 +321,9 @@
        rule below since the only real difference between them is behavioural, not
        visual — undo the UA's centered text and its own font/color, add the hairline
        border (background: none clears the UA <button> face), and lay out the rows of
-       their <span> markup as blocks, which a publication card's <div>s have by default. */
+       their <span> markup as blocks, which a publication card's <div>s have by default.
+       (.card-meta/.meta-line/.card-sub go block unconditionally: a no-op on a
+       publication's already-block <div>, the fix needed for an action/filter <span>.) */
     .action,
     .filter {
       display: block;
@@ -333,17 +336,10 @@
       border: 1px solid var(--border);
       background: none;
     }
-    .action:hover,
-    .filter:hover { border-color: var(--border-hover); }
-    .action:focus-visible,
-    .filter:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
-    .action .card-meta, .action .meta-line, .action .card-sub,
-    .filter .card-meta, .filter .meta-line, .filter .card-sub { display: block; }
+    .card-meta, .meta-line, .card-sub { display: block; }
 
-    /* ── Gallery view (masonry) ── */
-    body[data-view="gallery"] .publication,
-    body[data-view="gallery"] .action,
-    body[data-view="gallery"] .filter {
+    /* ── Gallery view (masonry) ── Every card kind is positioned identically. */
+    body[data-view="gallery"] .card {
       position: absolute;
       top: 0;
       left: 0;
@@ -354,8 +350,7 @@
        card's inlined graph miniature — framed once, so either sits the same among the tiles. */
     body[data-view="gallery"] .publication .card-img,
     #network-view .details .publication .card-img,
-    .action .card-media,
-    .filter .card-media {
+    .card-media {
       display: block;
       width: 100%;
       margin-bottom: 0.8rem;
@@ -779,9 +774,9 @@
     var container = document.getElementById('publications');
     var viewButtons = document.querySelectorAll('.view-toggle button');
     var total = publications.length;
-    // Masonry packs both real publication cards and the .action/.filter tiles;
-    // count/search/network keep operating on .publication only.
-    var tiles = container ? container.querySelectorAll(':scope > .publication, :scope > .action, :scope > .filter') : publications;
+    // Masonry packs every .card tile (publications + .action/.filter); count/search/network
+    // keep operating on .publication only.
+    var tiles = container ? container.querySelectorAll(':scope > .card') : publications;
     var specialCards = container ? container.querySelectorAll('.action, .filter') : [];
 
     // ── Masonry layout (gallery only) ──
