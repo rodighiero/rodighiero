@@ -17,6 +17,9 @@
   /* Tracking */
   --tracking-caps: 0.1em;
 
+  /* Card padding, shared by every card-shaped block (gallery cards, network lede/details) */
+  --card-pad: 0.6rem;
+
   --fg: #000;
   --bg: #fff;
   --muted: rgba(0,0,0,0.7);
@@ -90,7 +93,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 main:focus { outline: none; }
 .card-meta {
   font-size: var(--text-xs);
-  line-height: var(--lh-normal);
+  line-height: var(--lh-loose);
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: var(--tracking-caps);
@@ -99,9 +102,11 @@ main:focus { outline: none; }
 .card-meta .venue { font-style: italic; }
 /* The line under a card title: an action or filter card's description. */
 .card-text { font-size: var(--text-xs); line-height: var(--lh-normal); color: var(--fg); }
-.cite-ref-btn { display: inline-flex; background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 0 0.55rem; font: inherit; font-size: var(--text-xs); cursor: pointer; border-radius: 2px; line-height: var(--lh-normal); }
-.cite-ref-btn:hover { color: var(--fg); border-color: var(--border-hover); }
-.cite-ref-btn.copied { color: var(--fg); border-color: var(--fg); }
+/* Shared pill-button chrome — applied alongside behavioral hook classes
+   like .cite-ref-btn/.print-btn, so JS selectors stay decoupled from style. */
+.pill-btn { display: inline-flex; background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 0 0.55rem; font: inherit; font-size: var(--text-xs); cursor: pointer; border-radius: 2px; line-height: var(--lh-normal); text-decoration: none; }
+.pill-btn:hover { color: var(--fg); border-color: var(--border-hover); }
+.pill-btn.copied { color: var(--fg); border-color: var(--fg); }
 
 /* ── Mode toggle ── */
 .mode-toggle {
