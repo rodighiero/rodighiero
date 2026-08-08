@@ -773,6 +773,17 @@
     var tiles = container ? container.querySelectorAll(':scope > .card') : publications;
     var specialCards = container ? container.querySelectorAll('.action, .filter') : [];
 
+    // Coalesces bursts of calls (e.g. every tick of a window resize) into one
+    // trailing call `delay` ms after the last one.
+    function debounce(fn, delay) {
+      var timer = null;
+      return function() {
+        var args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function() { fn.apply(null, args); }, delay);
+      };
+    }
+
     // ── Masonry layout (gallery only) ──
     var GAP_X = 24;
     function columnCount(w) {
@@ -872,11 +883,7 @@
     }
     // Debounced for the search box: the URL is never read back mid-typing, so
     // there's no need to sync it on every keystroke.
-    var urlUpdateTimer = null;
-    function scheduleURLUpdate() {
-      clearTimeout(urlUpdateTimer);
-      urlUpdateTimer = setTimeout(updateURL, 200);
-    }
+    var scheduleURLUpdate = debounce(updateURL, 200);
 
     function setView(view, persist) {
       var prev = document.body.dataset.view;
@@ -942,6 +949,16 @@
         if (document.body.dataset.view !== saved) setView(saved, false);
       }
     }
+    // Clears the search input and any structured (type/cluster) filter, shared by
+    // the active-view-button reset and the global Escape handler below.
+    function resetFilters() {
+      if (searchInput) searchInput.value = '';
+      activeType = null;
+      clearClusterFilter();
+      activeFilterLabel = null;
+      applySearch();
+      updateURL();
+    }
     viewButtons.forEach(function(b) {
       b.addEventListener('click', function() {
         var clicked = this.dataset.view;
@@ -949,12 +966,7 @@
           // Clicking the active view button resets the view: clear the search
           // filter (text + type + cluster) and, on network, drop any node selection.
           if ((searchInput && searchInput.value) || structuredFilterActive()) {
-            if (searchInput) searchInput.value = '';
-            activeType = null;
-            clearClusterFilter();
-            activeFilterLabel = null;
-            applySearch();
-            updateURL();
+            resetFilters();
           }
           if (clicked === 'network' && networkClearSelection) networkClearSelection();
         } else {
@@ -963,7 +975,7 @@
       });
     });
     setView(document.body.dataset.view || 'gallery', false);
-    window.addEventListener('resize', applyResponsiveView);
+    window.addEventListener('resize', debounce(applyResponsiveView, 150));
 
     function normalize(s) {
       return s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
@@ -1151,7 +1163,7 @@
         e.preventDefault();
         searchInput.focus();
       } else if (e.key === 'Escape') {
-        if (searchInput.value || structuredFilterActive()) { searchInput.value = ''; activeType = null; clearClusterFilter(); activeFilterLabel = null; applySearch(); updateURL(); }
+        if (searchInput.value || structuredFilterActive()) resetFilters();
         if (networkClearSelection) networkClearSelection();
         var active = document.activeElement;
         if (active && active.classList && active.classList.contains('node')) active.blur();
@@ -1349,14 +1361,10 @@
             if (active && active !== this && active.classList && active.classList.contains('node')) {
               active.blur();
             }
-            d3.select(this).classed('hover', true);
-            d3.select(labelByIdx[d.i]).classed('hover', true);
-            setLabel(labelByIdx[d.i], d.title);
+            setNodeHover(d3.select(this), d.i, true);
           })
-          .on('mouseleave', function(e, d) {
-            d3.select(this).classed('hover', false);
-            d3.select(labelByIdx[d.i]).classed('hover', false);
-            setLabel(labelByIdx[d.i], '');
+          .on('mouseleave blur', function(e, d) {
+            setNodeHover(d3.select(this), d.i, false);
           })
           .on('click', function(e, d) {
             e.stopPropagation();
@@ -1367,14 +1375,7 @@
           // Keyboard parity: focus previews the title (like hover); Enter/Space
           // selects (like click); Esc drops the selection.
           .on('focus', function(e, d) {
-            d3.select(this).classed('hover', true);
-            d3.select(labelByIdx[d.i]).classed('hover', true);
-            setLabel(labelByIdx[d.i], d.title);
-          })
-          .on('blur', function(e, d) {
-            d3.select(this).classed('hover', false);
-            d3.select(labelByIdx[d.i]).classed('hover', false);
-            setLabel(labelByIdx[d.i], '');
+            setNodeHover(d3.select(this), d.i, true);
           })
           .on('keydown', function(e, d) {
             if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
@@ -1401,6 +1402,13 @@
           if (diff < bestDiff) { bestDiff = diff; best = i; }
         }
         return [words.slice(0, best).join(' '), words.slice(best).join(' ')];
+      }
+      // Shared by node hover/focus (mouse and keyboard) and the neighbor-list
+      // rows that mirror hovering a node on the canvas.
+      function setNodeHover(d3Node, idx, on) {
+        d3Node.classed('hover', on);
+        d3.select(labelByIdx[idx]).classed('hover', on);
+        setLabel(labelByIdx[idx], on ? nodes[idx].title : '');
       }
       // Titles always render above the node: single line at y=-10, or a balanced
       // two-line split at y=-25/-12. No above/below flip — placement is consistent.
@@ -1473,16 +1481,8 @@
           var idx = parseInt(li.dataset.nodeI, 10);
           if (isNaN(idx)) return;
           var g = nodeSel.filter(function(n) { return n.i === idx; });
-          li.addEventListener('mouseenter', function() {
-            g.classed('hover', true);
-            d3.select(labelByIdx[idx]).classed('hover', true);
-            setLabel(labelByIdx[idx], nodes[idx].title);
-          });
-          li.addEventListener('mouseleave', function() {
-            g.classed('hover', false);
-            d3.select(labelByIdx[idx]).classed('hover', false);
-            setLabel(labelByIdx[idx], '');
-          });
+          li.addEventListener('mouseenter', function() { setNodeHover(g, idx, true); });
+          li.addEventListener('mouseleave', function() { setNodeHover(g, idx, false); });
         });
       }
       function escapeHtml(s) {
@@ -1514,15 +1514,13 @@
 
       // Debounce: re-fit the baked layout to the new stage size (cheap — just a
       // scale + translate, no simulation).
-      var resizeTimer = null;
+      var scheduleNetworkResize = debounce(function() {
+        fitLayout();
+        placeNodes();
+      }, 150);
       window.addEventListener('resize', function() {
         if (document.body.dataset.view !== 'network') return;
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function() {
-          resizeTimer = null;
-          fitLayout();
-          placeNodes();
-        }, 150);
+        scheduleNetworkResize();
       });
     }
   </script>
