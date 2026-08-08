@@ -276,9 +276,9 @@
       transition: background 0.15s ease, border-color 0.15s ease;
     }
     .card:hover,
-    .publication:has(.card-meta h2 a:focus-visible) { background: var(--tint-hover); border-color: var(--border-hover); }
+    .publication:has(h2 a:focus-visible) { background: var(--tint-hover); border-color: var(--border-hover); }
     .card:focus-visible,
-    .publication:has(.card-meta h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
+    .publication:has(h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
 
     /* Every card titles itself with .card-title (publication: <h2>, action/filter: <span>),
        so one rule sets the box, type and weight for all three kinds.
@@ -296,13 +296,13 @@
 
     /* Shared sub-row: a publication's authors and an action/filter card's description sit
        the same distance below the title and share one typography — main.css sets the
-       type on `.authors, .card-sub` together, so only the gap belongs here. .card-sub only
-       ever appears inside an action/filter card, so it needs no ancestor qualifier. */
-    .card-meta .authors,
+       type on `.authors, .card-sub` together, so only the gap belongs here. Neither needs
+       an ancestor qualifier: each only ever appears once, directly inside a .card. */
+    .authors,
     .card-sub { margin-top: 0.4rem; }
 
-    /* Shared meta-line (both cards wrap it in .card-meta). */
-    .card-meta .meta-line { font-size: var(--text-xxs); line-height: var(--lh-loose); }
+    /* Shared meta-line, likewise unqualified. */
+    .meta-line { font-size: var(--text-xxs); line-height: var(--lh-loose); }
 
     /* Whatever fills a media slot spans it and keeps its own aspect ratio. .card-media is
        the one wrapper class for both content types — a publication's <img> thumbnail or
@@ -312,8 +312,9 @@
     .card-media img,
     .card-media .network-preview { width: 100%; height: auto; display: block; }
     .card-media.bordered img { border: 1px solid var(--border); }
-    .card-meta h2 a { color: inherit; text-decoration: none; }
-    .card-meta h2 a:focus-visible { outline: none; }
+    /* The title link is the only <h2> on the page, so it needs no ancestor qualifier either. */
+    h2 a { color: inherit; text-decoration: none; }
+    h2 a:focus-visible { outline: none; }
 
     /* ── Special cards (shown in gallery only) ── Two kinds: .action (a one-off
        view/type/search trigger) and .filter (a cluster tile, which sets a persistent
@@ -323,8 +324,8 @@
        visual — undo the UA's centered text and its own font/color, add the hairline
        border (background: none clears the UA <button> face), and lay out the rows of
        their <span> markup as blocks, which a publication card's <div>s have by default.
-       (.card-meta/.meta-line/.card-sub go block unconditionally: a no-op on a
-       publication's already-block <div>, the fix needed for an action/filter <span>.) */
+       (.meta-line/.card-sub go block unconditionally: a no-op on a publication's
+       already-block <div>, the fix needed for an action/filter <span>.) */
     .action,
     .filter {
       display: block;
@@ -337,7 +338,7 @@
       border: 1px solid var(--border);
       background: none;
     }
-    .card-meta, .meta-line, .card-sub { display: block; }
+    .meta-line, .card-sub { display: block; }
 
     /* ── Gallery view (masonry) ── Every card kind is positioned identically. */
     body[data-view="gallery"] .card {
@@ -512,7 +513,7 @@
       border-top: none;
     }
     #network-view .details .publication:hover { background: none; }
-    #network-view .details .publication .card-meta h2 a:hover { text-decoration: underline; }
+    #network-view .details .publication h2 a:hover { text-decoration: underline; }
     #network-view .details h3 {
       font-size: var(--text-xxs);
       text-transform: uppercase;
@@ -725,11 +726,9 @@
           <img src="{{ _thumb }}" alt="{{ publication.title | escape }}{% if publication.year %} — {{ publication.year }}{% endif %}" {% if _card_i <= 4 %}fetchpriority="high"{% elsif _card_i > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width }}" height="{{ _thumb_dims.height }}">
         </div>
         {% endif %}
-        <div class="card-meta">
-          {% include meta-line.html item=publication %}
-          <h2 class="card-title"><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
-          {% include authors-home.html item=publication %}
-        </div>
+        {% include meta-line.html item=publication %}
+        <h2 class="card-title"><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
+        {% include authors-home.html item=publication %}
       </div>
       {% endfor %}
     </div>
@@ -1192,7 +1191,7 @@
     // Make the whole card a target for the publication page,
     // without breaking inline links or text selection.
     publications.forEach(function(p) {
-      var titleLink = p.querySelector('.card-meta h2 a');
+      var titleLink = p.querySelector('h2 a');
       if (!titleLink) return;
       var href = titleLink.getAttribute('href');
       p.addEventListener('click', function(e) {
