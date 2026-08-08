@@ -269,7 +269,7 @@
        is bold roman and the tile is frameless; the action title is italic and its
        tile carries a hairline border (see the action-card block below). ── */
     .publication,
-    .action-card.card-plain {
+    .action-card.special-card {
       padding: 0.6rem;
       border-radius: 4px;
       cursor: pointer;
@@ -277,7 +277,7 @@
     }
     .publication:hover,
     .publication:has(.card-meta h2 a:focus-visible),
-    .action-card.card-plain:hover { background: var(--tint-hover); }
+    .action-card.special-card:hover { background: var(--tint-hover); }
 
     /* Every card titles itself with .card-title (publication: <h2>, action: <span>),
        so one rule sets the box as well as the type; only weight/style differ per card.
@@ -292,29 +292,30 @@
       max-width: 100%;
     }
     .publication .card-title { font-weight: 500; }
-    .card-plain .card-title { font-weight: 400; font-style: italic; }
+    .special-card .card-title { font-weight: 400; font-style: italic; }
 
     /* Shared sub-row: a publication's authors and an action card's description sit
        the same distance below the title and share one typography — main.css sets the
        type on `.authors, .card-sub` together, so only the gap belongs here. */
     .card-meta .authors,
-    .card-plain .card-sub { margin-top: 0.4rem; }
+    .special-card .card-sub { margin-top: 0.4rem; }
 
     /* Shared meta-line (both cards wrap it in .card-meta). */
     .card-meta .meta-line { font-size: var(--text-xxs); line-height: var(--lh-loose); }
 
     /* Whatever fills a media slot spans it and keeps its own aspect ratio. */
     .publication .card-img img,
-    .card-plain .card-media .network-preview { width: 100%; height: auto; display: block; }
+    .special-card .card-media .network-preview { width: 100%; height: auto; display: block; }
     .publication .card-img.bordered img { border: 1px solid var(--border); }
     .card-meta h2 a { color: inherit; text-decoration: none; }
     .card-meta h2 a:focus-visible { outline: none; }
     .publication:has(.card-meta h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
 
     /* ── Special cards (news + action tiles; shown in gallery only) ──
-       .special-card needs no rule of its own: it only marks the tiles the count /
-       search / network logic must skip, and tells the masonry to place them. The boxed
-       surface belongs to the news card alone. */
+       .special-card marks every tile the count/search/network logic must skip and tells
+       the masonry to place them; action/cluster tiles also style through it directly
+       (border, background, title and sub-row layout below) — the news card's own boxed
+       surface is layered on top via .news-card. */
     .news-card {
       padding: 0.9rem 1rem;
       border: 1px solid var(--border);
@@ -351,14 +352,15 @@
     }
     .action-card:hover { border-color: var(--border-hover); }
     .action-card:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
-    /* .card-plain takes the shared card base above (padding, radius, hover, title and
-       sub-row metrics) and adds only what makes an action tile distinct: the hairline
-       border (background: none clears the UA <button> face), plus block display for the
-       rows of its <span> markup, which a publication card's <div>s have by default. */
-    .action-card.card-plain { border: 1px solid var(--border); background: none; }
-    .card-plain .card-meta,
-    .card-plain .meta-line,
-    .card-plain .card-sub { display: block; }
+    /* An action/cluster tile takes the shared card base above (padding, radius, hover,
+       title and sub-row metrics, via .action-card.special-card) and adds only what makes
+       it distinct: the hairline border (background: none clears the UA <button> face),
+       plus block display for the rows of its <span> markup, which a publication card's
+       <div>s have by default. */
+    .action-card.special-card { border: 1px solid var(--border); background: none; }
+    .special-card .card-meta,
+    .special-card .meta-line,
+    .special-card .card-sub { display: block; }
 
     /* ── Gallery view (masonry) ── */
     body[data-view="gallery"] .publication,
@@ -373,7 +375,7 @@
        inlined graph miniature — framed once, so either sits the same among the tiles. */
     body[data-view="gallery"] .publication .card-img,
     #network-view .details .publication .card-img,
-    .card-plain .card-media {
+    .special-card .card-media {
       display: block;
       width: 100%;
       margin-bottom: 0.8rem;
