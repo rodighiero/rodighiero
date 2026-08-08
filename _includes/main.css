@@ -89,7 +89,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 }
 .skip-link:focus { top: 0.5rem; outline: 2px solid var(--fg); outline-offset: 2px; }
 main:focus { outline: none; }
-.meta-line {
+.card-meta {
   font-size: var(--text-xs);
   line-height: var(--lh-normal);
   color: var(--muted);
@@ -97,10 +97,10 @@ main:focus { outline: none; }
   letter-spacing: var(--tracking-caps);
   margin-bottom: 0.3rem;
 }
-.meta-line .venue { font-style: italic; }
+.card-meta .venue { font-style: italic; }
 /* The line under a card title: a publication's authors, or an action card's
-   description (.card-sub). One rule, so the two never drift apart. */
-.authors, .card-sub { font-size: var(--text-xs); line-height: var(--lh-normal); color: var(--fg); }
+   description (.card-text). One rule, so the two never drift apart. */
+.authors, .card-text { font-size: var(--text-xs); line-height: var(--lh-normal); color: var(--fg); }
 .cite-ref-btn { display: inline-flex; background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 0 0.55rem; font: inherit; font-size: var(--text-xs); cursor: pointer; border-radius: 2px; line-height: var(--lh-normal); }
 .cite-ref-btn:hover { color: var(--fg); border-color: var(--border-hover); }
 .cite-ref-btn.copied { color: var(--fg); border-color: var(--fg); }

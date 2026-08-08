@@ -294,15 +294,13 @@
       max-width: 100%;
     }
 
-    /* Shared sub-row: a publication's authors and an action/filter card's description sit
-       the same distance below the title and share one typography — main.css sets the
-       type on `.authors, .card-sub` together, so only the gap belongs here. Neither needs
-       an ancestor qualifier: each only ever appears once, directly inside a .card. */
-    .authors,
-    .card-sub { margin-top: 0.4rem; }
+    /* Shared sub-row: a publication's authors and an action/filter card's description now
+       render through one class, .card-text (main.css sets its type together with the
+       publication-page's own `.authors`), so only the gap belongs here. */
+    .card-text { margin-top: 0.4rem; }
 
     /* Shared meta-line, likewise unqualified. */
-    .meta-line { font-size: var(--text-xxs); line-height: var(--lh-loose); }
+    .card-meta { font-size: var(--text-xxs); line-height: var(--lh-loose); }
 
     /* Whatever fills a media slot spans it and keeps its own aspect ratio. .card-media is
        the one wrapper class for both content types — a publication's <img> thumbnail or
@@ -324,7 +322,7 @@
        visual — undo the UA's centered text and its own font/color, add the hairline
        border (background: none clears the UA <button> face), and lay out the rows of
        their <span> markup as blocks, which a publication card's <div>s have by default.
-       (.meta-line/.card-sub go block unconditionally: a no-op on a publication's
+       (.card-meta/.card-text go block unconditionally: a no-op on a publication's
        already-block <div>, the fix needed for an action/filter <span>.) */
     .action,
     .filter {
@@ -338,7 +336,7 @@
       border: 1px solid var(--border);
       background: none;
     }
-    .meta-line, .card-sub { display: block; }
+    .card-meta, .card-text { display: block; }
 
     /* ── Gallery view (masonry) ── Every card kind is positioned identically. */
     body[data-view="gallery"] .card {
