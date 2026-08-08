@@ -31,7 +31,7 @@ This article expands on the notion that it can be reductive to speak only about 
 
 The idea was to represent the Digital Humanities (DH) domain as a pattern that could be beautiful and ductile, allowing it to be used as a brand image for producing posters, covers, banners, and so on. The DHLAB, the laboratory in Digital Humanities at EPFL and one of the organizers of the conference, accomplished this task by using the conference data set—in particular the submission information. By analyzing this data it was possible to create a network visualization based on authors and keywords derived from the metadata found in all papers and posters accepted for the conference. All the keywords of each document were linked, as well as all the authors of each document. Then the authors and keywords of each document were linked. The three sets of links were merged to form a unique network that provided a representation of the DH community’s complexity (see Figure 1).
 
-{% include figure.html class="three-quarter" src="/images/representing-the-digital-humanities-community-unveiling-the-social-network-visualization-of-an-international-conference/fig_001.webp" caption="Figure 1. The network visualization based on authors and keywords derived from publications." %}
+{% include figure-single.html class="three-quarter" src="/images/representing-the-digital-humanities-community-unveiling-the-social-network-visualization-of-an-international-conference/fig_001.webp" caption="Figure 1. The network visualization based on authors and keywords derived from publications." %}
 
 ## The Authors Network
 
@@ -39,13 +39,13 @@ Subsequently the original network was split in two: the first representing the a
 
 This network represents all the authors attending the conference who had entered at least one submission. The authors in the middle of the network are the most linked, both because of their co-authoring and because of common keywords. In fact, this is not just a network showing who published with whom, but also a network displaying authors with shared keywords—in other words, who worked on the same theme (see Figure 2).
 
-{% include figure.html class="three-quarter" src="/images/representing-the-digital-humanities-community-unveiling-the-social-network-visualization-of-an-international-conference/fig_002.webp" caption="Figure 2. Conference authors represented by co-authoring and shared keywords." %}
+{% include figure-single.html class="three-quarter" src="/images/representing-the-digital-humanities-community-unveiling-the-social-network-visualization-of-an-international-conference/fig_002.webp" caption="Figure 2. Conference authors represented by co-authoring and shared keywords." %}
 
 The force-directed graph, arranged by combining the ForceAtlas 2 and Fruchterman–Reingold algorithms, makes the identification of author clusters easy. Because of these algorithms, the spatial disposition is not based on coordinates; rather, its relevance is in terms of proximity: the closer two authors are, the more documents or interests they share. The same network is shown both without and with labels (see Figure 5).
 
 The social network of authors was printed and placed in front of the conference’s entrance (see Figure 3). Because of its large size, this visualization, reified in a carpet, gave participants a clear invitation to exploration. As shown in the photograph, authors attempted to locate themselves on the map. What soon became a game was a perfect mix of entertainment and examination: each person followed a personal path within the social network.
 
-{% include figure.html class="three-quarter" src="/images/representing-the-digital-humanities-community-unveiling-the-social-network-visualization-of-an-international-conference/fig_003.webp" caption="Figure 3. The authors network visualization materialized in a red carpet, placed just in front of the conference entrance." %}
+{% include figure-single.html class="three-quarter" src="/images/representing-the-digital-humanities-community-unveiling-the-social-network-visualization-of-an-international-conference/fig_003.webp" caption="Figure 3. The authors network visualization materialized in a red carpet, placed just in front of the conference entrance." %}
 
 Such a search generally led them first to spotting authors well known to them, then to finding their own colleagues, and finally themselves. Finding one’s own name was a kind of success that triggered different behaviors, often shared on social networks such as Twitter. Among the actions identified were: a) a portrait, when authors asked to have a picture taken of them; b) a postcard, when they found a friend or close colleague and sent them a message; c) an invitation to play the game, when they invited other people to find themselves; or d) a selfie.
 
@@ -55,13 +55,13 @@ This active interaction with the carpet was not mere engagement, since any form 
 
 The network of keywords is probably the most interesting one. As the Digital Humanities community shows uncertainty in defining its very domain, this visualization is intended as a representation of the documents presented at the conference, of the authors attending it, of the conference itself, and—last but not least—of the domain of Digital Humanities (see Figure 4).
 
-{% include figure.html src="/images/representing-the-digital-humanities-community-unveiling-the-social-network-visualization-of-an-international-conference/fig_004.webp" caption="Figure 4. Conference keywords represented in a network." %}
+{% include figure-single.html src="/images/representing-the-digital-humanities-community-unveiling-the-social-network-visualization-of-an-international-conference/fig_004.webp" caption="Figure 4. Conference keywords represented in a network." %}
 
 The edges signify that two keywords are used in the same document, while the thickness of the lines is given according to the frequency of the connection. This thickness increases the depth of the layers—about twelve measures are used in the current network—thereby enriching the reading with a sense of depth and highlighting the most used connections. As with the authors, the keywords network is also shown both without and with labels (see Figure 6).
 
-{% include figure.html src="/images/representing-the-digital-humanities-community-unveiling-the-social-network-visualization-of-an-international-conference/fig_005.webp" caption="Figure 5. The authors network displayed without and with labels." %}
+{% include figure-single.html src="/images/representing-the-digital-humanities-community-unveiling-the-social-network-visualization-of-an-international-conference/fig_005.webp" caption="Figure 5. The authors network displayed without and with labels." %}
 
-{% include figure.html src="/images/representing-the-digital-humanities-community-unveiling-the-social-network-visualization-of-an-international-conference/fig_006.webp" caption="Figure 6. The keywords network displayed without and with labels." %}
+{% include figure-single.html src="/images/representing-the-digital-humanities-community-unveiling-the-social-network-visualization-of-an-international-conference/fig_006.webp" caption="Figure 6. The keywords network displayed without and with labels." %}
 
 ## Peirce and the Interpretant
 

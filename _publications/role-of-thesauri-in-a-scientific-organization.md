@@ -41,7 +41,7 @@ Concerning the scientific activities of the Italian establishment of the JRC, it
 
 > Physique des Réacteurs (Physique Mathématique Appliquée, Physique Neutronique, Essais Critiques, Automatisme et Régulation); Matériaux (Métallurgie; Chimie; Physico-Chimie); Engineering (Technologie; Echange Thermique); Bibliothèque et Documentation; Neutronique Expérimentale et Conversion Directe; Physique Sanitaire, Médecine et Santé. (Gueben 1962: 3–4)
 
-{% include figure.html src="/images/role-of-thesauri-in-a-scientific-organization/fig_001.webp" class="full" caption="Figure 1. Organizational chart (2008) of the JRC, excerpt for the main scientific activities at the Ispra site. Source: Organizational Chart (2008)." %}
+{% include figure-single.html src="/images/role-of-thesauri-in-a-scientific-organization/fig_001.webp" class="full" caption="Figure 1. Organizational chart (2008) of the JRC, excerpt for the main scientific activities at the Ispra site. Source: Organizational Chart (2008)." %}
 
 While the JRC research themes in 1962 and the Euratom Thesaurus could be superposed completely, this operation cannot be done for the present research fields. Consequently, while in the period 1962–71 the Euratom Thesaurus was a complete representation of the JRC’s scientific interests, this is no longer true today. A proposal for a combination of thesauri allowing for an explicit representation of both the organization and the research activities is presented in “SIRS Thesauri” below.
 
@@ -75,7 +75,7 @@ In “SIRS Thesauri” below, we use these considerations as grounds for a new c
 
 The Euratom Thesaurus (1966, 1967) was designed by the Center for Information and Documentation (CID) following the mandate of the Euratom Treaty. The CID was created in 1961 by the European Atomic Energy Community (Rolling 1966), and followed the merging of the European Coal and Steel Community, the European Atomic Energy Community and the European Economic Community into a single entity in 1967 (Brée 1972). The Euratom Thesaurus, whose first edition was published in 1964, was very advanced: its terminology charts are still quoted in the library science literature (Aitchison, Gilchrist, and Bawden 2000) as one of the first examples of graphical display.
 
-{% include figure.html src="/images/role-of-thesauri-in-a-scientific-organization/fig_002.webp" class="full" caption="Figure 2. Terminological chart no. 53, “Reactor Operation.” Source: Euratom Thesaurus (1966, 1967)." %}
+{% include figure-single.html src="/images/role-of-thesauri-in-a-scientific-organization/fig_002.webp" class="full" caption="Figure 2. Terminological chart no. 53, “Reactor Operation.” Source: Euratom Thesaurus (1966, 1967)." %}
 
 The Euratom Thesaurus served as a tool for subject control at the CID, in order to supply scientists of the European Atomic Energy Community and industry in its member countries with documentary information on all aspects of nuclear energy. Its terms were not limited to nuclear physics and reactor technology, but covered many related topics such as radiation protection, isotope technology, the fabrication and use of nuclear materials and instruments, radiochemistry, and radiobiology.
 
@@ -120,11 +120,11 @@ The overall thesaurus of the Scientific Information Retrieval System, SIRS, is t
 
 The mapping procedure is a task for the person responsible for SIRS contents, who has two main duties: the first is to describe what an Action is by using Eurovoc terms — traditional indexing applied to Actions instead of books; the second is to connect each DDC term already used for classifying the JRC Central Library holdings to one or more Eurovoc terms.
 
-{% include figure.html src="/images/role-of-thesauri-in-a-scientific-organization/fig_003.webp" class="three-quarter" caption="Figure 3. The Action “Emissions Characterization and Inventories” indexed by Eurovoc terms." %}
+{% include figure-single.html src="/images/role-of-thesauri-in-a-scientific-organization/fig_003.webp" class="three-quarter" caption="Figure 3. The Action “Emissions Characterization and Inventories” indexed by Eurovoc terms." %}
 
 As an example, the cross-thesauri mapping of the Action “Emissions Characterization and Inventories” with Eurovoc is shown in Figure 3. While the focus of SIRS is on this Action, it is possible to display other Actions as context; the context is computed on the number of common index terms in Eurovoc. In the example in Figure 3, the Action “Radioactivity Environmental Monitoring” shares six Eurovoc indexes with “Emissions Characterization and Inventories,” so the two Actions are consequently mutually close. An example of the final display, including the DDC cross-thesauri relations, is shown in Figure 4.
 
-{% include figure.html src="/images/role-of-thesauri-in-a-scientific-organization/fig_004.webp" class="full" caption="Figure 4. The SIRS interface: the three thesauri on the left, retrieved items in the right-hand frames." %}
+{% include figure-single.html src="/images/role-of-thesauri-in-a-scientific-organization/fig_004.webp" class="full" caption="Figure 4. The SIRS interface: the three thesauri on the left, retrieved items in the right-hand frames." %}
 
 The SIRS interface is dynamic and designed in agreement with the Focus+Context paradigm (Spence 2007): when the user’s focus changes, the displayed frames do not disappear from the interface — they are resized and lose definition.
 

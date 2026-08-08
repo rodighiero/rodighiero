@@ -17,7 +17,7 @@ In the Iliad, Homer wrote a list of the scenes presented on Achilles’ shield. 
 
 In a passage of the Iliad, Homer describes the shield of Achilles which, the story says, was stolen by Patroclus to fight Hector (Eco 2009). In the text, the list of the scenes presented on the surface of the shield is so long and detailed that it is difficult to imagine its real form. The legend fascinated many artists of different epochs who measured themselves against solving the problem: how to arrange all the facts to make them discernible on a single surface?
 
-{% include figure.html class="three-quarter" src="/images/the-homers-list-or-how-classifications-can-be-displayed-on-tablets/fig_001.webp" caption="Figure 1. Shield of Achilles. Borrowed from Wikipedia (en.wikipedia.org/wiki/Shield_of_Achilles)." %}
+{% include figure-single.html class="three-quarter" src="/images/the-homers-list-or-how-classifications-can-be-displayed-on-tablets/fig_001.webp" caption="Figure 1. Shield of Achilles. Borrowed from Wikipedia (en.wikipedia.org/wiki/Shield_of_Achilles)." %}
 
 Quatremère de Quincy[^1] and others tried to solve the problem producing, as a result, fascinating pieces of art. Each of them went through a creative process working on dimension, detail, grouping, simplification, etc. All of these solutions attempted to re-create the form of the shield as described by Homer.
 
@@ -53,7 +53,7 @@ A hybrid navigation shares the characteristics of horizontal and vertical naviga
 
 Figure 2 illustrates one way in which we can implement the hybrid navigation: the active page stays at the center, in the column where the vertical scrolling occurs. On both sides, the column is duplicated to allow the horizontal swiping. These columns do not show on screen, they appear on touch. The shifting is due to the necessity to navigate among pages: for example, if the user swipes right, the previous page will be displayed. The left swipe is used to open the next page.
 
-{% include figure.html class="narrow" src="/images/the-homers-list-or-how-classifications-can-be-displayed-on-tablets/fig_002.webp" caption="Figure 2. Hybrid navigation." %}
+{% include figure-single.html class="narrow" src="/images/the-homers-list-or-how-classifications-can-be-displayed-on-tablets/fig_002.webp" caption="Figure 2. Hybrid navigation." %}
 
 ## Horizontal Orientation
 
@@ -63,7 +63,7 @@ By rotating the tablet, we have thought to clone the column, offering to users t
 
 The idea of the two-column view consists in disposing of two different and independent representations of a single classification. This dual-view approach offers the opportunity to explore new methods of interacting with classification and discovering interesting paradigms of navigation (see Figure 3).
 
-{% include figure.html class="narrow" src="/images/the-homers-list-or-how-classifications-can-be-displayed-on-tablets/fig_003.webp" caption="Figure 3. Horizontal orientation." %}
+{% include figure-single.html class="narrow" src="/images/the-homers-list-or-how-classifications-can-be-displayed-on-tablets/fig_003.webp" caption="Figure 3. Horizontal orientation." %}
 
 ### Double Scroll
 
@@ -83,7 +83,7 @@ What if we want to compare the relationship between two subjects? In a tradition
 
 An interface that displays all related information in a single view is not common in bibliographic databases or library systems. In this paper we argue that it would be beneficial to compare the relationships between different subjects, because being able to explore their similarities would enhance classification exploration.
 
-{% include figure.html class="three-quarter" src="/images/the-homers-list-or-how-classifications-can-be-displayed-on-tablets/fig_004.webp" caption="Figure 4. Relationships (a) of one subject and (b) of two subjects." %}
+{% include figure-single.html class="three-quarter" src="/images/the-homers-list-or-how-classifications-can-be-displayed-on-tablets/fig_004.webp" caption="Figure 4. Relationships (a) of one subject and (b) of two subjects." %}
 
 #### Creating Relationships
 
@@ -105,7 +105,7 @@ The single-classification view shares the same positive aspects with the double-
 
 The easy way to view the mapping status is to display all the relationships at the same time. In information visualization, the entire view is a common presentation of information, which allows the analysis of large data sets at a glance (Fry 2009).
 
-{% include figure.html class="narrow" src="/images/the-homers-list-or-how-classifications-can-be-displayed-on-tablets/fig_005.webp" caption="Figure 5. Mapping view." %}
+{% include figure-single.html class="narrow" src="/images/the-homers-list-or-how-classifications-can-be-displayed-on-tablets/fig_005.webp" caption="Figure 5. Mapping view." %}
 
 ## Conclusions
 

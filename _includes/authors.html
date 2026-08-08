@@ -1,1 +1,0 @@
-{% if include.item.author or include.item.editor %}{% capture _byline_text %}{% include byline.html item=include.item %}{% endcapture %}<div class="authors">{{ _byline_text | strip }}</div>{% endif %}

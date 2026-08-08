@@ -11,7 +11,7 @@ pages: "24–25"
 doi: "https://networkcultures.org/blog/publication/network-notion-7-imagining-the-internets-a-collaborative-glossary/"
 thumb: "@cards/Visual-Abstraction.webp"
 ---
-{% include figure.html src="/images/@cards/Visual-Abstraction.webp" alt="Blue cover of the book “Imagining the Internet(s): A Collaborative Glossary,” Network Notion #7 from the Institute of Network Cultures" %}
+{% include figure-single.html src="/images/@cards/Visual-Abstraction.webp" alt="Blue cover of the book “Imagining the Internet(s): A Collaborative Glossary,” Network Notion #7 from the Institute of Network Cultures" %}
 
 Abstraction is an operation that makes sense of complex phenomena by making things graspable and open to understanding. In design, abstraction often takes the form of a mental model that guides the process, helping us navigate ideas and possibilities. When abstraction becomes visual, it changes function: it becomes a way to create and share meaning. Visual abstraction is, above all, a form of communication that offers a common ground to discuss complex ideas. This can be seen with the internet, abstracted in the 1970s through the ARPANET diagrams that sketched a network before it existed, and again in 2010 through Paul Butler’s visualization of Facebook friendships, which redrew the world through patterns of connection and absence.
 

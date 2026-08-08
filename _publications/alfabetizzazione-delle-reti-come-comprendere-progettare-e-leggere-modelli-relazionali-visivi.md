@@ -39,7 +39,7 @@ Da quel momento in poi, le reti si svilupparono in parallelo con l’aumento del
 
 Quando le reti iniziarono a circolare nel discorso pubblico e nei media, la loro visualizzazione divenne una modalità chiave di interpretazione. Come sostengono Löwgren e Stolterman (2004), il design rende leggibili i sistemi complessi mettendo in evidenza schemi e relazioni. Manuel Lima (2011) mostra inoltre come le metafore visive e l’estetica plasmino la comprensione. Ciò che era nato in matematica e sociologia vive ora anche come cultura visiva, dove il design ha un ruolo centrale nel modo in cui le reti vengono prodotte e comprese.
 
-{% include figure.html class="wide" src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_001.webp" caption="Figura 1. Sociogramma originale di Jacob L. Moreno tratto da Who Shall Survive?, che visualizza le scelte interpersonali di un gruppo per rivelare attrazioni, repulsioni e la struttura sociale emergente. Questo diagramma fondativo mostra come la sociometria sveli dinamiche nascoste di affiliazione ed esclusione all’interno delle comunità (Moreno 1934)." %}
+{% include figure-single.html class="wide" src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_001.webp" caption="Figura 1. Sociogramma originale di Jacob L. Moreno tratto da Who Shall Survive?, che visualizza le scelte interpersonali di un gruppo per rivelare attrazioni, repulsioni e la struttura sociale emergente. Questo diagramma fondativo mostra come la sociometria sveli dinamiche nascoste di affiliazione ed esclusione all’interno delle comunità (Moreno 1934)." %}
 
 ## Design di reti
 
@@ -55,7 +55,7 @@ In un ambito più tecnico, le tecniche di riduzione della dimensionalità come t
 
 Come mostrano queste scelte progettuali e metodologiche, ogni passaggio nella visualizzazione di rete porta naturalmente a considerare come lo spazio plasmi il significato. Le disposizioni spaziali guidano il modo in cui gli osservatori interpretano le strutture di rete, trasformando dati tabellari in schemi visivi. Comprendere le reti come spazi progettati ci prepara a esplorare come il pensiero spaziale influenzi la percezione, rivelando non solo ciò che le reti contengono, ma anche come comunichino intuizioni attraverso la loro organizzazione spaziale.
 
-{% include figure.html src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_002.webp" caption="Figura 2. The Grounded AI Map, una visualizzazione di rete su larga scala che traduce due milioni di articoli scientifici sull’intelligenza artificiale in un’installazione calpestabile di 100 m². I cluster sono annotati con modelli linguistici di grandi dimensioni, permettendo ai visitatori di esplorare e mettere in discussione la conoscenza algoritmica attraverso bot interattivi e un’app dedicata (Ficozzi et al. 2025)." %}
+{% include figure-single.html src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_002.webp" caption="Figura 2. The Grounded AI Map, una visualizzazione di rete su larga scala che traduce due milioni di articoli scientifici sull’intelligenza artificiale in un’installazione calpestabile di 100 m². I cluster sono annotati con modelli linguistici di grandi dimensioni, permettendo ai visitatori di esplorare e mettere in discussione la conoscenza algoritmica attraverso bot interattivi e un’app dedicata (Ficozzi et al. 2025)." %}
 
 ## Pensiero spaziale
 
@@ -71,7 +71,7 @@ Leggere le reti spazialmente è un po’ come leggere la mappa di una città: co
 
 Per illustrare queste idee nella pratica, il caso di studio successivo, Surprise Machines, esplora come le visualizzazioni di rete sperimentali attivino il pensiero spaziale e mettano alla prova le nostre aspettative.
 
-{% include figure.html class="wide" src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_003.webp" caption="Figura 3. Visualizzazione di Martin Grandjean che mostra la rete di influenza tra 4.300 filosofi nella Wikipedia inglese, illustrando come le strutture enciclopediche della conoscenza possano rivelare o oscurare le tradizioni intellettuali (Grandjean 2014)." %}
+{% include figure-single.html class="wide" src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_003.webp" caption="Figura 3. Visualizzazione di Martin Grandjean che mostra la rete di influenza tra 4.300 filosofi nella Wikipedia inglese, illustrando come le strutture enciclopediche della conoscenza possano rivelare o oscurare le tradizioni intellettuali (Grandjean 2014)." %}
 
 ## Surprise Machines
 
@@ -85,7 +85,7 @@ Il progetto mette in primo piano l’agency interpretativa dello spettatore, pon
 
 Infine, *Surprise Machines* unisce decisioni spaziali e di design in un modo che mette in evidenza la dimensione ludica e performativa dell’alfabetizzazione delle reti. Catturando i gesti dei visitatori per interagire con la visualizzazione — attraverso un’interfaccia coreografica — il progetto fonde esplorazione fisica e navigazione digitale. Questo coinvolgimento spaziale trasforma la lettura di una rete in una sorta di danza, in cui ogni movimento ridisegna il campo visivo e apre nuove interpretazioni. Le scelte di design, dagli algoritmi di clustering alle transizioni interattive, incoraggiano sperimentazione e sorpresa, sottolineando che le reti non sono mappe statiche ma spazi in evoluzione che rispondono alle azioni degli osservatori. Questo aspetto performativo incarna il nucleo dell’alfabetizzazione delle reti: comprendere che il significato nelle reti nasce non solo dai dati e dal design, ma anche da come gli utenti attraversano, manipolano e interpretano queste strutture complesse. *Surprise Machines* si presenta così come una testimonianza di come un design spaziale e interattivo consapevole possa trasformare le visualizzazioni di rete in esperienze immersive e interpretative.
 
-{% include figure.html src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_004.webp" caption="Figura 4. Visualizzazione di Surprise Machines delle oltre 200.000 immagini digitalizzate degli Harvard Art Museums, che mappa le somiglianze visive per permettere ai visitatori di esplorare la vasta collezione del museo attraverso connessioni inattese e interazione coreografica (Rodighiero et al. 2022)." %}
+{% include figure-single.html src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_004.webp" caption="Figura 4. Visualizzazione di Surprise Machines delle oltre 200.000 immagini digitalizzate degli Harvard Art Museums, che mappa le somiglianze visive per permettere ai visitatori di esplorare la vasta collezione del museo attraverso connessioni inattese e interazione coreografica (Rodighiero et al. 2022)." %}
 
 ## Conclusioni
 

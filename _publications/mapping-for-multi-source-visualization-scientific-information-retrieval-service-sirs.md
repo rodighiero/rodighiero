@@ -64,7 +64,7 @@ Two assumptions were made early on: the contextual relevance of information and 
 
 Each frame is rectangular and tagged by a label, which indexes the content. The first division reflects the source composition: index on the left and documents on the right, according to the direction of western writing. Then, each frame splits horizontally or vertically as needed for inserting three indexes and three document sets. Indexes are aligned vertically and documents horizontally.
 
-{% include figure.html class="three-quarter" src="/images/mapping-for-multi-source-visualization-scientific-information-retrieval-service-sirs/fig_001.webp" caption="Figure 1. Succession of frames accommodation." %}
+{% include figure-single.html class="three-quarter" src="/images/mapping-for-multi-source-visualization-scientific-information-retrieval-service-sirs/fig_001.webp" caption="Figure 1. Succession of frames accommodation." %}
 
 To make the interface space elastic, we enhanced the SIRS interface with a mechanism to enable frames’ size customization: in three actions, the users could change the frames’ size according to the movement of their focus area. During the change from an arrangement to another, the visual continuity is ensured by the use of a smooth movement of all frames. The three actions are:
 
@@ -72,7 +72,7 @@ To make the interface space elastic, we enhanced the SIRS interface with a mecha
 - Maximize, which makes the focused frame as big as possible;
 - Normalize, which restores default size values.
 
-{% include figure.html class="three-quarter" src="/images/mapping-for-multi-source-visualization-scientific-information-retrieval-service-sirs/fig_002.webp" caption="Figure 2. Frames customization on 1) index enlargement, 2) documents set enlargement, 3) index maximization and 4) documents maximization." %}
+{% include figure-single.html class="three-quarter" src="/images/mapping-for-multi-source-visualization-scientific-information-retrieval-service-sirs/fig_002.webp" caption="Figure 2. Frames customization on 1) index enlargement, 2) documents set enlargement, 3) index maximization and 4) documents maximization." %}
 
 Frames host objects. Objects belonging to an index are called terms. Vertical frames, which host indexes, display terms in two ways: as a multiple-level structure or as a simple list. Multiple-level structures allow browsing through index hierarchies. By default, the SIRS interface provides terms presented as a simple list.
 
@@ -94,21 +94,21 @@ In order to enable multi-source browsing, we had to create a unique network comp
 
 The interface is based on multiple window management, more specifically the concept of elastic windows, which allows a variable screen real estate to be used according to the role or task performed (Baeza-Yates and Ribeiro-Neto 1999). As discussed earlier there is a basic left-vertical-index to right-horizontal-document screen division. Both indexes and documents are considered sources. EU legislation is the backbone among sources. In fact the Eurovoc is placed in the middle of the three indexes as a bridge. The other two are JRC Actions and Dewey. On the left side, the Eurovoc is mapped to the JRC Actions. Each JRC Action is classified by a set of Eurovoc terms. The relations created through the Eurovoc terms enable cross browsing from EU legislation to JRC publications and vice versa. On the right side, the Eurovoc is mapped with the Dewey. This mapping, which is based on semantic similarity defined by Martin Doerr (2001), allows the navigation from EU legislation and Library holdings in both directions.
 
-{% include figure.html class="three-quarter" src="/images/mapping-for-multi-source-visualization-scientific-information-retrieval-service-sirs/fig_003.webp" caption="Figure 3. The SIRS mapping is based on two types of cross-relations: 1) one between Actions and Eurovoc terms and 2) one between Eurovoc and Dewey terms." %}
+{% include figure-single.html class="three-quarter" src="/images/mapping-for-multi-source-visualization-scientific-information-retrieval-service-sirs/fig_003.webp" caption="Figure 3. The SIRS mapping is based on two types of cross-relations: 1) one between Actions and Eurovoc terms and 2) one between Eurovoc and Dewey terms." %}
 
 Once the relations network was set up, we proposed a method for visualizing information based on graph navigation. For a selected term, we can navigate all relations in order to get the set of terms and documents at the first degree of separation. Moreover, we can use that set as input to receive a new set of terms and documents at the second degree of separation from the selected term. The degree of separation is the measure that we use to define the context.
 
 The methodology consists in getting indexes at once, then in retrieving related documents. By selecting a term in the middle index the user follows the shortest route to the objects. The contextual distance is not perceived by the user, but is used to populate the interface. For example, if a Eurovoc term is selected, two degrees of separation are in place. At the first degree, the resulting set includes EU legislation documents, JRC Actions and Dewey objects. At the second degree, we use only the two indexes (JRC Actions and Dewey) as input for retrieving documents from JRC publications and the Library holdings.
 
-{% include figure.html class="three-quarter" src="/images/mapping-for-multi-source-visualization-scientific-information-retrieval-service-sirs/fig_004.webp" caption="Figure 4. SIRS composes the context from a Eurovoc term respectively using 1) the first and 2) the second degree of separation." %}
+{% include figure-single.html class="three-quarter" src="/images/mapping-for-multi-source-visualization-scientific-information-retrieval-service-sirs/fig_004.webp" caption="Figure 4. SIRS composes the context from a Eurovoc term respectively using 1) the first and 2) the second degree of separation." %}
 
 On the contrary, when a term in one of the two lateral indexes (JRC Actions and Dewey) is selected, three degrees of separation are in place in the resulting context. For example, if a JRC Action is selected, the first set of related nodes is composed by JRC publications and Eurovoc terms. The second set, which uses only Eurovoc terms as input, includes EU legislation documents and Dewey terms. The third set is obtained using Dewey terms and contains Library documents.
 
 Moreover, in the second example, a behavior we call closure (Ferigato et al. 2009) can be observed. Closure is a way to suggest similar objects. For example, when we select a JRC Action, we obtain a set of Eurovoc terms. As EU legislation documents are retrieved from the latter, we can also retrieve other JRC Actions. This kind of operation — similar to a boomerang’s flight path — suggests a group of JRC Actions, which share at least one Eurovoc term with the initially selected JRC Action. Closure provides an interface with advanced relational context.
 
-{% include figure.html class="three-quarter" src="/images/mapping-for-multi-source-visualization-scientific-information-retrieval-service-sirs/fig_005.webp" caption="Figure 5. SIRS composes the context from a JRC Action term respectively using 1) the first, 2) the second and 3) the third degree of separation. 4) The last picture represents the relation used for closure." %}
+{% include figure-single.html class="three-quarter" src="/images/mapping-for-multi-source-visualization-scientific-information-retrieval-service-sirs/fig_005.webp" caption="Figure 5. SIRS composes the context from a JRC Action term respectively using 1) the first, 2) the second and 3) the third degree of separation. 4) The last picture represents the relation used for closure." %}
 
-{% include figure.html class="three-quarter" src="/images/mapping-for-multi-source-visualization-scientific-information-retrieval-service-sirs/fig_006.webp" caption="Figure 6. This picture shows how the JRC Action MASURE is connected to JRC Action FISHREG by the sharing of a Eurovoc term. Closure makes this relation available to users." %}
+{% include figure-single.html class="three-quarter" src="/images/mapping-for-multi-source-visualization-scientific-information-retrieval-service-sirs/fig_006.webp" caption="Figure 6. This picture shows how the JRC Action MASURE is connected to JRC Action FISHREG by the sharing of a Eurovoc term. Closure makes this relation available to users." %}
 
 As seen in the previous examples the method has four types of parameters:
 

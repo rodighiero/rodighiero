@@ -15,7 +15,7 @@ Les visualisations en réseau comptent parmi les plus complexes qui soient ; pou
 
 <!--more-->
 
-{% include figure.html class="three-quarter" src="/images/meduse-vers-des-visualisations-plus-complexes-que-le-reseau/fig_001.webp" caption="Le Caravage, _Méduse_, 1599, Galerie des Offices, Florence." %}
+{% include figure-single.html class="three-quarter" src="/images/meduse-vers-des-visualisations-plus-complexes-que-le-reseau/fig_001.webp" caption="Le Caravage, _Méduse_, 1599, Galerie des Offices, Florence." %}
 
 ## Introduction
 
@@ -39,7 +39,7 @@ Le réseau est un outil très intéressant pour visualiser la réalité. Avec le
 
 Les visualisations en réseau sont créées pour rendre compte de jeux de distance et d’attraction, autrement dit, pour représenter des relations spatiales. S’appesantissant sur une visualisation en réseau, Nietzsche se serait probablement écrié : « Spatial, trop spatial ». En effet, les visualisations en réseau sont des images stables, qui conservent immobile chaque entité, sans évolution possible. Il s’agit seulement d’une prise de vue de la réalité selon un moment unique. Au sein d’un réseau visualisé, la simultanéité prime : les entités sont comme dans un temps gelé. Ainsi, en souhaitant parvenir à une représentation encore plus détaillée de la complexité, il est nécessaire que nous introduisions une autre dimension aux relations des entités : la dimension du temps.
 
-{% include figure.html class="three-quarter" src="/images/meduse-vers-des-visualisations-plus-complexes-que-le-reseau/fig_002.webp" caption="Figure 1. Le réseau du DHLAB est créé selon des données de co-écriture : chaque nœud représente un auteur et chaque ligne vaut pour une collaboration dans l’écriture d’un travail de recherche. Le réseau du DHLAB est assez étendu : cela signifie qu’il regroupe non seulement des membres du DHLAB, mais que des collaborateurs externes peuvent aussi constituer des nœuds s’ils ont participé à la rédaction d’un travail en commun avec un membre du DHLAB." %}
+{% include figure-single.html class="three-quarter" src="/images/meduse-vers-des-visualisations-plus-complexes-que-le-reseau/fig_002.webp" caption="Figure 1. Le réseau du DHLAB est créé selon des données de co-écriture : chaque nœud représente un auteur et chaque ligne vaut pour une collaboration dans l’écriture d’un travail de recherche. Le réseau du DHLAB est assez étendu : cela signifie qu’il regroupe non seulement des membres du DHLAB, mais que des collaborateurs externes peuvent aussi constituer des nœuds s’ils ont participé à la rédaction d’un travail en commun avec un membre du DHLAB." %}
 
 Le temps et l’espace sont nécessairement liés au mouvement. Pour accroître la richesse du langage visuel, spécialement s’il s’agit de réseaux, nous introduisons une manière de visualiser des entités en mouvement. Il n’est pas indispensable de représenter encore plus d’entités ou de relations, plutôt d’élaborer plus richement leur mode de représentation. Les entités trouvent leur prolongement selon l’axe du temps. De la sorte, la réalité va être représentée non plus en termes d’infinité spatiale, composée d’entités et de relations, mais selon l’infinité temporelle d’entités et de relations.
 
@@ -72,7 +72,7 @@ Travaillons strate par strate, et essayons de produire une sorte d’alphabet po
 
 Pour plus de clarté, mettons de côté la visualisation en réseau pour le moment. Dans cette première représentation de trajectoire, nous allons utiliser seulement les données temporelles de la liste ci-dessus — durée, apparition, disparition.
 
-{% include figure.html class="half" src="/images/meduse-vers-des-visualisations-plus-complexes-que-le-reseau/fig_003.webp" caption="Figure 2. Modèle de trajectoire : les lignes verticales sont des entités hypothétiques ; leur longueur indique le nombre d’années ; le début et la fin de chaque ligne verticale donnent à lire l’apparition et la disparition de l’entité." %}
+{% include figure-single.html class="half" src="/images/meduse-vers-des-visualisations-plus-complexes-que-le-reseau/fig_003.webp" caption="Figure 2. Modèle de trajectoire : les lignes verticales sont des entités hypothétiques ; leur longueur indique le nombre d’années ; le début et la fin de chaque ligne verticale donnent à lire l’apparition et la disparition de l’entité." %}
 
 Avec l’usage des lignes, nous introduisons : la naissance, la fin, la longueur de la vie de chaque entité. Cependant, il y a encore des informations parallèles, notamment à propos de la simultanéité de l’évolution de chaque entité. Nous pouvons aussi nous intéresser aux successions, aux remplacements et à la stabilité des entités. Le temps est rendu dans sa complexité, dégivré par l’usage de lignes verticales. Les enquêtes à propos de l’évolution des entités deviennent plus aisées et ouvertes.
 
@@ -84,7 +84,7 @@ Mais l’incertitude est aussi un problème double : l’incertitude est un rés
 
 Partant de l’alphabet des trajectoires, nous proposons un cas d’étude pour explorer les usages possibles des trajectoires, au sein d’enquêtes.
 
-{% include figure.html class="three-quarter" src="/images/meduse-vers-des-visualisations-plus-complexes-que-le-reseau/fig_004.webp" caption="Figure 3. Le réseau du DHLAB est divisé selon les années. Chaque trajectoire représente un auteur qui publie durant plusieurs années, traçant sa continuité au sein du contexte du laboratoire." %}
+{% include figure-single.html class="three-quarter" src="/images/meduse-vers-des-visualisations-plus-complexes-que-le-reseau/fig_004.webp" caption="Figure 3. Le réseau du DHLAB est divisé selon les années. Chaque trajectoire représente un auteur qui publie durant plusieurs années, traçant sa continuité au sein du contexte du laboratoire." %}
 
 ## Conclusion : de la tête figée de la Méduse-réseau aux serpents qui dansent sur la tête de Méduse-trajectoire
 

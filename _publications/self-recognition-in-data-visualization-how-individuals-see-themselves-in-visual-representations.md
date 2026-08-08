@@ -33,7 +33,7 @@ The Heideggerian human-world relations that guide our perception of the world ar
 
 Data visualizations map textual and numeric information through personal computers. Although the art of visualizing information dates back centuries (Yates 1954), the digital turn of the 20th century marked a significant moment by welcoming the term “data visualization” in the universal language. Its rise takes place during the 1980s (see Figure 1) when Edward Tufte gathers a heterogeneous group of practitioners through a series of books (Tufte 2001).
 
-{% include figure.html class="half" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_001.webp" caption="Figure 1. The Google N-Gram graph shows the frequency of the term “data visualization” over time. The increase of the 1980s points out the moment in which data visualizations become widely used." %}
+{% include figure-single.html class="half" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_001.webp" caption="Figure 1. The Google N-Gram graph shows the frequency of the term “data visualization” over time. The increase of the 1980s points out the moment in which data visualizations become widely used." %}
 
 Data visualizations come from a design process, which can be less or more elaborate according to the amount of information displayed. They are artifacts that result from a series of transformations and endeavors driven by a designer (Neurath and Kinross 2009). Visualizations make visible the information that otherwise would be impossible to see in accordance with the decision taken (Manovich 2008).
 
@@ -53,7 +53,7 @@ On the horizontal axis, each network shows collaboration using edges based on pu
 
 Using this case study to support the argumentation, this section presents the five concepts of self-recognition in this order: a) the digital identity of laboratory members, b) the identification with data visualization, c) the self-recognition in digital representation, d) the mutual recognition between members, and e) the promise for future choices.
 
-{% include figure.html class="wide" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_002.webp" caption="Figure 2. This series of images represents the EPFL Digital Humanities Laboratory over time and through collaborations. The same network visualization is declined in five configurations, which support the article’s argumentation on self-recognition in the next sections, 1) digital identity, 2) identification, 3) self-recognition, 4) mutual recognition, and 5) promise." %}
+{% include figure-single.html class="wide" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_002.webp" caption="Figure 2. This series of images represents the EPFL Digital Humanities Laboratory over time and through collaborations. The same network visualization is declined in five configurations, which support the article’s argumentation on self-recognition in the next sections, 1) digital identity, 2) identification, 3) self-recognition, 4) mutual recognition, and 5) promise." %}
 
 ## Digital Identity
 
@@ -69,7 +69,7 @@ Ulysses, in the Odyssey, offers a beautiful example of storytelling when returni
 
 EPFL owns an information system that certifies academic literature called Infoscience. Authors are in charge of uploading and keeping records updated. Taking care of personal records is a task that guarantees visibility on the scientific community. Figure 3 shows how DHLAB members are extracted from the database and mapped on the canvas. It is easy to notice how a visualization showing unique identifiers without relational information might be meaningless.
 
-{% include figure.html class="three-quarter" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_003.webp" caption="Figure 3. Digital identities of DHLAB members are recorded, but invisible without projection. Mapping them without any relational information shows them as a bunch of unorganized nodes." %}
+{% include figure-single.html class="three-quarter" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_003.webp" caption="Figure 3. Digital identities of DHLAB members are recorded, but invisible without projection. Mapping them without any relational information shows them as a bunch of unorganized nodes." %}
 
 ## Identification
 
@@ -85,7 +85,7 @@ Thus, the information system embodies an already existing representation, which 
 
 In the case study, the designer draws a laboratory from a priori data from the Infoscience. The DHLAB members recognize the system’s authority, which gives credibility to the visualization. Figure 4 illustrates the laboratory’s collaborations where each and every network displays the peers linked using publications, from 2013 at the top, down to 2015 at the bottom. Vertically, the visualization connects the same individuals over time using the trajectories.
 
-{% include figure.html class="three-quarter" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_004.webp" caption="Figure 4. Digital identities of DHLAB take form in a relational space. Publication co-authoring forms network edges and nodes stay for individuals. This visualization aims to stress the laboratory temporality using long vertical trajectories (Rigal and Rodighiero 2015; Rigal, Rodighiero, and Cellard 2016; Rigal and Rodighiero 2017)." %}
+{% include figure-single.html class="three-quarter" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_004.webp" caption="Figure 4. Digital identities of DHLAB take form in a relational space. Publication co-authoring forms network edges and nodes stay for individuals. This visualization aims to stress the laboratory temporality using long vertical trajectories (Rigal and Rodighiero 2015; Rigal, Rodighiero, and Cellard 2016; Rigal and Rodighiero 2017)." %}
 
 ## Self-Recognition
 
@@ -107,7 +107,7 @@ This seal finds an analogy in _In Search of Lost Time_ that Ricœur takes as an 
 
 Figure 5 shows in red a specific trajectory that represents one member of the DHLAB over time. Readers establish a connection with the visualization in which they can recognize their own self. All of the graphical elements employed stay for the data stored in the Infoscience system. When represented information matches readers’ memories, the data visualization passes the test by confirming its proper authority.
 
-{% include figure.html class="three-quarter" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_005.webp" caption="Figure 5. Self-recognition happens at this stage individually, when a reader recognizes the own identity in the red trajectory. Personal memories are strengthened during the performative act." %}
+{% include figure-single.html class="three-quarter" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_005.webp" caption="Figure 5. Self-recognition happens at this stage individually, when a reader recognizes the own identity in the red trajectory. Personal memories are strengthened during the performative act." %}
 
 ## Mutual Recognition
 
@@ -121,7 +121,7 @@ Concerning James’s ideas, we depict the self as a radial emanation that surrou
 
 Figure 6 highlights the trajectories of the laboratory members. Each one recognizes not only their own selves but also other peers. Recognition is a basic behavior of society and academic life is not excluded. When someone joins a research group, the leader has to be recognized as well as its members, and all of them have to accept the newcomer. The mutual recognition is also a mark of esteem without which no constructive cooperation is possible. Society is based on a spirit of collectiveness within groups and of distinction between them. When a laboratory such as the one of Digital Humanities presents its research during conferences, the recognition is crucial for the image of the professor of the collective as well. The visualization, in this sense, helps to represent the group as sole entity. Sharing visual representations like Figure 6 is a way to create a sense of collectiveness between laboratory members and establishing the joint identity of a group (Rodighiero 2018). The collective digital identity thus becomes a way to stimulate a debate in and out of the group itself.
 
-{% include figure.html class="three-quarter" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_006.webp" caption="Figure 6. Each member of the laboratory recognizes his peers. All the red lines are not seen any longer as separate elements, but rather as elements of a whole. This operation corresponds to a shared sense of collectiveness." %}
+{% include figure-single.html class="three-quarter" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_006.webp" caption="Figure 6. Each member of the laboratory recognizes his peers. All the red lines are not seen any longer as separate elements, but rather as elements of a whole. This operation corresponds to a shared sense of collectiveness." %}
 
 ## Promise
 
@@ -131,7 +131,7 @@ This capacity of envisioning the future emerges from the reader’s understandin
 
 In the DHLAB, the laboratory members look at themselves, stimulating by the collective representation. Where can we improve? What is the next step? How can we collaborate to be more effective? The laboratory composed of individual members reflects upon its own form and makes itself a promise for the future: increasing interdisciplinarity, identifying new collaborations, incrementing publications, and developing creativity. These are some of the promises that might be made to project the collective towards the future. Figure 7 shows how the trajectories predict the future to forecast and control the evolution of the collective.
 
-{% include figure.html class="three-quarter" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_007.webp" caption="Figure 7. The laboratory starts to get a sense of what the next step will be and imagines the trajectories of all the members extended over time. The data visualization is an instrument for self-reflection to plan the future." %}
+{% include figure-single.html class="three-quarter" src="/images/self-recognition-in-data-visualization-how-individuals-see-themselves-in-visual-representations/fig_007.webp" caption="Figure 7. The laboratory starts to get a sense of what the next step will be and imagines the trajectories of all the members extended over time. The data visualization is an instrument for self-reflection to plan the future." %}
 
 > There is no making of oneself […] outside of a mode of subjectivation […] and, hence, no self-making outside of the norms that orchestrate the possible forms of a subject may take. […] The very being of the self is dependent, not just on the existence of the other in its singularity (as Levinas would have it), but also on the social dimension of normativity that governs the scene of recognition.
 >

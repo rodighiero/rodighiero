@@ -11,30 +11,30 @@
   - Interview: "interview with / interview by X and Y" (interviewer of an interview)
   - Lists join with ", " and "and" before the last name (no Oxford comma).
   The per-field formatting (split, strip Dario, re-join) is delegated to
-  name-list.html; this file only assembles the parts and capitalizes each
+  byline-names.html; this file only assembles the parts and capitalizes each
   segment that follows a period.
 {%- endcomment -%}
 
-{%- capture auth_part -%}{%- include name-list.html raw=include.item.author prefix_with="with " prefix_by="" -%}{%- endcapture -%}
+{%- capture auth_part -%}{%- include byline-names.html raw=include.item.author prefix_with="with " prefix_by="" -%}{%- endcapture -%}
 {%- assign auth_part = auth_part | strip -%}
 
-{%- capture ed_part -%}{%- include name-list.html raw=include.item.editor prefix_with="edited with " prefix_by="edited by " -%}{%- endcapture -%}
+{%- capture ed_part -%}{%- include byline-names.html raw=include.item.editor prefix_with="edited with " prefix_by="edited by " -%}{%- endcapture -%}
 {%- assign ed_part = ed_part | strip -%}
 {%- comment -%} Editors only surface on the homepage when Dario has no co-author. {%- endcomment -%}
 {%- if auth_part != "" -%}{%- assign ed_part = "" -%}{%- endif -%}
 
-{%- capture tr_part -%}{%- include name-list.html raw=include.item.translator prefix_with="translated with " prefix_by="translated by " -%}{%- endcapture -%}
+{%- capture tr_part -%}{%- include byline-names.html raw=include.item.translator prefix_with="translated with " prefix_by="translated by " -%}{%- endcapture -%}
 {%- assign tr_part = tr_part | strip -%}
 
-{%- capture intro_part -%}{%- include name-list.html raw=include.item.preface prefix_with="preface with " prefix_by="preface by " -%}{%- endcapture -%}
+{%- capture intro_part -%}{%- include byline-names.html raw=include.item.preface prefix_with="preface with " prefix_by="preface by " -%}{%- endcapture -%}
 {%- assign intro_part = intro_part | strip -%}
 
-{%- capture iv_part -%}{%- include name-list.html raw=include.item.interviewer prefix_with="interview with " prefix_by="interview by " -%}{%- endcapture -%}
+{%- capture iv_part -%}{%- include byline-names.html raw=include.item.interviewer prefix_with="interview with " prefix_by="interview by " -%}{%- endcapture -%}
 {%- assign iv_part = iv_part | strip -%}
 
 {%- comment -%} Join the five parts with ". ", capitalizing each one that follows a
 period. The parts are appended with the "~~~" sentinel and split back apart (the
-byline includes' convention for building an array — see name-list.html); empty
+byline includes' convention for building an array — see byline-names.html); empty
 parts fall out in the loop. {%- endcomment -%}
 {%- assign parts = auth_part | append: "~~~" | append: ed_part | append: "~~~" | append: tr_part | append: "~~~" | append: intro_part | append: "~~~" | append: iv_part | split: "~~~" -%}
 {%- assign out = "" -%}

@@ -36,7 +36,7 @@ We assume that each vessel is profiled by a set of quantitative measurements, ai
 
 In vessel monitoring systems, size, color, shape, transparency, orientation are all characteristics which can be manipulated. Size can represent the length of the vessel, color a classification, shape the kind of object (vessel, cage, etc.), transparency the reliability of its position, orientation the course of the vessel [Fig. 1].
 
-{% include figure.html class="three-quarter" src="/images/guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_001.webp" caption="Figure 1. Size, transparency and course are part of information that vessels can bring themselves." %}
+{% include figure-single.html class="three-quarter" src="/images/guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_001.webp" caption="Figure 1. Size, transparency and course are part of information that vessels can bring themselves." %}
 
 The characteristics employ the principles by linking to the metadata and conveying the most information in as few expressions as possible (Lambert et al. 2001). In the field of information visualization Otto Neurath proved the power of communication throughout symbols simplicity (Vossoughian 2008). He teach that this part deserves attention, because this is the basic design. An error in this part could compromise the following, so to decide these fundamental concepts requires time.
 
@@ -48,7 +48,7 @@ Simplifying the concept, we can reduce the latitude as a sequence from bottom to
 
 Visualizing data on a 2D or 3D model is really different. If one has ever travelled by plane from Europe to USA, he has surely seen these geographical views of the flight path on screens and he probably asked himself the reason for that funny curved trajectory of the flight [Fig. 2]. Why to cover the longest way? The point is that the airplane trajectory is distorted by the geographical flat representation. If he see the same path in a 3D model, maybe he could be surprised by seeing the same trajectory exactly straight.
 
-{% include figure.html class="three-quarter" src="/images/guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_002.webp" caption="Figure 2. The flat representation of the figure can not properly represent distances." %}
+{% include figure-single.html class="three-quarter" src="/images/guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_002.webp" caption="Figure 2. The flat representation of the figure can not properly represent distances." %}
 
 The described fact is fundamental even for another kind of spacial sequence, the distance. In fact, in a flat representation, the distance between two objects is quite faithful if your position is close to the equator, but the closer vessels are to the poles more the perception of distances is distorted. This issue covers a great importance in vessels monitoring systems, especially when distance is relevant. For example, when different signals are overlapped and elaborated to point out the position of a vessel in a fixed time, by observing the distance from supposed position to the relative signals it is possible to evaluate the information reliability.
 
@@ -64,7 +64,7 @@ For example, to communicate the most populated sea area in a precise moment of t
 
 But if I introduce a new quest, for example what areas are not occupied in the first four hours just after the dawn, I will have to introduce a new measure: the span time. The span time can be seen as an extension of the still time and it represents the sum of several still time data. It’s particular useful because it reveals an unreal situation, that is a configuration of vessels not available in the reality [Fig. 3].
 
-{% include figure.html class="three-quarter" src="/images/guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_003.webp" caption="Figure 3. Three time visualization approach all relative to the time: a) still time moving, b) span time expanding and c) span time moving." %}
+{% include figure-single.html class="three-quarter" src="/images/guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_003.webp" caption="Figure 3. Three time visualization approach all relative to the time: a) still time moving, b) span time expanding and c) span time moving." %}
 
 ### Later-in-Evolution
 
@@ -72,7 +72,7 @@ The evolution is the order where space and time go together. This solution is we
 
 The vessel track is a sequence of positions in time. The perception of a sequence is communicated by the frequency. In fact, radio signals are timed. This means that different positions must be merged to obtain the track [Fig. 4].
 
-{% include figure.html class="three-quarter" src="/images/guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_004.webp" caption="Figure 4. Closure transforms several positions in a meaningful sequence." %}
+{% include figure-single.html class="three-quarter" src="/images/guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_004.webp" caption="Figure 4. Closure transforms several positions in a meaningful sequence." %}
 
 In the visualization phase, one can choose between still time and moving time to display the tracks. This choice is related to the frequency of signal. In fact if the frequency of data is not enough dense, it will not be possible to visualize tracks as a movie clip and the use of still time representations will be the only solution. Instead if the frequency of data is high a moving-time visualization can be created, which is very easy to understand by playing. In such a case, one can choose between the still-time and the motion-time representation.
 
@@ -82,7 +82,7 @@ At this point it is also interesting to observe how these principles work among 
 
 Complexity is a very interesting fashion to show information if you need to have a perspective to the whole data. Obviously people using monitoring systems are not interested in visualizing the data complexity, because it enables a loss of information. They are rather more interested in how to manage complexity to let data become more comprehensive [Fig. 5].
 
-{% include figure.html class="three-quarter" src="/images/guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_005.webp" caption="Figure 5. Manage complexity bring us to point out relevant information." %}
+{% include figure-single.html class="three-quarter" src="/images/guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_005.webp" caption="Figure 5. Manage complexity bring us to point out relevant information." %}
 
 Inspired by the facets theory of Ranganathan (1963), we would like to introduce facets for our purposes. Vessels can be classified in three different kinds of classes: signals, size and area. Signals can be classified by sources: VDS, VMS and AIS. Size kind has three groups: small, medium and large. Finally areas are two: inside or outside of defined borders. We can add as many facets as necessary, three different divisions are enough to explain how to work with. By them, we can visualize all the vessels available in a precise area where the signal is equal to AIS. We can also obtain all the big vessels outside a delimited area. Or we can visualize inside the area all vessels whose size is small or medium but only belonging to the VDS signal.
 
@@ -94,7 +94,7 @@ In vessels monitoring systems it is difficult to talk about traditional sequence
 
 What is different in the actual monitoring systems, compared with the radar visualization, is the absence of origin. Consider an old war film, one can easily figure out the radar display of a naval vessel [Fig. 6]. This round-shaped monochrome display, characterized by a radial refresh, has the vessels itself as origin. The center was the reference for all objects in the radar, so the system was absolutely relative, while the new monitoring systems are absolute. This difference between relative and absolute influences relative measures: the first uses distance and degree, the latter latitude and longitude of a geographic system.
 
-{% include figure.html class="three-quarter" src="/images/guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_006.webp" caption="Figure 6. Radar systems has an origin as visualization reference." %}
+{% include figure-single.html class="three-quarter" src="/images/guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_006.webp" caption="Figure 6. Radar systems has an origin as visualization reference." %}
 
 So the canonical sequence can be interpreted as the point of view. If our tasks are based on the comprehension of distances referred to a single point in a relative system, the relative approach is what we need. If our view needs to be more complete and general, probably the absolute visualization will be the right solution.
 
@@ -104,7 +104,7 @@ All the sequences introduced are arranged from the most to the less useful accor
 
 Consider the display of one dimensional and two dimensional views side by side. Vessels are represented in both ways: as an alphabetical list first, as geographical view second. Since the objects are shared in both visualizations, it is important to notice that the two representations are connected each other by a mapping relation: each vessel on the list corresponds to a vessel to the geographical view and vice versa [Fig. 7]. Imagine how this double visualization works. If you select a vessel from the list, the same will be highlighted on the geographic view. If you focus on a vessel on the geographic view instead, you will see it also on the list.
 
-{% include figure.html class="three-quarter" src="/images/guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_007.webp" caption="Figure 7. Mapping between a list and a geographic visualization improves understanding." %}
+{% include figure-single.html class="three-quarter" src="/images/guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_007.webp" caption="Figure 7. Mapping between a list and a geographic visualization improves understanding." %}
 
 The mapping between different visualizations could be interesting and it could involve more views. We must think of this method as a way to improve comprehension.
 

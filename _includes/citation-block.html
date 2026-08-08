@@ -1,6 +1,6 @@
 {%- comment -%}
 Formatted Chicago author-date reference for the "Cite" button, emitted as a
-hidden <pre> and copied to the clipboard (see common-scripts.html). Plain text:
+hidden <pre> and copied to the clipboard (see site-scripts.html). Plain text:
 titles are not italicised — the reader can style them after pasting.
 
 Primary contributor is the author, or the editor(s) when there is no author.
@@ -19,7 +19,7 @@ a serial comma before "and". Formatting branches on the publication type.
   {%- assign _roleword = '' -%}
 {%- endif -%}
 {%- comment -%} First contributor is inverted to Family, Given for Chicago style; the
-rest join with a serial comma via the same join-and.html name-list.html uses. {%- endcomment -%}
+rest join with a serial comma via the same join-and.html byline-names.html uses. {%- endcomment -%}
 {%- assign _first_p = _people | first | strip -%}
 {%- assign _words = _first_p | split: ' ' -%}
 {%- assign _family = _words | last -%}
@@ -27,7 +27,7 @@ rest join with a serial comma via the same join-and.html name-list.html uses. {%
 {%- assign _given = _given | strip -%}
 {%- capture _first_formatted -%}{{ _family }}{%- if _given != '' -%}, {{ _given }}{%- endif -%}{%- endcapture -%}
 {%- comment -%} Splitting on the absent "~~~" sentinel is Liquid's only way to wrap
-one string in an array (same convention as name-list.html), so the inverted first
+one string in an array (same convention as byline-names.html), so the inverted first
 name can lead the list the rest joins onto. {%- endcomment -%}
 {%- assign _rest_people = _people | slice: 1, 9999 -%}
 {%- assign _display_people = _first_formatted | split: "~~~" | concat: _rest_people -%}

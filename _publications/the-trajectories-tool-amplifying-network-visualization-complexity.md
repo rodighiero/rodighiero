@@ -27,7 +27,7 @@ Conventionally, network visualizations are created considering the interdependen
 
 Time and space are intimately linked through movement. To enhance the richness of the visual language, we need to visualize the movement of entities through static simulation, as done in _Spiral Expansion of Muscles in Action_ by Umberto Boccioni, the Futurist artist who introduced the art of depicting sculpture in movement (Figure 1). We do not need to draw more actors or relations; it is enough to improve their representation with a more elaborated shape. In this way, complexity will be managed not only in terms of infinite spatial entities and relations, but also in terms of infinite time-based entities and relations.
 
-{% include figure.html class="three-quarter" src="/images/the-trajectories-tool-amplifying-network-visualization-complexity/fig_001.webp" caption="Figure 1. Umberto Boccioni, _Spiral Expansion of Muscles in Action_, 1913." %}
+{% include figure-single.html class="three-quarter" src="/images/the-trajectories-tool-amplifying-network-visualization-complexity/fig_001.webp" caption="Figure 1. Umberto Boccioni, _Spiral Expansion of Muscles in Action_, 1913." %}
 
 ## Movement and Complexity
 
@@ -43,13 +43,13 @@ Data are extracted from Infoscience,[^1] EPFL’s publication repository. This r
 
 This article has two figures representing the DHLAB in Lausanne. Both visualizations present the same information in two different ways: the first shows collaborations on a plain surface—this figure is a classical network visualization (Figure 2); the second is based on the trajectory idea: points previously arranged on a flat surface are transformed into lines reifying the continuity of people (Figure 3).
 
-{% include figure.html src="/images/the-trajectories-tool-amplifying-network-visualization-complexity/fig_002.webp" caption="Figure 2. The DHLAB network is created by co-authoring: each node is an author and each edge a collaboration for a paper. Nodes also represent external collaborators." %}
+{% include figure-single.html src="/images/the-trajectories-tool-amplifying-network-visualization-complexity/fig_002.webp" caption="Figure 2. The DHLAB network is created by co-authoring: each node is an author and each edge a collaboration for a paper. Nodes also represent external collaborators." %}
 
 If we affirm that complexity representation has indeed been ‘complexified’, how could this help digital humanists?
 
 The first figure shows how the laboratory professor is placed at the center—the network would probably be very different without him and would be divided in parts. So, he is the core of the laboratory with good reason. The network consists of two big clusters, which means that the professor is not included in all the publications of the laboratory (a rule that is compulsory in some labs).
 
-{% include figure.html src="/images/the-trajectories-tool-amplifying-network-visualization-complexity/fig_003.webp" caption="Figure 3. The DHLAB network is divided into years. Each trajectory represents an author who published during the years, tracing their continuity." %}
+{% include figure-single.html src="/images/the-trajectories-tool-amplifying-network-visualization-complexity/fig_003.webp" caption="Figure 3. The DHLAB network is divided into years. Each trajectory represents an author who published during the years, tracing their continuity." %}
 
 The second figure immediately displays the literary production year by year. For example, in 2013 the laboratory was relatively young to widely publish scientific works; collaborations have a greater size in 2014 and 2015. Compared to the network visualization, the trajectories depict the variability of links with time quite well by splitting the network into a sequence of networks.
 
