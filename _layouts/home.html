@@ -268,7 +268,7 @@
        plus (below) title size/margin, sub-row gap and the meta-line. They keep two
        deliberate differences on top: the publication title is bold roman and the tile
        is frameless; the action title is italic and its tile carries a hairline border
-       (see the action-card block below). ── */
+       (see the action/filter block below). ── */
     .card {
       padding: 0.6rem;
       border-radius: 4px;
@@ -291,31 +291,38 @@
       max-width: 100%;
     }
     .publication .card-title { font-weight: 500; }
-    .special-card .card-title { font-weight: 400; font-style: italic; }
+    .action .card-title,
+    .filter .card-title { font-weight: 400; font-style: italic; }
 
-    /* Shared sub-row: a publication's authors and an action card's description sit
+    /* Shared sub-row: a publication's authors and an action/filter card's description sit
        the same distance below the title and share one typography — main.css sets the
        type on `.authors, .card-sub` together, so only the gap belongs here. */
     .card-meta .authors,
-    .special-card .card-sub { margin-top: 0.4rem; }
+    .action .card-sub,
+    .filter .card-sub { margin-top: 0.4rem; }
 
     /* Shared meta-line (both cards wrap it in .card-meta). */
     .card-meta .meta-line { font-size: var(--text-xxs); line-height: var(--lh-loose); }
 
     /* Whatever fills a media slot spans it and keeps its own aspect ratio. */
     .publication .card-img img,
-    .special-card .card-media .network-preview { width: 100%; height: auto; display: block; }
+    .action .card-media .network-preview,
+    .filter .card-media .network-preview { width: 100%; height: auto; display: block; }
     .publication .card-img.bordered img { border: 1px solid var(--border); }
     .card-meta h2 a { color: inherit; text-decoration: none; }
     .card-meta h2 a:focus-visible { outline: none; }
     .publication:has(.card-meta h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
 
-    /* ── Special cards (action/cluster tiles; shown in gallery only) ──
-       .special-card marks every tile the count/search/network logic must skip and tells
-       the masonry to place them; action/cluster tiles also style through it directly
-       (border, background, title and sub-row layout below). */
-    /* An action tile is a <button>: undo the UA's centered text and its own font/color. */
-    .action-card {
+    /* ── Special cards (shown in gallery only) ── Two kinds: .action (a one-off
+       view/type/search trigger) and .filter (a cluster tile, which sets a persistent
+       filter instead). Both are <button>s that skip the count/search/network logic
+       (which queries .publication) and get placed by the masonry; they share every
+       rule below since the only real difference between them is behavioural, not
+       visual — undo the UA's centered text and its own font/color, add the hairline
+       border (background: none clears the UA <button> face), and lay out the rows of
+       their <span> markup as blocks, which a publication card's <div>s have by default. */
+    .action,
+    .filter {
       display: block;
       width: 100%;
       text-align: left;
@@ -323,32 +330,32 @@
       color: inherit;
       -webkit-user-select: none;
       user-select: none;
+      border: 1px solid var(--border);
+      background: none;
     }
-    .action-card:hover { border-color: var(--border-hover); }
-    .action-card:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
-    /* An action/cluster tile takes the shared card base above (padding, radius, hover,
-       title and sub-row metrics, via .card) and adds only what makes it distinct: the
-       hairline border (background: none clears the UA <button> face), plus block display
-       for the rows of its <span> markup, which a publication card's <div>s have by default. */
-    .action-card.special-card { border: 1px solid var(--border); background: none; }
-    .special-card .card-meta,
-    .special-card .meta-line,
-    .special-card .card-sub { display: block; }
+    .action:hover,
+    .filter:hover { border-color: var(--border-hover); }
+    .action:focus-visible,
+    .filter:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+    .action .card-meta, .action .meta-line, .action .card-sub,
+    .filter .card-meta, .filter .meta-line, .filter .card-sub { display: block; }
 
     /* ── Gallery view (masonry) ── */
     body[data-view="gallery"] .publication,
-    body[data-view="gallery"] .special-card {
+    body[data-view="gallery"] .action,
+    body[data-view="gallery"] .filter {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       will-change: transform;
     }
-    /* The media slot above a card's text — a publication thumbnail, or an action card's
-       inlined graph miniature — framed once, so either sits the same among the tiles. */
+    /* The media slot above a card's text — a publication thumbnail, or an action/filter
+       card's inlined graph miniature — framed once, so either sits the same among the tiles. */
     body[data-view="gallery"] .publication .card-img,
     #network-view .details .publication .card-img,
-    .special-card .card-media {
+    .action .card-media,
+    .filter .card-media {
       display: block;
       width: 100%;
       margin-bottom: 0.8rem;
@@ -569,7 +576,7 @@
       .header .bio-col { clear: left; margin-top: 1rem; }
       .filter-count, .view-toggle { display: none; }
       /* Mobile: drop the action / cluster / network tiles. */
-      .special-card { display: none !important; }
+      .action, .filter { display: none !important; }
     }
     @media (max-width: 430px) {
       .header-portrait { float: none; width: 100%; max-width: 320px; margin: 0 0 0.75rem; }
@@ -667,9 +674,10 @@
     <!-- ── Publications ── -->
     <div id="publications">
       {%- comment -%} Special cards (non-.publication tiles): clickable action cards. They live
-      in the gallery flow but carry the .special-card class so the count / search / network logic
-      (which queries .publication) ignores them. Placement of home_cards actions: `pin: first`
-      renders here as the very first tile (before the forthcoming publications); an unpinned
+      in the gallery flow but carry the .action or .filter class (not .publication) so the
+      count / search / network logic (which queries .publication) ignores them. Placement of
+      home_cards actions: `pin: first` renders here as the very first tile (before the
+      forthcoming publications); an unpinned
       action renders as a plain tile at the top. The research-cluster filter cards are NOT from
       home_cards — they are generated automatically from site.data.network.clusters and merged
       into the dated flow below (each just before its newest member). See _data/home_cards.yml
@@ -771,10 +779,10 @@
     var container = document.getElementById('publications');
     var viewButtons = document.querySelectorAll('.view-toggle button');
     var total = publications.length;
-    // Masonry packs both real publication cards and the .special-card (action) tiles;
+    // Masonry packs both real publication cards and the .action/.filter tiles;
     // count/search/network keep operating on .publication only.
-    var tiles = container ? container.querySelectorAll(':scope > .publication, :scope > .special-card') : publications;
-    var specialCards = container ? container.querySelectorAll('.special-card') : [];
+    var tiles = container ? container.querySelectorAll(':scope > .publication, :scope > .action, :scope > .filter') : publications;
+    var specialCards = container ? container.querySelectorAll('.action, .filter') : [];
 
     // ── Masonry layout (gallery only) ──
     var GAP_X = 24;
@@ -1039,13 +1047,13 @@
       if (_initialType) {
         activeType = _initialType;
         // Reflect the filter as its label in the box (no focus on load).
-        var _tEl = document.querySelector('.action-card[data-action="type:' + _initialType + '"]');
+        var _tEl = document.querySelector('.action[data-action="type:' + _initialType + '"]');
         activeFilterLabel = (_tEl && _tEl.dataset.filterLabel) || _initialType;
         if (searchInput) searchInput.value = activeFilterLabel;
       }
       var _initialCluster = _params.get('cluster');
       if (_initialCluster) {
-        var _cEl = document.querySelector('.action-card[data-action="cluster:' + _initialCluster + '"]');
+        var _cEl = document.querySelector('.filter[data-action="cluster:' + _initialCluster + '"]');
         if (_cEl && _cEl.dataset.slugs) {
           activeCluster = { id: _initialCluster, slugs: new Set(_cEl.dataset.slugs.split(' ')) };
           activeFilterLabel = _cEl.dataset.filterLabel || '';
@@ -1074,7 +1082,7 @@
       activeFilterLabel = null;
       if (searchInput) searchInput.value = '';
     }
-    document.querySelectorAll('.action-card[data-action]').forEach(function(btn) {
+    document.querySelectorAll('.action[data-action], .filter[data-action]').forEach(function(btn) {
       // The card hides itself when it applies a filter; a mousedown here would otherwise
       // start a text selection that lingers across the publications behind it (visible on
       // reset). Suppressing the default mousedown stops the selection at its source.
