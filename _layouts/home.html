@@ -310,35 +310,10 @@
     .card-meta h2 a:focus-visible { outline: none; }
     .publication:has(.card-meta h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
 
-    /* ── Special cards (news + action tiles; shown in gallery only) ──
+    /* ── Special cards (action/cluster tiles; shown in gallery only) ──
        .special-card marks every tile the count/search/network logic must skip and tells
        the masonry to place them; action/cluster tiles also style through it directly
-       (border, background, title and sub-row layout below) — the news card's own boxed
-       surface is layered on top via .news-card. */
-    .news-card {
-      padding: 0.9rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--tint-surface);
-    }
-    .special-eyebrow {
-      display: block;
-      font-size: var(--text-xxs);
-      letter-spacing: var(--tracking-caps);
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.4rem;
-    }
-    .special-text { font-size: var(--text-xs); line-height: var(--lh-normal); margin: 0; }
-    .special-link {
-      display: inline-block;
-      margin-top: 0.5rem;
-      font-size: var(--text-xs);
-      color: inherit;
-      text-decoration: none;
-      border-bottom: 1px solid var(--border-hover);
-    }
-    .special-link:hover { border-bottom-color: var(--fg); }
+       (border, background, title and sub-row layout below). */
     /* An action tile is a <button>: undo the UA's centered text and its own font/color. */
     .action-card {
       display: block;
@@ -593,8 +568,8 @@
       .header .icons { margin-bottom: 0.6rem; }
       .header .bio-col { clear: left; margin-top: 1rem; }
       .filter-count, .view-toggle { display: none; }
-      /* Mobile: drop the action / cluster / network tiles (the news card stays). */
-      .special-card:not(.news-card) { display: none !important; }
+      /* Mobile: drop the action / cluster / network tiles. */
+      .special-card { display: none !important; }
     }
     @media (max-width: 430px) {
       .header-portrait { float: none; width: 100%; max-width: 320px; margin: 0 0 0.75rem; }
@@ -691,24 +666,16 @@
 
     <!-- ── Publications ── -->
     <div id="publications">
-      {%- comment -%} Special cards (non-.publication tiles): a pinned news announcement and
-      clickable action cards. They live in the gallery flow but carry the .special-card class so
-      the count / search / network logic (which queries .publication) ignores them. Placement of
-      home_cards actions: `pin: first` renders here as the very first tile (before the forthcoming
-      publications); an unpinned action renders as a plain tile at the top. The research-cluster
-      filter cards are NOT from home_cards — they are generated automatically from
-      site.data.network.clusters and merged into the dated flow below (each just before its newest
-      member). See _data/home_cards.yml and scripts/build-network.py. {%- endcomment -%}
+      {%- comment -%} Special cards (non-.publication tiles): clickable action cards. They live
+      in the gallery flow but carry the .special-card class so the count / search / network logic
+      (which queries .publication) ignores them. Placement of home_cards actions: `pin: first`
+      renders here as the very first tile (before the forthcoming publications); an unpinned
+      action renders as a plain tile at the top. The research-cluster filter cards are NOT from
+      home_cards — they are generated automatically from site.data.network.clusters and merged
+      into the dated flow below (each just before its newest member). See _data/home_cards.yml
+      and scripts/build-network.py. {%- endcomment -%}
       {% assign _first_actions = site.data.home_cards.actions | where: "pin", "first" %}
       {% for _action in _first_actions %}{% include action-card-plain.html action=_action class="" %}{% endfor %}
-      {% assign _news = site.data.home_cards.news %}
-      {% if _news and _news.text and _news.text != '' %}
-      <div class="special-card news-card">
-        <span class="special-eyebrow">{{ _news.eyebrow | default: 'News' }}{% if _news.date %} · <time datetime="{{ _news.date | date_to_xmlschema }}">{{ _news.date | date: '%B %Y' }}</time>{% endif %}</span>
-        <p class="special-text">{{ _news.text }}</p>
-        {% if _news.link and _news.link != '' %}<a class="special-link" href="{{ _news.link }}">{{ _news.link_text | default: 'Read more' }} →</a>{% endif %}
-      </div>
-      {% endif %}
       {% for _action in site.data.home_cards.actions %}
       {% unless _action.pin %}{% include action-card-plain.html action=_action class="" %}{% endunless %}
       {% endfor %}
@@ -804,8 +771,8 @@
     var container = document.getElementById('publications');
     var viewButtons = document.querySelectorAll('.view-toggle button');
     var total = publications.length;
-    // Masonry packs both real publication cards and the .special-card tiles (news +
-    // action cards); count/search/network keep operating on .publication only.
+    // Masonry packs both real publication cards and the .special-card (action) tiles;
+    // count/search/network keep operating on .publication only.
     var tiles = container ? container.querySelectorAll(':scope > .publication, :scope > .special-card') : publications;
     var specialCards = container ? container.querySelectorAll('.special-card') : [];
 
