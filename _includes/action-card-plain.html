@@ -31,7 +31,7 @@ the GoatCounter dashboard reads as "Peirce Manuscripts" rather than "cluster:3".
 {%- if _act == 'view:network' -%}{%- assign _gc_click = 'network-view' -%}
 {%- elsif _act contains 'cluster:' -%}{%- assign _gc_click = _label -%}
 {%- endif -%}
-<button type="button" class="special-card action-card card-plain {{ include.class }}" data-action="{{ _act }}"{% if include.slugs %} data-slugs="{{ include.slugs | join: ' ' }}"{% endif %}{% if include.filterlabel %} data-filter-label="{{ include.filterlabel }}"{% endif %}{% if _gc_click != '' %} data-goatcounter-click="{{ _gc_click }}"{% endif %}>
+<button type="button" class="special-card action-card {{ include.class }}" data-action="{{ _act }}"{% if include.slugs %} data-slugs="{{ include.slugs | join: ' ' }}"{% endif %}{% if include.filterlabel %} data-filter-label="{{ include.filterlabel }}"{% endif %}{% if _gc_click != '' %} data-goatcounter-click="{{ _gc_click }}"{% endif %}>
   {%- if include.media -%}<span class="card-media">{% include {{ include.media }} %}</span>{%- endif -%}
   <span class="card-meta">
     {%- if _yr or _eyebrow or _venue -%}
