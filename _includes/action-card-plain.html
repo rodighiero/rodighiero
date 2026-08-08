@@ -38,8 +38,8 @@ everything else (view/type/search) triggers a one-off action (.action). {%- endc
 <button type="button" class="card {{ _kind }} {{ include.class }}" data-action="{{ _act }}"{% if include.slugs %} data-slugs="{{ include.slugs | join: ' ' }}"{% endif %}{% if include.filterlabel %} data-filter-label="{{ include.filterlabel }}"{% endif %}{% if _gc_click != '' %} data-goatcounter-click="{{ _gc_click }}"{% endif %}>
   {%- if include.media -%}<span class="card-media">{% include {{ include.media }} %}</span>{%- endif -%}
   {%- if _yr or _eyebrow or _venue -%}
-  <span class="meta-line">{% if _yr %}{% if _yr contains '–' or _yr contains '-' %}<span>{{ _yr }}</span>{% else %}<time datetime="{{ _yr }}">{{ _yr }}</time>{% endif %}{% if _eyebrow %} · {% endif %}{% endif %}{{ _eyebrow }}{% if _venue %}<br><span class="venue">{{ _venue }}</span>{% endif %}</span>
+  <span class="card-meta">{% if _yr %}{% if _yr contains '–' or _yr contains '-' %}<span>{{ _yr }}</span>{% else %}<time datetime="{{ _yr }}">{{ _yr }}</time>{% endif %}{% if _eyebrow %} · {% endif %}{% endif %}{{ _eyebrow }}{% if _venue %}<br><span class="venue">{{ _venue }}</span>{% endif %}</span>
   {%- endif -%}
   <span class="card-title">{{ _label }}</span>
-  {% if _sublabel %}<span class="card-sub">{{ _sublabel }}</span>{% endif %}
+  {% if _sublabel %}<span class="card-text">{{ _sublabel }}</span>{% endif %}
 </button>
