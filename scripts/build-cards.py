@@ -54,6 +54,10 @@ CLUSTER_CARDS = {
         "title": "Mapping Science",
         "description": "Turning conferences into networks of authors linked by a shared vocabulary. A field takes shape before your eyes.",
     },
+    "Thesaurus": {
+        "title": "Controlled Vocabularies",
+        "description": "Thesauri for organizing scientific and library collections, from a European Commission retrieval system to a national library's move onto the semantic web. The groundwork of indexing that came before the turn to visualization.",
+    },
 }
 
 
