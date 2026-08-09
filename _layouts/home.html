@@ -847,24 +847,10 @@
     });
 
     // ── View toggle ──
-    // Preserve the user's scroll position across view switches. We track the
-    // user's intended scrollY separately from the live one, because the network
-    // view is short (≈ one viewport) and the browser clamps scrollY when we
-    // restore into it. Without separating intent from live position, going
-    // gallery (y=5000) → network (clamps to ~800) → gallery would land at 800.
-    var desiredScroll = window.scrollY || 0;
-    var programmaticScroll = false;
-    window.addEventListener('scroll', function() {
-      if (!programmaticScroll) desiredScroll = window.scrollY;
-    }, { passive: true });
-    function scrollToPreserved(y) {
-      programmaticScroll = true;
-      window.scrollTo(0, y);
-      // The scroll event from scrollTo is async; clear the flag after it fires.
-      requestAnimationFrame(function() {
-        requestAnimationFrame(function() { programmaticScroll = false; });
-      });
-    }
+    // View switches always land at the top: the network view is short (≈ one
+    // viewport), so carrying over a scrolled position from a taller gallery
+    // would leave it looking scrolled into empty space instead of showing the graph.
+    function scrollToTop() { window.scrollTo(0, 0); }
     // Reflect the current view + search into the URL query string (via
     // replaceState, so it never adds history entries) to make any state
     // shareable and deep-linkable. Only user-initiated changes call this;
@@ -920,13 +906,11 @@
         if (networkApi) networkApi.filter(matchedSlugs);
       }
       if (shouldRestore) {
-        var target = desiredScroll;
-        var restore = function() { scrollToPreserved(target); };
         // Gallery needs masonry to set container height before scroll makes sense.
         if (view === 'gallery') {
-          requestAnimationFrame(function() { requestAnimationFrame(restore); });
+          requestAnimationFrame(function() { requestAnimationFrame(scrollToTop); });
         } else {
-          requestAnimationFrame(restore);
+          requestAnimationFrame(scrollToTop);
         }
       }
     }
@@ -1132,9 +1116,8 @@
         // applySearch() relayouts the masonry on the next frame (which changes page
         // height and would abort a smooth scroll), so scroll after that, instantly.
         if (verb === 'type' || verb === 'search' || verb === 'cluster') {
-          desiredScroll = 0;
           requestAnimationFrame(function() {
-            requestAnimationFrame(function() { scrollToPreserved(0); });
+            requestAnimationFrame(scrollToTop);
           });
         }
       });
