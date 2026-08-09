@@ -1172,8 +1172,13 @@
       } else if (e.key === 'Escape') {
         if (searchInput.value || structuredFilterActive()) resetFilters();
         if (networkApi) networkApi.clearSelection();
+        // Drop focus outright rather than special-casing which element kind:
+        // a focused control (e.g. the network-view toggle, just clicked to get
+        // here) can otherwise keep showing a focus ring after the reset —
+        // Safari's Full Keyboard Access ring in particular ignores `outline:
+        // none` entirely, so removing focus is the only way to clear it.
         var active = document.activeElement;
-        if (active && active.classList && active.classList.contains('node')) active.blur();
+        if (active && active !== document.body) active.blur();
         // Drop any lingering text selection (e.g. from clicking a card) so the reset
         // doesn't leave the page looking selected.
         var sel = window.getSelection && window.getSelection();
