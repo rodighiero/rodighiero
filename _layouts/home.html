@@ -255,6 +255,10 @@
       color: var(--fg);
       background: var(--tint-active);
     }
+    /* aria-pressed already shows the active view via background tint, so the
+       default focus ring (which Chrome/Safari can (re)apply on a later keypress,
+       e.g. pressing Esc right after a mouse click) would be redundant here. */
+    .view-toggle button:focus-visible { outline: none; }
     .no-results { font-size: var(--text-xs); color: var(--muted); padding: 2rem 0; }
     .no-results[hidden] { display: none; }
     /* Network view fades non-matching nodes in place, so the empty-state copy would duplicate the signal. */
