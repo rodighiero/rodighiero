@@ -877,7 +877,7 @@
 
     function setView(view, persist) {
       var prev = document.body.dataset.view;
-      var shouldRestore = prev && prev !== view;
+      var switchedView = prev && prev !== view;
       document.body.dataset.view = view;
       if (persist !== false) {
         try { localStorage.setItem('publicationView', view); } catch (e) {}
@@ -905,14 +905,11 @@
         // networkApi.filter(matchedSlugs) call handles it.
         if (networkApi) networkApi.filter(matchedSlugs);
       }
-      if (shouldRestore) {
-        // Gallery needs masonry to set container height before scroll makes sense.
-        if (view === 'gallery') {
-          requestAnimationFrame(function() { requestAnimationFrame(scrollToTop); });
-        } else {
-          requestAnimationFrame(scrollToTop);
-        }
-      }
+      // scrollTo(0, 0) doesn't depend on layout, so there's no need to wait a
+      // frame for it — doing it synchronously also avoids a one-frame flash
+      // where clearMasonry() has already shrunk the document but the scroll
+      // position hasn't caught up yet.
+      if (switchedView) scrollToTop();
     }
     // Hint that clicking the active view button resets the current filter,
     // since the behaviour is otherwise invisible.
@@ -947,6 +944,11 @@
       activeFilterLabel = null;
       applySearch();
       updateURL();
+      // Mirrors the scroll-to-top on applying a filter (below): clearing one
+      // changes the result set just as much, so it should land the same way.
+      requestAnimationFrame(function() {
+        requestAnimationFrame(scrollToTop);
+      });
     }
     viewButtons.forEach(function(b) {
       b.addEventListener('click', function() {
