@@ -15,27 +15,31 @@
   <meta name="description" content="{{ _excerpt_attr }}">
   <meta name="keywords" content="Dario Rodighiero{% if page.venue %}, {{ page.venue | escape }}{% endif %}{% if page.type %}, {{ page.type }}{% endif %}, data visualization, digital humanities, design">
   <link rel="canonical" href="{{ site.url }}{{ page.url }}">
-  {%- comment -%} hreflang alternates for translation pairs. A translation points at its source (and the source's other translations, itself included — which supplies the required self-reference); an original points at itself plus its translations. x-default is always the original. {%- endcomment -%}
+  {%- comment -%} Language set of this work: _origin is the original (this page, or the source it translates), _siblings every translation of that original (this page included when it is one). hreflang lists origin + siblings — which always contains the page itself, supplying the required self-reference — with x-default on the original. _alt_pages is the same set minus this page, for og:locale:alternate; _translated_by is siblings minus this page, for JSON-LD workTranslation. {%- endcomment -%}
   {%- assign _slug = page.url | remove_first: '/' -%}
-  {%- assign _translations = site.publications | where: 'translation_of', _slug -%}
   {%- assign _source = nil -%}
   {%- if page.translation_of -%}
     {%- capture _src_url -%}/{{ page.translation_of }}{%- endcapture -%}
     {%- assign _source = site.publications | where_exp: 'p', 'p.url == _src_url' | first -%}
   {%- endif -%}
-  {% if _source %}<link rel="alternate" hreflang="{{ _source.lang | default: 'en' }}" href="{{ site.url }}{{ _source.url }}">
-  {% assign _siblings = site.publications | where: 'translation_of', page.translation_of %}{% for _t in _siblings %}<link rel="alternate" hreflang="{{ _t.lang | default: 'en' }}" href="{{ site.url }}{{ _t.url }}">
-  {% endfor %}<link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ _source.url }}">
-  {% elsif _translations.size > 0 %}<link rel="alternate" hreflang="{{ page.lang | default: 'en' }}" href="{{ site.url }}{{ page.url }}">
-  {% for _t in _translations %}<link rel="alternate" hreflang="{{ _t.lang | default: 'en' }}" href="{{ site.url }}{{ _t.url }}">
-  {% endfor %}<link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ page.url }}">
+  {%- assign _origin = _source | default: page -%}
+  {%- assign _origin_slug = _origin.url | remove_first: '/' -%}
+  {%- assign _siblings = site.publications | where: 'translation_of', _origin_slug -%}
+  {%- assign _translated_by = _siblings | where_exp: 't', 't.url != page.url' -%}
+  {%- assign _alt_pages = _translated_by -%}
+  {%- unless _origin.url == page.url -%}
+    {%- assign _origin_arr = site.publications | where_exp: 'p', 'p.url == _origin.url' -%}
+    {%- assign _alt_pages = _origin_arr | concat: _alt_pages -%}
+  {%- endunless -%}
+  {% if _siblings.size > 0 %}<link rel="alternate" hreflang="{{ _origin.lang | default: 'en' }}" href="{{ site.url }}{{ _origin.url }}">
+  {% for _t in _siblings %}<link rel="alternate" hreflang="{{ _t.lang | default: 'en' }}" href="{{ site.url }}{{ _t.url }}">
+  {% endfor %}<link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ _origin.url }}">
   {% endif %}<meta property="og:title" content="{{ page.title | escape }}">
   <meta property="og:description" content="{{ _excerpt_attr }}">
   <meta property="og:url" content="{{ site.url }}{{ page.url }}">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="{% if page.lang == 'it' %}it_IT{% elsif page.lang == 'fr' %}fr_FR{% else %}en_US{% endif %}">
-  {% if _source %}{% assign _l = _source.lang | default: 'en' %}<meta property="og:locale:alternate" content="{% case _l %}{% when 'it' %}it_IT{% when 'fr' %}fr_FR{% else %}en_US{% endcase %}">
-  {% endif %}{% for _t in _translations %}{% assign _l = _t.lang | default: 'en' %}<meta property="og:locale:alternate" content="{% case _l %}{% when 'it' %}it_IT{% when 'fr' %}fr_FR{% else %}en_US{% endcase %}">
+  {% for _t in _alt_pages %}{% assign _l = _t.lang | default: 'en' %}<meta property="og:locale:alternate" content="{% case _l %}{% when 'it' %}it_IT{% when 'fr' %}fr_FR{% else %}en_US{% endcase %}">
   {% endfor %}
   {% assign _social_img = page.thumb %}
   {% if _social_img %}{% assign _social_dims = _social_img | prepend: '/images/' | image_size %}<meta property="og:image" content="{{ site.url }}/images/{{ _social_img }}">
@@ -62,8 +66,9 @@
   {% if _ptype.citation_venue %}<meta name="{{ _ptype.citation_venue }}" content="{{ page.venue | escape }}">{% endif %}
   {% if page.volume %}<meta name="citation_volume" content="{{ page.volume }}">{% endif %}
   {% if page.issue %}<meta name="citation_issue" content="{{ page.issue }}">{% endif %}
-  {% if page.pages %}{% assign _pp = page.pages | replace: '–', '-' | split: '-' %}<meta name="citation_firstpage" content="{{ _pp | first }}">
-  {% if _pp.size > 1 %}<meta name="citation_lastpage" content="{{ _pp | last }}">{% endif %}{% endif %}
+  {%- comment -%} Scholar reads first/last page as literal numbers, so a Chicago-condensed range ("301–9") must be expanded back to its full last page ("309") by borrowing the missing leading digits from the first page. {%- endcomment -%}
+  {% if page.pages %}{% assign _pp = page.pages | replace: '–', '-' | replace: '—', '-' | split: '-' %}{% assign _fp = _pp | first | strip %}<meta name="citation_firstpage" content="{{ _fp }}">
+  {% if _pp.size > 1 %}{% assign _lp = _pp | last | strip %}{% if _lp.size < _fp.size %}{% assign _pad = _fp.size | minus: _lp.size %}{% assign _lp = _fp | slice: 0, _pad | append: _lp %}{% endif %}<meta name="citation_lastpage" content="{{ _lp }}">{% endif %}{% endif %}
   {% if page.publisher %}<meta name="citation_publisher" content="{{ page.publisher | escape }}">{% endif %}
   {% if page.doi and page.doi contains 'doi.org/' %}<meta name="citation_doi" content="{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}">{% endif %}
   <meta name="citation_abstract_html_url" content="{{ site.url }}{{ page.url }}">
@@ -81,7 +86,7 @@
   <meta name="DC.language" content="{{ page.lang | default: 'en' }}">
   <meta name="DC.identifier" content="{{ site.url }}{{ page.url }}">
   {% if page.doi %}<meta name="DC.identifier" content="{{ page.doi }}">{% endif %}
-  <meta name="DC.publisher" content="Dario Rodighiero">
+  <meta name="DC.publisher" content="{{ page.publisher | default: 'Dario Rodighiero' | escape }}">
   <meta name="DCTERMS.isPartOf" content="{{ site.url }}">
   {% assign _schema_type = _ptype.schema | default: 'ScholarlyArticle' %}
   <script type="application/ld+json">
@@ -97,8 +102,8 @@
     "url": "{{ site.url }}{{ page.url }}",
     {% if page.doi %}"sameAs": "{{ page.doi }}",{% endif %}
     {% if page.pages %}"pagination": {{ page.pages | jsonify }},{% endif %}
-    {% if _source %}"translationOfWork": { "@id": "{{ site.url }}{{ _source.url }}", "name": {{ _source.title | jsonify }}, "inLanguage": "{{ _source.lang | default: 'en' }}" },{% endif %}
-    {% if _translations.size > 0 %}"workTranslation": [{% for _t in _translations %}{ "@id": "{{ site.url }}{{ _t.url }}", "name": {{ _t.title | jsonify }}, "inLanguage": "{{ _t.lang | default: 'en' }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}
+    {% if _source %}{% assign _st = site.data.publication_types[_source.type].schema | default: 'CreativeWork' %}"translationOfWork": { "@type": "{{ _st }}", "@id": "{{ site.url }}{{ _source.url }}", "name": {{ _source.title | jsonify }}, "inLanguage": "{{ _source.lang | default: 'en' }}" },{% endif %}
+    {% if _translated_by.size > 0 %}"workTranslation": [{% for _t in _translated_by %}{% assign _tt = site.data.publication_types[_t.type].schema | default: 'CreativeWork' %}{ "@type": "{{ _tt }}", "@id": "{{ site.url }}{{ _t.url }}", "name": {{ _t.title | jsonify }}, "inLanguage": "{{ _t.lang | default: 'en' }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}
     {% if _social_img %}"image": "{{ site.url }}/images/{{ _social_img }}",{% endif %}
     "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ site.url }}{{ page.url }}" },
     "inLanguage": "{{ page.lang | default: 'en' }}",
