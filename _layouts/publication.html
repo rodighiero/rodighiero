@@ -15,11 +15,28 @@
   <meta name="description" content="{{ _excerpt_attr }}">
   <meta name="keywords" content="Dario Rodighiero{% if page.venue %}, {{ page.venue | escape }}{% endif %}{% if page.type %}, {{ page.type }}{% endif %}, data visualization, digital humanities, design">
   <link rel="canonical" href="{{ site.url }}{{ page.url }}">
-  <meta property="og:title" content="{{ page.title | escape }}">
+  {%- comment -%} hreflang alternates for translation pairs. A translation points at its source (and the source's other translations, itself included — which supplies the required self-reference); an original points at itself plus its translations. x-default is always the original. {%- endcomment -%}
+  {%- assign _slug = page.url | remove_first: '/' -%}
+  {%- assign _translations = site.publications | where: 'translation_of', _slug -%}
+  {%- assign _source = nil -%}
+  {%- if page.translation_of -%}
+    {%- capture _src_url -%}/{{ page.translation_of }}{%- endcapture -%}
+    {%- assign _source = site.publications | where_exp: 'p', 'p.url == _src_url' | first -%}
+  {%- endif -%}
+  {% if _source %}<link rel="alternate" hreflang="{{ _source.lang | default: 'en' }}" href="{{ site.url }}{{ _source.url }}">
+  {% assign _siblings = site.publications | where: 'translation_of', page.translation_of %}{% for _t in _siblings %}<link rel="alternate" hreflang="{{ _t.lang | default: 'en' }}" href="{{ site.url }}{{ _t.url }}">
+  {% endfor %}<link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ _source.url }}">
+  {% elsif _translations.size > 0 %}<link rel="alternate" hreflang="{{ page.lang | default: 'en' }}" href="{{ site.url }}{{ page.url }}">
+  {% for _t in _translations %}<link rel="alternate" hreflang="{{ _t.lang | default: 'en' }}" href="{{ site.url }}{{ _t.url }}">
+  {% endfor %}<link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ page.url }}">
+  {% endif %}<meta property="og:title" content="{{ page.title | escape }}">
   <meta property="og:description" content="{{ _excerpt_attr }}">
   <meta property="og:url" content="{{ site.url }}{{ page.url }}">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="{% if page.lang == 'it' %}it_IT{% elsif page.lang == 'fr' %}fr_FR{% else %}en_US{% endif %}">
+  {% if _source %}{% assign _l = _source.lang | default: 'en' %}<meta property="og:locale:alternate" content="{% case _l %}{% when 'it' %}it_IT{% when 'fr' %}fr_FR{% else %}en_US{% endcase %}">
+  {% endif %}{% for _t in _translations %}{% assign _l = _t.lang | default: 'en' %}<meta property="og:locale:alternate" content="{% case _l %}{% when 'it' %}it_IT{% when 'fr' %}fr_FR{% else %}en_US{% endcase %}">
+  {% endfor %}
   {% assign _social_img = page.thumb %}
   {% if _social_img %}{% assign _social_dims = _social_img | prepend: '/images/' | image_size %}<meta property="og:image" content="{{ site.url }}/images/{{ _social_img }}">
   <meta property="og:image:alt" content="{{ page.title | escape }}">
@@ -43,6 +60,11 @@
   {% endfor %}
   {% if page.year and page.year != "Forthcoming" %}<meta name="citation_publication_date" content="{{ page.year }}">{% endif %}
   {% if _ptype.citation_venue %}<meta name="{{ _ptype.citation_venue }}" content="{{ page.venue | escape }}">{% endif %}
+  {% if page.volume %}<meta name="citation_volume" content="{{ page.volume }}">{% endif %}
+  {% if page.issue %}<meta name="citation_issue" content="{{ page.issue }}">{% endif %}
+  {% if page.pages %}{% assign _pp = page.pages | replace: '–', '-' | split: '-' %}<meta name="citation_firstpage" content="{{ _pp | first }}">
+  {% if _pp.size > 1 %}<meta name="citation_lastpage" content="{{ _pp | last }}">{% endif %}{% endif %}
+  {% if page.publisher %}<meta name="citation_publisher" content="{{ page.publisher | escape }}">{% endif %}
   {% if page.doi and page.doi contains 'doi.org/' %}<meta name="citation_doi" content="{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}">{% endif %}
   <meta name="citation_abstract_html_url" content="{{ site.url }}{{ page.url }}">
   <meta name="citation_language" content="{{ page.lang | default: 'en' }}">
@@ -74,6 +96,9 @@
     {% if page.venue or page.publisher %}"publisher": { "@type": "Organization", "name": {{ page.publisher | default: page.venue | jsonify }} },{% endif %}
     "url": "{{ site.url }}{{ page.url }}",
     {% if page.doi %}"sameAs": "{{ page.doi }}",{% endif %}
+    {% if page.pages %}"pagination": {{ page.pages | jsonify }},{% endif %}
+    {% if _source %}"translationOfWork": { "@id": "{{ site.url }}{{ _source.url }}", "name": {{ _source.title | jsonify }}, "inLanguage": "{{ _source.lang | default: 'en' }}" },{% endif %}
+    {% if _translations.size > 0 %}"workTranslation": [{% for _t in _translations %}{ "@id": "{{ site.url }}{{ _t.url }}", "name": {{ _t.title | jsonify }}, "inLanguage": "{{ _t.lang | default: 'en' }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}
     {% if _social_img %}"image": "{{ site.url }}/images/{{ _social_img }}",{% endif %}
     "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ site.url }}{{ page.url }}" },
     "inLanguage": "{{ page.lang | default: 'en' }}",
