@@ -53,6 +53,8 @@ Both layouts share a common `<head>` structure:
 - Twitter Card (`twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`, `twitter:image:alt`)
 - JSON-LD structured data
 
+**Translation pairs** (`translation_of` in a translation's front matter) emit reciprocal `hreflang` alternates on both pages — each side lists every language version plus itself, with `x-default` on the original — alongside `og:locale:alternate` and JSON-LD `translationOfWork` / `workTranslation` links. Publication pages also surface the bibliographic front matter to Google Scholar (`citation_volume`, `citation_issue`, `citation_firstpage`/`citation_lastpage` split from `pages`, `citation_publisher`) and as JSON-LD `pagination`.
+
 **`og:locale`** is set to `en_US` by default; publications with `lang: it` in their front matter get `it_IT`, and `lang: fr` gets `fr_FR`. The same `lang` (defaulting to `en`) also drives the publication page's `<html lang>`, the `citation_language` / `DC.language` meta tags, and JSON-LD `inLanguage`, so each page declares its real language end-to-end. The homepage stays `en` (English UI/bio); there is no translated UI or per-language page tree.
 
 **OG/Twitter image**: `home.html` always uses the author portrait (`images/Dario-Rodighiero.webp`). `publication.html` uses `page.thumb`, falling back to the same portrait so social cards are never blank.
