@@ -7,6 +7,8 @@ author: "Dario Rodighiero"
 preface: "Jeffrey T. Schnapp"
 doi: "https://library.oapen.org/handle/20.500.12657/91793"
 thumb: "@cards/Mapping-Affinities.webp"
+redirect_from:
+  - /Mapping-Affinities-Cartographie-des-affinites
 ---
 {% include figure-single.html src="/images/@cards/Mapping-Affinities.webp" alt="Cover of the book “Mapping Affinities” by Dario Rodighiero (MétisPresses), with a network of glowing nodes and links on a dark background" %}
 
