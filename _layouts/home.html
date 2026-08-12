@@ -366,6 +366,18 @@
       width: 100%;
       will-change: transform;
     }
+    /* A tile that survives a filter is the same tile, so let its transition group carry
+       it to the new slot and nothing more. Left to itself the group also cross-fades the
+       old picture of the tile into the new one, and because that blend is additive
+       (plus-lighter, so a genuine dissolve sums to 1) two *identical* pictures pulse
+       instead of holding steady — the blink. Dropping the old snapshot and the new one's
+       fade leaves the movement alone. Only survivors are named (see nameVisibleTiles), so
+       tiles arriving still fade in with the page snapshot; tiles leaving are cut, which
+       suits a filter. Browsers without view-transition-class ignore both rules and keep
+       the default cross-fade. */
+    ::view-transition-old(.tile) { display: none; }
+    ::view-transition-new(.tile) { animation: none; }
+
     /* The media slot above a card's text — a publication thumbnail, or an action/filter
        card's inlined graph miniature — framed once, so either sits the same among the tiles.
        One bare .card-media rule now covers both the live gallery tile and its clone in the
@@ -890,6 +902,121 @@
       if (!img.complete) img.addEventListener('load', scheduleLayout, { once: true });
     });
 
+    // ── View transitions ──
+    // Every change of state — switching view, applying a filter, clearing one, and
+    // typing once a burst of keystrokes has settled (see searchFromInput below) — runs
+    // through the two helpers here, so the page animates between states instead of
+    // cutting. Both fall straight through to fn() where the API is missing or the reader
+    // has asked for reduced motion, leaving the old instant behaviour intact.
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function transitionsOK() { return !!document.startViewTransition && !reduceMotion.matches; }
+
+    // Switching view: the gallery and the graph share nothing on screen, so there is
+    // nothing to match up — a plain cross-fade of the page is the whole effect.
+    function withCrossfade(fn) {
+      if (!transitionsOK()) { fn(); return; }
+      document.startViewTransition(fn);
+    }
+
+    // A filter change *within* the gallery, where the tiles that survive it should
+    // travel to their new masonry slots rather than blink into them. A tile can only be
+    // matched across the two states if it carries a view-transition-name, so the ones on
+    // screen are named for the length of the transition and unnamed after — naming all
+    // forty permanently would have the engine snapshot every one of them on every change.
+    //
+    // Only the tiles visible *before* the change are named, which sorts them into three
+    // behaviours: a tile in both states is matched and slides to its new slot (see the
+    // ::view-transition-*(.tile) rules, which stop it cross-fading with a second picture
+    // of itself on the way); a tile that leaves is cut; a tile that arrives was never
+    // named, so it stays part of the page snapshot and fades in with it.
+    function tileName(p, i) {
+      var slug = p.getAttribute('data-slug');
+      return 'tile-' + (slug ? slug.replace(/[^\w-]/g, '-') : 'card-' + i);
+    }
+    function nameVisibleTiles() {
+      tiles.forEach(function(p, i) {
+        if (p.style.display !== 'none' && p.offsetParent !== null) {
+          p.style.viewTransitionName = tileName(p, i);
+          p.style.viewTransitionClass = 'tile';
+        }
+      });
+    }
+    function clearTileNames() {
+      tiles.forEach(function(p) {
+        p.style.viewTransitionName = '';
+        p.style.viewTransitionClass = '';
+      });
+    }
+    // Cheap identity for the result set: which tiles are on screen, read off the inline
+    // display styles alone so it costs no layout.
+    function visibleSignature() {
+      var s = '';
+      tiles.forEach(function(p, i) { if (p.style.display !== 'none') s += i + ','; });
+      return s;
+    }
+    var activeTransition = null;
+    function withTileTransition(fn, thenScrollToTop) {
+      // Any deliberate change supersedes a filter still waiting out a typing burst
+      // (see searchFromInput below), so it never lands a second time behind this one.
+      cancelPendingSearch();
+      var gallery = document.body.dataset.view === 'gallery';
+      // Land at the top *before* anything is captured, not after. A filter card sits
+      // partway down the flow, so filtering has always jumped back up; jumping once the
+      // old state is already captured would leave the transition dissolving between two
+      // different scroll offsets. Doing it first keeps the jump instant, as it has
+      // always been, and leaves the transition to animate the tiles alone. (scrollTo(0, 0)
+      // doesn't mind the page height changing underneath it, so unlike the old
+      // double-rAF it needn't wait for the relayout.)
+      if (thenScrollToTop) scrollToTop();
+      // layoutMasonry() runs inside the callback rather than on the next frame the way
+      // scheduleLayout() would: the "after" snapshot is taken as soon as the callback
+      // settles, so transforms written a frame later would be captured at their old
+      // values and every tile would set off towards the wrong slot.
+      function run() {
+        fn();
+        if (gallery) layoutMasonry();
+      }
+      if (!transitionsOK()) { run(); return; }
+      var before = visibleSignature();
+      if (gallery) nameVisibleTiles();
+      var vt = document.startViewTransition(function() {
+        run();
+        // Nothing moved — typing another character that doesn't narrow the results is
+        // the common case. Cross-fading the page with an identical copy of itself is
+        // what reads as a blink, so skip straight to the end instead.
+        if (vt && visibleSignature() === before) vt.skipTransition();
+      });
+      activeTransition = vt;
+      // A skipped transition rejects .ready but settles .finished either way, so clear on
+      // both paths. Only the newest one clears: two clicks in quick succession skip the
+      // first, whose .finished would otherwise strip the names the second still needs.
+      var done = function() { if (activeTransition === vt) clearTileNames(); };
+      vt.finished.then(done, done);
+    }
+
+    // Typing gets the same transition as the cards and Escape, but only once a burst of
+    // keystrokes has settled. It cannot run per keystroke: a transition covers the page
+    // with its snapshot layer for its whole duration, so each one would catch the very
+    // field being typed into, and each new one skips the last before it can finish.
+    // Waiting out the burst costs the results SEARCH_SETTLE ms and buys them the motion
+    // everything else has — including the cards coming *back* as a query is deleted,
+    // which is the largest reflow the search box produces. Readers who get no transition
+    // (unsupported, or reduced motion) keep the old instant per-keystroke filtering
+    // rather than paying the delay for an animation they will never see.
+    var SEARCH_SETTLE = 180;
+    var searchTimer = null;
+    function cancelPendingSearch() {
+      if (searchTimer !== null) { clearTimeout(searchTimer); searchTimer = null; }
+    }
+    function searchFromInput() {
+      cancelPendingSearch();
+      if (!transitionsOK()) { applySearch(); return; }
+      searchTimer = setTimeout(function() {
+        searchTimer = null;
+        withTileTransition(applySearch);
+      }, SEARCH_SETTLE);
+    }
+
     // ── View toggle ──
     // View switches always land at the top: the network view is short (≈ one
     // viewport), so carrying over a scrolled position from a taller gallery
@@ -982,17 +1109,16 @@
     // Clears the search input and any structured (type/cluster) filter, shared by
     // the active-view-button reset and the global Escape handler below.
     function resetFilters() {
-      if (searchInput) searchInput.value = '';
-      activeType = null;
-      clearClusterFilter();
-      activeFilterLabel = null;
-      applySearch();
-      updateURL();
-      // Mirrors the scroll-to-top on applying a filter (below): clearing one
-      // changes the result set just as much, so it should land the same way.
-      requestAnimationFrame(function() {
-        requestAnimationFrame(scrollToTop);
-      });
+      // Mirrors applying a filter (below): clearing one changes the result set just
+      // as much, so it moves the same way and lands the same way.
+      withTileTransition(function() {
+        if (searchInput) searchInput.value = '';
+        activeType = null;
+        clearClusterFilter();
+        activeFilterLabel = null;
+        applySearch();
+        updateURL();
+      }, true);
     }
     viewButtons.forEach(function(b) {
       b.addEventListener('click', function() {
@@ -1005,7 +1131,7 @@
           }
           if (clicked === 'network' && networkApi) networkApi.clearSelection();
         } else {
-          setView(clicked);
+          withCrossfade(function() { setView(clicked); });
         }
       });
     });
@@ -1131,41 +1257,37 @@
         var verb = i === -1 ? raw : raw.slice(0, i);
         var val = i === -1 ? '' : raw.slice(i + 1);
         if (verb === 'view' && val) {
-          setView(val);
-        } else if (verb === 'type' && val) {
-          activeType = (activeType === val) ? null : val;
-          clearClusterFilter();
-          if (activeType) showFilterInInput(btn.dataset.filterLabel || val); else clearFilterInput();
-          applySearch();
-          updateURL();
-        } else if (verb === 'search' && val && searchInput) {
-          searchInput.value = (searchInput.value === val) ? '' : val; // click again to clear
-          activeType = null;
-          clearClusterFilter();
-          activeFilterLabel = null; // this is a real free-text query, not a filter label
-          applySearch();
-          updateURL();
-        } else if (verb === 'cluster' && val) {
-          if (activeCluster && activeCluster.id === val) {
+          withCrossfade(function() { setView(val); });
+          return;
+        }
+        if (verb !== 'type' && verb !== 'search' && verb !== 'cluster') return;
+        // A filter card sits partway down the flow; after filtering, jump back to the
+        // top so the (now shorter) result set starts in view rather than scrolled past.
+        // withTileTransition lays the masonry out synchronously, so the page height has
+        // already settled by the time it scrolls.
+        withTileTransition(function() {
+          if (verb === 'type' && val) {
+            activeType = (activeType === val) ? null : val;
             clearClusterFilter();
-            clearFilterInput();
-          } else if (btn.dataset.slugs) {
-            activeCluster = { id: val, slugs: new Set(btn.dataset.slugs.split(' ')) };
+            if (activeType) showFilterInInput(btn.dataset.filterLabel || val); else clearFilterInput();
+          } else if (verb === 'search' && val && searchInput) {
+            searchInput.value = (searchInput.value === val) ? '' : val; // click again to clear
             activeType = null;
-            showFilterInInput(btn.dataset.filterLabel || '');
+            clearClusterFilter();
+            activeFilterLabel = null; // this is a real free-text query, not a filter label
+          } else if (verb === 'cluster' && val) {
+            if (activeCluster && activeCluster.id === val) {
+              clearClusterFilter();
+              clearFilterInput();
+            } else if (btn.dataset.slugs) {
+              activeCluster = { id: val, slugs: new Set(btn.dataset.slugs.split(' ')) };
+              activeType = null;
+              showFilterInInput(btn.dataset.filterLabel || '');
+            }
           }
           applySearch();
           updateURL();
-        }
-        // A filter card sits partway down the flow; after filtering, jump back to the
-        // top so the (now shorter) result set starts in view rather than scrolled past.
-        // applySearch() relayouts the masonry on the next frame (which changes page
-        // height and would abort a smooth scroll), so scroll after that, instantly.
-        if (verb === 'type' || verb === 'search' || verb === 'cluster') {
-          requestAnimationFrame(function() {
-            requestAnimationFrame(scrollToTop);
-          });
-        }
+        }, true);
       });
     });
 
@@ -1183,7 +1305,7 @@
             activeFilterLabel = null;
           }
         }
-        applySearch();
+        searchFromInput();
         scheduleURLUpdate();
       });
     }
