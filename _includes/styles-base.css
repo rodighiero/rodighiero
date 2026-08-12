@@ -20,40 +20,26 @@
   /* Card padding, shared by every card-shaped block (gallery cards, network lede/details) */
   --card-pad: 0.6rem;
 
-  --fg: #000;
-  --bg: #fff;
-  --muted: rgba(0,0,0,0.7);
-  --border: rgba(0,0,0,0.2);
-  --border-hover: rgba(0,0,0,0.5);
+  /* Colors: one declaration per token. light-dark() resolves against the used
+     color-scheme, so both drivers feed the same five values — the system
+     preference (via `color-scheme: light dark` here, matching the
+     <meta name="color-scheme"> in site-head.html) and the manual toggle (which
+     sets color-scheme on html.dark / html.light below, and nothing else). The
+     print block at the foot of this file forces color-scheme: light, so the
+     whole palette flips to its light values there too. */
+  color-scheme: light dark;
+  --fg:           light-dark(#000, #e8e8e8);
+  --bg:           light-dark(#fff, #111);
+  --muted:        light-dark(rgba(0,0,0,0.7), rgba(255,255,255,0.7));
+  --border:       light-dark(rgba(0,0,0,0.2), rgba(255,255,255,0.2));
+  --border-hover: light-dark(rgba(0,0,0,0.5), rgba(255,255,255,0.5));
+  /* Tints derive from --fg, so they follow it into either scheme on their own. */
   --tint-surface: color-mix(in srgb, var(--fg) 4%, transparent);
   --tint-hover: color-mix(in srgb, var(--fg) 5%, transparent);
   --tint-active: color-mix(in srgb, var(--fg) 10%, transparent);
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --fg: #e8e8e8;
-    --bg: #111;
-    --muted: rgba(255,255,255,0.7);
-    --border: rgba(255,255,255,0.2);
-    --border-hover: rgba(255,255,255,0.5);
-  }
-}
-html.dark {
-  color-scheme: dark;
-  --fg: #e8e8e8;
-  --bg: #111;
-  --muted: rgba(255,255,255,0.7);
-  --border: rgba(255,255,255,0.2);
-  --border-hover: rgba(255,255,255,0.5);
-}
-html.light {
-  color-scheme: light;
-  --fg: #000;
-  --bg: #fff;
-  --muted: rgba(0,0,0,0.7);
-  --border: rgba(0,0,0,0.2);
-  --border-hover: rgba(0,0,0,0.5);
-}
+html.dark { color-scheme: dark; }
+html.light { color-scheme: light; }
 html { font-size: 16px; }
 body {
   font-family: var(--font);
