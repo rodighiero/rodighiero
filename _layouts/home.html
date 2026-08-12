@@ -259,8 +259,20 @@
        default focus ring (which Chrome/Safari can (re)apply on a later keypress,
        e.g. pressing Esc right after a mouse click) would be redundant here. */
     .view-toggle button:focus-visible { outline: none; }
-    .no-results { font-size: var(--text-xs); color: var(--muted); padding: 2rem 0; }
-    .no-results[hidden] { display: none; }
+    /* The empty state fades both ways. Nothing shares its slot, so `display` can
+       join the transition with allow-discrete, which holds it at block until the
+       opacity has finished on the way out; @starting-style supplies the entry
+       value on the way in. Between them they animate an element into and out of
+       display:none, which CSS could not express at all before. */
+    .no-results {
+      font-size: var(--text-xs);
+      color: var(--muted);
+      padding: 2rem 0;
+      transition: opacity 0.2s ease, display 0.2s allow-discrete;
+      @starting-style { opacity: 0; }
+      @media (prefers-reduced-motion: reduce) { transition: none; }
+    }
+    .no-results[hidden] { display: none; opacity: 0; }
     /* Network view fades non-matching nodes in place, so the empty-state copy would duplicate the signal. */
     body[data-view="network"] .no-results { display: none; }
 
@@ -404,6 +416,18 @@
            content width would otherwise change the moment the list overflows.
            No-op under macOS overlay scrollbars, which take no space to begin with. */
         scrollbar-gutter: stable;
+      }
+      /* Panel swap: the lede and the details panel take turns in this one slot,
+         and @starting-style gives whichever is arriving an entry value, so it
+         fades up out of display:none instead of appearing whole. Only the way in
+         is animated — the outgoing panel is cut. They share a flow slot, so
+         holding the old one on screen (allow-discrete, as .no-results does) would
+         stack the two and jolt the sidebar's height mid-transition. */
+      .lede,
+      .details {
+        transition: opacity 0.2s ease;
+        @starting-style { opacity: 0; }
+        @media (prefers-reduced-motion: reduce) { transition: none; }
       }
       .lede {
         color: var(--muted);
