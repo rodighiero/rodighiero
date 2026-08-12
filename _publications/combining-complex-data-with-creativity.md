@@ -6,7 +6,7 @@ type: "interview"
 author: "Dario Rodighiero"
 interviewer: "Jelle Posthuma"
 doi: "https://www.rug.nl/jantina-tammes-school/news/2026/interview-jts-scholar-rodighiero?lang=en"
-thumb: "@cards/Combining-Complex-Data-with-Creativity.webp"
+thumb: combining-complex-data-with-creativity/cover.webp
 ---
 
 The scientific career of Dario Rodighiero, Assistant Professor of Science and Technology Studies at the University of Groningen, is difficult to confine to a single discipline. Combining computational techniques with design, he explores how complex information can be made visible. In this episode of the interview series JTS Scholars, Rodighiero discusses his work. He began his career as a computer scientist. At an early stage, he developed a fascination for Gestalt psychology, the way people perceive and understand information. “I was always good at graphic design,” he says, “and I decided to combine my two areas of expertise in the visualization of data.” In doing so, he positioned himself at exactly the right moment within an emerging field, information design, which focuses on organizing and representing complex datasets in ways that make them accessible to a broader audience.

@@ -2,11 +2,13 @@
 # figures rendered by figure-single.html / figure-group.html — and exposes them
 # as `figures`, a list of site-absolute paths ("/images/slug/fig_001.webp").
 #
-# This is what sitemap.xml declares per publication: the article's own imagery,
-# rather than the `thumb` card image, which is a gallery/social crop and not
-# content. Anything under images/@cards/ is excluded for that reason even when
-# an article body points at it — as the abstract-only entries do, opening with
-# a caption-less lead figure on their own card image.
+# This is what sitemap.xml declares per publication: what the page actually
+# shows. Every source image now lives in its publication's own images/<slug>/
+# folder, so a body figure is declared whether it is a numbered figure or the
+# cover.webp that an abstract-only entry opens on — in both cases the reader
+# sees it. images/@cards/ is excluded because it is not a source at all: it
+# holds the downsized copies generate-thumbnails.py bakes for the homepage
+# gallery, which no article body has reason to reference.
 #
 # The two includes take their paths differently, so both are normalised to a
 # site-absolute path: figure-single takes an already-absolute src="/images/…",
@@ -20,7 +22,7 @@ class PublicationFiguresGenerator < Jekyll::Generator
   SINGLE = %r!\{%\s*include\s+figure-single\.html\b(.*?)%\}!m
   GROUP  = %r!\{%\s*include\s+figure-group\.html\b(.*?)%\}!m
 
-  # Card/social crops, never declared as article imagery.
+  # Generated homepage gallery copies, never declared as article imagery.
   EXCLUDED = "/images/@cards/".freeze
 
   def generate(site)

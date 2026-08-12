@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
-"""Generate homepage card thumbnails.
+"""Generate the homepage card images.
 
-Reads the `thumb:` front-matter field of every file in _publications/
-(the card + social image — often a figure from the article body), takes that
-full-size WebP from images/, and writes a thumbnail (max MAX_WIDTH px wide,
-never upscaled) to images/@thumbnails/, named after the publication slug
-(the .md filename). Requires Pillow. Run from the repo root:
+Reads the `thumb:` front-matter field of every file in _publications/ (the
+full-size card + social image, living in the publication's own images/<slug>/
+folder — either one of its figures or a purpose-made cover.webp), and writes a
+downsized copy (max MAX_WIDTH px wide, never upscaled) to images/@cards/, named
+after the publication slug (the .md filename).
+
+images/@cards/ is therefore wholly generated — one file per publication, safe to
+delete and rebuild — and is the only image set the homepage loads. The full-size
+original stays with its publication and is what og:image points at.
+
+Requires Pillow. Run from the repo root:
 
     python3 scripts/generate-thumbnails.py
 """
@@ -21,7 +27,7 @@ QUALITY = 70
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "images"
-DEST = ROOT / "images" / "@thumbnails"
+DEST = ROOT / "images" / "@cards"
 
 
 def front_matter_img(md_path):
