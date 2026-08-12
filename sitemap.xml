@@ -4,13 +4,19 @@ layout: null
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  <url><loc>{{ site.url }}/</loc><lastmod>{{ site.data.git_mtime }}</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url>
+    <loc>{{ site.url }}/</loc>
+    <lastmod>{{ site.data.git_mtime }}</lastmod>
+    <image:image><image:loc>{{ site.url }}/images/Dario-Rodighiero.webp</image:loc></image:image>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
   {% for project in site.publications %}
   <url>
     <loc>{{ site.url }}{{ project.url | remove: '.html' }}</loc>
     <lastmod>{{ project.git_mtime }}</lastmod>
-    {% if project.thumb %}<image:image><image:loc>{{ site.url }}/images/{{ project.thumb }}</image:loc></image:image>
-    {% endif %}<changefreq>yearly</changefreq>
+    {% for figure in project.figures %}<image:image><image:loc>{{ site.url }}{{ figure }}</image:loc></image:image>
+    {% endfor %}<changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   {% endfor %}
