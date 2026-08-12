@@ -399,6 +399,11 @@
         align-self: start;
         max-height: calc(100vh - 9rem);
         overflow-y: auto;
+        /* Reserve the scrollbar's track whether or not it is showing: this panel
+           swaps a short lede for a long details list on every selection, so its
+           content width would otherwise change the moment the list overflows.
+           No-op under macOS overlay scrollbars, which take no space to begin with. */
+        scrollbar-gutter: stable;
       }
       .lede {
         color: var(--muted);
