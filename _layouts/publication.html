@@ -133,7 +133,28 @@
       padding-top: 1.5rem;
     }
     .title-block { max-width: 660px; }
-    .body { max-width: 660px; font-size: var(--text-base); line-height: var(--lh-loose); color: var(--fg); overflow-wrap: break-word; }
+    /* Hyphenation. The dictionary is picked by the page's own language, and every
+       publication already declares its real one on <html> (see SEO in CLAUDE.md), so
+       the French and Italian articles break by their own rules rather than English
+       ones — which is where this earns its place: at a 660px measure their longer
+       words otherwise leave a very deep rag. hyphenate-limit-chars keeps only the
+       breaks worth having — nothing under 8 characters is split, and never fewer than
+       4 letters either side of the hyphen. Browsers that don't support that limit
+       still hyphenate, just more freely. */
+    .body {
+      max-width: 660px;
+      font-size: var(--text-base);
+      line-height: var(--lh-loose);
+      color: var(--fg);
+      overflow-wrap: break-word;
+      -webkit-hyphens: auto;
+      hyphens: auto;
+      hyphenate-limit-chars: 8 4 4;
+    }
+    /* Opt back out where a split word reads as an error rather than as typography:
+       headings, inline code, and table cells (whose measure is set by the column, not
+       by the text). `manual` rather than `none`, so an explicit &shy; still works. */
+    .body :is(h2, h3, code, figure.data-table) { -webkit-hyphens: manual; hyphens: manual; }
     .body p { margin: 0 0 1.1rem; }
     .body .abstract { font-style: italic; color: var(--muted); margin-bottom: 2rem; }
     .body h2 { font-size: var(--text-lg); font-weight: 500; margin: 3rem 0 0.8rem; color: var(--fg); }
