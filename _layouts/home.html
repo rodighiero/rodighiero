@@ -187,7 +187,19 @@
     .header .icons svg { fill: currentColor; overflow: visible; }
     .header .icons a[aria-label="Zotero"] svg { transform: scale(0.9); }
     .header .icons a[aria-label="RSS feed"] svg { transform: scale(1.15); }
-    .header .bio-col { font-size: var(--text-xs); line-height: var(--lh-loose); }
+    /* Hyphenated on the same terms as the article body (see publication.html): nothing
+       under 8 characters split, never fewer than 4 letters either side. The case is
+       stronger here than there — a bio column is one of four, about 270px wide, so its
+       measure is well under half the article's and a single long word costs a whole
+       line. On narrow viewports the header goes to one full-width column and the
+       opportunities mostly disappear on their own. */
+    .header .bio-col {
+      font-size: var(--text-xs);
+      line-height: var(--lh-loose);
+      -webkit-hyphens: auto;
+      hyphens: auto;
+      hyphenate-limit-chars: 8 4 4;
+    }
     .header .bio-col p { margin: 0; }
     .header .bio-col a { text-decoration: underline; }
 
@@ -666,7 +678,7 @@
       <h1>Dario Rodighiero</h1>
       <div class="links">
         <a href="https://www.rug.nl/staff/d.rodighiero">University of Groningen</a>
-        <a href="https://mlml.io/m/dario-rodighiero">metaLAB (at) Harvard/Berlin/Basel</a>
+        <a href="https://mlml.io/m/dario-rodighiero">metaLAB (at) Harvard / Berlin / Basel</a>
         <a href="https://cyber.harvard.edu/people/dario-rodighiero">Berkman Klein Center for Internet &amp; Society</a>
       </div>
       <div class="icons">
@@ -782,7 +794,12 @@
         </div>
         {% endif %}
         {% include card-meta.html item=publication %}
-        <h2 class="card-title"><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
+        {%- comment -%} lang on the title alone, not the card: the title is the only part
+        of a tile written in the work's own language (the meta line and byline prefixes
+        are English UI chrome either way). It tells a screen reader to pronounce the
+        French and Italian titles properly instead of reading them with English
+        phonetics. {%- endcomment -%}
+        <h2 class="card-title" lang="{{ publication.lang | default: 'en' }}"><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
         {% include byline-home.html item=publication %}
       </div>
       {% endfor %}
