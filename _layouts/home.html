@@ -318,7 +318,7 @@
        No underline on hover either: the whole card already signals clickability (background
        tint), so main.css's sitewide a:hover underline would be a redundant, noisier cue here.
        (The network-view sidebar clone has no tint on hover, so it restores the underline —
-       see #network-view .details .publication h2 a:hover below.) */
+       see .details .publication h2 a:hover inside @scope (#network-view) below.) */
     h2 a:hover { text-decoration: none; }
     h2 a:focus-visible { outline: none; }
 
@@ -370,6 +370,8 @@
     .publication .card-media { background: var(--tint-surface); }
 
     /* ── Network view ── */
+    /* Whether the view shows at all is driven by body[data-view], an ancestor of
+       the scope below, so these three rules stay outside it. */
     #network-view { display: none; }
     body[data-view="network"] #publications { display: none; }
     body[data-view="network"] #network-view {
@@ -381,161 +383,174 @@
       min-height: 460px;
       margin-bottom: 2rem;
     }
-    #network-view .sidebar {
-      font-size: var(--text-xs);
-      line-height: var(--lh-normal);
-      /* Don't stretch to the stage's fixed height: let the panel grow with its
-         content into the space beside/below the graph, up to the viewport, and
-         only scroll internally when it genuinely exceeds that. */
-      align-self: start;
-      max-height: calc(100vh - 9rem);
-      overflow-y: auto;
-    }
-    #network-view .lede {
-      color: var(--muted);
-      margin: 0 0 1.5rem;
-      /* Same footprint/spacing as the plain cards, but no border or background. */
-      padding: var(--card-pad);
-    }
-    #network-view .lede p { margin: 0 0 0.9rem; }
-    #network-view .lede p:last-child { margin-bottom: 0; }
-    /* Card pattern: a small caps meta line, then the title in the card-title face.
-       Shares its type with #network-view .details h3 below. */
-    #network-view .lede .lede-eyebrow,
-    #network-view .details h3 {
-      font-size: var(--text-xxs);
-      text-transform: uppercase;
-      letter-spacing: var(--tracking-caps);
-      color: var(--muted);
-    }
-    #network-view .lede .lede-eyebrow { display: block; margin-bottom: 0.3rem; }
-    #network-view .lede .lede-title {
-      color: var(--fg);
-      font-size: var(--text-base);
-      line-height: var(--lh-tight);
-      font-weight: 500;
-      margin: 0 0 0.9rem;
-    }
-    #network-view .lede ol {
-      margin: 0 0 0.9rem;
-      padding-left: 1.1rem;
-    }
-    #network-view .lede ol li { margin-bottom: 0.35rem; }
-    #network-view .lede ol li:last-child { margin-bottom: 0; }
-    #network-view .lede code {
-      font-family: inherit;
-      color: var(--fg);
-    }
-    /* Inline edge sample echoing the three link styles drawn on the graph:
-       solid (mutual backbone), faint (fallback rescue), dashed (translation). */
-    #network-view .lede .edge-sample {
-      display: inline-block;
-      width: 34px;
-      height: 8px;
-      margin-left: 0.35em;
-      vertical-align: -1px;
-      overflow: visible;
-    }
-    #network-view .lede .edge-sample line { stroke: var(--fg); stroke-width: 1.2; }
-    #network-view .lede .edge-sample circle { fill: var(--bg); stroke: var(--fg); stroke-width: 1; }
-    #network-view .lede .edge-sample.fallback line { opacity: 0.35; }
-    #network-view .lede .edge-sample.translation line { stroke-dasharray: 3 2.5; stroke-width: 1.4; }
-    #network-view .stage {
-      grid-column: 2 / -1;
-      position: relative;
-      overflow: hidden;
-    }
-    #network-view svg { display: block; width: 100%; height: 100%; }
-    #network-view .node .hit { fill: transparent; cursor: pointer; }
-    #network-view :is(.node .marker, .node .ring, .link) {
-      stroke: var(--fg);
-      stroke-width: 0.5;
-      pointer-events: none;
-    }
-    #network-view .node .marker { fill: var(--bg); }
-    #network-view .node .ring { fill: none; opacity: 0; }
-    #network-view .node.hover .ring { opacity: 1; }
-    /* Keyboard focus reuses the hover ring as its visible indicator. */
-    #network-view .node:focus { outline: none; }
-    #network-view .node:focus-visible .ring { opacity: 1; }
-    #network-view .labels text {
-      font-family: var(--font);
-      font-size: var(--text-xs);
-      fill: var(--fg);
-      pointer-events: none;
-      text-anchor: middle;
-      paint-order: stroke;
-      stroke: var(--bg);
-      stroke-width: 3px;
-      stroke-linejoin: round;
-    }
-    /* A translation is the same work in another language: an ordinary node,
-       set apart only by a more pronounced dashed edge to its original. */
-    #network-view .link.translation { stroke-width: 0.9; stroke-dasharray: 3 2.5; }
-    /* A fallback is a one-directional rescue edge for a node with no reciprocated
-       neighbour: drawn faint so the mutual backbone stays visually dominant. */
-    #network-view .link.fallback { opacity: 0.3; }
-    #network-view .node.highlight .marker { fill: var(--fg); }
-    #network-view .node.connected .marker { stroke: var(--fg); stroke-width: 1.25; }
-    #network-view .link.highlight { stroke-width: 1; }
-    #network-view .link.fallback.highlight { opacity: 1; }
-    #network-view .labels text.hover { fill: var(--fg); }
-    /* Click-selection (.dimmed on non-neighbours) and search filter (.filtered-out on non-matches) recolor to muted. */
-    #network-view .node.dimmed .marker,
-    #network-view .node.filtered-out .marker { stroke: var(--muted); }
-    #network-view .link.dimmed,
-    #network-view .link.filtered-out { stroke: var(--muted); }
-    #network-view .labels text.dimmed,
-    #network-view .labels text.filtered-out { fill: var(--muted); }
-    #network-view .node.dimmed.hover .marker { stroke: var(--fg); }
-    #network-view .labels text.dimmed.hover { fill: var(--fg); }
-    /* Search filter: fade non-matches out so the on/off signal is visible (a thin
-       muted stroke alone is imperceptible on these tiny markers). */
-    #network-view .node.filtered-out { pointer-events: none; opacity: 0.3; }
-    #network-view .link.filtered-out { opacity: 0.3; }
 
-    /* Details panel — replaces the lede in the first column on selection. Same
-       padding as the lede and the plain cards, so the selected publication's text lines
-       up with the text inside those cards rather than sitting flush to the sidebar edge. */
-    #network-view .details {
-      font-size: var(--text-xs);
-      line-height: var(--lh-normal);
-      padding: var(--card-pad);
+    /* Everything *inside* the view is scoped instead of chained off the id: the root
+       is named once, and the rules below carry no id weight, so where they meet the
+       gallery's card rules (the details panel clones a .publication card) they win on
+       class count rather than on an id. The two places where that margin is thin
+       enough to matter are marked with :scope, which adds exactly one class-unit. */
+    @scope (#network-view) {
+      .sidebar {
+        font-size: var(--text-xs);
+        line-height: var(--lh-normal);
+        /* Don't stretch to the stage's fixed height: let the panel grow with its
+           content into the space beside/below the graph, up to the viewport, and
+           only scroll internally when it genuinely exceeds that. */
+        align-self: start;
+        max-height: calc(100vh - 9rem);
+        overflow-y: auto;
+      }
+      .lede {
+        color: var(--muted);
+        margin: 0 0 1.5rem;
+        /* Same footprint/spacing as the plain cards, but no border or background. */
+        padding: var(--card-pad);
+      }
+      .lede p { margin: 0 0 0.9rem; }
+      .lede p:last-child { margin-bottom: 0; }
+      /* Card pattern: a small caps meta line, then the title in the card-title face.
+         Shares its type with .details h3 below. */
+      .lede .lede-eyebrow,
+      .details h3 {
+        font-size: var(--text-xxs);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-caps);
+        color: var(--muted);
+      }
+      .lede .lede-eyebrow { display: block; margin-bottom: 0.3rem; }
+      .lede .lede-title {
+        color: var(--fg);
+        font-size: var(--text-base);
+        line-height: var(--lh-tight);
+        font-weight: 500;
+        margin: 0 0 0.9rem;
+      }
+      .lede ol {
+        margin: 0 0 0.9rem;
+        padding-left: 1.1rem;
+      }
+      .lede ol li { margin-bottom: 0.35rem; }
+      .lede ol li:last-child { margin-bottom: 0; }
+      .lede code {
+        font-family: inherit;
+        color: var(--fg);
+      }
+      /* Inline edge sample echoing the three link styles drawn on the graph:
+         solid (mutual backbone), faint (fallback rescue), dashed (translation).
+         Two classes, so it keeps overriding the bare `svg` sizing rule below. */
+      .lede .edge-sample {
+        display: inline-block;
+        width: 34px;
+        height: 8px;
+        margin-left: 0.35em;
+        vertical-align: -1px;
+        overflow: visible;
+      }
+      .lede .edge-sample line { stroke: var(--fg); stroke-width: 1.2; }
+      .lede .edge-sample circle { fill: var(--bg); stroke: var(--fg); stroke-width: 1; }
+      .lede .edge-sample.fallback line { opacity: 0.35; }
+      .lede .edge-sample.translation line { stroke-dasharray: 3 2.5; stroke-width: 1.4; }
+      .stage {
+        grid-column: 2 / -1;
+        position: relative;
+        overflow: hidden;
+      }
+      svg { display: block; width: 100%; height: 100%; }
+      .node .hit { fill: transparent; cursor: pointer; }
+      :is(.node .marker, .node .ring, .link) {
+        stroke: var(--fg);
+        stroke-width: 0.5;
+        pointer-events: none;
+      }
+      .node .marker { fill: var(--bg); }
+      .node .ring { fill: none; opacity: 0; }
+      .node.hover .ring { opacity: 1; }
+      /* Keyboard focus reuses the hover ring as its visible indicator. */
+      .node:focus { outline: none; }
+      .node:focus-visible .ring { opacity: 1; }
+      .labels text {
+        font-family: var(--font);
+        font-size: var(--text-xs);
+        fill: var(--fg);
+        pointer-events: none;
+        text-anchor: middle;
+        paint-order: stroke;
+        stroke: var(--bg);
+        stroke-width: 3px;
+        stroke-linejoin: round;
+      }
+      /* A translation is the same work in another language: an ordinary node,
+         set apart only by a more pronounced dashed edge to its original. */
+      .link.translation { stroke-width: 0.9; stroke-dasharray: 3 2.5; }
+      /* A fallback is a one-directional rescue edge for a node with no reciprocated
+         neighbour: drawn faint so the mutual backbone stays visually dominant. */
+      .link.fallback { opacity: 0.3; }
+      .node.highlight .marker { fill: var(--fg); }
+      .node.connected .marker { stroke: var(--fg); stroke-width: 1.25; }
+      .link.highlight { stroke-width: 1; }
+      .link.fallback.highlight { opacity: 1; }
+      .labels text.hover { fill: var(--fg); }
+      /* Click-selection (.dimmed on non-neighbours) and search filter (.filtered-out on non-matches) recolor to muted. */
+      .node.dimmed .marker,
+      .node.filtered-out .marker { stroke: var(--muted); }
+      .link.dimmed,
+      .link.filtered-out { stroke: var(--muted); }
+      .labels text.dimmed,
+      .labels text.filtered-out { fill: var(--muted); }
+      .node.dimmed.hover .marker { stroke: var(--fg); }
+      .labels text.dimmed.hover { fill: var(--fg); }
+      /* Search filter: fade non-matches out so the on/off signal is visible (a thin
+         muted stroke alone is imperceptible on these tiny markers). */
+      .node.filtered-out { pointer-events: none; opacity: 0.3; }
+      .link.filtered-out { opacity: 0.3; }
+
+      /* Details panel — replaces the lede in the first column on selection. Same
+         padding as the lede and the plain cards, so the selected publication's text lines
+         up with the text inside those cards rather than sitting flush to the sidebar edge. */
+      .details {
+        font-size: var(--text-xs);
+        line-height: var(--lh-normal);
+        padding: var(--card-pad);
+      }
+      .details[hidden] { display: none; }
+      /* :scope for weight, not for matching: styles-base.css's
+         .publication:has(h2 a:focus-visible) is two classes *and* two pseudo-classes,
+         so the plain two-class form would lose `background` to it the moment the
+         cloned title link takes keyboard focus. */
+      :scope .details .publication {
+        position: static;
+        width: auto;
+        padding: 0;
+        cursor: default;
+        background: none;
+        transform: none;
+        border-top: none;
+      }
+      :scope .details .publication:hover { background: none; }
+      /* No background tint here (above), so the title link needs its own hover affordance
+         back — three classes beat the blanket h2 a:hover suppression above. */
+      .details .publication h2 a:hover { text-decoration: underline; }
+      .details h3 { margin: 0 0 0.5rem; font-weight: 500; }
+      /* Selected document + its closest matches: separated by margin whitespace like the
+         list/page rhythm, no hairline border. */
+      .details .neighbors {
+        margin-top: 1.5rem;
+      }
+      .details .neighbors ol { list-style: none; padding: 0; margin: 0; }
+      .details .neighbors li {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.7rem;
+      }
+      .details .neighbors li:last-child { margin-bottom: 0; }
+      .details .neighbors li .sim {
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+        flex-shrink: 0;
+        width: 2.5rem;
+      }
+      .details .neighbors li .nb-body { min-width: 0; flex: 1; }
     }
-    #network-view .details[hidden] { display: none; }
-    #network-view .details .publication {
-      position: static;
-      width: auto;
-      padding: 0;
-      cursor: default;
-      background: none;
-      transform: none;
-      border-top: none;
-    }
-    #network-view .details .publication:hover { background: none; }
-    /* No background tint here (above), so the title link needs its own hover affordance
-       back — this beats the blanket h2 a:hover suppression above via the #network-view id. */
-    #network-view .details .publication h2 a:hover { text-decoration: underline; }
-    #network-view .details h3 { margin: 0 0 0.5rem; font-weight: 500; }
-    /* Selected document + its closest matches: separated by margin whitespace like the
-       list/page rhythm, no hairline border. */
-    #network-view .details .neighbors {
-      margin-top: 1.5rem;
-    }
-    #network-view .details .neighbors ol { list-style: none; padding: 0; margin: 0; }
-    #network-view .details .neighbors li {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 0.7rem;
-    }
-    #network-view .details .neighbors li:last-child { margin-bottom: 0; }
-    #network-view .details .neighbors li .sim {
-      color: var(--muted);
-      font-variant-numeric: tabular-nums;
-      flex-shrink: 0;
-      width: 2.5rem;
-    }
-    #network-view .details .neighbors li .nb-body { min-width: 0; flex: 1; }
 
 
     footer {
