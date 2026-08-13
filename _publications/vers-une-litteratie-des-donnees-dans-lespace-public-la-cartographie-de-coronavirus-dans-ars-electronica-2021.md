@@ -9,6 +9,7 @@ place: "Paris"
 issue: "17"
 pages: "25–41"
 doi: "https://doi.org/10.48611/isbn.978-2-406-19980-9.p.0025"
+issn: "2497-1650"
 thumb: "immersive-architectures-for-visual-data-literacy/fig_000.webp"
 lang: fr
 translation_of: immersive-architectures-for-visual-data-literacy
