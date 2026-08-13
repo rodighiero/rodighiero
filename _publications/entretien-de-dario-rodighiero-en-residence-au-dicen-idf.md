@@ -6,7 +6,7 @@ type: "interview"
 lang: fr
 author: "Dario Rodighiero"
 interviewer: "Elie Petit"
-doi: "https://doi.org/10.58079/llqzn"
+doi: "https://doi.org/10.58079/11qzn"
 thumb: entretien-de-dario-rodighiero-en-residence-au-dicen-idf/cover.webp
 ---
 Dario Rodighiero, alors en résidence au Dicen-IDF, revient sur son parcours entre informatique, psychologie et design, et sur la manière dont la visualisation de données est devenue le cœur de son travail. De sa rencontre avec Bruno Latour au médialab de Sciences Po à ses recherches à l'EPFL, au MIT et à Harvard, il explique comment la mise en forme visuelle de l'information aide les individus et les communautés à se reconnaître, avant d'aborder l'affichage de visualisations dans l'espace public et la cartographie de controverses.
