@@ -8,6 +8,7 @@ doi: "https://doi.org/10.1109/IV.2010.70"
 publisher: "IEEE"
 place: "London"
 pages: "455–459"
+isbn: "9781424478460"
 thumb: "guidelines-to-visualize-vessels-in-a-geographic-information-system/fig_002.webp"
 ---
 In information systems the data representation covers a great importance. In fact the visualization of information is the last point of contact between the user and the information system. This is the space where the communication takes place. In real-time monitoring systems, this passage covers a great importance, especially for reasons related to the time and the transparency of relevant information. These factors are fundamental to vessel monitoring systems. This is the beginning where we start to define a guidelines manual, act to help specialists of information visualization in the vessel monitoring field, and in the GIS field more in general.

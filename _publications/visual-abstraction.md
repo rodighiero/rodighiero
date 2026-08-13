@@ -9,6 +9,7 @@ publisher: "Institute of Network Cultures"
 place: "Amsterdam"
 pages: "24–25"
 doi: "https://networkcultures.org/blog/publication/network-notion-7-imagining-the-internets-a-collaborative-glossary/"
+isbn: "9789083672168"
 thumb: visual-abstraction/cover.webp
 ---
 {% include figure-single.html src="/images/visual-abstraction/cover.webp" alt="Blue cover of the book “Imagining the Internet(s): A Collaborative Glossary,” Network Notion #7 from the Institute of Network Cultures" %}

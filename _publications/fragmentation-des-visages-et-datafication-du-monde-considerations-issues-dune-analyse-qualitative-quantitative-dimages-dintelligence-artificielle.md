@@ -11,6 +11,7 @@ doi: "https://doi.org/10.53136/97912218049286"
 publisher: "Aracne"
 place: "Roma"
 pages: "103–125"
+isbn: "9791221804928"
 thumb: "ethical-and-aesthetical-questions-on-stock-images-the-case-of-ais-depictions/fig_006.webp"
 ---
 Dans cet article, les auteurs analysent les images des banques d’images qui représentent l’intelligence artificielle (IA) sous la forme d’un visage ou d’un corps soumis à un processus de fragmentation en particules, pixels ou voxels. Ces images, soutiennent-ils, sont les symptômes d’une « datafication » du monde. Dans la première section, ils examinent les images d’IA et rendent compte de leurs analyses qualitatives et quantitatives d’un vaste corpus tiré du catalogue en ligne de Shutterstock, analyses qui font apparaître la fragmentation des visages et des corps comme l’un des thèmes récurrents de ces images. Dans la seconde partie, ils développent la notion de datafication du monde, entre l’iconologie d’Erwin Panofsky et la perspective « symptomale » de Georges Didi-Huberman. En conclusion, ils reviennent sur un aspect apparemment marginal de ces images : l’usage massif du bleu.

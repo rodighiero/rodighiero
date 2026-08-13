@@ -7,6 +7,7 @@ author: "Dario Rodighiero and Giorgio De Michelis"
 editor: "Aida Slavic and Almila Akdag Salah and Sylvie Davies"
 publisher: "Nomos Verlag"
 doi: "https://doi.org/10.5281/zenodo.3522207"
+isbn: "9783956500077"
 thumb: "the-homers-list-or-how-classifications-can-be-displayed-on-tablets/fig_001.webp"
 ---
 In the Iliad, Homer wrote a list of the scenes presented on Achilles’ shield. A list so long that many artists have attempted to create the shield, triggering a creative process to find a solution. In the same way librarians have been struggling for years to present knowledge classifications. A structure that has transmigrated from paper book to tablet computer following technological developments. The paper describes the results of an innovative research to display and interact with classifications using tablet computers. Since these mobile devices force the designer to keep things simple, the classification will be displayed as a list, one of the simplest ways of presenting information. Later the list will be enriched with its semantic structure to propose an application able to manage the screen rotation and the classification manipulation.
