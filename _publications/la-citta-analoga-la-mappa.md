@@ -71,7 +71,7 @@ _Fabio Reinhart, maggio 2015_
 
 Di seguito, alcune annotazioni utili all’orientamento dei visitatori. Parole e schemi espongono le principali scelte compositive degli autori.
 
-Le città materializzano le molteplici, disparate e mutevoli vite individuali e collettive di generazioni di abitanti; ne accolgono esigenze, desideri, conoscenze... Sogni, paure, speranze, e molto altro ancora: tutto, per farla breve. Inoltre ne registrano i mutamenti imposti dalle bizzarrie della sorte, capaci di esaltare o annientare con l’irresponsabile leggerezza dell’indifferenza. La complessità è connaturata alla città.
+Le città materializzano le molteplici, disparate e mutevoli vite individuali e collettive di generazioni di abitanti; ne accolgono esigenze, desideri, conoscenze… Sogni, paure, speranze, e molto altro ancora: tutto, per farla breve. Inoltre ne registrano i mutamenti imposti dalle bizzarrie della sorte, capaci di esaltare o annientare con l’irresponsabile leggerezza dell’indifferenza. La complessità è connaturata alla città.
 
 {% include figure-single.html src="/images/the-analogous-city-the-map/fig_003.webp" class="three-quarter" alt="Schema di Reinhart della composizione: la stanza domestica dell’abitante con la sua lampada a soffitto e la finestra a sinistra, e la macchina centrale di ingranaggi, ruote dentate e volani." %}
 
