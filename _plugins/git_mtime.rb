@@ -13,12 +13,19 @@ class GitMtimeGenerator < Jekyll::Generator
     docs = collection&.docs || []
     dates = git_mtimes_under(collection&.relative_directory || '_publications')
     docs.each do |doc|
-      doc.data['git_mtime'] = dates[doc.relative_path] || "#{doc.data['year']}-01-01"
+      doc.data['git_mtime'] = dates[doc.relative_path] || fallback_date(doc.data['year'])
     end
     site.data['git_mtime'] = git_mtime('.') || Time.now.utc.strftime('%Y-%m-%d')
   end
 
   private
+
+  # Only a four-digit year can stand in for a date. `year: Forthcoming` would
+  # otherwise yield "Forthcoming-01-01" — an invalid <lastmod> and an invalid
+  # dateModified — so it falls through to today instead.
+  def fallback_date(year)
+    year.to_s.match?(/\A\d{4}\z/) ? "#{year}-01-01" : Time.now.utc.strftime('%Y-%m-%d')
+  end
 
   # One `git log` walk covering every file under `dir`, instead of a
   # separate subprocess per document (61+ forks/build otherwise). Keys are

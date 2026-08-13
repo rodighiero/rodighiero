@@ -1,0 +1,14 @@
+{%- comment -%}
+One JSON-LD person-valued property, from an " and "-joined front-matter name list:
+a bare node for a single name, an array for several, with the trailing comma the
+caller expects. Every name goes through jsonld-person.html, so Dario picks up his
+ORCID @id wherever he appears — as author, editor, translator or contributor.
+
+Params:
+  property — the Schema.org property name (author / editor / translator / contributor)
+  names    — an " and "-joined list, e.g. page.editor. Emits nothing when empty.
+{%- endcomment -%}
+{%- assign _people = include.names | split: ' and ' -%}
+{%- if _people.size > 0 -%}
+"{{ include.property }}": {% if _people.size == 1 %}{% assign _solo = _people | first %}{% include jsonld-person.html name=_solo %}{% else %}[{% for _p in _people %}{% include jsonld-person.html name=_p %}{% unless forloop.last %}, {% endunless %}{% endfor %}]{% endif %},
+{%- endif -%}

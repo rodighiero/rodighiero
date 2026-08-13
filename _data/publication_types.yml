@@ -5,6 +5,13 @@
 #                    HighWire venue tag pins the item type, so prefer a value it maps firmly
 #                    (map, book, interview) over a broader DCMI term it can only guess from.
 #   citation_venue — HighWire/Google Scholar meta tag carrying the venue (omit to skip)
+#   container      — what `venue` names for this type, which decides how JSON-LD models it:
+#                    `periodical` (a journal/magazine → isPartOf a Periodical, nested through
+#                    PublicationVolume/PublicationIssue when known), `book` (a book or
+#                    proceedings the work sits inside → isPartOf a Book), or omitted, meaning
+#                    venue names the press itself and stays the publisher. Omitted is right
+#                    for book and map, whose venue is a press (Métis Presses, EPFL Archizoom),
+#                    and for interview, whose venue may be an institution rather than a serial.
 book:
   label: Book
   schema: Book
@@ -14,21 +21,25 @@ chapter:
   schema: ScholarlyArticle
   dc: bookPart
   citation_venue: citation_book_title
+  container: book
 journal:
   label: Journal Article
   schema: ScholarlyArticle
   dc: article
   citation_venue: citation_journal_title
+  container: periodical
 conference:
   label: Conference Paper
   schema: ScholarlyArticle
   dc: conferencePaper
   citation_venue: citation_conference_title
+  container: book
 magazine:
   label: Magazine Article
   schema: Article
   dc: article
   citation_venue: citation_journal_title
+  container: periodical
 interview:
   label: Interview
   schema: Article

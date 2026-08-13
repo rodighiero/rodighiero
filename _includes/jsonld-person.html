@@ -1,0 +1,12 @@
+{%- comment -%}
+One JSON-LD Person node for an author name (no trailing comma — the caller joins).
+
+Dario's node carries the ORCID as its @id, which must stay identical to the Person
+@id in home.html's @graph: that shared identifier is the only thing telling a
+consumer the author of these sixty-odd pages and the subject of the homepage are
+one entity. Co-authors stay bare names — we have no stable identifier for them.
+
+Params: name — a single author name (whitespace is stripped here).
+{%- endcomment -%}
+{%- assign _n = include.name | strip -%}
+{ "@type": "Person", "name": {{ _n | jsonify }}{% if _n == "Dario Rodighiero" %}, "@id": "https://orcid.org/0000-0002-1405-7062", "url": "{{ site.url }}"{% endif %} }
