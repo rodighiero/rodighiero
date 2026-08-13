@@ -135,7 +135,7 @@ Carlo Ferigato contributed in many ways on SIRS, especially on the mapping speci
 ## References
 
 - Baeza-Yates, Ricardo, and Berthier Ribeiro-Neto. 1999. *Modern Information Retrieval*. Reading, MA: Addison-Wesley.
-- BS 8723. 2009. “Official Development Website for BS 8723.” Accessed March 12, 2009. http://schemas.bs8723.org/.
+- BS 8723. 2009. “Official Development Website for BS 8723.” Accessed March 12, 2009. http://schemas.bs8723.org/ ([archived](https://web.archive.org/web/20081005192055/http://schemas.bs8723.org/)).
 - Dewey, Melvil. 1996. *Dewey Decimal Classification and Relative Index*. 21st ed. Albany, NY: Forest Press.
 - Doerr, Martin. 2001. “Semantic Problems of Thesaurus Mapping.” *Journal of Digital Information* 1 (8).
 - Eurovoc Thesaurus. 2007. Vol. 1, *Permuted Alphabetical Version*, parts A and B; vol. 2, *Subject-Oriented Version*. Luxembourg: Office for Official Publications of the European Communities.

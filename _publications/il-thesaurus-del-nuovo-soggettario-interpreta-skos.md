@@ -135,19 +135,19 @@ Il Thesaurus del Nuovo soggettario potrebbe diventare un “servizio terminologi
 - Cheti, Alberto, e Federica Paradisi. 2008. “Facet Analysis in the Development of a General Controlled Vocabulary.” *Axiomathes* 18 (2): 223–241.
 - International Organization for Standardization (ISO). 1986. *ISO 2788: Documentation — Guidelines for the Establishment and Development of Monolingual Thesauri*. Geneva: ISO.
 - Lucarelli, Anna. 2008. “Quando una collezione speciale chiede ospitalità ad una grande biblioteca.” In *Piccoli scritti di biblioteconomia per Luigi Crocetti: 10 marzo 2007–10 marzo 2008*, a cura di Carmela Cavallaro e Perla Innocenti, 183–201. Manziana: Vecchiarelli.
-- Ministero per la Pubblica Amministrazione e l’Innovazione. 2010. *Linee guida per i siti web della PA*. [www.innovazionepa.gov.it](http://www.innovazionepa.gov.it/media/367125/linee_guida_siti_web_pa.pdf).
+- Ministero per la Pubblica Amministrazione e l’Innovazione. 2010. *Linee guida per i siti web della PA*. [www.innovazionepa.gov.it](http://www.innovazionepa.gov.it/media/367125/linee_guida_siti_web_pa.pdf) ([archiviato](https://web.archive.org/web/20110908003222/http://www.innovazionepa.gov.it/media/367125/linee_guida_siti_web_pa.pdf)).
 - Motta, Marta, e Melissa Tiberi. 2009. “Riflessi dello standard britannico BS 8723 nel Thesaurus del Nuovo soggettario.” *Bollettino AIB* 49 (3): 325–340.
-- “Multilingual Access to Subjects (MACS).” n.d. [macs.vub.ac.be/pub](https://macs.vub.ac.be/pub).
+- “Multilingual Access to Subjects (MACS).” n.d. [macs.vub.ac.be/pub](https://macs.vub.ac.be/pub) ([archiviato](https://web.archive.org/web/20070613072941/https://macs.vub.ac.be/pub/)).
 - Svenonius, Elaine. 2000. *The Intellectual Foundation of Information Organization*. Cambridge, MA: MIT Press.
 - “TELplus.” n.d. [www.theeuropeanlibrary.org](http://www.theeuropeanlibrary.org/portal/organisation/cooperation/telplus/index.php).
-- Van Assem, Mark, Véronique Malaisé, Alistair Miles, e Guus Schreiber. 2006. “A Method to Convert Thesauri to SKOS.” [www.cs.vu.nl](http://www.cs.vu.nl/~mark/papers/Assem06b.pdf).
+- Van Assem, Mark, Véronique Malaisé, Alistair Miles, e Guus Schreiber. 2006. “A Method to Convert Thesauri to SKOS.” [www.cs.vu.nl](http://www.cs.vu.nl/~mark/papers/Assem06b.pdf) ([archiviato](https://web.archive.org/web/20070125043216/http://www.cs.vu.nl/~mark/papers/Assem06b.pdf)).
 - “Zthes.” n.d. [zthes.z3950.org](http://zthes.z3950.org/).
 
 [^1]: LCSH (Library of Congress Subject Headings) è il repertorio delle voci di soggetto utilizzate dalla Library of Congress a partire dal 1898.
 [^2]: RAMEAU (Répertoire d’autorité-matière encyclopédique et alphabétique unifié) è la lista controllata delle voci di soggetto assegnate dal 1980 ai record bibliografici inseriti nel catalogo in linea della Bibliothèque nationale de France, integrata con voci proposte da biblioteche universitarie, di pubblica lettura e di ricerca. Le voci di RAMEAU derivano in massima parte dal *Répertoire de vedettes-matière*, elaborato dalla biblioteca dell’Université de Laval (Québec) sulla base delle LCSH.
 [^3]: LIUC è il thesaurus di economia e scienze sociali dell’Università Carlo Cattaneo di Castellanza.
 [^4]: MESH (Medical Subject Headings) è il thesaurus usato per indicizzare gli articoli delle oltre 5.000 riviste mediche presenti nel database bibliografico Medline/PubMed.
-[^5]: Il Thesaurus è raggiungibile all’indirizzo [www.edigeo-online.it/Nuovo_soggettario](http://www.edigeo-online.it/Nuovo_soggettario/#?rigamenu=Nuovosoggettario.Thesaurus).
+[^5]: Il Thesaurus è raggiungibile all’indirizzo [www.edigeo-online.it/Nuovo_soggettario](http://www.edigeo-online.it/Nuovo_soggettario/#?rigamenu=Nuovosoggettario.Thesaurus) ([archiviato](https://web.archive.org/web/20110928151326/http://www.edigeo-online.it/Nuovo_soggettario/)).
 [^6]: Le istituzioni che finora collaborano al progetto sono: Biblioteca dell’Università Bocconi di Milano, Università degli Studi di Milano, l’Università di Pisa (Area bibliotecaria, archivistica e museale), Biblioteca Mario Rostoni dell’Università Carlo Cattaneo di Castellanza (LIUC), l’Istituto di teorie e tecniche dell’informazione giuridica (ITTIG) del Consiglio nazionale delle ricerche (CNR), il Coordinamento biblioteche speciali e specialistiche di Torino (CoBiS) e la Società IDEST.
 [^7]: La società IDEST, che cura la serie speciale della Bibliografia nazionale dei libri per ragazzi, utilizza i termini del Thesaurus per accessi da semplici parole chiave.
 [^8]: Presso la Biblioteca nazionale di Firenze, il Nuovo soggettario è stato applicato con successo per indicizzare fotografie di un prestigioso fondo del Novecento (Fondo Pannunzio). Cfr. Lucarelli (2008).
