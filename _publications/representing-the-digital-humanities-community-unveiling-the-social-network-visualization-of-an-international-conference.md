@@ -9,6 +9,7 @@ publisher: "Parsons Institute for Information Mapping"
 place: "New York"
 volume: "VII"
 issue: "2"
+issn: "2372-1197"
 thumb: "representing-the-digital-humanities-community-unveiling-the-social-network-visualization-of-an-international-conference/fig_004.webp"
 ---
 This paper deals with the sense of representing both a new domain such as Digital Humanities and its community. Based on a case study, in which a set of visualizations was used to represent the community attending the international Digital Humanities conference of 2014 in Lausanne, Switzerland, the meaning of representing a community is investigated in the light of the theories of three acknowledged authors: Charles Sanders Peirce, for his notion of the interpretant; Ludwig Wittgenstein, for his insights on the use of language; and finally Bruno Latour, for his ideas on representing politics. The result is a proposal for designing and interpreting social network visualizations in a more thoughtful way, while remaining aware of the relation between objects in the real world and their visualizations. As this type of work pertains to a wider scope, we propose bringing a theoretical framework to a young domain such as data visualization.
