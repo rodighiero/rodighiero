@@ -6,6 +6,7 @@ type: "map"
 author: "Aldo Rossi and Eraldo Consolascio and Bruno Reichlin and Fabio Reinhart"
 editor: "Dario Rodighiero"
 doi: "https://infoscience.epfl.ch/record/209326"
+isbn: "9782839916677"
 thumb: "the-analogous-city-the-map/fig_005.webp"
 lang: it
 translation_of: the-analogous-city-the-map
