@@ -78,6 +78,8 @@
   {% if page.pages %}{% assign _pp = page.pages | replace: '–', '-' | replace: '—', '-' | split: '-' %}{% assign _fp = _pp | first | strip %}<meta name="citation_firstpage" content="{{ _fp }}">
   {% if _pp.size > 1 %}{% assign _lp = _pp | last | strip %}{% if _lp.size < _fp.size %}{% assign _pad = _fp.size | minus: _lp.size %}{% assign _lp = _fp | slice: 0, _pad | append: _lp %}{% endif %}<meta name="citation_lastpage" content="{{ _lp }}">{% endif %}{% endif %}
   {% if page.publisher %}<meta name="citation_publisher" content="{{ page.publisher | escape }}">{% endif %}
+  {% if page.issn %}<meta name="citation_issn" content="{{ page.issn }}">{% endif %}
+  {% if page.isbn %}<meta name="citation_isbn" content="{{ page.isbn }}">{% endif %}
   {% if page.doi and page.doi contains 'doi.org/' %}<meta name="citation_doi" content="{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}">{% endif %}
   <meta name="citation_abstract_html_url" content="{{ site.url }}{{ page.url }}">
   <meta name="citation_language" content="{{ page.lang | default: 'en' }}">
@@ -126,9 +128,14 @@
     PublicationIssue when those are known) or the book/proceedings. Which is which comes
     from publication_types.yml, so the taxonomy stays defined in one place. publisher then
     carries only a real press, and is dropped when the front matter names none. {%- endcomment -%}
-    {% if _ptype.container == 'periodical' %}"isPartOf": {% if page.issue %}{ "@type": "PublicationIssue", "issueNumber": {{ page.issue | jsonify }}, "isPartOf": {% endif %}{% if page.volume %}{ "@type": "PublicationVolume", "volumeNumber": {{ page.volume | jsonify }}, "isPartOf": {% endif %}{ "@type": "Periodical", "name": {{ page.venue | jsonify }} }{% if page.volume %} }{% endif %}{% if page.issue %} }{% endif %},
-    {% elsif _ptype.container == 'book' %}"isPartOf": { "@type": "Book", "name": {{ page.venue | jsonify }} },
-    {% endif %}{% if _ptype.container %}{% if page.publisher %}"publisher": { "@type": "Organization", "name": {{ page.publisher | jsonify }} },{% endif %}{% elsif page.venue or page.publisher %}"publisher": { "@type": "Organization", "name": {{ page.publisher | default: page.venue | jsonify }} },{% endif %}
+    {% if _ptype.container == 'periodical' %}"isPartOf": {% if page.issue %}{ "@type": "PublicationIssue", "issueNumber": {{ page.issue | jsonify }}, "isPartOf": {% endif %}{% if page.volume %}{ "@type": "PublicationVolume", "volumeNumber": {{ page.volume | jsonify }}, "isPartOf": {% endif %}{ "@type": "Periodical", "name": {{ page.venue | jsonify }}{% if page.issn %}, "issn": {{ page.issn | jsonify }}{% endif %} }{% if page.volume %} }{% endif %}{% if page.issue %} }{% endif %},
+    {% elsif _ptype.container == 'book' %}"isPartOf": { "@type": "Book", "name": {{ page.venue | jsonify }}{% if page.isbn %}, "isbn": {{ page.isbn | jsonify }}{% endif %} },
+    {% endif %}
+    {%- comment -%} An isbn belongs to whichever node it identifies: where the type has a
+    container the front-matter isbn is the containing book's (set just above), and where it
+    has none the work is its own book, so it goes on the entity itself. issn only ever sits
+    on a Periodical — Schema.org does not define it for Book. {%- endcomment -%}
+    {% unless _ptype.container %}{% if page.isbn %}"isbn": {{ page.isbn | jsonify }},{% endif %}{% endunless %}{% if _ptype.container %}{% if page.publisher %}"publisher": { "@type": "Organization", "name": {{ page.publisher | jsonify }} },{% endif %}{% elsif page.venue or page.publisher %}"publisher": { "@type": "Organization", "name": {{ page.publisher | default: page.venue | jsonify }} },{% endif %}
     "url": "{{ site.url }}{{ page.url }}",
     {% if page.doi %}"sameAs": "{{ page.doi }}",{% endif %}
     {% if page.pages %}"pagination": {{ page.pages | jsonify }},{% endif %}

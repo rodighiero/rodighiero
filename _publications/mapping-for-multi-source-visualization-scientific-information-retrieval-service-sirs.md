@@ -8,6 +8,7 @@ publisher: "Springer"
 place: "Berlin, Heidelberg"
 pages: "597–605"
 doi: "https://doi.org/10.1007/978-3-642-02583-9_65"
+isbn: "9783642025822"
 thumb: "mapping-for-multi-source-visualization-scientific-information-retrieval-service-sirs/fig_007.webp"
 ---
 This paper discusses the design process of a multi-index, multi-source information retrieval system (SIRS). SIRS provides comprehensive visualization of different document types for the JRC working environment. The interface design is based on elastic window management and on the Focus+Context method to browse large amounts of information without losing its contextual relevance. Source integration was achieved by mapping techniques, on which we applied methods, degree-of-separation and closure, to provide advanced relational context for objects.

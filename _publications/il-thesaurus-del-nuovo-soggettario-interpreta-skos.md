@@ -9,6 +9,7 @@ doi: "https://doi.org/10.1400/212474"
 volume: "4"
 issue: "3"
 pages: "75–87"
+issn: "1121-0095"
 thumb: il-thesaurus-del-nuovo-soggettario-interpreta-skos/cover.webp
 ---
 Il consorzio W3C propone SKOS come standard per tutti i vocabolari controllati, in modo da creare un linguaggio che permetta di realizzare una rete informativa interoperabile. La Biblioteca nazionale centrale di Firenze ha deciso di sperimentare questo nuovo linguaggio formale. Qui di seguito viene trattato il caso studio della conversione in SKOS del Thesaurus del Nuovo soggettario, illustrandone vantaggi e problematiche.
