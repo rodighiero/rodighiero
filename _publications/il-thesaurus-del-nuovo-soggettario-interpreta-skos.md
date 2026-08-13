@@ -55,7 +55,7 @@ L’interfaccia di ricerca del Thesaurus consente di consultare anche la version
 
 Il Thesaurus del Nuovo soggettario è dunque un vocabolario generale che si sta costantemente accrescendo e che attualmente comprende circa 35.000 termini. È generale sia dal punto di vista dei domini coinvolti, sia perché applicabile all’indicizzazione di risorse di varia natura.[^8]
 
-È conforme all’ISO 2788-1986 (International Organization for Standardization 1986) e, in attesa della pubblicazione definitiva del nuovo ISO 25964 che lo sostituirà, sono state considerate anche le indicazioni di ANSI/NISO Z39.19 del 2005 e dello standard britannico BS 8723:2005-2008 (ANSI/NISO 2005; British Standards Institution 2005–2008; cfr. Motta e Tiberi 2009).
+È conforme all’ISO 2788-1986 (International Organization for Standardization 1986) e, in attesa della pubblicazione definitiva del nuovo ISO 25964 che lo sostituirà, sono state considerate anche le indicazioni di ANSI/NISO Z39.19 del 2005 e dello standard britannico BS 8723:2005–2008 (ANSI/NISO 2005; British Standards Institution 2005–2008; cfr. Motta e Tiberi 2009).
 
 Per quanto riguarda le caratteristiche strutturali del vocabolario, si tratta di un Thesaurus prevalentemente monogerarchico (la maggior parte dei termini ha un solo BT). La struttura gerarchica viene costruita applicando l’analisi a faccette e criteri di precedenza definiti. La poligerarchia è adottata solo raramente (secondo criteri espressamente indicati) e comunque sempre nel rispetto dei principi che regolano le relazioni gerarchiche.
 
