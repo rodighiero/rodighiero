@@ -83,7 +83,7 @@ La somme de ces forces fixe les nœuds sur la surface sphérique, mais ce n’es
 
 {% include figure-single.html src="/images/drawing-network-visualizations-on-a-continuous-spherical-surface/fig_002.webp" caption="Figure 2. Cette séquence montre trois moments de l’arrangement du réseau. On remarque notamment que la taille des nœuds change en fonction de leur position : les nœuds les plus larges sont plus proches du spectateur. Au cours de l’arrangement, ces nœuds adoptent la même taille, ce qui signifie qu’ils s’organisent sur la surface sphérique à la même distance du centre." %}
 
-Le résultat de l’agence est une composition de nœuds qui dessine une sphère (voir figure 3). La ressemblance avec un globe est encore renforcée par les lignes courbes qui courent sur la surface. Les 1 000 nœuds et les 140 000 liens forment un réseau dense qui conduit à des résultats favorables à un arrangement sphérique.
+Le résultat de l’agence est une composition de nœuds qui dessine une sphère (voir figure 3). La ressemblance avec un globe est encore renforcée par les lignes courbes qui courent sur la surface. Les 1 000 nœuds et les 140 000 liens forment un réseau dense qui conduit à des résultats favorables à un arrangement sphérique.
 
 Le réseau sphérique ne peut pas être lu en matière de centralité. Une telle mesure est absente au profit d’une autre, la densité. Une densité haute du réseau correspond à une zone marquée par le nombre de nœuds, qui indique un vocabulaire très partagé, comme dans le cas d’un article de conférence coécrit. Lorsque des auteurs sont isolés dans des zones plus raréfiées, ils se trouvent toujours dans un quartier contextuel à 360 degrés, malgré la distance qui peut les séparer des autres.
 
