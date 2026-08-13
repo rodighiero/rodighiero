@@ -12,6 +12,7 @@ place: "Paris"
 volume: "2020-2"
 issue: "10"
 pages: "197–211"
+issn: "2497-1650"
 thumb: "drawing-network-visualizations-on-a-continuous-spherical-surface/fig_006.webp"
 ---
 Malgré la grande littérature concernant les visualisations de réseau, leur représentation graphique n’est guère un objet d’investigation. Parfois, cela mérite plus d’attention, surtout lorsque des individus sont représentés. Traduire visuellement des communautés en réseau, par exemple, implique que certains individus soient positionnés aux frontières de la représentation. Cette hypothèse apparaît injuste, surtout si chaque individu de la communauté est connecté avec tout le monde.
