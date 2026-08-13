@@ -66,9 +66,18 @@ class FrontMatterValidator < Jekyll::Generator
       end
     end
 
-    # Validate ISSN format if present (journals have this)
-    if data['issn'] && !data['issn'].to_s.match?(/\A\d{4}-\d{4}\z/)
+    # Validate ISSN format if present (journals have this). The check digit may be
+    # an X — 0024-094X (Leonardo) and 2073-445X (Land) both are — so it is not \d.
+    if data['issn'] && !data['issn'].to_s.match?(/\A\d{4}-\d{3}[\dX]\z/)
       @warnings << "#{slug}: issn '#{data['issn']}' doesn't match format XXXX-XXXX"
+    end
+
+    # ISBN-13 or ISBN-10 (whose check digit may also be an X), hyphens optional.
+    if data['isbn']
+      bare = data['isbn'].to_s.delete('- ')
+      unless bare.match?(/\A(\d{13}|\d{9}[\dX])\z/)
+        @warnings << "#{slug}: isbn '#{data['isbn']}' is neither a 13- nor a 10-digit ISBN"
+      end
     end
   end
 

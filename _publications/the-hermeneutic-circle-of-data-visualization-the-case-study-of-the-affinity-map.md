@@ -5,6 +5,7 @@ venue: "Techné"
 type: "journal"
 author: "Dario Rodighiero and Alberto Romele"
 doi: "https://doi.org/10.5840/techne202081126"
+issn: "2691-5928"
 thumb: "the-hermeneutic-circle-of-data-visualization-the-case-study-of-the-affinity-map/fig_003.webp"
 volume: 24
 issue: 3

@@ -5,6 +5,7 @@ venue: "Information Design Journal"
 type: "journal"
 author: "Dario Rodighiero and Lins Derry and Douglas Duhaime and Jordan Kruguer and Maximilian C. Mueller and Christopher Pietsch and Jeffrey T. Schnapp and Jeff Steward and metaLAB"
 doi: "https://doi.org/10.1075/idj.22013.rod"
+issn: "0142-5471"
 thumb: "surprise-machines-revealing-harvard-art-museums-image-collection/fig_006.webp"
 redirect_from:
   - /surprise-machines
