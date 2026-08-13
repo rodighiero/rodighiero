@@ -3,6 +3,12 @@
 <head>
   {% assign _excerpt = page.content | strip_html | decode_numeric_entities | truncatewords: 22 | truncate: 160 %}
   {% assign _excerpt_attr = _excerpt | escape_once %}
+  {%- comment -%} The meta description has to fit a snippet, so it is the truncation above;
+  structured data has no such budget, so JSON-LD carries the abstract whole. On a full-text
+  article that is the lead before <!--more-->, which is exactly the abstract; on every other
+  entry the body is the abstract already. Split before strip_html — stripping tags takes the
+  <!--more--> comment with them. {%- endcomment -%}
+  {% assign _abstract = page.content | split: '<!--more-->' | first | strip_html | decode_numeric_entities | normalize_whitespace | strip %}
   <meta charset="utf-8">
   {% include site-head.html %}
   {% assign _ptype = site.data.publication_types[page.type] %}
@@ -50,6 +56,8 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="800">{% endif %}
   {% if page.year and page.year != "Forthcoming" %}<meta property="article:published_time" content="{{ page.year }}-01-01">{% endif %}
+  {%- comment -%} git_mtime is the file's last commit date, already computed for the sitemap. {%- endcomment -%}
+  {% if page.git_mtime %}<meta property="article:modified_time" content="{{ page.git_mtime }}">{% endif %}
   {% if page.author %}<meta property="article:author" content="{{ page.author | replace: ' and ', ', ' }}">{% endif %}
   <meta name="twitter:title" content="{{ page.title | escape }}">
   <meta name="twitter:description" content="{{ _excerpt_attr }}">
@@ -96,9 +104,31 @@
     "@id": "{{ site.url }}{{ page.url }}",
     "headline": {{ page.title | jsonify }},
     "name": {{ page.title | jsonify }},
-    {% if page.author %}{% assign _authors = page.author | split: ' and ' %}{% if _authors.size == 1 %}"author": { "@type": "Person", "name": {{ page.author | jsonify }} },{% else %}"author": [{% for _a in _authors %}{ "@type": "Person", "name": {{ _a | jsonify }} }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}{% else %}"author": { "@type": "Person", "name": "Dario Rodighiero", "url": "{{ site.url }}" },{% endif %}
+    {%- assign _jsonld_authors = page.author | default: 'Dario Rodighiero' -%}
+    {% include jsonld-people.html property="author" names=_jsonld_authors %}
+    {%- comment -%} The byline's other roles, so a work Dario edited, translated or conducted
+    still carries his ORCID node rather than leaving him off the page's graph entirely (the
+    interviews are cited under the interviewee, and the two Analogous City maps under Rossi
+    et al., so on those pages this is his only appearance). editor and translator are real
+    CreativeWork properties; interviewer and preface have no Schema.org equivalent, so they
+    fold into the general contributor. {%- endcomment -%}
+    {%- assign _contributors = '' -%}
+    {%- if page.interviewer -%}{%- assign _contributors = page.interviewer -%}{%- endif -%}
+    {%- if page.preface -%}{%- if _contributors != '' -%}{%- assign _contributors = _contributors | append: ' and ' -%}{%- endif -%}{%- assign _contributors = _contributors | append: page.preface -%}{%- endif -%}
+    {% if page.editor %}{% include jsonld-people.html property="editor" names=page.editor %}{% endif %}
+    {% if page.translator %}{% include jsonld-people.html property="translator" names=page.translator %}{% endif %}
+    {% if _contributors != '' %}{% include jsonld-people.html property="contributor" names=_contributors %}{% endif %}
     {% if page.year and page.year != "Forthcoming" %}"datePublished": "{{ page.year }}",{% endif %}
-    {% if page.venue or page.publisher %}"publisher": { "@type": "Organization", "name": {{ page.publisher | default: page.venue | jsonify }} },{% endif %}
+    {% if page.git_mtime %}"dateModified": "{{ page.git_mtime }}",{% endif %}
+    {%- comment -%} venue is type-dependent (see CLAUDE.md): for a book or a map it names
+    the press, so it stays the publisher; for every other type it names the container the
+    work sits inside, which is isPartOf — a Periodical (nested through PublicationVolume /
+    PublicationIssue when those are known) or the book/proceedings. Which is which comes
+    from publication_types.yml, so the taxonomy stays defined in one place. publisher then
+    carries only a real press, and is dropped when the front matter names none. {%- endcomment -%}
+    {% if _ptype.container == 'periodical' %}"isPartOf": {% if page.issue %}{ "@type": "PublicationIssue", "issueNumber": {{ page.issue | jsonify }}, "isPartOf": {% endif %}{% if page.volume %}{ "@type": "PublicationVolume", "volumeNumber": {{ page.volume | jsonify }}, "isPartOf": {% endif %}{ "@type": "Periodical", "name": {{ page.venue | jsonify }} }{% if page.volume %} }{% endif %}{% if page.issue %} }{% endif %},
+    {% elsif _ptype.container == 'book' %}"isPartOf": { "@type": "Book", "name": {{ page.venue | jsonify }} },
+    {% endif %}{% if _ptype.container %}{% if page.publisher %}"publisher": { "@type": "Organization", "name": {{ page.publisher | jsonify }} },{% endif %}{% elsif page.venue or page.publisher %}"publisher": { "@type": "Organization", "name": {{ page.publisher | default: page.venue | jsonify }} },{% endif %}
     "url": "{{ site.url }}{{ page.url }}",
     {% if page.doi %}"sameAs": "{{ page.doi }}",{% endif %}
     {% if page.pages %}"pagination": {{ page.pages | jsonify }},{% endif %}
@@ -107,6 +137,7 @@
     {% if _social_img %}"image": "{{ site.url }}/images/{{ _social_img }}",{% endif %}
     "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ site.url }}{{ page.url }}" },
     "inLanguage": "{{ page.lang | default: 'en' }}",
+    {% if _abstract != '' %}"abstract": {{ _abstract | jsonify }},{% endif %}
     "description": {{ _excerpt | jsonify }}
   }
   </script>

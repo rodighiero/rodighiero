@@ -9,7 +9,8 @@ permalink: /404.html
   <title>Page not found — Dario Rodighiero</title>
   <meta name="robots" content="noindex">
   <meta name="color-scheme" content="light dark">
-  <link rel="canonical" href="https://dariorodighiero.com">
+  {%- comment -%} No rel=canonical here: this page is noindex, and pointing a canonical at
+  the homepage would ask a crawler to consolidate every missing URL into it instead. {%- endcomment -%}
   <link rel="icon" href="/images/@icons/favicon.ico" sizes="any">
   <link rel="icon" href="/images/@icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/images/@icons/apple-touch-icon.png">
