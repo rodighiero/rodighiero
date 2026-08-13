@@ -22,7 +22,7 @@ The Analogous City is not simply a work that projects over a flat surface a cont
 
 I was inspired by Bernardo Secchi (2000), who identifies city planning as a combination of tracks: real practices that model the city, and shape it over time, at their overlapping. Secchi also states that there is another layer that intertwines with the practices and integrates the fragments left by them: the layer of discussions. After months of researching this work, if asked to reflect about it, I would say that The Analogous City is an urban fabric formed by tracks and conversations: tracks of all real and unreal objects that have become a sign on the map; discussions of all those authors, critics, historians, architects, who are equally inhabitants of this city.
 
-This idea already existed, it takes shape in a building designed by Aldo Rossi himself, the Bonnefanten Museum. What better way to show the richness of this urban fabric to visitors – the new inhabitants of this city – than through a city map? An object so simple and recognizable that it does not require any instructions.
+This idea already existed, it takes shape in a building designed by Aldo Rossi himself, the Bonnefanten Museum. What better way to show the richness of this urban fabric to visitors — the new inhabitants of this city — than through a city map? An object so simple and recognizable that it does not require any instructions.
 
 Although technologies have transformed the medium over the last few decades, a map preserves its role as an orientation tool that helps to identify an area’s landmarks and to become familiar with them. With a map in hand, one can set out and venture the streets, visit the neighborhoods, marvel at the unexpected sights that only a city can offer, and rediscover the pleasures of wandering, only to find, all of a sudden, one has arrived at destination.
 
@@ -77,7 +77,7 @@ Cities materialize the multiple, disparate and changing lives of generations of 
 
 This, its first distinctive characteristic of undefinable magnitude, is immediately evident from its heterogeneous, multiple and contradictory togetherness: heterogeneous its representation, form and scale dimensions; multiple its contours, orientations, centers, symmetries and vanishing points; contradictory and conflictual its ordering principles.
 
-The first apparition is theatrical and baroque. A mysterious figure – Angel? Youth? Beauty? Messenger, in the mind of the authors – greets and solicits in singular manner the gaze of every visitor directly indicating, with a peremptory gesture of fore-arm and finger, the center of the composition amidst racks, pinions, gears, pins and the flywheels of an unstoppable machine.
+The first apparition is theatrical and baroque. A mysterious figure — Angel? Youth? Beauty? Messenger, in the mind of the authors — greets and solicits in singular manner the gaze of every visitor directly indicating, with a peremptory gesture of fore-arm and finger, the center of the composition amidst racks, pinions, gears, pins and the flywheels of an unstoppable machine.
 
 {% include figure-single.html src="/images/the-analogous-city-the-map/fig_004.webp" class="three-quarter" alt="Reinhart’s diagram of the radial plan layout of the Analogous City." %}
 
@@ -113,7 +113,7 @@ Trellis beam and spiral stair would have been an excellent opportunity for a vis
 
 After the manner employed by Magritte in his 1965 “Le Blanc-seing”, the plan layout brings together three parts which superpose and abut each other: the real city (B), the city of memory (C), the ideal city (D).
 
-Miming reality, various local interventions on the layout were entrusted to the responsibility of each author. Superimposed over the real city, in a domestic space evoked by two lines and a ceiling lamp, a spectator inhabitant – “Aldo Rossi, poet” according to Ton Quik – examines from the window an abyssal glimpse of history deep into the mythological heart of the western city.
+Miming reality, various local interventions on the layout were entrusted to the responsibility of each author. Superimposed over the real city, in a domestic space evoked by two lines and a ceiling lamp, a spectator inhabitant — “Aldo Rossi, poet” according to Ton Quik — examines from the window an abyssal glimpse of history deep into the mythological heart of the western city.
 
 ## From Picture Panel to City-Map
 
@@ -131,7 +131,7 @@ Although present in the picture panel merely as a watermark, the separation dist
 
 What you have to hand now is no “Analogous city”, nor even a more or less faithful and accurate representation of it, but a “Map of the Analogous city” or rather of the same reality, posited in an analogous form.
 
-The content-identity of picture panel and city-map – both refer to the same reality – allows us to grasp the specificities and the implications of such analogous mutations.
+The content-identity of picture panel and city-map — both refer to the same reality — allows us to grasp the specificities and the implications of such analogous mutations.
 
 The map is an interpretation of the picture panel, a sort of re-invention within the framework of a new social and cultural reality: of identical content, but materially and dimensionally mutant.
 
@@ -157,7 +157,7 @@ In this statement are posited the basis, direction and meaning of their design w
 
 Indeed, subjection to critically evaluated guidelines alone can rid work of servility, make responsible purveyors shine out, and allow the artist to aspire to fullness of expression.
 
-If – as is observed – verbal conventions have greater permanence than figurative ones, Aldo Rossi’s text thrives on this condition, remaining fresh and legible: it therefore has no need of revision, nor of notes.
+If — as is observed — verbal conventions have greater permanence than figurative ones, Aldo Rossi’s text thrives on this condition, remaining fresh and legible: it therefore has no need of revision, nor of notes.
 
 However, to its acuteness is merit only due, since the diagnosis and the remedies expressed maintain their relevance, forty years of very bad territorial management having under-lined the urgency.
 
@@ -165,6 +165,6 @@ Text and images of the “Analogous city” are complementary, and constitute a 
 
 Words relate facts and thoughts, images call them up (or recall them) instantly, contributing to their remembrance, as will know whoever lives cities and monuments enquiringly.
 
-Without them – quite probably – you would not be reading the accompanying text and, in consequence, would not occur to you as much as I would hope for: that you ask yourself what is, will be, or could be, your own poetics. Were you to do so, you would discover one of their further properties: images can set alight curiosity, which illuminates knowledge and even, at times, the principal path of one’s own life, not merely professional.
+Without them — quite probably — you would not be reading the accompanying text and, in consequence, would not occur to you as much as I would hope for: that you ask yourself what is, will be, or could be, your own poetics. Were you to do so, you would discover one of their further properties: images can set alight curiosity, which illuminates knowledge and even, at times, the principal path of one’s own life, not merely professional.
 
 [^1]: The exhibition opened on 25 June 2015 at the Bonnefantenmuseum in Maastricht and ran through 15 November 2015, before traveling to the École polytechnique fédérale de Lausanne (Archizoom) and the Galleria d’Arte Moderna e Contemporanea di Bergamo (GAMeC). It brought together one hundred prints from the museum’s own collection alongside forty drawings and paintings from private collections, complemented by printing plates and proofs.
