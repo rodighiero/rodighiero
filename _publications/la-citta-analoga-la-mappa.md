@@ -77,7 +77,7 @@ Le città materializzano le molteplici, disparate e mutevoli vite individuali e 
 
 Questo primo tratto distintivo di inenarrabile enormità è alluso al primo colpo d’occhio dall’eterogeneo, molteplice, contraddittorio insieme: eterogenee le rappresentazioni, le forme e le scale dimensionali; molteplici le linee compositive, le direzioni, i centri, le simmetrie e i punti di fuga; contraddittori e conflittuali i principi ordinatori.
 
-L’incipit è teatrale e barocco. Una figura misteriosa – un angelo? La giovinezza? La bellezza? Il nunzio, per gli autori – accoglie e interpella singolarmente ogni visitatore con lo sguardo e, con il gesto perentorio di braccio e indice protesi, lo indirizza direttamente al centro della composizione tra cremagliere, ruote dentate, perni e volani di una macchina inarrestabile.
+L’incipit è teatrale e barocco. Una figura misteriosa — un angelo? La giovinezza? La bellezza? Il nunzio, per gli autori — accoglie e interpella singolarmente ogni visitatore con lo sguardo e, con il gesto perentorio di braccio e indice protesi, lo indirizza direttamente al centro della composizione tra cremagliere, ruote dentate, perni e volani di una macchina inarrestabile.
 
 {% include figure-single.html src="/images/the-analogous-city-the-map/fig_004.webp" class="three-quarter" alt="Diagramma di Reinhart della planimetria radiale della Città Analoga." %}
 
@@ -113,7 +113,7 @@ Traliccio e scala a chiocciola sarebbero stati un eccellente viatico per il visi
 
 La planimetria riunisce tre parti che si sovrappongono e s’intersecano nei modi impiegati da Magritte nel suo “Le Blanc-seing” del 1965: la città reale (B), la città della memoria (C) e la città ideale (D).
 
-Per mimare la realtà, i numerosi interventi puntuali sulla planimetria sono stati affidati alla responsabilità del singolo autore. Sovrapposto alla città reale, in uno spazio domestico alluso da due linee e una lampadina, un abitante-spettatore – Aldo Rossi poeta, secondo Ton Quik – scruta dalla finestra un abissale scorcio storico fin dentro il cuore mitologico della città occidentale.
+Per mimare la realtà, i numerosi interventi puntuali sulla planimetria sono stati affidati alla responsabilità del singolo autore. Sovrapposto alla città reale, in uno spazio domestico alluso da due linee e una lampadina, un abitante-spettatore — Aldo Rossi poeta, secondo Ton Quik — scruta dalla finestra un abissale scorcio storico fin dentro il cuore mitologico della città occidentale.
 
 ## Da tavola a mappa
 
@@ -123,7 +123,7 @@ _Fabio Reinhart, giugno 2015_
 
 La tavola focalizza nei modi della veduta e della rappresentazione cartografica questo fenomeno diffusissimo e intrinsecamente meraviglioso.
 
-Ogni forma di vita – sia biologica sia culturale – lo manifesta così da essere sovente identificato con il processo vitale stesso, con la vita stessa. Ognuno lo incarna e ne ha intima consapevolezza: vivere è trasformarsi rimanendo se stessi, conservando la memoria di sé.
+Ogni forma di vita — sia biologica sia culturale — lo manifesta così da essere sovente identificato con il processo vitale stesso, con la vita stessa. Ognuno lo incarna e ne ha intima consapevolezza: vivere è trasformarsi rimanendo se stessi, conservando la memoria di sé.
 
 Un ulteriore esempio è ora sotto i tuoi occhi, ed è pure opportuno poiché mostra separatamente i due momenti rivelatori di ogni trasformazione: il prima e il dopo, la forma iniziale e quella conclusiva.
 
@@ -131,7 +131,7 @@ Distingue quanto nella tavola è presente solo in filigrana, con rimandi affidat
 
 Ora, tra le mani non hai “La città analoga”, o una sua riproduzione più o meno fedele e accurata, bensì la “Mappa della Città Analoga”, ovvero, la stessa realtà calata in una forma analoga.
 
-L’identità del contenuto di tavola e mappa – entrambe presentano la medesima realtà – permette di cogliere specificità e implicazioni delle mutazioni analogiche.
+L’identità del contenuto di tavola e mappa — entrambe presentano la medesima realtà — permette di cogliere specificità e implicazioni delle mutazioni analogiche.
 
 La mappa è un’interpretazione della tavola, una sorta di re-invenzione all’interno di una nuova realtà sociale e culturale: identico il contenuto, mutate la materialità e le dimensioni.
 
@@ -155,7 +155,7 @@ In essa sono racchiusi fondamento e senso del loro lavoro professionale progettu
 
 Infatti, solo l’assoggettamento a linee guida vagliate criticamente può affrancare dal lavoro servile, contraddistinguere l’operatore responsabile, e permettere all’artista di aspirare alla pienezza espressiva.
 
-Se – come noto – le convenzioni verbali beneficiano di maggiore stabilità rispetto a quelle figurative, lo scritto di Aldo Rossi usufruisce di questa condizione e conserva freschezza e leggibilità: non necessita perciò né di riscritture né di note.
+Se — come noto — le convenzioni verbali beneficiano di maggiore stabilità rispetto a quelle figurative, lo scritto di Aldo Rossi usufruisce di questa condizione e conserva freschezza e leggibilità: non necessita perciò né di riscritture né di note.
 
 Tuttavia, deve solo alla sua acutezza se la diagnosi e i rimedi espressi mantengono intatta la loro attualità e quarant’anni di pessima gestione del territorio aggiungono loro il tratto dell’urgenza.
 
@@ -163,6 +163,6 @@ Testo e immagini de “La città analoga” sono complementari e formano un tutt
 
 Le parole raccontano fatti e pensieri, le immagini li suscitano (o risuscitano) istantaneamente e concorrono al loro ricordo, come ben sa chi vive e interroga città e monumenti.
 
-Senza di esse – probabilmente – non leggeresti il testo che le accompagna e, in seguito, non accadrebbe quanto ti auguro: che tu ti chieda quale sia, sarà o potrebbe essere la tua poetica. Se così fosse, sperimenteresti una loro ulteriore proprietà: le immagini possono accendere la curiosità che illumina le vie della conoscenza e, talvolta, anche la strada maestra della propria vita, non solo professionale.
+Senza di esse — probabilmente — non leggeresti il testo che le accompagna e, in seguito, non accadrebbe quanto ti auguro: che tu ti chieda quale sia, sarà o potrebbe essere la tua poetica. Se così fosse, sperimenteresti una loro ulteriore proprietà: le immagini possono accendere la curiosità che illumina le vie della conoscenza e, talvolta, anche la strada maestra della propria vita, non solo professionale.
 
 [^1]: La mostra si è inaugurata il 25 giugno 2015 al Bonnefantenmuseum di Maastricht e si è protratta fino al 15 novembre 2015, per poi spostarsi all’École polytechnique fédérale de Lausanne (Archizoom) e alla Galleria d’Arte Moderna e Contemporanea di Bergamo (GAMeC). Ha riunito cento incisioni della collezione del museo insieme a quaranta disegni e dipinti da collezioni private, arricchiti da matrici e prove di stampa.
