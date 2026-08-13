@@ -378,17 +378,28 @@
       width: 100%;
       will-change: transform;
     }
-    /* A tile that survives a filter is the same tile, so let its transition group carry
-       it to the new slot and nothing more. Left to itself the group also cross-fades the
-       old picture of the tile into the new one, and because that blend is additive
-       (plus-lighter, so a genuine dissolve sums to 1) two *identical* pictures pulse
-       instead of holding steady — the blink. Dropping the old snapshot and the new one's
-       fade leaves the movement alone. Only survivors are named (see nameVisibleTiles), so
-       tiles arriving still fade in with the page snapshot; tiles leaving are cut, which
-       suits a filter. Browsers without view-transition-class ignore both rules and keep
-       the default cross-fade. */
-    ::view-transition-old(.tile) { display: none; }
-    ::view-transition-new(.tile) { animation: none; }
+    /* A filter change carries the tiles that survive it to new slots. Since the masonry
+       gives every tile a transform of its own, that move is a transform change the browser
+       can animate on the real elements — the actual <img> travels, at full resolution,
+       rather than a snapshot of it (which is what a view transition animates, and why a
+       large photograph could drop out mid-slide). See withTileTransition.
+
+       Armed only while a filter change is in flight: the first layout and every resize
+       pass write transforms too, and those have to stay instant. */
+    body[data-view="gallery"] #publications.animating .card {
+      transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.28s ease,
+                  background 0.15s ease, border-color 0.15s ease;
+    }
+    /* A tile arriving from a hidden state still carries the transform of wherever it last
+       sat, so it takes its new slot with the transition off and fades in from there
+       instead of gliding in from a slot it no longer has any relation to. */
+    body[data-view="gallery"] #publications.animating .card.entering {
+      transition: none;
+      opacity: 0;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      body[data-view="gallery"] #publications.animating .card { transition: none; }
+    }
 
     /* The media slot above a card's text — a publication thumbnail, or an action/filter
        card's inlined graph miniature — framed once, so either sits the same among the tiles.
@@ -907,26 +918,55 @@
       });
       container.style.height = Math.max(0, Math.max.apply(null, colHeights) - gapY) + 'px';
       container.classList.add('ready');
+      // A layout has just run, so a pending one is stale by definition. This matters on a
+      // filter change: applySearch() asks for a layout on the next frame, while
+      // withTileTransition() has already laid out synchronously so the tiles have a single
+      // destination to animate towards. Left queued, that second pass re-measures a frame
+      // into the movement and rewrites every transform mid-flight.
+      cancelScheduledLayout();
     }
-    var layoutScheduled = false;
+    var layoutFrame = 0;
     function scheduleLayout() {
-      if (layoutScheduled) return;
-      layoutScheduled = true;
-      requestAnimationFrame(function() { layoutScheduled = false; layoutMasonry(); });
+      if (layoutFrame) return;
+      layoutFrame = requestAnimationFrame(function() { layoutFrame = 0; layoutMasonry(); });
+    }
+    function cancelScheduledLayout() {
+      if (layoutFrame) { cancelAnimationFrame(layoutFrame); layoutFrame = 0; }
     }
     window.addEventListener('resize', scheduleLayout);
     container && container.querySelectorAll('img').forEach(function(img) {
       if (!img.complete) img.addEventListener('load', scheduleLayout, { once: true });
     });
 
-    // ── View transitions ──
-    // Every change of state — switching view, applying a filter, clearing one, and
-    // typing once a burst of keystrokes has settled (see searchFromInput below) — runs
-    // through the two helpers here, so the page animates between states instead of
-    // cutting. Both fall straight through to fn() where the API is missing or the reader
-    // has asked for reduced motion, leaving the old instant behaviour intact.
+    // ── Thumbnail warming ──
+    // A card below the fold carries loading="lazy", and a card hidden by a filter loads
+    // nothing at all while it is display:none — so the first time a filter is cleared,
+    // the tiles coming back have no picture yet: they fade in as empty frames and fill
+    // once the image arrives. Once the page has settled, quietly promote whatever is
+    // still lazy to eager — the first paint keeps its lazy loading, which is the point of
+    // it, and by the time anyone filters, every card has its image ready to travel.
+    function warmThumbnails() {
+      if (!container) return;
+      container.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
+        img.loading = 'eager';
+      });
+    }
+    function warmWhenIdle() {
+      if (window.requestIdleCallback) requestIdleCallback(warmThumbnails, { timeout: 2000 });
+      else setTimeout(warmThumbnails, 500);
+    }
+    if (document.readyState === 'complete') warmWhenIdle();
+    else window.addEventListener('load', warmWhenIdle, { once: true });
+
+    // ── Animating between states ──
+    // Every change of state — switching view, applying a filter, clearing one, and typing
+    // once a burst of keystrokes has settled (see searchFromInput below) — runs through
+    // the two helpers here, so the page animates between states instead of cutting. Both
+    // fall straight through to fn() when the reader has asked for reduced motion, leaving
+    // the old instant behaviour intact.
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    function transitionsOK() { return !!document.startViewTransition && !reduceMotion.matches; }
+    function motionOK() { return !reduceMotion.matches; }
+    function transitionsOK() { return !!document.startViewTransition && motionOK(); }
 
     // Switching view: the gallery and the graph share nothing on screen, so there is
     // nothing to match up — a plain cross-fade of the page is the whole effect.
@@ -935,91 +975,72 @@
       document.startViewTransition(fn);
     }
 
-    // A filter change *within* the gallery, where the tiles that survive it should
-    // travel to their new masonry slots rather than blink into them. A tile can only be
-    // matched across the two states if it carries a view-transition-name, so the ones on
-    // screen are named for the length of the transition and unnamed after — naming all
-    // forty permanently would have the engine snapshot every one of them on every change.
+    // A filter change *within* the gallery, where the tiles that survive it should travel
+    // to their new masonry slots rather than blink into them. This is deliberately NOT a
+    // view transition. A view transition replaces the live page with rasterised snapshots
+    // for its whole duration, so a tile in flight is a picture of a card rather than the
+    // card — with the tile's own snapshot and the page's cross-fading against each other,
+    // which is what made the portrait drop out of the interview tile mid-slide. The
+    // masonry already positions every tile absolutely and moves it with a transform, so
+    // the destination is a transform we write ourselves and the browser can animate the
+    // real elements: the actual <img> travels, sharp, the whole way across.
     //
-    // Only the tiles visible *before* the change are named, which sorts them into three
-    // behaviours: a tile in both states is matched and slides to its new slot (see the
-    // ::view-transition-*(.tile) rules, which stop it cross-fading with a second picture
-    // of itself on the way); a tile that leaves is cut; a tile that arrives was never
-    // named, so it stays part of the page snapshot and fades in with it.
-    function tileName(p, i) {
-      var slug = p.getAttribute('data-slug');
-      return 'tile-' + (slug ? slug.replace(/[^\w-]/g, '-') : 'card-' + i);
-    }
-    function nameVisibleTiles() {
-      tiles.forEach(function(p, i) {
-        if (p.style.display !== 'none' && p.offsetParent !== null) {
-          p.style.viewTransitionName = tileName(p, i);
-          p.style.viewTransitionClass = 'tile';
-        }
-      });
-    }
-    function clearTileNames() {
-      tiles.forEach(function(p) {
-        p.style.viewTransitionName = '';
-        p.style.viewTransitionClass = '';
-      });
-    }
-    // Cheap identity for the result set: which tiles are on screen, read off the inline
-    // display styles alone so it costs no layout.
-    function visibleSignature() {
-      var s = '';
-      tiles.forEach(function(p, i) { if (p.style.display !== 'none') s += i + ','; });
-      return s;
-    }
-    var activeTransition = null;
+    // Three behaviours, as before. A tile in both states slides to its new slot. A tile
+    // that leaves is cut, which suits a filter. A tile that arrives is pinned at its new
+    // slot with the transition suppressed — it still carries the transform of wherever it
+    // last sat, and gliding in from a slot it no longer relates to reads as noise — then
+    // fades in from there.
+    var TILE_MOVE_MS = 420;
+    var animatingTimer = null;
     function withTileTransition(fn, thenScrollToTop) {
       // Any deliberate change supersedes a filter still waiting out a typing burst
       // (see searchFromInput below), so it never lands a second time behind this one.
       cancelPendingSearch();
       var gallery = document.body.dataset.view === 'gallery';
-      // Land at the top *before* anything is captured, not after. A filter card sits
-      // partway down the flow, so filtering has always jumped back up; jumping once the
-      // old state is already captured would leave the transition dissolving between two
-      // different scroll offsets. Doing it first keeps the jump instant, as it has
-      // always been, and leaves the transition to animate the tiles alone. (scrollTo(0, 0)
-      // doesn't mind the page height changing underneath it, so unlike the old
-      // double-rAF it needn't wait for the relayout.)
+      // Land at the top first, not after. A filter card sits partway down the flow, so
+      // filtering has always jumped back up; doing it before anything moves keeps that
+      // jump instant, as it has always been, and leaves the tiles to animate alone.
       if (thenScrollToTop) scrollToTop();
-      // layoutMasonry() runs inside the callback rather than on the next frame the way
-      // scheduleLayout() would: the "after" snapshot is taken as soon as the callback
-      // settles, so transforms written a frame later would be captured at their old
-      // values and every tile would set off towards the wrong slot.
-      function run() {
-        fn();
-        if (gallery) layoutMasonry();
-      }
-      if (!transitionsOK()) { run(); return; }
-      var before = visibleSignature();
-      if (gallery) nameVisibleTiles();
-      var vt = document.startViewTransition(function() {
-        run();
-        // Nothing moved — typing another character that doesn't narrow the results is
-        // the common case. Cross-fading the page with an identical copy of itself is
-        // what reads as a blink, so skip straight to the end instead.
-        if (vt && visibleSignature() === before) vt.skipTransition();
+      // In network view there are no tiles to move — the graph fades its nodes instead,
+      // and a page cross-fade is the whole effect, exactly as for a view switch.
+      if (!gallery) { withCrossfade(fn); return; }
+      if (!container || !motionOK()) { fn(); layoutMasonry(); return; }
+
+      var before = new Set();
+      tiles.forEach(function(p) { if (p.style.display !== 'none') before.add(p); });
+
+      container.classList.add('animating');
+      fn();
+      var entering = [];
+      tiles.forEach(function(p) {
+        if (p.style.display === 'none' || before.has(p)) return;
+        p.classList.add('entering');
+        entering.push(p);
       });
-      activeTransition = vt;
-      // A skipped transition rejects .ready but settles .finished either way, so clear on
-      // both paths. Only the newest one clears: two clicks in quick succession skip the
-      // first, whose .finished would otherwise strip the names the second still needs.
-      var done = function() { if (activeTransition === vt) clearTileNames(); };
-      vt.finished.then(done, done);
+      // Synchronous, not scheduled: the transform each tile animates towards has to be
+      // written now, in the same task as the display changes, so the browser sees one
+      // style change to transition rather than a jump followed by a second one.
+      layoutMasonry();
+      if (entering.length) {
+        // Flush the pinned state (new slot, opacity 0, transitions off) so it becomes the
+        // value the fade starts from, then release them: the transform is already where it
+        // belongs, so only opacity moves.
+        void container.offsetWidth;
+        entering.forEach(function(p) { p.classList.remove('entering'); });
+      }
+      clearTimeout(animatingTimer);
+      animatingTimer = setTimeout(function() {
+        container.classList.remove('animating');
+      }, TILE_MOVE_MS + 80);
     }
 
-    // Typing gets the same transition as the cards and Escape, but only once a burst of
-    // keystrokes has settled. It cannot run per keystroke: a transition covers the page
-    // with its snapshot layer for its whole duration, so each one would catch the very
-    // field being typed into, and each new one skips the last before it can finish.
-    // Waiting out the burst costs the results SEARCH_SETTLE ms and buys them the motion
-    // everything else has — including the cards coming *back* as a query is deleted,
-    // which is the largest reflow the search box produces. Readers who get no transition
-    // (unsupported, or reduced motion) keep the old instant per-keystroke filtering
-    // rather than paying the delay for an animation they will never see.
+    // Typing gets the same animation as the cards and Escape, but only once a burst of
+    // keystrokes has settled. Run per keystroke it would restart the tiles mid-flight on
+    // every character, so nothing would ever arrive anywhere. Waiting out the burst costs
+    // the results SEARCH_SETTLE ms and buys them the motion everything else has —
+    // including the cards coming *back* as a query is deleted, which is the largest
+    // reflow the search box produces. Readers on reduced motion keep the old instant
+    // per-keystroke filtering rather than paying the delay for motion they never see.
     var SEARCH_SETTLE = 180;
     var searchTimer = null;
     function cancelPendingSearch() {
@@ -1027,7 +1048,7 @@
     }
     function searchFromInput() {
       cancelPendingSearch();
-      if (!transitionsOK()) { applySearch(); return; }
+      if (!motionOK()) { applySearch(); return; }
       searchTimer = setTimeout(function() {
         searchTimer = null;
         withTileTransition(applySearch);
