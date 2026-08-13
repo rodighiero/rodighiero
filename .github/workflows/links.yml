@@ -49,6 +49,14 @@ jobs:
             --exclude 'krisis\.eu'
             --exclude 'artefaktum\.hu'
             --exclude 'assembla\.com'
+            --exclude 'twitter\.com'
+            --exclude 'insights\.dice\.com'
+            --exclude 'schemas\.bs8723\.org'
+            --exclude 'cs\.vu\.nl'
+            --exclude 'macs\.vub\.ac\.be'
+            --exclude 'edigeo-online\.it'
+            --exclude 'innovazionepa\.gov\.it'
+            --exclude 'bcr\.puglia\.it'
             './_site/*.html'
           fail: false
       - name: Annotate broken links with source context

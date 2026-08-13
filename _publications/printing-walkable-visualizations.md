@@ -111,7 +111,7 @@ The point of this section is that, if the intimate reading brings new insights, 
 
 - Arnheim, Rudolf. 1982. _The Power of the Center: A Study of Composition in the Visual Arts_. Berkeley: University of California Press.
 - Bastian, Mathieu, Sebastien Heymann, and Mathieu Jacomy. 2009. “Gephi: An Open Source Software for Exploring and Manipulating Networks.” In _Proceedings of the Third International ICWSM Conference_.
-- Croxall, Brian. 2014. “Found the @serendipomatic team. Need to get @sekleinman and @mia_out in one with me. Alas, @fontnerd. #dh2014.” Twitter. <https://twitter.com/briancroxall/status/486167328821088257>.
+- Croxall, Brian. 2014. “Found the @serendipomatic team. Need to get @sekleinman and @mia_out in one with me. Alas, @fontnerd. #dh2014.” Twitter. <https://twitter.com/briancroxall/status/486167328821088257> ([archived](https://web.archive.org/web/20140707155257/https://twitter.com/briancroxall/status/486167328821088257)).
 - Deleuze, Gilles, and Claire Parnet. 2007. _Dialogues II_. New York: Columbia University Press.
 - Desargues, Gérard, and Abraham Bosse. 1648. _Manière universelle de Mr. Girard Desargues, pour pratiquer la perspective par petit-pied_. Paris: Imprimerie de Pierre Des-Hayes.
 - Duchamp, Marcel. 1994. _The Creative Act_. Brussels: Sub Rosa Records.
