@@ -9,6 +9,7 @@ editor: "Guillaume Drevon and Luc Gwiazdzinski and Olivier Klein"
 doi: "https://doi.org/10.5281/zenodo.3516222"
 publisher: "Elya Éditions"
 place: "Grenoble"
+isbn: "9791091336109"
 thumb: "meduse-vers-des-visualisations-plus-complexes-que-le-reseau/fig_001.webp"
 ---
 Les visualisations en réseau comptent parmi les plus complexes qui soient ; pourtant, elles échouent parfois à rendre la complexité du réel : leurs relations ne suffisent pas à l’analyser, et elles ne distinguent pas les différences qualitatives entre les entités représentées. Partant du modèle classique du réseau, cet article propose une solution que nous nommons trajectoire — un réseau qui représente non seulement des distances, mais aussi des durées, et qui donne à voir des entités en mouvement selon leur évolution dans le temps. Construite sur une ligne de temps verticale, la trajectoire offre aux humanités numériques un nouveau langage visuel, et un outil pour porter leurs réseaux à la plus complexe des visualisations possibles.

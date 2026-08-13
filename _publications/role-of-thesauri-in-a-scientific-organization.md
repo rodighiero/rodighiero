@@ -9,6 +9,7 @@ publisher: "Universal-Publishers"
 place: "Boca Raton, FL"
 pages: "301–9"
 doi: "https://publications.jrc.ec.europa.eu/repository/handle/JRC48348"
+isbn: "9781599429069"
 thumb: "role-of-thesauri-in-a-scientific-organization/fig_002.webp"
 ---
 We aim at describing the mediation language between users and indexers in a document retrieval system for a big scientific community intimately related to European Union policies. We argue that this mediation can be represented at three levels by thesauri. At the first level, thesauri are sets of indexes coordinating searches by means of term-to-term relations such as Narrower Term and Related Term. At a higher level, person-to-term relations follow from the use of thesauri for indexing and retrieval, while person-to-person relations are embodied in a thesaurus through the implicit representation of the organization it serves. In this way, thesauri constitute a network of mediation with historical, social, scientific and technological perspectives, the latter two owing to the scientific community they serve — and, in particular, to the network originally proposed by the Euratom Thesaurus (1966, 1967) and to a more recent thesaurus designed for the Joint Research Centre of the European Commission.
