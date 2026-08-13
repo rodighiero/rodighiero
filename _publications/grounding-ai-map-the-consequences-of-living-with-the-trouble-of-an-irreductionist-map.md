@@ -12,7 +12,7 @@ Data visualizations are often seen as tools to make expert knowledge more access
 
 <!--more-->
 
-> « Aucune chose n’est par elle-même, réductible ou irréductible à aucune autre. » — Bruno Latour, *Irréductions* (1984)
+> « Aucune chose n’est par elle-même, réductible ou irréductible à aucune autre. » — Bruno Latour, *Irréductions* (1984)
 
 ## Abstract
 
