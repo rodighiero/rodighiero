@@ -1,5 +1,5 @@
 ---
-title: "Ethical and Aesthetical Questions on Stock Images: The Case of AI's Depictions"
+title: "Ethical and Aesthetical Questions on Stock Images: The Case of AI’s Depictions"
 year: 2024
 venue: "Lessico Di Etica Pubblica"
 type: "journal"
