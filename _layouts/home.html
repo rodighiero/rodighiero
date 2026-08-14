@@ -1151,15 +1151,11 @@
     // fades in from there.
     var TILE_MOVE_MS = 420;
     var animatingTimer = null;
-    function withTileTransition(fn, thenScrollToTop) {
+    function withTileTransition(fn) {
       // Any deliberate change supersedes a filter still waiting out a typing burst
       // (see searchFromInput below), so it never lands a second time behind this one.
       cancelPendingSearch();
       var gallery = document.body.dataset.view === 'gallery';
-      // Land at the top first, not after. A filter card sits partway down the flow, so
-      // filtering has always jumped back up; doing it before anything moves keeps that
-      // jump instant, as it has always been, and leaves the tiles to animate alone.
-      if (thenScrollToTop) scrollToTop();
       // In network view there are no tiles to move — the graph fades its nodes instead,
       // and a page cross-fade is the whole effect, exactly as for a view switch.
       if (!gallery) { withCrossfade(fn); return; }
@@ -1215,21 +1211,6 @@
     }
 
     // ── View toggle ──
-    // View switches land at the filter bar rather than the very top of the page:
-    // the network view is short (≈ one viewport), so carrying over a scrolled
-    // position from a taller gallery would leave it looking scrolled into empty
-    // space instead of showing the graph — but jumping to the literal page top
-    // also re-shows the bio every time, even when it was open and already
-    // scrolled past. Landing on .filters' own (unstuck) document position
-    // handles both: it's high enough to never leave the network view looking
-    // empty, and low enough to skip re-showing a bio that was already offscreen.
-    // offsetTop (not getBoundingClientRect, which reports the sticky *pinned*
-    // position once scrolled past) is what gives that static, scroll-independent
-    // position.
-    function scrollToTop() {
-      var filters = document.querySelector('.filters');
-      window.scrollTo(0, filters ? filters.offsetTop : 0);
-    }
     // Reflect the current view + search into the URL query string (via
     // replaceState, so it never adds history entries) to make any state
     // shareable and deep-linkable. Only user-initiated changes call this;
@@ -1256,7 +1237,6 @@
 
     function setView(view, persist) {
       var prev = document.body.dataset.view;
-      var switchedView = prev && prev !== view;
       document.body.dataset.view = view;
       if (persist !== false) {
         try { localStorage.setItem('publicationView', view); } catch (e) {}
@@ -1274,11 +1254,8 @@
         networkApi.clearSelection();
       }
       // Both branches lay out synchronously rather than deferring to
-      // scheduleLayout's next-frame pass: scrollToTop() below reads .filters'
-      // offsetTop, which must already reflect this branch's own DOM/width
-      // writes (layoutMasonry's syncPageWidth, or clearMasonry) — read before
-      // they've run, the scroll would land a beat short of .filters' real
-      // position, or flash the old (taller) scroll position for a frame.
+      // scheduleLayout's next-frame pass, so the view is settled by the time it
+      // paints (layoutMasonry's syncPageWidth, or clearMasonry).
       if (view === 'gallery') {
         layoutMasonry();
       } else if (view === 'network') {
@@ -1290,7 +1267,6 @@
         // networkApi.filter(matchedSlugs) call handles it.
         if (networkApi) networkApi.filter(matchedSlugs);
       }
-      if (switchedView) scrollToTop();
     }
     // Hint that clicking the active view button resets the current filter,
     // since the behaviour is otherwise invisible.
@@ -1330,7 +1306,7 @@
         activeFilterLabel = null;
         applySearch();
         updateURL();
-      }, true);
+      });
     }
     viewButtons.forEach(function(b) {
       b.addEventListener('click', function() {
@@ -1473,10 +1449,6 @@
           return;
         }
         if (verb !== 'type' && verb !== 'search' && verb !== 'cluster') return;
-        // A filter card sits partway down the flow; after filtering, jump back to the
-        // top so the (now shorter) result set starts in view rather than scrolled past.
-        // withTileTransition lays the masonry out synchronously, so the page height has
-        // already settled by the time it scrolls.
         withTileTransition(function() {
           if (verb === 'type' && val) {
             activeType = (activeType === val) ? null : val;
@@ -1499,7 +1471,7 @@
           }
           applySearch();
           updateURL();
-        }, true);
+        });
       });
     });
 
