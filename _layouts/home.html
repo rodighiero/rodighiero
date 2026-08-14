@@ -147,11 +147,22 @@
        grid-template-rows 1fr→0fr animates to the content's *actual* height, so
        the motion matches what you see. (A max-height transition animates to a
        fixed upper bound instead: with the bio well under 60rem, opening finished
-       early and closing stalled before snapping shut.) The single child carries
-       min-height:0 + overflow:hidden so the row can actually be clipped to zero. */
+       early and closing stalled before snapping shut.) The clipping lives on the
+       shell itself (overflow: hidden), not on the child: the child carries
+       align-self: start so it is never stretched to the row's track size — if it
+       were (the grid default), then whenever JS (see the bio-toggle script) has
+       the row pinned to a stale, too-tall pixel height — e.g. right after a
+       resize shrinks the content, before the next remeasure — the child would
+       stretch to fill that leftover space instead of sitting at its own true
+       content height, and *measuring* the child (which JS does, to keep the row
+       in sync) would just read back the stale height it was stretched to. With
+       align-self: start the child always renders at its real content height and
+       only ever gets clipped by the shell around it, so a scrollHeight read is
+       always the true, un-stretched number. */
     .bio-shell {
       display: grid;
       grid-template-rows: 1fr;
+      overflow: hidden;
       /* Carries the header's former 2rem bottom padding as well (see .header):
          a collapsing grid child must have no vertical padding, or that padding
          becomes a floor the row can never shrink past. */
@@ -173,7 +184,7 @@
           0.853, 0.895, 0.925, 0.947, 0.963, 0.974, 0.982, 0.987, 0.991, 0.994, 0.996,
           0.997, 1);
     }
-    .bio-shell > * { min-height: 0; overflow: hidden; }
+    .bio-shell > * { align-self: start; }
     html[data-bio-visible="0"] .bio-shell {
       grid-template-rows: 0fr;
       margin-bottom: 0;
@@ -770,8 +781,7 @@
       .mode-toggle, .bio-toggle, .header .profile-links, main, footer { display: none !important; }
       /* display:block drops the collapsing grid, so the bio always prints in
          full even when it is collapsed on screen. */
-      .bio-shell { display: block !important; margin-bottom: 0 !important; }
-      .bio-shell > * { overflow: visible !important; }
+      .bio-shell { display: block !important; overflow: visible !important; margin-bottom: 0 !important; }
       .header { display: block; margin-bottom: 0; border-bottom: none; }
       .header-portrait { display: none; }
       .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }
@@ -1509,9 +1519,49 @@
 
     // ── Bio toggle ──
     var bioToggle = document.querySelector('.bio-toggle');
+    var bioShell = document.getElementById('bio');
+    var bioHeader = bioShell && bioShell.firstElementChild;
+    /* grid-template-rows: 1fr (see that rule's own comment) sizes the open row to
+       the content's real height instead of an arbitrary max-height ceiling — but
+       that leaves the browser to keep re-deriving an intrinsic ("fr") track size
+       against content whose shape keeps changing after the transition has long
+       settled, e.g. crossing the 1199px breakpoint where the header stops being a
+       4-column grid and stacks into one wide column. In practice engines don't
+       reliably redo that derivation on a later window resize — not just skip the
+       transition, but never recompute the row's size against the new content at
+       all — leaving the row pinned to a stale height with the bio's tail clipped
+       by its own overflow: hidden. So once this script is running, the open row's
+       height is written explicitly as a plain pixel number instead of left for the
+       browser to infer, and kept in step by a ResizeObserver on the header (whose
+       own scrollHeight still reports its full content height even while the row
+       around it is collapsed to 0, which is what makes measuring it safe at any
+       point). The CSS 1fr remains the value for the very first paint, before this
+       script runs, and the fallback for browsers without ResizeObserver. */
+    function syncBioHeight(animate) {
+      if (!bioShell || !bioHeader) return;
+      if (document.documentElement.dataset.bioVisible !== '1') return;
+      var target = bioHeader.scrollHeight + 'px';
+      if (bioShell.style.gridTemplateRows === target) return;
+      if (animate) {
+        bioShell.style.gridTemplateRows = target;
+      } else {
+        bioShell.style.transition = 'none';
+        bioShell.style.gridTemplateRows = target;
+        void bioShell.offsetHeight;
+        bioShell.style.transition = '';
+      }
+    }
+    if (bioShell && bioHeader && window.ResizeObserver) {
+      new ResizeObserver(function() { syncBioHeight(false); }).observe(bioHeader);
+    }
     function setBioVisible(visible, persist) {
       var v = visible ? '1' : '0';
       document.documentElement.dataset.bioVisible = v;
+      if (visible) {
+        syncBioHeight(true); // an exact pixel target, so the open transition still animates cleanly
+      } else if (bioShell) {
+        bioShell.style.gridTemplateRows = ''; // hand back to the CSS 0fr rule; removing the override still transitions
+      }
       if (bioToggle) {
         bioToggle.setAttribute('aria-expanded', visible ? 'true' : 'false');
         var label = visible ? 'Hide bio' : 'Show bio';
