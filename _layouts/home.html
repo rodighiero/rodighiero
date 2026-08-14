@@ -145,9 +145,8 @@
     }
 
     /* ── Header ──
-       No top/bottom padding: this is .bio-shell's collapsing grid child, and vertical
-       padding would keep the row from reaching zero. The 2rem lives in .bio-shell's
-       margin-bottom instead, which animates with it.
+       No top/bottom padding: the 2rem of spacing below it lives in .bio-shell's
+       margin-bottom instead.
        The 4 columns mirror the gallery's own grid exactly — --card-w each with a
        --card-gap gap, not a fluid 1fr/2rem split — so column 2's left edge lands on
        card 2's left edge, column 3's on card 3's, and so on, not just the row's outer
@@ -723,14 +722,9 @@
        needs measuring at runtime, and staying in CSS means it holds even before JS runs. */
     @media (max-width: 1199px) {
       .header { display: block; }
-      /* Stacked, not floated beside the text: a float here needs a BFC-containment
-         `overflow: hidden` on .header, nested inside .bio-shell's own content-sized
-         1fr row, which is itself a transitioned property — Safari doesn't reliably
-         re-measure that combination after a live resize changes .header's wrap width,
-         leaving the row a beat short and the bio's tail end clipped. Plain block flow
-         has no such ambiguity: its height is just the sum of its children's, recomputed
-         every time. The portrait needs no override here — it's already a fixed 270px
-         at every width (see the base rule above). */
+      /* Stacked, not floated beside the text: plain block flow, no BFC-containment
+         complications. The portrait needs no override here — it's already a fixed
+         270px at every width (see the base rule above). */
       .header .profile-links { margin-bottom: 0.6rem; }
       .header .bio-col { margin-top: 1rem; }
     }
@@ -749,9 +743,7 @@
       @page { margin: 2cm 2.8cm; }
       html, body { font-size: 9pt; }
       .mode-toggle, .bio-toggle, .header .profile-links, main, footer { display: none !important; }
-      /* display:block drops the collapsing grid, so the bio always prints in
-         full even when it is collapsed on screen. */
-      .bio-shell { display: block !important; overflow: visible !important; margin-bottom: 0 !important; }
+      .bio-shell { margin-bottom: 0 !important; }
       .header { display: block; margin-bottom: 0; border-bottom: none; }
       .header-portrait { display: none; }
       .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }
@@ -986,8 +978,19 @@
       document.body.style.maxWidth = ((cols === 1 ? avail : gridWidth(cols)) + PAGE_PAD) + 'px';
       return { avail: avail, cols: cols };
     }
+    // Only ever runs on the way into the network view, where #publications is
+    // display:none — so the widths and transforms are dropped (a card cloned into the
+    // network's details panel must not inherit its masonry slot), but the container
+    // *keeps* its height. Clearing it is what used to bump the reader up the page:
+    // the height is the only thing holding the gallery open, since every card is
+    // absolutely positioned and contributes nothing to it. Coming back, the view flips
+    // to gallery with the height still cleared, so the document collapses to header +
+    // filter bar + footer — and layoutMasonry's measuring pass then forces a layout
+    // inside that collapsed window, at which point the browser clamps the scroll
+    // position to the short page's maximum. Restoring the height a few statements later
+    // brings the page back but not the scroll position. A stale height on a hidden
+    // element costs nothing and is overwritten by layoutMasonry on the way back.
     function clearMasonry() {
-      container.style.height = '';
       tiles.forEach(function(p) {
         p.style.width = '';
         p.style.transform = '';
