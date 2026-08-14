@@ -183,6 +183,14 @@
        card's own* edges, not from the row's outer edges, so the header's columns
        (this one and .bio-col below) have to match that per-column, not just overall. */
     .header-about { padding: 0 var(--card-pad); }
+    /* Three columns is the one count where the header's four blocks don't divide evenly
+       into the row, and letting them wrap where they fall puts two paragraphs beside the
+       portrait and the third alone underneath it — the bio read as two pieces rather than
+       one. Sending every paragraph to the second row instead keeps them side by side, all
+       three across the full measure, with the identity block holding the first column
+       above them. Only at three: four gives every block a column of its own, two makes a
+       tidy pair of rows already, and one is the stacked layout. */
+    body[data-cols="3"] .header .bio-col { grid-row: 2; }
     /* The portrait has no rule of its own: it wears .card-media, the same slot a
        publication's thumbnail sits in, so it fills its column exactly as a card's photo
        fills its own — same width, same 2px radius, same 0.8rem beneath it — at every
