@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   {% include site-head.html %}
-  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}var ok={gallery:1,network:1};var pref=ok[v]?v:'gallery';document.documentElement.dataset.preferredView=pref;document.documentElement.dataset.initialView=(window.innerWidth<=905)?'gallery':pref}()</script>
+  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}var ok={gallery:1,network:1};var pref=ok[v]?v:'gallery';document.documentElement.dataset.preferredView=pref;document.documentElement.dataset.initialView=matchMedia('(max-width: 905px)').matches?'gallery':pref}()</script>
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
   <meta name="keywords" content="Dario Rodighiero, data visualization, digital humanities, Science and Technology Studies, University of Groningen, Berkman Klein Center, metaLAB Harvard, mapping, information design">
@@ -970,12 +970,31 @@
        being written — reading it back would feed the result into its own input. */
     var PAGE_PAD = 48;                                          // body's 1.5rem, both sides
     var MAX_CONTENT = gridWidth(MAX_COLS); // the grid's own width at MAX_COLS
+    var pageWidth = null;                  // the last width written, to spot real changes
+    /* clientWidth, not innerWidth: innerWidth counts a classic scrollbar as page width,
+       and the columns are then laid out into space the scrollbar is already using. On
+       macOS (overlay scrollbars) the two are equal and nothing shows; where the scrollbar
+       takes a track — Windows, Linux, macOS set to always show them — the grid overhangs
+       the body by exactly its width, which is a horizontal scrollbar on the whole page:
+       at every window width in one-column mode (where the page is sized to the window
+       itself), and in a scrollbar-wide band just above each of the 2-, 3- and 4-column
+       thresholds. clientWidth is the width the content actually gets, which is what the
+       CSS breakpoints below are matched against too. */
     // Returns the values it just wrote, so layoutMasonry doesn't re-derive cols from a
     // second, independent read of the DOM it was just told to resize.
     function syncPageWidth() {
-      var avail = Math.min(window.innerWidth, MAX_CONTENT + PAGE_PAD) - PAGE_PAD;
+      var avail = Math.min(document.documentElement.clientWidth, MAX_CONTENT + PAGE_PAD) - PAGE_PAD;
       var cols = columnCount(avail);
-      document.body.style.maxWidth = ((cols === 1 ? avail : gridWidth(cols)) + PAGE_PAD) + 'px';
+      var width = (cols === 1 ? avail : gridWidth(cols)) + PAGE_PAD;
+      if (width !== pageWidth) {
+        pageWidth = width;
+        document.body.style.maxWidth = width + 'px';
+        // The network fits its baked layout to the stage, and the stage is as wide as the
+        // page — so a page-width change with no window resize behind it (a late image
+        // load, say) has to reach it here, or the graph stays scaled to the old stage.
+        // Its own listener only ever hears window resizes.
+        if (document.body.dataset.view === 'network' && networkApi) networkApi.refit();
+      }
       return { avail: avail, cols: cols };
     }
     // Only ever runs on the way into the network view, where #publications is
@@ -1006,7 +1025,12 @@
       var containerWidth = sync.avail;
       var cols = sync.cols;
       var colWidth = cols === 1 ? containerWidth : CARD_W;
-      var gapY = colWidth / 4; // vertical gap between stacked tiles = 1/4 of a card's width
+      /* Vertical gap between stacked tiles: a quarter of a *card*, not of the column it
+         sits in. The two are the same thing from two columns up, but the single column
+         is the page's whole width, and a quarter of that is a gap the size of a card —
+         it made the one-column page more than three times taller than the two-column
+         one, most of it empty. */
+      var gapY = CARD_W / 4;
       var colHeights = new Array(cols).fill(0);
       tiles.forEach(function(p) {
         p.style.width = colWidth + 'px';
@@ -1214,6 +1238,14 @@
         layoutMasonry();
       } else if (view === 'network') {
         clearMasonry();
+        // The page is sized to the gallery's grid, and the network stage is as wide as
+        // the page — so the width has to be written before the graph is fitted into it.
+        // layoutMasonry is what normally writes it, and this branch must not run that.
+        // Without this the very first paint of a page that opens straight into the
+        // network view (?view=network, or the view persisted in localStorage) keeps the
+        // stylesheet's 4-column cap whatever the column count actually is, and the graph
+        // is laid out into a stage wider than the page it belongs to.
+        syncPageWidth();
         initNetwork();
         // If buildNetwork already ran on a prior visit, re-apply the search
         // filter to catch up to any changes made while another view was active.
@@ -1236,10 +1268,16 @@
         b.setAttribute('title', label);
       });
     }
+    /* The same boundary the CSS mobile breakpoint uses (see @media above) — below the
+       gallery's own 3-column threshold, not an arbitrary device width. Asked as a media
+       query rather than measured with innerWidth so it is the identical test: a media
+       query is matched against the viewport without its scrollbar, innerWidth includes
+       one, and in the band between the two answers the CSS would hide the view toggle
+       while this kept the network view alive — leaving a reader who had it persisted in
+       a view with no visible way out of it. */
+    var mobileQuery = window.matchMedia('(max-width: 905px)');
     function applyResponsiveView() {
-      // 905: the same boundary the CSS mobile breakpoint uses (see @media above) —
-      // below the gallery's own 3-column threshold, not an arbitrary device width.
-      if (window.innerWidth <= 905) {
+      if (mobileQuery.matches) {
         if (document.body.dataset.view !== 'gallery') setView('gallery', false);
       } else {
         // Restore the resolved preference from <head> (kept in sync by setView),
@@ -1278,7 +1316,9 @@
       });
     });
     setView(document.body.dataset.view || 'gallery', false);
-    window.addEventListener('resize', debounce(applyResponsiveView, 150));
+    // Fires exactly when the boundary is crossed, so there is nothing to debounce and
+    // no width to re-test on the resizes that don't cross it.
+    mobileQuery.addEventListener('change', applyResponsiveView);
 
     function normalize(s) {
       return s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
@@ -1296,7 +1336,8 @@
     }
 
     var matchedSlugs = null;
-    // Set once buildNetwork() finishes initializing (see below): { filter(slugs), clearSelection() }.
+    // Set once buildNetwork() finishes initializing (see below):
+    // { filter(slugs), clearSelection(), refit() }.
     // One object rather than two independently-nullable globals, so callers can't
     // observe one half wired up before the other.
     var networkApi = null;
@@ -1797,13 +1838,9 @@
           });
         }
       }
-      // Both halves of the module's public surface are ready together, so external
-      // callers never see one wired up without the other (see networkApi above).
-      networkApi = { filter: filter, clearSelection: clearSelection };
-      networkApi.filter(matchedSlugs);
-
       // Debounce: re-fit the baked layout to the new stage size (cheap — just a
-      // scale + translate, no simulation).
+      // scale + translate, no simulation). Declared before networkApi below, which
+      // hands it out as refit().
       var scheduleNetworkResize = debounce(function() {
         fitLayout();
         placeNodes();
@@ -1812,6 +1849,14 @@
         if (document.body.dataset.view !== 'network') return;
         scheduleNetworkResize();
       });
+
+      // Every part of the module's public surface is ready together, so external
+      // callers never see one wired up without the others (see networkApi above).
+      // refit() is for the other way the stage can change size: the page being
+      // resized to the gallery's grid under a view that isn't the gallery's
+      // (see syncPageWidth).
+      networkApi = { filter: filter, clearSelection: clearSelection, refit: scheduleNetworkResize };
+      networkApi.filter(matchedSlugs);
     }
   </script>
   {% include site-scripts.html %}
