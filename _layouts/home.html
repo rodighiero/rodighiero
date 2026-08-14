@@ -329,6 +329,17 @@
        default focus ring (which Chrome/Safari can (re)apply on a later keypress,
        e.g. pressing Esc right after a mouse click) would be redundant here. */
     .view-toggle button:focus-visible { outline: none; }
+    /* Lines up .mode-toggle (styles-base.css, shared with publication.html —
+       overridden here rather than there, since the reasoning is specific to
+       this row) with these view-toggle icons once .filters is scrolled up and
+       stuck at the viewport top (position: sticky; top: 0): .filters' own top
+       padding, then centered against its 28px-tall row item (this button) —
+       not the mode-toggle's own smaller 20px box (16px icon + 2 * 2px padding
+       there vs. 28px here). Fixed rather than joining the sticky bar itself, so
+       it stays put at every scroll position — this is exactly where it needs
+       to be once .filters reaches the top, and before that point .filters is
+       further down the page, not up here. */
+    .mode-toggle { top: calc(0.4rem + (28px - 20px) / 2); }
     /* The empty state fades both ways. Nothing shares its slot, so `display` can
        join the transition with allow-discrete, which holds it at block until the
        opacity has finished on the way out; @starting-style supplies the entry
@@ -359,13 +370,15 @@
       padding: var(--card-pad);
       border-radius: 4px;
       cursor: pointer;
-      transition: background 0.15s ease, outline-color 0.15s ease;
+      transition: background 0.15s ease, box-shadow 0.15s ease;
     }
-    /* outline-color, not border-color: the action/filter hairline is an outline (see
-       below), and a plain publication card has neither, so this only ever darkens
-       that hairline — harmless to apply everywhere rather than split the rule in two. */
     .card:hover,
-    .publication:has(h2 a:focus-visible) { background: var(--tint-hover); outline-color: var(--border-hover); }
+    .publication:has(h2 a:focus-visible) { background: var(--tint-hover); }
+    /* Scoped to the hairline cards themselves, unlike the old outline-color rule this
+       replaces: box-shadow has no color-only sub-property that stays a no-op without a
+       shadow already present, so applying it to .card:hover generally would have drawn
+       a hairline onto plain publication cards too, on hover. */
+    :is(.action, .filter):hover { box-shadow: inset 0 0 0 1px var(--border-hover); }
     .card:focus-visible,
     .publication:has(h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
 
@@ -428,18 +441,24 @@
        filter instead). Both are <button>s that skip the count/search/network logic
        (which queries .publication) and get placed by the masonry; they share every
        rule below since the only real difference between them is behavioural, not
-       visual — undo the UA's centered text and its own font/color, add the hairline
-       border (background: none clears the UA <button> face), and lay out the rows of
-       their <span> markup as blocks, which a publication card's <div>s have by default.
-       (.card-meta/.card-text go block unconditionally: a no-op on a publication's
-       already-block <div>, the fix needed for an action/filter <span>.)
-       The hairline is an outline, not a border: border-box already keeps a bordered
-       card's own outer box at exactly colWidth regardless, but a real border still
-       eats 1px of content width per side that a plain publication card doesn't give
-       up, so the two kinds sit on very slightly different inner grids. An outline is
-       drawn outside the box model entirely — outline-offset: -1px places the line at
-       the same visual spot a 1px border would, with no box-model cost at all, so
-       every card kind measures and lays out identically. */
+       visual — undo the UA button's own default border, centered text and font/color
+       (background: none clears the UA <button> face too), add the hairline, and lay
+       out the rows of their <span> markup as blocks, which a publication card's <div>s
+       have by default. (.card-meta/.card-text go block unconditionally: a no-op on a
+       publication's already-block <div>, the fix needed for an action/filter <span>.)
+       The `border: none` reset matters here specifically: left in place, the UA's own
+       default button border sits right under the hairline below and doubles up with
+       it into a visibly heavier line than a plain 1px border like .filters' own
+       border-bottom draws.
+       The hairline itself is an inset box-shadow, not a real border: border-box
+       already keeps a bordered card's own outer box at exactly colWidth regardless,
+       but a real border still eats 1px of content width per side that a plain
+       publication card doesn't give up, so the two kinds would sit on very slightly
+       different inner grids. An inset box-shadow, like the outline this replaced, is
+       painted outside the box model entirely, so every card kind measures and lays
+       out identically — box-shadow over outline is a smaller belt-and-braces choice
+       on top of the border reset above: it paints through the same path a real border
+       does, rather than outline's own separate anti-aliasing. */
     .action,
     .filter {
       display: block;
@@ -449,8 +468,8 @@
       color: inherit;
       -webkit-user-select: none;
       user-select: none;
-      outline: 1px solid var(--border);
-      outline-offset: -1px;
+      border: none;
+      box-shadow: inset 0 0 0 1px var(--border);
       background: none;
     }
     .card-meta, .card-text { display: block; }
