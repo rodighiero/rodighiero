@@ -206,12 +206,16 @@
        stronger here than there — a bio column is one of four, about 270px wide, so its
        measure is well under half the article's and a single long word costs a whole
        line. On narrow viewports the header goes to one full-width column and the
-       opportunities mostly disappear on their own. */
+       opportunities mostly disappear on their own. The -webkit- longhands are what
+       Safari actually reads (see publication.html for why both are needed). */
     .header .bio-col {
       font-size: var(--text-xs);
       line-height: var(--lh-loose);
       -webkit-hyphens: auto;
       hyphens: auto;
+      -webkit-hyphenate-limit-before: 4;
+      -webkit-hyphenate-limit-after: 4;
+      -webkit-hyphenate-limit-lines: 2;
       hyphenate-limit-chars: 8 4 4;
     }
     .header .bio-col p { margin: 0; }
@@ -340,6 +344,22 @@
        both render through one class, .card-text (main.css sets its type); only the
        gap belongs here. */
     .card-text { margin-top: 0.4rem; }
+    /* Hyphenated for the same reason as the bio column above, but looser: a gallery
+       card is narrower still, so one long word costs a whole line of a two-sentence
+       description — 6 3 3 rather than the header's 8 4 4 takes the opportunities the
+       stricter limit leaves on the table. Restricted to the action/filter cards
+       because the other .card-text is a byline — a split surname (Rodig-hiero) reads
+       as a different name, and a name is parsed as a unit in a way prose is not.
+       The -webkit- longhands are what Safari actually reads (it ignores the standard
+       shorthand); before+after imply the 6-character word minimum on their own. */
+    :is(.action, .filter) .card-text {
+      -webkit-hyphens: auto;
+      hyphens: auto;
+      -webkit-hyphenate-limit-before: 3;
+      -webkit-hyphenate-limit-after: 3;
+      -webkit-hyphenate-limit-lines: 2;
+      hyphenate-limit-chars: 6 3 3;
+    }
 
     /* Shared meta-line, likewise unqualified. */
     .card-meta { font-size: var(--text-xxs); }

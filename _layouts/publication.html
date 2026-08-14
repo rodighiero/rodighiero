@@ -177,8 +177,14 @@
        ones — which is where this earns its place: at a 660px measure their longer
        words otherwise leave a very deep rag. hyphenate-limit-chars keeps only the
        breaks worth having — nothing under 8 characters is split, and never fewer than
-       4 letters either side of the hyphen. Browsers that don't support that limit
-       still hyphenate, just more freely. */
+       4 letters either side of the hyphen.
+       Safari ignores that standard shorthand and reads the -webkit- longhands only,
+       so both are declared: without them it falls back to unrestricted hyphens: auto
+       and splits us-ing and broad-er, which the limit exists to forbid. before+after
+       imply the 8-character word minimum on their own (a word must reach their sum to
+       qualify), so the pair is equivalent to the shorthand rather than an
+       approximation of it. limit-lines caps the ladder of consecutive hyphenated
+       lines, which at this measure is the more visible problem than any one break. */
     .body {
       max-width: 660px;
       font-size: var(--text-base);
@@ -187,6 +193,9 @@
       overflow-wrap: break-word;
       -webkit-hyphens: auto;
       hyphens: auto;
+      -webkit-hyphenate-limit-before: 4;
+      -webkit-hyphenate-limit-after: 4;
+      -webkit-hyphenate-limit-lines: 2;
       hyphenate-limit-chars: 8 4 4;
     }
     /* Opt back out where a split word reads as an error rather than as typography:
