@@ -103,6 +103,13 @@
   <style>
 {% include styles-font.css %}
 {% include styles-base.css %}
+    /* The gallery's current column count, shared by everything on the page that is laid
+       out on the grid (the header, the footer, the network view). The masonry overwrites
+       it on the body's own style attribute the moment it runs — which is before the first
+       paint — so this value only stands in for the widest case until then, and for a
+       reader with no JS at all, where the page keeps the stylesheet's 4-column width. */
+    body { --cols: 4; }
+
     /* ── Bio toggle ── */
     .bio-toggle {
       display: inline-flex;
@@ -147,17 +154,28 @@
     /* ── Header ──
        No top/bottom padding: the 2rem of spacing below it lives in .bio-shell's
        margin-bottom instead.
-       The 4 columns mirror the gallery's own grid exactly — --card-w each with a
+       The columns mirror the gallery's own grid exactly — --card-w each with a
        --card-gap gap, not a fluid 1fr/2rem split — so column 2's left edge lands on
        card 2's left edge, column 3's on card 3's, and so on, not just the row's outer
        ends. A 1fr grid can only ever match a card row's overall left/right extent (both
        fill the same total width by construction); it can't reproduce the interior
        boundaries between columns unless it uses the identical per-column/gap math. Both
        custom properties live in styles-base.css and are also what the masonry script
-       reads at runtime for CARD_W/GAP_X — one number, not two hand-matched literals. */
+       reads at runtime for CARD_W/GAP_X — one number, not two hand-matched literals.
+       auto-fill rather than a literal 4: the body is sized to whatever the grid spans,
+       so the header takes exactly as many columns as the gallery below it, and the bio
+       keeps a card's measure at every count instead of becoming one full-width line of
+       12px text the moment the 4th column stops fitting (an 858px measure, more than
+       three times the column it reads at when there are four). The paragraphs wrap onto
+       a second row as the count drops — at three columns the last one sits under the
+       portrait — and at one column the grid is the stacked mobile layout, with the row
+       gap standing in for the margins the old media query set by hand.
+       minmax(min(…), 1fr) rather than a bare --card-w track, so a viewport narrower than
+       a single card (below any count this grid plans for) shrinks the column instead of
+       overflowing it; where the body *is* grid-sized, 1fr resolves to --card-w exactly. */
     .header {
       display: grid;
-      grid-template-columns: repeat(4, var(--card-w));
+      grid-template-columns: repeat(auto-fill, minmax(min(var(--card-w), 100%), 1fr));
       gap: var(--card-gap);
     }
     /* Each column pads itself the same --card-pad a card pads its own content with,
@@ -497,9 +515,11 @@
     body[data-view="network"] #publications { display: none; }
     body[data-view="network"] #network-view {
       display: grid;
-      /* Match the 4-column rhythm used by the gallery view: sidebar = 1 col, stage = 3 cols. */
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: 2rem;
+      /* The gallery's own columns, not a fixed four (see footer): sidebar = 1 column,
+         stage = the rest, both measuring exactly what a card measures. The view is only
+         reachable above the 905px boundary, so `--cols` here is only ever 3 or 4. */
+      grid-template-columns: repeat(var(--cols), 1fr);
+      gap: var(--card-gap);
       height: calc(80vh - 9rem);
       min-height: 460px;
       margin-bottom: 2rem;
@@ -691,43 +711,39 @@
     }
 
 
+    /* Laid out on the gallery's own columns, not on four fluid ones: the page is sized
+       to whatever the grid spans (see syncPageWidth), so `--cols` equal columns with the
+       card gutter between them reproduce a card's width exactly — the quote's left edge
+       lands on a card's left edge instead of a few pixels off it, and keeps doing so at
+       three and two columns, where a fixed four-column footer used to keep dividing a
+       page the cards had already divided differently. */
     footer {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: 2rem;
+      grid-template-columns: repeat(var(--cols), 1fr);
+      gap: var(--card-gap);
       margin-top: 6rem;
       padding: 3rem 0 4rem;
     }
-    footer blockquote {
-      grid-column: 3 / span 2;
+    /* The quote takes the right half of the row wherever there is one to take: the last
+       two columns of four or three, the last of two, the whole row at one. Counted from
+       the end (-1) so it stays flush right whatever the count. */
+    footer :is(blockquote, cite) {
+      grid-column: 3 / -1;
       font-size: var(--text-xs);
-      line-height: var(--lh-normal);
-      margin: 0 0 0.25rem;
       color: var(--muted);
     }
+    body[data-cols="3"] footer :is(blockquote, cite),
+    body[data-cols="2"] footer :is(blockquote, cite) { grid-column: 2 / -1; }
+    body[data-cols="1"] footer :is(blockquote, cite) { grid-column: 1 / -1; }
+    footer blockquote {
+      line-height: var(--lh-normal);
+      margin: 0 0 0.25rem;
+    }
     footer cite {
-      grid-column: 3 / span 2;
-      font-size: var(--text-xs);
       font-style: normal;
-      color: var(--muted);
       text-align: right;
     }
 
-    /* The header narrows below 1200px — the exact window width at which the gallery
-       reaches its 4th column (gridWidth(4) + PAGE_PAD, see the masonry script). Below
-       it the page itself is narrower than four ~190px bio columns can read in, so the
-       header drops to the single-column mobile layout a beat before the true mobile
-       breakpoint below. A plain static query rather than a JS-set data attribute: the
-       threshold is a fixed pixel value derived from CARD_W/GAP_X, not something that
-       needs measuring at runtime, and staying in CSS means it holds even before JS runs. */
-    @media (max-width: 1199px) {
-      .header { display: block; }
-      /* Stacked, not floated beside the text: plain block flow, no BFC-containment
-         complications. The portrait needs no override here — it's already a fixed
-         270px at every width (see the base rule above). */
-      .header .profile-links { margin-bottom: 0.6rem; }
-      .header .bio-col { margin-top: 1rem; }
-    }
     /* 905px is the gallery's own boundary, not an arbitrary device size: it's where
        cols drops from 3 to 2 (gridWidth(3) + PAGE_PAD - 1, see the masonry script), so
        the network view and the action/cluster tiles stay reachable at every window
@@ -989,6 +1005,15 @@
       if (width !== pageWidth) {
         pageWidth = width;
         document.body.style.maxWidth = width + 'px';
+        /* The count itself, published for the rest of the page: the footer and the
+           network view are laid out on the same columns the cards are in, so their
+           interior boundaries land on card edges at every count rather than only at
+           four. --cols is the number to compute with, data-cols the hook for the rules
+           that can't (a grid line counted from the end needs a line to exist). Both are
+           written here because this is where the count is decided; the CSS carries a
+           4-column default for the moment before this first runs. */
+        document.body.style.setProperty('--cols', cols);
+        document.body.dataset.cols = cols;
         // The network fits its baked layout to the stage, and the stage is as wide as the
         // page — so a page-width change with no window resize behind it (a late image
         // load, say) has to reach it here, or the graph stays scaled to the old stage.
@@ -1247,6 +1272,12 @@
         // is laid out into a stage wider than the page it belongs to.
         syncPageWidth();
         initNetwork();
+        // Catch up on every stage resize that happened while this view was off screen:
+        // the graph's own resize listener ignores anything arriving under another view,
+        // so a window resized in the gallery (which also moves the page's own width, at
+        // each column threshold) would otherwise be met with a graph still scaled to the
+        // stage it last saw — nodes drawn well outside it, if the stage shrank.
+        if (networkApi) networkApi.refit();
         // If buildNetwork already ran on a prior visit, re-apply the search
         // filter to catch up to any changes made while another view was active.
         // On first visit networkApi is still null and buildNetwork's trailing
@@ -1838,13 +1869,16 @@
           });
         }
       }
-      // Debounce: re-fit the baked layout to the new stage size (cheap — just a
-      // scale + translate, no simulation). Declared before networkApi below, which
+      // Re-fit the baked layout to the stage's current size. Cheap — a scale and a
+      // translate, no simulation — so it runs on the spot wherever the stage is known
+      // to have changed, and debounced only where the changes arrive continuously, as
+      // they do from a window being dragged. Declared before networkApi below, which
       // hands it out as refit().
-      var scheduleNetworkResize = debounce(function() {
+      function refit() {
         fitLayout();
         placeNodes();
-      }, 150);
+      }
+      var scheduleNetworkResize = debounce(refit, 150);
       window.addEventListener('resize', function() {
         if (document.body.dataset.view !== 'network') return;
         scheduleNetworkResize();
@@ -1852,10 +1886,11 @@
 
       // Every part of the module's public surface is ready together, so external
       // callers never see one wired up without the others (see networkApi above).
-      // refit() is for the other way the stage can change size: the page being
-      // resized to the gallery's grid under a view that isn't the gallery's
-      // (see syncPageWidth).
-      networkApi = { filter: filter, clearSelection: clearSelection, refit: scheduleNetworkResize };
+      // refit() is for the ways the stage changes size that its own resize listener
+      // above cannot see: the page being resized to the gallery's grid under a view
+      // that isn't the gallery's (see syncPageWidth), and every window resize that
+      // happened while the gallery was the view on screen (see setView).
+      networkApi = { filter: filter, clearSelection: clearSelection, refit: refit };
       networkApi.filter(matchedSlugs);
     }
   </script>
