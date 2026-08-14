@@ -183,16 +183,13 @@
        card's own* edges, not from the row's outer edges, so the header's columns
        (this one and .bio-col below) have to match that per-column, not just overall. */
     .header-about { padding: 0 var(--card-pad); }
-    /* Fixed at --card-w minus a card's own left+right padding — what a card's *photo*
-       actually measures, not its outer box — since the portrait plays a photo's role,
-       sitting inside .header-about's padding exactly as a photo sits inside a card's.
-       Fixed rather than filling its column so it stays this size whether the header is
-       the 4-column grid or, below 1199px, a single stacked column, instead of
-       stretching to whatever column width the moment happens to give it — the one
-       piece that can't just wear .card-media itself (which fills its column at
-       width: 100%, exactly the stretch this needs to avoid), so margin-bottom is
-       matched to .card-media's own 0.8rem by value instead. */
-    .header-portrait { width: calc(var(--card-w) - 2 * var(--card-pad)); height: auto; border-radius: 4px; display: block; margin-bottom: 0.8rem; }
+    /* The portrait has no rule of its own: it wears .card-media, the same slot a
+       publication's thumbnail sits in, so it fills its column exactly as a card's photo
+       fills its own — same width, same 2px radius, same 0.8rem beneath it — at every
+       column count, one column included, where the cards' photos go full-width and a
+       portrait pinned to a fixed width used to be the one thing on the page that didn't
+       follow the grid. It picks up no loading tint: that belongs to `.publication
+       .card-media`, for a thumbnail that arrives late, and this one is fetched first. */
     /* The name, the affiliations, and the profile-links line reuse .card-title/
        .card-meta/.card-text directly (classes in the markup) rather than parallel
        hand-tuned rules — the same look as a card's title/eyebrow/byline, in the same
@@ -761,7 +758,7 @@
       .mode-toggle, .bio-toggle, .header .profile-links, main, footer { display: none !important; }
       .bio-shell { margin-bottom: 0 !important; }
       .header { display: block; margin-bottom: 0; border-bottom: none; }
-      .header-portrait { display: none; }
+      .header .card-media { display: none; }
       .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }
       .header .links, .header .bio-col { font-size: 8.5pt; }
       .header .bio-col { margin-top: 0.6rem; }
@@ -784,7 +781,21 @@
   <header class="header">
     <div class="header-about">
       {%- comment -%} Downsized copy for display; the full-size 1200px original stays for OG cards and JSON-LD. {%- endcomment -%}
-      <img src="/images/Dario-Rodighiero-640.webp" alt="Dario Rodighiero" class="header-portrait" width="640" height="427" fetchpriority="high" decoding="async">
+      {%- comment -%} Two sources, because the portrait is a card's photo now and a card's
+      photo is as wide as its column: 251px at two columns and up, where the 640 copy is
+      right, but the full width of the page at one, where a phone's 3x screen would ask
+      about a thousand device pixels of a 640px image. The 1200px original — the same file
+      the OG card and the JSON-LD point at — covers that case, and is only ever fetched
+      there. The `sizes` breakpoint is the gallery's own one-column threshold; 100vw
+      slightly overstates the column (which is inset by the page and card padding), and an
+      overstatement is the safe direction: it can only bias the choice towards the larger
+      file. {%- endcomment -%}
+      <div class="card-media">
+        <img src="/images/Dario-Rodighiero-640.webp"
+             srcset="/images/Dario-Rodighiero-640.webp 640w, /images/Dario-Rodighiero.webp 1200w"
+             sizes="(min-width: 612px) 251px, 100vw"
+             alt="Dario Rodighiero" width="640" height="427" fetchpriority="high" decoding="async">
+      </div>
       <div class="links card-meta">
         <a href="https://www.rug.nl/staff/d.rodighiero">University of Groningen</a>
         <a href="https://mlml.io/m/dario-rodighiero">metaLAB (at) Harvard / Berlin / Basel</a>
