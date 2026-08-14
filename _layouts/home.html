@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   {% include site-head.html %}
-  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}var ok={gallery:1,network:1};var pref=ok[v]?v:'gallery';document.documentElement.dataset.preferredView=pref;document.documentElement.dataset.initialView=(window.innerWidth<=1024)?'gallery':pref;var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='0'?'0':'1')}()</script>
+  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}var ok={gallery:1,network:1};var pref=ok[v]?v:'gallery';document.documentElement.dataset.preferredView=pref;document.documentElement.dataset.initialView=(window.innerWidth<=905)?'gallery':pref;var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='0'?'0':'1')}()</script>
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
   <meta name="keywords" content="Dario Rodighiero, data visualization, digital humanities, Science and Technology Studies, University of Groningen, Berkman Klein Center, metaLAB Harvard, mapping, information design">
@@ -120,7 +120,7 @@
     }
     .bio-toggle:hover { color: var(--fg); }
     /* Shared 16px icon footprint for the header/filter-bar controls. */
-    .bio-toggle svg, .header .icons svg, .filter-search-icon, .view-toggle svg { width: 16px; height: 16px; }
+    .bio-toggle svg, .filter-search-icon, .view-toggle svg { width: 16px; height: 16px; }
     .bio-toggle svg {
       fill: none; stroke: currentColor; stroke-width: 2;
       stroke-linecap: round; stroke-linejoin: round; overflow: visible;
@@ -183,24 +183,49 @@
     }
 
     /* ── Header ──
-       No bottom padding: this is .bio-shell's collapsing grid child, and padding
-       would keep the row from reaching zero. The 2rem lives in .bio-shell's
-       margin-bottom instead, which animates with it. */
+       No top/bottom padding: this is .bio-shell's collapsing grid child, and vertical
+       padding would keep the row from reaching zero. The 2rem lives in .bio-shell's
+       margin-bottom instead, which animates with it.
+       The 4 columns mirror the gallery's own grid exactly — --card-w each with a
+       --card-gap gap, not a fluid 1fr/2rem split — so column 2's left edge lands on
+       card 2's left edge, column 3's on card 3's, and so on, not just the row's outer
+       ends. A 1fr grid can only ever match a card row's overall left/right extent (both
+       fill the same total width by construction); it can't reproduce the interior
+       boundaries between columns unless it uses the identical per-column/gap math. Both
+       custom properties live in styles-base.css and are also what the masonry script
+       reads at runtime for CARD_W/GAP_X — one number, not two hand-matched literals. */
     .header {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: 2rem;
+      grid-template-columns: repeat(4, var(--card-w));
+      gap: var(--card-gap);
     }
-    .header-portrait { width: 100%; height: auto; border-radius: 4px; display: block; margin-bottom: 0.75rem; }
-    .header h1 { font-size: var(--text-lg); font-weight: 500; margin: 0.85rem 0 0; line-height: var(--lh-normal); }
-    .header .links { font-size: var(--text-xs); line-height: var(--lh-normal); margin-top: -0.2rem; }
+    /* Each column pads itself the same --card-pad a card pads its own content with,
+       rather than padding the row once — a card's photo/title is inset from *that
+       card's own* edges, not from the row's outer edges, so the header's columns
+       (this one and .bio-col below) have to match that per-column, not just overall. */
+    .header-about { padding: 0 var(--card-pad); }
+    /* Fixed at --card-w minus a card's own left+right padding — what a card's *photo*
+       actually measures, not its outer box — since the portrait plays a photo's role,
+       sitting inside .header-about's padding exactly as a photo sits inside a card's.
+       Fixed rather than filling its column so it stays this size whether the header is
+       the 4-column grid or, below 1199px, a single stacked column, instead of
+       stretching to whatever column width the moment happens to give it — the one
+       piece that can't just wear .card-media itself (which fills its column at
+       width: 100%, exactly the stretch this needs to avoid), so margin-bottom is
+       matched to .card-media's own 0.8rem by value instead. */
+    .header-portrait { width: calc(var(--card-w) - 2 * var(--card-pad)); height: auto; border-radius: 4px; display: block; margin-bottom: 0.8rem; }
+    /* The name, the affiliations, and the profile-links line reuse .card-title/
+       .card-meta/.card-text directly (classes in the markup) rather than parallel
+       hand-tuned rules — the same look as a card's title/eyebrow/byline, in the same
+       order (media, meta, title, text) a card lays them out in. That reuse is also
+       what sets the rhythm between them: .card-title is inline-block specifically so
+       its own margin doesn't collapse with .card-meta's margin-bottom above it (see
+       .card-title's own comment below) or .card-text's margin-top below it, so the
+       gaps come out to the same 0.3+0.3=0.6rem and 0.4rem a real card uses, with
+       nothing hand-tuned here. There is no .header h1 rule left at all — the <h1>
+       tag is the only thing that still marks this as a name rather than a card
+       title; everything about how it looks comes from .card-title alone. */
     .header .links a { display: block; }
-    .header .icons { display: flex; gap: 0.75rem; margin-top: 1rem; }
-    .header .icons a { display: flex; color: var(--muted); padding: 4px; }
-    .header .icons a:hover { color: var(--fg); }
-    .header .icons svg { fill: currentColor; overflow: visible; }
-    .header .icons a[aria-label="Zotero"] svg { transform: scale(0.9); }
-    .header .icons a[aria-label="RSS feed"] svg { transform: scale(1.15); }
     /* Hyphenated on the same terms as the article body (see publication.html): nothing
        under 8 characters split, never fewer than 4 letters either side. The case is
        stronger here than there — a bio column is one of four, about 270px wide, so its
@@ -209,6 +234,10 @@
        opportunities mostly disappear on their own. The -webkit- longhands are what
        Safari actually reads (see publication.html for why both are needed). */
     .header .bio-col {
+      /* Matches .header-about's own padding (see above) — this column's text then
+         starts and ends exactly where the card below it pads its own title/photo in
+         from its edges, the same relationship .header-about has to card 1. */
+      padding: 0 var(--card-pad);
       font-size: var(--text-xs);
       line-height: var(--lh-loose);
       -webkit-hyphens: auto;
@@ -319,10 +348,13 @@
       padding: var(--card-pad);
       border-radius: 4px;
       cursor: pointer;
-      transition: background 0.15s ease, border-color 0.15s ease;
+      transition: background 0.15s ease, outline-color 0.15s ease;
     }
+    /* outline-color, not border-color: the action/filter hairline is an outline (see
+       below), and a plain publication card has neither, so this only ever darkens
+       that hairline — harmless to apply everywhere rather than split the rule in two. */
     .card:hover,
-    .publication:has(h2 a:focus-visible) { background: var(--tint-hover); border-color: var(--border-hover); }
+    .publication:has(h2 a:focus-visible) { background: var(--tint-hover); outline-color: var(--border-hover); }
     .card:focus-visible,
     .publication:has(h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
 
@@ -389,7 +421,14 @@
        border (background: none clears the UA <button> face), and lay out the rows of
        their <span> markup as blocks, which a publication card's <div>s have by default.
        (.card-meta/.card-text go block unconditionally: a no-op on a publication's
-       already-block <div>, the fix needed for an action/filter <span>.) */
+       already-block <div>, the fix needed for an action/filter <span>.)
+       The hairline is an outline, not a border: border-box already keeps a bordered
+       card's own outer box at exactly colWidth regardless, but a real border still
+       eats 1px of content width per side that a plain publication card doesn't give
+       up, so the two kinds sit on very slightly different inner grids. An outline is
+       drawn outside the box model entirely — outline-offset: -1px places the line at
+       the same visual spot a 1px border would, with no box-model cost at all, so
+       every card kind measures and lays out identically. */
     .action,
     .filter {
       display: block;
@@ -399,7 +438,8 @@
       color: inherit;
       -webkit-user-select: none;
       user-select: none;
-      border: 1px solid var(--border);
+      outline: 1px solid var(--border);
+      outline-offset: -1px;
       background: none;
     }
     .card-meta, .card-text { display: block; }
@@ -435,14 +475,14 @@
          and all, so the bezier stands as the fallback rather than leaving the tiles to
          jump and the hover tint to snap. */
       transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.28s ease,
-                  background 0.15s ease, border-color 0.15s ease;
+                  background 0.15s ease, outline-color 0.15s ease;
       transition:
         transform 0.42s linear(0, 0.05, 0.167, 0.314, 0.465, 0.604, 0.723, 0.82, 0.894,
           0.948, 0.985, 1.008, 1.021, 1.027, 1.028, 1.026, 1.023, 1.018, 1.014, 1.01,
           1.007, 1.005, 1.003, 1.001, 1),
         opacity 0.28s ease,
         background 0.15s ease,
-        border-color 0.15s ease;
+        outline-color 0.15s ease;
     }
     /* A tile arriving from a hidden state still carries the transform of wherever it last
        sat, so it takes its new slot with the transition off and fades in from there
@@ -693,24 +733,41 @@
       text-align: right;
     }
 
-    @media (max-width: 1024px) {
-      .header { display: block; overflow: hidden; }
-      .header-portrait { float: left; width: 220px; margin: 0 1.5rem 0.75rem 0; }
-      .header .icons { margin-bottom: 0.6rem; }
-      .header .bio-col { clear: left; margin-top: 1rem; }
+    /* The header narrows below 1200px — the exact window width at which the gallery
+       reaches its 4th column (gridWidth(4) + PAGE_PAD, see the masonry script). Below
+       it the page itself is narrower than four ~190px bio columns can read in, so the
+       header drops to the single-column mobile layout a beat before the true mobile
+       breakpoint below. A plain static query rather than a JS-set data attribute: the
+       threshold is a fixed pixel value derived from CARD_W/GAP_X, not something that
+       needs measuring at runtime, and staying in CSS means it holds even before JS runs. */
+    @media (max-width: 1199px) {
+      .header { display: block; }
+      /* Stacked, not floated beside the text: a float here needs a BFC-containment
+         `overflow: hidden` on .header, nested inside .bio-shell's own content-sized
+         1fr row, which is itself a transitioned property — Safari doesn't reliably
+         re-measure that combination after a live resize changes .header's wrap width,
+         leaving the row a beat short and the bio's tail end clipped. Plain block flow
+         has no such ambiguity: its height is just the sum of its children's, recomputed
+         every time. The portrait needs no override here — it's already a fixed 270px
+         at every width (see the base rule above). */
+      .header .profile-links { margin-bottom: 0.6rem; }
+      .header .bio-col { margin-top: 1rem; }
+    }
+    /* 905px is the gallery's own boundary, not an arbitrary device size: it's where
+       cols drops from 3 to 2 (gridWidth(3) + PAGE_PAD - 1, see the masonry script), so
+       the network view and the action/cluster tiles stay reachable at every window
+       width that still shows 3 columns, and only drop away once the grid itself does. */
+    @media (max-width: 905px) {
       .filter-count, .view-toggle { display: none; }
       /* Mobile: drop the action / cluster / network tiles. Same specificity as the
          base .action, .filter rule above, so later source order alone wins here. */
       .action, .filter { display: none; }
     }
-    @media (max-width: 430px) {
-      .header-portrait { float: none; width: 100%; max-width: 320px; margin: 0 0 0.75rem; }
-      .header h1 { clear: left; }
-    }
+
     @media print {
       @page { margin: 2cm 2.8cm; }
       html, body { font-size: 9pt; }
-      .mode-toggle, .bio-toggle, .header .icons, main, footer { display: none !important; }
+      .mode-toggle, .bio-toggle, .header .profile-links, main, footer { display: none !important; }
       /* display:block drops the collapsing grid, so the bio always prints in
          full even when it is collapsed on screen. */
       .bio-shell { display: block !important; margin-bottom: 0 !important; }
@@ -737,34 +794,17 @@
   <!-- ── Header ── -->
   <div class="bio-shell" id="bio">
   <header class="header">
-    <div>
+    <div class="header-about">
       {%- comment -%} Downsized copy for display; the full-size 1200px original stays for OG cards and JSON-LD. {%- endcomment -%}
       <img src="/images/Dario-Rodighiero-640.webp" alt="Dario Rodighiero" class="header-portrait" width="640" height="427" fetchpriority="high" decoding="async">
-      <h1>Dario Rodighiero</h1>
-      <div class="links">
+      <div class="links card-meta">
         <a href="https://www.rug.nl/staff/d.rodighiero">University of Groningen</a>
         <a href="https://mlml.io/m/dario-rodighiero">metaLAB (at) Harvard / Berlin / Basel</a>
         <a href="https://cyber.harvard.edu/people/dario-rodighiero">Berkman Klein Center for Internet &amp; Society</a>
       </div>
-      <div class="icons">
-        <a href="https://github.com/rodighiero/" aria-label="GitHub">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-        </a>
-        <a href="https://scholar.google.com/citations?user=h065R1oAAAAJ&amp;sortby=pubdate" aria-label="Google Scholar">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
-        </a>
-        <a href="https://www.linkedin.com/in/dariorodighiero/" aria-label="LinkedIn">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        </a>
-        <a href="https://orcid.org/0000-0002-1405-7062" aria-label="ORCID">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325 5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c2.359 0 3.713-1.709 3.713-3.772 0-2.344-1.536-3.672-3.601-3.672h-2.409z"/></svg>
-        </a>
-        <a href="https://www.zotero.org/rodighiero" aria-label="Zotero">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M21.231 2.462 7.18 20.923h14.564V24H2.256v-2.462L16.308 3.076H2.975V0h18.256v2.462z"/></svg>
-        </a>
-        <a href="{{ site.url }}/feed.xml" aria-label="RSS feed">
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>
-        </a>
+      <h1 class="card-title">Dario Rodighiero</h1>
+      <div class="profile-links card-text">
+        <a href="https://github.com/rodighiero/">GitHub</a> · <a href="https://scholar.google.com/citations?user=h065R1oAAAAJ&amp;sortby=pubdate">Google Scholar</a> · <a href="https://www.linkedin.com/in/dariorodighiero/">LinkedIn</a> · <a href="https://orcid.org/0000-0002-1405-7062">ORCID Profile</a> · <a href="https://www.zotero.org/rodighiero">Zotero Library</a> · <a href="{{ site.url }}/feed.xml">RSS Feed</a>
       </div>
     </div>
     {% assign bio_raw = site.data.readme_content %}
@@ -927,12 +967,44 @@
     }
 
     // ── Masonry layout (gallery only) ──
-    var GAP_X = 24;
+    /* Read from the CSS custom properties in styles-base.css rather than hardcoded here:
+       the header's grid (see .header in this file) is built to match a card's width and
+       gap exactly, and reading the same declaration both places is what keeps that true
+       — a retune only has one number to change, not two copies to keep in step. */
+    var rootStyle = getComputedStyle(document.documentElement);
+    var GAP_X = parseFloat(rootStyle.getPropertyValue('--card-gap'));
+    /* The card width is the constant and the column count follows from it, rather than
+       the other way round: fit as many CARD_W columns as the container holds, so a card
+       is the same size at every size above mobile and the leftover goes to the margins.
+       Below two columns there is no grid left to speak of: one full-width column, which
+       is the mobile layout (window < 612). The count steps 1 → 2 → 3 → 4, and the widest
+       grid a window can afford is the widest of those that still fits. */
+    var CARD_W = parseFloat(rootStyle.getPropertyValue('--card-w'));
+    var COLS = [1, 2, 3, 4];
+    var MAX_COLS = COLS[COLS.length - 1];
+    function gridWidth(n) { return n * CARD_W + GAP_X * (n - 1); }
     function columnCount(w) {
-      if (w < 640) return 1;
-      if (w < 1024) return 2;
-      if (w < 1400) return 3;
-      return 4;
+      var best = COLS[0];
+      for (var i = 1; i < COLS.length; i++) {
+        if (gridWidth(COLS[i]) <= w) best = COLS[i];
+      }
+      return best;
+    }
+    /* The grid is the page's measure: the body is sized to whatever the current column
+       count actually spans, so the header, bio, search bar and footer end exactly where
+       the last card ends. Without this the page keeps the full 1152 while a 2- or
+       3-column grid sits centred inside it, and the bio visibly overhangs the cards.
+       Derived from the window rather than from the body's own width, which is the value
+       being written — reading it back would feed the result into its own input. */
+    var PAGE_PAD = 48;                                          // body's 1.5rem, both sides
+    var MAX_CONTENT = gridWidth(MAX_COLS); // the grid's own width at MAX_COLS
+    // Returns the values it just wrote, so layoutMasonry doesn't re-derive cols from a
+    // second, independent read of the DOM it was just told to resize.
+    function syncPageWidth() {
+      var avail = Math.min(window.innerWidth, MAX_CONTENT + PAGE_PAD) - PAGE_PAD;
+      var cols = columnCount(avail);
+      document.body.style.maxWidth = ((cols === 1 ? avail : gridWidth(cols)) + PAGE_PAD) + 'px';
+      return { avail: avail, cols: cols };
     }
     function clearMasonry() {
       container.style.height = '';
@@ -943,10 +1015,14 @@
     }
     function layoutMasonry() {
       if (!container) return;
+      // Before the view check: a resize in network view must resize the page too.
+      var sync = syncPageWidth();
       if (document.body.dataset.view !== 'gallery') return;
-      var containerWidth = container.clientWidth;
-      var cols = columnCount(window.innerWidth);
-      var colWidth = (containerWidth - GAP_X * (cols - 1)) / cols;
+      // The body was just sized to fit exactly cols × CARD_W (plus gutters), so the
+      // container spans it precisely — no need to re-measure or recompute cols from it.
+      var containerWidth = sync.avail;
+      var cols = sync.cols;
+      var colWidth = cols === 1 ? containerWidth : CARD_W;
       var gapY = colWidth / 4; // vertical gap between stacked tiles = 1/4 of a card's width
       var colHeights = new Array(cols).fill(0);
       tiles.forEach(function(p) {
@@ -1189,7 +1265,9 @@
       });
     }
     function applyResponsiveView() {
-      if (window.innerWidth <= 1024) {
+      // 905: the same boundary the CSS mobile breakpoint uses (see @media above) —
+      // below the gallery's own 3-column threshold, not an arbitrary device width.
+      if (window.innerWidth <= 905) {
         if (document.body.dataset.view !== 'gallery') setView('gallery', false);
       } else {
         // Restore the resolved preference from <head> (kept in sync by setView),

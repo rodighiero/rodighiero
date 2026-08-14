@@ -20,6 +20,15 @@
   /* Card padding, shared by every card-shaped block (gallery cards, network lede/details) */
   --card-pad: 0.6rem;
 
+  /* The gallery's own card width and gutter (home.html: CARD_W/GAP_X in the masonry
+     script). Declared once here rather than as parallel literals in the masonry JS and
+     the header's CSS grid: the JS reads these two at runtime (getComputedStyle) instead
+     of hardcoding its own copies, so retuning the card size is a one-line, one-place
+     edit that the header's alignment (and anything else built to match it) picks up
+     automatically, with no second number to remember to update in step. */
+  --card-w: 270px;
+  --card-gap: 24px;
+
   /* Colors: one declaration per token. light-dark() resolves against the used
      color-scheme, so both drivers feed the same five values — the system
      preference (via `color-scheme: light dark` here, matching the
