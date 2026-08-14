@@ -1196,10 +1196,21 @@
     }
 
     // ── View toggle ──
-    // View switches always land at the top: the network view is short (≈ one
-    // viewport), so carrying over a scrolled position from a taller gallery
-    // would leave it looking scrolled into empty space instead of showing the graph.
-    function scrollToTop() { window.scrollTo(0, 0); }
+    // View switches land at the filter bar rather than the very top of the page:
+    // the network view is short (≈ one viewport), so carrying over a scrolled
+    // position from a taller gallery would leave it looking scrolled into empty
+    // space instead of showing the graph — but jumping to the literal page top
+    // also re-shows the bio every time, even when it was open and already
+    // scrolled past. Landing on .filters' own (unstuck) document position
+    // handles both: it's high enough to never leave the network view looking
+    // empty, and low enough to skip re-showing a bio that was already offscreen.
+    // offsetTop (not getBoundingClientRect, which reports the sticky *pinned*
+    // position once scrolled past) is what gives that static, scroll-independent
+    // position.
+    function scrollToTop() {
+      var filters = document.querySelector('.filters');
+      window.scrollTo(0, filters ? filters.offsetTop : 0);
+    }
     // Reflect the current view + search into the URL query string (via
     // replaceState, so it never adds history entries) to make any state
     // shareable and deep-linkable. Only user-initiated changes call this;
@@ -1243,8 +1254,14 @@
       if (prev === 'network' && view !== 'network' && networkApi) {
         networkApi.clearSelection();
       }
+      // Both branches lay out synchronously rather than deferring to
+      // scheduleLayout's next-frame pass: scrollToTop() below reads .filters'
+      // offsetTop, which must already reflect this branch's own DOM/width
+      // writes (layoutMasonry's syncPageWidth, or clearMasonry) — read before
+      // they've run, the scroll would land a beat short of .filters' real
+      // position, or flash the old (taller) scroll position for a frame.
       if (view === 'gallery') {
-        scheduleLayout();
+        layoutMasonry();
       } else if (view === 'network') {
         clearMasonry();
         initNetwork();
@@ -1254,10 +1271,6 @@
         // networkApi.filter(matchedSlugs) call handles it.
         if (networkApi) networkApi.filter(matchedSlugs);
       }
-      // scrollTo(0, 0) doesn't depend on layout, so there's no need to wait a
-      // frame for it — doing it synchronously also avoids a one-frame flash
-      // where clearMasonry() has already shrunk the document but the scroll
-      // position hasn't caught up yet.
       if (switchedView) scrollToTop();
     }
     // Hint that clicking the active view button resets the current filter,
