@@ -582,6 +582,15 @@ shows 3 columns. {%- endcomment -%}
       transition: none;
       opacity: 0;
     }
+    /* A tile whose slot moves further than the screen is cut rather than slid: past a
+       viewport of travel the eye has nothing to follow, so the slide reads as a streak and
+       arrives as a jump anyway. Only a column change produces moves that long — it re-packs
+       every column, so the deepest tiles in a gallery this tall move by thousands of pixels
+       while the ones the reader is actually looking at move by a card or two. See
+       layoutMasonry, which adds the class for the one style change and takes it off again. */
+    body[data-view="gallery"] #publications.animating .card.snapping {
+      transition: none;
+    }
     @media (prefers-reduced-motion: reduce) {
       body[data-view="gallery"] #publications.animating .card { transition: none; }
     }
@@ -1170,7 +1179,24 @@ shows 3 columns. {%- endcomment -%}
         p.style.width = '';
         p.style.transform = '';
       });
+      // Every transform just went: there are no positions left to travel from, so the
+      // layout on the way back out of the network view has to take its slots outright.
+      lastCols = null;
+      placedY = [];
     }
+    /* The column count the tiles were last laid out into, so a pass that changes it can be
+       told from one that doesn't — a window resize within a count rewrites nothing (above
+       one column a card's width is fixed, so neither x nor y moves), while a pass that
+       crosses a threshold re-packs the whole gallery. null means "nothing to travel from":
+       before the first layout, and after clearMasonry drops the transforms. */
+    var lastCols = null;
+    /* Where the pack put each tile last time, indexed alongside `tiles` — the y a re-pack
+       would move it away from, and the only thing needed to tell a short move from a long
+       one. Remembered rather than read back out of the transform string this function
+       itself wrote: it is the same number either way, without the parse. A tile that isn't
+       placed on a pass (hidden by a filter, or by the mobile media query) keeps its entry,
+       exactly as it keeps the transform that entry describes. */
+    var placedY = [];
     function layoutMasonry() {
       if (!container) return;
       // Before the view check: a resize in network view must resize the page too.
@@ -1180,6 +1206,25 @@ shows 3 columns. {%- endcomment -%}
       // container spans it precisely — no need to re-measure or recompute cols from it.
       var containerWidth = sync.avail;
       var cols = sync.cols;
+      /* A count change re-packs the gallery, which is the same kind of event as a filter
+         change — every surviving tile gets a new slot — so it gets the same motion: the
+         one `.animating` class, the same spring, on the real elements (see
+         withTileTransition). Nothing enters or leaves here, so there is no fade to run
+         alongside it, and the tiles that would have to cross more than a screen to get
+         there are cut (see `snapping` below).
+
+         The one-column boundary is excluded, on both sides. From two columns up a card is
+         always CARD_W, so the tiles that travel are the same tiles at the same size, and
+         the move is the whole change. At one column the card is the page's full width
+         instead: crossing that line resizes every tile as well as moving it, and width is
+         a layout property — animating it would reflow every card's text on every frame,
+         so it can only change instantly, and a card that changes size instantly while
+         gliding to a new slot reads as two unrelated things happening at once. The whole
+         page also roughly doubles or halves in height there, so almost every tile is past
+         the distance cut anyway. Better to let that one change simply happen. */
+      var animate = lastCols !== null && lastCols !== cols && cols > 1 && lastCols > 1
+        && motionOK();
+      lastCols = cols;
       var colWidth = cols === 1 ? containerWidth : CARD_W;
       /* Vertical gap between stacked tiles: a quarter of a *card*, not of the column it
          sits in. The two are the same thing from two columns up, but the single column
@@ -1196,21 +1241,62 @@ shows 3 columns. {%- endcomment -%}
       tiles.forEach(function(p) {
         heights.push(p.style.display === 'none' ? 0 : p.getBoundingClientRect().height);
       });
+      /* Pack into an array before writing anything. The height the pack comes to decides
+         whether the change can be animated at all (see below), and a transform written
+         outside the armed class cannot be taken back — so the whole arrangement has to
+         exist as numbers first. Nothing here touches the DOM, so the reads above stay the
+         one measuring pass. */
+      var slots = [];
       tiles.forEach(function(p, idx) {
         // Skip tiles hidden inline (search/view state) or via CSS (a media query
         // hides the action cards on mobile; offsetParent is null when display:none).
-        if (p.style.display === 'none' || p.offsetParent === null) return;
+        if (p.style.display === 'none' || p.offsetParent === null) { slots.push(null); return; }
         var minCol = 0;
         for (var i = 1; i < cols; i++) {
           if (colHeights[i] < colHeights[minCol]) minCol = i;
         }
-        var x = minCol * (colWidth + GAP_X);
         var y = colHeights[minCol];
-        p.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+        slots.push({ x: minCol * (colWidth + GAP_X), y: y });
         colHeights[minCol] = y + heights[idx] + gapY;
       });
-      container.style.height = Math.max(0, Math.max.apply(null, colHeights) - gapY) + 'px';
+      var height = Math.max(0, Math.max.apply(null, colHeights) - gapY);
+      /* A pass that shortens the gallery past where the reader is standing ends with the
+         browser clamping the scroll position: three columns to four at the foot of the
+         page pulls the viewport some 2500px up. Nothing here can prevent that — the page
+         really is shorter — but a slide playing while the viewport is dragged the other
+         way reads as the page coming apart, so that pass is left to cut. One jump, rather
+         than a jump with movement inside it. Only a rising count can clamp: fewer columns
+         is a taller page, and a taller page leaves the scroll position alone. */
+      if (animate) {
+        var docHeight = document.documentElement.scrollHeight
+          - (parseFloat(container.style.height) || 0) + height;
+        if (window.scrollY > docHeight - window.innerHeight) animate = false;
+      }
+      // Arm before the transforms are written, so the change the browser sees is already
+      // a transitioned one, and mark the tiles too far from their new slot to be followed.
+      var farMove = window.innerHeight;
+      var snapped = [];
+      if (animate) armTileMotion();
+      tiles.forEach(function(p, idx) {
+        var slot = slots[idx];
+        if (!slot) return;
+        if (animate && (placedY[idx] === undefined
+              || Math.abs(slot.y - placedY[idx]) > farMove)) {
+          p.classList.add('snapping');
+          snapped.push(p);
+        }
+        p.style.transform = 'translate(' + slot.x + 'px,' + slot.y + 'px)';
+        placedY[idx] = slot.y;
+      });
+      container.style.height = height + 'px';
       container.classList.add('ready');
+      if (snapped.length) {
+        // Flush, so those jumps land as the state the next change starts from, then hand
+        // the tiles their transition back: the class exists for one style change only, and
+        // a tile still wearing it would cut on the next filter too.
+        void container.offsetWidth;
+        snapped.forEach(function(p) { p.classList.remove('snapping'); });
+      }
       // A layout has just run, so a pending one is stale by definition. This matters on a
       // filter change: applySearch() asks for a layout on the next frame, while
       // withTileTransition() has already laid out synchronously so the tiles have a single
@@ -1285,6 +1371,20 @@ shows 3 columns. {%- endcomment -%}
     // fades in from there.
     var TILE_MOVE_MS = 420;
     var animatingTimer = null;
+    /* Arms the tile transition for one change and disarms it once the travel is over.
+       Called from both places a tile can be sent to a new slot: a filter change, below,
+       and a column-count change in layoutMasonry. It has to be disarmed again because the
+       ordinary layout passes — the first one, every resize within a count, a late image
+       load — write transforms too, and those have to stay instant. Re-arming while a
+       change is still in flight just extends the window, which is what a second change
+       landing on top of the first wants. */
+    function armTileMotion() {
+      container.classList.add('animating');
+      clearTimeout(animatingTimer);
+      animatingTimer = setTimeout(function() {
+        container.classList.remove('animating');
+      }, TILE_MOVE_MS + 80);
+    }
     function withTileTransition(fn) {
       // Any deliberate change supersedes a filter still waiting out a typing burst
       // (see searchFromInput below), so it never lands a second time behind this one.
@@ -1298,7 +1398,7 @@ shows 3 columns. {%- endcomment -%}
       var before = new Set();
       tiles.forEach(function(p) { if (p.style.display !== 'none') before.add(p); });
 
-      container.classList.add('animating');
+      armTileMotion();
       fn();
       var entering = [];
       tiles.forEach(function(p) {
@@ -1317,10 +1417,6 @@ shows 3 columns. {%- endcomment -%}
         void container.offsetWidth;
         entering.forEach(function(p) { p.classList.remove('entering'); });
       }
-      clearTimeout(animatingTimer);
-      animatingTimer = setTimeout(function() {
-        container.classList.remove('animating');
-      }, TILE_MOVE_MS + 80);
     }
 
     // Typing gets the same animation as the cards and Escape, but only once a burst of
