@@ -735,16 +735,21 @@ shows 3 columns. {%- endcomment -%}
       margin-top: 6rem;
       padding: 3rem 0 4rem;
     }
-    /* The quote takes the right half of the row wherever there is one to take: the last
-       two columns of four or three, the last of two, the whole row at one. Counted from
-       the end (-1) so it stays flush right whatever the count. */
+    /* The quote takes the last two columns, wherever there are two to take — which is
+       one declaration for four, three and two columns rather than a rule per count,
+       because both endpoints are counted from the end of the grid: -3 resolves to
+       cols - 1, so the span follows the count on its own. At two columns that is the
+       whole row, which is the intent — half of a two-column page is too narrow a measure
+       for a quotation this long, and the indent has no room left to read as one. */
     footer :is(blockquote, cite) {
-      grid-column: 3 / -1;
+      grid-column: -3 / -1;
       font-size: var(--text-xs);
       color: var(--muted);
     }
-    body[data-cols="3"] footer :is(blockquote, cite),
-    body[data-cols="2"] footer :is(blockquote, cite) { grid-column: 2 / -1; }
+    /* One column is the exception the count-from-the-end form can't cover: there is no
+       second-to-last line to reach back to, so -3 would land before the grid's first line
+       and the browser would manufacture an implicit column there to hold the item —
+       widening the footer past the page it is supposed to end with. Named forward. */
     body[data-cols="1"] footer :is(blockquote, cite) { grid-column: 1 / -1; }
     footer blockquote {
       line-height: var(--lh-normal);
