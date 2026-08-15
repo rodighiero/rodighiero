@@ -1,3 +1,5 @@
+# Registers the Liquid filter `| decode_numeric_entities` (publication.html:4,11).
+#
 # Liquid filter that turns numeric character references (&#8217; / &#x2019;)
 # into their UTF-8 characters. Used on excerpts before escape_once, whose
 # regexp exempts named and decimal entities but not hex ones — a hex entity

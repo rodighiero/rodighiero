@@ -1,3 +1,7 @@
+# Registers the Liquid filter `| autolink_urls`, applied to publication full-text
+# bodies in publication.html. The filter keeps the name that says what it does to
+# the text; the file is named for the subject it serves, alongside the other
+# publication_* plugins — so this header is where the two are tied together.
 module Jekyll
   module AutolinkFilter
     # Group 1 swallows existing anchors and any other HTML tag, so URLs

@@ -1,3 +1,5 @@
+# Attaches the `figures` field to each publication (read by sitemap.xml:16).
+#
 # Collects the images that actually appear inside a publication's body — the
 # figures rendered by figure-single.html / figure-group.html — and exposes them
 # as `figures`, a list of site-absolute paths ("/images/slug/fig_001.webp").
@@ -14,7 +16,7 @@
 # site-absolute path: figure-single takes an already-absolute src="/images/…",
 # figure-group a pipe-delimited images="slug/a.webp|slug/b.webp" that the
 # include prefixes itself.
-class PublicationFiguresGenerator < Jekyll::Generator
+class Jekyll::PublicationFiguresGenerator < Jekyll::Generator
   priority :high
 
   # Non-greedy up to the first "%}" so a caption containing "%" can't swallow
@@ -55,7 +57,7 @@ class PublicationFiguresGenerator < Jekyll::Generator
   def present?(site, doc, path)
     return true if File.exist?(File.join(site.source, path))
 
-    Jekyll.logger.warn "Figures:", "#{doc.relative_path} references missing image #{path}"
+    Jekyll.logger.warn 'system_figures:', "#{doc.relative_path} references missing image #{path}"
     false
   end
 end

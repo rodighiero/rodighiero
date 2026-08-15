@@ -1,10 +1,13 @@
 require 'open3'
 
+# Attaches `git_mtime` to each publication and to `site.data` (sitemap.xml lastmod,
+# publication.html article:modified_time / dateModified).
+#
 # Adds git_mtime (last commit date as YYYY-MM-DD) to each publication doc
 # and to site.data, for accurate sitemap lastmod values. Falls back to
 # page.year-01-01 (or today) when git history is unavailable — e.g. a
 # shallow checkout that doesn't include the file's introducing commit.
-class GitMtimeGenerator < Jekyll::Generator
+class Jekyll::GitMtimeGenerator < Jekyll::Generator
   priority :high
 
   def generate(site)
@@ -61,7 +64,7 @@ class GitMtimeGenerator < Jekyll::Generator
   def capture_git(*args)
     Open3.capture2('git', *args, chdir: @source)
   rescue Errno::ENOENT
-    Jekyll.logger.warn 'GitMtimeGenerator:', 'git not found on PATH'
+    Jekyll.logger.warn 'system_mtime:', 'git not found on PATH'
     ['', nil]
   end
 end
