@@ -6,6 +6,8 @@ type: "magazine"
 author: "Damla Çay and Dario Rodighiero and Weidi Zhang"
 doi: "https://nightingaledvs.com/visualizing-as-a-form-of-collective-care/"
 thumb: visualizing-as-a-form-of-collective-care/cover.webp
+redirect_from:
+  - /Collective-Care
 ---
 {% include figure-single.html class="wide" src="/images/visualizing-as-a-form-of-collective-care/cover.webp" alt="Typographic artwork with bold overlapping black letterforms and the “collective care” wordmark on a light background" %}
 

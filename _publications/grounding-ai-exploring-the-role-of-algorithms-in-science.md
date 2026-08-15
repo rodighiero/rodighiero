@@ -8,6 +8,8 @@ author: "Matilde Ficozzi and Dario Rodighiero and Mathieu Jacomy and Anders Kris
 doi: "https://doi.org/10.21827/69de53fee06e8"
 isbn: "9789403431543"
 thumb: grounding-ai-exploring-the-role-of-algorithms-in-science/cover.webp
+redirect_from:
+  - /Grounding-AI
 ---
 {% include figure-single.html class="wide" src="/images/grounding-ai-exploring-the-role-of-algorithms-in-science/cover.webp" alt="Title card for “Grounding AI: Exploring the Role of Algorithms in Science,” set over an iridescent microscopic texture on a blue-grey gradient" %}
 

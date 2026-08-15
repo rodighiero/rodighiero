@@ -7,6 +7,8 @@ editor: "José Higuera Rubio and Alberto Romele and Dario Rodighiero and Celeste
 doi: "https://www.up.pt/press/books/978-989-746-315-0"
 isbn: "9789897463150"
 thumb: from-wisdom-to-data-philosophical-atlas-on-visual-representations-of-knowledge/cover.webp
+redirect_from:
+  - /From-Wisdom-to-Data
 ---
 {% include figure-single.html src="/images/from-wisdom-to-data-philosophical-atlas-on-visual-representations-of-knowledge/cover.webp" alt="Grey cover of the book “From Wisdom to Data: Philosophical Atlas on Visual Representations of Knowledge” (Coleção Transversal, University of Porto Press)" %}
 

@@ -7,6 +7,10 @@ author: "Damla Çay and Dario Rodighiero and Weidi Zhang and Martina R. Fröschl
 doi: "https://visap.net/2025/downloads/visap-2025-booklet.pdf"
 thumb: collective-care-visap-25-catalog/cover.webp
 img_border: true
+redirect_from:
+  - /VISAP-2025-Catalog
+  - /catalog-visap-2025
+  - /visap-2025-catalog
 ---
 {% include figure-single.html class="wide bordered" src="/images/collective-care-visap-25-catalog/cover.webp" alt="A two-page spread from the VISAP ’25 “Collective Care” catalog, presenting two exhibited artworks with their captions" %}
 

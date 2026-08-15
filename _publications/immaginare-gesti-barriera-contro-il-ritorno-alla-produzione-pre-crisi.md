@@ -9,6 +9,8 @@ doi: "https://antinomie.it/index.php/2020/04/09/immaginare-gesti-barriera-contro
 issn: "3103-4101"
 thumb: immaginare-gesti-barriera-contro-il-ritorno-alla-produzione-pre-crisi/cover.webp
 lang: it
+redirect_from:
+  - /Gesti-Barriera
 ---
 {% include figure-single.html class="wide" src="/images/immaginare-gesti-barriera-contro-il-ritorno-alla-produzione-pre-crisi/cover.webp" alt="Ritratto del sociologo Bruno Latour su sfondo azzurro" %}
 
