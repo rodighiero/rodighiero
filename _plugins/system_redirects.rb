@@ -1,3 +1,5 @@
+# Consumes the `redirect_from` front-matter key on any page or document; writes the stubs.
+#
 # Generates a small redirect stub for every alias listed in a page's or
 # document's `redirect_from` front matter, so shortened or retired URLs keep
 # resolving to the canonical page. Local replacement for jekyll-redirect-from,
@@ -53,12 +55,12 @@ module Jekyll
           next if alias_path.empty?
 
           unless alias_path.start_with?("/")
-            Jekyll.logger.warn "Redirect:", "#{item.relative_path}: redirect_from '#{alias_path}' must start with '/', skipped"
+            Jekyll.logger.warn 'system_redirects:', "#{item.relative_path}: redirect_from '#{alias_path}' must start with '/', skipped"
             next
           end
 
           if seen.key?(alias_path)
-            Jekyll.logger.warn "Redirect:", "#{item.relative_path}: redirect_from '#{alias_path}' already claimed by #{seen[alias_path]}, skipped"
+            Jekyll.logger.warn 'system_redirects:', "#{item.relative_path}: redirect_from '#{alias_path}' already claimed by #{seen[alias_path]}, skipped"
             next
           end
           seen[alias_path] = item.relative_path
