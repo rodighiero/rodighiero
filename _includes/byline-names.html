@@ -10,7 +10,7 @@
 {%- assign me = "Rodighiero" -%}
 {%- comment -%} Liquid has no array literal, so names are appended with a sentinel
 and split back apart. "~~~" is the convention across the byline includes (see also
-byline-home.html, citation-block.html); it never occurs in the front matter it splits. {%- endcomment -%}
+byline-home.html, publication-cite.html); it never occurs in the front matter it splits. {%- endcomment -%}
 {%- assign SEP = "~~~" -%}
 {%- if include.raw -%}
   {%- assign raw_arr = include.raw | split: " and " -%}
@@ -27,7 +27,7 @@ byline-home.html, citation-block.html); it never occurs in the front matter it s
   {%- endfor -%}
   {%- if kept != "" -%}
     {%- assign arr = kept | split: SEP -%}
-    {%- capture list -%}{%- include join-and.html items=arr -%}{%- endcapture -%}
+    {%- capture list -%}{%- include byline-join.html items=arr -%}{%- endcapture -%}
     {%- if had_me -%}{{ include.prefix_with }}{{ list }}
     {%- else -%}{{ include.prefix_by }}{{ list }}{%- endif -%}
   {%- endif -%}

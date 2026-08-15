@@ -19,7 +19,7 @@ a serial comma before "and". Formatting branches on the publication type.
   {%- assign _roleword = '' -%}
 {%- endif -%}
 {%- comment -%} First contributor is inverted to Family, Given for Chicago style; the
-rest join with a serial comma via the same join-and.html byline-names.html uses. {%- endcomment -%}
+rest join with a serial comma via the same byline-join.html byline-names.html uses. {%- endcomment -%}
 {%- assign _first_p = _people | first | strip -%}
 {%- assign _words = _first_p | split: ' ' -%}
 {%- assign _family = _words | last -%}
@@ -31,7 +31,7 @@ one string in an array (same convention as byline-names.html), so the inverted f
 name can lead the list the rest joins onto. {%- endcomment -%}
 {%- assign _rest_people = _people | slice: 1, 9999 -%}
 {%- assign _display_people = _first_formatted | split: "~~~" | concat: _rest_people -%}
-{%- capture _authors -%}{%- include join-and.html items=_display_people serial_comma=true -%}{%- endcapture -%}
+{%- capture _authors -%}{%- include byline-join.html items=_display_people serial_comma=true -%}{%- endcapture -%}
 {%- assign _t = _item.type -%}
 {%- comment -%} For books/maps the venue field holds the publisher; for chapters/conferences it holds the booktitle, so don't reuse it as the publisher there. {%- endcomment -%}
 {%- if _t == 'book' or _t == 'map' -%}{%- assign _pub = _item.publisher | default: _item.venue -%}{%- else -%}{%- assign _pub = _item.publisher -%}{%- endif -%}
@@ -52,4 +52,4 @@ name can lead the list the rest joins onto. {%- endcomment -%}
 {%- endif -%}
 {%- if _item.doi %} {% if _item.doi contains 'doi.org/' %}https://doi.org/{{ _item.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}{{ _item.doi }}{% endif %}.{% endif -%}
 {%- endcapture -%}
-<pre class="citation-data" hidden>{{ _ref | normalize_whitespace | replace: ' .', '.' | replace: ' :', ':' | strip }}</pre>
+<pre class="cite-data" hidden>{{ _ref | normalize_whitespace | replace: ' .', '.' | replace: ' :', ':' | strip }}</pre>
