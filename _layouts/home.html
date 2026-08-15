@@ -11,7 +11,7 @@ shows 3 columns. {%- endcomment -%}
 <head>
   <meta charset="utf-8">
   {% include site-head.html %}
-  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}var ok={gallery:1,network:1};var pref=ok[v]?v:'gallery';document.documentElement.dataset.preferredView=pref;document.documentElement.dataset.initialView=matchMedia('(max-width: {{ _mobile_max }}px)').matches?'gallery':pref}()</script>
+  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}var ok={gallery:1,network:1};var pref=ok[v]?v:'gallery';document.documentElement.dataset.preferredView=pref;document.documentElement.dataset.initialView=matchMedia('(max-width: {{ _mobile_max }}px)').matches?'gallery':pref;var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='0'?'0':'1')}()</script>
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
   <meta name="keywords" content="Dario Rodighiero, data visualization, digital humanities, Science and Technology Studies, University of Groningen, Berkman Klein Center, metaLAB Harvard, mapping, information design">
@@ -121,7 +121,12 @@ shows 3 columns. {%- endcomment -%}
       display: inline-flex;
       align-items: center;
       height: 28px;
-      margin: 0 0 0.5rem -6px;
+      /* The -6px cancels this button's own left padding, so the chevron's edge — not the
+         hit area's — is what gets positioned; --card-pad then puts that edge on the same
+         line the portrait and the name start from, since .header-about insets its content
+         by exactly that. The control that opens the masthead lines up with what it opens
+         rather than hanging a card's padding to the left of it. */
+      margin: 0 0 0.5rem calc(var(--card-pad) - 6px);
       background: none;
       border: none;
       cursor: pointer;
@@ -137,24 +142,85 @@ shows 3 columns. {%- endcomment -%}
     .bio-toggle svg {
       fill: none; stroke: currentColor; stroke-width: 2;
       stroke-linecap: round; stroke-linejoin: round; overflow: visible;
-      transition: transform 0.25s ease;
+      /* Quicker than the panel it controls — a chevron is a small thing making a short
+         move, and matching the full 0.6s would read as sluggish — but not so much quicker
+         that it lands and waits: the two are one gesture. */
+      transition: transform 0.35s ease;
       flex-shrink: 0;
     }
+    /* The chevron points down at an open panel and swings to point at a closed one. */
+    html[data-bio-visible="0"] .bio-toggle svg { transform: rotate(-90deg); }
+    /* The word only appears when the bio is hidden. Open, the collapsed masthead is
+       right there under the chevron and needs no naming; closed, nothing on screen says
+       what the control would bring back, so it says so itself. Animated on max-width
+       rather than width because the text has no width to interpolate from otherwise;
+       6rem is simply past the label's natural width, and the clip does the rest. */
     .bio-toggle-label {
       overflow: hidden;
       white-space: nowrap;
       max-width: 0;
       opacity: 0;
       margin-left: 0;
-      transition: max-width 0.25s ease, opacity 0.2s ease, margin-left 0.25s ease;
+      transition: max-width 0.35s ease, opacity 0.3s ease, margin-left 0.35s ease;
+    }
+    html[data-bio-visible="0"] .bio-toggle-label {
+      max-width: 6rem;
+      opacity: 1;
+      margin-left: 0.4rem;
     }
 
     /* ── Bio shell ──
-       Plain wrapper around the header. Carries the header's bottom spacing (the
-       header itself has no bottom padding — see .header). The show/hide behaviour
-       is being rebuilt, so this is always visible for now. */
+       The collapsing wrapper around the header, and the reason the header itself has no
+       bottom padding: that spacing is this element's margin, so it can go to zero with
+       the height and leave nothing behind.
+
+       **At rest it holds no measurement**, and that is the whole design. Open, its height
+       is `auto`; closed, it is 0. The previous version instead kept the open height as an
+       explicit pixel number maintained by a ResizeObserver, which is precisely what could
+       not survive this page: the header's height is a function of the column count (four
+       blocks in one row at four columns, two rows at three, stacked at one), so every
+       remeasure raced a layout that had already changed shape, and a stale number clipped
+       the bio's tail under its own overflow. `auto` cannot go stale, so a resize at any
+       time, in either state, needs no handling at all.
+
+       A pixel number does appear, but only *during* the travel and never at rest: `auto`
+       is not an interpolable value in most engines, so the toggle script pins the height
+       it currently occupies, flips the state, and hands the height back to this stylesheet
+       the moment the transition ends (see setBioVisible). interpolate-size would remove
+       even that, but it is too new to depend on — where it is missing the height would
+       simply jump, which is the one thing this rule exists to prevent. */
     .bio-shell {
+      overflow: hidden;
+      height: auto;
       margin-bottom: 6.2rem;
+      /* The same sampled spring as the gallery tiles, in its critically damped variant —
+         it approaches the end value from below and never crosses it. The tiles' 2.8%
+         overshoot would mean a panel that opens slightly past its own height and settles
+         back, which reads as a bounce in a surface whose height is supposed to *be* its
+         content. Fallback bezier first: a browser without linear() drops that declaration
+         and keeps this one, rather than losing the transition entirely. */
+      /* Opacity rides along on a plain ease, shorter than the travel: the masthead reads
+         as dismissing itself rather than being cropped by the search bar sliding over it.
+         Shorter deliberately — gone before the clip finishes on the way out, and legible
+         before the panel is fully open on the way back — and on its own curve, since a
+         spring is a shape for distance, not for a fade. It repeats in both declarations
+         because the second `transition` replaces the first outright rather than adding to
+         it; a browser without linear() would otherwise take the fallback and lose it. */
+      transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  margin-bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.4s ease;
+      transition:
+        height 0.6s linear(0, 0.034, 0.112, 0.211, 0.316, 0.417, 0.51, 0.593, 0.665,
+          0.726, 0.777, 0.82, 0.855, 0.884, 0.908, 0.927, 0.942, 0.954, 0.964, 0.971,
+          0.978, 0.982, 0.986, 0.989, 0.992, 0.993, 0.995, 0.996, 0.997, 0.998, 1),
+        margin-bottom 0.6s linear(0, 0.034, 0.112, 0.211, 0.316, 0.417, 0.51, 0.593,
+          0.665, 0.726, 0.777, 0.82, 0.855, 0.884, 0.908, 0.927, 0.942, 0.954, 0.964,
+          0.971, 0.978, 0.982, 0.986, 0.989, 0.992, 0.993, 0.995, 0.996, 0.997, 0.998, 1),
+        opacity 0.4s ease;
+    }
+    html[data-bio-visible="0"] .bio-shell { height: 0; margin-bottom: 0; opacity: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .bio-shell { transition: none; }
     }
 
     /* ── Header ──
@@ -805,9 +871,13 @@ shows 3 columns. {%- endcomment -%}
   <script>document.body.dataset.view = document.documentElement.dataset.initialView || 'gallery'</script>
   <a class="skip-link" href="#main">Skip to content</a>
   {% include site-toggle.html %}
-  <button class="bio-toggle" type="button" aria-controls="bio" aria-expanded="true" aria-label="Hide bio" title="Hide bio">
+  {%- comment -%} "profile", not "bio": the button collapses the whole masthead — portrait,
+  name, affiliations and profile links along with the bio — and for a screen reader this
+  label is the only description of that scope. The class and the id stay `bio-*`, being
+  internal names. {%- endcomment -%}
+  <button class="bio-toggle" type="button" aria-controls="bio" aria-expanded="true" aria-label="Hide profile" title="Hide profile">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-    <span class="bio-toggle-label" aria-hidden="true">Show bio</span>
+    <span class="bio-toggle-label" aria-hidden="true">Show profile</span>
   </button>
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
 
@@ -1409,6 +1479,74 @@ shows 3 columns. {%- endcomment -%}
     // Fires exactly when the boundary is crossed, so there is nothing to debounce and
     // no width to re-test on the resizes that don't cross it.
     mobileQuery.addEventListener('change', applyResponsiveView);
+
+    // ── Bio toggle ──
+    // The state is one attribute on <html> (set here, restored before the first paint by
+    // the script in <head>, read by every rule that changes with it). What this adds is
+    // the one thing CSS cannot do on its own: `height: auto` is not an interpolable value
+    // in most engines today, so a bare auto↔0 transition doesn't animate, it jumps.
+    //
+    // So the height is pinned to the pixels the panel currently occupies, the state is
+    // flipped, and the height is handed straight back to the stylesheet when the travel
+    // ends. The pin exists only while the panel is moving — never at rest, which is the
+    // difference from the version that broke. That one kept the open height pinned
+    // permanently and chased the header's shape with a ResizeObserver; every column change
+    // raced it. Here a resize while open finds plain `auto`, and while closed finds 0.
+    var bioToggle = document.querySelector('.bio-toggle');
+    var bioShell = document.getElementById('bio');
+    var bioReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    // Hands the height back to the stylesheet: `auto` when open, the rule's own 0 when
+    // closed. On cancel too, or an interrupted double-click would leave a pin behind —
+    // exactly the stale number this design exists to avoid.
+    function releaseBioHeight(e) {
+      if (e.target !== bioShell || e.propertyName !== 'height') return;
+      bioShell.style.height = '';
+      // The scrollbar goes when the travel does, and a scrollbar is width, which is the
+      // column count.
+      if (document.body.dataset.view === 'gallery') scheduleLayout();
+    }
+    function setBioVisible(visible, persist, animate) {
+      // scrollHeight reports the content's full height even while the panel is clipped to
+      // nothing, so the same read gives the target opening and the starting point closing.
+      if (animate && bioShell && !bioReduceMotion.matches) {
+        bioShell.style.height = (visible ? 0 : bioShell.scrollHeight) + 'px';
+        void bioShell.offsetHeight;  // flush, so the pin is a state the browser has drawn
+        bioShell.style.height = (visible ? bioShell.scrollHeight : 0) + 'px';
+      } else if (bioShell) {
+        bioShell.style.height = '';
+      }
+      document.documentElement.dataset.bioVisible = visible ? '1' : '0';
+      if (bioToggle) {
+        bioToggle.setAttribute('aria-expanded', visible ? 'true' : 'false');
+        var label = visible ? 'Hide profile' : 'Show profile';
+        bioToggle.setAttribute('aria-label', label);
+        bioToggle.setAttribute('title', label);
+      }
+      // A panel clipped to zero height still holds the portrait's link, the affiliations
+      // and the profile links: without this they stay in the tab order and in the
+      // accessibility tree, so a keyboard reader tabs into content that isn't there.
+      if (bioShell) bioShell.inert = !visible;
+      if (persist !== false) {
+        try { localStorage.setItem('bioVisible', visible ? '1' : '0'); } catch (e) {}
+      }
+      // The masonry doesn't depend on the header's height — tiles are positioned inside
+      // #publications, which only moves — but the page losing ~400px can take a scrollbar
+      // with it, and a scrollbar is width, which is the column count. This call covers the
+      // reduced-motion path, where no transition runs and releaseBioHeight never fires.
+      if (document.body.dataset.view === 'gallery') scheduleLayout();
+    }
+    // Sync the button and the inert state to whatever <head> restored, without persisting
+    // it back and without animating from a state the page was never in.
+    setBioVisible(document.documentElement.dataset.bioVisible !== '0', false, false);
+    if (bioToggle) {
+      bioToggle.addEventListener('click', function() {
+        setBioVisible(document.documentElement.dataset.bioVisible === '0', true, true);
+      });
+    }
+    if (bioShell) {
+      bioShell.addEventListener('transitionend', releaseBioHeight);
+      bioShell.addEventListener('transitioncancel', releaseBioHeight);
+    }
 
     function normalize(s) {
       return s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();

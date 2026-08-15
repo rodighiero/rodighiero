@@ -17,9 +17,11 @@
 //                  tiles' transform (damping 0.75, 2.8% overshoot, 420ms), where a tile
 //                  can travel a hair past its slot and come back.
 //   critical     — approaches from below, never crosses. Used for the bio panel's
-//                  grid-template-rows + margin-bottom (400ms): a grid row cannot exceed
-//                  1fr, so an overshoot there is clamped on the row but not on the
-//                  margin, and the two come apart mid-open.
+//                  height + margin-bottom (600ms). The panel animates to `height: auto`,
+//                  so an overshoot would carry it past its own content height and open a
+//                  band of empty space under the bio before settling back. Longer than
+//                  the tiles because it is a much larger surface making a deliberate,
+//                  infrequent move, where the tiles are a quick rearrangement.
 //
 // omega0 is solved from the requested duration rather than chosen, so the spring has
 // genuinely settled (residual < 0.2%) by its last sample. A curve still moving when it
@@ -72,7 +74,7 @@ function format(pts, indent) {
 
 const curves = [
   ['gallery tiles — transform 0.42s (underdamped 0.75, 2.8% overshoot)', underdamped(0.75, 0.42, 24)],
-  ['bio panel — grid-template-rows/margin-bottom 0.4s (critically damped)', critical(0.4, 20)],
+  ['bio panel — height/margin-bottom 0.6s (critically damped)', critical(0.6, 30)],
 ];
 
 for (const [label, pts] of curves) {
