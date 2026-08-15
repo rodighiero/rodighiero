@@ -7,6 +7,24 @@ goatcounter_code: fumoseaffabulazioni
 plugins:
   - jekyll-feed
 
+# Build-time tooling is not site content. Jekyll copies every folder it isn't told to
+# skip, so without this the whole scripts/ chain — and the 280KB of d3 it vendors for
+# the offline graph layout — lands in each deploy, where nothing links to it. Setting
+# `exclude` replaces Jekyll's own default list instead of adding to it, so the defaults
+# worth keeping (Gemfile and friends) are repeated here rather than inherited.
+exclude:
+  - scripts/
+  - Gemfile
+  - Gemfile.lock
+  - gemfiles
+  - node_modules
+  - .sass-cache
+  - .jekyll-cache
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
 feed:
   posts_limit: 1000
   excerpt_only: true          # feed carries each publication's abstract (excerpt) only, not the full body

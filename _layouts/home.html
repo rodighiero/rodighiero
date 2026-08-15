@@ -1321,11 +1321,12 @@ shows 3 columns. {%- endcomment -%}
         // real size, which is a resize its own observer sees — so a graph that was left
         // scaled to a stage the reader has since resized away from catches up on its
         // own (see buildNetwork).
-        // If buildNetwork already ran on a prior visit, re-apply the search
-        // filter to catch up to any changes made while another view was active.
-        // On first visit networkApi is still null and buildNetwork's trailing
-        // networkApi.filter(matchedSlugs) call handles it.
-        if (networkApi) networkApi.filter(matchedSlugs);
+        // Apply the current filter — on a first visit to catch the graph up to a search
+        // already in the box, on a later one to catch it up to whatever changed while
+        // another view was showing. Both cases land here now that initNetwork builds
+        // synchronously: with d3 gone there is nothing to fetch, so networkApi is always
+        // wired by this line and the module needs no filter call of its own.
+        networkApi.filter(matchedSlugs);
       }
     }
     // Hint that clicking the active view button resets the current filter,
@@ -1603,28 +1604,14 @@ shows 3 columns. {%- endcomment -%}
       });
     });
 
-    // ── Network view (lazy) ─────────────────────────────────────────────
+    // ── Network view ────────────────────────────────────────────────────
+    // Built on first open and never rebuilt: the graph is baked offline (positions,
+    // links and all), so there is nothing to load and nothing to re-render.
     var networkInited = false;
-    var d3Promise = null;
-    function loadD3() {
-      if (d3Promise) return d3Promise;
-      d3Promise = new Promise(function(resolve, reject) {
-        if (window.d3) return resolve(window.d3);
-        var s = document.createElement('script');
-        s.src = '/js/d3.v7.min.js';
-        s.onload = function() { resolve(window.d3); };
-        s.onerror = reject;
-        document.head.appendChild(s);
-      });
-      return d3Promise;
-    }
     function initNetwork() {
       if (networkInited) return;
       networkInited = true;
-      loadD3().then(buildNetwork).catch(function(e) {
-        console.error('Could not load d3', e);
-        networkInited = false;
-      });
+      buildNetwork();
     }
 
     function buildNetwork() {
@@ -1656,12 +1643,22 @@ shows 3 columns. {%- endcomment -%}
       // Canonical canvas the positions were baked into (scripts/layout-network.js).
       var CANVAS = data.canvas || { w: 856, h: 600 };
 
-      var svg = d3.select('#net');
+      // SVG elements have to be created in the SVG namespace — document.createElement
+      // would make an unknown HTML element that happens to be spelled "circle" and
+      // renders as nothing.
+      var SVG_NS = 'http://www.w3.org/2000/svg';
+      function svgEl(name, attrs) {
+        var e = document.createElementNS(SVG_NS, name);
+        for (var k in attrs) e.setAttribute(k, attrs[k]);
+        return e;
+      }
+
+      var svg = document.getElementById('net');
       var stage = document.querySelector('#network-view .stage');
-      var root = svg.append('g');
-      var linkLayer = root.append('g').attr('class', 'links');
-      var nodeLayer = root.append('g').attr('class', 'nodes');
-      var labelLayer = root.append('g').attr('class', 'labels');
+      var root = svg.appendChild(svgEl('g'));
+      var linkLayer = root.appendChild(svgEl('g', { class: 'links' }));
+      var nodeLayer = root.appendChild(svgEl('g', { class: 'nodes' }));
+      var labelLayer = root.appendChild(svgEl('g', { class: 'labels' }));
 
       function clearSelection() {
         if (selectedNode === null) return;
@@ -1670,7 +1667,7 @@ shows 3 columns. {%- endcomment -%}
         if (details) details.hidden = true;
         if (lede) lede.hidden = false;
       }
-      svg.on('click', clearSelection);
+      svg.addEventListener('click', clearSelection);
 
       function dimensions() { return { w: stage.clientWidth, h: stage.clientHeight }; }
       // Positions are precomputed offline at canonical canvas size (bx, by);
@@ -1687,9 +1684,12 @@ shows 3 columns. {%- endcomment -%}
         var s = nodes[l.source], t = nodes[l.target];
         return { source: s, target: t, translation: !!(s.tr || t.tr), fallback: !!l.fb };
       });
-      var linkSel, nodeSel, labelSel;
-      var labelByIdx = [];
-      var nodeByIdx = [];
+      // One element per entry, parallel to `nodes` and `links` — built once by build()
+      // below and never rebuilt, so an index is the only lookup anything needs: nodes[i]
+      // is drawn by nodeEls[i] and titled by labelEls[i], links[k] by linkEls[k].
+      var nodeEls = [];
+      var labelEls = [];
+      var linkEls = [];
       var selectedNode = null;
 
       // Precomputed once so highlight() doesn't rescan every link per click.
@@ -1700,10 +1700,18 @@ shows 3 columns. {%- endcomment -%}
       });
 
       function placeNodes() {
-        linkSel.attr('x1', function(d) { return d.source.x; }).attr('y1', function(d) { return d.source.y; })
-          .attr('x2', function(d) { return d.target.x; }).attr('y2', function(d) { return d.target.y; });
-        nodeSel.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
-        labelSel.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
+        links.forEach(function(l, k) {
+          var line = linkEls[k];
+          line.setAttribute('x1', l.source.x);
+          line.setAttribute('y1', l.source.y);
+          line.setAttribute('x2', l.target.x);
+          line.setAttribute('y2', l.target.y);
+        });
+        nodes.forEach(function(n, i) {
+          var t = 'translate(' + n.x + ',' + n.y + ')';
+          nodeEls[i].setAttribute('transform', t);
+          labelEls[i].setAttribute('transform', t);
+        });
       }
 
       // Fit the precomputed canonical-canvas positions (bx, by) into the live
@@ -1725,71 +1733,66 @@ shows 3 columns. {%- endcomment -%}
         });
       }
 
-      function render() {
+      function select(n) {
+        selectedNode = n;
+        showDetails(n);
+        highlight(n);
+      }
+      function wireNode(g, n) {
+        g.addEventListener('mouseenter', function() {
+          // Mouse takes over from the keyboard: drop the previously
+          // tab-focused node so only the hovered one stays lit.
+          var active = document.activeElement;
+          if (active && active !== g && active.classList && active.classList.contains('node')) {
+            active.blur();
+          }
+          setNodeHover(n.i, true);
+        });
+        g.addEventListener('mouseleave', function() { setNodeHover(n.i, false); });
+        g.addEventListener('click', function(e) {
+          e.stopPropagation();
+          select(n);
+        });
+        // Keyboard parity: focus previews the title (like hover); Enter/Space
+        // selects (like click); Esc drops the selection.
+        g.addEventListener('focus', function() { setNodeHover(n.i, true); });
+        g.addEventListener('blur', function() { setNodeHover(n.i, false); });
+        g.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+            e.preventDefault();
+            select(n);
+          } else if (e.key === 'Escape') {
+            clearSelection();
+          }
+        });
+      }
+
+      // Draws the graph once. There is no update pass and no keyed join: the nodes and
+      // links come baked out of build-network.py and never change identity for the life
+      // of the page — only their coordinates move (placeNodes, on a re-fit) and their
+      // classes toggle (highlight, filter). Everything is appended in array order, which
+      // is what lets nodeEls/labelEls/linkEls stay index-parallel to nodes/links.
+      function build() {
         fitLayout();
 
-        var linkData = linkLayer.selectAll('line').data(links, function(d) { return d.source.i + ':' + d.target.i; });
-        linkData.exit().remove();
-        linkSel = linkData.enter().append('line').attr('class', 'link').merge(linkData);
-        linkSel.classed('translation', function(d) { return !!d.translation; })
-          .classed('fallback', function(d) { return !!d.fallback; });
+        links.forEach(function(l) {
+          var line = svgEl('line', { class: 'link' });
+          line.classList.toggle('translation', l.translation);
+          line.classList.toggle('fallback', l.fallback);
+          linkEls.push(linkLayer.appendChild(line));
+        });
 
-        var nodeData = nodeLayer.selectAll('g.node').data(nodes, function(d) { return d.i; });
-        nodeData.exit().remove();
-        // Nodes are focusable buttons so the graph is keyboard- and screen-reader
-        // reachable; the gallery/list views carry the same publications as a fallback.
-        var nodeEnter = nodeData.enter().append('g').attr('class', 'node')
-          .attr('tabindex', 0).attr('role', 'button');
-        nodeEnter.append('circle').attr('class', 'hit').attr('r', 12);
-        nodeEnter.append('circle').attr('class', 'marker').attr('r', NODE_RADIUS);
-        nodeEnter.append('circle').attr('class', 'ring').attr('r', NODE_RADIUS + 2);
-        nodeSel = nodeEnter.merge(nodeData);
-        nodeSel.attr('aria-label', function(d) { return d.title; });
-        nodeByIdx = [];
-        nodeSel.each(function(d) { nodeByIdx[d.i] = this; });
-
-        var labelData = labelLayer.selectAll('text').data(nodes, function(d) { return d.i; });
-        labelData.exit().remove();
-        var labelEnter = labelData.enter().append('text');
-        labelSel = labelEnter.merge(labelData);
-        labelSel.selectAll('tspan').remove();
-        labelByIdx = [];
-        labelSel.each(function(d) { labelByIdx[d.i] = this; });
-
-        nodeSel
-          .on('mouseenter', function(e, d) {
-            // Mouse takes over from the keyboard: drop the previously
-            // tab-focused node so only the hovered one stays lit.
-            var active = document.activeElement;
-            if (active && active !== this && active.classList && active.classList.contains('node')) {
-              active.blur();
-            }
-            setNodeHover(d3.select(this), d.i, true);
-          })
-          .on('mouseleave blur', function(e, d) {
-            setNodeHover(d3.select(this), d.i, false);
-          })
-          .on('click', function(e, d) {
-            e.stopPropagation();
-            selectedNode = d;
-            showDetails(d);
-            highlight(d);
-          })
-          // Keyboard parity: focus previews the title (like hover); Enter/Space
-          // selects (like click); Esc drops the selection.
-          .on('focus', function(e, d) {
-            setNodeHover(d3.select(this), d.i, true);
-          })
-          .on('keydown', function(e, d) {
-            if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
-              e.preventDefault();
-              selectedNode = d;
-              showDetails(d);
-              highlight(d);
-            } else if (e.key === 'Escape') {
-              clearSelection();
-            }
-          });
+        nodes.forEach(function(n) {
+          // Nodes are focusable buttons so the graph is keyboard- and screen-reader
+          // reachable; the gallery view carries the same publications as a fallback.
+          var g = svgEl('g', { class: 'node', tabindex: 0, role: 'button', 'aria-label': n.title });
+          g.appendChild(svgEl('circle', { class: 'hit', r: 12 }));
+          g.appendChild(svgEl('circle', { class: 'marker', r: NODE_RADIUS }));
+          g.appendChild(svgEl('circle', { class: 'ring', r: NODE_RADIUS + 2 }));
+          wireNode(g, n);
+          nodeEls.push(nodeLayer.appendChild(g));
+          labelEls.push(labelLayer.appendChild(svgEl('text')));
+        });
 
         placeNodes();
       }
@@ -1808,45 +1811,51 @@ shows 3 columns. {%- endcomment -%}
       }
       // Shared by node hover/focus (mouse and keyboard) and the neighbor-list
       // rows that mirror hovering a node on the canvas.
-      function setNodeHover(d3Node, idx, on) {
-        d3Node.classed('hover', on);
-        d3.select(labelByIdx[idx]).classed('hover', on);
-        setLabel(labelByIdx[idx], on ? nodes[idx].title : '');
+      function setNodeHover(idx, on) {
+        nodeEls[idx].classList.toggle('hover', on);
+        labelEls[idx].classList.toggle('hover', on);
+        setLabel(labelEls[idx], on ? nodes[idx].title : '');
       }
       // Titles always render above the node: single line at y=-10, or a balanced
       // two-line split at y=-25/-12. No above/below flip — placement is consistent.
       function setLabel(textEl, title) {
-        var sel = d3.select(textEl);
-        sel.selectAll('tspan').remove();
+        textEl.textContent = '';  // drops any tspans from the last title
         if (!title) return;
         var lines = splitTitle(title);
-        if (lines.length === 1) {
-          sel.append('tspan').attr('x', 0).attr('y', -12).text(lines[0]);
-        } else {
-          sel.append('tspan').attr('x', 0).attr('y', -25).text(lines[0]);
-          sel.append('tspan').attr('x', 0).attr('y', -12).text(lines[1]);
-        }
+        var ys = lines.length === 1 ? [-12] : [-25, -12];
+        lines.forEach(function(line, i) {
+          var tspan = svgEl('tspan', { x: 0, y: ys[i] });
+          tspan.textContent = line;
+          textEl.appendChild(tspan);
+        });
       }
 
       function highlight(d) {
         var neighbors = new Set(neighborsByIdx[d.i]);
         neighbors.add(d.i);
-        nodeSel.classed('dimmed', function(n) { return !neighbors.has(n.i); }).classed('highlight', function(n) { return n.i === d.i; }).classed('connected', function(n) { return neighbors.has(n.i) && n.i !== d.i; });
-        labelSel.classed('dimmed', function(n) { return !neighbors.has(n.i); });
-        linkSel.classed('dimmed', function(l) {
-          return l.source.i !== d.i && l.target.i !== d.i;
-        }).classed('highlight', function(l) {
-          return l.source.i === d.i || l.target.i === d.i;
+        nodes.forEach(function(n, i) {
+          var near = neighbors.has(i);
+          nodeEls[i].classList.toggle('dimmed', !near);
+          nodeEls[i].classList.toggle('highlight', i === d.i);
+          nodeEls[i].classList.toggle('connected', near && i !== d.i);
+          labelEls[i].classList.toggle('dimmed', !near);
+        });
+        links.forEach(function(l, k) {
+          var touches = l.source.i === d.i || l.target.i === d.i;
+          linkEls[k].classList.toggle('dimmed', !touches);
+          linkEls[k].classList.toggle('highlight', touches);
         });
         // No pinned label on the selected node — its title lives in the details
         // panel, and the canvas shows a floating title only while hovering, so
         // at most one label is ever visible and two can never overlap.
       }
       function unhighlight() {
-        nodeSel.classed('dimmed', false).classed('highlight', false).classed('connected', false);
-        labelSel.classed('dimmed', false);
-        linkSel.classed('dimmed', false).classed('highlight', false);
-        labelSel.each(function() { setLabel(this, ''); });
+        nodeEls.forEach(function(g, i) {
+          g.classList.remove('dimmed', 'highlight', 'connected');
+          labelEls[i].classList.remove('dimmed');
+          setLabel(labelEls[i], '');
+        });
+        linkEls.forEach(function(line) { line.classList.remove('dimmed', 'highlight'); });
       }
 
       var details = document.getElementById('network-details');
@@ -1880,35 +1889,33 @@ shows 3 columns. {%- endcomment -%}
         details.querySelectorAll('.neighbors li').forEach(function(li) {
           var idx = parseInt(li.dataset.nodeI, 10);
           if (isNaN(idx)) return;
-          var g = d3.select(nodeByIdx[idx]);
-          li.addEventListener('mouseenter', function() { setNodeHover(g, idx, true); });
-          li.addEventListener('mouseleave', function() { setNodeHover(g, idx, false); });
+          li.addEventListener('mouseenter', function() { setNodeHover(idx, true); });
+          li.addEventListener('mouseleave', function() { setNodeHover(idx, false); });
         });
       }
       function escapeHtml(s) {
         return String(s).replace(/[&<>"']/g, function(c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
       }
 
-      render();
+      build();
 
+      // A null `slugs` means no filter, which is just the case where everything shows —
+      // so one pass covers both, rather than a branch per state. Non-matching nodes also
+      // drop out of the tab order and from AT, so keyboard navigation follows the same
+      // nodes the search surfaces.
       function filter(slugs) {
-        if (!nodeSel) return;
-        if (!slugs) {
-          // No filter: every node is tab-reachable again.
-          nodeSel.classed('filtered-out', false).attr('tabindex', 0).attr('aria-hidden', null);
-          labelSel.classed('filtered-out', false);
-          linkSel.classed('filtered-out', false);
-        } else {
-          // While filtering, drop non-matches out of the tab order and from AT,
-          // so keyboard navigation follows the same nodes the search surfaces.
-          nodeSel.classed('filtered-out', function(n) { return !slugs.has(n.slug); })
-            .attr('tabindex', function(n) { return slugs.has(n.slug) ? 0 : -1; })
-            .attr('aria-hidden', function(n) { return slugs.has(n.slug) ? null : 'true'; });
-          labelSel.classed('filtered-out', function(n) { return !slugs.has(n.slug); });
-          linkSel.classed('filtered-out', function(l) {
-            return !slugs.has(l.source.slug) || !slugs.has(l.target.slug);
-          });
-        }
+        nodes.forEach(function(n, i) {
+          var shown = !slugs || slugs.has(n.slug);
+          nodeEls[i].classList.toggle('filtered-out', !shown);
+          nodeEls[i].setAttribute('tabindex', shown ? 0 : -1);
+          if (shown) nodeEls[i].removeAttribute('aria-hidden');
+          else nodeEls[i].setAttribute('aria-hidden', 'true');
+          labelEls[i].classList.toggle('filtered-out', !shown);
+        });
+        links.forEach(function(l, k) {
+          var shown = !slugs || (slugs.has(l.source.slug) && slugs.has(l.target.slug));
+          linkEls[k].classList.toggle('filtered-out', !shown);
+        });
       }
       // Re-fit the baked layout whenever the stage changes size — a scale and a
       // translate, no simulation. Watching the stage itself rather than the window is
@@ -1932,7 +1939,6 @@ shows 3 columns. {%- endcomment -%}
       // Both halves of the module's public surface are ready together, so external
       // callers never see one wired up without the other (see networkApi above).
       networkApi = { filter: filter, clearSelection: clearSelection };
-      networkApi.filter(matchedSlugs);
     }
   </script>
   {% include site-scripts.html %}
