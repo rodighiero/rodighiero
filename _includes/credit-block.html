@@ -1,0 +1,5 @@
+{%- comment -%}
+  Wraps credit-full.html in the publication page's byline element. Separate from
+  it because <title> needs the bare string and the body needs the markup.
+{%- endcomment -%}
+{% if include.item.author or include.item.editor %}{% capture _credit_text %}{% include credit-full.html item=include.item %}{% endcapture %}<div class="authors">{{ _credit_text | strip }}</div>{% endif %}

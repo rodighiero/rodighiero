@@ -1025,7 +1025,7 @@ shows 3 columns. {%- endcomment -%}
         French and Italian titles properly instead of reading them with English
         phonetics. {%- endcomment -%}
         <h2 class="card-title" lang="{{ publication.lang | default: 'en' }}"><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
-        {% include byline-home.html item=publication %}
+        {% include credit-short.html item=publication %}
       </div>
       {% endfor %}
     </div>

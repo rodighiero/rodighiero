@@ -12,12 +12,12 @@
   <meta charset="utf-8">
   {% include site-head.html %}
   {% assign _ptype = site.data.publication_types[page.type] %}
-  {% capture _byline %}{% include byline-text.html item=page %}{% endcapture %}{% assign _byline = _byline | strip %}
-  {%- comment -%} Full byline is used in the page body via byline-block.html; here in <title> it's capped to keep the tag within Google's ~60-char display budget on multi-author papers. {%- endcomment -%}
+  {% capture _credit %}{% include credit-full.html item=page %}{% endcapture %}{% assign _credit = _credit | strip %}
+  {%- comment -%} The same full credit runs in the page body via credit-block.html; here in <title> it's capped to keep the tag within Google's ~60-char display budget on multi-author papers. {%- endcomment -%}
   {% assign _title_names = page.author | default: page.editor | split: ' and ' %}
-  {% assign _title_byline = _byline %}
-  {% if _title_names.size > 2 %}{% assign _title_byline = _title_names[0] | append: ' et al.' %}{% endif %}
-  <title>{{ page.title | escape }}{% if _title_byline != '' %} — {{ _title_byline | escape }}{% endif %}</title>
+  {% assign _title_credit = _credit %}
+  {% if _title_names.size > 2 %}{% assign _title_credit = _title_names[0] | append: ' et al.' %}{% endif %}
+  <title>{{ page.title | escape }}{% if _title_credit != '' %} — {{ _title_credit | escape }}{% endif %}</title>
   <meta name="description" content="{{ _excerpt_attr }}">
   <meta name="keywords" content="Dario Rodighiero{% if page.venue %}, {{ page.venue | escape }}{% endif %}{% if page.type %}, {{ page.type }}{% endif %}, data visualization, digital humanities, design">
   <link rel="canonical" href="{{ site.url }}{{ page.url }}">
@@ -323,7 +323,7 @@
   <div class="title-block">
   {% include card-meta.html item=page %}
   <h1>{{ page.title }}</h1>
-  {% include byline-block.html item=page %}
+  {% include credit-block.html item=page %}
   {% if page.doi %}<div class="doi"><button class="cite-btn pill-btn" type="button">Cite</button><button class="print-btn pill-btn" type="button">Print</button><a class="pill-btn" href="{{ page.doi }}">{% if page.doi contains 'doi.org/' %}{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}URL{% endif %}</a></div>{% endif %}
   </div>
   {% if page.doi %}{% include publication-cite.html item=page %}{% endif %}
