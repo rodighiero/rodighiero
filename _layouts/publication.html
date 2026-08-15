@@ -171,32 +171,21 @@
       padding-top: 1.5rem;
     }
     .title-block { max-width: 660px; }
-    /* Hyphenation. The dictionary is picked by the page's own language, and every
-       publication already declares its real one on <html> (see SEO in CLAUDE.md), so
-       the French and Italian articles break by their own rules rather than English
-       ones — which is where this earns its place: at a 660px measure their longer
-       words otherwise leave a very deep rag. hyphenate-limit-chars keeps only the
-       breaks worth having — nothing under 8 characters is split, and never fewer than
-       4 letters either side of the hyphen.
-       Safari ignores that standard shorthand and reads the -webkit- longhands only,
-       so both are declared: without them it falls back to unrestricted hyphens: auto
-       and splits us-ing and broad-er, which the limit exists to forbid. before+after
-       imply the 8-character word minimum on their own (a word must reach their sum to
-       qualify), so the pair is equivalent to the shorthand rather than an
-       approximation of it. limit-lines caps the ladder of consecutive hyphenated
-       lines, which at this measure is the more visible problem than any one break. */
+    /* Hyphenation comes from .hyphenate-prose in the markup — the shared policy defined
+       once in styles-base.css (the homepage bio wears the same one); its own comment
+       carries the terms and the Safari longhand caveat. What is specific to this page is
+       why it earns its place: the dictionary is picked by the page's own language, and
+       every publication already declares its real one on <html> (see SEO in CLAUDE.md),
+       so the French and Italian articles break by their own rules rather than English
+       ones — at a 660px measure their longer words otherwise leave a very deep rag. And
+       limit-lines caps the ladder of consecutive hyphenated lines, which at this measure
+       is the more visible problem than any single break. */
     .body {
       max-width: 660px;
       font-size: var(--text-base);
       line-height: var(--lh-loose);
       color: var(--fg);
       overflow-wrap: break-word;
-      -webkit-hyphens: auto;
-      hyphens: auto;
-      -webkit-hyphenate-limit-before: 4;
-      -webkit-hyphenate-limit-after: 4;
-      -webkit-hyphenate-limit-lines: 2;
-      hyphenate-limit-chars: 8 4 4;
     }
     /* Opt back out where a split word reads as an error rather than as typography:
        headings, inline code, and table cells (whose measure is set by the column, not
@@ -340,7 +329,7 @@
   {% if page.doi %}{% include citation-block.html item=page %}{% endif %}
   <div class="content">
     {% assign _content_parts = content | split: '<!--more-->' %}
-    {% if _content_parts.size > 1 %}<div class="body"><div class="abstract">{{ _content_parts[0] }}</div>{{ _content_parts[1] | autolink_urls }}</div>{% else %}<div class="body">{{ content | autolink_urls }}</div>{% endif %}
+    {% if _content_parts.size > 1 %}<div class="body hyphenate-prose"><div class="abstract">{{ _content_parts[0] }}</div>{{ _content_parts[1] | autolink_urls }}</div>{% else %}<div class="body hyphenate-prose">{{ content | autolink_urls }}</div>{% endif %}
   </div>
   </article>
   {% if _content_parts.size > 1 %}<footer class="editorial-note"><p>Editorial note: this text is republished from its original venue and lightly edited for uniformity across the site. Citations and references have been restated in Chicago author-date style; obvious typos, incidental reference errors, and occasional language slips have been corrected. Small differences from the original publication may therefore exist; the version of record is the publisher’s, linked at the top of this page.</p></footer>{% endif %}

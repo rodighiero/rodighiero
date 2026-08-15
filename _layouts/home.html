@@ -216,13 +216,12 @@ shows 3 columns. {%- endcomment -%}
        tag is the only thing that still marks this as a name rather than a card
        title; everything about how it looks comes from .card-title alone. */
     .header .links a { display: block; }
-    /* Hyphenated on the same terms as the article body (see publication.html): nothing
-       under 8 characters split, never fewer than 4 letters either side. The case is
-       stronger here than there — a bio column is one of four, about 270px wide, so its
+    /* The bio columns wear .hyphenate-prose in the markup — the shared policy, defined
+       once in styles-base.css, that the article body wears too. The case for it is
+       stronger here than there: a bio column is one of four, about 270px wide, so its
        measure is well under half the article's and a single long word costs a whole
        line. On narrow viewports the header goes to one full-width column and the
-       opportunities mostly disappear on their own. The -webkit- longhands are what
-       Safari actually reads (see publication.html for why both are needed). */
+       opportunities mostly disappear on their own. */
     .header .bio-col {
       /* Matches .header-about's own padding (see above) — this column's text then
          starts and ends exactly where the card below it pads its own title/photo in
@@ -230,14 +229,31 @@ shows 3 columns. {%- endcomment -%}
       padding: 0 var(--card-pad);
       font-size: var(--text-xs);
       line-height: var(--lh-loose);
-      -webkit-hyphens: auto;
-      hyphens: auto;
-      -webkit-hyphenate-limit-before: 4;
-      -webkit-hyphenate-limit-after: 4;
-      -webkit-hyphenate-limit-lines: 2;
-      hyphenate-limit-chars: 8 4 4;
     }
-    .header .bio-col p { margin: 0; }
+    /* The bio's first line and the portrait's top edge already start on the same grid
+       line — but a line box is taller than the letters inside it, so starting level is
+       not looking level. Half the leading stands above the capitals (--lh-loose is 1.5,
+       so 0.25em) and above that again sits the gap between Nunito's ascender and its cap
+       height, which together drop the text about 5px below the photo it reads as
+       beginning with. text-box-trim takes exactly that off the block-start edge, cutting
+       to the cap rather than to the line box, so the alignment is optical instead of
+       nominal — and it stays right if the type scale or the line height is ever retuned,
+       which a measured offset would not.
+       On the paragraph rather than on .bio-col, because that is where the line boxes
+       are: a block container holding only block-level children has none of its own to
+       trim. Firefox has not shipped the property, so @supports hands it the part a
+       stylesheet can actually compute — the half-leading, derived from the same two
+       tokens — leaving only the font's internal ascent-to-cap gap, which no stylesheet
+       can know. That lands it a couple of pixels short of flush rather than the full
+       five, and nothing moves at all where the property is understood. */
+    .header .bio-col p {
+      margin: 0;
+      text-box-trim: trim-start;
+      text-box-edge: cap alphabetic;
+    }
+    @supports not (text-box-trim: trim-start) {
+      .header .bio-col p { margin-top: calc((1 - var(--lh-loose)) / 2 * var(--text-xs)); }
+    }
     .header .bio-col a { text-decoration: underline; }
 
     /* ── Search bar + view toggle ── */
@@ -775,8 +791,8 @@ shows 3 columns. {%- endcomment -%}
       @page { margin: 2cm 2.8cm; }
       html, body { font-size: 9pt; }
       .mode-toggle, .bio-toggle, .header .profile-links, main, footer { display: none !important; }
-      .bio-shell { margin-bottom: 0 !important; }
-      .header { display: block; margin-bottom: 0; border-bottom: none; }
+      .bio-shell { margin-bottom: 0; }
+      .header { display: block; margin-bottom: 0; }
       .header .card-media { display: none; }
       .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }
       .header .links, .header .bio-col { font-size: 8.5pt; }
@@ -846,7 +862,7 @@ shows 3 columns. {%- endcomment -%}
     {% for para in bio_paragraphs %}
       {% assign para_trimmed = para | strip %}
       {% if para_trimmed != "" %}
-    <div class="bio-col">{{ para_trimmed | markdownify }}</div>
+    <div class="bio-col hyphenate-prose">{{ para_trimmed | markdownify }}</div>
       {% endif %}
     {% endfor %}
   </header>
