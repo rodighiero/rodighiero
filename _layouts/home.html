@@ -1,11 +1,17 @@
 {% assign _meta_desc = "Dario Rodighiero researches data visualization, digital humanities, and Science and Technology Studies at Groningen and Harvard's Berkman Klein Center." %}
 {% assign _page_title = "Dario Rodighiero — Science and Technology Studies" %}
+{%- comment -%} The mobile boundary, in one place: it is asked three times below — by the
+pre-paint script in <head>, by the CSS, and by the masonry script — and all three have to
+be the same number or they disagree about what the page currently is. It is the gallery's
+own boundary, not a device size: gridWidth(3) + PAGE_PAD - 1, the last width that still
+shows 3 columns. {%- endcomment -%}
+{% assign _mobile_max = 905 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   {% include site-head.html %}
-  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}var ok={gallery:1,network:1};var pref=ok[v]?v:'gallery';document.documentElement.dataset.preferredView=pref;document.documentElement.dataset.initialView=matchMedia('(max-width: 905px)').matches?'gallery':pref}()</script>
+  <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}var ok={gallery:1,network:1};var pref=ok[v]?v:'gallery';document.documentElement.dataset.preferredView=pref;document.documentElement.dataset.initialView=matchMedia('(max-width: {{ _mobile_max }}px)').matches?'gallery':pref}()</script>
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
   <meta name="keywords" content="Dario Rodighiero, data visualization, digital humanities, Science and Technology Studies, University of Groningen, Berkman Klein Center, metaLAB Harvard, mapping, information design">
@@ -522,7 +528,7 @@
       display: grid;
       /* The gallery's own columns, not a fixed four (see footer): sidebar = 1 column,
          stage = the rest, both measuring exactly what a card measures. The view is only
-         reachable above the 905px boundary, so `--cols` here is only ever 3 or 4. */
+         reachable above the mobile boundary, so `--cols` here is only ever 3 or 4. */
       grid-template-columns: repeat(var(--cols), 1fr);
       gap: var(--card-gap);
       height: calc(80vh - 9rem);
@@ -749,11 +755,11 @@
       text-align: right;
     }
 
-    /* 905px is the gallery's own boundary, not an arbitrary device size: it's where
-       cols drops from 3 to 2 (gridWidth(3) + PAGE_PAD - 1, see the masonry script), so
-       the network view and the action/cluster tiles stay reachable at every window
-       width that still shows 3 columns, and only drop away once the grid itself does. */
-    @media (max-width: 905px) {
+    /* The gallery's own boundary, not an arbitrary device size (see _mobile_max at the
+       top of this file): it's where cols drops from 3 to 2, so the network view and the
+       action/cluster tiles stay reachable at every window width that still shows 3
+       columns, and only drop away once the grid itself does. */
+    @media (max-width: {{ _mobile_max }}px) {
       .filter-count, .view-toggle { display: none; }
       /* Mobile: drop the action / cluster / network tiles. Same specificity as the
          base .action, .filter rule above, so later source order alone wins here. */
@@ -794,10 +800,16 @@
       right, but the full width of the page at one, where a phone's 3x screen would ask
       about a thousand device pixels of a 640px image. The 1200px original — the same file
       the OG card and the JSON-LD point at — covers that case, and is only ever fetched
-      there. The `sizes` breakpoint is the gallery's own one-column threshold; 100vw
-      slightly overstates the column (which is inset by the page and card padding), and an
-      overstatement is the safe direction: it can only bias the choice towards the larger
-      file. {%- endcomment -%}
+      there. Both numbers in `sizes` are hand-computed from values that live elsewhere —
+      an attribute the preload scanner reads before any stylesheet or script exists is the
+      one place on this page that cannot say var(--card-w) — so they are written out here
+      to be greppable when those are retuned: 612px is the gallery's two-column threshold,
+      gridWidth(2) + PAGE_PAD = 2 × --card-w + --card-gap + 48; 251px is a card's photo,
+      --card-w − 2 × --card-pad = 270 − 2 × 9.6. Nothing breaks if they drift, which is
+      exactly the risk: the browser would simply pick the wrong candidate, silently. Below
+      the threshold, 100vw slightly overstates the column (which is inset by the page and
+      card padding), and an overstatement is the safe direction: it can only bias the
+      choice towards the larger file. {%- endcomment -%}
       <div class="card-media">
         <img src="/images/Dario-Rodighiero-640.webp"
              srcset="/images/Dario-Rodighiero-640.webp 640w, /images/Dario-Rodighiero.webp 1200w"
@@ -1033,11 +1045,10 @@
            4-column default for the moment before this first runs. */
         document.body.style.setProperty('--cols', cols);
         document.body.dataset.cols = cols;
-        // The network fits its baked layout to the stage, and the stage is as wide as the
-        // page — so a page-width change with no window resize behind it (a late image
-        // load, say) has to reach it here, or the graph stays scaled to the old stage.
-        // Its own listener only ever hears window resizes.
-        if (document.body.dataset.view === 'network' && networkApi) networkApi.refit();
+        // Nothing to notify: the network stage is as wide as the page, so the width
+        // written here resizes it, and the graph's own ResizeObserver picks that up
+        // (see buildNetwork) — including a page-width change with no window resize
+        // behind it, such as a late image load.
       }
       return { avail: avail, cols: cols };
     }
@@ -1291,12 +1302,10 @@
         // is laid out into a stage wider than the page it belongs to.
         syncPageWidth();
         initNetwork();
-        // Catch up on every stage resize that happened while this view was off screen:
-        // the graph's own resize listener ignores anything arriving under another view,
-        // so a window resized in the gallery (which also moves the page's own width, at
-        // each column threshold) would otherwise be met with a graph still scaled to the
-        // stage it last saw — nodes drawn well outside it, if the stage shrank.
-        if (networkApi) networkApi.refit();
+        // No refit call here either: showing the view takes the stage from 0×0 to its
+        // real size, which is a resize its own observer sees — so a graph that was left
+        // scaled to a stage the reader has since resized away from catches up on its
+        // own (see buildNetwork).
         // If buildNetwork already ran on a prior visit, re-apply the search
         // filter to catch up to any changes made while another view was active.
         // On first visit networkApi is still null and buildNetwork's trailing
@@ -1318,14 +1327,13 @@
         b.setAttribute('title', label);
       });
     }
-    /* The same boundary the CSS mobile breakpoint uses (see @media above) — below the
-       gallery's own 3-column threshold, not an arbitrary device width. Asked as a media
-       query rather than measured with innerWidth so it is the identical test: a media
-       query is matched against the viewport without its scrollbar, innerWidth includes
-       one, and in the band between the two answers the CSS would hide the view toggle
-       while this kept the network view alive — leaving a reader who had it persisted in
-       a view with no visible way out of it. */
-    var mobileQuery = window.matchMedia('(max-width: 905px)');
+    /* The same boundary the CSS mobile breakpoint uses, from the same source (see
+       _mobile_max at the top of this file). Asked as a media query rather than measured
+       with innerWidth so it is the identical test — innerWidth counts the scrollbar the
+       query doesn't (see syncPageWidth) — because in the band between the two answers
+       the CSS would hide the view toggle while this kept the network view alive, leaving
+       a reader who had it persisted in a view with no visible way out of it. */
+    var mobileQuery = window.matchMedia('(max-width: {{ _mobile_max }}px)');
     function applyResponsiveView() {
       if (mobileQuery.matches) {
         if (document.body.dataset.view !== 'gallery') setView('gallery', false);
@@ -1386,8 +1394,7 @@
     }
 
     var matchedSlugs = null;
-    // Set once buildNetwork() finishes initializing (see below):
-    // { filter(slugs), clearSelection(), refit() }.
+    // Set once buildNetwork() finishes initializing (see below): { filter(slugs), clearSelection() }.
     // One object rather than two independently-nullable globals, so callers can't
     // observe one half wired up before the other.
     var networkApi = null;
@@ -1888,28 +1895,28 @@
           });
         }
       }
-      // Re-fit the baked layout to the stage's current size. Cheap — a scale and a
-      // translate, no simulation — so it runs on the spot wherever the stage is known
-      // to have changed, and debounced only where the changes arrive continuously, as
-      // they do from a window being dragged. Declared before networkApi below, which
-      // hands it out as refit().
-      function refit() {
+      // Re-fit the baked layout whenever the stage changes size — a scale and a
+      // translate, no simulation. Watching the stage itself rather than the window is
+      // what makes this one path instead of three: the stage is the only box fitLayout
+      // measures, and it moves for reasons the window never hears about — the page
+      // being resized to the gallery's column count (see syncPageWidth), the view
+      // switch that reveals it, a window resize that happened while the gallery was on
+      // screen. An observer sees all of them, so no caller has to remember to ask.
+      // It also runs after layout and before paint, where reading the stage's size
+      // costs nothing, unlike a refit called mid-script straight after a style write.
+      // A hidden stage measures 0×0 (#network-view is display:none under the gallery):
+      // fitting to that would collapse the graph onto a point, so those deliveries are
+      // skipped and the one that arrives when the view is shown again does the work.
+      new ResizeObserver(function() {
+        var dim = dimensions();
+        if (!dim.w || !dim.h) return;
         fitLayout();
         placeNodes();
-      }
-      var scheduleNetworkResize = debounce(refit, 150);
-      window.addEventListener('resize', function() {
-        if (document.body.dataset.view !== 'network') return;
-        scheduleNetworkResize();
-      });
+      }).observe(stage);
 
-      // Every part of the module's public surface is ready together, so external
-      // callers never see one wired up without the others (see networkApi above).
-      // refit() is for the ways the stage changes size that its own resize listener
-      // above cannot see: the page being resized to the gallery's grid under a view
-      // that isn't the gallery's (see syncPageWidth), and every window resize that
-      // happened while the gallery was the view on screen (see setView).
-      networkApi = { filter: filter, clearSelection: clearSelection, refit: refit };
+      // Both halves of the module's public surface are ready together, so external
+      // callers never see one wired up without the other (see networkApi above).
+      networkApi = { filter: filter, clearSelection: clearSelection };
       networkApi.filter(matchedSlugs);
     }
   </script>
