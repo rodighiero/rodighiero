@@ -56,8 +56,8 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="800">{% endif %}
   {% if page.year and page.year != "Forthcoming" %}<meta property="article:published_time" content="{{ page.year }}-01-01">{% endif %}
-  {%- comment -%} git_mtime is the file's last commit date, already computed for the sitemap. {%- endcomment -%}
-  {% if page.git_mtime %}<meta property="article:modified_time" content="{{ page.git_mtime }}">{% endif %}
+  {%- comment -%} commit_date is the file's last commit date, already computed for the sitemap. {%- endcomment -%}
+  {% if page.commit_date %}<meta property="article:modified_time" content="{{ page.commit_date }}">{% endif %}
   {% if page.author %}<meta property="article:author" content="{{ page.author | replace: ' and ', ', ' }}">{% endif %}
   <meta name="twitter:title" content="{{ page.title | escape }}">
   <meta name="twitter:description" content="{{ _excerpt_attr }}">
@@ -121,7 +121,7 @@
     {% if page.translator %}{% include jsonld-people.html property="translator" names=page.translator %}{% endif %}
     {% if _contributors != '' %}{% include jsonld-people.html property="contributor" names=_contributors %}{% endif %}
     {% if page.year and page.year != "Forthcoming" %}"datePublished": "{{ page.year }}",{% endif %}
-    {% if page.git_mtime %}"dateModified": "{{ page.git_mtime }}",{% endif %}
+    {% if page.commit_date %}"dateModified": "{{ page.commit_date }}",{% endif %}
     {%- comment -%} venue is type-dependent (see CLAUDE.md): for a book or a map it names
     the press, so it stays the publisher; for every other type it names the container the
     work sits inside, which is isPartOf — a Periodical (nested through PublicationVolume /
@@ -313,8 +313,8 @@
   <a class="skip-link" href="#main">Skip to content</a>
   {% include site-toggle.html %}
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
-  {%- comment -%} Neighbours in the canonical order come precomputed from
-  _plugins/both_order.rb. {%- endcomment -%}
+  {%- comment -%} Neighbors in the canonical order come precomputed from
+  _plugins/publication_neighbors.rb. {%- endcomment -%}
   {% assign _prev = page.prev_pub %}
   {% assign _next = page.next_pub %}
   <main id="main" tabindex="-1">

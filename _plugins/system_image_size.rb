@@ -1,7 +1,6 @@
-# Registers the Liquid filter `| image_size` (home.html, publication.html and both
-# figure-* includes).
+# | image_size — read by home.html, publication.html and both figure-* includes.
 #
-# Liquid filter exposing an image's intrinsic pixel dimensions at build time,
+# Exposes an image's intrinsic pixel dimensions at build time,
 # so figure markup can set width/height and avoid layout shift (CLS).
 # Pure-Ruby WebP parser (VP8/VP8L/VP8X) — no ImageMagick/gem dependency.
 # Usage: {% assign d = src | image_size %}{{ d.width }}×{{ d.height }}
