@@ -21,7 +21,11 @@
 'use strict';
 
 const path = require('path');
-const d3 = require(path.resolve(__dirname, '..', 'js', 'd3.v7.min.js'));
+// d3 is a build-time dependency only — this script is the last thing that uses it,
+// for d3-force. The page itself draws the baked result with plain DOM calls, which is
+// why the library lives here beside its one consumer rather than in js/, where it
+// would be published to readers who never load it.
+const d3 = require(path.resolve(__dirname, 'vendor', 'd3.v7.min.js'));
 
 // ── Layout constants (formerly in _layouts/home.html) ──
 const NODE_RADIUS = 3;
