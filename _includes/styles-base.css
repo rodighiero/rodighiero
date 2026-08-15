@@ -135,7 +135,7 @@ main:focus { outline: none; }
   hyphenate-limit-chars: 8 4 4;
 }
 /* Shared pill-button chrome — applied alongside behavioral hook classes
-   like .cite-ref-btn/.print-btn, so JS selectors stay decoupled from style. */
+   like .cite-btn/.print-btn, so JS selectors stay decoupled from style. */
 .pill-btn { display: inline-flex; background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 0 0.55rem; font: inherit; font-size: var(--text-xs); cursor: pointer; border-radius: 2px; line-height: var(--lh-normal); text-decoration: none; }
 .pill-btn:hover { color: var(--fg); border-color: var(--border-hover); }
 .pill-btn.copied { color: var(--fg); border-color: var(--fg); }
