@@ -734,14 +734,14 @@ shows 3 columns. {%- endcomment -%}
          set apart only by a more pronounced dashed edge to its original. */
       .link.translation { stroke-width: 0.9; stroke-dasharray: 3 2.5; }
       /* A fallback is a one-directional rescue edge for a node with no reciprocated
-         neighbour: drawn faint so the mutual backbone stays visually dominant. */
+         neighbor: drawn faint so the mutual backbone stays visually dominant. */
       .link.fallback { opacity: 0.3; }
       .node.highlight .marker { fill: var(--fg); }
       .node.connected .marker { stroke: var(--fg); stroke-width: 1.25; }
       .link.highlight { stroke-width: 1; }
       .link.fallback.highlight { opacity: 1; }
       .labels text.hover { fill: var(--fg); }
-      /* Click-selection (.dimmed on non-neighbours) and search filter (.filtered-out on non-matches) recolor to muted. */
+      /* Click-selection (.dimmed on non-neighbors) and search filter (.filtered-out on non-matches) recolor to muted. */
       .node.dimmed .marker,
       .node.filtered-out .marker { stroke: var(--muted); }
       .link.dimmed,
@@ -1041,7 +1041,7 @@ shows 3 columns. {%- endcomment -%}
             <li>Each file in <code>_publications/</code> is stripped to plain prose — no footnotes, headings, links, or markup.</li>
             <li>Its text becomes a 768-dimension vector via <code>gte-base-en-v1.5</code>; non-English originals are machine-translated first.</li>
             <li>Cosine similarity is measured between every pair of embedded papers.</li>
-            <li>Edges use mutual nearest neighbours (<em>k</em>&nbsp;=&nbsp;2): each ranks the other in its top two, above 0.65.<svg class="edge-sample" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
+            <li>Edges use mutual nearest neighbors (<em>k</em>&nbsp;=&nbsp;2): each ranks the other in its top two, above 0.65.<svg class="edge-sample" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
             <li>A node with no mutual match keeps one faint edge to its closest above 0.60, or none.<svg class="edge-sample fallback" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
             <li>A translation stays a node, tied to its original by a dashed forced edge, not by similarity.<svg class="edge-sample translation" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
             <li>A pre-computed D3 force simulation lays out the nodes, so the graph loads already settled.</li>

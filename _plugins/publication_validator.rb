@@ -1,8 +1,9 @@
-# Introduces no identifier — reads publication front matter and aborts the build on error.
+# Validates every publication's front matter — required fields, valid type,
+# referenced images on disk, ISSN/ISBN shape. Introduces no identifier a
+# template can read; its output is the build log.
 #
-# Front matter validation plugin for publications.
-# Checks required fields, valid values, and referenced images exist.
-# Logs warnings during build; can be run in CI to catch errors before deploy.
+# Warnings are advisory; an error raises and aborts the build, so bad metadata
+# is caught on every deploy rather than shipped.
 class Jekyll::FrontMatterValidator < Jekyll::Generator
   priority :high
 
@@ -95,14 +96,14 @@ class Jekyll::FrontMatterValidator < Jekyll::Generator
   def report_issues
     return if @errors.empty? && @warnings.empty?
 
-    Jekyll.logger.info 'system_validator:', "Validation report for publications:"
+    Jekyll.logger.info 'publication_validator:', "Validation report for publications:"
 
     @warnings.each do |msg|
-      Jekyll.logger.warn 'system_validator:', msg
+      Jekyll.logger.warn 'publication_validator:', msg
     end
 
     @errors.each do |msg|
-      Jekyll.logger.error 'system_validator:', msg
+      Jekyll.logger.error 'publication_validator:', msg
     end
 
     if @errors.any?

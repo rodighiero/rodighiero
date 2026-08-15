@@ -6,13 +6,13 @@ layout: null
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>{{ site.url }}/</loc>
-    <lastmod>{{ site.data.git_mtime }}</lastmod>
+    <lastmod>{{ site.data.commit_date }}</lastmod>
     <image:image><image:loc>{{ site.url }}/images/Dario-Rodighiero.webp</image:loc></image:image>
   </url>
   {% for project in site.publications %}
   <url>
     <loc>{{ site.url }}{{ project.url | remove: '.html' }}</loc>
-    <lastmod>{{ project.git_mtime }}</lastmod>
+    <lastmod>{{ project.commit_date }}</lastmod>
     {% for figure in project.figures %}<image:image><image:loc>{{ site.url }}{{ figure }}</image:loc></image:image>
     {% endfor %}</url>
   {% endfor %}

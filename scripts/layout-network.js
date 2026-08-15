@@ -30,22 +30,22 @@ const d3 = require(path.resolve(__dirname, 'vendor', 'd3.v7.min.js'));
 // ── Layout constants (formerly in _layouts/home.html) ──
 const NODE_RADIUS = 3;
 // Collide radius = NODE_RADIUS + NODE_SPACING. Labels render only on hover (one
-// at a time, plus a selection's neighbours), so this spacing governs marker/
+// at a time, plus a selection's neighbors), so this spacing governs marker/
 // click separation, not label legibility — kept tight enough that linked nodes
 // pull into visibly distinct cluster knots rather than a uniform blob.
 const NODE_SPACING = 18;
 const CHARGE_STRENGTH = -280;
 const STRONG_SIM = 0.65;
-// Mutual k-nearest-neighbour: an English node pair is linked only when each
-// ranks the other within its top MUTUAL_K most-similar English neighbours (and
+// Mutual k-nearest-neighbor: an English node pair is linked only when each
+// ranks the other within its top MUTUAL_K most-similar English neighbors (and
 // the similarity clears STRONG_SIM). This makes every similarity edge
-// reciprocal — no one-sided "nearest neighbour" links — and lets a node carry
+// reciprocal — no one-sided "nearest neighbor" links — and lets a node carry
 // more than one edge, so genuine clusters form. A handful of nodes with no
-// reciprocated neighbour are left unconnected by design.
+// reciprocated neighbor are left unconnected by design.
 const MUTUAL_K = 2;
-// Nearest-neighbour fallback: an English node that the mutual-kNN rule leaves
+// Nearest-neighbor fallback: an English node that the mutual-kNN rule leaves
 // with no edge at all (and that is not tied to a translation) is given a single
-// edge to its most-similar English neighbour, but only if that similarity
+// edge to its most-similar English neighbor, but only if that similarity
 // clears FALLBACK_SIM — so a publication similar to nothing stays honestly
 // isolated rather than collecting a spurious link. These rescue edges are
 // one-directional and weaker than the reciprocal backbone, so they are flagged
@@ -103,7 +103,7 @@ function main(input) {
   // Translations: index → original index. They lay out as regular nodes but
   // their sole edge is a forced 1.00 link to their original, and they are never
   // a similarity-link candidate for anyone else (so an original links to its
-  // strongest distinct neighbour, not to its own translation).
+  // strongest distinct neighbor, not to its own translation).
   const isTrans = new Array(N).fill(false);
   const transOf = new Array(N).fill(-1);
   if (data.translations) {
@@ -128,14 +128,14 @@ function main(input) {
     return n;
   });
 
-  // ── buildLinks: the core network uses mutual k-nearest-neighbour edges over
+  // ── buildLinks: the core network uses mutual k-nearest-neighbor edges over
   // all original works (English + non-English originals, which share one
   // embedding space). For each original we rank the other originals by
   // similarity; a pair (i, j) is linked only when j is within i's top MUTUAL_K
   // AND i is within j's top MUTUAL_K, and sim clears STRONG_SIM. This keeps
   // every similarity edge reciprocal and lets a node carry several edges, so
   // real clusters emerge. A node whose top picks never reciprocate would stay
-  // unconnected, so a nearest-neighbour fallback (see below) then gives each
+  // unconnected, so a nearest-neighbor fallback (see below) then gives each
   // such node one weaker edge to its strongest match above FALLBACK_SIM —
   // unless it is similar to nothing, in which case it stays isolated by design.
   // Translations do not take part in this similarity search: each gets a forced
@@ -148,7 +148,7 @@ function main(input) {
     if (seen.has(key)) return;
     seen.add(key);
     const link = { source: i, target: j, value: v };
-    if (fb) link.fb = true;   // nearest-neighbour fallback edge (drawn fainter)
+    if (fb) link.fb = true;   // nearest-neighbor fallback edge (drawn fainter)
     links.push(link);
   }
   // Per-original ranking of the other originals, most similar first.
@@ -172,10 +172,10 @@ function main(input) {
     });
   }
 
-  // ── Nearest-neighbour fallback ──
-  // Any original still carrying no edge (no reciprocated mutual neighbour, and
+  // ── Nearest-neighbor fallback ──
+  // Any original still carrying no edge (no reciprocated mutual neighbor, and
   // not attached to a translation) is linked to its single most-similar
-  // neighbour when that similarity clears FALLBACK_SIM. Degree counts
+  // neighbor when that similarity clears FALLBACK_SIM. Degree counts
   // every edge added so far (mutual + forced translation edges), so a node that
   // is already visibly connected — including via a dashed translation edge — is
   // not rescued. degree is updated as we go, so two mutually-isolated nodes that

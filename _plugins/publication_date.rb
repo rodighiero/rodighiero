@@ -1,8 +1,7 @@
-# Sets `page.date` on publications — read by the jekyll-feed gem, not by any template here.
+# date on each publication — read by the jekyll-feed gem, not by any template here.
 #
-# Sets page.date from page.year (+ optional month, day) for publications,
-# preserving the homepage sort order (year desc, then alphabetical within each year)
-# in the RSS feed.
+# Derives it from year (+ optional month, day), preserving the homepage sort
+# order (year desc, then alphabetical within each year) in the RSS feed.
 #
 # Front matter support:
 #   year: 2024              # Required
@@ -19,8 +18,8 @@ class Jekyll::PublicationDateGenerator < Jekyll::Generator
     return unless docs
 
     # Grouping the canonically ordered list keeps each year's titles in exactly
-    # the order the homepage shows (see OrderedPublications), so the feed and the
-    # gallery can never disagree.
+    # the order the homepage shows (Jekyll::OrderedPublications, defined in
+    # publication_order.rb), so the feed and the gallery can never disagree.
     Jekyll::OrderedPublications.order(docs).group_by { |doc| doc.data['year'].to_i }.each do |year, sorted|
       sorted.each_with_index do |doc, i|
         if year.zero?
