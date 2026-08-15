@@ -794,26 +794,36 @@ shows 3 columns. {%- endcomment -%}
   <div class="bio-shell" id="bio">
   <header class="header">
     <div class="header-about">
-      {%- comment -%} Downsized copy for display; the full-size 1200px original stays for OG cards and JSON-LD. {%- endcomment -%}
-      {%- comment -%} Two sources, because the portrait is a card's photo now and a card's
-      photo is as wide as its column: 251px at two columns and up, where the 640 copy is
-      right, but the full width of the page at one, where a phone's 3x screen would ask
-      about a thousand device pixels of a 640px image. The 1200px original — the same file
-      the OG card and the JSON-LD point at — covers that case, and is only ever fetched
-      there. Both numbers in `sizes` are hand-computed from values that live elsewhere —
-      an attribute the preload scanner reads before any stylesheet or script exists is the
-      one place on this page that cannot say var(--card-w) — so they are written out here
-      to be greppable when those are retuned: 612px is the gallery's two-column threshold,
-      gridWidth(2) + PAGE_PAD = 2 × --card-w + --card-gap + 48; 251px is a card's photo,
-      --card-w − 2 × --card-pad = 270 − 2 × 9.6. Nothing breaks if they drift, which is
-      exactly the risk: the browser would simply pick the wrong candidate, silently. Below
-      the threshold, 100vw slightly overstates the column (which is inset by the page and
-      card padding), and an overstatement is the safe direction: it can only bias the
-      choice towards the larger file. {%- endcomment -%}
+      {%- comment -%} The portrait is a card's photo, so it is as wide as its column: a
+      fixed 251px at two columns and up, and the whole page at one, which is where the
+      file sizes are decided. A 390px phone shows it at 323 CSS px, so it asks for 646
+      device pixels at 2x and 968 at 3x — both just past the 640 copy, the 2x case by six
+      pixels — and with only 640 and 1200 to choose from, every modern phone took the
+      1200 (50KB) for want of anything between. Hence the ladder: 768 (19KB) covers 2x,
+      1024 (27KB) covers 3x, and the 1200 original — the same file the OG card and the
+      JSON-LD point at — is left for the widest one-column case. Desktop is untouched at
+      640. All four are one family: cwebp -m 6 -sharp_yuv -q 81, matching the quality the
+      640 copy was already made at.
+      A ladder only pays if `sizes` is honest, so the column is stated as it is rather
+      than as 100vw: an overstatement is safe with two candidates (it can only bias the
+      choice upward) but with four it costs a rung — 100vw on that same phone asks 780 at
+      2x and takes the 1024 instead of the 768. 67px is the page's own inset,
+      2 × body padding + 2 × --card-pad = 48 + 19.2. (100vw itself counts a scrollbar the
+      layout doesn't, which leaves a hair of overstatement — the safe direction.)
+      Every number here is hand-computed from values that live elsewhere: an attribute the
+      preload scanner reads before any stylesheet exists is the one place on this page
+      that cannot say var(--card-w). So they are written out to be greppable when those
+      are retuned — 612px is the two-column threshold, gridWidth(2) + PAGE_PAD =
+      2 × --card-w + --card-gap + 48; 251px is a card's photo, --card-w − 2 × --card-pad =
+      270 − 2 × 9.6. Nothing breaks if they drift, which is exactly the risk: the browser
+      just picks the wrong rung, silently. {%- endcomment -%}
       <div class="card-media">
         <img src="/images/Dario-Rodighiero-640.webp"
-             srcset="/images/Dario-Rodighiero-640.webp 640w, /images/Dario-Rodighiero.webp 1200w"
-             sizes="(min-width: 612px) 251px, 100vw"
+             srcset="/images/Dario-Rodighiero-640.webp 640w,
+                     /images/Dario-Rodighiero-768.webp 768w,
+                     /images/Dario-Rodighiero-1024.webp 1024w,
+                     /images/Dario-Rodighiero.webp 1200w"
+             sizes="(min-width: 612px) 251px, calc(100vw - 67px)"
              alt="Dario Rodighiero" width="640" height="427" fetchpriority="high" decoding="async">
       </div>
       <div class="links card-meta">
