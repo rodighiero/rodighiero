@@ -6,6 +6,13 @@
 # resolving to the canonical page. Local replacement for jekyll-redirect-from,
 # with no external gem.
 #
+# The stub carries rel=canonical and deliberately no `noindex`. The two are
+# contradictory instructions — Google resolves the conflict by picking the
+# canonical — so the tag only argued with the line beneath it. What keeps an
+# alias out of the index is the instant refresh, which a crawler follows to the
+# real page; the canonical then hands that page credit for whatever links the
+# alias earned, which a noindex would throw away instead.
+#
 #   redirect_from: /surprise-machines
 #   redirect_from:
 #     - /Surprise-Machines
@@ -30,7 +37,6 @@ module Jekyll
         <head>
           <meta charset="utf-8">
           <title>Redirecting…</title>
-          <meta name="robots" content="noindex">
           <link rel="canonical" href="#{canonical}">
           <meta http-equiv="refresh" content="0; url=#{target}">
           <script>location.replace("#{target}");</script>

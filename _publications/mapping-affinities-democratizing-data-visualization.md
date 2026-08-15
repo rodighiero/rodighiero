@@ -8,6 +8,8 @@ preface: "Jeffrey T. Schnapp"
 doi: "https://library.oapen.org/handle/20.500.12657/91793"
 isbn: "9782940563999"
 thumb: mapping-affinities-democratizing-data-visualization/cover.webp
+redirect_from:
+  - /Mapping-Affinities
 ---
 {% include figure-single.html src="/images/mapping-affinities-democratizing-data-visualization/cover.webp" alt="Cover of the book “Mapping Affinities” by Dario Rodighiero (MétisPresses), with a network of glowing nodes and links on a dark background" %}
 
