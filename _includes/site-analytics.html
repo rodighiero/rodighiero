@@ -1,4 +1,29 @@
 {% if jekyll.environment == "production" and site.goatcounter_code %}
-<script data-goatcounter="https://{{ site.goatcounter_code }}.goatcounter.com/count"
-        async src="/js/count.js"></script>
+<script>
+  // Count human visits without turning anyone away. count.js already flags
+  // PhantomJS/Selenium/navigator.webdriver (js/count.js:57) and the backend
+  // drops whatever names itself a crawler, but an agent driving a headless
+  // Chrome that claims macOS passes both — which is most of what shows up in
+  // the stats. So the *loader* is gated rather than the request blocked: an
+  // automated visitor is served the page in full and simply isn't tallied.
+  // The bias runs toward not counting, since a missed tally costs a number
+  // and a blocked fetch costs a reader.
+  //
+  // Gating the loader is also the only place this works. count.js assigns
+  // window.goatcounter.filter unconditionally (js/count.js:114), so a filter
+  // defined ahead of it is overwritten before it can decline anything.
+  (function () {
+    var n = navigator
+    if (n.webdriver ||                              // declares itself automated
+        !(n.languages && n.languages.length) ||     // sends no language — the "(unknown)" rows
+        /bot|crawl|spider|headless/i.test(n.userAgent))
+      return
+
+    var s = document.createElement('script')
+    s.async = true
+    s.src = '/js/count.js'
+    s.setAttribute('data-goatcounter', 'https://{{ site.goatcounter_code }}.goatcounter.com/count')
+    document.head.appendChild(s)
+  })()
+</script>
 {% endif %}
