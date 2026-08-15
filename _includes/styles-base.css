@@ -115,6 +115,25 @@ main:focus { outline: none; }
    img_border, or a figure's class="bordered"). Shared by home.html's .card-media
    and publication.html's .body figure. */
 .bordered img { border: 1px solid var(--border); }
+/* Opt-in hyphenation for running prose, on one set of terms: nothing under 8 characters
+   split, never fewer than 4 letters either side, never more than 2 hyphenated lines in a
+   row. Worn by publication.html's .body and home.html's bio columns, which had each
+   declared these six lines for themselves — identical down to the 8 4 4 — so the policy
+   had two places to change and nothing keeping them in step.
+   Opt-in rather than inherited from body, because it is wrong in the places that must not
+   break: a byline splitting a surname (Rodig-hiero) reads as a different name, and the
+   action/filter cards run a deliberately looser 6/3/3 of their own (see home.html).
+   Safari reads the -webkit- longhands only and ignores the standard shorthand, so both
+   are declared; before+after imply the 8-character minimum on their own, which makes the
+   pair equivalent to the shorthand rather than an approximation of it. */
+.hyphenate-prose {
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  -webkit-hyphenate-limit-before: 4;
+  -webkit-hyphenate-limit-after: 4;
+  -webkit-hyphenate-limit-lines: 2;
+  hyphenate-limit-chars: 8 4 4;
+}
 /* Shared pill-button chrome — applied alongside behavioral hook classes
    like .cite-ref-btn/.print-btn, so JS selectors stay decoupled from style. */
 .pill-btn { display: inline-flex; background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 0 0.55rem; font: inherit; font-size: var(--text-xs); cursor: pointer; border-radius: 2px; line-height: var(--lh-normal); text-decoration: none; }
