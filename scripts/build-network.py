@@ -808,6 +808,12 @@ def main() -> int:
     )
     layout = precompute_layout(nodes, similarity, translations)
     print(f"layout seed: {layout.get('seed')}", file=sys.stderr)
+    _clear = layout.get("clearance") or {}
+    print(
+        f"node/edge clearance: {_clear.get('atSettle')} at settle, "
+        f"{_clear.get('remaining')} after {_clear.get('passes')} pass(es)",
+        file=sys.stderr,
+    )
     for node, (x, y) in zip(nodes, layout["positions"]):
         node["x"], node["y"] = x, y
     for i in translations:
