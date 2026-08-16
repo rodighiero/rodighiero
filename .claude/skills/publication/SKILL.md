@@ -15,6 +15,7 @@ The slug is the filename. It is also the URL, the `images/<slug>/` folder name, 
 and `redirect_from`. Renaming a file means renaming all of those.
 
 Field-by-field schema, per type: `reference/front-matter.md`.
+Image layout, compression, the portrait ladder and the icon set: `reference/images.md`.
 
 ## Adding a publication — the whole sequence
 
@@ -64,11 +65,8 @@ image (book, map, magazine spread) opens its body with a caption-less lead figur
 
 ### Fix a dead reference
 Never delete or rewrite the original URL — it is what the publication cited. Append a
-Wayback link in parentheses: `<original URL> ([archived](https://web.archive.org/web/<ts>/<original URL>))`.
-Pick a capture contemporaneous with the reference's access date, not the newest one, and
-verify it through `https://archive.org/wayback/available?url=…&timestamp=…` — only a
-`closest.status == "200"` capture is worth linking. Label follows the language of the piece
-(`archiviato` in Italian entries). No usable capture → leave the dead URL alone.
+verified Wayback link in parentheses instead. Full procedure, and how to tell rot from a bot
+wall: the **`links`** skill.
 
 ### Rename or retire an entry
 Renaming the file changes the URL. Add the old path to `redirect_from:` (a string or list
@@ -109,9 +107,8 @@ One entry in `_data/publication_types.yml` — `label`, `schema`, `dc`, optional
 disk. It **warns** on a DOI that isn't a URL, a malformed ISSN or ISBN, and an out-of-range
 `month`/`day`.
 
-Broken external links are a separate, scheduled concern: `.github/workflows/links.yml`
-crawls weekly and `scripts/link-context.py` turns the flat report into one that says which
-citation each dead URL sits in. A red result there is maintenance, not a broken build.
+Broken external links are a separate, scheduled concern — a red `links.yml` run is
+maintenance, not a broken build. See the `links` skill.
 
 ## Don't
 
