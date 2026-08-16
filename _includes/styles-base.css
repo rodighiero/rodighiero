@@ -29,6 +29,17 @@
   --card-w: 270px;
   --card-gap: 24px;
 
+  /* The page's side inset, left and right (home.html: PAGE_PAD, twice this). It is not
+     mere breathing room: it is the column .mode-toggle lives in. The toggle is fixed to
+     the viewport while the body is centred in it, so the two are measured from different
+     origins and collide wherever the centring margin runs out — under every card below
+     612px, in a band above each column threshold, and down the whole right edge of a
+     660px article on a phone. Sizing the inset to hold the toggle is what keeps the
+     content out of its way at every width, rather than only at the widths that happen to
+     leave a margin. See .mode-toggle below for how the 32px is arrived at. Declared in px,
+     like the two above, because the masonry parseFloats it. */
+  --page-gutter: 32px;
+
   /* Colors: one declaration per token. light-dark() resolves against the used
      color-scheme, so both drivers feed the same five values — the system
      preference (via `color-scheme: light dark` here, matching the
@@ -57,8 +68,10 @@ body {
   color: var(--fg);
   background: var(--bg);
   margin: 0 auto;
-  padding: 4rem 1.5rem 2rem;
-  max-width: 1200px;
+  padding: 4rem var(--page-gutter) 2rem;
+  /* MAX_CONTENT + PAGE_PAD (1152 + 64), for the moment before the masonry first writes
+     the page's real width and for a reader with no JS. */
+  max-width: 1216px;
 }
 /* Underline metrics, applying wherever one is actually drawn — link hovers, the bio
    column's permanently underlined links, the network sidebar. Nunito's own are poor at
@@ -140,11 +153,20 @@ main:focus { outline: none; }
 .pill-btn:hover { color: var(--fg); border-color: var(--border-hover); }
 .pill-btn.copied { color: var(--fg); border-color: var(--fg); }
 
-/* ── Mode toggle ── */
+/* ── Mode toggle ──
+   Fixed to the viewport, and parked in the page's own --page-gutter so the content
+   column never reaches it. The two numbers are one calculation and have to be read
+   together: per side, the gutter must hold this button's 20px box (16px icon + 2 * 2px
+   padding), the 4px its focus ring reaches past that box (outline 2px at 2px offset,
+   from the shared :focus-visible rule above), and the inset below — which itself must
+   clear 4px or the ring is cut off by the window edge. 4 + 20 + 4 = 28px is the floor,
+   where the ring touches the window on one side and the content on the other; 32px with
+   an 8px inset is the first pair with air on both. Retuning either means redoing the
+   sum: a smaller gutter or a larger inset puts the icon back over the text. */
 .mode-toggle {
   position: fixed;
   top: 1.2rem;
-  right: 1.5rem;
+  right: 0.5rem;
   background: none;
   border: none;
   cursor: pointer;

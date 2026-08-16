@@ -243,7 +243,13 @@
     .body p.equation { display: flex; justify-content: center; align-items: baseline; margin: 1.6rem 0; }
     .body code { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: var(--text-xs); }
     @media screen {
-      .body figure.wide { display: block; width: min(990px, 100vw); max-width: none; margin-left: calc(50% - min(990px, 100vw) / 2); }
+      /* Breaks out past the 660px measure, but stops at the page's own --page-gutter
+         rather than at the window: below 990px the old 100vw ran the figure edge to edge,
+         straight under the fixed .mode-toggle parked in that gutter (see styles-base.css).
+         Nothing is lost — under 660px + 2 gutters the breakout was already no wider than
+         the text column. The width is named once and reused by the centring offset, which
+         had been carrying a second copy of the same min(). */
+      .body figure.wide { --bleed: min(990px, calc(100vw - 2 * var(--page-gutter))); display: block; width: var(--bleed); max-width: none; margin-left: calc(50% - var(--bleed) / 2); }
       .body figure.wide img { display: block; width: auto; height: auto; max-width: 100%; max-height: 660px; margin: 0 auto; }
       .body figure.wide figcaption { width: calc(min(660px, 100vw) - 3rem); max-width: 100%; margin-left: auto; margin-right: auto; }
       .body figure:is(.narrow, .half, .three-quarter, .full) img { margin: 0 auto; }
