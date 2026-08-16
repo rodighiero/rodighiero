@@ -708,7 +708,7 @@ shows 3 columns. {%- endcomment -%}
       }
       .lede .edge-sample line { stroke: var(--fg); stroke-width: 1.2; }
       .lede .edge-sample circle { fill: var(--bg); stroke: var(--fg); stroke-width: 1; }
-      .lede .edge-sample.fallback line { opacity: 0.35; }
+      .lede .edge-sample.fallback line { opacity: 0.55; }
       .lede .edge-sample.translation line { stroke-dasharray: 3 2.5; stroke-width: 1.4; }
       .stage {
         grid-column: 2 / -1;
@@ -744,7 +744,7 @@ shows 3 columns. {%- endcomment -%}
       .link.translation { stroke-width: 0.9; stroke-dasharray: 3 2.5; }
       /* A fallback is a one-directional rescue edge for a node with no reciprocated
          neighbor: drawn faint so the mutual backbone stays visually dominant. */
-      .link.fallback { opacity: 0.3; }
+      .link.fallback { opacity: 0.5; }
       .node.highlight .marker { fill: var(--fg); }
       .node.connected .marker { stroke: var(--fg); stroke-width: 1.25; }
       .link.highlight { stroke-width: 1; }
@@ -761,8 +761,8 @@ shows 3 columns. {%- endcomment -%}
       .labels text.dimmed.hover { fill: var(--fg); }
       /* Search filter: fade non-matches out so the on/off signal is visible (a thin
          muted stroke alone is imperceptible on these tiny markers). */
-      .node.filtered-out { pointer-events: none; opacity: 0.3; }
-      .link.filtered-out { opacity: 0.3; }
+      .node.filtered-out { pointer-events: none; opacity: 0.5; }
+      .link.filtered-out { opacity: 0.5; }
 
       /* Details panel — replaces the lede in the first column on selection. Same
          padding as the lede and the plain cards, so the selected publication's text lines
