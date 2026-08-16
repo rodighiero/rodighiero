@@ -96,15 +96,22 @@ const CHARGE_DISTANCE_MAX = 520;
 // settle as islands with unconnected nodes filling the gaps.
 const ANCHOR = 'center';
 
-// Canonical stage the layout is baked into. Approximates a desktop `.stage`
-// box: body max-width 1200 − 2×1.5rem padding → 1152 content; the network grid
-// gives the stage 3 of 4 columns (≈ 856 px wide); height ≈ 80vh − 9rem on a
-// typical viewport. The client fit-scales these coords into the real stage, so
-// at a desktop size the scale stays ≈ 1 and markers/labels keep their rhythm.
-const CANVAS_W = 856;
-const CANVAS_H = 600;
+// Canonical stage the layout is baked into — a square two grid columns wide,
+// which is exactly what `.stage` now measures: 2 × --card-w (270) + --card-gap
+// (24). Because the card width is the constant and the page is sized to its
+// grid, that is 564 px at every column count the view is reachable at, so the
+// client's fit-scale is 1:1 on a desktop and markers, labels and the clearance
+// below all keep the size they were baked at. A square frame also spends the
+// stage on the graph rather than on the empty bands a wide canvas left above
+// and below it when fitted into a tall box.
+const CANVAS_W = 564;
+const CANVAS_H = 564;
 // Uniform margin kept clear on every side when the settled layout is
-// normalized to fit the canvas.
+// normalized to fit the canvas. It is also the page's label headroom: a title
+// renders above its node (two lines reach y = −25 plus the ascent), so a node
+// at the top edge needs ~37px of canvas above it to keep its label inside the
+// stage. The margin is baked in here, which is why the client centres the
+// canvas and adds nothing of its own.
 const FIT_MARGIN = 40;
 
 function readStdin() {
