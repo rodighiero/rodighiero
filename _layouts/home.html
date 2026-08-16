@@ -1021,10 +1021,16 @@ shows 3 columns. {%- endcomment -%}
         {% if publication.thumb %}
         {% assign _card_i = _card_i | plus: 1 %}
         <div class="card-media{% if publication.img_border %} bordered{% endif %}">
-          {%- comment -%} The first row (4 columns) is the likely LCP: load it eagerly with high priority; lazy-load below the fold. Reserve space from the thumbnail's own dimensions. {%- endcomment -%}
+          {%- comment -%} The first row (4 columns) is the likely LCP: load it eagerly with high priority; lazy-load below the fold. Reserve space from the thumbnail's own dimensions.
+          alt is empty on purpose: the card's <h2> link right below carries the title, so
+          naming the image would make a screen reader announce every publication twice —
+          once as a picture of the title, once as the link. The thumbnail is a crop of a
+          figure standing in for the work, not information the title doesn't already give,
+          which is exactly what alt="" is for. (The full-size original still reaches image
+          search through the publication page and og:image; only this derivative is silent.) {%- endcomment -%}
           {%- assign _thumb = '/images/@cards/' | append: publication.slug | append: '.webp' -%}
           {%- assign _thumb_dims = _thumb | image_size -%}
-          <img src="{{ _thumb }}" alt="{{ publication.title | escape }}{% if publication.year %} — {{ publication.year }}{% endif %}" {% if _card_i <= 4 %}fetchpriority="high"{% elsif _card_i > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width }}" height="{{ _thumb_dims.height }}">
+          <img src="{{ _thumb }}" alt="" {% if _card_i <= 4 %}fetchpriority="high"{% elsif _card_i > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width }}" height="{{ _thumb_dims.height }}">
         </div>
         {% endif %}
         {% include card-meta.html item=publication %}
@@ -1734,10 +1740,17 @@ shows 3 columns. {%- endcomment -%}
     } catch (e) {}
     applySearch();
 
-    // Action cards: switch view (view:<name>), toggle a type filter (type:<name>), run a
-    // free-text query (search:<terms>), or toggle a cluster filter (cluster:<id>, whose member
+    // Action cards: switch view (view:<name>), set a type filter (type:<name>), run a
+    // free-text query (search:<terms>), or set a cluster filter (cluster:<id>, whose member
     // slugs ride on the card's data-slugs). Split on the FIRST colon only, so a search value may
     // itself contain colons/spaces. The three content filters are mutually exclusive.
+    //
+    // Each of the three re-reads its own state first, so clicking a card that is already
+    // active clears it. In practice that never fires from a click: applySearch() hides every
+    // special card the moment any filter is active, so the card that set the filter is gone
+    // before it could be clicked again. The re-read stays because it is what makes each
+    // branch a toggle rather than a setter, and clearing runs through Escape and the search
+    // box instead (see resetFilters and the input handler below).
     function clearClusterFilter() { activeCluster = null; }
     // Show a structured filter's label in the search box (cursor at the end) so the whole
     // filter is managed there: the user deletes the text to clear it. Clearing wipes the box.
@@ -1814,7 +1827,7 @@ shows 3 columns. {%- endcomment -%}
             clearClusterFilter();
             if (activeType) showFilterInInput(btn.dataset.filterLabel || val); else clearFilterInput();
           } else if (verb === 'search' && val && searchInput) {
-            searchInput.value = (searchInput.value === val) ? '' : val; // click again to clear
+            searchInput.value = (searchInput.value === val) ? '' : val;
             activeType = null;
             clearClusterFilter();
             activeFilterLabel = null; // this is a real free-text query, not a filter label
