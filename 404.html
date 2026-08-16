@@ -5,6 +5,7 @@ permalink: /404.html
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  {% include site-scheme.html %}
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Page not found — Dario Rodighiero</title>
   <meta name="robots" content="noindex">
@@ -14,11 +15,22 @@ permalink: /404.html
   <link rel="icon" href="/images/@icons/favicon.ico" sizes="any">
   <link rel="icon" href="/images/@icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/images/@icons/apple-touch-icon.png">
-  <link rel="stylesheet" href="/fonts/nunito.css">
   <style>
+    {% include styles-font.css %}
     *, *::before, *::after { box-sizing: border-box; }
-    :root { --fg: #000; --bg: #fff; --muted: rgba(0,0,0,0.6); }
-    @media (prefers-color-scheme: dark) { :root { --fg: #e8e8e8; --bg: #111; --muted: rgba(255,255,255,0.5); } }
+    /* Same two drivers as the rest of the site, for the same reason: light-dark() resolves
+       against the used color-scheme, so the system preference and the stored manual choice
+       (stamped on <html> by site-scheme.html above) both land on one set of declarations.
+       A prefers-color-scheme media query alone would honour only the first, and this is the
+       one page with no toggle to correct it with. */
+    :root {
+      color-scheme: light dark;
+      --fg: light-dark(#000, #e8e8e8);
+      --bg: light-dark(#fff, #111);
+      --muted: light-dark(rgba(0,0,0,0.6), rgba(255,255,255,0.5));
+    }
+    html.dark { color-scheme: dark; }
+    html.light { color-scheme: light; }
     html { font-size: 16px; }
     body {
       font-family: "Nunito", sans-serif;

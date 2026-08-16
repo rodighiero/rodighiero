@@ -278,9 +278,10 @@ shows 3 columns. {%- endcomment -%}
        its own margin doesn't collapse with .card-meta's margin-bottom above it (see
        .card-title's own comment below) or .card-text's margin-top below it, so the
        gaps come out to the same 0.3+0.3=0.6rem and 0.4rem a real card uses, with
-       nothing hand-tuned here. There is no .header h1 rule left at all — the <h1>
-       tag is the only thing that still marks this as a name rather than a card
-       title; everything about how it looks comes from .card-title alone. */
+       nothing hand-tuned here. On screen the <h1> tag is the only thing that still
+       marks this as a name rather than a card title; everything about how it looks
+       comes from .card-title alone. The single exception is the print block at the
+       foot of this file, where the masthead prints alone and sets its own size. */
     .header .links a { display: block; }
     /* The bio columns wear .hyphenate-prose in the markup — the shared policy, defined
        once in styles-base.css, that the article body wears too. The case for it is
@@ -458,7 +459,7 @@ shows 3 columns. {%- endcomment -%}
     }
 
     /* Shared sub-row: a publication's authors and an action/filter card's description
-       both render through one class, .card-text (main.css sets its type); only the
+       both render through one class, .card-text (styles-base.css sets its type); only the
        gap belongs here. */
     .card-text { margin-top: 0.4rem; }
     /* Hyphenated for the same reason as the bio column above, but looser: a gallery
@@ -489,9 +490,9 @@ shows 3 columns. {%- endcomment -%}
     .card-media img,
     .card-media .network-preview { width: 100%; height: auto; display: block; }
     /* The title link is the only <h2> on the page, so it needs no ancestor qualifier either;
-       main.css's `a { color: inherit; text-decoration: none; }` already covers its base look.
-       No underline on hover either: the whole card already signals clickability (background
-       tint), so main.css's sitewide a:hover underline would be a redundant, noisier cue here.
+       styles-base.css's `a { color: inherit; text-decoration: none; }` already covers its base
+       look. No underline on hover either: the whole card already signals clickability (background
+       tint), so styles-base.css's sitewide a:hover underline would be a redundant, noisier cue.
        (The network-view sidebar clone has no tint on hover, so it restores the underline —
        see .details .publication h2 a:hover inside @scope (#network-view) below.) */
     h2 a:hover { text-decoration: none; }
@@ -564,16 +565,20 @@ shows 3 columns. {%- endcomment -%}
     body[data-view="gallery"] #publications.animating .card {
       /* A browser that doesn't know linear() drops the whole declaration below, shorthand
          and all, so the bezier stands as the fallback rather than leaving the tiles to
-         jump and the hover tint to snap. */
+         jump and the hover tint to snap. Both declarations carry background and box-shadow
+         as well as the travel: this rule replaces .card's own transition outright rather
+         than adding to it, so anything left out here stops animating for the 0.42s the
+         class is on — which is how the hairline came to snap when it moved from
+         outline-color to an inset box-shadow. */
       transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.28s ease,
-                  background 0.15s ease, outline-color 0.15s ease;
+                  background 0.15s ease, box-shadow 0.15s ease;
       transition:
         transform 0.42s linear(0, 0.05, 0.167, 0.314, 0.465, 0.604, 0.723, 0.82, 0.894,
           0.948, 0.985, 1.008, 1.021, 1.027, 1.028, 1.026, 1.023, 1.018, 1.014, 1.01,
           1.007, 1.005, 1.003, 1.001, 1),
         opacity 0.28s ease,
         background 0.15s ease,
-        outline-color 0.15s ease;
+        box-shadow 0.15s ease;
     }
     /* A tile arriving from a hidden state still carries the transform of wherever it last
        sat, so it takes its new slot with the transition off and fades in from there
@@ -873,9 +878,19 @@ shows 3 columns. {%- endcomment -%}
       @page { margin: 2cm 2.8cm; }
       html, body { font-size: 9pt; }
       .mode-toggle, .bio-toggle, .header .profile-links, main, footer { display: none !important; }
-      .bio-shell { margin-bottom: 0; }
+      /* With main and footer gone the masthead is the entire sheet, and the reader may
+         have left it collapsed — the state persists in localStorage, so it survives from
+         one visit to the next. The collapse rule (html[data-bio-visible="0"] .bio-shell,
+         0-2-0) applies in print like anywhere else and clips it to zero height, so the
+         second selector here has to match its specificity to undo it; a bare .bio-shell
+         only reached 0-1-0 and the page printed blank. */
+      .bio-shell,
+      html[data-bio-visible="0"] .bio-shell { height: auto; margin-bottom: 0; opacity: 1; }
       .header { display: block; margin-bottom: 0; }
       .header .card-media { display: none; }
+      /* The one .header h1 rule on the page: the name is styled by .card-title everywhere
+         else (see the header block above), but the printed sheet has no card next to it
+         to keep the size honest. */
       .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }
       .header .links, .header .bio-col { font-size: 8.5pt; }
       .header .bio-col { margin-top: 0.6rem; }
