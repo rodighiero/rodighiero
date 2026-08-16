@@ -622,8 +622,6 @@ shows 3 columns. {%- endcomment -%}
          reachable above the mobile boundary, so `--cols` here is only ever 3 or 4. */
       grid-template-columns: repeat(var(--cols), 1fr);
       gap: var(--card-gap);
-      height: calc(80vh - 9rem);
-      min-height: 460px;
       margin-bottom: 2rem;
     }
 
@@ -710,8 +708,17 @@ shows 3 columns. {%- endcomment -%}
       .lede .edge-sample circle { fill: var(--bg); stroke: var(--fg); stroke-width: 1; }
       .lede .edge-sample.fallback line { opacity: 0.55; }
       .lede .edge-sample.translation line { stroke-dasharray: 3 2.5; stroke-width: 1.4; }
+      /* The stage is a square two columns wide — the same 2 × --card-w + gap the
+         canvas is baked at, so the fit-scale is 1:1 on a desktop — centred in
+         whatever the sidebar leaves: the whole span at three columns (where two
+         columns is exactly it), and centred within three at four. Its height
+         comes from its width, so the view is as tall as the graph rather than a
+         slice of the viewport with empty bands above and below it. */
       .stage {
         grid-column: 2 / -1;
+        justify-self: center;
+        width: min(100%, calc(2 * var(--card-w) + var(--card-gap)));
+        aspect-ratio: 1;
         position: relative;
         overflow: hidden;
       }
@@ -1161,10 +1168,12 @@ shows 3 columns. {%- endcomment -%}
            4-column default for the moment before this first runs. */
         document.body.style.setProperty('--cols', cols);
         document.body.dataset.cols = cols;
-        // Nothing to notify: the network stage is as wide as the page, so the width
-        // written here resizes it, and the graph's own ResizeObserver picks that up
-        // (see buildNetwork) — including a page-width change with no window resize
-        // behind it, such as a late image load.
+        // Nothing to notify: the stage is a square two columns wide, so a change of
+        // count moves it within the grid without resizing it, and where it does
+        // change size — the view coming out of display:none, or a page too narrow
+        // for the square, where min(100%, …) bites — the graph's own ResizeObserver
+        // picks that up (see buildNetwork), including a page-width change with no
+        // window resize behind it, such as a late image load.
       }
       return { avail: avail, cols: cols };
     }
@@ -1496,13 +1505,13 @@ shows 3 columns. {%- endcomment -%}
         layoutMasonry();
       } else if (view === 'network') {
         clearMasonry();
-        // The page is sized to the gallery's grid, and the network stage is as wide as
-        // the page — so the width has to be written before the graph is fitted into it.
-        // layoutMasonry is what normally writes it, and this branch must not run that.
-        // Without this the very first paint of a page that opens straight into the
-        // network view (?view=network, or the view persisted in localStorage) keeps the
-        // stylesheet's 4-column cap whatever the column count actually is, and the graph
-        // is laid out into a stage wider than the page it belongs to.
+        // The page is sized to the gallery's grid, and the network view is laid out on
+        // those same columns — so the width has to be written before the graph is
+        // fitted into its stage. layoutMasonry is what normally writes it, and this
+        // branch must not run that. Without this the very first paint of a page that
+        // opens straight into the network view (?view=network, or the view persisted
+        // in localStorage) keeps the stylesheet's 4-column cap whatever the column
+        // count actually is, and the stage is centred against a page it overhangs.
         syncPageWidth();
         initNetwork();
         // No refit call here either: showing the view takes the stage from 0×0 to its
@@ -1963,7 +1972,7 @@ shows 3 columns. {%- endcomment -%}
 
       var NODE_RADIUS = 3;
       // Canonical canvas the positions were baked into (scripts/layout-network.js).
-      var CANVAS = data.canvas || { w: 856, h: 600 };
+      var CANVAS = data.canvas || { w: 564, h: 564 };
 
       // SVG elements have to be created in the SVG namespace — document.createElement
       // would make an unknown HTML element that happens to be spelled "circle" and
@@ -2040,15 +2049,14 @@ shows 3 columns. {%- endcomment -%}
       // stage: uniform scale + center (object-fit: contain), so markers, labels
       // and link strokes keep their fixed pixel sizes. Runs once at render and
       // again on resize — no force simulation in the browser anymore.
-      // LABEL_HEADROOM nudges everything down: labels are drawn above their
-      // node (see setLabel's negative tspan y), so a node sitting right at
-      // the canvas top would otherwise have its label clipped by the stage edge.
-      var LABEL_HEADROOM = 32;
+      // Nothing is added to the centring: the canvas is square and so is the
+      // stage, so the fit leaves no slack to spend, and the label headroom a
+      // node at the top edge needs is baked into the canvas as FIT_MARGIN.
       function fitLayout() {
         var dim = dimensions();
         var scale = Math.min(dim.w / CANVAS.w, dim.h / CANVAS.h);
         var offX = (dim.w - CANVAS.w * scale) / 2;
-        var offY = (dim.h - CANVAS.h * scale) / 2 + LABEL_HEADROOM;
+        var offY = (dim.h - CANVAS.h * scale) / 2;
         nodes.forEach(function(n) {
           n.x = offX + n.bx * scale;
           n.y = offY + n.by * scale;
