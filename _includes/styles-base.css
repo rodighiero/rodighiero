@@ -93,8 +93,14 @@ a:hover { text-decoration: underline; }
 a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   outline: 2px solid var(--fg);
   outline-offset: 2px;
-  border-radius: 2px;
 }
+/* The ring follows border-radius, so an inline link — a box with no radius of its own —
+   gets a barely-rounded one to soften the corners. Split out at zero specificity
+   (:where() on both halves) rather than left in the rule above, where `button:focus-visible`
+   at 0-1-1 outranked `.card`'s own 4px and shrank a focused action tile's corners to 2px
+   for exactly as long as it held focus. Anything that sets its own radius now keeps it,
+   whatever its specificity or source order. */
+:where(a, button, [tabindex]):where(:focus-visible) { border-radius: 2px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 /* Skip link: off-screen until a keyboard user focuses it, then slides into view. */
 .skip-link {

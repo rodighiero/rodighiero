@@ -10,8 +10,9 @@ the page does not belong in this file.
 
 `viewport`, `robots`, `author`, two `theme-color`s (light/dark), `color-scheme`, the RSS
 `<link rel=alternate>`, `og:site_name`, `twitter:card`, the two Dublin Core schema links, and
-the icon/manifest set. Plus the pre-paint `colorScheme` restore script — not metadata, but it
-must run before the first paint and every page needs it.
+the icon/manifest set. It opens by including `_includes/site-scheme.html`, the pre-paint
+`colorScheme` restore script — not metadata, but it must run before the first paint. That one
+lives in its own file because `404.html` includes it directly and takes nothing else from here.
 
 `robots` is `index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1`.
 Indexing was never blocked; the three `max-*` directives only lift the caps on how a result

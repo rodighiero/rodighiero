@@ -86,8 +86,11 @@ The value is a **sort key**, not a publication date, and nothing else should rea
 
 ## `404.html`
 
-Standalone — its own inline CSS and the only page still loading `fonts/nunito.css`. It is
-`noindex` and carries **no `rel=canonical`**, for two independent reasons:
+Standalone — its own inline CSS, taking only two includes from the rest of the site:
+`styles-font.css` for the `@font-face` set and `site-scheme.html` for the pre-paint
+color-scheme restore, without which a stored light choice on a dark-preference machine would
+land on a dark 404 with no toggle to fix it. It is `noindex` and carries **no `rel=canonical`**,
+for two independent reasons:
 
 1. Pointing one at the homepage would ask crawlers to consolidate every missing URL into it.
 2. `count.js` derives its analytics path from `link[rel=canonical]` when that points at this
