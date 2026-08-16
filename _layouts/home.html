@@ -1717,6 +1717,17 @@ shows 3 columns. {%- endcomment -%}
       if (v === 'gallery') scheduleLayout();
     }
 
+    // The type slugs and their human labels, straight from _data/publication_types.yml —
+    // the same table the meta line reads, so a type filter names itself the way the cards
+    // below it do ("Book Chapter", not "chapter"). It is what typeLabel() falls back on
+    // when no action card is carrying a label of its own, which is the normal case: a
+    // ?type= URL is shareable whether or not a card for that type happens to exist.
+    var TYPE_LABELS = { {% for t in site.data.publication_types %}{{ t[0] | jsonify }}: {{ t[1].label | jsonify }}{% unless forloop.last %}, {% endunless %}{% endfor %} };
+    function typeLabel(slug) {
+      var el = document.querySelector('[data-action="type:' + slug + '"]');
+      return (el && el.dataset.filterLabel) || TYPE_LABELS[slug] || slug;
+    }
+
     try {
       var _params = new URLSearchParams(location.search);
       if (searchInput) { var _initialQ = _params.get('q'); if (_initialQ) searchInput.value = _initialQ; }
@@ -1724,8 +1735,7 @@ shows 3 columns. {%- endcomment -%}
       if (_initialType) {
         activeType = _initialType;
         // Reflect the filter as its label in the box (no focus on load).
-        var _tEl = document.querySelector('[data-action="type:' + _initialType + '"]');
-        activeFilterLabel = (_tEl && _tEl.dataset.filterLabel) || _initialType;
+        activeFilterLabel = typeLabel(_initialType);
         if (searchInput) searchInput.value = activeFilterLabel;
       }
       var _initialCluster = _params.get('cluster');
@@ -1825,7 +1835,7 @@ shows 3 columns. {%- endcomment -%}
           if (verb === 'type' && val) {
             activeType = (activeType === val) ? null : val;
             clearClusterFilter();
-            if (activeType) showFilterInInput(btn.dataset.filterLabel || val); else clearFilterInput();
+            if (activeType) showFilterInInput(typeLabel(val)); else clearFilterInput();
           } else if (verb === 'search' && val && searchInput) {
             searchInput.value = (searchInput.value === val) ? '' : val;
             activeType = null;
