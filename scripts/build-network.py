@@ -814,6 +814,16 @@ def main() -> int:
         f"{_clear.get('remaining')} after {_clear.get('passes')} pass(es)",
         file=sys.stderr,
     )
+    # `remaining` is how many nodes still sit on an edge they do not end. The
+    # separation pass is supposed to drive it to zero; anything left is a node
+    # printed on top of a stranger's link, so say it here rather than leaving it
+    # to be spotted in a line of routine build chatter.
+    if _clear.get("remaining"):
+        print(
+            f"WARNING: {_clear['remaining']} node(s) still overlap an edge after "
+            f"{_clear.get('passes')} pass(es) — inspect the graph before committing.",
+            file=sys.stderr,
+        )
     for node, (x, y) in zip(nodes, layout["positions"]):
         node["x"], node["y"] = x, y
     for i in translations:

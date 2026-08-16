@@ -63,17 +63,31 @@ CLUSTER_CARDS = {
 
 def enrich_clusters(clusters: list[dict]) -> list[dict]:
     """Add `title`, `description` and `filter_label` to each cluster from its auto `label`."""
+    unkeyed = []
     for c in clusters:
         label = c["label"]
         card = CLUSTER_CARDS.get(label, {})
         # Without an entry, fall back to the auto label and a template drawn from
         # the cluster's own TF-IDF terms — never a blank card.
+        if not card:
+            unkeyed.append(label)
         c["title"] = card.get("title", label)
         c["description"] = card.get(
             "description",
             f"{c['size']} works drawn together by {', '.join(c.get('terms', []))}.",
         )
         c["filter_label"] = card.get("filter", c["title"])
+    # The fallback is a safety net, not an outcome: a label shifts whenever cluster
+    # membership changes, and the auto text ships to the homepage looking deliberate.
+    # Say so loudly rather than letting a reworded card silently disappear.
+    if unkeyed:
+        print(
+            "WARNING: no CLUSTER_CARDS entry for "
+            + ", ".join(repr(l) for l in unkeyed)
+            + f" — {'these clusters' if len(unkeyed) > 1 else 'this cluster'} shipped auto text. "
+            "Add the key(s) to build-cards.py and re-run.",
+            file=sys.stderr,
+        )
     return clusters
 
 

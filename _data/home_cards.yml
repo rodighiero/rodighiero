@@ -1,7 +1,7 @@
 # Special cards on the homepage gallery (see the `layout` skill, reference/cards.md).
 #
-# `actions` — clickable tiles embedded in the gallery. Each `action` is either
-#           `view:<gallery|list|network>` (switches view) or
+# `actions` — clickable tiles embedded in the gallery. Each `action` is
+#           `view:<gallery|network>` (switches view), `search:<terms>`, or
 #           `type:<publication-type>` (filters the gallery to that front-matter
 #           `type`, e.g. map / book / chapter / journal / conference / magazine /
 #           interview). An empty list renders no action cards. An optional
@@ -18,7 +18,7 @@ actions: []
   # graph (see scripts/build-network.py → network.json `clusters`, rendered in
   # _layouts/home.html); they are no longer listed here.
   #
-  # Manual action cards can still be added: each `action` is `view:<gallery|list|network>`,
+  # Manual action cards can still be added: each `action` is `view:<gallery|network>`,
   # `type:<publication-type>`, or `search:<terms>`; an optional `pin: first` renders it as
   # the leading gallery tile. Example (a network-view lead card):
   #   - year: now

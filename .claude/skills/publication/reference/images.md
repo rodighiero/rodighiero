@@ -17,12 +17,8 @@ image).
 `@cards/` is safe to delete and rebuild, is the **only** image set the homepage loads, and is
 **never a source**: `og:image` keeps pointing at the full-size original in the publication's
 own folder, so a social preview never inherits the gallery downsize. It is also excluded from
-the image sitemap (`publication_figures.rb` drops it) — those are gallery/social crops, not
-article content.
-
-Note the excluded card images are not deindexed by their absence: they stay on the page as
-lead figures and as `og:image`. Blocking them would take a `robots.txt` disallow, which social
-crawlers honour too and would strip the preview image from those entries.
+the image sitemap — crops, not article content, and excluding one does not deindex it. Why:
+the **`seo`** skill (`reference/discovery.md`).
 
 ## Compression — method 6
 

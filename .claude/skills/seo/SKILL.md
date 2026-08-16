@@ -61,9 +61,10 @@ what `venue` names for that type: a serial (`periodical`), the book the work sit
 
 ### Add an ISSN or ISBN
 `issn:` / `isbn:` in the front matter; ISBNs unhyphenated, since hyphenating one correctly
-needs the registrant-range tables. **Validate the check digit before it lands** (ISSN mod-11,
-ISBN-13 mod-10) — a transcription slip is the realistic failure, and `publication_validator.rb`
-checks only the *shape* of both (`XXXX-XXXX`; 10 or 13 digits) and only warns. Sources: Crossref by DOI, a Zotero
+needs the registrant-range tables. `publication_validator.rb` checks the shape **and the
+check digit** (ISSN mod-11, ISBN-13 mod-10, ISBN-10 mod-11), so a transcription slip — the
+realistic failure — surfaces in the build log. It only *warns*, so read the log: a bad
+identifier still ships. Sources: Crossref by DOI, a Zotero
 export of Dario's library, the journal's own site, a library registry, or Dario. Coverage is
 partial **by design**: a venue where none could be confirmed carries no field, because a
 wrong identifier is worse than a missing one.
@@ -96,11 +97,11 @@ not the template.
 
 ## Invariants — don't break these
 
-- **One author identity.** Every name renders through `jsonld-person.html`, which gives Dario
-  `"@id": "https://orcid.org/0000-0002-1405-7062"` — identical to the `Person` `@id` in the
-  homepage `@graph`. That shared identifier is the only thing telling a crawler the author of
-  sixty-odd pages and the subject of the homepage are one entity. Without it each page
-  declares an unrelated person who happens to share a name.
+- **One author identity.** Every name renders through `jsonld-person.html`, which stamps
+  Dario's ORCID as his `@id` — identical to the `Person` `@id` in the homepage `@graph` (the
+  value is in `reference/jsonld.md`, and in the include itself). That shared identifier is the
+  only thing telling a crawler the author of sixty-odd pages and the subject of the homepage
+  are one entity. Without it each page declares an unrelated person who happens to share a name.
 - **Every byline role goes through `jsonld-people.html`**, not just `author` — `editor`,
   `translator`, and `interviewer`/`preface` folded into `contributor`. That is what keeps
   Dario in the graph of works he did not author (the interviews, the two *Analogous City*
@@ -143,7 +144,7 @@ not the template.
 | Zotero imports as "Document" or guesses artwork | no venue tag *and* a `dc` value it cannot map |
 | A magazine piece imports as journalArticle | known and accepted — it carries `citation_journal_title` so the venue survives |
 | Scholar shows a one-page article | `citation_lastpage` missing or shorter than `citation_firstpage` |
-| A translation shows no alternates | `translation_of` names a slug that does not resolve to a publication URL |
+| A translation shows no alternates | `translation_of` names a slug that does not resolve — the validator warns about this by name |
 | `dateModified` is today on an old entry | `year: Forthcoming` (no valid date to fall back to) or the deploy checked out shallow — `deploy.yml` needs `fetch-depth: 0` |
-| Build aborts on a publication | `publication_validator.rb` **error** — a required field, an unknown `type`, a missing image. A malformed ISSN/ISBN only warns, so it ships |
-| An alias 404s | it was skipped as a duplicate or for not starting with `/`; check the build warning |
+| Build aborts on a publication | `publication_validator.rb` **error** — see the **`publication`** skill. An ISSN/ISBN only ever *warns*, so a bad one ships unless the log is read |
+| An alias 404s | the redirect stub was skipped — the **`plugins`** skill has the two reasons and the warning to look for |

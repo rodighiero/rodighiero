@@ -8,8 +8,9 @@ retuning a card is a one-place edit that the header's alignment picks up on its 
 
 The gallery fits as many `--card-w` columns as the page can hold, **capped at 4**, so a card
 is the same size at every width above mobile and the leftover goes to the margins.
-`syncPageWidth()` then sizes `document.body` to exactly what the current count spans — the
-counts change at **628 / 922 / 1216 px** — so the header, bio, search bar and footer all end
+`syncPageWidth()` then sizes `document.body` to exactly what the current count spans — at
+today's tokens the counts change at **628 / 922 / 1216 px**, each of them `gridWidth(n) + PAGE_PAD`
+and so derived, not chosen — so the header, bio, search bar and footer all end
 where the last card ends, rather than a 2- or 3-column grid sitting centred in a wider page.
 
 ## `--page-gutter` is not decoration
@@ -85,8 +86,9 @@ page.
 
 **Network stage.** The sidebar is one column and the stage the rest, so the panel is exactly
 a card wide and the stage starts on a card edge. Within that span the stage is a **square two
-columns wide** (`2 × --card-w + --card-gap` = 564px, the same at every count, since the card
-width is the constant), `justify-self: center` — it fills the two remaining columns exactly at
+columns wide** (`2 × --card-w + --card-gap`, the same at every count, since the card width is
+the constant — and the square `scripts/layout-network.js` bakes its coordinates into, as
+`CANVAS_W`/`CANVAS_H`), `justify-self: center` — it fills the two remaining columns exactly at
 three and sits centred inside three at four. Its height comes from `aspect-ratio: 1` rather
 than a slice of the viewport: the view is as tall as the graph, instead of a `80vh − 9rem` box
 a wide canvas could only fill in the middle, leaving ~165px of dead space above and below.

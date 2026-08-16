@@ -1,7 +1,7 @@
 # Discovery — sitemap, robots, aliases, feed, 404
 
 How URLs are found, consolidated, and retired. Everything here is about *which* URLs exist and
-which one is canonical; what each page then says about itself is `reference/head.md`.
+which one is canonical; what each page then says about itself is `head.md`.
 
 ## `sitemap.xml`
 
@@ -18,15 +18,10 @@ The homepage declares the portrait. Each publication declares its **`figures`** 
 that actually appear inside the body, collected by `publication_figures.rb` off the raw
 content by scanning the `figure-single` / `figure-group` includes. Not the `thumb`.
 
-`publication_figures.rb` normalises two different call conventions (`figure-single` passes an
-absolute `src="/images/…"`, `figure-group` a pipe-delimited `images="slug/a.webp|…"` it
-prefixes itself), deduplicates per document, drops anything under `images/@cards/` — those are
-gallery and social crops, not article content — and skips a path missing from disk with a
-warning, since a 404 in an image sitemap is a crawl error rather than a discovery.
-
-Excluding the `@cards/` copies does **not** deindex them. They remain on the page as lead
-figures and as `og:image`; blocking them would take a `robots.txt` disallow, which social
-crawlers honour too and would strip the preview image from those entries.
+`images/@cards/` copies are excluded — gallery and social crops, not article content — and so
+is any path missing from disk. Excluding a card image does **not** deindex it: it stays on the
+page as a lead figure and as `og:image`. How the two call conventions are normalised and why
+each filter exists: the **`plugins`** skill (`reference/catalogue.md`, `publication_figures.rb`).
 
 ## `lastmod`
 
@@ -69,11 +64,9 @@ to sit on a publication). The stub is:
 <script>location.replace("<target>");</script>
 ```
 
-**It deliberately carries no `noindex`.** A `noindex` and a `rel=canonical` are contradictory
-instructions and Google resolves the conflict by picking the canonical, so the tag only
-argued with the line beneath it. What keeps an alias out of the index is the instant refresh,
-which a crawler follows to the real page; the canonical then hands that page credit for
-whatever links the alias earned — credit a `noindex` would throw away instead.
+**It deliberately carries no `noindex`** — the refresh is what keeps an alias out of the
+index, and the canonical is what hands the real page the alias's link credit. The full
+argument: the **`plugins`** skill (`reference/catalogue.md`, `publication_redirect.rb`).
 
 Path rules: an alias with no extension is written `<alias>.html` (served extensionless by both
 GitHub Pages and `jekyll serve`); one ending in `/` becomes `<alias>/index.html`. A duplicate
