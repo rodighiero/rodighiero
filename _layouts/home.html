@@ -1083,7 +1083,6 @@ shows 3 columns. {%- endcomment -%}
     var noResults = document.getElementById('no-results');
     var filterCount = document.getElementById('filter-count');
     var container = document.getElementById('publications');
-    var filtersBar = document.querySelector('.filters');
     var viewButtons = document.querySelectorAll('.view-toggle button');
     var total = publications.length;
     // Masonry packs every .card tile (publications + .action/.filter); count/search/network
@@ -1768,7 +1767,11 @@ shows 3 columns. {%- endcomment -%}
       activeFilterLabel = label;
       if (!searchInput) return;
       searchInput.value = label;
-      searchInput.focus();
+      // preventScroll, because focusing an element also asks the browser to scroll it into
+      // view — a second scroll, which cancels the one scrollToResults has in flight and
+      // parks the page wherever the glide had got to. The bar is sticky and already on
+      // screen, so there was never anything to scroll to.
+      searchInput.focus({ preventScroll: true });
       var n = searchInput.value.length;
       try { searchInput.setSelectionRange(n, n); } catch (e) {}
     }
@@ -1795,14 +1798,19 @@ shows 3 columns. {%- endcomment -%}
        inside the viewport the reader ends up watching, instead of behind it.
 
        Distance decides whether it glides, on the rule the tiles already follow: past a
-       screen of travel there is nothing for the eye to follow, so it cuts. Landing the
-       gallery under the sticky bar rather than at the viewport top keeps the bar from
-       covering the first row — it is showing the filter's own label, which is the only
-       thing on screen naming what just happened. */
+       screen of travel there is nothing for the eye to follow, so it cuts.
+
+       It stops at the foot of the bio panel — the last position before the biography
+       starts to unroll — rather than at the gallery's own top edge. That clears the whole
+       filter bar into view instead of pinning it stickily over the first row, and the
+       strip of masthead left showing keeps the jump legible as a move within the page.
+       With the bio collapsed there is nothing above to hold back, so it goes to the top. */
     function scrollToResults() {
       if (!container || document.body.dataset.view !== 'gallery') return;
-      var barH = filtersBar ? filtersBar.getBoundingClientRect().height : 0;
-      var target = Math.max(0, window.scrollY + container.getBoundingClientRect().top - barH);
+      var target = 0;
+      if (bioShell && document.documentElement.dataset.bioVisible === '1') {
+        target = Math.max(0, window.scrollY + bioShell.getBoundingClientRect().bottom);
+      }
       if (target >= window.scrollY) return;
       var far = window.scrollY - target > window.innerHeight;
       window.scrollTo({ top: target, behavior: (far || !motionOK()) ? 'auto' : 'smooth' });
