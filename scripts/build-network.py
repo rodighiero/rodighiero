@@ -757,24 +757,25 @@ def main() -> int:
     np.fill_diagonal(sim, 0)
     similarity = [[round(float(s), 4) for s in row] for row in sim]
 
-    # `related`: rank every other publication by cosine, but keep each *work*
-    # once — a translation ties its source (shared vector), and the tie breaks
-    # toward the original, so a translated work's own counterpart leads at ~1.00
-    # without a work ever taking two slots.
+    # `related`: rank by cosine over one candidate per *work*, picked before the
+    # ranking rather than deduplicated after it. A translation shares its
+    # source's vector, so the two are the same point in the space — and which of
+    # them a score puts first is not decidable: a BLAS matmul may compute two dot
+    # products of the very same row in different orders and disagree in the last
+    # bits, which is enough to let a translation displace its own original. The
+    # representative is therefore the original, except for the page's own work,
+    # where the sibling in the other language is the point of the suggestion and
+    # leads at ~1.00.
     for d, node in enumerate(nodes):
-        order = sorted(
-            (i for i in range(len(pubs)) if i != d),
-            key=lambda i: (-sim[d][i], 1 if pubs[i].get("translation_of") else 0, i),
-        )
-        ranked, seen = [], set()
-        for i in order:
-            w = _work(pubs[i])
-            if w in seen:
-                continue
-            seen.add(w)
-            ranked.append(i)
-            if len(ranked) == RELATED_K:
-                break
+        own = _work(pubs[d])
+        ranked = sorted(
+            (
+                i
+                for i, p in enumerate(pubs)
+                if i != d and (_work(p) == own or not p.get("translation_of"))
+            ),
+            key=lambda i: (-sim[d][i], i),
+        )[:RELATED_K]
         node["related"] = [
             {
                 "slug": pubs[i]["slug"],
