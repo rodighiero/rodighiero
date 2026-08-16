@@ -46,7 +46,7 @@ I better understood the esteem among architects (not all) for Rossi’s thinking
 
 Aldo Rossi, Eraldo Consolascio, Bruno Reichlin and Fabio Reinhart worked for months at composing this work and, similarly, it took me some time to decipher it, find the images, digitize book pages, and sometimes my curiosity led me to read the texts in them, which gave the urban fabric color and depth.
 
-In this way, this installation reveals itself as a modern tool, available to all of us, for pursuing our personal growth, and the time spent using this tool generates our affection towards it.
+In this way, this installation reveals itself as a modern tool, available to all of us, for pursuing our personal growth, and the time spent using this tool generates our affection toward it.
 
 The work has required time and passion. Initially, references arrived quickly, but little by little as the puzzle was being completed, to recover a certain reference became increasingly difficult and took more and more time. For instance, the last reference was found thanks to the help of Beatrice Lampariello, and required months of research, in the spare moments that I had during my doctorate study at EPFL. Reconstructing the tracks required such a long time, in scattered moments, that even now I could not tell exactly how many tracks make up The Analogous City. I count 42.
 
