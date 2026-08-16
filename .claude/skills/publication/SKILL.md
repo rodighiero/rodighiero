@@ -1,6 +1,6 @@
 ---
 name: publication
-description: Every operation on a publication — the Markdown files in _publications/ and everything downstream of them. Use for adding a new entry, editing front matter or body text, adding a translation, adding or replacing images and thumbnails, adding figures or tables, fixing a dead reference, adding an ISSN/ISBN or a redirect alias, retiring an entry, or checking why the build warns about one.
+description: Every operation on a publication — the Markdown files in _publications/, the publication page they render into, and everything downstream. Use for adding a new entry, editing front matter or body text, adding a translation, adding or replacing images and thumbnails, adding figures or tables, styling a data table or an equation, fixing a dead reference, renaming or retiring an entry, or checking why the build aborts on one. Which field to type is here; what that field then declares to machines is the seo skill.
 ---
 
 # The publication object
@@ -14,8 +14,12 @@ The slug is the filename. It is also the URL, the `images/<slug>/` folder name, 
 `images/@cards/<slug>.webp` name, and the key other entries reference in `translation_of`
 and `redirect_from`. Renaming a file means renaming all of those.
 
-Field-by-field schema, per type: `reference/front-matter.md`.
-Image layout, compression, the portrait ladder and the icon set: `reference/images.md`.
+| Reference | Holds |
+|---|---|
+| `reference/front-matter.md` | field-by-field schema, per type |
+| `reference/images.md` | image layout, compression, the portrait ladder, the icon set |
+| `reference/page.md` | `_layouts/publication.html` — the figure, table and equation vocabulary the bodies are written against |
+| `reference/naming.md` | how `_includes/` are named, and the renames already settled |
 
 ## Adding a publication — the whole sequence
 
@@ -35,16 +39,15 @@ edit that doesn't touch `thumb` or the abstract needs only step 6.
 ### Edit an existing entry
 Body text changes shift its embedding, so they need a network rebuild. Front-matter
 metadata (venue, DOI, ISSN, pages) does not. Either way, every edit bumps the file's
-`commit_date`, which feeds sitemap `lastmod`, `article:modified_time`, and JSON-LD
-`dateModified` — so avoid touching all 63 files at once for a cosmetic reason.
+`commit_date` — so avoid sweeping the whole corpus for a cosmetic reason. What that value
+feeds: the **`plugins`** skill (`system_commit_date.rb`).
 
 ### Add a translation
 The translation is its own file with its own slug and its own front matter, carrying
 `lang: it|fr` and `translation_of: <original-slug>`. It shares the original's `thumb`.
-That single field produces: reciprocal `hreflang` alternates with `x-default` on the
-original, `og:locale:alternate`, JSON-LD `translationOfWork` / `workTranslation`, and the
-forced dashed edge in the network. A translation is never embedded — it borrows its
-source's vector.
+That one field then drives the whole alternates set (the **`seo`** skill) and the forced
+dashed network edge (the **`network`** skill, which also explains why a translation is
+never embedded).
 
 ### Add figures or a table
 Figures: `{% include figure-single.html src="/images/<slug>/fig_00N.webp" caption="…" %}`,
@@ -53,8 +56,11 @@ or `figure-group.html` with a pipe-delimited `images=`. Width modifiers: `narrow
 Tables wrap a Markdown table in `<figure class="data-table" markdown="1"> … <figcaption>Table N. …</figcaption></figure>`
 — the `markdown="1"` is what opts the inner table into kramdown.
 
-Only figures that appear **in the body** are declared in the image sitemap
-(`publication_figures.rb` scans the raw content); `@cards/` copies are excluded.
+The rest of the vocabulary — `wrap`, `media`, `bordered`, the `equation` pair, how captions
+are sized and what `wide` actually breaks out of — is `reference/page.md`.
+
+Only figures that appear **in the body** are declared in the image sitemap; `@cards/` copies
+are excluded. Why, and by which plugin: the **`plugins`** skill (`publication_figures.rb`).
 
 ### Replace a card image
 Change `thumb:`, rerun `generate-thumbnails.py`. `thumb` is the single image field: it is
@@ -75,16 +81,15 @@ to the real page (no `noindex`; see the `seo` skill for why). Also rename `image
 update any `translation_of` pointing at the old slug, and rebuild the network.
 
 ### Add an ISSN/ISBN
-Both are invisible on the page and exist purely for Google Scholar and Zotero. Sources:
-Crossref by DOI, Dario's Zotero library, the journal's own site, or Dario. **Check-digit
-validate before adding** (ISSN mod-11, ISBN-13 mod-10) — a wrong identifier is worse than a
-missing one, and coverage is partial by design. ISSN: write the ISSN-L (normally print);
-the check digit may be `X`. ISBN: stored unhyphenated.
+`issn:` (ISSN-L, hyphenated, check digit may be `X`) and `isbn:` (unhyphenated). The build
+verifies both check digits and warns on a slip. Both are invisible on the page and exist
+purely for Google Scholar and Zotero, so the **`seo`** skill owns them — where to source one,
+and why coverage is partial.
 
 ### Add a publication type
 One entry in `_data/publication_types.yml` — `label`, `schema`, `dc`, optional
-`citation_venue` and `container`. Nothing else needs to know. `container` decides how
-`venue` is modelled: `periodical`, `book`, or omitted (venue *is* the press).
+`citation_venue` and `container`; no template or plugin needs changing. Choosing the right
+`schema` / `dc` / `container` values is a machine-metadata decision: the **`seo`** skill.
 
 ## House style
 
@@ -104,15 +109,26 @@ One entry in `_data/publication_types.yml` — `label`, `schema`, `dc`, optional
 (aborting the build) on: a missing required field (`title`, `year`, `venue`, `type`,
 `thumb`, and `author` unless `editor` is present), a `year` that is neither four digits nor
 `Forthcoming`, a `type` absent from `publication_types.yml`, or a `thumb` missing from
-disk. It **warns** on a DOI that isn't a URL, a malformed ISSN or ISBN, and an out-of-range
-`month`/`day`.
+disk. It **warns** on a DOI that isn't a URL, an out-of-range `month`/`day`, an ISSN or ISBN
+that fails its shape or its check digit, and a `translation_of` naming no publication.
+Warnings ship — read the log.
 
 Broken external links are a separate, scheduled concern — a red `links.yml` run is
 maintenance, not a broken build. See the `links` skill.
 
-## Don't
+## Invariants — don't break these
 
-- Don't hand-edit `_data/network.json` or anything in `images/@cards/` — both are generated.
+- Don't hand-edit `_data/network.json`, `_includes/network-*.svg` or anything in `images/@cards/` — all are generated, and a hand-edit is silently reverted by the next rebuild.
 - Don't add a second image field. There is one, `thumb`, and the card and social preview must not diverge.
-- Don't rename `figure-single` / `figure-group`: 334 call sites across 60 files, and rewriting them would bump every publication's `commit_date`.
+- Don't rename `figure-single` / `figure-group`: they are called from nearly every publication, so a rename rewrites the corpus and bumps every `commit_date`. Count the call sites before arguing otherwise — `/usr/bin/grep -ro "include figure-" _publications | /usr/bin/wc -l`.
 - Don't put a source image outside its publication's own folder.
+
+## Troubleshooting
+
+| Symptom | Cause |
+|---|---|
+| Build aborts naming a publication | a required field is missing, or `year` / `type` / `thumb` is invalid — the validator's message names the file and the field |
+| A new entry has no `related` list and sits in no cluster | the network was not rebuilt after it was added |
+| Card image is right, social preview is wrong (or vice versa) | impossible by construction — both read `thumb`; if they differ, one surface is reading a stale `@cards/` copy, so rerun `generate-thumbnails.py` |
+| A table renders as literal pipes | the wrapping `<figure>` is missing `markdown="1"` |
+| A figure is missing from the image sitemap | it isn't in the body — only body figures are declared |

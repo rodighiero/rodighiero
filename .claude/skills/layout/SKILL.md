@@ -19,16 +19,16 @@ A third **list** view was removed; cards no longer carry an abstract/`.card-desc
 
 **The card width is the constant and everything else follows from it** — the column count,
 the page's own width, the header, the footer, the network stage. There are no hand-picked
-breakpoints. `--card-w` (270px), `--card-gap` (24px) and `--page-gutter` (32px) are declared
-once in `_includes/styles-base.css` and read at runtime by the masonry
-(`CARD_W`/`GAP_X`/`PAGE_PAD`, via `getComputedStyle`) rather than copied into it, so
-retuning a card is a one-place edit that every other block picks up on its own.
+breakpoints. `--card-w`, `--card-gap` and `--page-gutter` are declared once in
+`_includes/styles-base.css` and read at runtime by the masonry (`CARD_W`/`GAP_X`/`PAGE_PAD`,
+via `getComputedStyle`) rather than copied into it, so retuning a card is a one-place edit
+that every other block picks up on its own.
 
 `syncPageWidth()` sizes `document.body` to exactly what the current column count spans and
 publishes that count as **`--cols`** (the number to compute with) and **`data-cols`** (the
 hook for rules that cannot compute) on `<body>`.
 
-Full arithmetic, thresholds and the per-block grids: `reference/grid.md`.
+Token values, the derived thresholds and the per-block grids: `reference/grid.md`.
 
 ## Where things live
 
@@ -36,7 +36,8 @@ Full arithmetic, thresholds and the per-block grids: `reference/grid.md`.
 |---|---|
 | Markup, all JS, page-specific CSS | `_layouts/home.html` |
 | Tokens, `.card*`, `.authors`, `.card-meta`, mode toggle | `_includes/styles-base.css` |
-| Every card's markup (publication, action, cluster) | `_includes/card-action.html`, `_includes/card-meta.html` |
+| Publication card markup | inline in the Liquid loop in `_layouts/home.html` |
+| Action and cluster tile markup | `_includes/card-action.html` (both kinds; `card-meta.html` is the meta line every card shares) |
 | Manual action cards | `_data/home_cards.yml` |
 | Cluster cards + graph miniatures | `_data/network.json`, `_includes/network-*.svg` (generated) |
 | Bio prose | `README.md` (via `_plugins/system_readme.rb`) |
@@ -45,11 +46,19 @@ Full arithmetic, thresholds and the per-block grids: `reference/grid.md`.
 ## Operations
 
 ### Retune the card, the gap or the gutter
-Edit the token in `styles-base.css` — nothing else copies it. Two consequences to carry
-through by hand: the `_mobile_max` Liquid assign at the top of `home.html` is
-`gridWidth(3) + PAGE_PAD - 1`, so it moves whenever `--page-gutter` does; and
-`--page-gutter` is a **sum**, not a taste — redo it if you touch the toggle, its inset,
-the icon or the focus ring. Both are worked out in `reference/grid.md`.
+Edit the token in `styles-base.css` — nothing else *on the page* copies it. Three
+consequences to carry through by hand:
+
+1. The `_mobile_max` Liquid assign at the top of `home.html` is `gridWidth(3) + PAGE_PAD - 1`,
+   so it moves whenever `--card-w`, `--card-gap` or `--page-gutter` does.
+2. `--page-gutter` is a **sum**, not a taste — redo it if you touch the toggle, its inset,
+   the icon or the focus ring.
+3. The network stage is a square two columns wide, and `scripts/layout-network.js` hardcodes
+   that square as `CANVAS_W`/`CANVAS_H`. A token change moves the stage but not the baked
+   coordinates, which are then fit-scaled to a different square — retune the constants and
+   rebuild. See the **`network`** skill's own `reference/tuning.md`.
+
+The first two are worked out in `reference/grid.md`.
 
 ### Add or reword an action card
 Append to `_data/home_cards.yml`: `label`, `action`, optional `year` / `eyebrow` / `venue` /

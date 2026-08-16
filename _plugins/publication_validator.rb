@@ -1,5 +1,6 @@
 # Validates every publication's front matter — required fields, valid type,
-# referenced images on disk, ISSN/ISBN shape. Introduces no identifier a
+# referenced images on disk, ISSN/ISBN shape *and* check digit, and that
+# translation_of resolves to a real publication. Introduces no identifier a
 # template can read; its output is the build log.
 #
 # Warnings are advisory; an error raises and aborts the build, so bad metadata
@@ -18,6 +19,10 @@ class Jekyll::FrontMatterValidator < Jekyll::Generator
     docs = site.collections['publications']&.docs
     return unless docs
 
+    # translation_of names another publication by slug, so the whole set has to
+    # be known before any single document can be checked against it.
+    @slugs = docs.map { |doc| slug_for(doc) }
+
     docs.each { |doc| validate_publication(doc) }
 
     report_issues
@@ -25,8 +30,12 @@ class Jekyll::FrontMatterValidator < Jekyll::Generator
 
   private
 
+  def slug_for(doc)
+    doc.data['slug'] || doc.basename
+  end
+
   def validate_publication(doc)
-    slug = doc.data['slug'] || doc.basename
+    slug = slug_for(doc)
     data = doc.data
 
     # Check required fields (author can be replaced by editor)
@@ -71,16 +80,64 @@ class Jekyll::FrontMatterValidator < Jekyll::Generator
 
     # Validate ISSN format if present (journals have this). The check digit may be
     # an X — 0024-094X (Leonardo) and 2073-445X (Land) both are — so it is not \d.
-    if data['issn'] && !data['issn'].to_s.match?(/\A\d{4}-\d{3}[\dX]\z/)
-      @warnings << "#{slug}: issn '#{data['issn']}' doesn't match format XXXX-XXXX"
+    if data['issn']
+      issn = data['issn'].to_s
+      if !issn.match?(/\A\d{4}-\d{3}[\dX]\z/)
+        @warnings << "#{slug}: issn '#{issn}' doesn't match format XXXX-XXXX"
+      else
+        expected = issn_check_digit(issn.delete('-'))
+        unless issn[-1].upcase == expected
+          @warnings << "#{slug}: issn '#{issn}' fails its check digit (mod 11 expects #{expected}) — likely a transcription error"
+        end
+      end
     end
 
     # ISBN-13 or ISBN-10 (whose check digit may also be an X), hyphens optional.
     if data['isbn']
       bare = data['isbn'].to_s.delete('- ')
-      unless bare.match?(/\A(\d{13}|\d{9}[\dX])\z/)
+      if !bare.match?(/\A(\d{13}|\d{9}[\dX])\z/)
         @warnings << "#{slug}: isbn '#{data['isbn']}' is neither a 13- nor a 10-digit ISBN"
+      else
+        expected = bare.length == 13 ? isbn13_check_digit(bare) : isbn10_check_digit(bare)
+        unless bare[-1].upcase == expected
+          @warnings << "#{slug}: isbn '#{data['isbn']}' fails its check digit (expects #{expected}) — likely a transcription error"
+        end
       end
+    end
+
+    # A translation names its original by slug; an unresolved one silently costs
+    # the page its hreflang alternates and its forced network edge.
+    if data['translation_of'] && !@slugs.include?(data['translation_of'].to_s)
+      @warnings << "#{slug}: translation_of '#{data['translation_of']}' matches no publication"
+    end
+  end
+
+  # ISSN: seven digits weighted 8..2, check digit = 11 - (sum mod 11), where
+  # 10 is written X and 11 is written 0.
+  def issn_check_digit(bare)
+    sum = bare[0, 7].chars.each_with_index.sum { |c, i| c.to_i * (8 - i) }
+    mod_11_digit(sum)
+  end
+
+  # ISBN-10: nine digits weighted 10..2, same mod-11 rule as the ISSN.
+  def isbn10_check_digit(bare)
+    sum = bare[0, 9].chars.each_with_index.sum { |c, i| c.to_i * (10 - i) }
+    mod_11_digit(sum)
+  end
+
+  # ISBN-13 (and every EAN-13): twelve digits weighted 1,3,1,3…, check digit
+  # = (10 - sum mod 10) mod 10. No X is possible here.
+  def isbn13_check_digit(bare)
+    sum = bare[0, 12].chars.each_with_index.sum { |c, i| c.to_i * (i.even? ? 1 : 3) }
+    ((10 - sum % 10) % 10).to_s
+  end
+
+  def mod_11_digit(sum)
+    remainder = 11 - sum % 11
+    case remainder
+    when 11 then '0'
+    when 10 then 'X'
+    else remainder.to_s
     end
   end
 

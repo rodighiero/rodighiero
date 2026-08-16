@@ -68,7 +68,6 @@ Rules:
 - **A URL with no usable capture is left alone.** A fabricated or wrong-content archive link is
   worse than an honest dead one.
 
-Editing a publication file this way bumps its `commit_date`, which feeds sitemap `lastmod`,
-`article:modified_time` and JSON-LD `dateModified` — expected here, but a reason not to sweep
-every file at once for a cosmetic reason. Body text changes also shift the embedding: see the
-`publication` and `network` skills.
+Editing a publication file this way bumps its `commit_date` — expected for a real repair, but
+a reason not to sweep every file at once (what the value feeds: the **`plugins`** skill). Body
+text changes also shift the embedding: the **`publication`** and **`network`** skills.

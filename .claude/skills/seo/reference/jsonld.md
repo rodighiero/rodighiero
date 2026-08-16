@@ -118,4 +118,4 @@ affiliation or job title is edited here by hand, and the bio in `README.md` is a
 text that must agree in fact but not in wording.
 
 `ProfilePage.dateModified` uses `site.time` (build time), not `commit_date`. The homepage's
-*sitemap* `lastmod` uses the repo-wide `commit_date` instead — see `reference/discovery.md`.
+*sitemap* `lastmod` uses the repo-wide `commit_date` instead — see `discovery.md`.

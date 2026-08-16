@@ -50,8 +50,8 @@ Adding, removing or editing the body of any publication invalidates the graph. R
 
 Then check, before committing:
 - cluster count and labels (`python3 -c "import json;d=json.load(open('_data/network.json'));print([c['label'] for c in d['clusters']])"`);
-- that every label still has a `CLUSTER_CARDS` key in `scripts/build-cards.py` — a shifted label silently falls back to auto text;
-- the build's `node/edge clearance: N at settle, M after K pass(es)` line — `M` must be 0;
+- that every label still has a `CLUSTER_CARDS` key in `scripts/build-cards.py` — a shifted label falls back to auto text, and the script prints a `WARNING:` naming the label when it does;
+- the build's `node/edge clearance: N at settle, M after K pass(es)` line — `M` must be 0, and a non-zero `M` prints its own `WARNING:`;
 - `git status` for new/deleted `_includes/network-cluster-*.svg` (stale ones are auto-deleted).
 
 **The layout seed is random per run**, so a rebuild moves every node even when nothing changed. Expect a large diff in `network.json` and in every SVG; that is normal, not a bug. Don't rebuild "to check" — rebuild when the inputs changed.
@@ -87,4 +87,4 @@ Add the `lang` code → opus-mt model to `OPUS_MODELS` in `build-network.py`, th
 | Miniature is black in night mode | it got referenced as `<img>` instead of inlined through the card's `media` slot |
 | Build fails at the layout step | Node missing from PATH (`scripts/layout-network.js` + vendored d3) |
 
-Homepage/gallery behaviour that merely *consumes* the network (stage sizing, `--cols`, filters, view transitions) lives in `_layouts/home.html` and is documented in CLAUDE.md — not here.
+Homepage/gallery behaviour that merely *consumes* the network (stage sizing, `--cols`, filters, view transitions) lives in `_layouts/home.html` and is documented in the **`layout`** skill — not here. The seam: this skill owns the baked coordinates, the links and the `related` arrays; `layout` owns the stage they are fit-scaled into.

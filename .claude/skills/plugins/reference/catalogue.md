@@ -185,9 +185,15 @@ metadata is caught on every deploy rather than shipped.
 | `thumb` resolves to a file under `images/` | error |
 | `month` 1–12, `day` 1–31 | warning (the value is clamped downstream) |
 | `doi` starts with `http(s)://` | warning |
-| `issn` matches `\d{4}-\d{3}[\dX]` | warning |
-| `isbn` is 13 digits, or 10 with an `X` allowed | warning |
+| `issn` matches `\d{4}-\d{3}[\dX]`, then its mod-11 check digit | warning |
+| `isbn` is 13 digits (mod-10) or 10 with an `X` allowed (mod-11), then its check digit | warning |
+| `translation_of` names a slug in the collection | warning |
 
-Both identifier checks are **shape only** — no check-digit arithmetic, so a transcribed digit
-passes. Validate ISSN mod-11 / ISBN-13 mod-10 by hand before adding one. The `[\dX]` is not an
-oversight: `0024-094X` (*Leonardo*) and `2073-445X` (*Land*) both end in X.
+The `[\dX]` is not an oversight: `0024-094X` (*Leonardo*) and `2073-445X` (*Land*) both end in
+X, and the mod-11 rule is what produces that X. Both identifier checks are warnings rather
+than errors — a wrong identifier is bad metadata, not a broken site, so it should not block a
+deploy; it does mean the log has to be read.
+
+`translation_of` is checked against the whole collection, so it needs every slug before it can
+judge any one document — that is why the generator collects them up front rather than
+resolving per document.

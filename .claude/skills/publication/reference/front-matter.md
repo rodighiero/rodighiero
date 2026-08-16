@@ -58,7 +58,7 @@ subject of the homepage are one person.
 | `issn` | no | Scholar + Zotero; ISSN-L, check digit may be `X` |
 | `isbn` | no | Scholar + Zotero; unhyphenated |
 
-Check-digit validate both before adding. Coverage is partial by design.
+The validator checks both check digits and warns on a bad one. Coverage is partial by design.
 
 ## Language and translation
 
