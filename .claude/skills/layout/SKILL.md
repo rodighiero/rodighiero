@@ -1,9 +1,9 @@
 ---
-name: homepage
-description: Every operation on the homepage — the gallery grid and its masonry, the column arithmetic that sizes the whole page, the card system and the special/action/cluster tiles, the search and filter pipeline, the tile and view-switch motion, and the bio collapse. Use for retuning card width or gutters, adding or rewording an action card, changing what is searchable or filterable, adjusting the spring easing or the scroll behaviour, fixing a layout that overflows or a toggle that gets painted over, or working out why a tile jumps instead of sliding.
+name: layout
+description: Every operation on _layouts/home.html, the homepage — the gallery grid and its masonry, the column arithmetic that sizes the whole page, the card system and the special/action/cluster tiles, the search and filter pipeline, the tile and view-switch motion, and the bio collapse. Use for retuning card width or gutters, adding or rewording an action card, changing what is searchable or filterable, adjusting the spring easing or the scroll behaviour, fixing a layout that overflows or a toggle that gets painted over, or working out why a tile jumps instead of sliding. It is the homepage layout only — _layouts/publication.html is a separate file this skill does not cover.
 ---
 
-# The homepage object
+# The layout object
 
 `_layouts/home.html` is the only top-level publications page. It has two view modes,
 toggled in the search bar and persisted in `localStorage` under `publicationView`:

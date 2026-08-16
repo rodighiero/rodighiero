@@ -122,7 +122,7 @@
     {% if _contributors != '' %}{% include jsonld-people.html property="contributor" names=_contributors %}{% endif %}
     {% if page.year and page.year != "Forthcoming" %}"datePublished": "{{ page.year }}",{% endif %}
     {% if page.commit_date %}"dateModified": "{{ page.commit_date }}",{% endif %}
-    {%- comment -%} venue is type-dependent (see CLAUDE.md): for a book or a map it names
+    {%- comment -%} venue is type-dependent (see the `seo` skill): for a book or a map it names
     the press, so it stays the publisher; for every other type it names the container the
     work sits inside, which is isPartOf — a Periodical (nested through PublicationVolume /
     PublicationIssue when those are known) or the book/proceedings. Which is which comes
@@ -175,7 +175,7 @@
        once in styles-base.css (the homepage bio wears the same one); its own comment
        carries the terms and the Safari longhand caveat. What is specific to this page is
        why it earns its place: the dictionary is picked by the page's own language, and
-       every publication already declares its real one on <html> (see SEO in CLAUDE.md),
+       every publication already declares its real one on <html> (see the `seo` skill),
        so the French and Italian articles break by their own rules rather than English
        ones — at a 660px measure their longer words otherwise leave a very deep rag. And
        limit-lines caps the ladder of consecutive hyphenated lines, which at this measure
