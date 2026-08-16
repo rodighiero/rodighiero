@@ -34,6 +34,29 @@ const NODE_RADIUS = 3;
 // click separation, not label legibility — kept tight enough that linked nodes
 // pull into visibly distinct cluster knots rather than a uniform blob.
 const NODE_SPACING = 18;
+// Node–edge clearance. A marker is filled with the page background and drawn
+// over the link layer, so a node resting on an edge knocks that line out on
+// both sides — which is exactly what a junction looks like, and the node then
+// reads as connected to two publications it has no edge to. So no marker may
+// come within EDGE_CLEARANCE of a segment it does not end: the marker itself
+// plus its hover ring (NODE_RADIUS + 2), plus room to read as clear of it.
+// The clearance is held twice — as a force during the simulation, which lets
+// the arrangement settle around it, and as a deterministic pass afterwards,
+// which guarantees it (see below: the pass runs after the fit, since a uniform
+// scale under 1 shrinks every gap the force had won).
+const EDGE_CLEARANCE = NODE_RADIUS + 6;
+const EDGE_CLEAR_STRENGTH = 0.4;   // share of the shortfall applied per tick
+const EDGE_CLEAR_PASSES = 60;      // cap on the sweeps that finish the job
+// Overshoot of each repair, in px: a sweep that moves a node to exactly the
+// clearance leaves it on the boundary, where float noise re-reports it as an
+// incidence and the sweeps trade it back and forth until the cap. A hair past
+// converges instead, and survives the 2-decimal rounding of the output.
+const EDGE_CLEAR_EPSILON = 0.05;
+// Floor on centre-to-centre distance in those sweeps: nudging a node off an
+// edge must not park it on another node. Far below the simulation's collide
+// radius (NODE_RADIUS + NODE_SPACING) — this is the marker-overlap floor, not
+// the spacing that shapes the cloud.
+const MIN_NODE_GAP = 2 * NODE_RADIUS + 4;
 const CHARGE_STRENGTH = -280;
 const STRONG_SIM = 0.65;
 // Mutual k-nearest-neighbor: an English node pair is linked only when each
@@ -238,6 +261,52 @@ function main(input) {
     }
   }
 
+  // ── Node–edge incidences ──
+  // Walk every (node, edge) pair where the node is not one of the edge's two
+  // ends and lies closer to it than EDGE_CLEARANCE, calling `visit` with the
+  // unit vector pointing off the segment and the shortfall to make up. Returns
+  // the count, so the same walk both measures and repairs. Reads positions
+  // live, which is what lets the repair pass re-check its own work.
+  function edgeIncidences(visit) {
+    let count = 0;
+    for (let k = 0; k < links.length; k++) {
+      const si = links[k].source, ti = links[k].target;
+      const a = nodes[si], b = nodes[ti];
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const len2 = dx * dx + dy * dy;
+      if (len2 < 1e-9) continue;               // degenerate segment: nothing to clear
+      for (let i = 0; i < N; i++) {
+        if (i === si || i === ti) continue;
+        const n = nodes[i];
+        const t = ((n.x - a.x) * dx + (n.y - a.y) * dy) / len2;
+        if (t < 0 || t > 1) continue;          // off the end: collide governs there
+        let ox = n.x - (a.x + t * dx), oy = n.y - (a.y + t * dy);
+        let d = Math.sqrt(ox * ox + oy * oy);
+        if (d >= EDGE_CLEARANCE) continue;
+        if (d < 1e-6) {                        // exactly on the line: take its normal,
+          const len = Math.sqrt(len2);         // so the direction is not seed noise
+          ox = -dy / len; oy = dx / len;
+        } else { ox /= d; oy /= d; }
+        count++;
+        if (visit) visit(n, a, b, ox, oy, EDGE_CLEARANCE - d, t);
+      }
+    }
+    return count;
+  }
+
+  // The force half: push the node off the line, and let the segment yield half
+  // as much, split between its ends by where along it the node sits — so a long
+  // edge bows away rather than the node alone having to find room.
+  function forceEdgeClear(alpha) {
+    const k = EDGE_CLEAR_STRENGTH * alpha;
+    edgeIncidences(function (n, a, b, ox, oy, short, t) {
+      const f = short * k;
+      n.vx += ox * f; n.vy += oy * f;
+      a.vx -= ox * f * 0.5 * (1 - t); a.vy -= oy * f * 0.5 * (1 - t);
+      b.vx -= ox * f * 0.5 * t;       b.vy -= oy * f * 0.5 * t;
+    });
+  }
+
   // forceLink mutates link.source/target into node refs — give it a copy so the
   // emitted `links` keep their integer indices.
   const simLinks = links.map(function (l) { return { source: l.source, target: l.target, value: l.value }; });
@@ -251,6 +320,7 @@ function main(input) {
     .force('x', d3.forceX(function (d) { return targets[d.i].x; }).strength(GRAVITY))
     .force('y', d3.forceY(function (d) { return targets[d.i].y; }).strength(GRAVITY))
     .force('collide', d3.forceCollide().radius(NODE_RADIUS + NODE_SPACING))
+    .force('edgeClear', forceEdgeClear)
     .stop();
   for (let i = 0; i < LAYOUT_TICKS; i++) simulation.tick();
 
@@ -272,12 +342,55 @@ function main(input) {
   const ty = (CANVAS_H - spanY * fit) / 2 - minY * fit;
   nodes.forEach(function (n) { n.x = n.x * fit + tx; n.y = n.y * fit + ty; });
 
+  // ── Node–edge clearance, guaranteed ──
+  // The force above shapes the arrangement around the clearance while the
+  // simulation is warm, but it is one force among several, it fades with alpha,
+  // and the fit just applied rescales every gap it won (a uniform scale under 1
+  // shrinks the distance to a line as surely as the distance between markers).
+  // So the invariant is established here, in the units the page will draw:
+  // sweep the incidences, move each offender straight out to the clearance,
+  // keep it inside the margin box and off its neighbours, then measure again —
+  // a nudge can create the next incidence, which is why this iterates instead
+  // of sweeping once. A node in a pocket too dense to free is left where it is
+  // and counted, rather than the map being distorted to satisfy a constant.
+  const clearAtSettle = edgeIncidences(null);
+  let clearPasses = 0;
+  for (; clearPasses < EDGE_CLEAR_PASSES; clearPasses++) {
+    let moved = 0;
+    edgeIncidences(function (n, a, b, ox, oy, short) {
+      const step = short + EDGE_CLEAR_EPSILON;
+      n.x += ox * step; n.y += oy * step;
+      moved++;
+    });
+    if (!moved) break;
+    nodes.forEach(function (n) {
+      n.x = Math.max(FIT_MARGIN, Math.min(CANVAS_W - FIT_MARGIN, n.x));
+      n.y = Math.max(FIT_MARGIN, Math.min(CANVAS_H - FIT_MARGIN, n.y));
+    });
+    for (let i = 0; i < N; i++) {          // one relaxation sweep at the
+      for (let j = i + 1; j < N; j++) {    // marker-overlap floor
+        const p = nodes[i], q = nodes[j];
+        let dx = q.x - p.x, dy = q.y - p.y;
+        let d = Math.sqrt(dx * dx + dy * dy);
+        if (d >= MIN_NODE_GAP) continue;
+        if (d < 1e-6) { dx = 1; dy = 0; d = 1; }   // coincident: split along x
+        const push = (MIN_NODE_GAP - d) / d / 2;
+        p.x -= dx * push; p.y -= dy * push;
+        q.x += dx * push; q.y += dy * push;
+      }
+    }
+  }
+  const clearRemaining = edgeIncidences(null);
+
   const positions = nodes.map(function (n) {
     return [Math.round(n.x * 100) / 100, Math.round(n.y * 100) / 100];
   });
 
   process.stdout.write(JSON.stringify({
     seed: LAYOUT_SEED,
+    // Reported by build-network.py beside the seed: stderr here is captured and
+    // shown only on failure, so what the build should say travels in the result.
+    clearance: { atSettle: clearAtSettle, remaining: clearRemaining, passes: clearPasses },
     canvas: { w: CANVAS_W, h: CANVAS_H },
     positions: positions,
     links: links,
