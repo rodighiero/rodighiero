@@ -1077,6 +1077,7 @@ shows 3 columns. {%- endcomment -%}
     var noResults = document.getElementById('no-results');
     var filterCount = document.getElementById('filter-count');
     var container = document.getElementById('publications');
+    var filtersBar = document.querySelector('.filters');
     var viewButtons = document.querySelectorAll('.view-toggle button');
     var total = publications.length;
     // Masonry packs every .card tile (publications + .action/.filter); count/search/network
@@ -1752,6 +1753,38 @@ shows 3 columns. {%- endcomment -%}
       activeFilterLabel = null;
       if (searchInput) searchInput.value = '';
     }
+    /* Selecting a research cluster is the one filter that moves the page for the reader,
+       because it is the one filter whose control sits in the middle of the gallery rather
+       than in the bar at the top: the cluster cards are interleaved at their span's
+       midpoint, so the click happens far down the flow while the works it selects are
+       packed at the very top. The browser's own clamp already rescues the short case — a
+       filtered page that no longer fills the viewport can only scroll to 0 — and between
+       that and no change at all sits the state this exists for: a filtered gallery still
+       taller than the screen, with every result above where the reader is standing.
+
+       Only ever upward. A reader already above the gallery's first row has the results
+       below them and will meet them by scrolling; pulling them down would take the
+       masthead away to solve a problem they do not have.
+
+       It runs *before* the filter rather than after. The gallery's top edge is fixed by
+       the header above it and does not move when the tiles do, so the destination is
+       known without laying anything out first — and going first means the tiles rearrange
+       inside the viewport the reader ends up watching, instead of behind it.
+
+       Distance decides whether it glides, on the rule the tiles already follow: past a
+       screen of travel there is nothing for the eye to follow, so it cuts. Landing the
+       gallery under the sticky bar rather than at the viewport top keeps the bar from
+       covering the first row — it is showing the filter's own label, which is the only
+       thing on screen naming what just happened. */
+    function scrollToResults() {
+      if (!container || document.body.dataset.view !== 'gallery') return;
+      var barH = filtersBar ? filtersBar.getBoundingClientRect().height : 0;
+      var target = Math.max(0, window.scrollY + container.getBoundingClientRect().top - barH);
+      if (target >= window.scrollY) return;
+      var far = window.scrollY - target > window.innerHeight;
+      window.scrollTo({ top: target, behavior: (far || !motionOK()) ? 'auto' : 'smooth' });
+    }
+
     document.querySelectorAll('[data-action]').forEach(function(btn) {
       // The card hides itself when it applies a filter; a mousedown here would otherwise
       // start a text selection that lingers across the publications behind it (visible on
@@ -1767,6 +1800,14 @@ shows 3 columns. {%- endcomment -%}
           return;
         }
         if (verb !== 'type' && verb !== 'search' && verb !== 'cluster') return;
+        // Setting a cluster — not clearing one, and not a card with nothing to select —
+        // takes the reader to the results (see scrollToResults). The test repeats the
+        // cluster branch's own, because the branch runs inside the transition and the
+        // scroll has to have happened before it does.
+        if (verb === 'cluster' && val && btn.dataset.slugs
+            && !(activeCluster && activeCluster.id === val)) {
+          scrollToResults();
+        }
         withTileTransition(function() {
           if (verb === 'type' && val) {
             activeType = (activeType === val) ? null : val;
