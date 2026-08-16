@@ -56,7 +56,7 @@ CLUSTER_CARDS = {
     },
     "Thesaurus": {
         "title": "Controlled Vocabularies",
-        "description": "Thesauri for organizing scientific and library collections, from a European Commission retrieval system to a national library's move onto the semantic web. The groundwork of indexing that came before the turn to visualization.",
+        "description": "Thesauri for organizing scientific and library collections, from a European Commission retrieval system to the semantic web. The groundwork before visualization.",
     },
 }
 
