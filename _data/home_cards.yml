@@ -1,4 +1,4 @@
-# Special cards on the homepage gallery (see the "Special cards" section in CLAUDE.md).
+# Special cards on the homepage gallery (see the `layout` skill, reference/cards.md).
 #
 # `actions` — clickable tiles embedded in the gallery. Each `action` is either
 #           `view:<gallery|list|network>` (switches view) or

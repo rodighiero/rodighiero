@@ -70,8 +70,8 @@ wall: the **`links`** skill.
 
 ### Rename or retire an entry
 Renaming the file changes the URL. Add the old path to `redirect_from:` (a string or list
-of site-absolute paths) — `publication_redirect.rb` emits a `noindex` stub with a canonical
-to the real page. Also rename `images/<slug>/`, delete the stale `images/@cards/<slug>.webp`,
+of site-absolute paths) — `publication_redirect.rb` emits a refresh stub with a canonical
+to the real page (no `noindex`; see the `seo` skill for why). Also rename `images/<slug>/`, delete the stale `images/@cards/<slug>.webp`,
 update any `translation_of` pointing at the old slug, and rebuild the network.
 
 ### Add an ISSN/ISBN

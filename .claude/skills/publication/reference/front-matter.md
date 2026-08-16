@@ -74,7 +74,7 @@ Absent `lang` means English. The homepage UI stays English; there is no per-lang
 | Field | Effect |
 |---|---|
 | `img_border: true` | hairline around the homepage card |
-| `redirect_from` | string or list of site-absolute paths; each becomes a `noindex` redirect stub |
+| `redirect_from` | string or list of site-absolute paths; each becomes a refresh stub canonicalised to the real page |
 | `month`, `day` | validated 1–12 / 1–31; rarely used |
 
 `page.date` is **derived**, not declared — `publication_date.rb` synthesizes it from `year`
