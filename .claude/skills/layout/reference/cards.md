@@ -1,6 +1,6 @@
 # Cards, search and filters
 
-## One card style, three kinds of tile
+## One card style, four kinds of tile
 
 Every tile carries a shared **`.card`** class holding the common metrics — padding, radius,
 cursor, hover — alongside the class that says what it is:
@@ -10,10 +10,16 @@ cursor, hover — alongside the class that says what it is:
 | `.publication` | a publication | `_publications/*.md`, via `site.data.ordered_publications` |
 | `.action` | a one-off view/type/search trigger | `_data/home_cards.yml` |
 | `.filter` | a cluster tile setting a persistent filter | `site.data.network.clusters` (generated) |
+| `.event` | an announcement linking out to another site | `_data/home_cards.yml` |
 
-`.action` and `.filter` are deliberately distinct from `.publication` so the count, search
+The three special kinds are deliberately distinct from `.publication` so the count, search
 and network-clone logic ignores them. Masonry packs everything via a combined `tiles`
 NodeList (`:scope > .card`) while count/search stay on `.publication`.
+
+`.event` is the odd one: an `<a>` rather than a `<button>`, because it goes somewhere instead
+of re-cutting the gallery in place. That is also why it is the one special card kept below
+921px — the others re-cut a gallery whose view toggle is gone at that width, while an
+announcement reads the same everywhere.
 
 Every card titles itself with `.card-title` — the publication's is an `<h2>`, the action
 card's a `<span>` — styled by one shared rule for size, margin and weight. That rule's
@@ -44,6 +50,23 @@ default:
 
 A `mousedown` `preventDefault` on the `.action`/`.filter` buttons stops a click from starting
 a stray text selection over the publications behind it.
+
+## `_includes/card-event.html`
+
+The event kind renders through its own include: `label`, `link` (required — no link, no card),
+optional `date` (ISO, shown as `26 August 2026` inside `<time>`), `eyebrow` (defaults to
+`Event`), `venue` (the italic second meta line, the host institution alone), `sublabel` and
+`author`.
+
+`author` is the publications' own `" and "`-joined format and goes through
+**`credit-short.html`**, the same include a publication card uses — so an event ends on a
+`with X and Y` byline in the same slot, the same voice and the same type as the byline under
+every publication beside it, with Dario's own name stripped. It opens in a new tab, which
+keeps the reader's gallery and also lets the GoatCounter click beacon — bound by
+`data-goatcounter-click="<label>"` — finish before the navigation would have cancelled it.
+
+It carries **no `data-action`**, which is what keeps it out of the `[data-action]` click
+handler and its `mousedown` `preventDefault`.
 
 ## Manual action cards — `_data/home_cards.yml`
 
@@ -76,11 +99,14 @@ rule the same typography, a publication card gives its authors. Its meta line re
 ## Where special cards appear
 
 - **Gallery view only** (hidden in network via CSS), and hidden whenever a filter is active.
+- Events lead the flow, sorted by `date` descending. Nothing expires them — a past event
+  sits at the top of the homepage until its entry is deleted.
 - Unpinned actions render at the top of `#publications`.
 - A `pin: first` card leads the flow.
 - Cluster cards sit inline before their span-midpoint anchor, with a `view:network` card
   leading the dated flow just after the forthcoming works.
-- Hidden below 921px along with the view toggle and the filter count.
+- Actions and cluster tiles are hidden below 921px along with the view toggle and the filter
+  count; events stay.
 
 Publications render in one ordered loop, year-descending then title-ascending (Forthcoming
 first), so the `_card_i` priority counter stays correct.
