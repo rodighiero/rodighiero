@@ -99,7 +99,8 @@ before the first paint) and for a reader with no JS.
 ## The 921px boundary
 
 Where the grid drops from 3 columns to 2, and where the view toggle, the filter count and the
-special cards are hidden and the network view is forced back to gallery.
+action/cluster tiles are hidden (event cards stay) and the network view is forced back to
+gallery.
 
 The JS asks for it as a **`matchMedia` query** rather than measuring `innerWidth`, so it runs
 the identical test the CSS does: a media query is matched against the viewport *without* its

@@ -38,7 +38,8 @@ Token values, the derived thresholds and the per-block grids: `reference/grid.md
 | Tokens, `.card*`, `.authors`, `.card-meta`, mode toggle | `_includes/styles-base.css` |
 | Publication card markup | inline in the Liquid loop in `_layouts/home.html` |
 | Action and cluster tile markup | `_includes/card-action.html` (both kinds; `card-meta.html` is the meta line every card shares) |
-| Manual action cards | `_data/home_cards.yml` |
+| Event tile markup | `_includes/card-event.html` |
+| Manual action cards and events | `_data/home_cards.yml` |
 | Cluster cards + graph miniatures | `_data/network.json`, `_includes/network-*.svg` (generated) |
 | Bio prose | `README.md` (via `_plugins/system_readme.rb`) |
 | Spring curve generator | `scripts/spring-easing.js` |
@@ -66,6 +67,14 @@ Append to `_data/home_cards.yml`: `label`, `action`, optional `year` / `eyebrow`
 or `search:<terms>`. **Research-cluster cards are not edited here** — they are generated from
 `network.json`; reword them in `scripts/build-cards.py` (see the `network` skill).
 Card anatomy and the filter pipeline: `reference/cards.md`.
+
+### Announce an event
+Append to `events:` in `_data/home_cards.yml`: `label` and `link` (an external URL), optional
+`date` / `eyebrow` / `venue` / `sublabel` / `author` (the last one in a publication's
+`" and "`-joined format — it ends the card on the same `with X and Y` byline, through the same
+`credit-short.html`). Events lead the gallery, newest first, and are the
+one special card that survives below 921px. **Nothing expires them** — delete the entry once
+the event has passed.
 
 ### Change what is searchable or filterable
 The haystack is each card's `data-search` attribute, built in the Liquid loop; the three

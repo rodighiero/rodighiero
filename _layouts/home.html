@@ -440,7 +440,7 @@ shows 3 columns. {%- endcomment -%}
        replaces: box-shadow has no color-only sub-property that stays a no-op without a
        shadow already present, so applying it to .card:hover generally would have drawn
        a hairline onto plain publication cards too, on hover. */
-    :is(.action, .filter):hover { box-shadow: inset 0 0 0 1px var(--border-hover); }
+    :is(.action, .filter, .event):hover { box-shadow: inset 0 0 0 1px var(--border-hover); }
     .card:focus-visible,
     .publication:has(h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
 
@@ -465,12 +465,12 @@ shows 3 columns. {%- endcomment -%}
     /* Hyphenated for the same reason as the bio column above, but looser: a gallery
        card is narrower still, so one long word costs a whole line of a two-sentence
        description — 6 3 3 rather than the header's 8 4 4 takes the opportunities the
-       stricter limit leaves on the table. Restricted to the action/filter cards
+       stricter limit leaves on the table. Restricted to the special cards
        because the other .card-text is a byline — a split surname (Rodig-hiero) reads
        as a different name, and a name is parsed as a unit in a way prose is not.
        The -webkit- longhands are what Safari actually reads (it ignores the standard
        shorthand); before+after imply the 6-character word minimum on their own. */
-    :is(.action, .filter) .card-text {
+    :is(.action, .filter, .event) .card-text {
       -webkit-hyphens: auto;
       hyphens: auto;
       -webkit-hyphenate-limit-before: 3;
@@ -498,16 +498,23 @@ shows 3 columns. {%- endcomment -%}
     h2 a:hover { text-decoration: none; }
     h2 a:focus-visible { outline: none; }
 
-    /* ── Special cards (shown in gallery only) ── Two kinds: .action (a one-off
-       view/type/search trigger) and .filter (a cluster tile, which sets a persistent
-       filter instead). Both are <button>s that skip the count/search/network logic
+    /* ── Special cards (shown in gallery only) ── Three kinds: .action (a one-off
+       view/type/search trigger), .filter (a cluster tile, which sets a persistent
+       filter instead) and .event (an announcement linking out to another site — the
+       only one that is an <a> rather than a <button>, and the only one kept on
+       mobile, since it is news rather than a way of re-cutting the gallery).
+       All three skip the count/search/network logic
        (which queries .publication) and get placed by the masonry; they share every
        rule below since the only real difference between them is behavioural, not
        visual — undo the UA button's own default border, centered text and font/color
        (background: none clears the UA <button> face too), add the hairline, and lay
        out the rows of their <span> markup as blocks, which a publication card's <div>s
        have by default. (.card-meta/.card-text go block unconditionally: a no-op on a
-       publication's already-block <div>, the fix needed for an action/filter <span>.)
+       publication's already-block <div>, the fix needed for a special card's <span>.)
+       The button resets are inert on .event's <a> but harmless, and keeping one rule
+       for the three is what keeps the kinds looking identical; the anchor needs one
+       thing of its own — no underline on hover, since the card's background tint
+       already says it is clickable and styles-base.css underlines every other <a>.
        The `border: none` reset matters here specifically: left in place, the UA's own
        default button border sits right under the hairline below and doubles up with
        it into a visibly heavier line than a plain 1px border like .filters' own
@@ -522,7 +529,8 @@ shows 3 columns. {%- endcomment -%}
        on top of the border reset above: it paints through the same path a real border
        does, rather than outline's own separate anti-aliasing. */
     .action,
-    .filter {
+    .filter,
+    .event {
       display: block;
       width: 100%;
       text-align: left;
@@ -534,6 +542,7 @@ shows 3 columns. {%- endcomment -%}
       box-shadow: inset 0 0 0 1px var(--border);
       background: none;
     }
+    .event:hover { text-decoration: none; }
     .card-meta, .card-text { display: block; }
 
     /* ── Gallery view (masonry) ── Every card kind is positioned identically. */
@@ -869,8 +878,10 @@ shows 3 columns. {%- endcomment -%}
        columns, and only drop away once the grid itself does. */
     @media (max-width: {{ _mobile_max }}px) {
       .filter-count, .view-toggle { display: none; }
-      /* Mobile: drop the action / cluster / network tiles. Same specificity as the
-         base .action, .filter rule above, so later source order alone wins here. */
+      /* Mobile: drop the action / cluster / network tiles — every one of them re-cuts a
+         gallery that has no view toggle left to re-cut it into. .event stays: it is an
+         announcement that reads the same at any width. Same specificity as the base
+         .action, .filter, .event rule above, so later source order alone wins here. */
       .action, .filter { display: none; }
     }
 
@@ -1003,15 +1014,19 @@ shows 3 columns. {%- endcomment -%}
 
     <!-- ── Publications ── -->
     <div id="publications">
-      {%- comment -%} Special cards (non-.publication tiles): clickable action cards. They live
-      in the gallery flow but carry the .action or .filter class (not .publication) so the
-      count / search / network logic (which queries .publication) ignores them. Placement of
+      {%- comment -%} Special cards (non-.publication tiles): event announcements and clickable
+      action cards. They live in the gallery flow but carry the .event, .action or .filter class
+      (not .publication) so the count / search / network logic (which queries .publication)
+      ignores them. Events lead the flow, newest first — they are the timely tile, and the one
+      kind that goes somewhere else rather than filtering in place. Placement of
       home_cards actions: `pin: first` renders here as the very first tile (before the
       forthcoming publications); an unpinned
       action renders as a plain tile at the top. The research-cluster filter cards are NOT from
       home_cards — they are generated automatically from site.data.network.clusters and merged
       into the dated flow below (each just before its newest member). See _data/home_cards.yml
       and scripts/build-network.py. {%- endcomment -%}
+      {% assign _events = site.data.home_cards.events | sort: 'date' | reverse %}
+      {% for _event in _events %}{% include card-event.html event=_event class="" %}{% endfor %}
       {% assign _first_actions = site.data.home_cards.actions | where: "pin", "first" %}
       {% for _action in _first_actions %}{% include card-action.html action=_action class="" %}{% endfor %}
       {% for _action in site.data.home_cards.actions %}
@@ -1118,10 +1133,10 @@ shows 3 columns. {%- endcomment -%}
     var container = document.getElementById('publications');
     var viewButtons = document.querySelectorAll('.view-toggle button');
     var total = publications.length;
-    // Masonry packs every .card tile (publications + .action/.filter); count/search/network
-    // keep operating on .publication only.
+    // Masonry packs every .card tile (publications + .action/.filter/.event);
+    // count/search/network keep operating on .publication only.
     var tiles = container ? container.querySelectorAll(':scope > .card') : publications;
-    var specialCards = container ? container.querySelectorAll('.action, .filter') : [];
+    var specialCards = container ? container.querySelectorAll('.action, .filter, .event') : [];
 
     // Coalesces bursts of calls (e.g. every tick of a window resize) into one
     // trailing call `delay` ms after the last one.

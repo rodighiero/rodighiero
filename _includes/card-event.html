@@ -1,0 +1,32 @@
+{%- comment -%}
+Event card — an announcement tile that links out to an external page. It wears the same card
+vocabulary as card-action.html (meta line, title, description) but is an <a>, not a <button>:
+it goes somewhere rather than filtering the gallery in place. Opens in a new tab, so the
+reader keeps the gallery they were browsing (and the GoatCounter click beacon isn't cancelled
+by the navigation).
+Fields come from one entry of _data/home_cards.yml `events`:
+  event.date     — ISO date; rendered as "26 August 2026" inside <time>; optional
+  event.eyebrow  — the word after the date on the meta line; defaults to "Event"
+  event.venue    — italic second meta line: the host institution alone, matching what a
+                   publication card puts there; optional
+  event.label    — the card title
+  event.sublabel — the description beneath it; optional
+  event.author   — everyone presenting, Dario included, in a publication's " and "-joined
+                   `author` format. It renders through credit-short.html, so the card ends
+                   on the same "with X and Y" byline a publication card ends on, in the
+                   same slot and the same voice; optional
+  event.link     — the external URL. Required: without it the card renders nothing, since a
+                   tile that looks clickable and goes nowhere is worse than no tile.
+  include.class  — optional extra wrapper class (none by default)
+{%- endcomment -%}
+{%- assign _e = include.event -%}
+{%- if _e.link and _e.link != '' -%}
+<a class="card event {{ include.class }}" href="{{ _e.link }}" target="_blank" rel="noopener" data-goatcounter-click="{{ _e.label }}">
+  {%- if _e.date or _e.eyebrow or _e.venue -%}
+  <span class="card-meta">{% if _e.date %}<time datetime="{{ _e.date | date: '%Y-%m-%d' }}">{{ _e.date | date: '%-d %B %Y' }}</time> · {% endif %}{{ _e.eyebrow | default: 'Event' }}{% if _e.venue %}<br><span class="venue">{{ _e.venue }}</span>{% endif %}</span>
+  {%- endif -%}
+  <span class="card-title">{{ _e.label }}</span>
+  {% if _e.sublabel %}<span class="card-text">{{ _e.sublabel }}</span>{% endif %}
+  {% include credit-short.html item=_e %}
+</a>
+{%- endif -%}
