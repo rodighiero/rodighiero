@@ -97,7 +97,7 @@ Whether the plurality of “livable” is potentially also a weakness is the obj
 - Cottyn, H., L. Devliege, and L. Cahn. 2023. “Life Out of Place: Revisiting Species Invasions. Introduction to the Special Issue.” *Anthropocenes – Human, Inhuman, Posthuman* 4 (1): 1. [doi:10.16997/ahip.1433](https://doi.org/10.16997/ahip.1433).
 - Descola, P. 2013. *Beyond Nature and Culture*. Chicago: University of Chicago Press.
 - Gibson-Graham, J. K. 1996. *The End of Capitalism (As We Knew It): A Feminist Critique of Political Economy*. Minneapolis: University of Minnesota Press.
-- Global Liveability Index. 2022. https://pages.eiu.com/rs/753-RIQ-438/images/liveability-index-2022.pdf (accessed April 29, 2024).
+- Global Liveability Index. 2022. https://pages.eiu.com/rs/753-RIQ-438/images/liveability-index-2022.pdf ([archived](https://web.archive.org/web/20240707143812/https://pages.eiu.com/rs/753-RIQ-438/images/liveability-index-2022.pdf)) (accessed April 29, 2024).
 - Groth-Jensen, L., M. N. Svendsen, and K. Snell. 2023. “Strategies on Personalized Medicine and the Power of the Imagined Public.” *New Genetics and Society* 42 (1): e2260939. [doi:10.1080/14636778.2023.2260939](https://doi.org/10.1080/14636778.2023.2260939).
 - Haraway, D. 1991. *Simians, Cyborgs and Women: The Reinvention of Nature*. New York: Routledge.
 - Haraway, D. 2015. “Anthropocene, Capitalocene, Plantationocene, Chthulucene: Making Kin.” *Environmental Humanities* 6 (1): 159–65. [doi:10.1215/22011919-3615934](https://doi.org/10.1215/22011919-3615934).
@@ -108,7 +108,7 @@ Whether the plurality of “livable” is potentially also a weakness is the obj
 - Lorimer, J. 2017. “The Anthropo-Scene: A Guide for the Perplexed.” *Social Studies of Science* 47 (1): 117–42. [doi:10.1177/0306312716671039](https://doi.org/10.1177/0306312716671039).
 - McNeilly, K. 2016. “Livability: Notes on the Thought of Judith Butler.” *Critical Legal Thinking Blog*, May 26, 2016. https://criticallegalthinking.com/2016/05/26/livability-judith-butler/ (accessed April 29, 2024).
 - Murphy, M. 2018. “Against Population, Toward Afterlife.” In *Making Kin, Not Population*, edited by A. E. Clarke and D. J. Haraway, 102–24. Chicago: Prickly Paradigm Press.
-- Papadopoulos, D., M. Puig de la Bellacasa, and M. Tacchetti, eds. 2023. “Introduction: No Justice, No Ecological Peace: The Groundings of Ecological Reparation.” In *Ecological Reparation*, 1–16. Bristol: Bristol University Press. https://bristoluniversitypressdigital.com/display/book/9781529216073/int001.xml
+- Papadopoulos, D., M. Puig de la Bellacasa, and M. Tacchetti, eds. 2023. “Introduction: No Justice, No Ecological Peace: The Groundings of Ecological Reparation.” In *Ecological Reparation*, 1–16. Bristol: Bristol University Press. https://bristoluniversitypressdigital.com/display/book/9781529216073/int001.xml ([archived](https://web.archive.org/web/20230506010138/https://bristoluniversitypressdigital.com/display/book/9781529216073/int001.xml))
 - Raworth, K. 2017. *Doughnut Economics*. Vermont: Chelsea Green Publishing.
 - Salazar, J. F., S. Pink, A. Irving, and J. Sjöberg, eds. 2017. *Anthropologies and Futures: Researching Emerging and Uncertain Worlds*. London: Bloomsbury.
 - Schiølin, K. 2020. “Revolutionary Dreams: Future Essentialism and the Sociotechnical Imaginary of the Fourth Industrial Revolution in Denmark.” *Social Studies of Science* 50 (4): 542–66. [doi:10.1177/0306312719867768](https://doi.org/10.1177/0306312719867768).
@@ -121,5 +121,5 @@ Whether the plurality of “livable” is potentially also a weakness is the obj
 - Washington, H. 2015. “Is ‘Sustainability’ the Same as ‘Sustainable Development’?” In *Sustainability*, edited by H. Kopnina and E. Shoreman-Ouimet. London: Routledge.
 - Whyte, K. P. 2020. “Against Crisis Epistemology.” In *Handbook of Critical Indigenous Studies*, edited by A. Hokowhitu, L. Moreton-Robinson, S. Larkin, and C. Andersen, 52–64. London: Routledge.
 - Wijkman, A., and J. Rockström. 2012. *Bankrupting Nature: Denying Our Planetary Boundaries*. London: Routledge.
-- World Commission on Environment and Development (WCED). 1987. *Our Common Future*. Brundtland Report. Oxford: Oxford University Press. https://www.are.admin.ch/are/en/home/medien-und-publikationen/publikationen/nachhaltige-entwicklung/brundtland-report.html (accessed April 29, 2024).
+- World Commission on Environment and Development (WCED). 1987. *Our Common Future*. Brundtland Report. Oxford: Oxford University Press. https://www.are.admin.ch/are/en/home/medien-und-publikationen/publikationen/nachhaltige-entwicklung/brundtland-report.html ([archived](https://web.archive.org/web/20240528141457/https://www.are.admin.ch/are/en/home/medien-und-publikationen/publikationen/nachhaltige-entwicklung/brundtland-report.html)) (accessed April 29, 2024).
 - Yusoff, K. 2018. *A Billion Black Anthropocenes or None*. Minneapolis: University of Minnesota Press.
