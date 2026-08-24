@@ -57,6 +57,9 @@ jobs:
             --exclude 'edigeo-online\.it'
             --exclude 'innovazionepa\.gov\.it'
             --exclude 'bcr\.puglia\.it'
+            --exclude 'pages\.eiu\.com'
+            --exclude 'bristoluniversitypressdigital\.com'
+            --exclude 'are\.admin\.ch'
             './_site/*.html'
           fail: false
       - name: Annotate broken links with source context
