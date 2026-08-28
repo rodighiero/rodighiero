@@ -13,6 +13,7 @@ class Jekyll::FrontMatterValidator < Jekyll::Generator
   def generate(site)
     @site = site
     @valid_types = site.data['publication_types']&.keys || []
+    @valid_langs = site.data['languages']&.keys || []
     @errors = []
     @warnings = []
 
@@ -59,6 +60,14 @@ class Jekyll::FrontMatterValidator < Jekyll::Generator
     # Validate type
     if data['type'] && !@valid_types.include?(data['type'])
       @errors << "#{slug}: type '#{data['type']}' is not in publication_types.yml (valid: #{@valid_types.join(', ')})"
+    end
+
+    # Validate lang. Five of the six declarations lang drives are the bare code and
+    # would be right for any language; og:locale is a lookup in _data/languages.yml,
+    # so an unlisted code comes out silently wrong there alone — the kind of failure
+    # that surfaces months later in a social card rather than in this log.
+    if data['lang'] && !@valid_langs.include?(data['lang'].to_s)
+      @errors << "#{slug}: lang '#{data['lang']}' is not in _data/languages.yml (valid: #{@valid_langs.join(', ')})"
     end
 
     # Validate month/day if present

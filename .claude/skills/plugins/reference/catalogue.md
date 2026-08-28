@@ -182,6 +182,7 @@ metadata is caught on every deploy rather than shipped.
 | `author` present — waived when `editor` is | error |
 | `year` is four digits or `Forthcoming` | error |
 | `type` is a key in `publication_types.yml` | error |
+| `lang` is a key in `languages.yml` | error |
 | `thumb` resolves to a file under `images/` | error |
 | `month` 1–12, `day` 1–31 | warning (the value is clamped downstream) |
 | `doi` starts with `http(s)://` | warning |
