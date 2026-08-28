@@ -118,8 +118,9 @@ Three nodes, cross-linked by `@id`:
 | `Person` | the ORCID URI | — |
 
 The `Person` node holds `name`, `url`, an `ImageObject` for the portrait (with
-`representativeOfPage`), `description`, `jobTitle`, `worksFor`, three `affiliation`s, `sameAs`
-(GitHub, Google Scholar, LinkedIn, ORCID, Zotero), `knowsAbout` and `knowsLanguage`.
+`representativeOfPage`), `description`, `jobTitle`, `worksFor`, three `affiliation`s,
+`alumniOf` (EPFL), `sameAs` (GitHub, Google Scholar, LinkedIn, ORCID, Zotero), `knowsAbout`
+and `knowsLanguage` (English, French, Italian — the three the corpus is written in).
 
 All of it is **literal** — none derives from front matter or from `README.md`. A change of
 affiliation or job title is edited here by hand, and the bio in `README.md` is a separate
