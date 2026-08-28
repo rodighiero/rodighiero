@@ -43,8 +43,11 @@
   <meta property="og:description" content="{{ _excerpt_attr }}">
   <meta property="og:url" content="{{ site.url }}{{ page.url }}">
   <meta property="og:type" content="article">
-  <meta property="og:locale" content="{% if page.lang == 'it' %}it_IT{% elsif page.lang == 'fr' %}fr_FR{% else %}en_US{% endif %}">
-  {% for _t in _alt_pages %}{% assign _l = _t.lang | default: 'en' %}<meta property="og:locale:alternate" content="{% case _l %}{% when 'it' %}it_IT{% when 'fr' %}fr_FR{% else %}en_US{% endcase %}">
+  {%- comment -%} og:locale is the one thing lang does not supply verbatim, so the mapping is
+  a lookup in _data/languages.yml rather than a branch repeated here and below — and that
+  file is also what the validator checks a new lang against. {%- endcomment -%}
+  <meta property="og:locale" content="{{ site.data.languages[page.lang] | default: 'en_US' }}">
+  {% for _t in _alt_pages %}<meta property="og:locale:alternate" content="{{ site.data.languages[_t.lang] | default: 'en_US' }}">
   {% endfor %}
   {% assign _social_img = page.thumb %}
   {% if _social_img %}{% assign _social_dims = _social_img | prepend: '/images/' | image_size %}<meta property="og:image" content="{{ site.url }}/images/{{ _social_img }}">

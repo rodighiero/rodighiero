@@ -38,6 +38,7 @@ usually edit `_data/publication_types.yml` or a plugin, not the sixty-odd public
 | Homepage tags + the `WebSite`/`ProfilePage`/`Person` graph | `_layouts/home.html` (head) |
 | Publication tags + the work's JSON-LD | `_layouts/publication.html` (head) |
 | `schema` / `dc` / `citation_venue` / `container` per type | `_data/publication_types.yml` |
+| Which `lang` codes exist, and the `og:locale` each maps to | `_data/languages.yml` |
 | Person nodes, and Dario's ORCID `@id` | `_includes/jsonld-person.html`, `jsonld-people.html` |
 | URL discovery and consolidation | `sitemap.xml`, `robots.txt`, `_plugins/publication_redirect.rb` |
 | Which images a publication declares | `_plugins/publication_figures.rb` |
@@ -74,7 +75,9 @@ The translation carries `translation_of: <slug-of-original>`; the original carri
 Everything else — reciprocal `hreflang` with `x-default` on the original,
 `og:locale:alternate`, JSON-LD `translationOfWork` / `workTranslation` — is resolved from
 that one field, for any number of language versions. Also set `lang:`, which drives
-`<html lang>`, `og:locale`, `citation_language`, `DC.language` and `inLanguage`.
+`<html lang>`, `og:locale`, `citation_language`, `DC.language` and `inLanguage` — and must be
+a key in `_data/languages.yml`, or the build aborts. A language the site has never published
+in is a line added there first.
 
 ### Add a URL alias
 `redirect_from:` on the publication (a string or a list of site-absolute paths).

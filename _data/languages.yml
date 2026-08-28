@@ -1,0 +1,14 @@
+# Every language a publication may declare in `lang:`, mapped to its Open Graph locale.
+#
+# `lang` drives six declarations. Five are the bare code and so are right for any
+# language without this file existing: <html lang>, hreflang, citation_language,
+# DC.language and JSON-LD inLanguage. The sixth, og:locale, is a lookup — and an
+# unknown code used to fall through the layout's if/elsif to en_US, coming out
+# silently wrong while the other five stayed correct. So the set lives here, where
+# publication_validator.rb can refuse a code that is not in it, the way it already
+# refuses a type that is not in publication_types.yml.
+#
+# Adding a language means adding a line here and nothing else.
+en: en_US
+it: it_IT
+fr: fr_FR
