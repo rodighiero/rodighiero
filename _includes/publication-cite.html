@@ -32,6 +32,13 @@ name can lead the list the rest joins onto. {%- endcomment -%}
 {%- assign _rest_people = _people | slice: 1, 9999 -%}
 {%- assign _display_people = _first_formatted | split: "~~~" | concat: _rest_people -%}
 {%- capture _authors -%}{%- include credit-join.html items=_display_people serial_comma=true -%}{%- endcapture -%}
+{%- comment -%} The secondary roles below the author block — editor, translator, interviewer —
+join through credit-join.html as well; interpolating the front-matter string directly would
+leave its " and " separators standing between every name. Chicago takes the serial comma from
+three names up, so lists of two join with a bare " and ". {%- endcomment -%}
+{%- capture _editors -%}{%- if _item.editor -%}{%- assign _r = _item.editor | split: ' and ' -%}{%- assign _sc = false -%}{%- if _r.size > 2 -%}{%- assign _sc = true -%}{%- endif -%}{%- include credit-join.html items=_r serial_comma=_sc -%}{%- endif -%}{%- endcapture -%}
+{%- capture _translators -%}{%- if _item.translator -%}{%- assign _r = _item.translator | split: ' and ' -%}{%- assign _sc = false -%}{%- if _r.size > 2 -%}{%- assign _sc = true -%}{%- endif -%}{%- include credit-join.html items=_r serial_comma=_sc -%}{%- endif -%}{%- endcapture -%}
+{%- capture _interviewers -%}{%- if _item.interviewer -%}{%- assign _r = _item.interviewer | split: ' and ' -%}{%- assign _sc = false -%}{%- if _r.size > 2 -%}{%- assign _sc = true -%}{%- endif -%}{%- include credit-join.html items=_r serial_comma=_sc -%}{%- endif -%}{%- endcapture -%}
 {%- assign _t = _item.type -%}
 {%- comment -%} For books/maps the venue field holds the publisher; for chapters/conferences it holds the booktitle, so don't reuse it as the publisher there. {%- endcomment -%}
 {%- if _t == 'book' or _t == 'map' -%}{%- assign _pub = _item.publisher | default: _item.venue -%}{%- else -%}{%- assign _pub = _item.publisher -%}{%- endif -%}
@@ -44,11 +51,11 @@ name can lead the list the rest joins onto. {%- endcomment -%}
 {%- unless _ablast == '.' -%}{%- assign _authblock = _authblock | append: '.' -%}{%- endunless -%}
 {%- capture _ref -%}
 {{ _authblock }} {{ _item.year }}.
-{%- if _t == 'book' or _t == 'map' %} {{ _item.title }}{{ _dot }}{% if _item.translator %} Translated by {{ _item.translator }}.{% endif %}{% if _item.place %} {{ _item.place }}:{% endif %} {{ _pub }}.
-{%- elsif _t == 'journal' or _t == 'magazine' %} “{{ _item.title }}{{ _dot }}” {{ _item.venue }}{% if _item.volume %} {{ _item.volume }}{% endif %}{% if _item.issue %} ({{ _item.issue }}){% endif %}{% if _item.pages %}: {{ _item.pages }}{% endif %}.
-{%- elsif _t == 'chapter' or _t == 'conference' %} “{{ _item.title }}{{ _dot }}” In {{ _item.venue }}{% if _item.editor and _item.author %}, edited by {{ _item.editor }}{% endif %}{% if _item.pages %}, {{ _item.pages }}{% endif %}.{% if _item.place %} {{ _item.place }}:{% endif %}{% if _pub %} {{ _pub }}.{% endif %}
-{%- elsif _t == 'interview' %} “{{ _item.title }}{{ _dot }}”{% if _item.interviewer %} Interview by {{ _item.interviewer }}.{% endif %}{% if _item.venue %} {{ _item.venue }}.{% endif %}
-{%- else %} “{{ _item.title }}{{ _dot }}”{% if _item.venue %} {{ _item.venue }}.{% endif %}
+{%- if _t == 'book' or _t == 'map' %} {{ _item.title }}{{ _dot }}{% if _item.translator %} Translated by {{ _translators }}.{% endif %}{% if _item.place %} {{ _item.place }}:{% endif %} {{ _pub }}.
+{%- elsif _t == 'journal' or _t == 'magazine' %} “{{ _item.title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}{% if _item.volume %} {{ _item.volume }}{% endif %}{% if _item.issue %} ({{ _item.issue }}){% endif %}{% if _item.pages %}: {{ _item.pages }}{% endif %}.
+{%- elsif _t == 'chapter' or _t == 'conference' %} “{{ _item.title }}{{ _dot }}” In {{ _item.venue }}{% if _item.editor and _item.author %}, edited by {{ _editors }}{% endif %}{% if _item.translator %}, translated by {{ _translators }}{% endif %}{% if _item.pages %}, {{ _item.pages }}{% endif %}.{% if _item.place %} {{ _item.place }}:{% endif %}{% if _pub %} {{ _pub }}.{% endif %}
+{%- elsif _t == 'interview' %} “{{ _item.title }}{{ _dot }}”{% if _item.interviewer %} Interview by {{ _interviewers }}.{% endif %}{% if _item.translator %} Translated by {{ _translators }}.{% endif %}{% if _item.venue %} {{ _item.venue }}.{% endif %}
+{%- else %} “{{ _item.title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %}{% if _item.venue %} {{ _item.venue }}.{% endif %}
 {%- endif -%}
 {%- if _item.doi %} {% if _item.doi contains 'doi.org/' %}https://doi.org/{{ _item.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}{{ _item.doi }}{% endif %}.{% endif -%}
 {%- endcapture -%}
