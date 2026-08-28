@@ -130,7 +130,9 @@ through to today.
 Title and description are two literal `assign`s at the very top of `home.html` — the only
 page whose description is written by hand rather than derived. It also carries
 `profile:first_name` / `last_name` / `username`, three `<link rel="me">` (GitHub, LinkedIn,
-ORCID), `<link rel="image_src">`, and `DCTERMS.modified` from `site.time`.
+ORCID), `<link rel="image_src">`, and `DCTERMS.modified` from `site.data.commit_date` — the
+same repo-wide date the sitemap declares for this page, not the build clock, so a deploy that
+changes nothing a reader sees does not claim the page changed.
 
 Its `og:image` is always the portrait; a publication's is `thumb`, falling back to the same
 portrait, so no card is ever blank. Both emit `og:image:width`/`height` — from

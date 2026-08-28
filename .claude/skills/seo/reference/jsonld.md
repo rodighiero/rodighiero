@@ -19,6 +19,14 @@ the person properties, `datePublished` / `dateModified`, the container or publis
 `sameAs` (the DOI), `pagination`, translation links, `image`, `mainEntityOfPage`,
 `inLanguage`, `abstract` and `description`.
 
+The work and the page carrying it are **two nodes with two `@id`s**: the work takes the bare
+page URL — matching its own `url`, and what a sibling's `translationOfWork` points at — and
+`mainEntityOfPage`'s `WebPage` takes `<url>#webpage`, the same fragment convention the
+homepage's `#website` and `#profilepage` use. `@id` is the merge key, so giving both the bare
+URL would collapse them into one node typed `ScholarlyArticle` *and* `WebPage`. That `WebPage`
+is `isPartOf` `/#website`, which is what ties each publication page into the site graph — the
+page-level counterpart of what the shared ORCID `@id` does for the author.
+
 ## People — the one identity that matters
 
 `jsonld-person.html` emits a single `Person` node and gives Dario
@@ -117,5 +125,6 @@ All of it is **literal** — none derives from front matter or from `README.md`.
 affiliation or job title is edited here by hand, and the bio in `README.md` is a separate
 text that must agree in fact but not in wording.
 
-`ProfilePage.dateModified` uses `site.time` (build time), not `commit_date`. The homepage's
-*sitemap* `lastmod` uses the repo-wide `commit_date` instead — see `discovery.md`.
+`ProfilePage.dateModified`, `DCTERMS.modified` and the homepage's sitemap `lastmod` are all
+the repo-wide `site.data.commit_date` — the last commit touching a path that reaches `_site`,
+which is not `HEAD`. Build time would move all three on every deploy; see `discovery.md`.

@@ -14,7 +14,6 @@ shows 3 columns. {%- endcomment -%}
   <script>!function(){var v=null;try{v=new URLSearchParams(location.search).get('view')}catch(e){}if(v!=='gallery'&&v!=='network'){v=null;try{v=localStorage.getItem('publicationView')}catch(e){}}var ok={gallery:1,network:1};var pref=ok[v]?v:'gallery';document.documentElement.dataset.preferredView=pref;document.documentElement.dataset.initialView=matchMedia('(max-width: {{ _mobile_max }}px)').matches?'gallery':pref;var b=null;try{b=localStorage.getItem('bioVisible')}catch(e){}document.documentElement.dataset.bioVisible=(b==='0'?'0':'1')}()</script>
   <title>{{ _page_title }}</title>
   <meta name="description" content="{{ _meta_desc }}">
-  <meta name="keywords" content="Dario Rodighiero, data visualization, digital humanities, Science and Technology Studies, University of Groningen, Berkman Klein Center, metaLAB Harvard, mapping, information design">
   <link rel="canonical" href="{{ site.url }}/">
   <meta property="og:title" content="{{ _page_title }}">
   <meta property="og:description" content="{{ _meta_desc }}">
@@ -41,7 +40,11 @@ shows 3 columns. {%- endcomment -%}
   <meta name="DC.format" content="text/html">
   <meta name="DC.language" content="en">
   <meta name="DC.identifier" content="{{ site.url }}/">
-  <meta name="DCTERMS.modified" content="{{ site.time | date: '%Y-%m-%d' }}">
+  {%- comment -%} Same date the sitemap declares for this page: the last commit touching
+  something that reaches _site, not the build clock. site.time would move on every deploy
+  and tell a crawler the homepage changed when nothing a reader sees did — which is the
+  whole reason system_commit_date.rb computes this value. {%- endcomment -%}
+  <meta name="DCTERMS.modified" content="{{ site.data.commit_date }}">
   <link rel="me" href="https://github.com/rodighiero/">
   <link rel="me" href="https://www.linkedin.com/in/dariorodighiero/">
   <link rel="me" href="https://orcid.org/0000-0002-1405-7062">
@@ -62,7 +65,7 @@ shows 3 columns. {%- endcomment -%}
         "@id": "{{ site.url }}/#profilepage",
         "url": "{{ site.url }}/",
         "isPartOf": { "@id": "{{ site.url }}/#website" },
-        "dateModified": "{{ site.time | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+        "dateModified": "{{ site.data.commit_date }}",
         "mainEntity": { "@id": "https://orcid.org/0000-0002-1405-7062" },
         "primaryImageOfPage": { "@id": "{{ site.url }}/images/Dario-Rodighiero.webp" }
       },
