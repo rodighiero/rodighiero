@@ -1405,7 +1405,7 @@ shows 3 columns. {%- endcomment -%}
     // still lazy to eager — the first paint keeps its lazy loading, which is the point of
     // it, and by the time anyone filters, every card has its image ready to travel.
     function warmThumbnails() {
-      if (container) promoteLazyImages(container);
+      promoteLazyImages(container);
     }
     function warmWhenIdle() {
       if (window.requestIdleCallback) requestIdleCallback(warmThumbnails, { timeout: 2000 });
@@ -1983,9 +1983,7 @@ shows 3 columns. {%- endcomment -%}
     // Make the whole card a target for the publication page,
     // without breaking inline links or text selection.
     publications.forEach(function(p) {
-      var titleLink = p.querySelector('h2 a');
-      if (!titleLink) return;
-      var href = titleLink.getAttribute('href');
+      var href = p.querySelector('h2 a').getAttribute('href');
       p.addEventListener('click', function(e) {
         if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
         if (e.target.closest('a')) return;
