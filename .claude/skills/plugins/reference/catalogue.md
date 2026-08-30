@@ -1,4 +1,4 @@
-# The eleven, in detail
+# The twelve, in detail
 
 Ordered by what they do, not alphabetically. Each heading gives the identifier the file
 produces — which is what you are usually searching for.
@@ -141,6 +141,30 @@ repo readme.
 
 The weak fit for its prefix — its output *is* visible masthead prose. Read the prefix here as
 "sourced from a repo file rather than from the collection".
+
+### `system_network_client.rb` → `site.data.network_client`
+
+A `priority :high` generator projecting `_data/network.json` down to the part the browser
+actually reads, for `home.html`'s `#net-data` tag.
+
+The file feeds three surfaces with three appetites. `publication.html` walks
+`nodes[].related` for its "Related publications" list and `home.html`'s Liquid builds the
+cluster cards from `clusters` and quotes `params` in the legend — both at **build** time.
+The network view's JavaScript needs a much smaller thing at **run** time, and inlining the
+whole file served it from the union of all three: **79 KB in every homepage response**, about
+half of it unread, paid for by the majority of readers who never open the view.
+
+What survives: `nodes[]` as `slug`, `title`, `url`, `x`, `y`, `tr?` and
+`related[]{slug, sim}`; `links[]` as `source`, `target`, `fb?`; plus `canvas` and `params`.
+What goes: `clusters` (no JS touches it), `related[].title`/`url`/`lang` (the panel maps
+`r.slug` to a node index and reads those off `nodes` — the same strings a second time, and the
+bulk of the saving), `nodes[].i` (the array position), `nodes[].lang` and `links[].value`.
+That is **38 KB rather than 79 KB**, and a homepage 12% smaller.
+
+`tr` and `fb` are omitted where false rather than written as `false`, because the JS reads
+both through `!!`. The set of fields was established by grepping the module for every property
+read off the parsed JSON, not by inspection — if the view ever needs another one, add it to
+the projection rather than reverting to inlining the file whole.
 
 ## No identifier at all
 

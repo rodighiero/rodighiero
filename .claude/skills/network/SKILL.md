@@ -9,7 +9,7 @@ One artifact — **`_data/network.json`** (committed) — feeds three surfaces:
 
 | Surface | Reads |
 |---|---|
-| Homepage network view (`_layouts/home.html`) | `nodes` (baked `x`/`y`), `links`, `canvas`, `params` |
+| Homepage network view (`_layouts/home.html`) | `nodes` (baked `x`/`y`), `links`, `canvas`, `params` — but **via `site.data.network_client`**, the trimmed projection `_plugins/system_network_client.rb` builds for the browser, not the file whole (see the `plugins` skill) |
 | Homepage research-cluster cards | `clusters` (+ `_includes/network-cluster-<id>.svg`) |
 | "Related publications" on each publication page (`_layouts/publication.html`) | each node's `related` |
 
@@ -29,6 +29,8 @@ clusters[] — {id, label, terms, slugs, year_start, year_end, span, size,
 ```
 
 `nodes` / `links` are index-parallel to the DOM elements the view builds once and never re-renders. The similarity matrix is deliberately **not** shipped.
+
+**Adding a field the network view needs is two edits, not one.** The browser does not see this file; it sees the projection in `_plugins/system_network_client.rb`. A field added here and not there arrives as `undefined` in the view, with nothing to say so.
 
 `clusters[].label`/`terms`/`slugs`/`years`/`size`/`anchor_slug` are **structural** (build-network.py); `title`/`description`/`filter_label` are **editorial** (build-cards.py).
 
