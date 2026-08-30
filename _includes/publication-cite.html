@@ -4,6 +4,10 @@ hidden <pre> and copied to the clipboard (see site-scripts.html). Plain text:
 titles are not italicised — the reader can style them after pasting.
 
 Primary contributor is the author, or the editor(s) when there is no author.
+There is no third branch for "neither": publication_validator.rb requires one of
+the two and aborts the build without them, so a work with no primary contributor
+never reaches this file.
+
 The first name is inverted (Family, Given); the rest stay in normal order, with
 a serial comma before "and". Formatting branches on the publication type.
 {%- endcomment -%}
@@ -14,9 +18,6 @@ a serial comma before "and". Formatting branches on the publication type.
 {%- elsif _item.editor -%}
   {%- assign _people = _item.editor | split: ' and ' -%}
   {%- if _people.size > 1 -%}{%- assign _roleword = ', eds' -%}{%- else -%}{%- assign _roleword = ', ed' -%}{%- endif -%}
-{%- else -%}
-  {%- assign _people = '' | split: '§' -%}
-  {%- assign _roleword = '' -%}
 {%- endif -%}
 {%- comment -%} First contributor is inverted to Family, Given for Chicago style; the
 rest join with a serial comma via the same credit-join.html credit-names.html uses. {%- endcomment -%}
@@ -33,15 +34,23 @@ name can lead the list the rest joins onto. {%- endcomment -%}
 {%- assign _display_people = _first_formatted | split: "~~~" | concat: _rest_people -%}
 {%- capture _authors -%}{%- include credit-join.html items=_display_people serial_comma=true -%}{%- endcapture -%}
 {%- comment -%} The secondary roles below the author block — editor, translator, interviewer —
-join through credit-join.html as well; interpolating the front-matter string directly would
-leave its " and " separators standing between every name. Chicago takes the serial comma from
-three names up, so lists of two join with a bare " and ". {%- endcomment -%}
-{%- capture _editors -%}{%- if _item.editor -%}{%- assign _r = _item.editor | split: ' and ' -%}{%- assign _sc = false -%}{%- if _r.size > 2 -%}{%- assign _sc = true -%}{%- endif -%}{%- include credit-join.html items=_r serial_comma=_sc -%}{%- endif -%}{%- endcapture -%}
-{%- capture _translators -%}{%- if _item.translator -%}{%- assign _r = _item.translator | split: ' and ' -%}{%- assign _sc = false -%}{%- if _r.size > 2 -%}{%- assign _sc = true -%}{%- endif -%}{%- include credit-join.html items=_r serial_comma=_sc -%}{%- endif -%}{%- endcapture -%}
-{%- capture _interviewers -%}{%- if _item.interviewer -%}{%- assign _r = _item.interviewer | split: ' and ' -%}{%- assign _sc = false -%}{%- if _r.size > 2 -%}{%- assign _sc = true -%}{%- endif -%}{%- include credit-join.html items=_r serial_comma=_sc -%}{%- endif -%}{%- endcapture -%}
+are the same list in the same voice three times over, so the split, the Chicago serial-comma
+rule and the join live once in credit-role.html rather than being spelled out per role.
+Interpolating the front-matter string directly would leave its " and " separators standing
+between every name. {%- endcomment -%}
+{%- capture _editors -%}{%- include credit-role.html raw=_item.editor -%}{%- endcapture -%}
+{%- capture _translators -%}{%- include credit-role.html raw=_item.translator -%}{%- endcapture -%}
+{%- capture _interviewers -%}{%- include credit-role.html raw=_item.interviewer -%}{%- endcapture -%}
 {%- assign _t = _item.type -%}
-{%- comment -%} For books/maps the venue field holds the publisher; for chapters/conferences it holds the booktitle, so don't reuse it as the publisher there. {%- endcomment -%}
-{%- if _t == 'book' or _t == 'map' -%}{%- assign _pub = _item.publisher | default: _item.venue -%}{%- else -%}{%- assign _pub = _item.publisher -%}{%- endif -%}
+{%- comment -%} What `venue` names is per-type, and publication_types.yml already owns that
+question: `container` omitted means venue names the press itself, so it stands in when no
+`publisher` is given; any other value means venue names something the work sits inside (a
+periodical, a book) and must not be reused as the publisher. Reading the table rather than
+re-listing which types are which is what makes a newly added type come out right on arrival —
+the reference grammar below is the one place that still knows type names by heart, and it has
+to, because Chicago's shapes are not a property of the taxonomy. {%- endcomment -%}
+{%- assign _container = site.data.publication_types[_t].container -%}
+{%- if _container -%}{%- assign _pub = _item.publisher -%}{%- else -%}{%- assign _pub = _item.publisher | default: _item.venue -%}{%- endif -%}
 {%- comment -%} Drop the title-final period when the title already ends in ? or !. {%- endcomment -%}
 {%- assign _tlast = _item.title | slice: -1, 1 -%}
 {%- if _tlast == '?' or _tlast == '!' -%}{%- assign _dot = '' -%}{%- else -%}{%- assign _dot = '.' -%}{%- endif -%}

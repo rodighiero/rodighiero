@@ -6,12 +6,12 @@ then which one of them this is. The rule is deliberately the same shape as the o
 
 | Family | Members |
 |---|---|
-| `credit-` | block, full, join, names, short |
-| `card-` | action, meta |
+| `credit-` | block, full, join, names, role, short |
+| `card-` | action, event, meta |
 | `figure-` | group, single |
 | `jsonld-` | people, person |
 | `publication-` | cite, nav |
-| `site-` | analytics, head, scripts, toggle |
+| `site-` | analytics, head, scheme, scripts, toggle |
 | `styles-` | base, font |
 | `network-` | the generated `*.svg` miniatures |
 
@@ -26,7 +26,10 @@ then which one of them this is. The rule is deliberately the same shape as the o
    names every contributor in citation order (publication page and `<title>`);
    `credit-short` writes from Dario's point of view with his own name stripped ("with X and
    Y", homepage cards). They were `-text` / `-home`, which named a format and a place while
-   the real distinction between them is neither.
+   the real distinction between them is neither. `credit-names` and `credit-role` are the
+   same pairing one level down — both format a single credit field, the first for the short
+   voice (Dario stripped), the second for the Chicago reference (every name, serial comma
+   from three up).
 
 The same two-word shape carries into the **behavioural class hooks** the JS selects on,
 which stay separate from the classes that style them: `.cite-btn` (the trigger) and

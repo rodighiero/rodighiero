@@ -53,8 +53,15 @@ Sitemap, robots, aliases, feed and 404: `reference/discovery.md`.
 
 ### Add or change a publication type
 Add a key to `_data/publication_types.yml` with `label`, `schema`, `dc`, optionally
-`citation_venue` and `container`. Those five keys are the whole contract — no layout branches
-on a type name. Pick `dc` for **what Zotero maps firmly**, not for the most precise DCMI term
+`citation_venue` and `container`. Those five keys are the whole contract for everything the
+page says to a machine — no `<head>` tag, no JSON-LD and no plugin branches on a type name.
+**One deliberate exception**, and it is not machine metadata: `_includes/publication-cite.html`
+names types directly to pick a Chicago reference grammar (`book`/`map`, `journal`/`magazine`,
+`chapter`/`conference`, `interview`, else). That is the punctuation of a citation, not a
+property of the taxonomy, so it stays in the template — but a new type falls to the `else`
+branch and gets the generic “Title.” Venue. shape until you place it in that chain. Everything
+else about the new type, including whether `venue` doubles as the publisher in that same file,
+follows from the table. Pick `dc` for **what Zotero maps firmly**, not for the most precise DCMI term
 (`map`, not `image`; `image` leaves Zotero guessing at artwork). Pick `container` by asking
 what `venue` names for that type: a serial (`periodical`), the book the work sits inside
 (`book`), or the press itself (omit, and `venue` stays the publisher). See
