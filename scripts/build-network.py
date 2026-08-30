@@ -439,10 +439,14 @@ def build_clusters(pubs: list[dict], links: list[dict]) -> list[dict]:
     # renders at the head of that year (or the nearest older year that has one). An
     # undated cluster (mid = -inf) falls back to the oldest work, so the anchor always
     # names a real publication and the homepage needs no separate append pass.
+    #
+    # The two bounds are popped as they are used: they exist to place the card and to
+    # print `span`, and nothing downstream reads them off the artifact — the homepage
+    # shows `span`, already formatted.
     gallery = sorted(pubs, key=lambda p: (-_year_key(p["year"]), p["title"]))
     oldest = gallery[-1]["slug"] if gallery else ""
     for c in clusters:
-        ys, ye = c["year_start"], c["year_end"]
+        ys, ye = c.pop("year_start"), c.pop("year_end")
         mid = (ys + ye) / 2 if ys is not None else float("-inf")
         c["anchor_slug"] = next(
             (p["slug"] for p in gallery if _year_key(p["year"]) <= mid), oldest
@@ -730,10 +734,12 @@ def main() -> int:
     # already has — layout-network.js numbers its own simulation nodes from the
     # array, and the browser's projection numbers its own too. Writing it down
     # made it a second place the same fact could be wrong.
-    nodes = [
-        {"slug": p["slug"], "title": p["title"], "url": p["url"], "lang": p["lang"]}
-        for p in pubs
-    ]
+    #
+    # No "lang" either. The language of a *related* entry is shown (publication.html
+    # marks a suggestion in another language), so it rides on `related` below, taken
+    # from `pubs`; the language of a node in its own right is displayed nowhere and
+    # read by nobody — not layout-network.js, not the preview SVGs, not the browser.
+    nodes = [{"slug": p["slug"], "title": p["title"], "url": p["url"]} for p in pubs]
 
     # ── One embedding space, one cosine matrix, two consumers ──
     # Give every publication a vector: an original its own (English native or
