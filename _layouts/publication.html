@@ -21,7 +21,6 @@
   <meta name="description" content="{{ _excerpt_attr }}">
   <link rel="canonical" href="{{ site.url }}{{ page.url }}">
   {%- comment -%} Language set of this work: _origin is the original (this page, or the source it translates), _siblings every translation of that original (this page included when it is one). hreflang lists origin + siblings — which always contains the page itself, supplying the required self-reference — with x-default on the original. _alt_pages is the same set minus this page, for og:locale:alternate; _translated_by is siblings minus this page, for JSON-LD workTranslation. {%- endcomment -%}
-  {%- assign _slug = page.url | remove_first: '/' -%}
   {%- assign _source = nil -%}
   {%- if page.translation_of -%}
     {%- capture _src_url -%}/{{ page.translation_of }}{%- endcapture -%}
