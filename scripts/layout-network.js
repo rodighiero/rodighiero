@@ -3,7 +3,7 @@
  * Precompute the home network view's force-directed layout.
  *
  * Reads {nodes, similarity, translations} as JSON on stdin and writes
- * {clearance, canvas, params, positions, links} as JSON on stdout, running the
+ * {clearance, canvas, params, positions, links{source,target,fb?}} as JSON on stdout, running the
  * d3-force simulation offline so the home page can draw the graph already
  * settled. Nodes start from a random scatter, so every run produces a fresh
  * arrangement (re-run to reroll); the settled cloud is then normalized to fit
@@ -406,7 +406,16 @@ function main(input) {
       fallback_sim: FALLBACK_SIM,
     },
     positions: positions,
-    links: links,
+    /* `value` — the cosine that set each edge's rest length and strength — stays
+       internal. The simulation above is the only thing that reads it; every consumer
+       downstream draws all edges alike, at one weight, so writing it into the committed
+       artifact only invited someone to believe otherwise. `fb` survives because the
+       fallback edges genuinely are drawn fainter. */
+    links: links.map(function (l) {
+      const out = { source: l.source, target: l.target };
+      if (l.fb) out.fb = true;
+      return out;
+    }),
   }));
 }
 

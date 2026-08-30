@@ -23,9 +23,11 @@
 #   related[].title     the panel maps r.slug to a node index and reads the
 #   related[].url       title and url off `nodes`, so these are the same
 #   related[].lang      strings a second time — the bulk of the saving
-#   nodes[].i           the array position, which the JS re-derives anyway
-#   nodes[].lang        unread in the browser
-#   links[].value       unread; edges are drawn straight, at one weight
+#
+# It used to drop three more — nodes[].i, nodes[].lang and links[].value — which
+# have since been taken out of network.json itself, since this was not the only
+# reader they were dead to. What is left to drop is only what a *build-time*
+# reader genuinely uses and the browser does not.
 #
 # `tr` and `fb` are omitted where false rather than written as false: the JS
 # reads both through !!, so absence and false are the same value to it.
