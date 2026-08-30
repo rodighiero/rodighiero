@@ -130,8 +130,14 @@ offline it was ceremony over a one-time build, and D3 was a 93KB-gzipped depende
   so a tile in flight becomes a *picture* of a card cross-fading against a snapshot — which
   is how a large photograph dropped out of its tile mid-slide.
 - **The tile transition is armed only while a change is in flight** (`.animating` on
-  `#publications`). The first layout and the no-op resize passes write transforms too, and
-  those must stay instant.
+  `#publications`). The first layout writes transforms too, and it must stay instant.
+- **`applySearch()` must not lay out.** It decides which tiles show; the caller asks for the
+  pack, because only the caller knows whether it needs to be synchronous (it does, inside a
+  tile transition). See `reference/motion.md`.
+- **A scheduled pass is width-gated** — `layoutIfPageResized()` packs only when the page's
+  own width actually moved, which is safe because no column change can happen without one.
+  A new caller that needs a pack for some *other* reason must call `layoutMasonry()` itself,
+  not `scheduleWidthPass()`. See `reference/grid.md`.
 - **`.card-title` is `display: inline-block`** and that is load-bearing: an inline-block's
   top margin does not collapse with the meta line's bottom margin, so `display: block` would
   halve the gap.
@@ -154,4 +160,5 @@ offline it was ceremony over a one-time build, and D3 was a 93KB-gzipped depende
 | A tile jumps instead of sliding | it travelled further than `window.innerHeight` (class `snapping`), or the column count crossed the one-column boundary, or the pass shortened the page under the reader |
 | Tiles restart on every keystroke | `SEARCH_SETTLE` (180 ms) debounce lost |
 | Bio clipped under its own overflow | an open height got pinned and went stale |
+| Tiles overlap after some non-resize change | it went through `scheduleWidthPass()`, which packs only on a width change — call `layoutMasonry()` |
 | Empty frame where a card's image should be | the after-idle thumbnail warming (`lazy` → `eager`) didn't run |

@@ -113,6 +113,29 @@ The number is written **once**, as the Liquid `{% assign _mobile_max = 921 %}` a
 and interpolated into all three places that ask for it — the pre-paint script in `<head>`,
 the `@media` rule, the `matchMedia` call. Three literals that must agree, from one source.
 
+## The width gate
+
+Everything that schedules a pass — the window `resize` listener and the bio collapse's two
+calls — does so for one reason: the page's own width may have changed. So the scheduled
+function asks before packing. `layoutIfPageResized()` runs `syncPageWidth()` and returns
+unless `pageWidth` actually moved.
+
+That is exact rather than approximate, because of how the width is derived. Above one column
+it is quantized to `gridWidth(cols)`, so dragging a window inside a count cannot move a tile
+— a card is `CARD_W` at every size up there, so neither `x` nor `y` changes. At one column
+the width tracks the window, every pixel re-fits the full-width cards, and the pass runs on
+each. **No column change is possible without a width change**, which is what makes the gate
+safe; the 921px media query that hides the action cards sits exactly on the 2↔3 boundary
+(`pageWidth` 628 → 922), so that flip is packed too.
+
+A 1200→700px drag is ~125 frames, of which one crosses a threshold: 125 full
+measure-and-write passes over ~75 tiles became 1.
+
+It also removes a cancellation. `layoutMasonry()` used to end by cancelling any pending
+scheduled pass, because `applySearch()` queued one that a synchronous filter layout had to
+retract. Neither half exists now: `applySearch()` schedules nothing, and a pass queued before
+a synchronous layout and fired after finds the width already synced and returns on its own.
+
 ## Two things to keep in mind when touching `setView`
 
 `syncPageWidth()` is called from `layoutMasonry()`, which the network branch must **not** run
@@ -155,10 +178,11 @@ pin entirely and lets the state flip instantly.
 
 The JS owns only the state: it flips the attribute, updates `aria-expanded`/label/title,
 persists, and sets `.inert` on the shell — a panel clipped to zero height still holds real
-links, which would otherwise stay in the tab order. It also calls `scheduleLayout()` on toggle
-and on the height's `transitionend`, not because the masonry depends on the header (tiles sit
-inside `#publications`, which merely moves) but because losing ~400px of page can take a
-scrollbar with it, and a scrollbar is width, which is the column count.
+links, which would otherwise stay in the tab order. It also calls `scheduleWidthPass()` on
+toggle and on the height's `transitionend`, not because the masonry depends on the header
+(tiles sit inside `#publications`, which merely moves) but because losing ~400px of page can
+take a scrollbar with it, and a scrollbar is width, which is the column count. If it didn't,
+the pass costs nothing: see the width gate below.
 
 Bio prose itself lives in `README.md`, split into three paragraphs with `<!-- split -->`
 comments; `_plugins/system_readme.rb` exposes it as `site.data.readme_content`, so `README.md`

@@ -30,10 +30,15 @@ Three behaviours:
 
 The transition is armed only while a change is in flight, via `.animating` on `#publications`
 (`armTileMotion()` adds the class and sets the timer that takes it off again): the first
-layout and the resize passes that change nothing write transforms too, and **those must stay
-instant**. `layoutMasonry()` runs synchronously inside the change and cancels any pending
-scheduled pass, so the tiles get one destination rather than a second one written a frame
+layout and any pass that changes nothing write transforms too, and **those must stay
+instant**. `layoutMasonry()` runs synchronously inside the change, in the same task as the
+display flips, so the tiles get one destination rather than a second one written a frame
 into the movement.
+
+`applySearch()` deliberately does **not** lay out — it decides which tiles show, and packing
+them is the caller's to ask for, because only the caller knows when. It used to end by
+scheduling a pass, which `layoutMasonry()` then had to cancel on its way out; the two knew
+about each other for no reason a caller could see.
 
 Typing is debounced by `SEARCH_SETTLE` (180 ms) so a burst of keystrokes animates once rather
 than restarting the tiles on every character, and `prefers-reduced-motion` falls through to
