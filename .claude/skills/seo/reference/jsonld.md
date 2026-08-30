@@ -29,12 +29,16 @@ page-level counterpart of what the shared ORCID `@id` does for the author.
 
 ## People — the one identity that matters
 
-`jsonld-person.html` emits a single `Person` node and gives Dario
-`"@id": "https://orcid.org/0000-0002-1405-7062"` plus `url`. **That `@id` is identical to the
-`Person` `@id` in the homepage `@graph`, and that is the entire mechanism** tying sixty-odd
-publication pages to the homepage's subject. Break it and each page declares an unrelated
-person who happens to share a name. Co-authors stay bare names — there is no stable
-identifier for them, and inventing one would be worse than none.
+`jsonld-person.html` emits a single `Person` node and gives Dario `"@id": "{{ site.orcid }}"`
+plus `url`. **That `@id` is identical to the `Person` `@id` in the homepage `@graph`, and that
+is the entire mechanism** tying sixty-odd publication pages to the homepage's subject. Break it
+and each page declares an unrelated person who happens to share a name. Co-authors stay bare
+names — there is no stable identifier for them, and inventing one would be worse than none.
+
+The identity is now structural rather than agreed: `orcid:` lives once in `_config.yml` and the
+six places that name it — this include, plus `rel="me"`, `mainEntity`, the `Person` `@id`,
+`sameAs` and the footer link in `home.html` — all read `site.orcid`. Editing `_config.yml`
+needs a `jekyll serve` restart to take effect; nothing else does.
 
 `jsonld-people.html` wraps it into a whole person-valued property from an `" and "`-joined
 front-matter field, emitting a bare node for one name and an array for several.

@@ -4,9 +4,16 @@ One JSON-LD Person node for an author name (no trailing comma — the caller joi
 Dario's node carries the ORCID as its @id, which must stay identical to the Person
 @id in home.html's @graph: that shared identifier is the only thing telling a
 consumer the author of these sixty-odd pages and the subject of the homepage are
-one entity. Co-authors stay bare names — we have no stable identifier for them.
+one entity. Both now read `site.orcid` from _config.yml, so they are the same
+string by construction rather than by agreement. Co-authors stay bare names — we
+have no stable identifier for them.
+
+The name is matched exactly, and against site.title, which is the person's name
+here. A looser test would hang an ORCID on the wrong person; credit-names.html
+matches the surname alone, but only to decide whose byline to strip, where a
+false positive costs nothing.
 
 Params: name — a single author name (whitespace is stripped here).
 {%- endcomment -%}
 {%- assign _n = include.name | strip -%}
-{ "@type": "Person", "name": {{ _n | jsonify }}{% if _n == "Dario Rodighiero" %}, "@id": "https://orcid.org/0000-0002-1405-7062", "url": "{{ site.url }}"{% endif %} }
+{ "@type": "Person", "name": {{ _n | jsonify }}{% if _n == site.title %}, "@id": "{{ site.orcid }}", "url": "{{ site.url }}"{% endif %} }
