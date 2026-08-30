@@ -22,8 +22,6 @@
  * constants the page still needs — the marker radius it draws, and the k and
  * two thresholds its legend quotes — travel to it in the output's `params`,
  * so there is nothing left to keep in sync by hand.
- *
- * Set LAYOUT_SEED in the environment to reproduce a previous run's positions.
  */
 'use strict';
 
@@ -86,25 +84,11 @@ const MUTUAL_K = 2;
 // only for a node that would otherwise be isolated.
 const FALLBACK_SIM = 0.60;
 const GRAVITY = 0.9;
-/* Randomized per build: each run produces a fresh arrangement (re-run to
-   reroll). The settled cloud is normalized to fit the canvas afterwards, so
-   any seed yields a usable, non-overflowing layout. The seed used is printed
-   to stderr and stored in the output as `seed`.
-
-   LAYOUT_SEED in the environment pins it instead, which makes a run
-   reproducible: feed back the `seed` a previous run stored and every node
-   lands exactly where it did. That is what lets a change to anything else
-   here — a constant, a new output field — be rebuilt and reviewed as its own
-   diff, rather than arriving buried in a reroll of all 64 positions. */
-const SEED_OVERRIDE = process.env.LAYOUT_SEED;
-if (SEED_OVERRIDE !== undefined && !Number.isFinite(Number(SEED_OVERRIDE))) {
-  // Refuse rather than silently seeding with 0, which would look like a reroll.
-  process.stderr.write('LAYOUT_SEED is not a number: ' + SEED_OVERRIDE + '\n');
-  process.exit(1);
-}
-const LAYOUT_SEED = SEED_OVERRIDE !== undefined
-  ? (Number(SEED_OVERRIDE) >>> 0)
-  : (Math.random() * 0x100000000) >>> 0;
+// Randomized per build: each run produces a fresh arrangement (re-run to
+// reroll). The settled cloud is normalized to fit the canvas afterwards, so
+// any seed yields a usable, non-overflowing layout. The seed used is printed
+// to stderr and stored in the output as `seed` for reference.
+const LAYOUT_SEED = (Math.random() * 0x100000000) >>> 0;
 const LAYOUT_TICKS = 1400;
 // Link-distance shaping (forceLink): distance = LINK_DIST_BASE + (1−sim)*LINK_DIST_SPAN.
 const LINK_DIST_BASE = 10;

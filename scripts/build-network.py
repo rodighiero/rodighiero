@@ -198,10 +198,7 @@ def precompute_layout(
     index to its original's index: those nodes join the simulation as regular
     nodes but their only edge is a forced 1.00 link to the original (no
     similarity edge), so the layout arranges them appended to their source.
-    Returns {canvas, params, positions, links}. Set LAYOUT_SEED in the
-    environment to reproduce a previous run's positions instead of rerolling —
-    the seed of the run that produced the committed graph is stored in
-    _data/network.json.
+    Returns {canvas, params, positions, links}.
     """
     payload = json.dumps(
         {"nodes": nodes, "similarity": similarity, "translations": translations}
