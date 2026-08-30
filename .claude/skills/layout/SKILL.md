@@ -39,7 +39,7 @@ Token values, the derived thresholds and the per-block grids: `reference/grid.md
 | Publication card markup | inline in the Liquid loop in `_layouts/home.html` |
 | Action and cluster tile markup | `_includes/card-action.html` (both kinds; `card-meta.html` is the meta line every card shares) |
 | Event tile markup | `_includes/card-event.html` |
-| Manual action cards and events | `_data/home_cards.yml` |
+| Event cards | `_data/home_cards.yml` |
 | Cluster cards + graph miniatures | `_data/network.json`, `_includes/network-*.svg` (generated) |
 | Bio prose | `README.md` (via `_plugins/system_readme.rb`) |
 | Spring curve generator | `scripts/spring-easing.js` |
@@ -61,12 +61,13 @@ consequences to carry through by hand:
 
 The first two are worked out in `reference/grid.md`.
 
-### Add or reword an action card
-Append to `_data/home_cards.yml`: `label`, `action`, optional `year` / `eyebrow` / `venue` /
-`sublabel`, optional `pin: first`. `action` is `view:<gallery|network>`, `type:<publication-type>`
-or `search:<terms>`. **Research-cluster cards are not edited here** — they are generated from
-`network.json`; reword them in `scripts/build-cards.py` (see the `network` skill).
-Card anatomy and the filter pipeline: `reference/cards.md`.
+### Reword an action card
+Two kinds exist and neither is configured in a data file. The `view:network` tile is written
+out inline in `home.html`'s gallery loop — edit its `label` / `sublabel` there. **Cluster cards
+are generated** from `network.json`; reword them in `scripts/build-cards.py` (see the `network`
+skill). A third card takes an `action=` string the click handler understands, which is
+`view:<gallery|network>` or `cluster:<id>` and nothing else. Card anatomy and the filter
+pipeline: `reference/cards.md`.
 
 ### Announce an event
 Append to `events:` in `_data/home_cards.yml`: `label` and `link` (an external URL), optional

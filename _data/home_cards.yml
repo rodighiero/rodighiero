@@ -1,28 +1,18 @@
-# Special cards on the homepage gallery (see the `layout` skill, reference/cards.md).
+# Event cards on the homepage gallery (see the `layout` skill, reference/cards.md).
 #
-# `events`  — announcement tiles that link out to an external page (a talk, a workshop, an
-#           exhibition). Each entry takes `label`, `link` (the external URL — required) and
-#           optional `date` (ISO, rendered as "26 August 2026"), `eyebrow` (defaults to
-#           "Event"; the meta line is uppercased in CSS, like every other card's), `venue`
-#           (the host institution alone — the city belongs in the text if it matters),
-#           `sublabel` and `author` (everyone presenting, Dario included, in a publication's
-#           " and "-joined format: it renders as the same "with X and Y" byline, in the same
-#           bottom slot, that a publication card ends on). They lead the gallery flow, and
-#           are the one special card that survives on mobile. Delete an entry once it has
-#           happened — nothing expires it automatically.
+# Announcement tiles that link out to an external page (a talk, a workshop, an exhibition).
+# Each entry takes `label`, `link` (the external URL — required) and optional `date` (ISO,
+# rendered as "26 August 2026"), `eyebrow` (defaults to "Event"; the meta line is uppercased
+# in CSS, like every other card's), `venue` (the host institution alone — the city belongs in
+# the text if it matters), `sublabel` and `author` (everyone presenting, Dario included, in a
+# publication's " and "-joined format: it renders as the same "with X and Y" byline, in the
+# same bottom slot, that a publication card ends on). They lead the gallery flow, and are the
+# one special card that survives on mobile. Delete an entry once it has happened — nothing
+# expires it automatically.
 #
-# `actions` — clickable tiles embedded in the gallery. Each `action` is
-#           `view:<gallery|network>` (switches view), `search:<terms>`, or
-#           `type:<publication-type>` (filters the gallery to that front-matter
-#           `type`, e.g. map / book / chapter / journal / conference / magazine /
-#           interview). An empty list renders no action cards. An optional
-#           `pin: first` renders an action as the leading gallery tile (before the
-#           forthcoming works); unpinned actions render at the top. Example tile:
-#
-#   actions:
-#     - label: Maps
-#       sublabel: Cartographic pieces
-#       action: type:map
+# The gallery's other special tiles — the network card and the six research-cluster filters —
+# are not configured here: they are generated from the similarity graph and rendered by
+# _layouts/home.html. See scripts/build-network.py and the `network` skill.
 
 events:
   - date: 2026-08-26
@@ -32,18 +22,3 @@ events:
     sublabel: A presentation and a workshop around an interactive archive of Svalbardposten. Nearly two decades of reporting, read for what it says about how the local community understands itself. The workshop hands the floor back to that community, whose feedback shapes the next phase. Free, no registration.
     author: Dario Rodighiero and Tina Rosado and Sabina Rosenbergova
     link: https://www.articasvalbard.no/2026/workshop-talk-exploring-longyearbyen-through-the-svalbardposten-archive
-
-actions: []
-  # The research-cluster filter cards are now generated automatically from the network
-  # graph (see scripts/build-network.py → network.json `clusters`, rendered in
-  # _layouts/home.html); they are no longer listed here.
-  #
-  # Manual action cards can still be added: each `action` is `view:<gallery|network>`,
-  # `type:<publication-type>`, or `search:<terms>`; an optional `pin: first` renders it as
-  # the leading gallery tile. Example (a network-view lead card):
-  #   - year: now
-  #     eyebrow: Filter
-  #     venue: Publication network
-  #     label: Explore how the works are organized by research area
-  #     action: view:network
-  #     pin: first

@@ -1000,7 +1000,7 @@ shows 3 columns. {%- endcomment -%}
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         </button>
         {%- comment -%} The "network-view" GoatCounter key here matches the literal in
-        action-card-plain.html's _gc_click assignment (for the view:network action card) —
+        card-action.html's _gc_click assignment (for the view:network action card) —
         keep the two in sync if this key is ever renamed. {%- endcomment -%}
         <button type="button" data-view="network" aria-label="Network view" aria-pressed="false" data-goatcounter-click="network-view">
           {%- comment -%} Same stroke-width as the search, gallery and bio-toggle icons, so the
@@ -1023,20 +1023,13 @@ shows 3 columns. {%- endcomment -%}
       action cards. They live in the gallery flow but carry the .event, .action or .filter class
       (not .publication) so the count / search / network logic (which queries .publication)
       ignores them. Events lead the flow, newest first — they are the timely tile, and the one
-      kind that goes somewhere else rather than filtering in place. Placement of
-      home_cards actions: `pin: first` renders here as the very first tile (before the
-      forthcoming publications); an unpinned
-      action renders as a plain tile at the top. The research-cluster filter cards are NOT from
-      home_cards — they are generated automatically from site.data.network.clusters and merged
-      into the dated flow below (each just before its newest member). See _data/home_cards.yml
-      and scripts/build-network.py. {%- endcomment -%}
+      kind that goes somewhere else rather than filtering in place; they are the only special
+      card that comes from _data/home_cards.yml. The network tile and the research-cluster
+      filter cards are generated below from site.data.network and merged into the dated flow
+      (each cluster just before its newest member). See scripts/build-network.py.
+      {%- endcomment -%}
       {% assign _events = site.data.home_cards.events | sort: 'date' | reverse %}
-      {% for _event in _events %}{% include card-event.html event=_event class="" %}{% endfor %}
-      {% assign _first_actions = site.data.home_cards.actions | where: "pin", "first" %}
-      {% for _action in _first_actions %}{% include card-action.html action=_action class="" %}{% endfor %}
-      {% for _action in site.data.home_cards.actions %}
-      {% unless _action.pin %}{% include card-action.html action=_action class="" %}{% endunless %}
-      {% endfor %}
+      {% for _event in _events %}{% include card-event.html event=_event %}{% endfor %}
 
       {%- comment -%} One ordered list in year-desc / title-asc order (Forthcoming first), so a
       single card block renders every card and the _card_i priority counter stays correct. {%- endcomment -%}
@@ -1048,7 +1041,7 @@ shows 3 columns. {%- endcomment -%}
       {%- comment -%} A network-view card leads the dated flow: emit it once, right after the
       forthcoming works (before the first publication carrying a real year). {%- endcomment -%}
       {% if _net_done == false and publication.year != 'Forthcoming' %}
-      {% include card-action.html eyebrow="Action" venue="Publication network" label="The Shape of a Body of Work" sublabel="This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." act="view:network" year="now" media="network-preview.svg" %}
+      {% include card-action.html eyebrow="Action" venue="Publication network" label="The Shape of a Body of Work" sublabel="This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." action="view:network" year="now" media="network-preview.svg" %}
       {% assign _net_done = true %}
       {% endif %}
       {%- comment -%} Auto cluster filter cards are distributed by the midpoint of their span:
@@ -1065,7 +1058,7 @@ shows 3 columns. {%- endcomment -%}
       {% assign _cluster_n = _cluster_n | plus: 1 %}
       {% capture _cluster_media %}network-cluster-{{ _cluster.id }}.svg{% endcapture %}
       {% capture _cluster_venue %}Research cluster {{ _cluster_n }}{% endcapture %}
-      {% include card-action.html eyebrow="Filter" venue=_cluster_venue label=_cluster.title sublabel=_cluster.description act=_cluster.action slugs=_cluster.slugs year=_cluster.span filterlabel=_cluster.filter_label media=_cluster_media %}
+      {% include card-action.html eyebrow="Filter" venue=_cluster_venue label=_cluster.title sublabel=_cluster.description action=_cluster.action slugs=_cluster.slugs year=_cluster.span filterlabel=_cluster.filter_label media=_cluster_media %}
       {% endif %}{% endfor %}
       {% assign _type_label = site.data.publication_types[publication.type].label %}
       {% capture _lang_terms %}{% if publication.lang == 'it' %}italian italiano{% elsif publication.lang == 'fr' %}french français francais{% else %}english{% endif %}{% endcapture %}
@@ -1803,18 +1796,9 @@ shows 3 columns. {%- endcomment -%}
 
     // The type slugs and their human labels, straight from _data/publication_types.yml —
     // the same table the meta line reads, so a type filter names itself the way the cards
-    // below it do ("Book Chapter", not "chapter"). It is what typeLabel() falls back on
-    // when no action card is carrying a label of its own, which is the normal case: a
-    // ?type= URL is shareable whether or not a card for that type happens to exist.
+    // below it do ("Book Chapter", not "chapter"). A ?type= URL is the only way to reach
+    // one — no tile on the page sets a type — so this table is where its label comes from.
     var TYPE_LABELS = { {% for t in site.data.publication_types %}{{ t[0] | jsonify }}: {{ t[1].label | jsonify }}{% unless forloop.last %}, {% endunless %}{% endfor %} };
-    // The action card that sets a given filter, if one is on the page.
-    function actionCard(verb, val) {
-      return document.querySelector('[data-action="' + verb + ':' + val + '"]');
-    }
-    function typeLabel(slug) {
-      var card = actionCard('type', slug);
-      return (card && card.dataset.filterLabel) || TYPE_LABELS[slug] || slug;
-    }
 
     try {
       var _params = new URLSearchParams(location.search);
@@ -1824,11 +1808,11 @@ shows 3 columns. {%- endcomment -%}
       if (_initialType) {
         activeType = _initialType;
         // Reflect the filter as its label in the box (no focus on load).
-        showFilterInInput(typeLabel(_initialType), false);
+        showFilterInInput(TYPE_LABELS[_initialType] || _initialType, false);
       }
       var _initialCluster = _params.get('cluster');
       if (_initialCluster) {
-        var _cEl = actionCard('cluster', _initialCluster);
+        var _cEl = document.querySelector('[data-action="cluster:' + _initialCluster + '"]');
         if (_cEl && _cEl.dataset.slugs) {
           setClusterFilter(_cEl, _initialCluster);
           showFilterInInput(_cEl.dataset.filterLabel || '', false);
@@ -1843,15 +1827,14 @@ shows 3 columns. {%- endcomment -%}
     applySearch();
     layoutMasonry();
 
-    // Action cards: switch view (view:<name>), set a type filter (type:<name>), run a
-    // free-text query (search:<terms>), or set a cluster filter (cluster:<id>, whose member
-    // slugs ride on the card's data-slugs). Split on the FIRST colon only, so a search value may
-    // itself contain colons/spaces. The three content filters are mutually exclusive.
+    // Action cards: switch view (view:<name>) or set a cluster filter (cluster:<id>, whose
+    // member slugs ride on the card's data-slugs). Those are the two the page emits — the
+    // network tile and the six cluster tiles.
     //
-    // Each of the three re-reads its own state first, so clicking a card that is already
+    // The cluster branch re-reads its own state first, so clicking a card that is already
     // active clears it. In practice that never fires from a click: applySearch() hides every
     // special card the moment any filter is active, so the card that set the filter is gone
-    // before it could be clicked again. The re-read stays because it is what makes each
+    // before it could be clicked again. The re-read stays because it is what makes the
     // branch a toggle rather than a setter, and clearing runs through Escape and the search
     // box instead (see resetFilters and the input handler below).
     /* The one place a cluster filter is constructed, so the {id, slugs} pair this design
@@ -1932,33 +1915,21 @@ shows 3 columns. {%- endcomment -%}
           withCrossfade(function() { setView(val); });
           return;
         }
-        if (verb !== 'type' && verb !== 'search' && verb !== 'cluster') return;
+        if (verb !== 'cluster' || !val) return;
         // Setting a cluster — not clearing one, and not a card with nothing to select —
         // takes the reader to the results (see scrollToResults). The test repeats the
         // cluster branch's own, because the branch runs inside the transition and the
         // scroll has to have happened before it does.
-        if (verb === 'cluster' && val && btn.dataset.slugs
-            && !(activeCluster && activeCluster.id === val)) {
+        if (btn.dataset.slugs && !(activeCluster && activeCluster.id === val)) {
           scrollToResults();
         }
         withTileTransition(function() {
-          if (verb === 'type' && val) {
-            activeType = (activeType === val) ? null : val;
+          if (activeCluster && activeCluster.id === val) {
             activeCluster = null;
-            if (activeType) showFilterInInput(typeLabel(val)); else clearFilterInput();
-          } else if (verb === 'search' && val && searchInput) {
-            searchInput.value = (searchInput.value === val) ? '' : val;
-            activeType = null;
-            activeCluster = null;
-            activeFilterLabel = null; // this is a real free-text query, not a filter label
-          } else if (verb === 'cluster' && val) {
-            if (activeCluster && activeCluster.id === val) {
-              activeCluster = null;
-              clearFilterInput();
-            } else if (btn.dataset.slugs) {
-              setClusterFilter(btn, val);
-              showFilterInInput(btn.dataset.filterLabel || '');
-            }
+            clearFilterInput();
+          } else if (btn.dataset.slugs) {
+            setClusterFilter(btn, val);
+            showFilterInInput(btn.dataset.filterLabel || '');
           }
           applySearch();
           updateURL();

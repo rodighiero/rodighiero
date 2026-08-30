@@ -1,31 +1,23 @@
 {%- comment -%}
-Plain action card (looks like a gallery publication card with no image). Fields come either
-from an action hash (include.action, from _data/home_cards.yml) or as explicit params that
-override it — so the same card renders manual home_cards entries and auto network clusters.
+Plain action card (looks like a gallery publication card with no image). Every field comes
+as an explicit param — the two callers are home.html's network-view tile and its auto
+cluster tiles, both of which build their text on the spot.
 Params:
-  include.action  — action hash {year, eyebrow, venue, label, sublabel, action}; optional
-  include.year / eyebrow / venue / label / sublabel — explicit overrides
-  include.act     — explicit action string (e.g. "cluster:3"); falls back to action.action
+  include.year / eyebrow / venue / label / sublabel — the card's text
+  include.action  — the action string the click handler reads ("view:network", "cluster:3")
   include.slugs   — array of member slugs for a cluster filter (joined into data-slugs); optional
   include.filterlabel — short label shown in the search box when this filter is active (data-filter-label); optional
   include.media   — filename of an include to render above the text as the card's image
                     (e.g. "network-preview.svg"); optional
-  include.class   — optional extra wrapper class (none by default; flows in the gallery masonry among the publications)
 `year: now` renders the live build year; a literal string renders as-is (a range like
 "2015–2026" is shown plain rather than wrapped in <time>); omit it for a year-less card.
 {%- endcomment -%}
-{%- assign _a = include.action -%}
-{%- assign _yr = include.year | default: _a.year -%}
+{%- assign _yr = include.year -%}
 {%- if _yr == 'now' -%}{%- assign _yr = site.time | date: '%Y' -%}{%- endif -%}
-{%- assign _eyebrow = include.eyebrow | default: _a.eyebrow -%}
-{%- assign _venue = include.venue | default: _a.venue -%}
-{%- assign _label = include.label | default: _a.label -%}
-{%- assign _sublabel = include.sublabel | default: _a.sublabel -%}
-{%- assign _act = include.act | default: _a.action -%}
 {%- comment -%} Two kinds of special card: a cluster tile applies a filter (.filter);
-everything else (view/type/search) triggers a one-off action (.action). {%- endcomment -%}
+the network tile triggers a one-off view switch (.action). {%- endcomment -%}
 {%- assign _is_cluster = false -%}
-{%- if _act contains 'cluster:' -%}{%- assign _is_cluster = true -%}{%- endif -%}
+{%- if include.action contains 'cluster:' -%}{%- assign _is_cluster = true -%}{%- endif -%}
 {%- assign _kind = 'action' -%}
 {%- if _is_cluster -%}{%- assign _kind = 'filter' -%}{%- endif -%}
 {%- comment -%} GoatCounter event tracking: count.js auto-binds a click listener to any element
@@ -34,14 +26,14 @@ the auto cluster cards get one, matching the two interactions worth measuring on
 Cluster cards are tracked by their title (the same text the card shows), not the internal id, so
 the GoatCounter dashboard reads as "Peirce Manuscripts" rather than "cluster:3". {%- endcomment -%}
 {%- assign _gc_click = '' -%}
-{%- if _act == 'view:network' -%}{%- assign _gc_click = 'network-view' -%}
-{%- elsif _is_cluster -%}{%- assign _gc_click = _label -%}
+{%- if include.action == 'view:network' -%}{%- assign _gc_click = 'network-view' -%}
+{%- elsif _is_cluster -%}{%- assign _gc_click = include.label -%}
 {%- endif -%}
-<button type="button" class="card {{ _kind }} {{ include.class }}" data-action="{{ _act }}"{% if include.slugs %} data-slugs="{{ include.slugs | join: ' ' }}"{% endif %}{% if include.filterlabel %} data-filter-label="{{ include.filterlabel }}"{% endif %}{% if _gc_click != '' %} data-goatcounter-click="{{ _gc_click }}"{% endif %}>
+<button type="button" class="card {{ _kind }}" data-action="{{ include.action }}"{% if include.slugs %} data-slugs="{{ include.slugs | join: ' ' }}"{% endif %}{% if include.filterlabel %} data-filter-label="{{ include.filterlabel }}"{% endif %}{% if _gc_click != '' %} data-goatcounter-click="{{ _gc_click }}"{% endif %}>
   {%- if include.media -%}<span class="card-media">{% include {{ include.media }} %}</span>{%- endif -%}
-  {%- if _yr or _eyebrow or _venue -%}
-  <span class="card-meta">{% if _yr %}{% if _yr contains '–' or _yr contains '-' %}<span>{{ _yr }}</span>{% else %}<time datetime="{{ _yr }}">{{ _yr }}</time>{% endif %}{% if _eyebrow %} · {% endif %}{% endif %}{{ _eyebrow }}{% if _venue %}<br><span class="venue">{{ _venue }}</span>{% endif %}</span>
+  {%- if _yr or include.eyebrow or include.venue -%}
+  <span class="card-meta">{% if _yr %}{% if _yr contains '–' or _yr contains '-' %}<span>{{ _yr }}</span>{% else %}<time datetime="{{ _yr }}">{{ _yr }}</time>{% endif %}{% if include.eyebrow %} · {% endif %}{% endif %}{{ include.eyebrow }}{% if include.venue %}<br><span class="venue">{{ include.venue }}</span>{% endif %}</span>
   {%- endif -%}
-  <span class="card-title">{{ _label }}</span>
-  {% if _sublabel %}<span class="card-text">{{ _sublabel }}</span>{% endif %}
+  <span class="card-title">{{ include.label }}</span>
+  {% if include.sublabel %}<span class="card-text">{{ include.sublabel }}</span>{% endif %}
 </button>
