@@ -1,0 +1,12 @@
+{%- comment -%}
+  One secondary role's name list in the Chicago voice — the editors, translators or
+  interviewers that sit below the author block in publication-cite.html. Splits the raw
+  " and "-joined front-matter field and joins it through credit-join.html, taking the
+  serial comma from three names up (Chicago's rule), so a list of two joins on a bare
+  " and ". Emits nothing when the field is absent.
+
+  The Dario-stripping counterpart, for the homepage's short voice, is credit-names.html.
+  Params:
+    include.raw — a front-matter name field (item.editor, item.translator, …)
+{%- endcomment -%}
+{%- if include.raw -%}{%- assign _r = include.raw | split: ' and ' -%}{%- assign _sc = false -%}{%- if _r.size > 2 -%}{%- assign _sc = true -%}{%- endif -%}{%- include credit-join.html items=_r serial_comma=_sc -%}{%- endif -%}

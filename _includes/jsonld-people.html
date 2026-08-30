@@ -10,5 +10,5 @@ Params:
 {%- endcomment -%}
 {%- assign _people = include.names | split: ' and ' -%}
 {%- if _people.size > 0 -%}
-"{{ include.property }}": {% if _people.size == 1 %}{% assign _solo = _people | first %}{% include jsonld-person.html name=_solo %}{% else %}[{% for _p in _people %}{% include jsonld-person.html name=_p %}{% unless forloop.last %}, {% endunless %}{% endfor %}]{% endif %},
+"{{ include.property }}": {% if _people.size == 1 %}{% include jsonld-person.html name=_people.first %}{% else %}[{% for _p in _people %}{% include jsonld-person.html name=_p %}{% unless forloop.last %}, {% endunless %}{% endfor %}]{% endif %},
 {%- endif -%}

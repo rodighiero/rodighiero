@@ -67,7 +67,10 @@
   <meta name="twitter:image:alt" content="Dario Rodighiero">{% endif %}
   <!-- HighWire Press / Google Scholar citation tags -->
   <meta name="citation_title" content="{{ page.title | escape }}">
-  {% assign _authors_list = page.author | default: 'Dario Rodighiero' | split: ' and ' %}
+  {%- comment -%} One authors string, three surfaces: citation_author below, DC.creator further
+  down, and the JSON-LD author node. The fallback name is written once so they cannot drift. {%- endcomment -%}
+  {% assign _authors_raw = page.author | default: 'Dario Rodighiero' %}
+  {% assign _authors_list = _authors_raw | split: ' and ' %}
   {% for _ca in _authors_list %}
   <meta name="citation_author" content="{{ _ca | strip | escape }}">
   {% endfor %}
@@ -107,20 +110,19 @@
     "@id": "{{ site.url }}{{ page.url }}",
     "headline": {{ page.title | jsonify }},
     "name": {{ page.title | jsonify }},
-    {%- assign _jsonld_authors = page.author | default: 'Dario Rodighiero' -%}
-    {% include jsonld-people.html property="author" names=_jsonld_authors %}
+    {%- include jsonld-people.html property="author" names=_authors_raw %}
     {%- comment -%} The byline's other roles, so a work Dario edited, translated or conducted
     still carries his ORCID node rather than leaving him off the page's graph entirely (the
     interviews are cited under the interviewee, and the two Analogous City maps under Rossi
     et al., so on those pages this is his only appearance). editor and translator are real
     CreativeWork properties; interviewer and preface have no Schema.org equivalent, so they
     fold into the general contributor. {%- endcomment -%}
-    {%- assign _contributors = '' -%}
-    {%- if page.interviewer -%}{%- assign _contributors = page.interviewer -%}{%- endif -%}
-    {%- if page.preface -%}{%- if _contributors != '' -%}{%- assign _contributors = _contributors | append: ' and ' -%}{%- endif -%}{%- assign _contributors = _contributors | append: page.preface -%}{%- endif -%}
-    {% if page.editor %}{% include jsonld-people.html property="editor" names=page.editor %}{% endif %}
-    {% if page.translator %}{% include jsonld-people.html property="translator" names=page.translator %}{% endif %}
-    {% if _contributors != '' %}{% include jsonld-people.html property="contributor" names=_contributors %}{% endif %}
+    {%- comment -%} Each include tests its own `names` and emits nothing when it is empty, so
+    the callers do not repeat that test. {%- endcomment -%}
+    {%- capture _contributors -%}{{ page.interviewer }}{% if page.interviewer and page.preface %} and {% endif %}{{ page.preface }}{%- endcapture -%}
+    {% include jsonld-people.html property="editor" names=page.editor %}
+    {% include jsonld-people.html property="translator" names=page.translator %}
+    {% include jsonld-people.html property="contributor" names=_contributors %}
     {% if page.year and page.year != "Forthcoming" %}"datePublished": "{{ page.year }}",{% endif %}
     {% if page.commit_date %}"dateModified": "{{ page.commit_date }}",{% endif %}
     {%- comment -%} venue is type-dependent (see the `seo` skill): for a book or a map it names
