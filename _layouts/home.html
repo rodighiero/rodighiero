@@ -1109,8 +1109,18 @@ shows 3 columns. {%- endcomment -%}
             <li>Each file in <code>_publications/</code> is stripped to plain prose — no footnotes, headings, links, or markup.</li>
             <li>Its text becomes a 768-dimension vector via <code>gte-base-en-v1.5</code>; non-English originals are machine-translated first.</li>
             <li>Cosine similarity is measured between every pair of embedded papers.</li>
-            <li>Edges use mutual nearest neighbors (<em>k</em>&nbsp;=&nbsp;2): each ranks the other in its top two, above 0.65.<svg class="edge-sample" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
-            <li>A node with no mutual match keeps one faint edge to its closest above 0.60, or none.<svg class="edge-sample fallback" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
+            {%- comment -%} The three numbers below are quoted from the build, not typed:
+            scripts/layout-network.js owns MUTUAL_K, STRONG_SIM and FALLBACK_SIM, and ships
+            them in network.json's `params` so retuning one cannot leave this list stating
+            the number it used to be. {%- endcomment -%}
+            {%- assign _p = site.data.network.params -%}
+            {%- comment -%} JSON drops a trailing zero, so 0.60 arrives as 0.6 and would sit
+            beside 0.65 a digit short. Both are cosine thresholds in (0.10, 0.99), so two
+            decimals is the whole number: scale to an integer and re-prefix. {%- endcomment -%}
+            {%- assign _strong = _p.strong_sim | times: 100 | round | prepend: '0.' -%}
+            {%- assign _fallback = _p.fallback_sim | times: 100 | round | prepend: '0.' -%}
+            <li>Edges use mutual nearest neighbors (<em>k</em>&nbsp;=&nbsp;{{ _p.mutual_k }}): each ranks the other in its top {% if _p.mutual_k == 2 %}two{% else %}{{ _p.mutual_k }}{% endif %}, above {{ _strong }}.<svg class="edge-sample" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
+            <li>A node with no mutual match keeps one faint edge to its closest above {{ _fallback }}, or none.<svg class="edge-sample fallback" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
             <li>A translation stays a node, tied to its original by a dashed forced edge, not by similarity.<svg class="edge-sample translation" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
             <li>A pre-computed D3 force simulation lays out the nodes, so the graph loads already settled.</li>
           </ol>
@@ -2033,9 +2043,14 @@ shows 3 columns. {%- endcomment -%}
         return cardCache[slug] ? cardCache[slug].cloneNode(true) : null;
       }
 
-      var NODE_RADIUS = 3;
-      // Canonical canvas the positions were baked into (scripts/layout-network.js).
-      var CANVAS = data.canvas || { w: 564, h: 564 };
+      /* Both baked by scripts/layout-network.js and shipped in the data: the canonical
+         canvas the positions were laid out on, and the radius the clearance pass kept
+         every marker clear of an edge by. Neither is restated here — a literal copy is
+         a second source of truth that goes stale silently, and the failure it produces
+         (markers printed on top of links) looks like a layout bug rather than a drifted
+         constant. */
+      var NODE_RADIUS = data.params.node_radius;
+      var CANVAS = data.canvas;
 
       // SVG elements have to be created in the SVG namespace — document.createElement
       // would make an unknown HTML element that happens to be spelled "circle" and

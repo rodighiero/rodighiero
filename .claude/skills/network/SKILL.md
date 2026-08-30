@@ -9,7 +9,7 @@ One artifact — **`_data/network.json`** (committed) — feeds three surfaces:
 
 | Surface | Reads |
 |---|---|
-| Homepage network view (`_layouts/home.html`) | `nodes` (baked `x`/`y`), `links`, `canvas` |
+| Homepage network view (`_layouts/home.html`) | `nodes` (baked `x`/`y`), `links`, `canvas`, `params` |
 | Homepage research-cluster cards | `clusters` (+ `_includes/network-cluster-<id>.svg`) |
 | "Related publications" on each publication page (`_layouts/publication.html`) | each node's `related` |
 
@@ -20,6 +20,9 @@ Nothing is computed in the browser. The page only fit-scales baked coordinates.
 ```
 seed     — the layout RNG seed of the run that produced these positions
 canvas   — {w, h}; 564×564, the stage's own square (layout-network.js CANVAS_W/H)
+params   — {node_radius, mutual_k, strong_sim, fallback_sim}; layout-network.js's
+           own constants, shipped so the page can draw and describe the graph
+           without restating them
 nodes[]  — {i, slug, title, url, lang, related[3], x, y}
 links[]  — {source, target, value}  (+ forced/fb flags where applicable)
 clusters[] — {id, label, terms, slugs, year_start, year_end, span, size,
@@ -55,6 +58,16 @@ Then check, before committing:
 - `git status` for new/deleted `_includes/network-cluster-*.svg` (stale ones are auto-deleted).
 
 **The layout seed is random per run**, so a rebuild moves every node even when nothing changed. Expect a large diff in `network.json` and in every SVG; that is normal, not a bug. Don't rebuild "to check" — rebuild when the inputs changed.
+
+To rebuild *without* rerolling, pin the seed to the one the committed graph already carries:
+
+```bash
+KMP_DUPLICATE_LIB_OK=TRUE \
+  LAYOUT_SEED=$(python3 -c "import json;print(json.load(open('_data/network.json'))['seed'])") \
+  python3 scripts/build-network.py
+```
+
+Every position then lands exactly where it was, and the diff shows only what actually changed — which is what makes a change to a constant or an output field reviewable on its own. Use it when the publications did **not** change; a content change deserves a fresh arrangement.
 
 ### Reword a cluster card
 Edit the `CLUSTER_CARDS` table in `scripts/build-cards.py`, keyed on the cluster's auto `label`, then run `python3 scripts/build-cards.py` alone. Each entry is a `title` (the subject, as a name), a two-sentence `description` (what the work does to it, then why it matters), and an optional `filter` chip. Ground the text in the cluster's mutual core, not in its TF-IDF terms.

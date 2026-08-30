@@ -198,7 +198,10 @@ def precompute_layout(
     index to its original's index: those nodes join the simulation as regular
     nodes but their only edge is a forced 1.00 link to the original (no
     similarity edge), so the layout arranges them appended to their source.
-    Returns {canvas, positions, links}.
+    Returns {canvas, params, positions, links}. Set LAYOUT_SEED in the
+    environment to reproduce a previous run's positions instead of rerolling —
+    the seed of the run that produced the committed graph is stored in
+    _data/network.json.
     """
     payload = json.dumps(
         {"nodes": nodes, "similarity": similarity, "translations": translations}
@@ -843,10 +846,14 @@ def main() -> int:
     # list — the single "three closest" source shared with the publication
     # pages — so shipping the full matrix would be dead weight. `clusters` is
     # persisted: it drives the homepage's auto filter cards.
+    # `params` carries layout-network.js's own constants — the marker radius the
+    # page draws and the k/thresholds its legend quotes — so neither the script
+    # nor the template restates a number the other owns.
     data = {
         "seed": layout.get("seed"),
         "nodes": nodes,
         "canvas": layout["canvas"],
+        "params": layout["params"],
         "links": layout["links"],
         "clusters": clusters,
     }

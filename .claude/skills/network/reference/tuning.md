@@ -24,7 +24,7 @@ Python) because the layout is what consumes it.
 | `CHARGE_DISTANCE_MAX` | 520 | repulsion cutoff |
 | `GRAVITY` | 0.9 | pull toward the well |
 | `LINK_DIST_BASE` / `LINK_DIST_SPAN` | 10 / 38 | edge length as a function of similarity |
-| `LAYOUT_SEED` | random per run | why every rebuild produces a full diff; recorded as `seed` in the JSON |
+| `LAYOUT_SEED` | random per run | why every rebuild produces a full diff; recorded as `seed` in the JSON. Set the **environment variable** of the same name to pin it and reproduce a run's positions exactly |
 | `LAYOUT_TICKS` | 1400 | simulation length |
 | `ANCHOR` | `center` | one gravity well, so clusters settle as islands. `ring` centres the largest component and pins the rest on a perimeter — wrong for this many-small-components graph, which it scatters into a halo |
 | `CANVAS_W` / `CANVAS_H` | 564 / 564 | the stage's own square, so the client's fit is 1:1 on desktop and everything baked in px is drawn at the size it was measured at |
@@ -36,6 +36,12 @@ scale under 1 shrinks the distance to a line as surely as the distance between m
 Each sweep nudges, clamps inside the margin box, relaxes any overlap it created, and
 measures again. The build prints `node/edge clearance: N at settle, M after K pass(es)`;
 `M` must be 0.
+
+Four of these constants are **shipped to the page** in `network.json`'s `params`:
+`NODE_RADIUS` (which the view draws its markers at) and `MUTUAL_K` / `STRONG_SIM` /
+`FALLBACK_SIM` (which the network view's legend quotes, via Liquid). Retuning any of them
+therefore updates the page by itself — there is no copy in `_layouts/home.html` to chase.
+The change still needs a rebuild to reach the JSON.
 
 ## Text pipeline and embeddings — `scripts/build-network.py`
 
