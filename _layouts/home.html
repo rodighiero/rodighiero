@@ -1368,31 +1368,42 @@ shows 3 columns. {%- endcomment -%}
         void container.offsetWidth;
         snapped.forEach(function(p) { p.classList.remove('snapping'); });
       }
-      // A layout has just run, so a pending one is stale by definition. This matters on a
-      // filter change: applySearch() asks for a layout on the next frame, while
-      // withTileTransition() has already laid out synchronously so the tiles have a single
-      // destination to animate towards. Left queued, that second pass re-measures a frame
-      // into the movement and rewrites every transform mid-flight.
-      cancelScheduledLayout();
     }
+    /* Everything that schedules a pass now does so for one reason: the page's own width
+       may have changed. A window resize, and the bio collapse taking a scrollbar with it —
+       a scrollbar is width, which is the column count.
+
+       So the pass asks first. syncPageWidth is the authority: above one column the width is
+       quantized to the grid, so dragging a window inside a column count cannot move a tile
+       (a card is CARD_W at every size up there, so neither x nor y changes) and the pass
+       returns having written nothing. At one column the width tracks the window and every
+       pixel counts, which is exactly when the cards do need re-fitting, and it runs. A
+       two-second drag is ~120 frames of which at most three cross a threshold; this is the
+       difference between three packs and 120.
+
+       It also removes the need to cancel a queued pass when a layout runs synchronously
+       underneath it: layoutMasonry syncs the width itself, so a pass queued before it and
+       fired after finds nothing changed and returns on its own. */
     var layoutFrame = 0;
-    function scheduleLayout() {
+    function layoutIfPageResized() {
+      var before = pageWidth;
+      // Runs in every view: a resize in network view must resize the page too, even though
+      // there is no gallery to pack (see layoutMasonry, which returns on the view check).
+      syncPageWidth();
+      if (pageWidth !== before) layoutMasonry();
+    }
+    function scheduleWidthPass() {
       if (layoutFrame) return;
-      layoutFrame = requestAnimationFrame(function() { layoutFrame = 0; layoutMasonry(); });
+      layoutFrame = requestAnimationFrame(function() { layoutFrame = 0; layoutIfPageResized(); });
     }
-    function cancelScheduledLayout() {
-      if (layoutFrame) { cancelAnimationFrame(layoutFrame); layoutFrame = 0; }
-    }
-    window.addEventListener('resize', scheduleLayout);
-    /* Only for a picture whose box the browser cannot reserve in advance. Card thumbnails
-       all carry width/height from image_size (see the card markup above) and are styled
-       height:auto, so their tiles are already the right height before a byte arrives and a
-       decoded image cannot change the pack — re-laying out on each of ~60 loads would be a
-       full measure-and-write pass for a height nothing learned. */
-    container && container.querySelectorAll('img').forEach(function(img) {
-      if (img.complete || (img.getAttribute('width') && img.getAttribute('height'))) return;
-      img.addEventListener('load', scheduleLayout, { once: true });
-    });
+    window.addEventListener('resize', scheduleWidthPass);
+    /* No re-layout on image load. Every card thumbnail carries width and height from
+       image_size and is styled height:auto, so the browser reserves the tile's box from
+       the intrinsic ratio before a byte arrives — a decoded image cannot change the pack.
+       There used to be a load listener on all ~60 of them, each firing a full
+       measure-and-write pass to learn a height already known. If an image ever does turn
+       up without dimensions, give it dimensions: that is the fix, and image_size does it
+       automatically. */
 
     // ── Thumbnail warming ──
     // A card below the fold carries loading="lazy", and a card hidden by a filter loads
@@ -1511,7 +1522,7 @@ shows 3 columns. {%- endcomment -%}
     }
     function searchFromInput() {
       cancelPendingSearch();
-      if (!motionOK()) { applySearch(); return; }
+      if (!motionOK()) { applySearch(); layoutMasonry(); return; }
       searchTimer = setTimeout(function() {
         searchTimer = null;
         withTileTransition(applySearch);
@@ -1564,9 +1575,9 @@ shows 3 columns. {%- endcomment -%}
       if (prev === 'network' && view !== 'network' && networkApi) {
         networkApi.clearSelection();
       }
-      // Both branches lay out synchronously rather than deferring to
-      // scheduleLayout's next-frame pass, so the view is settled by the time it
-      // paints (layoutMasonry's syncPageWidth, or clearMasonry).
+      // Both branches lay out synchronously rather than deferring to a scheduled
+      // next-frame pass, so the view is settled by the time it paints
+      // (layoutMasonry's syncPageWidth, or clearMasonry).
       if (view === 'gallery') {
         layoutMasonry();
       } else if (view === 'network') {
@@ -1679,7 +1690,7 @@ shows 3 columns. {%- endcomment -%}
       bioShell.style.height = '';
       // The scrollbar goes when the travel does, and a scrollbar is width, which is the
       // column count.
-      if (document.body.dataset.view === 'gallery') scheduleLayout();
+      if (document.body.dataset.view === 'gallery') scheduleWidthPass();
     }
     function setBioVisible(visible, persist, animate) {
       // scrollHeight reports the content's full height even while the panel is clipped to
@@ -1709,7 +1720,7 @@ shows 3 columns. {%- endcomment -%}
       // #publications, which only moves — but the page losing ~400px can take a scrollbar
       // with it, and a scrollbar is width, which is the column count. This call covers the
       // reduced-motion path, where no transition runs and releaseBioHeight never fires.
-      if (document.body.dataset.view === 'gallery') scheduleLayout();
+      if (document.body.dataset.view === 'gallery') scheduleWidthPass();
     }
     // Sync the button and the inert state to whatever <head> restored, without persisting
     // it back and without animating from a state the page was never in.
@@ -1790,8 +1801,12 @@ shows 3 columns. {%- endcomment -%}
       if (noResults) noResults.hidden = visible !== 0;
       updateCount(visible);
       updateViewButtonLabels();
-      var v = document.body.dataset.view;
-      if (v === 'gallery') scheduleLayout();
+      /* No layout call here. This decides which tiles show; packing them is the caller's
+         to ask for, because only the caller knows when. withTileTransition needs the pack
+         synchronously, in the same task as the display changes, so the browser sees one
+         style change to animate — and a pass queued here would land a frame into that
+         movement and rewrite every transform mid-flight. It used to do exactly that, and
+         layoutMasonry ended by cancelling the pass this function had just asked for. */
     }
 
     // The type slugs and their human labels, straight from _data/publication_types.yml —
@@ -1827,7 +1842,13 @@ shows 3 columns. {%- endcomment -%}
         }
       }
     } catch (e) {}
+    /* The initial state, from ?q= / ?type= / ?cluster=. The pack is asked for here rather
+       than left to a queued pass: a shared filter link would otherwise paint the whole
+       gallery for one frame and re-pack on the next. setView above has already laid out
+       once, so on an unfiltered load this re-packs the same arrangement; on a filtered one
+       it is the pass that hides what the link excluded. */
     applySearch();
+    layoutMasonry();
 
     // Action cards: switch view (view:<name>), set a type filter (type:<name>), run a
     // free-text query (search:<terms>), or set a cluster filter (cluster:<id>, whose member
