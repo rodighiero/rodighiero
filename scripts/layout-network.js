@@ -2,15 +2,19 @@
 /*
  * Precompute the home network view's force-directed layout.
  *
- * Reads {nodes, similarity} as JSON on stdin and writes
- * {seed, canvas, positions, links} as JSON on stdout, running the d3-force
- * simulation offline so the home page can draw the graph already settled.
- * The seed is randomized per build, so every run produces a fresh arrangement
- * (re-run to reroll); the settled cloud is then normalized to fit the canvas
- * with a uniform margin, so any seed yields a balanced, non-overflowing layout.
+ * Reads {nodes, similarity, translations} as JSON on stdin and writes
+ * {seed, clearance, canvas, params, positions, links} as JSON on stdout,
+ * running the d3-force simulation offline so the home page can draw the graph
+ * already settled. The seed is randomized per build, so every run produces a
+ * fresh arrangement (re-run to reroll); the settled cloud is then normalized to
+ * fit the canvas with a uniform margin, so any seed yields a balanced,
+ * non-overflowing layout.
  *
- * Invoked automatically at the end of scripts/build-network.py. Standalone:
- *     node scripts/layout-network.js < _data/network.json
+ * Invoked by scripts/build-network.py, which is the only thing that can feed
+ * it: the input needs the full similarity matrix, and that is deliberately not
+ * persisted to _data/network.json (see the `network` skill). So there is no
+ * standalone form — piping the committed JSON in gives it no `similarity`, and
+ * it exits 1 on a TypeError rather than producing a layout.
  *
  * The layout constants below are the single source of truth for the graph
  * geometry. _layouts/home.html only fit-scales these positions into the live
