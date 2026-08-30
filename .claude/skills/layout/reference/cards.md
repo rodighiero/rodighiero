@@ -8,7 +8,7 @@ cursor, hover — alongside the class that says what it is:
 | Class | What it is | Source |
 |---|---|---|
 | `.publication` | a publication | `_publications/*.md`, via `site.data.ordered_publications` |
-| `.action` | a one-off view/type/search trigger | `_data/home_cards.yml` |
+| `.action` | the one-off `view:network` trigger | hardcoded in `_layouts/home.html` |
 | `.filter` | a cluster tile setting a persistent filter | `site.data.network.clusters` (generated) |
 | `.event` | an announcement linking out to another site | `_data/home_cards.yml` |
 
@@ -38,8 +38,10 @@ inner grids.
 
 ## `_includes/card-action.html`
 
-Both non-publication kinds render through it, as a plain gallery card with no image by
-default:
+The `.action` and `.filter` kinds render through it, as a plain gallery card with no image by
+default. Every field arrives as an explicit include param — there is no data file behind it,
+and its two callers both live in `home.html`: the `view:network` tile, written out inline,
+and the cluster tiles, built from `site.data.network.clusters`.
 
 - a two-line `.card-meta` — a literal `year` (or `year: now` → build year), then
   ` · {{ eyebrow }}`, then an optional italic `.venue` second line via `<br>`;
@@ -68,16 +70,13 @@ keeps the reader's gallery and also lets the GoatCounter click beacon — bound 
 It carries **no `data-action`**, which is what keeps it out of the `[data-action]` click
 handler and its `mousedown` `preventDefault`.
 
-## Manual action cards — `_data/home_cards.yml`
+## The two actions the click handler knows
 
-Fields: `label`, `action`, optional `year` / `eyebrow` / `venue` / `sublabel`, optional
-`pin: first` (renders the card as the leading gallery tile, before the forthcoming works).
-
-`action` is one of:
-
-- `view:<gallery|network>` — switch view
-- `type:<publication-type>` — set the type filter
-- `search:<terms>` — set a free-text query
+`data-action` carries `view:<gallery|network>` (the network tile) or `cluster:<id>` (the six
+cluster tiles), and the handler in `home.html` reads exactly those two. `_data/home_cards.yml`
+once fed arbitrary `type:` and `search:` tiles as well; nothing set one, so the data key, the
+verbs and the include's fallback-to-a-hash path are gone. A `?type=` URL still filters — it is
+read at load, not through a card — and its label comes from `TYPE_LABELS`.
 
 ## Auto research-cluster cards
 
@@ -101,11 +100,9 @@ rule the same typography, a publication card gives its authors. Its meta line re
 - **Gallery view only** (hidden in network via CSS), and hidden whenever a filter is active.
 - Events lead the flow, sorted by `date` descending. Nothing expires them — a past event
   sits at the top of the homepage until its entry is deleted.
-- Unpinned actions render at the top of `#publications`.
-- A `pin: first` card leads the flow.
-- Cluster cards sit inline before their span-midpoint anchor, with a `view:network` card
+- Cluster cards sit inline before their span-midpoint anchor, with the `view:network` card
   leading the dated flow just after the forthcoming works.
-- Actions and cluster tiles are hidden below 921px along with the view toggle and the filter
+- The network and cluster tiles are hidden below 921px along with the view toggle and the filter
   count; events stay.
 
 Publications render in one ordered loop, year-descending then title-ascending (Forthcoming
