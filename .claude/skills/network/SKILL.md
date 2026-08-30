@@ -18,7 +18,6 @@ Nothing is computed in the browser. The page only fit-scales baked coordinates.
 ## Schema of `_data/network.json`
 
 ```
-seed     — the layout RNG seed of the run that produced these positions
 canvas   — {w, h}; 564×564, the stage's own square (layout-network.js CANVAS_W/H)
 params   — {node_radius, mutual_k, strong_sim, fallback_sim}; layout-network.js's
            own constants, shipped so the page can draw and describe the graph
@@ -57,7 +56,7 @@ Then check, before committing:
 - the build's `node/edge clearance: N at settle, M after K pass(es)` line — `M` must be 0, and a non-zero `M` prints its own `WARNING:`;
 - `git status` for new/deleted `_includes/network-cluster-*.svg` (stale ones are auto-deleted).
 
-**The layout seed is random per run**, so a rebuild moves every node even when nothing changed. Expect a large diff in `network.json` and in every SVG; that is normal, not a bug. Don't rebuild "to check" — rebuild when the inputs changed.
+**The layout starts from a random scatter**, so a rebuild moves every node even when nothing changed, and it cannot be reproduced. Expect a large diff in `network.json` and in every SVG; that is normal, not a bug. Don't rebuild "to check" — rebuild when the inputs changed.
 
 ### Reword a cluster card
 Edit the `CLUSTER_CARDS` table in `scripts/build-cards.py`, keyed on the cluster's auto `label`, then run `python3 scripts/build-cards.py` alone. Each entry is a `title` (the subject, as a name), a two-sentence `description` (what the work does to it, then why it matters), and an optional `filter` chip. Ground the text in the cluster's mutual core, not in its TF-IDF terms.

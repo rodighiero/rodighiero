@@ -1070,7 +1070,7 @@ shows 3 columns. {%- endcomment -%}
       {% assign _type_label = site.data.publication_types[publication.type].label %}
       {% capture _lang_terms %}{% if publication.lang == 'it' %}italian italiano{% elsif publication.lang == 'fr' %}french français francais{% else %}english{% endif %}{% endcapture %}
       {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.interviewer }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ _lang_terms }}{% endcapture %}
-      <div class="card publication" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-search="{{ _search_text | strip_newlines | downcase | escape }}">
+      <div class="card publication" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-search="{{ _search_text | strip_newlines | escape }}">
         {% if publication.thumb %}
         {% assign _card_i = _card_i | plus: 1 %}
         <div class="card-media{% if publication.img_border %} bordered{% endif %}">
@@ -1167,15 +1167,12 @@ shows 3 columns. {%- endcomment -%}
        is the mobile layout (window < 628). The count steps 1 → 2 → 3 → 4, and the widest
        grid a window can afford is the widest of those that still fits. */
     var CARD_W = parseFloat(rootStyle.getPropertyValue('--card-w'));
-    var COLS = [1, 2, 3, 4];
-    var MAX_COLS = COLS[COLS.length - 1];
+    var MAX_COLS = 4;
     function gridWidth(n) { return n * CARD_W + GAP_X * (n - 1); }
+    // gridWidth(n) <= w rearranged, which is the same count at every width without
+    // walking a table to find it: n columns fit when n*CARD_W + (n-1)*GAP_X <= w.
     function columnCount(w) {
-      var best = COLS[0];
-      for (var i = 1; i < COLS.length; i++) {
-        if (gridWidth(COLS[i]) <= w) best = COLS[i];
-      }
-      return best;
+      return Math.max(1, Math.min(MAX_COLS, Math.floor((w + GAP_X) / (CARD_W + GAP_X))));
     }
     /* The grid is the page's measure: the body is sized to whatever the current column
        count actually spans, so the header, bio, search bar and footer end exactly where
@@ -1418,12 +1415,11 @@ shows 3 columns. {%- endcomment -%}
     // the old instant behaviour intact.
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     function motionOK() { return !reduceMotion.matches; }
-    function transitionsOK() { return !!document.startViewTransition && motionOK(); }
 
     // Switching view: the gallery and the graph share nothing on screen, so there is
     // nothing to match up — a plain cross-fade of the page is the whole effect.
     function withCrossfade(fn) {
-      if (!transitionsOK()) { fn(); return; }
+      if (!document.startViewTransition || !motionOK()) { fn(); return; }
       document.startViewTransition(fn);
     }
 
@@ -1623,14 +1619,17 @@ shows 3 columns. {%- endcomment -%}
         if (document.body.dataset.view !== preferred) setView(preferred, false);
       }
     }
-    // Clears the search input and any structured (type/cluster) filter, shared by
-    // the active-view-button reset and the global Escape handler below.
+    /* Clears the search input and any structured (type/cluster) filter, shared by
+       the active-view-button reset and the global Escape handler below. Both used to
+       ask whether there was anything to clear before calling; the question belongs
+       here, once, so neither caller has to know what "filtered" means. */
     function resetFilters() {
+      if (!(searchInput && searchInput.value) && !structuredFilterActive()) return;
       // Mirrors applying a filter (below): clearing one changes the result set just
       // as much, so it moves the same way and lands the same way.
       withTileTransition(function() {
         activeType = null;
-        clearClusterFilter();
+        activeCluster = null;
         clearFilterInput();
         applySearch();
         updateURL();
@@ -1642,9 +1641,7 @@ shows 3 columns. {%- endcomment -%}
         if (document.body.dataset.view === clicked) {
           // Clicking the active view button resets the view: clear the search
           // filter (text + type + cluster) and, on network, drop any node selection.
-          if ((searchInput && searchInput.value) || structuredFilterActive()) {
-            resetFilters();
-          }
+          resetFilters();
           if (clicked === 'network' && networkApi) networkApi.clearSelection();
         } else {
           withCrossfade(function() { setView(clicked); });
@@ -1839,7 +1836,6 @@ shows 3 columns. {%- endcomment -%}
     // before it could be clicked again. The re-read stays because it is what makes each
     // branch a toggle rather than a setter, and clearing runs through Escape and the search
     // box instead (see resetFilters and the input handler below).
-    function clearClusterFilter() { activeCluster = null; }
     /* The one place a cluster filter is constructed, so the {id, slugs} pair this design
        merged into a single object cannot be assembled two different ways. Membership rides
        on the card's data-slugs, which Liquid emits from the same network.json the graph
@@ -1931,16 +1927,16 @@ shows 3 columns. {%- endcomment -%}
         withTileTransition(function() {
           if (verb === 'type' && val) {
             activeType = (activeType === val) ? null : val;
-            clearClusterFilter();
+            activeCluster = null;
             if (activeType) showFilterInInput(typeLabel(val)); else clearFilterInput();
           } else if (verb === 'search' && val && searchInput) {
             searchInput.value = (searchInput.value === val) ? '' : val;
             activeType = null;
-            clearClusterFilter();
+            activeCluster = null;
             activeFilterLabel = null; // this is a real free-text query, not a filter label
           } else if (verb === 'cluster' && val) {
             if (activeCluster && activeCluster.id === val) {
-              clearClusterFilter();
+              activeCluster = null;
               clearFilterInput();
             } else if (btn.dataset.slugs) {
               setClusterFilter(btn, val);
@@ -1963,7 +1959,7 @@ shows 3 columns. {%- endcomment -%}
           var v = searchInput.value;
           if (v === '' || activeFilterLabel === null || activeFilterLabel.indexOf(v) !== 0) {
             activeType = null;
-            clearClusterFilter();
+            activeCluster = null;
             activeFilterLabel = null;
           }
         }
@@ -1983,7 +1979,7 @@ shows 3 columns. {%- endcomment -%}
         e.preventDefault();
         searchInput.focus();
       } else if (e.key === 'Escape') {
-        if (searchInput.value || structuredFilterActive()) resetFilters();
+        resetFilters();
         if (networkApi) networkApi.clearSelection();
         // Drop focus outright rather than special-casing which element kind:
         // a focused control (e.g. the network-view toggle, just clicked to get

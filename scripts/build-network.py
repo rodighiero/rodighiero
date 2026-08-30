@@ -807,7 +807,6 @@ def main() -> int:
         file=sys.stderr,
     )
     layout = precompute_layout(nodes, similarity, translations)
-    print(f"layout seed: {layout.get('seed')}", file=sys.stderr)
     _clear = layout.get("clearance") or {}
     print(
         f"node/edge clearance: {_clear.get('atSettle')} at settle, "
@@ -847,7 +846,6 @@ def main() -> int:
     # page draws and the k/thresholds its legend quotes — so neither the script
     # nor the template restates a number the other owns.
     data = {
-        "seed": layout.get("seed"),
         "nodes": nodes,
         "canvas": layout["canvas"],
         "params": layout["params"],
