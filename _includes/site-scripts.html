@@ -22,23 +22,25 @@
     });
   })();
 
-  // Copy button: formatted citation
+  /* Copy button: formatted citation. Nothing here is guarded, because nothing here can be
+     absent: #live-msg is unconditional markup in both layouts, and a .cite-btn only exists
+     inside publication.html's <article>, where the same `page.doi` conditional that emits
+     the button emits publication-cite.html's .cite-data beside it. Wrapping either in a Liquid
+     conditional now fails loudly at the click rather than silently doing nothing. */
   (function() {
     var liveMsg = document.getElementById('live-msg');
     document.querySelectorAll('.cite-btn').forEach(function(btn) {
       var label = btn.textContent;
       btn.addEventListener('click', function() {
-        var scope = btn.closest('article');
-        var data = scope && scope.querySelector('.cite-data');
-        if (!data) return;
+        var data = btn.closest('article').querySelector('.cite-data');
         navigator.clipboard.writeText(data.textContent.trim()).then(function() {
           btn.textContent = 'Copied!';
           btn.classList.add('copied');
-          if (liveMsg) liveMsg.textContent = 'Citation copied to clipboard.';
+          liveMsg.textContent = 'Citation copied to clipboard.';
           setTimeout(function() {
             btn.textContent = label;
             btn.classList.remove('copied');
-            if (liveMsg) liveMsg.textContent = '';
+            liveMsg.textContent = '';
           }, 1500);
         });
       });

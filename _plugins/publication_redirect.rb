@@ -26,11 +26,10 @@ module Jekyll
     def initialize(site, dir, name, target, canonical)
       super(site, site.source, dir, name)
 
-      self.data = {
-        "layout"   => nil,
-        "sitemap"  => false,
-        "target"   => target,
-      }
+      # No front matter to carry: the stub renders with no layout, sitemap.xml walks
+      # site.publications rather than site.pages, and the target below is interpolated
+      # into the markup rather than read back off the page.
+      self.data = {}
       self.content = <<~HTML
         <!DOCTYPE html>
         <html lang="en">
