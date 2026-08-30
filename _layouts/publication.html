@@ -364,28 +364,35 @@
 
   {% include site-scripts.html %}
   <script>
-    // Ensure all lazy-loaded figures are fetched before printing.
-    // beforeprint flips them to eager; for Cmd/Ctrl+P we intercept and await loading first so menu-initiated prints capture the images too.
-    function eagerLoadFigures() {
-      document.querySelectorAll('img[loading="lazy"]').forEach(function(img) { img.loading = 'eager'; });
-    }
-
-    window.addEventListener('beforeprint', eagerLoadFigures);
-
-    window.addEventListener('keydown', function(e) {
-      if (e.key.toLowerCase() !== 'p' || !(e.metaKey || e.ctrlKey) || e.shiftKey || e.altKey) return;
+    /* Ensure all lazy-loaded figures are fetched before printing. beforeprint flips them
+       to eager, which covers a print the browser starts on its own; every route we control
+       — Cmd/Ctrl+P and the Print button — goes through printWhenImagesReady instead, so it
+       awaits the loads rather than racing them. Returns false when there was nothing to
+       wait for, leaving the caller's own print to proceed. */
+    function printWhenImagesReady() {
       var imgs = Array.from(document.querySelectorAll('img')).filter(function(i) { return !i.complete || i.naturalWidth === 0; });
-      if (imgs.length === 0) return;
-      e.preventDefault();
-      eagerLoadFigures();
+      if (imgs.length === 0) return false;
+      promoteLazyImages();
       Promise.all(imgs.map(function(img) {
         return new Promise(function(resolve) {
-          if (img.complete && img.naturalWidth > 0) return resolve();
           img.addEventListener('load', resolve, { once: true });
           img.addEventListener('error', resolve, { once: true });
           setTimeout(resolve, 5000);
         });
       })).then(function() { window.print(); });
+      return true;
+    }
+
+    window.addEventListener('beforeprint', function() { promoteLazyImages(); });
+
+    window.addEventListener('keydown', function(e) {
+      if (e.key.toLowerCase() !== 'p' || !(e.metaKey || e.ctrlKey) || e.shiftKey || e.altKey) return;
+      if (printWhenImagesReady()) e.preventDefault();
+    });
+
+    // The button is this layout's alone, and takes the same waiting path as Cmd/Ctrl+P.
+    document.querySelectorAll('.print-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() { if (!printWhenImagesReady()) window.print(); });
     });
   </script>
   {% include site-analytics.html %}
