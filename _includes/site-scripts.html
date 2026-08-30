@@ -1,4 +1,14 @@
 <script>
+  /* Promote whatever is still lazy inside `root` to eager. Both layouts want this, for
+     different reasons — the homepage warms thumbnails so a filtered-in card travels with
+     its picture, the publication page fetches figures before printing — so the rule for
+     what counts as warmable lives here once rather than in each of them. */
+  function promoteLazyImages(root) {
+    (root || document).querySelectorAll('img[loading="lazy"]').forEach(function(img) {
+      img.loading = 'eager';
+    });
+  }
+
   // Mode toggle
   (function() {
     var html = document.documentElement;
@@ -18,8 +28,8 @@
     document.querySelectorAll('.cite-btn').forEach(function(btn) {
       var label = btn.textContent;
       btn.addEventListener('click', function() {
-        var scope = btn.closest('.card-meta') || btn.closest('article') || document;
-        var data = scope.querySelector('.cite-data');
+        var scope = btn.closest('article');
+        var data = scope && scope.querySelector('.cite-data');
         if (!data) return;
         navigator.clipboard.writeText(data.textContent.trim()).then(function() {
           btn.textContent = 'Copied!';
@@ -34,9 +44,4 @@
       });
     });
   })();
-
-  // Print buttons
-  document.querySelectorAll('.print-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() { window.print(); });
-  });
 </script>

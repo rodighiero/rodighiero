@@ -1143,17 +1143,6 @@ shows 3 columns. {%- endcomment -%}
     var tiles = container ? container.querySelectorAll(':scope > .card') : publications;
     var specialCards = container ? container.querySelectorAll('.action, .filter, .event') : [];
 
-    // Coalesces bursts of calls (e.g. every tick of a window resize) into one
-    // trailing call `delay` ms after the last one.
-    function debounce(fn, delay) {
-      var timer = null;
-      return function() {
-        var args = arguments;
-        clearTimeout(timer);
-        timer = setTimeout(function() { fn.apply(null, args); }, delay);
-      };
-    }
-
     // ── Masonry layout (gallery only) ──
     /* Read from the CSS custom properties in styles-base.css rather than hardcoded here:
        the header's grid (see .header in this file) is built to match a card's width and
@@ -1247,6 +1236,7 @@ shows 3 columns. {%- endcomment -%}
       // layout on the way back out of the network view has to take its slots outright.
       lastCols = null;
       placedY = [];
+      lastHeight = 0;
     }
     /* The column count the tiles were last laid out into, so a pass that changes it can be
        told from one that doesn't — a window resize within a count rewrites nothing (above
@@ -1261,6 +1251,9 @@ shows 3 columns. {%- endcomment -%}
        placed on a pass (hidden by a filter, or by the mobile media query) keeps its entry,
        exactly as it keeps the transform that entry describes. */
     var placedY = [];
+    // The height the last pass gave the container, remembered for the same reason placedY
+    // is: reading it back off container.style would parse a string this function wrote.
+    var lastHeight = 0;
     function layoutMasonry() {
       if (!container) return;
       // Before the view check: a resize in network view must resize the page too.
@@ -1300,10 +1293,15 @@ shows 3 columns. {%- endcomment -%}
       tiles.forEach(function(p) {
         p.style.width = colWidth + 'px';
       });
-      // Read all heights in one pass (single reflow), then write transforms.
+      /* Read all heights in one pass (single reflow), then write transforms. A tile is out
+         of the pack if it is hidden inline (search/view state) or via CSS (a media query
+         hides the action cards on mobile; offsetParent is null when display:none) — asked
+         once, here, so the measuring and the packing cannot disagree about a tile. A null
+         entry is "not placed": no height, no slot. */
       var heights = [];
       tiles.forEach(function(p) {
-        heights.push(p.style.display === 'none' ? 0 : p.getBoundingClientRect().height);
+        var hidden = p.style.display === 'none' || p.offsetParent === null;
+        heights.push(hidden ? null : p.getBoundingClientRect().height);
       });
       /* Pack into an array before writing anything. The height the pack comes to decides
          whether the change can be animated at all (see below), and a transform written
@@ -1312,9 +1310,7 @@ shows 3 columns. {%- endcomment -%}
          one measuring pass. */
       var slots = [];
       tiles.forEach(function(p, idx) {
-        // Skip tiles hidden inline (search/view state) or via CSS (a media query
-        // hides the action cards on mobile; offsetParent is null when display:none).
-        if (p.style.display === 'none' || p.offsetParent === null) { slots.push(null); return; }
+        if (heights[idx] === null) { slots.push(null); return; }
         var minCol = 0;
         for (var i = 1; i < cols; i++) {
           if (colHeights[i] < colHeights[minCol]) minCol = i;
@@ -1332,8 +1328,7 @@ shows 3 columns. {%- endcomment -%}
          than a jump with movement inside it. Only a rising count can clamp: fewer columns
          is a taller page, and a taller page leaves the scroll position alone. */
       if (animate) {
-        var docHeight = document.documentElement.scrollHeight
-          - (parseFloat(container.style.height) || 0) + height;
+        var docHeight = document.documentElement.scrollHeight - lastHeight + height;
         if (window.scrollY > docHeight - window.innerHeight) animate = false;
       }
       // Arm before the transforms are written, so the change the browser sees is already
@@ -1353,6 +1348,7 @@ shows 3 columns. {%- endcomment -%}
         placedY[idx] = slot.y;
       });
       container.style.height = height + 'px';
+      lastHeight = height;
       container.classList.add('ready');
       if (snapped.length) {
         // Flush, so those jumps land as the state the next change starts from, then hand
@@ -1377,8 +1373,14 @@ shows 3 columns. {%- endcomment -%}
       if (layoutFrame) { cancelAnimationFrame(layoutFrame); layoutFrame = 0; }
     }
     window.addEventListener('resize', scheduleLayout);
+    /* Only for a picture whose box the browser cannot reserve in advance. Card thumbnails
+       all carry width/height from image_size (see the card markup above) and are styled
+       height:auto, so their tiles are already the right height before a byte arrives and a
+       decoded image cannot change the pack — re-laying out on each of ~60 loads would be a
+       full measure-and-write pass for a height nothing learned. */
     container && container.querySelectorAll('img').forEach(function(img) {
-      if (!img.complete) img.addEventListener('load', scheduleLayout, { once: true });
+      if (img.complete || (img.getAttribute('width') && img.getAttribute('height'))) return;
+      img.addEventListener('load', scheduleLayout, { once: true });
     });
 
     // ── Thumbnail warming ──
@@ -1389,10 +1391,7 @@ shows 3 columns. {%- endcomment -%}
     // still lazy to eager — the first paint keeps its lazy loading, which is the point of
     // it, and by the time anyone filters, every card has its image ready to travel.
     function warmThumbnails() {
-      if (!container) return;
-      container.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
-        img.loading = 'eager';
-      });
+      if (container) promoteLazyImages(container);
     }
     function warmWhenIdle() {
       if (window.requestIdleCallback) requestIdleCallback(warmThumbnails, { timeout: 2000 });
@@ -1433,7 +1432,12 @@ shows 3 columns. {%- endcomment -%}
     // slot with the transition suppressed — it still carries the transform of wherever it
     // last sat, and gliding in from a slot it no longer relates to reads as noise — then
     // fades in from there.
+    /* Kept in step with the `transform` duration on .animating .card (see the styles
+       above), which spring-easing.js generates from the same 0.42s. */
     var TILE_MOVE_MS = 420;
+    /* The spring overshoots and settles, so it is still moving fractionally after its
+       nominal duration; disarming on the tick would strip the transition mid-settle. */
+    var ARM_SLACK_MS = 80;
     var animatingTimer = null;
     /* Arms the tile transition for one change and disarms it once the travel is over.
        Called from both places a tile can be sent to a new slot: a filter change, below,
@@ -1447,7 +1451,7 @@ shows 3 columns. {%- endcomment -%}
       clearTimeout(animatingTimer);
       animatingTimer = setTimeout(function() {
         container.classList.remove('animating');
-      }, TILE_MOVE_MS + 80);
+      }, TILE_MOVE_MS + ARM_SLACK_MS);
     }
     function withTileTransition(fn) {
       // Any deliberate change supersedes a filter still waiting out a typing burst
@@ -1510,7 +1514,6 @@ shows 3 columns. {%- endcomment -%}
     // shareable and deep-linkable. Only user-initiated changes call this;
     // initial load and responsive coercion leave an incoming shared URL untouched.
     function updateURL() {
-      if (!window.history || !history.replaceState) return;
       var params;
       try { params = new URLSearchParams(location.search); } catch (e) { return; }
       var view = document.body.dataset.view;
@@ -1527,7 +1530,11 @@ shows 3 columns. {%- endcomment -%}
     }
     // Debounced for the search box: the URL is never read back mid-typing, so
     // there's no need to sync it on every keystroke.
-    var scheduleURLUpdate = debounce(updateURL, 200);
+    var urlTimer = null;
+    function scheduleURLUpdate() {
+      clearTimeout(urlTimer);
+      urlTimer = setTimeout(updateURL, 200);
+    }
 
     function setView(view, persist) {
       var prev = document.body.dataset.view;
@@ -1562,14 +1569,14 @@ shows 3 columns. {%- endcomment -%}
         // in localStorage) keeps the stylesheet's 4-column cap whatever the column
         // count actually is, and the stage is centred against a page it overhangs.
         syncPageWidth();
-        initNetwork();
+        if (!networkApi) buildNetwork();
         // No refit call here either: showing the view takes the stage from 0×0 to its
         // real size, which is a resize its own observer sees — so a graph that was left
         // scaled to a stage the reader has since resized away from catches up on its
         // own (see buildNetwork).
         // Apply the current filter — on a first visit to catch the graph up to a search
         // already in the box, on a later one to catch it up to whatever changed while
-        // another view was showing. Both cases land here now that initNetwork builds
+        // another view was showing. Both cases land here now that buildNetwork runs
         // synchronously: with d3 gone there is nothing to fetch, so networkApi is always
         // wired by this line and the module needs no filter call of its own.
         networkApi.filter(matchedSlugs);
@@ -1612,10 +1619,9 @@ shows 3 columns. {%- endcomment -%}
       // Mirrors applying a filter (below): clearing one changes the result set just
       // as much, so it moves the same way and lands the same way.
       withTileTransition(function() {
-        if (searchInput) searchInput.value = '';
         activeType = null;
         clearClusterFilter();
-        activeFilterLabel = null;
+        clearFilterInput();
         applySearch();
         updateURL();
       });
@@ -1654,7 +1660,6 @@ shows 3 columns. {%- endcomment -%}
     // raced it. Here a resize while open finds plain `auto`, and while closed finds 0.
     var bioToggle = document.querySelector('.bio-toggle');
     var bioShell = document.getElementById('bio');
-    var bioReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     // Hands the height back to the stylesheet: `auto` when open, the rule's own 0 when
     // closed. On cancel too, or an interrupted double-click would leave a pin behind —
     // exactly the stale number this design exists to avoid.
@@ -1668,7 +1673,7 @@ shows 3 columns. {%- endcomment -%}
     function setBioVisible(visible, persist, animate) {
       // scrollHeight reports the content's full height even while the panel is clipped to
       // nothing, so the same read gives the target opening and the starting point closing.
-      if (animate && bioShell && !bioReduceMotion.matches) {
+      if (animate && bioShell && motionOK()) {
         bioShell.style.height = (visible ? 0 : bioShell.scrollHeight) + 'px';
         void bioShell.offsetHeight;  // flush, so the pin is a state the browser has drawn
         bioShell.style.height = (visible ? bioShell.scrollHeight : 0) + 'px';
@@ -1754,19 +1759,23 @@ shows 3 columns. {%- endcomment -%}
         for (var i = 0; i < tokens.length; i++) {
           if (p._haystack.indexOf(tokens[i]) === -1) { match = false; break; }
         }
+        var slug = p.dataset.slug;
         if (match && activeType !== null && p.dataset.type !== activeType) match = false;
-        if (match && activeCluster !== null && !activeCluster.slugs.has(p.getAttribute('data-slug'))) match = false;
+        if (match && activeCluster !== null && !activeCluster.slugs.has(slug)) match = false;
         p.style.display = match ? '' : 'none';
         if (match) {
           visible++;
-          var slug = p.getAttribute('data-slug');
           if (slug) matched.add(slug);
         }
       });
       // Special cards are chrome, not results: hide them whenever a filter is active.
       specialCards.forEach(function(c) { c.style.display = filterActive ? 'none' : ''; });
       matchedSlugs = filterActive ? matched : null;
-      if (networkApi) networkApi.filter(matchedSlugs);
+      /* Only while the graph is on screen. matchedSlugs is assigned either way, and
+         setView re-applies it on every entry to the network view, so a filter changed
+         from the gallery still lands — without walking 64 nodes and 44 links inside a
+         display:none subtree on every settled keystroke. */
+      if (networkApi && document.body.dataset.view === 'network') networkApi.filter(matchedSlugs);
       if (noResults) noResults.hidden = visible !== 0;
       updateCount(visible);
       updateViewButtonLabels();
@@ -1780,9 +1789,13 @@ shows 3 columns. {%- endcomment -%}
     // when no action card is carrying a label of its own, which is the normal case: a
     // ?type= URL is shareable whether or not a card for that type happens to exist.
     var TYPE_LABELS = { {% for t in site.data.publication_types %}{{ t[0] | jsonify }}: {{ t[1].label | jsonify }}{% unless forloop.last %}, {% endunless %}{% endfor %} };
+    // The action card that sets a given filter, if one is on the page.
+    function actionCard(verb, val) {
+      return document.querySelector('[data-action="' + verb + ':' + val + '"]');
+    }
     function typeLabel(slug) {
-      var el = document.querySelector('[data-action="type:' + slug + '"]');
-      return (el && el.dataset.filterLabel) || TYPE_LABELS[slug] || slug;
+      var card = actionCard('type', slug);
+      return (card && card.dataset.filterLabel) || TYPE_LABELS[slug] || slug;
     }
 
     try {
@@ -1792,16 +1805,14 @@ shows 3 columns. {%- endcomment -%}
       if (_initialType) {
         activeType = _initialType;
         // Reflect the filter as its label in the box (no focus on load).
-        activeFilterLabel = typeLabel(_initialType);
-        if (searchInput) searchInput.value = activeFilterLabel;
+        showFilterInInput(typeLabel(_initialType), false);
       }
       var _initialCluster = _params.get('cluster');
       if (_initialCluster) {
-        var _cEl = document.querySelector('[data-action="cluster:' + _initialCluster + '"]');
+        var _cEl = actionCard('cluster', _initialCluster);
         if (_cEl && _cEl.dataset.slugs) {
-          activeCluster = { id: _initialCluster, slugs: new Set(_cEl.dataset.slugs.split(' ')) };
-          activeFilterLabel = _cEl.dataset.filterLabel || '';
-          if (searchInput) searchInput.value = activeFilterLabel;
+          setClusterFilter(_cEl, _initialCluster);
+          showFilterInInput(_cEl.dataset.filterLabel || '', false);
         }
       }
     } catch (e) {}
@@ -1819,12 +1830,22 @@ shows 3 columns. {%- endcomment -%}
     // branch a toggle rather than a setter, and clearing runs through Escape and the search
     // box instead (see resetFilters and the input handler below).
     function clearClusterFilter() { activeCluster = null; }
-    // Show a structured filter's label in the search box (cursor at the end) so the whole
-    // filter is managed there: the user deletes the text to clear it. Clearing wipes the box.
-    function showFilterInInput(label) {
+    /* The one place a cluster filter is constructed, so the {id, slugs} pair this design
+       merged into a single object cannot be assembled two different ways. Membership rides
+       on the card's data-slugs, which Liquid emits from the same network.json the graph
+       reads. */
+    function setClusterFilter(card, id) {
+      activeCluster = { id: id, slugs: new Set(card.dataset.slugs.split(' ')) };
+      activeType = null;
+    }
+    /* Show a structured filter's label in the search box (cursor at the end) so the whole
+       filter is managed there: the user deletes the text to clear it. Clearing wipes the box.
+       `focus` is false on the load path, where the reader has not touched anything yet. */
+    function showFilterInInput(label, focus) {
       activeFilterLabel = label;
       if (!searchInput) return;
       searchInput.value = label;
+      if (focus === false) return;
       // preventScroll, because focusing an element also asks the browser to scroll it into
       // view — a second scroll, which cancels the one scrollToResults has in flight and
       // parks the page wherever the glide had got to. The bar is sticky and already on
@@ -1912,8 +1933,7 @@ shows 3 columns. {%- endcomment -%}
               clearClusterFilter();
               clearFilterInput();
             } else if (btn.dataset.slugs) {
-              activeCluster = { id: val, slugs: new Set(btn.dataset.slugs.split(' ')) };
-              activeType = null;
+              setClusterFilter(btn, val);
               showFilterInInput(btn.dataset.filterLabel || '');
             }
           }
@@ -1964,8 +1984,8 @@ shows 3 columns. {%- endcomment -%}
         if (active && active !== document.body) active.blur();
         // Drop any lingering text selection (e.g. from clicking a card) so the reset
         // doesn't leave the page looking selected.
-        var sel = window.getSelection && window.getSelection();
-        if (sel && sel.removeAllRanges) sel.removeAllRanges();
+        var sel = window.getSelection();
+        if (sel) sel.removeAllRanges();
       }
     });
 
@@ -1986,14 +2006,8 @@ shows 3 columns. {%- endcomment -%}
 
     // ── Network view ────────────────────────────────────────────────────
     // Built on first open and never rebuilt: the graph is baked offline (positions,
-    // links and all), so there is nothing to load and nothing to re-render.
-    var networkInited = false;
-    function initNetwork() {
-      if (networkInited) return;
-      networkInited = true;
-      buildNetwork();
-    }
-
+    // links and all), so there is nothing to load and nothing to re-render. buildNetwork
+    // assigns networkApi synchronously as its last act, so that is the built flag.
     function buildNetwork() {
       var dataNode = document.getElementById('net-data');
       if (!dataNode) return;
@@ -2002,21 +2016,21 @@ shows 3 columns. {%- endcomment -%}
       var idxBySlug = {};
       pubs.forEach(function(p, i) { idxBySlug[p.slug] = i; });
 
-      // The gallery card markup for a given slug never changes post-load, so
-      // cache each clone's HTML instead of re-querying and re-cloning the DOM
-      // on every node selection.
-      var cardHtmlCache = {};
-      function cardHtmlFor(slug) {
-        if (slug in cardHtmlCache) return cardHtmlCache[slug];
-        var src = document.querySelector('.publication[data-slug="' + CSS.escape(slug) + '"]');
-        var html = '';
-        if (src) {
-          var clone = src.cloneNode(true);
-          clone.removeAttribute('style');
-          html = clone.outerHTML;
+      // The gallery card for a given slug never changes post-load, so cache one
+      // detached clone per slug and hand out copies of it, instead of re-querying
+      // the document on every node selection.
+      var cardCache = {};
+      function cardFor(slug) {
+        if (!(slug in cardCache)) {
+          var src = document.querySelector('.publication[data-slug="' + CSS.escape(slug) + '"]');
+          var clone = null;
+          if (src) {
+            clone = src.cloneNode(true);
+            clone.removeAttribute('style');
+          }
+          cardCache[slug] = clone;
         }
-        cardHtmlCache[slug] = html;
-        return html;
+        return cardCache[slug] ? cardCache[slug].cloneNode(true) : null;
       }
 
       var NODE_RADIUS = 3;
@@ -2053,7 +2067,7 @@ shows 3 columns. {%- endcomment -%}
       // Positions are precomputed offline at canonical canvas size (bx, by);
       // fitLayout() scales them into the live stage at render time.
       var nodes = pubs.map(function(p, i) {
-        return { i: i, slug: p.slug, title: p.title, url: p.url, bx: p.x, by: p.y, tr: !!p.tr };
+        return { i: i, slug: p.slug, title: p.title, bx: p.x, by: p.y, tr: !!p.tr };
       });
 
       // Baked links: resolve integer endpoints to node refs (the force
@@ -2176,7 +2190,15 @@ shows 3 columns. {%- endcomment -%}
         placeNodes();
       }
 
+      /* Where a title breaks is a property of the title, not of the hover that revealed
+         it — and the search below is quadratic in its words — so the split is computed
+         once per title and kept. Hovering the same node twice re-reads it. */
+      var titleLines = {};
       function splitTitle(title) {
+        if (!(title in titleLines)) titleLines[title] = computeSplit(title);
+        return titleLines[title];
+      }
+      function computeSplit(title) {
         var words = title.split(/\s+/);
         if (words.length <= 1) return [title];
         var best = 1, bestDiff = Infinity;
@@ -2249,31 +2271,39 @@ shows 3 columns. {%- endcomment -%}
         var top = (pub.related || [])
           .map(function(r) { return [idxBySlug[r.slug], r.sim]; })
           .filter(function(t) { return t[0] != null; });
-        var cardHtml = cardHtmlFor(pub.slug);
-        var neighborsHtml = top.length ? (
-          '<div class="neighbors"><h3>Three closest by embedding</h3><ol>' +
-          top.map(function(t) {
+        /* Built with DOM calls, like everything else in this module: textContent escapes
+           titles and URLs by construction, so a title carrying an ampersand or a quote
+           needs no hand-written escaper to be safe here. */
+        var card = cardFor(pub.slug);
+        var parts = card ? [card] : [];
+        if (top.length) {
+          var box = el('div', 'neighbors');
+          box.appendChild(el('h3', null, 'Three closest by embedding'));
+          var ol = box.appendChild(el('ol'));
+          top.forEach(function(t) {
             var j = t[0], s = t[1];
+            var li = ol.appendChild(el('li'));
             // Floor rather than round: a score just under STRONG_SIM must never
             // display as if it cleared it (e.g. 0.6483 should read 0.64, not 0.65).
-            var sDisplay = (Math.floor(s * 100) / 100).toFixed(2);
-            return '<li data-node-i="' + j + '"><span class="sim">' + sDisplay + '</span><div class="nb-body"><a href="' + escapeHtml(pubs[j].url) + '">' + escapeHtml(pubs[j].title) + '</a></div></li>';
-          }).join('') +
-          '</ol></div>'
-        ) : '';
-        details.innerHTML = cardHtml + neighborsHtml;
+            li.appendChild(el('span', 'sim', (Math.floor(s * 100) / 100).toFixed(2)));
+            var body = li.appendChild(el('div', 'nb-body'));
+            var a = body.appendChild(el('a', null, pubs[j].title));
+            a.href = pubs[j].url;
+            // Hovering a neighbor in the list mirrors hovering its node on the canvas.
+            li.addEventListener('mouseenter', function() { setNodeHover(j, true); });
+            li.addEventListener('mouseleave', function() { setNodeHover(j, false); });
+          });
+          parts.push(box);
+        }
+        details.replaceChildren.apply(details, parts);
         details.hidden = false;
-
-        // Hovering a neighbor in the list mirrors hovering its node on the canvas.
-        details.querySelectorAll('.neighbors li').forEach(function(li) {
-          var idx = parseInt(li.dataset.nodeI, 10);
-          if (isNaN(idx)) return;
-          li.addEventListener('mouseenter', function() { setNodeHover(idx, true); });
-          li.addEventListener('mouseleave', function() { setNodeHover(idx, false); });
-        });
       }
-      function escapeHtml(s) {
-        return String(s).replace(/[&<>"']/g, function(c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
+      // The HTML counterpart of svgEl above.
+      function el(name, cls, text) {
+        var e = document.createElement(name);
+        if (cls) e.className = cls;
+        if (text != null) e.textContent = text;
+        return e;
       }
 
       build();
