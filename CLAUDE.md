@@ -14,7 +14,7 @@ of them.
 | `network` | the similarity graph — `_data/network.json`, the build scripts, clusters, cluster-card text, the SVG miniatures |
 | `layout` | `_layouts/home.html` — the grid and its column arithmetic, the card system, search and filters, motion, the bio collapse |
 | `seo` | everything declared to machines — both `<head>`s, JSON-LD, hreflang, the Scholar/Dublin Core tags, Zotero, `sitemap.xml`, `robots.txt`, aliases, the 404 |
-| `plugins` | the eleven Ruby files in `_plugins/` — what each produces and who reads it, the naming scheme, the build-order rules |
+| `plugins` | the twelve Ruby files in `_plugins/` — what each produces and who reads it, the naming scheme, the build-order rules |
 | `links` | link rot — the weekly lychee crawl, its report, and the Wayback fallback for a dead reference |
 
 ## Commands
@@ -69,7 +69,7 @@ The site has two layouts:
 
 **Network view** is a publication similarity graph, pre-computed offline into `_data/network.json` — the browser runs no simulation and loads no library. One file feeds three surfaces (the network view, the homepage's research-cluster cards, and each publication page's "Related publications"), so they can never disagree. The link rule, the embeddings and machine translation, the cluster rule, the miniatures and every tuning constant: the **`network`** skill.
 
-**Plugins**: `jekyll-feed` (RSS for the `publications` collection), plus eleven local plugins in `_plugins/` — the layer that lets templates *read* derived values instead of computing them. Like the includes they are named in two words, and the first word is one of **two**: **`publication_`** (eight files) for the `publications` collection, **`system_`** (three) for everything else. They run only because the site deploys through **GitHub Actions** rather than GitHub's branch build, which ignores `_plugins/` entirely; and none of them depends on a gem. What each produces, who reads it, the naming edge cases and the invariants: the **`plugins`** skill.
+**Plugins**: `jekyll-feed` (RSS for the `publications` collection), plus twelve local plugins in `_plugins/` — the layer that lets templates *read* derived values instead of computing them. Like the includes they are named in two words, and the first word is one of **two**: **`publication_`** (eight files) for the `publications` collection, **`system_`** (four) for everything else. They run only because the site deploys through **GitHub Actions** rather than GitHub's branch build, which ignores `_plugins/` entirely; and none of them depends on a gem. What each produces, who reads it, the naming edge cases and the invariants: the **`plugins`** skill.
 
 **SEO and machine metadata** — everything the site says to a machine rather than to a reader: both layouts' `<head>`, JSON-LD, `hreflang` and translation sets, the Google Scholar and Dublin Core citation tags, Zotero import, ISSN/ISBN, `sitemap.xml`, `robots.txt`, the redirect stubs and the 404. One thing worth knowing without loading the skill: `_data/publication_types.yml` is the single source deciding a type's Schema.org `@type`, its `DC.type`, which `citation_*` venue tag it uses and how its `venue` is modelled. All of it: the **`seo`** skill.
 

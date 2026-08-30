@@ -1132,7 +1132,11 @@ shows 3 columns. {%- endcomment -%}
         <svg id="net" aria-label="Publication similarity network"></svg>
       </div>
     </div>
-    <script id="net-data" type="application/json">{{ site.data.network | jsonify }}</script>
+    {%- comment -%} The browser's share of network.json, projected by
+    _plugins/system_network_client.rb — roughly half the file, because the rest of it
+    (clusters, the related list's titles and urls) is read by Liquid at build time and
+    would otherwise be inlined a second time for a reader who never uses it. {%- endcomment -%}
+    <script id="net-data" type="application/json">{{ site.data.network_client | jsonify }}</script>
   </main>
 
   <footer>

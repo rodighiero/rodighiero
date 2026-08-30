@@ -1,17 +1,17 @@
 ---
 name: plugins
-description: The eleven local Ruby plugins in _plugins/ — what each registers, publishes or attaches, who reads it, and the naming scheme and cross-cutting rules they all follow. Use when adding or editing a plugin, when a Liquid filter or a page-data field is missing at render time, when a build warning or fatal error names a plugin, when working out where a derived value comes from, or when deciding whether a new behaviour belongs in a plugin at all.
+description: The twelve local Ruby plugins in _plugins/ — what each registers, publishes or attaches, who reads it, and the naming scheme and cross-cutting rules they all follow. Use when adding or editing a plugin, when a Liquid filter or a page-data field is missing at render time, when a build warning or fatal error names a plugin, when working out where a derived value comes from, or when deciding whether a new behaviour belongs in a plugin at all.
 ---
 
 # The plugin layer
 
-Eleven Ruby files in `_plugins/`, plus one gem (`jekyll-feed`). They exist so that templates
+Twelve Ruby files in `_plugins/`, plus one gem (`jekyll-feed`). They exist so that templates
 read values rather than derive them: a Liquid loop that scans the whole collection on each of
 sixty-odd pages is the thing these replace.
 
 They run **only because the site deploys through GitHub Actions** rather than GitHub's branch
 build, which whitelists gems and ignores `_plugins/` entirely. That is not a preference; the
-site would silently lose all eleven under branch deployment.
+site would silently lose all twelve under branch deployment.
 
 **No plugin depends on a gem.** `system_image_size.rb` is a hand-written WebP parser rather
 than ImageMagick, and `publication_redirect.rb` replaced `jekyll-redirect-from` outright.
@@ -34,7 +34,7 @@ Two files fit none of them and produce no identifier a template can read:
 ## The naming scheme, in one line
 
 Two words. The first is **`publication_`** (eight files) if the file works on the
-`publications` collection, or **`system_`** (three) if it does not; the second says what it
+`publications` collection, or **`system_`** (four) if it does not; the second says what it
 does to that subject. Two prefixes with no third case means there is nothing to adjudicate.
 The full rule, its three genuine edge cases, and the two schemes tried and rejected:
 `reference/naming.md` — read it before naming a new file, not after.
@@ -60,6 +60,7 @@ written down.
 | `publication_figures.rb` | `figures` | `sitemap.xml` |
 | `system_commit_date.rb` | `commit_date` (per doc **and** `site.data`) | `sitemap.xml`, `publication.html` |
 | `system_readme.rb` | `site.data.readme_content` | `home.html` |
+| `system_network_client.rb` | `site.data.network_client` | `home.html` (the `#net-data` tag) |
 | `publication_redirect.rb` | redirect stub pages | crawlers |
 | `publication_validator.rb` | build-log warnings; a fatal error | the deploy |
 
@@ -70,7 +71,7 @@ Per-file detail — what each actually does and the decisions inside it: `refere
 | Stage | Who |
 |---|---|
 | `post_read` hook | `publication_order.rb`, `publication_neighbors.rb`, `system_readme.rb` |
-| Generator, `priority :high` | `publication_validator.rb`, `publication_figures.rb`, `system_commit_date.rb`, `publication_date.rb` |
+| Generator, `priority :high` | `publication_validator.rb`, `publication_figures.rb`, `system_commit_date.rb`, `publication_date.rb`, `system_network_client.rb` |
 | Generator, `priority :low` | `publication_redirect.rb` (last, so every page it might alias exists) |
 | `pre_render` hook | `system_image_size.rb`'s cache clear |
 
