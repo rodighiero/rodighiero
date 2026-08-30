@@ -3,11 +3,11 @@
  * Precompute the home network view's force-directed layout.
  *
  * Reads {nodes, similarity, translations} as JSON on stdin and writes
- * {seed, clearance, canvas, params, positions, links} as JSON on stdout,
- * running the d3-force simulation offline so the home page can draw the graph
- * already settled. The seed is randomized per build, so every run produces a
- * fresh arrangement (re-run to reroll); the settled cloud is then normalized to
- * fit the canvas with a uniform margin, so any seed yields a balanced,
+ * {clearance, canvas, params, positions, links} as JSON on stdout, running the
+ * d3-force simulation offline so the home page can draw the graph already
+ * settled. Nodes start from a random scatter, so every run produces a fresh
+ * arrangement (re-run to reroll); the settled cloud is then normalized to fit
+ * the canvas with a uniform margin, so any starting scatter yields a balanced,
  * non-overflowing layout.
  *
  * Invoked by scripts/build-network.py, which is the only thing that can feed
@@ -84,11 +84,6 @@ const MUTUAL_K = 2;
 // only for a node that would otherwise be isolated.
 const FALLBACK_SIM = 0.60;
 const GRAVITY = 0.9;
-// Randomized per build: each run produces a fresh arrangement (re-run to
-// reroll). The settled cloud is normalized to fit the canvas afterwards, so
-// any seed yields a usable, non-overflowing layout. The seed used is printed
-// to stderr and stored in the output as `seed` for reference.
-const LAYOUT_SEED = (Math.random() * 0x100000000) >>> 0;
 const LAYOUT_TICKS = 1400;
 // Link-distance shaping (forceLink): distance = LINK_DIST_BASE + (1−sim)*LINK_DIST_SPAN.
 const LINK_DIST_BASE = 10;
@@ -149,16 +144,13 @@ function main(input) {
     });
   }
 
-  // Seeded RNG — identical LCG to the former makeRng() in home.html.
-  let s = LAYOUT_SEED >>> 0;
-  function rand() { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }
-
-  // Nodes, seeded in index order (each consumes rand() x then y), same as the
-  // browser's seedPosition() but against the canonical canvas.
+  /* The starting scatter, against the canonical canvas. It was drawn from a
+     seeded LCG while the seed was an input worth reproducing; with nothing left
+     to replay it, the platform's RNG is the same scatter with less apparatus. */
   const nodes = pubs.map(function (p, i) {
     const n = { i: i };
-    n.x = CANVAS_W / 2 + (rand() - 0.5) * Math.min(CANVAS_W, CANVAS_H) * 0.6;
-    n.y = CANVAS_H / 2 + (rand() - 0.5) * Math.min(CANVAS_W, CANVAS_H) * 0.6;
+    n.x = CANVAS_W / 2 + (Math.random() - 0.5) * Math.min(CANVAS_W, CANVAS_H) * 0.6;
+    n.y = CANVAS_H / 2 + (Math.random() - 0.5) * Math.min(CANVAS_W, CANVAS_H) * 0.6;
     n.vx = 0; n.vy = 0;
     return n;
   });
@@ -296,7 +288,7 @@ function main(input) {
         let d = Math.sqrt(ox * ox + oy * oy);
         if (d >= EDGE_CLEARANCE) continue;
         if (d < 1e-6) {                        // exactly on the line: take its normal,
-          const len = Math.sqrt(len2);         // so the direction is not seed noise
+          const len = Math.sqrt(len2);         // so the direction is not float noise
           ox = -dy / len; oy = dx / len;
         } else { ox /= d; oy /= d; }
         count++;
@@ -337,7 +329,7 @@ function main(input) {
   for (let i = 0; i < LAYOUT_TICKS; i++) simulation.tick();
 
   // Normalize the settled cloud to fit the canvas with a uniform margin, so
-  // every (randomized) seed yields a balanced, non-overflowing layout. Uniform
+  // every starting scatter yields a balanced, non-overflowing layout. Uniform
   // scale preserves the shape; the translation centers it. The page then
   // fit-scales this canvas into the live stage as before.
   let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
@@ -399,9 +391,8 @@ function main(input) {
   });
 
   process.stdout.write(JSON.stringify({
-    seed: LAYOUT_SEED,
-    // Reported by build-network.py beside the seed: stderr here is captured and
-    // shown only on failure, so what the build should say travels in the result.
+    // Reported by build-network.py: stderr here is captured and shown only on
+    // failure, so what the build should say travels in the result.
     clearance: { atSettle: clearAtSettle, remaining: clearRemaining, passes: clearPasses },
     canvas: { w: CANVAS_W, h: CANVAS_H },
     /* The constants the page needs to say the same thing this file did: the radius it

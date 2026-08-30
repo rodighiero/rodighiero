@@ -24,14 +24,13 @@ Python) because the layout is what consumes it.
 | `CHARGE_DISTANCE_MAX` | 520 | repulsion cutoff |
 | `GRAVITY` | 0.9 | pull toward the well |
 | `LINK_DIST_BASE` / `LINK_DIST_SPAN` | 10 / 38 | edge length as a function of similarity |
-| `LAYOUT_SEED` | random per run | why every rebuild produces a full diff; recorded as `seed` in the JSON |
 | `LAYOUT_TICKS` | 1400 | simulation length |
 | `ANCHOR` | `center` | one gravity well, so clusters settle as islands. `ring` centres the largest component and pins the rest on a perimeter — wrong for this many-small-components graph, which it scatters into a halo |
 | `CANVAS_W` / `CANVAS_H` | 564 / 564 | the stage's own square, so the client's fit is 1:1 on desktop and everything baked in px is drawn at the size it was measured at |
 | `FIT_MARGIN` | 40 | label headroom — a hovered two-line title reaches ~37px above its node |
 
 The clearance is enforced **twice**: as a force during the simulation (which clears most
-seeds on its own) and as a deterministic pass **after** fit-normalization, since a uniform
+starting scatters on its own) and as a deterministic pass **after** fit-normalization, since a uniform
 scale under 1 shrinks the distance to a line as surely as the distance between markers.
 Each sweep nudges, clamps inside the margin box, relaxes any overlap it created, and
 measures again. The build prints `node/edge clearance: N at settle, M after K pass(es)`;
