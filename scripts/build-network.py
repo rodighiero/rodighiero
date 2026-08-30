@@ -726,9 +726,13 @@ def main() -> int:
             cache[k] = np.asarray(v, dtype=np.float32)
         _save_cache({k: cache[k] for k in all_keys})  # persist, pruning stale entries
 
+    # No "i": a node's index is its position in this list, which every consumer
+    # already has — layout-network.js numbers its own simulation nodes from the
+    # array, and the browser's projection numbers its own too. Writing it down
+    # made it a second place the same fact could be wrong.
     nodes = [
-        {"i": i, "slug": p["slug"], "title": p["title"], "url": p["url"], "lang": p["lang"]}
-        for i, p in enumerate(pubs)
+        {"slug": p["slug"], "title": p["title"], "url": p["url"], "lang": p["lang"]}
+        for p in pubs
     ]
 
     # ── One embedding space, one cosine matrix, two consumers ──
