@@ -4,6 +4,14 @@ description: Design, Data, and Humanities
 url: https://dariorodighiero.com
 goatcounter_code: fumoseaffabulazioni
 
+# The author's ORCID, as a resolvable URI. It is the site's one stable identifier for a
+# person, and it does structural work rather than decorative: the same string is the JSON-LD
+# `@id` on the homepage's Person node and on every publication page's author node, and that
+# identity is the only thing telling a consumer the subject of the homepage and the author of
+# the sixty-odd publications are one entity. It used to be typed out in six places across two
+# files, kept in step by a sentence in the `seo` skill. See that skill's reference/jsonld.md.
+orcid: https://orcid.org/0000-0002-1405-7062
+
 plugins:
   - jekyll-feed
 
