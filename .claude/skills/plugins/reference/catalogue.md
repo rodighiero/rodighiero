@@ -113,10 +113,16 @@ error rather than a discovery.
 
 ### `system_commit_date.rb` → `commit_date`, per document and site-wide
 
-Per publication: that file's last commit date as `YYYY-MM-DD`, feeding sitemap `lastmod`,
+Per publication: that file's last commit time as a full ISO 8601 timestamp
+(`git log --date=iso-strict`, e.g. `2026-08-16T14:16:37+02:00`), feeding sitemap `lastmod`,
 `article:modified_time` and JSON-LD `dateModified`. The fallback accepts only a four-digit
-`year` (as `YYYY-01-01`) and otherwise falls through to today — `Forthcoming-01-01` would be
-invalid in both the sitemap and the structured data.
+`year` (as `YYYY-01-01T00:00:00+00:00`) and otherwise falls through to now —
+`Forthcoming-01-01` would be invalid in both the sitemap and the structured data.
+
+**Why the long form and not `YYYY-MM-DD`.** Google Search Console reports a date alone on the
+homepage's `ProfilePage` as *"Invalid datetime value for dateModified"* — that parser wants a
+timestamp, unlike the `Article` one, which is happy with a date. A timestamp is valid in every
+surface a date was valid in, so the plugin emits one format rather than two.
 
 All per-file dates come from **one** `git log --name-only` walk keyed by path, not a
 subprocess per document: 61+ forks per build otherwise. Git is invoked via `Open3.capture2`

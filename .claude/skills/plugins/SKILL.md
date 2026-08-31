@@ -159,7 +159,7 @@ ships.
 |---|---|
 | Build aborts, "Front matter validation failed with N error(s)" | `publication_validator.rb`; the errors are logged just above |
 | A Liquid filter is "unknown" | the file isn't in `_plugins/`, or the site is being built by GitHub's branch deployment, where no local plugin runs |
-| Every `lastmod` is `<year>-01-01` or today | git history unavailable — shallow checkout, or `git` not on `PATH` (logged by `system_commit_date:`) |
+| Every `lastmod` is `<year>-01-01T00:00:00+00:00` or now | git history unavailable — shallow checkout, or `git` not on `PATH` (logged by `system_commit_date:`) |
 | An image is missing from the sitemap | `publication_figures:` warned it isn't on disk, or it lives under `images/@cards/` |
 | `width`/`height` empty on a figure | not a WebP, or a WebP variant the parser doesn't cover (it reads VP8, VP8L, VP8X) |
 | A constant is `uninitialized` inside a plugin | compact-form nesting — qualify it as `Jekyll::Thing` |
