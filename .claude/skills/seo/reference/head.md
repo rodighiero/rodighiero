@@ -122,12 +122,16 @@ journalArticle rather than magazineArticle. The venue is worth more than the typ
 | Tag | Source |
 |---|---|
 | `article:published_time` | `year`, as `YYYY-01-01`; omitted when `Forthcoming` |
-| `article:modified_time` | `commit_date` — the file's last commit |
+| `article:modified_time` | `commit_date` — the file's last commit, as a full ISO 8601 timestamp |
 | `citation_cover_date` | `year`, as `YYYY-01-01`; omitted when `Forthcoming` |
 
 Anything derived from `year` is skipped for `Forthcoming`, since `Forthcoming-01-01` is not a
 date. `commit_date`'s own no-git fallback accepts only a four-digit year and otherwise falls
-through to today.
+through to now.
+
+`commit_date` is a **timestamp**, not a date: Search Console flags a bare `YYYY-MM-DD` on the
+homepage's `ProfilePage` as "Invalid datetime value for dateModified". See the `plugins` skill
+(`system_commit_date.rb`) before shortening it.
 
 ## The homepage's own tags
 

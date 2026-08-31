@@ -1,9 +1,12 @@
 # commit_date on each publication and on site.data — read by sitemap.xml (lastmod)
 # and publication.html (article:modified_time, JSON-LD dateModified).
 #
-# Per publication: that file's last commit date as YYYY-MM-DD. Falls back to
-# page.year-01-01 (or today) when git history is unavailable — e.g. a
-# shallow checkout that doesn't include the file's introducing commit.
+# Per publication: that file's last commit time as a full ISO 8601 timestamp.
+# Google's ProfilePage parser rejects a date alone as an "invalid datetime
+# value", and a timestamp is valid everywhere a date was — sitemap <lastmod>,
+# DCTERMS.modified, article:modified_time — so every reader gets the long form.
+# Falls back to page.year-01-01 (or now) when git history is unavailable —
+# e.g. a shallow checkout that doesn't include the file's introducing commit.
 #
 # On site.data: the last commit touching anything that reaches _site, which is
 # not the same as HEAD — see PUBLISHED_ANYWAY below.
@@ -30,8 +33,7 @@ class Jekyll::CommitDateGenerator < Jekyll::Generator
     docs.each do |doc|
       doc.data['commit_date'] = dates[doc.relative_path] || fallback_date(doc.data['year'])
     end
-    site.data['commit_date'] = published_commit_date(site) ||
-                               Time.now.utc.strftime('%Y-%m-%d')
+    site.data['commit_date'] = published_commit_date(site) || now
   end
 
   private
@@ -49,7 +51,11 @@ class Jekyll::CommitDateGenerator < Jekyll::Generator
   # otherwise yield "Forthcoming-01-01" — an invalid <lastmod> and an invalid
   # dateModified — so it falls through to today instead.
   def fallback_date(year)
-    year.to_s.match?(/\A\d{4}\z/) ? "#{year}-01-01" : Time.now.utc.strftime('%Y-%m-%d')
+    year.to_s.match?(/\A\d{4}\z/) ? "#{year}-01-01T00:00:00+00:00" : now
+  end
+
+  def now
+    Time.now.utc.strftime('%Y-%m-%dT%H:%M:%S+00:00')
   end
 
   # One `git log` walk covering every file under `dir`, instead of a
@@ -57,7 +63,7 @@ class Jekyll::CommitDateGenerator < Jekyll::Generator
   # paths relative to the repo root, matching Document#relative_path.
   def commit_dates_under(dir)
     stdout, status = capture_git(
-      'log', '--name-only', '--pretty=format:%x00%cd', '--date=short', '--', dir
+      'log', '--name-only', '--pretty=format:%x00%cd', '--date=iso-strict', '--', dir
     )
     return {} unless status&.success?
 
@@ -77,7 +83,7 @@ class Jekyll::CommitDateGenerator < Jekyll::Generator
   end
 
   def commit_date(*pathspecs)
-    stdout, status = capture_git('log', '-1', '--format=%cd', '--date=short', '--', *pathspecs)
+    stdout, status = capture_git('log', '-1', '--format=%cd', '--date=iso-strict', '--', *pathspecs)
     status&.success? && !stdout.empty? ? stdout.strip : nil
   end
 
