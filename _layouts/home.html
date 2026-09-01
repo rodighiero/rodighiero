@@ -1298,13 +1298,20 @@ shows 3 columns. {%- endcomment -%}
       });
       /* Read all heights in one pass (single reflow), then write transforms. A tile is out
          of the pack if it is hidden inline (search/view state) or via CSS (a media query
-         hides the action cards on mobile; offsetParent is null when display:none) — asked
-         once, here, so the measuring and the packing cannot disagree about a tile. A null
-         entry is "not placed": no height, no slot. */
+         hides the action cards on mobile) — asked once, here, so the measuring and the
+         packing cannot disagree about a tile. A null entry is "not placed": no height, no
+         slot.
+         checkVisibility() asks that question directly: with its default options it answers
+         "does this generate a box" — display:none on the tile or on any ancestor, and
+         nothing else — which is exactly what this used to spell out by hand as
+         `style.display === 'none' || offsetParent === null`. The case neither form catches
+         is the one that matters most here: #publications is `visibility: hidden` until the
+         first pack lands (see .ready), and visibility is only consulted when the call asks
+         for it (visibilityProperty), so the tiles measured on that very first pass still
+         count as present. */
       var heights = [];
       tiles.forEach(function(p) {
-        var hidden = p.style.display === 'none' || p.offsetParent === null;
-        heights.push(hidden ? null : p.getBoundingClientRect().height);
+        heights.push(p.checkVisibility() ? p.getBoundingClientRect().height : null);
       });
       /* Pack into an array before writing anything. The height the pack comes to decides
          whether the change can be animated at all (see below), and a transform written
@@ -1315,12 +1322,12 @@ shows 3 columns. {%- endcomment -%}
       tiles.forEach(function(p, idx) {
         if (heights[idx] === null) { slots.push(null); return; }
         // The shortest column, said the way the tallest is said a few lines down.
-        var minCol = colHeights.indexOf(Math.min.apply(null, colHeights));
+        var minCol = colHeights.indexOf(Math.min(...colHeights));
         var y = colHeights[minCol];
         slots.push({ x: minCol * (colWidth + GAP_X), y: y });
         colHeights[minCol] = y + heights[idx] + gapY;
       });
-      var height = Math.max(0, Math.max.apply(null, colHeights) - gapY);
+      var height = Math.max(0, Math.max(...colHeights) - gapY);
       /* A pass that shortens the gallery past where the reader is standing ends with the
          browser clamping the scroll position: three columns to four at the foot of the
          page pulls the viewport some 2500px up. Nothing here can prevent that — the page
@@ -2295,7 +2302,7 @@ shows 3 columns. {%- endcomment -%}
           });
           parts.push(box);
         }
-        details.replaceChildren.apply(details, parts);
+        details.replaceChildren(...parts);
         details.hidden = false;
       }
       // The HTML counterpart of svgEl above.
