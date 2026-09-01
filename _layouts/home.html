@@ -1562,7 +1562,9 @@ shows 3 columns. {%- endcomment -%}
         b.setAttribute('aria-pressed', b.dataset.view === view ? 'true' : 'false');
       });
       updateViewButtonLabels();
-      if (prev === 'network' && view !== 'network' && networkApi) {
+      // Leaving the network view means it was entered, and entering it builds the
+      // module — so networkApi is never null here.
+      if (prev === 'network' && view !== 'network') {
         networkApi.clearSelection();
       }
       // Both branches lay out synchronously rather than deferring to a scheduled
@@ -1688,9 +1690,13 @@ shows 3 columns. {%- endcomment -%}
       // scrollHeight reports the content's full height even while the panel is clipped to
       // nothing, so the same read gives the target opening and the starting point closing.
       if (animate && motionOK()) {
-        bioShell.style.height = (visible ? 0 : bioShell.scrollHeight) + 'px';
+        // One read, used as both ends of the travel: clipping the panel doesn't change
+        // what scrollHeight reports, so the second read this replaced returned the same
+        // number at the cost of a second forced layout.
+        var full = bioShell.scrollHeight;
+        bioShell.style.height = (visible ? 0 : full) + 'px';
         void bioShell.offsetHeight;  // flush, so the pin is a state the browser has drawn
-        bioShell.style.height = (visible ? bioShell.scrollHeight : 0) + 'px';
+        bioShell.style.height = (visible ? full : 0) + 'px';
       } else {
         bioShell.style.height = '';
       }
@@ -2131,7 +2137,7 @@ shows 3 columns. {%- endcomment -%}
           // Mouse takes over from the keyboard: drop the previously
           // tab-focused node so only the hovered one stays lit.
           var active = document.activeElement;
-          if (active && active !== g && active.classList && active.classList.contains('node')) {
+          if (active && active !== g && active.classList.contains('node')) {
             active.blur();
           }
           setNodeHover(n.i, true);
