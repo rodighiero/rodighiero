@@ -1314,10 +1314,8 @@ shows 3 columns. {%- endcomment -%}
       var slots = [];
       tiles.forEach(function(p, idx) {
         if (heights[idx] === null) { slots.push(null); return; }
-        var minCol = 0;
-        for (var i = 1; i < cols; i++) {
-          if (colHeights[i] < colHeights[minCol]) minCol = i;
-        }
+        // The shortest column, said the way the tallest is said a few lines down.
+        var minCol = colHeights.indexOf(Math.min.apply(null, colHeights));
         var y = colHeights[minCol];
         slots.push({ x: minCol * (colWidth + GAP_X), y: y });
         colHeights[minCol] = y + heights[idx] + gapY;
@@ -1649,13 +1647,15 @@ shows 3 columns. {%- endcomment -%}
           // Clicking the active view button resets the view: clear the search
           // filter (text + type + cluster) and, on network, drop any node selection.
           resetFilters();
-          if (clicked === 'network' && networkApi) networkApi.clearSelection();
+          // Reachable only from within the network view, so networkApi is built by now.
+          if (clicked === 'network') networkApi.clearSelection();
         } else {
           withCrossfade(function() { setView(clicked); });
         }
       });
     });
-    setView(document.body.dataset.view || 'gallery', false);
+    // data-view is always set: the inline script under <body> writes it before this runs.
+    setView(document.body.dataset.view, false);
     // Fires exactly when the boundary is crossed, so there is nothing to debounce and
     // no width to re-test on the resizes that don't cross it.
     mobileQuery.addEventListener('change', applyResponsiveView);
@@ -1762,17 +1762,17 @@ shows 3 columns. {%- endcomment -%}
       var visible = 0;
       var matched = new Set();
       publications.forEach(function(p) {
-        var match = true;
-        for (var i = 0; i < tokens.length; i++) {
-          if (p._haystack.indexOf(tokens[i]) === -1) { match = false; break; }
-        }
+        // Every token has to appear. `every` stops at the first miss, as the loop
+        // this replaced did with a flag and a break.
+        var match = tokens.every(function(t) { return p._haystack.indexOf(t) !== -1; });
         var slug = p.dataset.slug;
         if (match && activeType !== null && p.dataset.type !== activeType) match = false;
         if (match && activeCluster !== null && !activeCluster.slugs.has(slug)) match = false;
         p.style.display = match ? '' : 'none';
         if (match) {
           visible++;
-          if (slug) matched.add(slug);
+          // Every .publication is a gallery card and carries data-slug.
+          matched.add(slug);
         }
       });
       // Special cards are chrome, not results: hide them whenever a filter is active.
