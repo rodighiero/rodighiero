@@ -142,6 +142,7 @@ ORCID), `<link rel="image_src">`, and `DCTERMS.modified` from `site.data.commit_
 same repo-wide date the sitemap declares for this page, not the build clock, so a deploy that
 changes nothing a reader sees does not claim the page changed.
 
-Its `og:image` is always the portrait; a publication's is `thumb`, falling back to the same
-portrait, so no card is ever blank. Both emit `og:image:width`/`height` — from
-`| image_size` for a `thumb`, hardcoded `1200×800` for the portrait.
+Its `og:image` is always the portrait, at a hardcoded `1200×800`. A publication's is always
+`thumb` — a required field, so the portrait fallback the layout used to carry was unreachable
+and is gone — sized by `| image_size`, which is the one part still conditional: a file it
+cannot parse yields no width or height rather than empty ones.
