@@ -197,6 +197,33 @@ main:focus { outline: none; }
 html.dark .mode-toggle .icon-sun { display: flex; }
 html.dark .mode-toggle .icon-moon { display: none; }
 
+/* ── Navigation transitions ──
+   A click from a gallery card to its publication page, and prev/next between two
+   publications, cross-fade instead of cutting. Both documents in a navigation have to opt
+   in for the transition to run, which this one declaration handles: styles-base.css is
+   inlined by the two layouts and by nothing else, so the pages that can transition into
+   each other are exactly the pages that share this file. 404.html takes styles-font.css
+   alone and is deliberately left out — a dead link should land hard rather than arrive
+   like a page that was meant to be there.
+   No duration is named. document.startViewTransition already animates the gallery/network
+   toggle in home.html, and both it and this one animate the same root snapshot through the
+   same ::view-transition pseudo-elements — so a number here would silently retune a motion
+   that is already on screen and already settled. The UA cross-fade is what that toggle
+   uses today, and this makes the navigation match it rather than introduce a second speed.
+   Where `navigation: auto` isn't supported the rule is dropped and the click stays the
+   plain cut it is now, which is why nothing else on the page has to know about it. */
+@view-transition { navigation: auto; }
+/* The UA does not fold prefers-reduced-motion into the transition itself, so it is
+   suppressed here the way every other motion on this site is. With no animation left to
+   run, the transition finishes on the next frame — an instant swap, which is what the
+   preference asks for. The wildcard covers the root pair and any named group a later
+   change might add, so a new one cannot ship without this guard already applying to it. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+}
+
 @media print {
   :root, html.dark, html.light { color-scheme: light !important; }
   html, body { background: #fff !important; color: #000 !important; }
