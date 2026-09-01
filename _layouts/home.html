@@ -1534,7 +1534,7 @@ shows 3 columns. {%- endcomment -%}
       // The box holds a filter label (not a query) while a structured filter is active,
       // so persist ?type/?cluster then, not ?q.
       var structured = structuredFilterActive();
-      var q = (!structured && searchInput) ? searchInput.value.trim() : '';
+      var q = structured ? '' : searchInput.value.trim();
       if (q) params.set('q', q); else params.delete('q');
       if (activeType) params.set('type', activeType); else params.delete('type');
       if (activeCluster) params.set('cluster', activeCluster.id); else params.delete('cluster');
@@ -1756,7 +1756,7 @@ shows 3 columns. {%- endcomment -%}
       // filter's label, not a free-text query — so its text is ignored for matching and
       // the type/slug filter alone drives the results.
       var structured = structuredFilterActive();
-      var query = (!structured && searchInput) ? searchInput.value : '';
+      var query = structured ? '' : searchInput.value;
       var tokens = query ? normalize(query).split(/\s+/).filter(Boolean) : [];
       var filterActive = tokens.length > 0 || structured;
       var visible = 0;
@@ -2008,18 +2008,19 @@ shows 3 columns. {%- endcomment -%}
       // The gallery card for a given slug never changes post-load, so cache one
       // detached clone per slug and hand out copies of it, instead of re-querying
       // the document on every node selection.
+      //
+      // The query always finds its card: the graph's nodes are built from the same
+      // publications the gallery loops over (one node per file in _publications, see
+      // build-network.py), so a slug on the canvas is a slug in the DOM. This used to
+      // return null when it missed, and the caller used to test for it.
       var cardCache = {};
       function cardFor(slug) {
         if (!(slug in cardCache)) {
           var src = document.querySelector('.publication[data-slug="' + CSS.escape(slug) + '"]');
-          var clone = null;
-          if (src) {
-            clone = src.cloneNode(true);
-            clone.removeAttribute('style');
-          }
-          cardCache[slug] = clone;
+          cardCache[slug] = src.cloneNode(true);
+          cardCache[slug].removeAttribute('style');
         }
-        return cardCache[slug] ? cardCache[slug].cloneNode(true) : null;
+        return cardCache[slug].cloneNode(true);
       }
 
       /* Both baked by scripts/layout-network.js and shipped in the data: the canonical
@@ -2268,8 +2269,7 @@ shows 3 columns. {%- endcomment -%}
         /* Built with DOM calls, like everything else in this module: textContent escapes
            titles and URLs by construction, so a title carrying an ampersand or a quote
            needs no hand-written escaper to be safe here. */
-        var card = cardFor(pub.slug);
-        var parts = card ? [card] : [];
+        var parts = [cardFor(pub.slug)];
         if (top.length) {
           var box = el('div', 'neighbors');
           box.appendChild(el('h3', null, 'Three closest by embedding'));
