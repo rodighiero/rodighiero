@@ -77,11 +77,12 @@ module makes this one independent of which hook Jekyll happens to run first.
 
 ### `publication_date.rb` → `page.date`
 
-Derives a date from `year` (+ optional `month`, `day`) so jekyll-feed's newest-first ordering
-reproduces the homepage's order. **The value is a sort key, not a publication date.**
+Derives a date from `year` — the only date a publication carries — so jekyll-feed's
+newest-first ordering reproduces the homepage's order. **The value is a sort key, not a
+publication date.**
 
-Within a year the entries are grouped in canonical order and each gets a small offset —
-`Time.new(year, month, day, 12, 0, 0) + (size - 1 - i)` — so the alphabetically-first title
+Within a year the entries are all dated to January 1st and each gets a small offset —
+`Time.new(year, 1, 1, 12, 0, 0) + (size - 1 - i)` — so the alphabetically-first title
 carries the *latest* timestamp and therefore leads the feed. Noon, so a timezone shift cannot
 move the date. The offset is added as time arithmetic rather than passed as a seconds argument
 to `Time.new`, which would raise once a year held more than 86,400 titles.
@@ -214,7 +215,6 @@ metadata is caught on every deploy rather than shipped.
 | `type` is a key in `publication_types.yml` | error |
 | `lang` is a key in `languages.yml` | error |
 | `thumb` resolves to a file under `images/` | error |
-| `month` 1–12, `day` 1–31 | warning (the value is clamped downstream) |
 | `doi` starts with `http(s)://` | warning |
 | `issn` matches `\d{4}-\d{3}[\dX]`, then its mod-11 check digit | warning |
 | `isbn` is 13 digits (mod-10) or 10 with an `X` allowed (mod-11), then its check digit | warning |
