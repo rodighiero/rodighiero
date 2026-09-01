@@ -1,0 +1,46 @@
+{%- comment -%}
+Speculation rules: fetch the page behind a link the reader is about to follow, so the
+navigation lands on bytes that are already here. Shared by both layouts — the selectors
+below name links from each of them, and one that matches nothing on the page it is parsed
+into simply does nothing.
+
+**prefetch, never prerender.** Prerendering runs the target page — its scripts included —
+and count.js has no idea it is being speculated: `document.prerendering` is never asked,
+so every prerendered publication would log a pageview for a reader who never arrived.
+Prefetch fetches the response and stops there, which is also the only version of this that
+is honest about what it costs someone on a metered connection.
+
+**moderate**: the fetch starts on a ~200ms hover or on pointerdown, and the browser keeps
+only the last couple of them. Not `eager`/`immediate`, which on the homepage would mean
+every publication in the gallery, most of which nobody is going to open.
+
+The trigger is the anchor, not the tile. A gallery card is clickable across its whole
+surface (see the click handler in home.html), but only hovering the title link arms this —
+hovering the thumbnail and clicking it navigates unprefetched. Closing that gap means
+injecting rules from a mouseover handler, which is a second mechanism for what the browser
+already does; the title sits directly under the picture, so the cursor usually crosses it
+on the way anyway.
+
+Selectors rather than href_matches, because `permalink: /:name` puts publications at the
+root: the pattern that covers them (`/*`) also covers /feed.xml, the skip link's own page
+and every alias, so naming the four link kinds is both narrower and self-explanatory.
+`.publication h2 a` is the gallery card title, which the network view's details panel
+clones verbatim — so it covers the sidebar too, without a selector of its own.
+{%- endcomment -%}
+<script type="speculationrules">
+{
+  "prefetch": [
+    {
+      "where": {
+        "selector_matches": [
+          ".publication h2 a",
+          "#network-details .neighbors a",
+          ".publication-nav a",
+          ".related-pubs a"
+        ]
+      },
+      "eagerness": "moderate"
+    }
+  ]
+}
+</script>
