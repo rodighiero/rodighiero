@@ -202,18 +202,20 @@ shows 3 columns. {%- endcomment -%}
          it approaches the end value from below and never crosses it. The tiles' 2.8%
          overshoot would mean a panel that opens slightly past its own height and settles
          back, which reads as a bounce in a surface whose height is supposed to *be* its
-         content. Fallback bezier first: a browser without linear() drops that declaration
-         and keeps this one, rather than losing the transition entirely. */
+         content.
+         linear() is depended on outright, here and on the tiles below, rather than shadowed
+         by a bezier declared ahead of it. The palette already sets the higher floor:
+         light-dark() carries every colour on the site with no fallback of its own, and it
+         shipped after linear() in all three engines — so a browser that could miss this
+         curve could not draw the page at all. Declaring one anyway costs a second copy of
+         the timing to keep in step, which is a real hazard and not a theoretical one: the
+         pair below lost `box-shadow` from one half, and the card hairline snapped for the
+         0.42s the class was on. */
       /* Opacity rides along on a plain ease, shorter than the travel: the masthead reads
          as dismissing itself rather than being cropped by the search bar sliding over it.
          Shorter deliberately — gone before the clip finishes on the way out, and legible
          before the panel is fully open on the way back — and on its own curve, since a
-         spring is a shape for distance, not for a fade. It repeats in both declarations
-         because the second `transition` replaces the first outright rather than adding to
-         it; a browser without linear() would otherwise take the fallback and lose it. */
-      transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                  margin-bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                  opacity 0.4s ease;
+         spring is a shape for distance, not for a fade. */
       transition:
         height 0.6s linear(0, 0.034, 0.112, 0.211, 0.316, 0.417, 0.51, 0.593, 0.665,
           0.726, 0.777, 0.82, 0.855, 0.884, 0.908, 0.927, 0.942, 0.954, 0.964, 0.971,
@@ -577,15 +579,11 @@ shows 3 columns. {%- endcomment -%}
        this is meant to remove. Opacity keeps a plain ease — a fade has nothing to settle
        into, and a spring on it would only delay the arrival. */
     body[data-view="gallery"] #publications.animating .card {
-      /* A browser that doesn't know linear() drops the whole declaration below, shorthand
-         and all, so the bezier stands as the fallback rather than leaving the tiles to
-         jump and the hover tint to snap. Both declarations carry background and box-shadow
-         as well as the travel: this rule replaces .card's own transition outright rather
-         than adding to it, so anything left out here stops animating for the 0.42s the
-         class is on — which is how the hairline came to snap when it moved from
-         outline-color to an inset box-shadow. */
-      transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.28s ease,
-                  background 0.15s ease, box-shadow 0.15s ease;
+      /* background and box-shadow ride along with the travel because this rule replaces
+         .card's own transition outright rather than adding to it: anything left out here
+         stops animating for the 0.42s the class is on, which is how the hairline came to
+         snap when it moved from outline-color to an inset box-shadow. (On why there is no
+         bezier declared ahead of the curve, see .bio-shell above.) */
       transition:
         transform 0.42s linear(0, 0.05, 0.167, 0.314, 0.465, 0.604, 0.723, 0.82, 0.894,
           0.948, 0.985, 1.008, 1.021, 1.027, 1.028, 1.026, 1.023, 1.018, 1.014, 1.01,
