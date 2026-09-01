@@ -25,7 +25,7 @@ Fields come from one entry of _data/home_cards.yml `events`:
   <span class="card-meta">{% if _e.date %}<time datetime="{{ _e.date | date: '%Y-%m-%d' }}">{{ _e.date | date: '%-d %B %Y' }}</time> · {% endif %}{{ _e.eyebrow | default: 'Event' }}{% if _e.venue %}<br><span class="venue">{{ _e.venue }}</span>{% endif %}</span>
   {%- endif -%}
   <span class="card-title">{{ _e.label }}</span>
-  {% if _e.sublabel %}<span class="card-text">{{ _e.sublabel }}</span>{% endif %}
+  {% if _e.sublabel %}<span class="card-text hyphenate-prose">{{ _e.sublabel }}</span>{% endif %}
   {% include credit-short.html item=_e %}
 </a>
 {%- endif -%}

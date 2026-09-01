@@ -35,5 +35,5 @@ the GoatCounter dashboard reads as "Peirce Manuscripts" rather than "cluster:3".
   <span class="card-meta">{% if _yr %}{% if _yr contains '–' or _yr contains '-' %}<span>{{ _yr }}</span>{% else %}<time datetime="{{ _yr }}">{{ _yr }}</time>{% endif %}{% if include.eyebrow %} · {% endif %}{% endif %}{{ include.eyebrow }}{% if include.venue %}<br><span class="venue">{{ include.venue }}</span>{% endif %}</span>
   {%- endif -%}
   <span class="card-title">{{ include.label }}</span>
-  {% if include.sublabel %}<span class="card-text">{{ include.sublabel }}</span>{% endif %}
+  {% if include.sublabel %}<span class="card-text hyphenate-prose">{{ include.sublabel }}</span>{% endif %}
 </button>

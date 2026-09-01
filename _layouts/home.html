@@ -469,22 +469,23 @@ shows 3 columns. {%- endcomment -%}
        both render through one class, .card-text (styles-base.css sets its type); only the
        gap belongs here. */
     .card-text { margin-top: 0.4rem; }
-    /* Hyphenated for the same reason as the bio column above, but looser: a gallery
-       card is narrower still, so one long word costs a whole line of a two-sentence
-       description — 6 3 3 rather than the header's 8 4 4 takes the opportunities the
-       stricter limit leaves on the table. Restricted to the special cards
-       because the other .card-text is a byline — a split surname (Rodig-hiero) reads
-       as a different name, and a name is parsed as a unit in a way prose is not.
-       The -webkit- longhands are what Safari actually reads (it ignores the standard
-       shorthand); before+after imply the 6-character word minimum on their own. */
-    :is(.action, .filter, .event) .card-text {
-      -webkit-hyphens: auto;
-      hyphens: auto;
-      -webkit-hyphenate-limit-before: 3;
-      -webkit-hyphenate-limit-after: 3;
-      -webkit-hyphenate-limit-lines: 2;
-      hyphenate-limit-chars: 6 3 3;
-    }
+    /* Hyphenated for the same reason as the bio column above, but looser: a gallery card
+       is narrower still, so one long word costs a whole line of a two-sentence description
+       — 6/3/3 rather than the header's 8/4/4 takes the opportunities the stricter limit
+       leaves on the table. The card wears .hyphenate-prose in the markup (see
+       card-action.html and card-event.html) and states only the two numbers it differs by;
+       the policy itself — which properties, in which order, with the -webkit- longhands
+       Safari actually reads — stays in styles-base.css, where the article body reads it
+       too. Only the special cards: the other .card-text is a byline, and a split surname
+       (Rodig-hiero) reads as a different name, a name being parsed as a unit in a way
+       prose is not.
+       Naming the element rather than describing where it sits is also what makes that last
+       sentence true. This was `:is(.action, .filter, .event) .card-text`, and an event card
+       holds two .card-text elements, not one: the description this means, and the byline
+       credit-short.html renders under it. So the rule reached a byline after all — the
+       standing event card credits Rosenbergova, at 6/3/3 — which is precisely what the
+       sentence above says must not happen. A class on the description alone cannot. */
+    :is(.action, .filter, .event) .card-text { --hyphen-word: 6; --hyphen-min: 3; }
 
     /* Shared meta-line, likewise unqualified. */
     .card-meta { font-size: var(--text-xxs); }
@@ -2201,20 +2202,19 @@ shows 3 columns. {%- endcomment -%}
          once per title and kept. Hovering the same node twice re-reads it. */
       var titleLines = {};
       function splitTitle(title) {
-        if (!(title in titleLines)) titleLines[title] = computeSplit(title);
-        return titleLines[title];
-      }
-      function computeSplit(title) {
+        if (title in titleLines) return titleLines[title];
         var words = title.split(/\s+/);
-        if (words.length <= 1) return [title];
         var best = 1, bestDiff = Infinity;
         for (var i = 1; i < words.length; i++) {
-          var left = words.slice(0, i).join(' ');
-          var right = words.slice(i).join(' ');
-          var diff = Math.abs(left.length - right.length);
+          var diff = Math.abs(words.slice(0, i).join(' ').length
+                            - words.slice(i).join(' ').length);
           if (diff < bestDiff) { bestDiff = diff; best = i; }
         }
-        return [words.slice(0, best).join(' '), words.slice(best).join(' ')];
+        // A one-word title has no split to make, and taking one anyway would hand setLabel
+        // an empty second line to draw a tspan for. The loop simply doesn't run there.
+        titleLines[title] = words.length <= 1 ? [title]
+          : [words.slice(0, best).join(' '), words.slice(best).join(' ')];
+        return titleLines[title];
       }
       // Shared by node hover/focus (mouse and keyboard) and the neighbor-list
       // rows that mirror hovering a node on the canvas.
