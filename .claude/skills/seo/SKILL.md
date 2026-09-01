@@ -126,7 +126,8 @@ not the template.
 - **Scholar reads page numbers as literal integers**, so a Chicago-condensed `pages: "301–9"`
   is expanded to `citation_lastpage: 309` by borrowing the leading digits. The *visible*
   citation keeps the condensed form. Don't "fix" one to match the other.
-- **`og:image` is never blank** — `page.thumb`, falling back to the portrait.
+- **`og:image` is never blank** — a publication's is `page.thumb`, which the validator
+  requires, so there is no fallback to reach. The homepage declares the portrait.
 - **The `hreflang` set always contains the page itself.** A self-reference is required; it
   comes for free from listing origin + siblings, so don't "optimise" the page out of its own
   list.
@@ -147,7 +148,7 @@ not the template.
 
 | Symptom | Cause |
 |---|---|
-| Social card shows the portrait on a publication | no `thumb` in the front matter — the fallback fired |
+| Social card unfurls blank on a publication | `thumb` names a file that is on disk but that `image_size` cannot parse, so width/height are dropped |
 | A visible `&amp;#x2019;` in a search snippet or card | a hex numeric entity reached `escape_once` without `decode_numeric_entities` |
 | JSON-LD `abstract` is the whole article | the `<!--more-->` split ran after `strip_html` |
 | Zotero imports a chapter as a journal article | `citation_venue` in `publication_types.yml` points at the wrong HighWire tag — it wins over `DC.type` |

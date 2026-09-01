@@ -63,8 +63,8 @@ to, because Chicago's shapes are not a property of the taxonomy. {%- endcomment 
 {%- if _t == 'book' or _t == 'map' %} {{ _item.title }}{{ _dot }}{% if _item.translator %} Translated by {{ _translators }}.{% endif %}{% if _item.place %} {{ _item.place }}:{% endif %} {{ _pub }}.
 {%- elsif _t == 'journal' or _t == 'magazine' %} “{{ _item.title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}{% if _item.volume %} {{ _item.volume }}{% endif %}{% if _item.issue %} ({{ _item.issue }}){% endif %}{% if _item.pages %}: {{ _item.pages }}{% endif %}.
 {%- elsif _t == 'chapter' or _t == 'conference' %} “{{ _item.title }}{{ _dot }}” In {{ _item.venue }}{% if _item.editor and _item.author %}, edited by {{ _editors }}{% endif %}{% if _item.translator %}, translated by {{ _translators }}{% endif %}{% if _item.pages %}, {{ _item.pages }}{% endif %}.{% if _item.place %} {{ _item.place }}:{% endif %}{% if _pub %} {{ _pub }}.{% endif %}
-{%- elsif _t == 'interview' %} “{{ _item.title }}{{ _dot }}”{% if _item.interviewer %} Interview by {{ _interviewers }}.{% endif %}{% if _item.translator %} Translated by {{ _translators }}.{% endif %}{% if _item.venue %} {{ _item.venue }}.{% endif %}
-{%- else %} “{{ _item.title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %}{% if _item.venue %} {{ _item.venue }}.{% endif %}
+{%- elsif _t == 'interview' %} “{{ _item.title }}{{ _dot }}”{% if _item.interviewer %} Interview by {{ _interviewers }}.{% endif %}{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}.
+{%- else %} “{{ _item.title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}.
 {%- endif -%}
 {%- if _item.doi %} {% if _item.doi contains 'doi.org/' %}https://doi.org/{{ _item.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}{{ _item.doi }}{% endif %}.{% endif -%}
 {%- endcapture -%}
