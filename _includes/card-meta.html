@@ -1,1 +1,5 @@
-{% assign _t = site.data.publication_types[include.item.type] %}<div class="card-meta">{% if include.item.year %}{% if include.item.year == "Forthcoming" %}<span>{{ include.item.year }}</span>{% else %}<time datetime="{{ include.item.year }}">{{ include.item.year }}</time>{% endif %}{% endif %}{% if _t %} · {{ _t.label }}{% endif %}{% if include.item.venue %}<br><span class="venue">{{ include.item.venue }}</span>{% endif %}</div>
+{%- comment -%} Nothing here is guarded, because nothing here can be absent: both call sites
+pass a publication, and publication_validator.rb requires `year`, `venue` and `type` on every
+one — `type` also has to be a key of publication_types.yml, so _t is always a real entry. A
+publication missing any of them aborts the build long before this line renders. {%- endcomment -%}
+{% assign _t = site.data.publication_types[include.item.type] %}<div class="card-meta">{% if include.item.year == "Forthcoming" %}<span>{{ include.item.year }}</span>{% else %}<time datetime="{{ include.item.year }}">{{ include.item.year }}</time>{% endif %} · {{ _t.label }}<br><span class="venue">{{ include.item.venue }}</span></div>

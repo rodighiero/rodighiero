@@ -95,14 +95,14 @@
   <meta name="DC.description" content="{{ _excerpt_attr }}">
   {% if page.venue %}<meta name="DC.source" content="{{ page.venue | escape }}">{% endif %}
   {% if page.year and page.year != "Forthcoming" %}<meta name="DC.date" content="{{ page.year }}">{% endif %}
-  <meta name="DC.type" content="{{ _ptype.dc | default: 'text' }}">
+  <meta name="DC.type" content="{{ _ptype.dc }}">
   <meta name="DC.format" content="text/html">
   <meta name="DC.language" content="{{ page.lang | default: 'en' }}">
   <meta name="DC.identifier" content="{{ site.url }}{{ page.url }}">
   {% if page.doi %}<meta name="DC.identifier" content="{{ page.doi }}">{% endif %}
   <meta name="DC.publisher" content="{{ page.publisher | default: 'Dario Rodighiero' | escape }}">
   <meta name="DCTERMS.isPartOf" content="{{ site.url }}">
-  {% assign _schema_type = _ptype.schema | default: 'ScholarlyArticle' %}
+  {% assign _schema_type = _ptype.schema %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -142,8 +142,8 @@
     "url": "{{ site.url }}{{ page.url }}",
     {% if page.doi %}"sameAs": "{{ page.doi }}",{% endif %}
     {% if page.pages %}"pagination": {{ page.pages | jsonify }},{% endif %}
-    {% if _source %}{% assign _st = site.data.publication_types[_source.type].schema | default: 'CreativeWork' %}"translationOfWork": { "@type": "{{ _st }}", "@id": "{{ site.url }}{{ _source.url }}", "name": {{ _source.title | jsonify }}, "inLanguage": "{{ _source.lang | default: 'en' }}" },{% endif %}
-    {% if _translated_by.size > 0 %}"workTranslation": [{% for _t in _translated_by %}{% assign _tt = site.data.publication_types[_t.type].schema | default: 'CreativeWork' %}{ "@type": "{{ _tt }}", "@id": "{{ site.url }}{{ _t.url }}", "name": {{ _t.title | jsonify }}, "inLanguage": "{{ _t.lang | default: 'en' }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}
+    {% if _source %}{% assign _st = site.data.publication_types[_source.type].schema %}"translationOfWork": { "@type": "{{ _st }}", "@id": "{{ site.url }}{{ _source.url }}", "name": {{ _source.title | jsonify }}, "inLanguage": "{{ _source.lang | default: 'en' }}" },{% endif %}
+    {% if _translated_by.size > 0 %}"workTranslation": [{% for _t in _translated_by %}{% assign _tt = site.data.publication_types[_t.type].schema %}{ "@type": "{{ _tt }}", "@id": "{{ site.url }}{{ _t.url }}", "name": {{ _t.title | jsonify }}, "inLanguage": "{{ _t.lang | default: 'en' }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}
     {% if _social_img %}"image": "{{ site.url }}/images/{{ _social_img }}",{% endif %}
     {%- comment -%} The page and the work it carries are two nodes, so they need two @ids —
     @id *is* the merge key, and giving both the bare URL asks a consumer to collapse them

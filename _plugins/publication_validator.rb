@@ -70,10 +70,6 @@ class Jekyll::FrontMatterValidator < Jekyll::Generator
       @errors << "#{slug}: lang '#{data['lang']}' is not in _data/languages.yml (valid: #{@valid_langs.join(', ')})"
     end
 
-    # Validate month/day if present
-    check_range(data, slug, 'month', 1, 12)
-    check_range(data, slug, 'day', 1, 31)
-
     # Validate DOI format if present (accept any https:// URL)
     if data['doi'] && !data['doi'].to_s.start_with?('https://', 'http://')
       @warnings << "#{slug}: doi '#{data['doi']}' doesn't look like a URL (should start with http:// or https://)"
@@ -147,15 +143,6 @@ class Jekyll::FrontMatterValidator < Jekyll::Generator
     when 11 then '0'
     when 10 then 'X'
     else remainder.to_s
-    end
-  end
-
-  def check_range(data, slug, field, min, max)
-    return unless data[field]
-
-    value = data[field].to_i
-    unless value >= min && value <= max
-      @warnings << "#{slug}: #{field} '#{value}' is out of range (#{min}-#{max}), will be clamped"
     end
   end
 

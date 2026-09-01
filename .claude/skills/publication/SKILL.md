@@ -109,8 +109,8 @@ One entry in `_data/publication_types.yml` — `label`, `schema`, `dc`, optional
 (aborting the build) on: a missing required field (`title`, `year`, `venue`, `type`,
 `thumb`, and `author` unless `editor` is present), a `year` that is neither four digits nor
 `Forthcoming`, a `type` absent from `publication_types.yml`, or a `thumb` missing from
-disk. It **warns** on a DOI that isn't a URL, an out-of-range `month`/`day`, an ISSN or ISBN
-that fails its shape or its check digit, and a `translation_of` naming no publication.
+disk. It **warns** on a DOI that isn't a URL, an ISSN or ISBN that fails its shape or its
+check digit, and a `translation_of` naming no publication.
 Warnings ship — read the log.
 
 Broken external links are a separate, scheduled concern — a red `links.yml` run is

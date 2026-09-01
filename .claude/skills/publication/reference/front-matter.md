@@ -75,11 +75,16 @@ Absent `lang` means English. The homepage UI stays English; there is no per-lang
 |---|---|
 | `img_border: true` | hairline around the homepage card |
 | `redirect_from` | string or list of site-absolute paths; each becomes a refresh stub canonicalised to the real page |
-| `month`, `day` | validated 1–12 / 1–31; rarely used |
 
 `page.date` is **derived**, not declared — `publication_date.rb` synthesizes it from `year`
 purely as an RSS sort key (Jan 1 at noon plus offsets, so the feed reproduces the homepage
 order). Don't add a `date:` field.
+
+`year` is the only date a publication carries. `month` and `day` were once accepted as
+optional refinements of the derived `page.date`; no entry ever used them, and since the value
+they refined is a sort key rather than a date anyone reads, they were dropped rather than
+kept working for a caller that never came. Adding either back means reviving the clamp in
+`publication_date.rb` and the range check in `publication_validator.rb` together.
 
 ## Body
 
