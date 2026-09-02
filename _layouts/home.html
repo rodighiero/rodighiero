@@ -193,9 +193,16 @@ shows 3 columns. {%- endcomment -%}
        it currently occupies, flips the state, and hands the height back to this stylesheet
        the moment the transition ends (see setBioVisible). interpolate-size would remove
        even that, but it is too new to depend on — where it is missing the height would
-       simply jump, which is the one thing this rule exists to prevent. */
+       simply jump, which is the one thing this rule exists to prevent.
+
+       The clip is on the same schedule as the pin, and for the same reason. The bio's
+       first paragraph is trimmed to its cap height (see .header .bio-col p), so the text
+       box's top edge *is* the cap line and every ascender — and the antialiased top row of
+       the capitals themselves — sits above it. A permanent overflow:hidden cuts exactly
+       that row off the first line. So the shell clips while it is closed, where clipping is
+       the whole point, and while it is moving, where the script sets it beside the height it
+       pins; open and at rest it clips nothing and the line is whole. */
     .bio-shell {
-      overflow: hidden;
       height: auto;
       margin-bottom: 6.2rem;
       /* The same sampled spring as the gallery tiles, in its critically damped variant —
@@ -225,7 +232,7 @@ shows 3 columns. {%- endcomment -%}
           0.971, 0.978, 0.982, 0.986, 0.989, 0.992, 0.993, 0.995, 0.996, 0.997, 0.998, 1),
         opacity 0.4s ease;
     }
-    html[data-bio-visible="0"] .bio-shell { height: 0; margin-bottom: 0; opacity: 0; }
+    html[data-bio-visible="0"] .bio-shell { height: 0; overflow: hidden; margin-bottom: 0; opacity: 0; }
     @media (prefers-reduced-motion: reduce) {
       .bio-shell { transition: none; }
     }
@@ -900,7 +907,7 @@ shows 3 columns. {%- endcomment -%}
          second selector here has to match its specificity to undo it; a bare .bio-shell
          only reached 0-1-0 and the page printed blank. */
       .bio-shell,
-      html[data-bio-visible="0"] .bio-shell { height: auto; margin-bottom: 0; opacity: 1; }
+      html[data-bio-visible="0"] .bio-shell { height: auto; overflow: visible; margin-bottom: 0; opacity: 1; }
       .header { display: block; margin-bottom: 0; }
       .header .card-media { display: none; }
       /* The one .header h1 rule on the page: the name is styled by .card-title everywhere
@@ -1684,10 +1691,13 @@ shows 3 columns. {%- endcomment -%}
     var bioShell = document.getElementById('bio');
     // Hands the height back to the stylesheet: `auto` when open, the rule's own 0 when
     // closed. On cancel too, or an interrupted double-click would leave a pin behind —
-    // exactly the stale number this design exists to avoid.
+    // exactly the stale number this design exists to avoid. The clip goes back with it:
+    // open and at rest the shell must not clip, or it cuts the top row off the bio's
+    // first line, which is trimmed to sit exactly on the shell's edge.
     function releaseBioHeight(e) {
       if (e.target !== bioShell || e.propertyName !== 'height') return;
       bioShell.style.height = '';
+      bioShell.style.overflow = '';
       // The scrollbar goes when the travel does, and a scrollbar is width, which is the
       // column count.
       if (document.body.dataset.view === 'gallery') scheduleWidthPass();
@@ -1700,11 +1710,15 @@ shows 3 columns. {%- endcomment -%}
         // what scrollHeight reports, so the second read this replaced returned the same
         // number at the cost of a second forced layout.
         var full = bioShell.scrollHeight;
+        // A panel between 0 and its full height has to clip, in both directions: opening,
+        // the content is already full size behind an edge that hasn't reached it yet.
+        bioShell.style.overflow = 'hidden';
         bioShell.style.height = (visible ? 0 : full) + 'px';
         void bioShell.offsetHeight;  // flush, so the pin is a state the browser has drawn
         bioShell.style.height = (visible ? full : 0) + 'px';
       } else {
         bioShell.style.height = '';
+        bioShell.style.overflow = '';
       }
       document.documentElement.dataset.bioVisible = visible ? '1' : '0';
       bioToggle.setAttribute('aria-expanded', visible ? 'true' : 'false');
