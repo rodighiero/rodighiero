@@ -107,11 +107,16 @@ const ANCHOR = 'center';
 const CANVAS_W = 564;
 const CANVAS_H = 564;
 // Uniform margin kept clear on every side when the settled layout is
-// normalized to fit the canvas. It is also the page's label headroom: a title
-// renders above its node (two lines reach y = −25 plus the ascent), so a node
-// at the top edge needs ~37px of canvas above it to keep its label inside the
-// stage. The margin is baked in here, which is why the client centres the
-// canvas and adds nothing of its own.
+// normalized to fit the canvas.
+//
+// It was also the page's label headroom, back when a title was always two lines
+// (reaching y = −25 plus the ascent, so ~37px). It no longer covers one: a label
+// wraps to a width budget now and can run to five lines, and they always render
+// above their node, never flipped. The shortfall is made up on the page instead —
+// home.html's fitLayout reserves LABEL_HEADROOM at the top of the stage and
+// scales the graph into what is left. Raising this constant would do the same job
+// by moving every node, so it stays where it is and the client adds that one
+// offset to the centring.
 const FIT_MARGIN = 40;
 
 function readStdin() {

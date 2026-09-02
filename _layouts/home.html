@@ -2133,14 +2133,25 @@ shows 3 columns. {%- endcomment -%}
       // stage: uniform scale + center (object-fit: contain), so markers, labels
       // and link strokes keep their fixed pixel sizes. Runs once at render and
       // again on resize — no force simulation in the browser anymore.
-      // Nothing is added to the centring: the canvas is square and so is the
-      // stage, so the fit leaves no slack to spend, and the label headroom a
-      // node at the top edge needs is baked into the canvas as FIT_MARGIN.
+      /* Blank band kept at the top of the stage for the tallest label to grow into.
+         Labels always stack upward and the stage is overflow:hidden, so without it the
+         highest node loses the top of its first line. Sized off the worst case in the
+         corpus — a 3-line title on a node sitting right on FIT_MARGIN, which overran by
+         8px — with margin for a longer title landing there later. */
+      var LABEL_HEADROOM = 16;
+      // The canvas is square and so is the stage, so the fit has no slack of its
+      // own to spend on the labels — and FIT_MARGIN, the headroom baked into the
+      // coordinates, was sized back when a title was always two lines. A wrapped
+      // label can now run to five, so the graph is nudged down by LABEL_HEADROOM
+      // and scaled into what is left. It is bought here rather than in
+      // layout-network.js because it costs under 3% of the graph and needs no
+      // rebuild; raising FIT_MARGIN would reshuffle every node to the same end.
       function fitLayout() {
         var dim = dimensions();
-        var scale = Math.min(dim.w / CANVAS.w, dim.h / CANVAS.h);
+        var usableH = dim.h - LABEL_HEADROOM;
+        var scale = Math.min(dim.w / CANVAS.w, usableH / CANVAS.h);
         var offX = (dim.w - CANVAS.w * scale) / 2;
-        var offY = (dim.h - CANVAS.h * scale) / 2;
+        var offY = LABEL_HEADROOM + (usableH - CANVAS.h * scale) / 2;
         nodes.forEach(function(n) {
           n.x = offX + n.bx * scale;
           n.y = offY + n.by * scale;
@@ -2211,41 +2222,129 @@ shows 3 columns. {%- endcomment -%}
         placeNodes();
       }
 
-      /* Where a title breaks is a property of the title, not of the hover that revealed
-         it — and the search below is quadratic in its words — so the split is computed
-         once per title and kept. Hovering the same node twice re-reads it. */
+      /* Labels are measured, not counted. String.length misjudges proportional type,
+         and badly so on a corpus that mixes English with accented French and Italian,
+         so the wrap asks a canvas 2D context for the real advance width. The font is
+         read off a live label rather than restated here, which keeps --font and
+         --text-xs the single source of truth. */
+      var measureText = (function() {
+        var ctx = document.createElement('canvas').getContext('2d'), font = '';
+        return function(s) {
+          if (!font && labelEls.length) {
+            var cs = getComputedStyle(labelEls[0]);
+            font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+          }
+          ctx.font = font;
+          return ctx.measureText(s).width;
+        };
+      })();
+
+      /* The widest a label line may get, in CSS pixels. The stage has no viewBox — the
+         graph is scaled into it by fitLayout while the text stays 12px — so a budget in
+         canvas units would mean nothing, and on a stage narrower than the canvas the
+         label grows relative to the graph. Hence the second clamp against stage width. */
+      var LABEL_MAX_W = 230;
+      var LINE_H = 13;
+
+      /* Where a title breaks is a property of the title and the budget, not of the hover
+         that revealed it, so the wrap is computed once per pair and kept. Nothing is ever
+         dropped: length becomes lines, never an ellipsis. */
       var titleLines = {};
-      function splitTitle(title) {
-        if (title in titleLines) return titleLines[title];
-        var words = title.split(/\s+/);
-        var best = 1, bestDiff = Infinity;
-        for (var i = 1; i < words.length; i++) {
-          var diff = Math.abs(words.slice(0, i).join(' ').length
-                            - words.slice(i).join(' ').length);
-          if (diff < bestDiff) { bestDiff = diff; best = i; }
+      function wrapTitle(title, budget) {
+        var key = budget + '|' + title;
+        if (key in titleLines) return titleLines[key];
+        /* French sets a space before its colons and question marks, so a naive split
+           makes ":" a word of its own and a line can begin with it. Glue such a token
+           to the word before, keeping the space that French orthography wants. */
+        var words = [];
+        title.split(/\s+/).forEach(function(tok) {
+          if (words.length && /^[:;?!»]+$/.test(tok)) words[words.length - 1] += ' ' + tok;
+          else words.push(tok);
+        });
+        var n = words.length;
+        /* Width of words[i..j) as it will actually be drawn. Measured on the joined
+           string rather than summed per word, so the real space advance and any kerning
+           across it are counted. Quadratic, but n is a title's word count and the whole
+           result is memoized. */
+        var w = [];
+        for (var i = 0; i < n; i++) {
+          w.push([]);
+          for (var j = i + 1; j <= n; j++) w[i].push(measureText(words.slice(i, j).join(' ')));
         }
-        // A one-word title has no split to make, and taking one anyway would hand setLabel
-        // an empty second line to draw a tspan for. The loop simply doesn't run there.
-        titleLines[title] = words.length <= 1 ? [title]
-          : [words.slice(0, best).join(' '), words.slice(best).join(' ')];
-        return titleLines[title];
+        function width(i, j) { return w[i][j - i - 1]; }
+        // Fewest lines the budget allows, found greedily. The fill below uses exactly
+        // that many — the budget decides the line count, the balance decides the breaks.
+        var k = 1, cur = words[0];
+        for (var g = 1; g < n; g++) {
+          var cand = cur + ' ' + words[g];
+          if (measureText(cand) > budget) { k++; cur = words[g]; } else { cur = cand; }
+        }
+        if (k <= 1) { titleLines[key] = [title]; return titleLines[key]; }
+        /* Greedy fills each line to the brim and leaves the remainder on the last one,
+           which on this corpus strands a single short word — "Care", "Model", "Object" —
+           on 23 of the 65 titles. Centred under a node that reads as a mistake rather
+           than as a line. So the same k lines are refilled to even out their lengths:
+           minimum raggedness, summing squared slack, by DP over (word, line) pairs.
+           Breaking at the colon was tried first and abandoned: it is the seam the author
+           wrote, but it forces its own orphan — "Experiments of Network Literacy for
+           Urban / Designers: / …" — and costs a line to do it. */
+        var INF = Infinity, dp = [], ch = [];
+        for (var a = 0; a <= n; a++) {
+          dp.push([]); ch.push([]);
+          for (var b = 0; b <= k; b++) { dp[a].push(INF); ch[a].push(0); }
+        }
+        dp[n][0] = 0;
+        for (var p = n - 1; p >= 0; p--) {
+          for (var l = 1; l <= k; l++) {
+            for (var q = p + 1; q <= n; q++) {
+              var lw = width(p, q);
+              // A lone word wider than the budget still gets its line: overflowing by one
+              // word beats breaking mid-word, and it keeps a path through the table.
+              if (lw > budget && q > p + 1) break;
+              if (dp[q][l - 1] === INF) continue;
+              var slack = budget - lw, cost = slack * slack + dp[q][l - 1];
+              if (cost < dp[p][l]) { dp[p][l] = cost; ch[p][l] = q; }
+            }
+          }
+        }
+        var lines = [], at = 0, left = k;
+        while (left > 0) {
+          var to = ch[at][left];
+          lines.push(words.slice(at, to).join(' '));
+          at = to; left--;
+        }
+        titleLines[key] = lines;
+        return lines;
       }
       // Shared by node hover/focus (mouse and keyboard) and the neighbor-list
       // rows that mirror hovering a node on the canvas.
       function setNodeHover(idx, on) {
         nodeEls[idx].classList.toggle('hover', on);
         labelEls[idx].classList.toggle('hover', on);
-        setLabel(labelEls[idx], on ? nodes[idx].title : '');
+        setLabel(labelEls[idx], on ? nodes[idx].title : '', nodes[idx]);
       }
-      // Titles always render above the node: single line at y=-10, or a balanced
-      // two-line split at y=-25/-12. No above/below flip — placement is consistent.
-      function setLabel(textEl, title) {
+      /* Titles always render above the node, stacked upward from y=-12 — one placement,
+         never flipped, so the eye knows where to look. The stage is overflow:hidden and the
+         stack grows with the title, which is what LABEL_HEADROOM in fitLayout pays for:
+         the room the tallest label needs is taken off the top of the stage once, rather
+         than the label dodging to find it. Horizontally the anchor is middle, so a wide
+         label reaches half its width either side; there the block does move, sliding back
+         inside rather than clipping, because no amount of reserved margin would cover a
+         node at the far left or right. At most one label is ever visible, so neither the
+         stack nor the slide can collide with another label. */
+      function setLabel(textEl, title, n) {
         textEl.textContent = '';  // drops any tspans from the last title
         if (!title) return;
-        var lines = splitTitle(title);
-        var ys = lines.length === 1 ? [-12] : [-25, -12];
+        var dim = dimensions();
+        var lines = wrapTitle(title, Math.min(LABEL_MAX_W, dim.w * 0.42));
+        var half = 0;
+        lines.forEach(function(line) { half = Math.max(half, measureText(line)); });
+        half /= 2;
+        var dx = 0;
+        if (n.x - half < 2) dx = 2 - (n.x - half);
+        else if (n.x + half > dim.w - 2) dx = dim.w - 2 - (n.x + half);
         lines.forEach(function(line, i) {
-          var tspan = svgEl('tspan', { x: 0, y: ys[i] });
+          var tspan = svgEl('tspan', { x: dx, y: -12 - (lines.length - 1 - i) * LINE_H });
           tspan.textContent = line;
           textEl.appendChild(tspan);
         });
