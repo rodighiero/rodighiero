@@ -94,7 +94,10 @@ deliberately cut rather than animated: `reference/motion.md`.
 `<html>`, persisted under `bioVisible` and restored before first paint. **At rest the
 collapse holds no measurement** — open is `height: auto`, closed is 0. A pixel height
 exists only during the travel, pinned by `setBioVisible` and handed back on `transitionend`
-*and* `transitioncancel`. See the invariant below before changing any of that.
+*and* `transitioncancel`. **`overflow: hidden` is on the same schedule** — inline while the
+travel runs, from the collapsed rule while it is closed, and absent while it is open, because
+the bio's first paragraph is trimmed to its cap height and sits flush on the shell's top
+edge. See the invariants below before changing any of that.
 
 ### Work on the network view
 Stage sizing, `--cols` and the filter fade live here; the graph's data, layout, clusters and
@@ -127,6 +130,10 @@ offline it was ceremony over a one-time build, and D3 was a 93KB-gzipped depende
 - **The bio collapse must not store its open height.** The header's height *is* a function
   of the column count, so any remeasure races a layout that already changed shape and a
   stale number clips the bio under its own `overflow`. `auto` cannot go stale.
+- **The bio shell must not clip while it is open.** `text-box-trim` puts the bio's first
+  line's cap top exactly on the shell's top edge, so a standing `overflow: hidden` shaves
+  the ascenders and the caps' own top row. It clips only where clipping is the point:
+  closed, and in flight.
 - **A gallery filter change must not use a view transition.** It rasterises the live page,
   so a tile in flight becomes a *picture* of a card cross-fading against a snapshot — which
   is how a large photograph dropped out of its tile mid-slide.
@@ -173,5 +180,6 @@ offline it was ceremony over a one-time build, and D3 was a 93KB-gzipped depende
 | A tile jumps instead of sliding | it travelled further than `window.innerHeight` (class `snapping`), or the column count crossed the one-column boundary, or the pass shortened the page under the reader |
 | Tiles restart on every keystroke | `SEARCH_SETTLE` (180 ms) debounce lost |
 | Bio clipped under its own overflow | an open height got pinned and went stale |
+| Top pixel row shaved off the bio's first line | the shell is clipping while open — `overflow: hidden` escaped the collapsed rule and the in-flight pin |
 | Tiles overlap after some non-resize change | it went through `scheduleWidthPass()`, which packs only on a width change — call `layoutMasonry()` |
 | Empty frame where a card's image should be | the after-idle thumbnail warming (`lazy` → `eager`) didn't run |
