@@ -14,11 +14,4 @@
 # are not configured here: they are generated from the similarity graph and rendered by
 # _layouts/home.html. See scripts/build-network.py and the `network` skill.
 
-events:
-  - date: 2026-08-26
-    eyebrow: Event
-    venue: Artica Svalbard
-    label: Exploring Longyearbyen Through the Svalbardposten Archive
-    sublabel: A presentation and a workshop around an interactive archive of Svalbardposten. Nearly two decades of reporting, read for what it says about how the local community understands itself. The workshop hands the floor back to that community, whose feedback shapes the next phase. Free, no registration.
-    author: Dario Rodighiero and Tina Rosado and Sabina Rosenbergova
-    link: https://www.articasvalbard.no/2026/workshop-talk-exploring-longyearbyen-through-the-svalbardposten-archive
+events: []
