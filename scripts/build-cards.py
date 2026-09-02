@@ -54,6 +54,10 @@ CLUSTER_CARDS = {
         "title": "Mapping Science",
         "description": "Turning conferences into networks of authors linked by a shared vocabulary. A field takes shape before your eyes.",
     },
+    "Surprise Machines": {
+        "title": "Curatorial Agents",
+        "description": "Handing algorithms a share of curatorial agency over the Harvard Art Museums’ 230,000 objects. What a collection shows, and who decides.",
+    },
     "Thesaurus": {
         "title": "Controlled Vocabularies",
         "description": "Thesauri for organizing scientific and library collections, from a European Commission retrieval system to the semantic web. The groundwork before visualization.",

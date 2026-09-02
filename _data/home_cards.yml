@@ -10,7 +10,7 @@
 # one special card that survives on mobile. Delete an entry once it has happened — nothing
 # expires it automatically.
 #
-# The gallery's other special tiles — the network card and the six research-cluster filters —
+# The gallery's other special tiles — the network card and the seven research-cluster filters —
 # are not configured here: they are generated from the similarity graph and rendered by
 # _layouts/home.html. See scripts/build-network.py and the `network` skill.
 
