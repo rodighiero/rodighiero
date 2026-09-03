@@ -5,6 +5,7 @@ _site/
 .sass-cache/
 node_modules/
 __pycache__/
+.venv/
 .DS_Store
 scripts/.embedding-cache.npz
 scripts/.translation-cache.json

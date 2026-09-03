@@ -1,7 +1,7 @@
 # Network tuning constants
 
 Every knob, what it does, and which file owns it. Changing any of these means a full
-`KMP_DUPLICATE_LIB_OK=TRUE python3 scripts/build-network.py`.
+`KMP_DUPLICATE_LIB_OK=TRUE uv run scripts/build-network.py`.
 
 ## Link rule and geometry — `scripts/layout-network.js`
 

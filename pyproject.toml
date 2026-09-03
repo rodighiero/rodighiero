@@ -1,0 +1,29 @@
+# Build-time tooling only — the site itself is Jekyll/Ruby and ships no Python.
+# These packages back the scripts in scripts/: the similarity-network build
+# (build-network.py → build-cards.py) and the image pipeline.
+#
+#   uv run scripts/build-network.py        # syncs the env first, then runs
+#   uv run scripts/generate-thumbnails.py
+#
+# uv.lock pins the exact versions; commit both files, never .venv.
+
+[project]
+name = "rodighiero-tooling"
+version = "0"
+description = "Build-time tooling for dariorodighiero.com — the similarity network and image pipeline"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy",
+    "pyyaml",
+    # gte-base-en-v1.5 runs through trust_remote_code; its modeling code breaks on
+    # transformers 5.x (RoPE position_ids corruption → IndexError in encode()).
+    # Pin the 4.x stack — sentence-transformers <4 tracks it via its own <5 cap.
+    "sentence-transformers>=3.1,<4",
+    "transformers>=4.44,<4.47",
+    "sentencepiece",
+    "sacremoses",
+    "pillow",
+]
+
+[tool.uv]
+package = false

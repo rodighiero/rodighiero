@@ -46,11 +46,13 @@ build-network.py). Each was written down, read by nobody, and free to drift.
 ```bash
 # Full rebuild — embeddings, translation, similarity, layout, clusters, SVGs,
 # then invokes build-cards.py at the end. Needs Node on PATH. Minutes.
-KMP_DUPLICATE_LIB_OK=TRUE python3 scripts/build-network.py
+KMP_DUPLICATE_LIB_OK=TRUE uv run scripts/build-network.py
 
 # Card text only — model-free, reads and rewrites the same network.json. Instant.
-python3 scripts/build-cards.py
+uv run scripts/build-cards.py
 ```
+
+Python deps are managed by `uv` (`pyproject.toml` + `uv.lock`); `uv run` syncs them first.
 
 Never hand-edit `_data/network.json`; it is generated output. Edit the script that produces the field, then rerun.
 
@@ -60,7 +62,7 @@ Never hand-edit `_data/network.json`; it is generated output. Edit the script th
 Adding, removing or editing the body of any publication invalidates the graph. Run the full rebuild. Embeddings and translations are cached (`scripts/.embedding-cache.npz`, `scripts/.translation-cache.json`, both gitignored), so only changed texts are recomputed.
 
 Then check, before committing:
-- cluster count and labels (`python3 -c "import json;d=json.load(open('_data/network.json'));print([c['label'] for c in d['clusters']])"`);
+- cluster count and labels (`python3 -c "import json;d=json.load(open('_data/network.json'));print([c['label'] for c in d['clusters']])"` — stdlib only, any python);
 - that every label still has a `CLUSTER_CARDS` key in `scripts/build-cards.py` — a shifted label falls back to auto text, and the script prints a `WARNING:` naming the label when it does;
 - the build's `node/edge clearance: N at settle, M after K pass(es)` line — `M` must be 0, and a non-zero `M` prints its own `WARNING:`;
 - `git status` for new/deleted `_includes/network-cluster-*.svg` (stale ones are auto-deleted).
@@ -68,7 +70,7 @@ Then check, before committing:
 **The layout starts from a random scatter**, so a rebuild moves every node even when nothing changed, and it cannot be reproduced. Expect a large diff in `network.json` and in every SVG; that is normal, not a bug. Don't rebuild "to check" — rebuild when the inputs changed.
 
 ### Reword a cluster card
-Edit the `CLUSTER_CARDS` table in `scripts/build-cards.py`, keyed on the cluster's auto `label`, then run `python3 scripts/build-cards.py` alone. Each entry is a `title` (the subject, as a name), a two-sentence `description` (what the work does to it, then why it matters), and an optional `filter` chip. Ground the text in the cluster's mutual core, not in its TF-IDF terms.
+Edit the `CLUSTER_CARDS` table in `scripts/build-cards.py`, keyed on the cluster's auto `label`, then run `uv run scripts/build-cards.py` alone. Each entry is a `title` (the subject, as a name), a two-sentence `description` (what the work does to it, then why it matters), and an optional `filter` chip. Ground the text in the cluster's mutual core, not in its TF-IDF terms.
 
 ### Retune links, layout, or clusters
 See `reference/tuning.md` for every constant, what it controls, and which file owns it. The rule that matters: **`scripts/layout-network.js` is the single source of truth for the link rule and the geometry**; `build-network.py` owns the text pipeline, the clusters, and the SVG miniatures. Any retune is a full rebuild.

@@ -6,10 +6,10 @@ lives in build-network.py, which writes each cluster's structural fields
 (id, label, terms, slugs, years, span, size, anchor_slug). This script owns only
 the **presentation**: the hand-written card `title` and `description`, plus the
 short `filter_label` shown in the search box. Because it needs no model, it runs in
-a blink, so a card reword is a one-second `python3 scripts/build-cards.py` instead
+a blink, so a card reword is a one-second `uv run scripts/build-cards.py` instead
 of a full rebuild.
 
-  python3 scripts/build-cards.py     # cards only — reads & rewrites network.json
+  uv run scripts/build-cards.py      # cards only — reads & rewrites network.json
   build-network.py                   # runs the full network build, then calls this
 
 Keys are the auto TF-IDF `label` each cluster carries; a cluster without an entry

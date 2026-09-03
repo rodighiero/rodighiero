@@ -28,14 +28,19 @@ No test suite, no asset pipeline, no npm for the site itself. The build runs
 `_plugins/publication_validator.rb`, which **aborts** on bad front matter — a failed build is
 usually a publication, not the tooling.
 
+The `scripts/` tooling is Python, managed by **`uv`** (`pyproject.toml` + `uv.lock`, both
+committed; `.venv/` is ignored). Run any script with `uv run scripts/<name>.py` — uv syncs
+the environment from the lockfile first. No manual venv, no `pip install`. The site build
+itself uses none of this.
+
 Three artifacts are generated and committed. **Edit the script, never the artifact** — a
 hand-edit passes review and is then silently reverted by the next rebuild.
 
 | Artifact | Command | Rebuild when |
 |---|---|---|
-| `_data/network.json` + `_includes/network-*.svg` | `KMP_DUPLICATE_LIB_OK=TRUE python3 scripts/build-network.py` (minutes; it runs `build-cards.py` itself) | a publication is added, removed, or has its **body** edited |
-| cluster-card text alone | `python3 scripts/build-cards.py` | rewording a cluster card — model-free, instant |
-| `images/@cards/` | `python3 scripts/generate-thumbnails.py`, alongside `python3 scripts/optimize-images.py` | a `thumb` is added or replaced |
+| `_data/network.json` + `_includes/network-*.svg` | `KMP_DUPLICATE_LIB_OK=TRUE uv run scripts/build-network.py` (minutes; it runs `build-cards.py` itself) | a publication is added, removed, or has its **body** edited |
+| cluster-card text alone | `uv run scripts/build-cards.py` | rewording a cluster card — model-free, instant |
+| `images/@cards/` | `uv run scripts/generate-thumbnails.py`, alongside `uv run scripts/optimize-images.py` | a `thumb` is added or replaced |
 
 See the **`network`** and **`publication`** skills.
 
