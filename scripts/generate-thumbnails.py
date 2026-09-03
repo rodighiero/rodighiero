@@ -11,9 +11,9 @@ images/@cards/ is therefore wholly generated — one file per publication, safe 
 delete and rebuild — and is the only image set the homepage loads. The full-size
 original stays with its publication and is what og:image points at.
 
-Requires Pillow. Run from the repo root:
+Requires Pillow (in pyproject.toml). Run from the repo root:
 
-    python3 scripts/generate-thumbnails.py
+    uv run scripts/generate-thumbnails.py
 """
 
 import sys

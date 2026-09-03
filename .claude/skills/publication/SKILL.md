@@ -26,10 +26,10 @@ and `redirect_from`. Renaming a file means renaming all of those.
 1. **Write `_publications/<slug>.md`.** Slug = lowercased, hyphenated title. Front matter per `reference/front-matter.md`; body is the abstract (or lead + `<!--more-->` + full text).
 2. **Put images in `images/<slug>/`** — numbered `fig_00N.webp` for body figures, plus `cover.webp` only when the card image is not one of the figures.
 3. **Point `thumb:`** at one of them, path relative to `images/` (`<slug>/fig_002.webp`).
-4. `python3 scripts/optimize-images.py` — re-encodes new WebPs at method 6, visually lossless, idempotent. `--dry-run` to preview.
-5. `python3 scripts/generate-thumbnails.py` — writes `images/@cards/<slug>.webp`, the only image set the homepage loads.
+4. `uv run scripts/optimize-images.py` — re-encodes new WebPs at method 6, visually lossless, idempotent. `--dry-run` to preview.
+5. `uv run scripts/generate-thumbnails.py` — writes `images/@cards/<slug>.webp`, the only image set the homepage loads.
 6. `bundle exec jekyll build` — `publication_validator.rb` **aborts on error**, so this is the check that matters.
-7. `KMP_DUPLICATE_LIB_OK=TRUE python3 scripts/build-network.py` — the new entry has no node, no `related`, and no cluster membership until this runs. See the `network` skill.
+7. `KMP_DUPLICATE_LIB_OK=TRUE uv run scripts/build-network.py` — the new entry has no node, no `related`, and no cluster membership until this runs. See the `network` skill.
 
 Steps 4–7 are also what a *changed body* or a *changed image* needs; a front-matter-only
 edit that doesn't touch `thumb` or the abstract needs only step 6.

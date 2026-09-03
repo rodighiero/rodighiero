@@ -16,7 +16,7 @@ selection panel and the publication pages.
 
 Re-run after editing publications:
 
-    KMP_DUPLICATE_LIB_OK=TRUE python3 scripts/build-network.py
+    KMP_DUPLICATE_LIB_OK=TRUE uv run scripts/build-network.py
 """
 from __future__ import annotations
 
@@ -277,7 +277,7 @@ _CLUSTER_STOP = set(
 # layered on afterwards by scripts/build-cards.py, which keys off the auto TF-IDF
 # `label` this file emits. main() invokes it once the structural JSON is written, so
 # a full network build still produces complete cards; rewording a card alone is a
-# fast `python3 scripts/build-cards.py` with no model in the loop.
+# fast `uv run scripts/build-cards.py` with no model in the loop.
 
 
 def _tokens(text: str) -> list[str]:

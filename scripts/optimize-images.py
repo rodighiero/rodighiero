@@ -22,8 +22,8 @@ pass is idempotent (a second run finds nothing left to gain).
 
 Requires libwebp's `cwebp` on PATH (brew install webp). Run from the repo root:
 
-    python3 scripts/optimize-images.py            # apply in place
-    python3 scripts/optimize-images.py --dry-run  # report only, change nothing
+    uv run scripts/optimize-images.py            # apply in place
+    uv run scripts/optimize-images.py --dry-run  # report only, change nothing
 
 Note: every image here seeds a homepage card, so if anything is re-encoded,
 rerun scripts/generate-thumbnails.py afterwards (the visual delta is nil at this

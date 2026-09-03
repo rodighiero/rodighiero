@@ -23,7 +23,7 @@ the **`seo`** skill (`reference/discovery.md`).
 ## Compression — method 6
 
 All source WebPs are stored at libwebp's **method 6** (max compression effort). Run
-`python3 scripts/optimize-images.py` after adding new images: it re-encodes every WebP under
+`uv run scripts/optimize-images.py` after adding new images: it re-encodes every WebP under
 `images/` — except `@cards/`, which its own generator already writes at method 6, and
 `@icons/` — at method 6 to a strict visually-lossless PSNR target, keeping the result only
 when it is meaningfully smaller. So no image is ever degraded or enlarged, and the pass is
