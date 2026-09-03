@@ -17,8 +17,8 @@ dependencies = [
     "pyyaml",
     # gte-base-en-v1.5 runs through trust_remote_code; its modeling code breaks on
     # transformers 5.x (RoPE position_ids corruption → IndexError in encode()).
-    # Pin the 4.x stack — sentence-transformers <4 tracks it via its own <5 cap.
-    "sentence-transformers>=3.1,<4",
+    # transformers stays on 4.x; sentence-transformers 5.2+ supports that line.
+    "sentence-transformers>=3.1,<6",
     "transformers>=4.44,<4.47",
     "sentencepiece",
     "sacremoses",
