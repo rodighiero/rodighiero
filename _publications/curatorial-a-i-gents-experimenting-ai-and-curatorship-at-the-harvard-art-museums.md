@@ -121,10 +121,6 @@ The Panorama Panel (Rodighiero et al. 2022c) addresses the collection as a whole
 
 Read across the four panels, curatorship as supervision acquires four objects — an instrument’s omissions, a vocabulary of gestures, a collection’s bias, a classification system — and one procedure: the curator sets the machine’s task, corrects its output, and chooses which of its relations to display. What the panels hold in common is that their criticality arose in the design process itself: working with an instrument that appears to see everything forces the question of what it omits. A visualization can display a relation without disclosing its reason, and that reason stays out of reach unless those who built the system account for it. Curatorship without hands still has an author.
 
-## Acknowledgements
-
-Immense gratitude is extended to all contributors whose diverse perspectives and innovative works have significantly enriched the Curatorial A(i)gents exhibition. The text authors first extend their gratitude to the Harvard Art Museums for generously making the Lightbox Gallery available and sharing their digital collection. Special thanks also to the authors Francisco Alarcón, Minne Atairu, Matthew Battles, Kevin Brewster, Pablo Castillo Luna, Wendy Chun, Douglas Duhaime, Sinan Goknur, Lauren Hanson, Keith Hartwig, Stefan Helmreich, David Joselit, Boris Konik, Jordan Kruguer, Todd Linkner, Mike Maizels, Shannon Mattern, Maximilian Mueller, Daniel Newman, Dietmar Offenhuber, Christopher Pietsch, Yue Chelsea Qiu, Jonatan Reyes, Philipp Schmitt, Tim Schneider, Jeff Steward, and Giulia Taurino.
-
 ## References
 
 - Alarcón, Francisco, Boris Konik, and Stefan Helmreich. 2022. “Ocean Amplification.” metaLAB (at) Harvard & FU Berlin. <https://metalab.harvard.edu/p/ocean-amplification/>.
