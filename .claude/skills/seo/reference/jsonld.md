@@ -122,7 +122,7 @@ Three nodes, cross-linked by `@id`:
 | `Person` | the ORCID URI | — |
 
 The `Person` node holds `name`, `url`, an `ImageObject` for the portrait (with
-`representativeOfPage`), `description`, `jobTitle`, `worksFor`, three `affiliation`s,
+`representativeOfPage`), `description`, `jobTitle`, `worksFor`, two `affiliation`s,
 `alumniOf` (EPFL), `sameAs` (GitHub, Google Scholar, LinkedIn, ORCID, Zotero), `knowsAbout`
 and `knowsLanguage` (English, French, Italian — the three the corpus is written in).
 
