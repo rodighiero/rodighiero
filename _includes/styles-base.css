@@ -160,9 +160,10 @@ main:focus { outline: none; }
    to the later legal ones. Safari knows interdisciplinary as in-/inter-/interdis-, and
    --hyphen-min 4 rejects the two-letter in- and so drops the whole word, good breaks
    included. Lowering the minimum is the wrong trade — it buys in-terdisciplinary and
-   loosens every other word to match. Write the break into the text instead, with a &shy;
-   where it belongs (README.md's bio does this once); WebKit honours an explicit one under
-   the same 4-letter rule. */
+   loosens every other word to match. Two remedies work: a &shy; in the text, which WebKit
+   honours under the same 4-letter rule, or a rewording that stops the word landing on a
+   line end. Prefer the rewording where the prose can take it — a soft hyphen is invisible
+   in the source and outlives the line break that motivated it. */
 .hyphenate-prose {
   -webkit-hyphens: auto;
   hyphens: auto;
