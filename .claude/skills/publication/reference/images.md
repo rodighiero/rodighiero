@@ -65,7 +65,7 @@ column, and it carries **four widths in one `srcset`**:
 The rungs in the middle exist because that case is a phone: at ~347 CSS px (a 430px viewport)
 the image is asked for at 694 device pixels on a 2× screen, and a 390px one asks 920 on a 3×,
 both past the 640 copy — so with only 640 and 1200 to choose from, the larger phones fetched
-the 1200 (50KB) for the one image carrying `fetchpriority="high"`.
+the 1200 (35KB) for the one image carrying `fetchpriority="high"`.
 
 All four are one family (`cwebp -m 6 -sharp_yuv -q 81`, the quality the 640 copy was already
 at). The ladder only pays if `sizes` states the real column rather than `100vw`: an
