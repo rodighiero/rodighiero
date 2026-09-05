@@ -283,19 +283,16 @@ shows 3 columns. {%- endcomment -%}
        portrait pinned to a fixed width used to be the one thing on the page that didn't
        follow the grid. It picks up no loading tint: that belongs to `.publication
        .card-media`, for a thumbnail that arrives late, and this one is fetched first. */
-    /* The name, the affiliations, and the profile-links line reuse .card-title/
-       .card-meta/.card-text directly (classes in the markup) rather than parallel
-       hand-tuned rules — the same look as a card's title/eyebrow/byline, in the same
-       order (media, meta, title, text) a card lays them out in. That reuse is also
-       what sets the rhythm between them: .card-title is inline-block specifically so
-       its own margin doesn't collapse with .card-meta's margin-bottom above it (see
-       .card-title's own comment below) or .card-text's margin-top below it, so the
-       gaps come out to the same 0.3+0.3=0.6rem and 0.4rem a real card uses, with
-       nothing hand-tuned here. On screen the <h1> tag is the only thing that still
+    /* The name and the profile-links line reuse .card-title/.card-text directly
+       (classes in the markup) rather than parallel hand-tuned rules — the same look as
+       a card's title/byline, in the same order (media, title, text) a card lays them
+       out in. That reuse is also what sets the rhythm between them: .card-title is
+       inline-block specifically so its own margin doesn't collapse with .card-text's
+       margin-top below it, so the gap comes out to the same 0.4rem a real card uses,
+       with nothing hand-tuned here. On screen the <h1> tag is the only thing that still
        marks this as a name rather than a card title; everything about how it looks
        comes from .card-title alone. The single exception is the print block at the
        foot of this file, where the masthead prints alone and sets its own size. */
-    .header .links a { display: block; }
     /* The bio columns wear .hyphenate-prose in the markup — the shared policy, defined
        once in styles-base.css, that the article body wears too. The case for it is
        stronger here than there: a bio column is one of four, about 270px wide, so its
@@ -913,7 +910,7 @@ shows 3 columns. {%- endcomment -%}
          else (see the header block above), but the printed sheet has no card next to it
          to keep the size honest. */
       .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }
-      .header .links, .header .bio-col { font-size: 8.5pt; }
+      .header .bio-col { font-size: 8.5pt; }
       .header .bio-col { margin-top: 0.6rem; }
       a { text-decoration: none; }
     }
@@ -970,10 +967,6 @@ shows 3 columns. {%- endcomment -%}
                      /images/Dario-Rodighiero.webp 1200w"
              sizes="(min-width: 628px) 251px, calc(100vw - 83.2px)"
              alt="Dario Rodighiero" width="640" height="427" fetchpriority="high" decoding="async">
-      </div>
-      <div class="links card-meta">
-        <a href="https://www.rug.nl/staff/d.rodighiero">University of Groningen</a>
-        <a href="https://mlml.io/m/dario-rodighiero">metaLAB (at) Harvard / Berlin / Basel</a>
       </div>
       <h1 class="card-title">Dario Rodighiero</h1>
       <div class="profile-links card-text">
