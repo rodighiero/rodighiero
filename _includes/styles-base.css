@@ -154,7 +154,15 @@ main:focus { outline: none; }
    break: a byline splitting a surname (Rodig-hiero) reads as a different name.
    Safari reads the -webkit- longhands only and ignores the standard shorthand, so both
    are declared; before+after imply the word minimum on their own, which makes the pair
-   equivalent to the shorthand rather than an approximation of it. */
+   equivalent to the shorthand rather than an approximation of it.
+   One WebKit quirk to know when a word refuses to break: it judges a word by its *first*
+   dictionary point alone and gives up if that one is too short, rather than falling back
+   to the later legal ones. Safari knows interdisciplinary as in-/inter-/interdis-, and
+   --hyphen-min 4 rejects the two-letter in- and so drops the whole word, good breaks
+   included. Lowering the minimum is the wrong trade — it buys in-terdisciplinary and
+   loosens every other word to match. Write the break into the text instead, with a &shy;
+   where it belongs (README.md's bio does this once); WebKit honours an explicit one under
+   the same 4-letter rule. */
 .hyphenate-prose {
   -webkit-hyphens: auto;
   hyphens: auto;
