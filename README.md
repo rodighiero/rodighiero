@@ -2,7 +2,7 @@ Dario Rodighiero’s mode of inquiry is knowledge design, which borrows its ques
 
 <!-- split -->
 
-At the [University of Groningen](https://www.rug.nl/), he is Assistant Professor of Science and Technology Studies at Campus Fryslân, its interdisciplinary faculty. There he coordinates the minor Data Wise and teaches data and visual literacy in the bachelor’s program Data Science and Society. He is a principal at metaLAB (at) Harvard / Berlin / Basel, a center engaged in critical and creative practice across the disciplinary grid. He is co-chair of [VISAP](https://visap.net/), the IEEE VIS Arts Program, for the 2025 and 2026 editions in Vienna and Boston, respectively.
+At the [University of Groningen](https://www.rug.nl/), he is Assistant Professor of Science and Technology Studies at Campus Fryslân, its interdisciplinary faculty. There he coordinates the minor Data Wise and teaches data and visual literacy in the bachelor’s program Data Science and Society. He is a principal at [metaLAB (at) Harvard / Berlin / Basel](https://metalab.harvard.edu/), a center engaged in critical and creative practice across the disciplinary grid. He is co-chair of [VISAP](https://visap.net/), the IEEE VIS Arts Program, for the 2025 and 2026 editions in Vienna and Boston, respectively.
 
 <!-- split -->
 
