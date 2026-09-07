@@ -9,6 +9,8 @@ Params:
   include.filterlabel — short label shown in the search box when this filter is active (data-filter-label); optional
   include.media   — filename of an include to render above the text as the card's image
                     (e.g. "network-preview.svg"); optional
+  include.gcclick — GoatCounter event path for a click on this card; omit to track nothing
+  include.gctitle — the event's dashboard title; defaults to include.gcclick
 `year: now` renders the live build year; a literal string renders as-is (a range like
 "2015–2026" is shown plain rather than wrapped in <time>); omit it for a year-less card.
 {%- endcomment -%}
@@ -21,21 +23,17 @@ the network tile triggers a one-off view switch (.action). {%- endcomment -%}
 {%- assign _kind = 'action' -%}
 {%- if _is_cluster -%}{%- assign _kind = 'filter' -%}{%- endif -%}
 {%- comment -%} GoatCounter event tracking: count.js auto-binds a click listener to any element
-carrying data-goatcounter-click, using its value as the event path. Only the network-view card and
-the auto cluster cards get one, matching the two interactions worth measuring on this template.
-Cluster cards are tracked by their title (the same text the card shows), not the internal id, so
-the GoatCounter dashboard reads as "Peirce Manuscripts" rather than "cluster:3".
+carrying data-goatcounter-click, using its value as the event path. The caller decides what a
+card is worth measuring as, so the path arrives as a param rather than being derived here from
+include.action — which lets the network card share one path with the view-toggle button that
+does the same thing, without either file spelling out the other's literal.
 
-The title is sent explicitly too. Left out, count.js falls back to the element's innerHTML
-(js/count.js:188), so a card whose first child is the network miniature reports a screenful of
-raw SVG as its event title. The network card's title matches the view-toggle button's in
-home.html, since the two send the same event path. {%- endcomment -%}
-{%- assign _gc_click = '' -%}
-{%- assign _gc_title = '' -%}
-{%- if include.action == 'view:network' -%}{%- assign _gc_click = 'network-view' -%}{%- assign _gc_title = 'Network view' -%}
-{%- elsif _is_cluster -%}{%- assign _gc_click = include.label -%}{%- assign _gc_title = include.label -%}
-{%- endif -%}
-<button type="button" class="card {{ _kind }}" data-action="{{ include.action }}"{% if include.slugs %} data-slugs="{{ include.slugs | join: ' ' }}"{% endif %}{% if include.filterlabel %} data-filter-label="{{ include.filterlabel }}"{% endif %}{% if _gc_click != '' %} data-goatcounter-click="{{ _gc_click }}" data-goatcounter-title="{{ _gc_title }}"{% endif %}>
+The title is always sent alongside it. Left out, count.js falls back to the element's innerHTML
+(js/count.js:188) and every card here is markup — the network tile, whose first child is the
+graph miniature, reports a screenful of raw SVG as its event title. Defaulting the title to the
+path means a caller that names an event can't forget to label it. {%- endcomment -%}
+{%- assign _gc_title = include.gctitle | default: include.gcclick -%}
+<button type="button" class="card {{ _kind }}" data-action="{{ include.action }}"{% if include.slugs %} data-slugs="{{ include.slugs | join: ' ' }}"{% endif %}{% if include.filterlabel %} data-filter-label="{{ include.filterlabel }}"{% endif %}{% if include.gcclick %} data-goatcounter-click="{{ include.gcclick }}" data-goatcounter-title="{{ _gc_title }}"{% endif %}>
   {%- if include.media -%}<span class="card-media">{% include {{ include.media }} %}</span>{%- endif -%}
   {%- if _yr or include.eyebrow or include.venue -%}
   <span class="card-meta">{% if _yr %}{% if _yr contains '–' or _yr contains '-' %}<span>{{ _yr }}</span>{% else %}<time datetime="{{ _yr }}">{{ _yr }}</time>{% endif %}{% if include.eyebrow %} · {% endif %}{% endif %}{{ include.eyebrow }}{% if include.venue %}<br><span class="venue">{{ include.venue }}</span>{% endif %}</span>
