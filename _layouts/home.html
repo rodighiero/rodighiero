@@ -1007,8 +1007,10 @@ shows 3 columns. {%- endcomment -%}
         </button>
         {%- comment -%} The "network-view" GoatCounter key here matches the literal in
         card-action.html's _gc_click assignment (for the view:network action card) —
-        keep the two in sync if this key is ever renamed. {%- endcomment -%}
-        <button type="button" data-view="network" aria-label="Network view" aria-pressed="false" data-goatcounter-click="network-view">
+        keep the two in sync if this key is ever renamed. The explicit title matters:
+        without it count.js falls back to the element's innerHTML (js/count.js:188), and
+        the dashboard would label the event with this icon's raw SVG markup. {%- endcomment -%}
+        <button type="button" data-view="network" aria-label="Network view" aria-pressed="false" data-goatcounter-click="network-view" data-goatcounter-title="Network view">
           {%- comment -%} Same stroke-width as the search, gallery and bio-toggle icons, so the
           four read as one set. The node dots grew with it (1.9 → 2.1, hub 2.3 → 2.6): at a
           2-wide edge, the old radii were barely fatter than the line they sat on.
