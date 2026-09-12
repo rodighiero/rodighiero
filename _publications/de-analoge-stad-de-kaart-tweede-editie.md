@@ -18,13 +18,13 @@ Weinig expositiepanelen hebben zoveel invloed gehad als _La città analoga_ (De 
 
 <!--more-->
 
-> Dario Rodighiero’s careful archaeology returns Rossi’s collage to its sources and rebuilds it as an analogical machine, opening the representational archive to a new digital commons.
+> Dario Rodighiero’s zorgvuldige archeologie brengt Rossi’s collage terug naar haar bronnen en bouwt haar opnieuw op als een analogische machine, waarmee hij het archief van representaties opent voor een nieuw digitaal gemeengoed.
 >
-> — Cameron McEwan, Head of Architecture at Northumbria University
+> — Cameron McEwan, hoofd Architectuur aan Northumbria University
 
-> The Aldo Rossi Foundation welcomes this publication, making a seminal work of architectural theory accessible to a large audience, on the occasion of the exhibition honoring Rossi at the Bonnefanten Museum in Maastricht, one of the architect’s masterpieces.
+> De Fondazione Aldo Rossi verwelkomt deze uitgave, die een baanbrekend werk uit de architectuurtheorie toegankelijk maakt voor een groot publiek, ter gelegenheid van de tentoonstelling die Rossi eert in het Bonnefanten in Maastricht, een van de meesterwerken van de architect.
 >
-> — Vera Rossi, President of Fondazione Aldo Rossi
+> — Vera Rossi, voorzitter van de Fondazione Aldo Rossi
 
 ## Een andere vorm van de stad om te bezoeken
 
