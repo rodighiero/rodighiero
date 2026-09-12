@@ -458,7 +458,23 @@ def build_clusters(pubs: list[dict], links: list[dict]) -> list[dict]:
 # words reach the model. Patterns are compiled once here and applied in the order
 # below; ordering matters (e.g. links are unwrapped before parentheses are pulled,
 # emphasis after tags). Publication *titles* are cleaned separately, if at all.
-_BIB_HEADING   = re.compile(r"^##\s+(?:References|Bibliography|Références|Bibliographie)\s*$", re.M)
+# The bibliography *section* — its heading and its entries, stopping at the next
+# `##` or the end of the body.
+#
+# This used to split on the heading and keep only the front, which is the same
+# thing in the 66 entries whose references come last and silently truncated the
+# one whose references sit mid-document: the 2015 Analogous City map, where
+# Reinhart's two texts and Rossi's follow the references and were dropped whole,
+# leaving a quarter of that file to speak for it.
+#
+# The heading list is every form the corpus actually uses, in all four
+# languages; the loose tail catches "Bibliographie complémentaire". Missing a
+# form is not a harmless omission — it puts a page of citations into the
+# embedding, which is the one thing this scrubber exists to prevent.
+_BIB_SECTION   = re.compile(
+    r"^##\s+(?:References|Bibliography|Bibliografia|Bibliographie|Références|Riferimenti|Referenties)[^\n]*$.*?(?=^##\s|\Z)",
+    re.M | re.S,
+)
 _FOOTNOTE_DEF  = re.compile(r"^\[\^[^\]]+\]:.*(?:\n[ \t]+.*)*", re.M)  # def + indented continuations
 _FOOTNOTE_REF  = re.compile(r"\[\^[^\]]+\]")                           # inline [^n]
 _MD_LINK       = re.compile(r"\[([^\]]+)\]\([^)]+\)")                  # [text](url) → text
@@ -481,7 +497,7 @@ _SPACE_BEFORE_PUNCT = re.compile(r"\s+([.,;:!?])")
 
 def _clean_body(body: str) -> str:
     """Strip Markdown/Liquid scaffolding and reference apparatus, leaving prose."""
-    body = _BIB_HEADING.split(body, maxsplit=1)[0]  # drop the bibliography onward
+    body = _BIB_SECTION.sub("", body)               # drop the bibliography, keep what follows
     body = _FOOTNOTE_DEF.sub("", body)
     body = _FOOTNOTE_REF.sub("", body)
     body = _MD_LINK.sub(r"\1", body)
