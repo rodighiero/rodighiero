@@ -14,19 +14,5 @@
 # are not configured here: they are generated from the similarity graph and rendered by
 # _layouts/home.html. See scripts/build-network.py and the `network` skill.
 
-events:
-  - label: "VISAP 2026: Amplification"
-    date: 2026-11-11
-    eyebrow: "Exhibition"
-    venue: "Massachusetts Institute of Technology"
-    sublabel: "The arts program of IEEE Visualization and Visual Analytics opens its exhibition at the Met Warehouse, in Boston, asking what it means to turn up the signal on the data, the stories and the communities the world tends not to hear."
-    author: "Dario Rodighiero and Sarah Williams and Weidi Zhang"
-    link: "https://visap.net/2026/"
-
-  - label: "Aldo Rossi: Darling Architecture"
-    date: 2026-09-19
-    eyebrow: "Exhibition"
-    venue: "Bonnefantenmuseum"
-    sublabel: "The second edition of The Analogous City map is free to take at the museum’s permanent tribute to the architect who designed it, in Maastricht."
-    author: "Dario Rodighiero and Ton Quik"
-    link: "https://www.bonnefanten.nl/en/exhibitions/aldo-rossi-darling-architecture"
+# Empty is a valid state: the gallery simply opens on the publications.
+events: []
