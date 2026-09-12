@@ -85,7 +85,7 @@ Superimposed over the royal city, in a domestic space evoked by two lines and a 
 
 ## The Analogous City: Panel
 
-_Aldo Rossi, 1976. Originally published in Lotus International, no. 13 (December), here with minor corrections._
+_Aldo Rossi, 1976. Translated by Marzia Deplano and Baukje Reitsma. Originally published in Lotus International, no. 13 (December), here with minor corrections._
 
 […] At the last Venice Biennale I in fact exhibited a large panel entitled _La città analoga_, which was, as I have said, a collective work.
 
