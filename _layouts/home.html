@@ -1074,7 +1074,7 @@ shows 3 columns. {%- endcomment -%}
       {% include card-action.html eyebrow="Filter" venue=_cluster_venue label=_cluster.title sublabel=_cluster.description action=_cluster.action slugs=_cluster.slugs year=_cluster.span filterlabel=_cluster.filter_label media=_cluster_media gcclick=_cluster.title %}
       {% endif %}{% endfor %}
       {% assign _type_label = site.data.publication_types[publication.type].label %}
-      {% capture _lang_terms %}{% if publication.lang == 'it' %}italian italiano{% elsif publication.lang == 'fr' %}french français francais{% else %}english{% endif %}{% endcapture %}
+      {% capture _lang_terms %}{% if publication.lang == 'it' %}italian italiano{% elsif publication.lang == 'fr' %}french français francais{% elsif publication.lang == 'nl' %}dutch nederlands{% else %}english{% endif %}{% endcapture %}
       {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.interviewer }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ _lang_terms }}{% endcapture %}
       <div class="card publication" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-search="{{ _search_text | strip_newlines | escape }}">
         {%- comment -%} Unconditional: `thumb` is required on every publication (see
