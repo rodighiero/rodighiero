@@ -8,11 +8,11 @@ editor: "Dario Rodighiero and Ton Quik"
 place: "Groningen"
 doi: "https://doi.org/10.21827/6a5e18e30b11d"
 isbn: "9789403431802"
-thumb: the-analogous-city-the-map-second-edition/cover.webp
+thumb: the-analogous-city-the-map-second-edition/fig_001.webp
 lang: nl
 translation_of: the-analogous-city-the-map-second-edition
 ---
-{% include figure-single.html src="/images/the-analogous-city-the-map-second-edition/cover.webp" alt="De Analoge Stad, gereproduceerd op de voorzijde van de kaart: een zwart-witcollage van stadsplattegronden, landschappen en architectuurfragmenten, omkaderd door de letters en cijfers in de marge waarmee elke referentie op het blad te vinden is" %}
+{% include figure-single.html src="/images/the-analogous-city-the-map-second-edition/fig_001.webp" alt="De Analoge Stad, gereproduceerd op de voorzijde van de kaart: een zwart-witcollage van stadsplattegronden, landschappen en architectuurfragmenten, omkaderd door de letters en cijfers in de marge waarmee elke referentie op het blad te vinden is" %}
 
 Weinig expositiepanelen hebben zoveel invloed gehad als _La città analoga_ (De analoge stad) op de Biënnale van Venetië van 1976. Samen met Eraldo Consolascio, Bruno Reichlin en Fabio Reinhart had Aldo Rossi een visie gepresenteerd op het ontwerpen van steden die creatief omgaat met de historische rijkdom van de architectuur. Het toont de vitaliteit van de architectuur die verbinding zoekt tussen werkelijkheid en fantasie als alternatief voor de smalle functionele denkwijze. Deze uitgave, met een reproductie van het oorspronkelijke paneel, een lijst van referenties en teksten van Rossi, Reinhart en Rodighiero, verschijnt bij de expositie _Darling Architecture_ in Bonnefanten, waar _La città analoga_ een prominente plaats heeft.
 

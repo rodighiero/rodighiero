@@ -9,8 +9,9 @@ place: "Groningen"
 doi: "https://doi.org/10.21827/6a5e18e30b11d"
 isbn: "9789403431802"
 thumb: the-analogous-city-the-map-second-edition/cover.webp
+img_border: true
 ---
-{% include figure-single.html src="/images/the-analogous-city-the-map-second-edition/cover.webp" alt="The Analogous City reproduced across the recto of the map, a black-and-white collage of city plans, landscapes and architectural fragments, framed by the lettered and numbered margins that let each reference be located on the sheet" %}
+{% include figure-single.html src="/images/the-analogous-city-the-map-second-edition/fig_001.webp" alt="The Analogous City reproduced across the recto of the map, a black-and-white collage of city plans, landscapes and architectural fragments, framed by the lettered and numbered margins that let each reference be located on the sheet" %}
 
 Few exhibition panels have had as much impact as _La città analoga_ (The Analogous City), which Aldo Rossi presented with Eraldo Consolascio, Bruno Reichlin and Fabio Reinhart at the 1976 Venice Biennale: a vision for urban design that takes a creative approach to the historical richness of architecture, and that seeks a connection between reality and imagination as an alternative to a narrow, functional way of thinking. This second, revised edition of the map — first published by EPFL Archizoom in 2015 — accompanies _Darling Architecture_, the permanent exhibition with which the Bonnefantenmuseum marks the thirtieth anniversary of the building Rossi designed for it. Printed as a foldable sheet and published open access, it reproduces the original work, locates on a lettered grid the references identified within the collage, and carries texts by Aldo Rossi, Fabio Reinhart and Dario Rodighiero in English and Dutch.
 
