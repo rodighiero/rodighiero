@@ -92,12 +92,29 @@ shows 3 columns. {%- endcomment -%}
           { "@type": "Organization", "name": "University of Groningen", "url": "https://www.rug.nl/staff/d.rodighiero" },
           { "@type": "Organization", "name": "metaLAB (at) Harvard", "url": "https://mlml.io/m/dario-rodighiero" }
         ],
+        {%- comment -%} Two kinds of link under one property. The first five are profiles Dario
+        keeps himself; the rest are authority records institutions keep about him, and those are
+        the half that does the reconciliation work — they tell a crawler this Person is the one
+        the libraries and the bibliographic databases already hold a file on, rather than a name
+        that happens to match. Wikidata points back here through its own official-website claim,
+        so that pair is reciprocal. Each ID was read off its issuing register rather than copied
+        between them: a wrong sameAs merges Dario with a different person, which is worse than
+        declaring nothing — the same reasoning the `seo` skill applies to ISSN and ISBN. Note
+        that viaf.org, isni.org, id.loc.gov and openalex.org all answer 403 to a plain HTTP
+        client; that is a bot wall rather than rot, and links.yml already accepts 403. {%- endcomment %}
         "sameAs": [
           "https://github.com/rodighiero/",
           "https://scholar.google.com/citations?user=h065R1oAAAAJ",
           "https://www.linkedin.com/in/dariorodighiero/",
           "{{ site.orcid }}",
-          "https://www.zotero.org/rodighiero"
+          "https://www.zotero.org/rodighiero",
+          "https://www.wikidata.org/wiki/Q58362722",
+          "https://viaf.org/viaf/29152199159614281065",
+          "https://isni.org/isni/0000000507437114",
+          "https://id.loc.gov/authorities/names/no2021119296",
+          "https://d-nb.info/gnd/1154825515",
+          "https://dblp.org/pid/04/7187",
+          "https://openalex.org/A5028604593"
         ],
         "knowsAbout": ["Data Visualization", "Digital Humanities", "Science and Technology Studies", "Information Design", "Mapping"],
         "alumniOf": { "@type": "CollegeOrUniversity", "name": "École Polytechnique Fédérale de Lausanne", "url": "https://www.epfl.ch/" },
