@@ -1041,8 +1041,9 @@ shows 3 columns. {%- endcomment -%}
       {% assign _events = site.data.home_cards.events | sort: 'date' | reverse %}
       {% for _event in _events %}{% include card-event.html event=_event %}{% endfor %}
 
-      {%- comment -%} One ordered list in year-desc / title-asc order (Forthcoming first), so a
-      single card block renders every card and the _card_i priority counter stays correct. {%- endcomment -%}
+      {%- comment -%} One ordered list, year-desc with Forthcoming first (publication_order.rb
+      decides the tie-break inside a year), so a single card block renders every card and the
+      _card_i priority counter stays correct. {%- endcomment -%}
       {% assign _card_i = 0 %}
       {% assign _clusters_az = site.data.network.clusters | sort: 'label' %}
       {% assign _cluster_n = 0 %}

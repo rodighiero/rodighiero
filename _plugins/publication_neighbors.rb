@@ -26,6 +26,6 @@ end
 
 Jekyll::Hooks.register :site, :post_read do |site|
   Jekyll::NeighborPublications.link(
-    Jekyll::OrderedPublications.order(Jekyll::OrderedPublications.docs(site))
+    Jekyll::OrderedPublications.order(Jekyll::OrderedPublications.docs(site), site)
   )
 end
