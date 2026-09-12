@@ -8,6 +8,7 @@ editor: "Dario Rodighiero"
 doi: "https://infoscience.epfl.ch/record/209326"
 isbn: "9782839916677"
 thumb: the-analogous-city-the-map/cover.webp
+img_border: true
 redirect_from:
   - /Analogous-City
 ---
