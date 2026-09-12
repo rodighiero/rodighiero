@@ -16,6 +16,8 @@ Questa nuova pubblicazione de La Città Analoga, opera realizzata da Aldo Rossi,
 
 <!--more-->
 
+_Introduzione di Cyril Veillon, giugno 2015._
+
 ## Una sottrazione di peso
 
 _Dario Rodighiero, aprile 2015_
@@ -164,5 +166,71 @@ Testo e immagini de “La città analoga” sono complementari e formano un tutt
 Le parole raccontano fatti e pensieri, le immagini li suscitano (o risuscitano) istantaneamente e concorrono al loro ricordo, come ben sa chi vive e interroga città e monumenti.
 
 Senza di esse — probabilmente — non leggeresti il testo che le accompagna e, in seguito, non accadrebbe quanto ti auguro: che tu ti chieda quale sia, sarà o potrebbe essere la tua poetica. Se così fosse, sperimenteresti una loro ulteriore proprietà: le immagini possono accendere la curiosità che illumina le vie della conoscenza e, talvolta, anche la strada maestra della propria vita, non solo professionale.
+
+## La città analoga: tavola
+
+_Aldo Rossi, 1976. Pubblicato originariamente in Lotus International, n. 13 (dicembre 1976): 5–8._
+
+Invitato a scrivere sulla tavola esposta alla Biennale di Venezia intitolata appunto “La città analoga” — un’opera collettiva compiuta con gli amici Eraldo Consolascio, Bruno Reichlin e Fabio Reinhart — mi sembra utile porre alcune questioni generali che stanno prima di esperienze o risultati di questo tipo.
+
+Non tanto per la critica o i critici, la cui libertà è insostituibile sia nell’approfondimento e nella comprensione delle cose sia, come purtroppo si produce soprattutto nella tradizione italiana, con esercitazioni verbali piacevolmente dannunziane, ma per chiarezza verso un tipo di cultura progressiva che pone problemi concreti in cui continuo a credere.
+
+Ora la risposta contenuta nel tema della città analoga, in modo più vasto certamente di quanto la tavola possa esprimere, è quella del rapporto tra realtà e immaginazione. E di questo vorrei occuparmi con alcune osservazioni.
+
+Negli ultimi anni si conoscono diverse proposte sulla città e in particolare sul centro storico. Per una situazione obiettiva queste proposte, che sono a volte attuazioni o progetti o programmi, appartengono in maggior misura ad amministratori o economisti o politici da una parte e da funzionari comunali o statali (Sovrintendenza ai Monumenti) dall’altra.
+
+Il fatto, tutto calcolato, non dispiace: che architetti, ingegneri, geometri, veri servi della speculazione nel significato letterale, comincino a togliere le mani dalla città ci riempie di soddisfazione come cittadini. Oltre che distruggere ci hanno lasciato il volto della città democristiana e della città del centro-sinistra più incombente per volume, buoni affari e stupidità, di quello della città fascista.
+
+Di proposte positive, dopo lo slancio del dopoguerra e alcuni buoni quartieri periferici a Roma e Milano, se ne conoscono poche che provengano dagli architetti; assolutamente nessuna da parte dei teorici e dei critici. Certamente non sono mancati gli appelli, sentimentali ma energici nel contempo, dei difensori del _bel paese_: purtroppo gli effetti di questi appelli sono noti a tutti.
+
+A questo punto le cose si rovesciano ma non si risolvono. Quando scrivevo che il problema stava nella riutilizzazione del centro storico e che questo doveva permanere come residenza, quando rilevavamo le vecchie case di Milano non prevedevamo quello che sarebbe successo. Ma, proprio a Milano credo, è esplosa la “rabbia” dei senza casa, immigrati e no, che hanno cominciato ad occupare le case vuote, della periferia e del centro storico. Nel contempo le amministrazioni di sinistra cominciavano a pensare che l’edilizia economico-popolare; i famosi _piani 167_ potevano essere applicati anche nel centro urbano; il caso di Bologna diventava emblematico. Sull’altro fronte le Sovrintendenze cominciavano a bloccare; rimaste del tutto assenti, se così si può dire, di fronte alle più grosse distruzioni affaristiche del periodo trionfalistico del centro-sinistra, cominciavano appunto a bloccare e vincolare. Operazione anche questa condotta in modo ambiguo, persino degradante per il volto della città, nella pretesa di imporre non uno stile ma un nuovo folclore. (Si pensi, di passaggio, agli intonaci crema e agli infissi di legno naturale del tutto sconosciuti alla tradizione italiana ed europea.)
+
+Ma in fondo questo ha un’importanza relativa; penso che i funzionari delle Sovrintendenze troveranno la strada giusta, per noi è importante che applichino i mezzi a loro disposizione.
+
+Perché ho tracciato questo schizzo della situazione urbana? Perché se devo parlare dell’architettura oggi, della mia o di quella degli altri, ritengo sia importante illuminare i fili che riconducono la fantasia alla realtà, e l’una e l’altra alla libertà.
+
+Non esiste invenzione, complessità, persino irrazionalità che non sia vista dalla parte della ragione, o almeno, dalla parte della dialettica del concreto. E io credo alla capacità dell’immaginazione come cosa concreta. La definizione di città analoga è nata nella rilettura del mio libro _L’architettura della città_. Nella prefazione alla seconda edizione, scritta alcuni anni dopo, mi sembrava che descrizione e conoscenza dovevano dar luogo ad uno stadio ulteriore; la capacità dell’immaginazione che nasceva dal concreto. In questo senso accentuavo il quadro del Canaletto dove, attraverso uno straordinario collage, si costruisce una Venezia immaginaria impiantata su quella vera. E la costruzione avviene mediante progetti e cose, inventate o reali, citate e messe insieme, proponendo un’alternativa nel reale.
+
+A mio giudizio questo quadro ha un significato storico-politico importante; ed è un significato progressivo. Venezia si pone come la città analoga della repubblica veneta e di una più vasta nazione moderna: ognuno può ritrovarsi in elementi fissi e razionali, nella propria storia, e accentuare il carattere particolare di un luogo, di un paesaggio, di un momento. Sarà d’altra parte il destino dell’architettura palladiana. Saranno i tentativi dei migliori interpreti dell’architettura moderna.
+
+Senza la capacità di immaginare il futuro non può esservi soluzione per la città in quanto fatto sociale per eccellenza.
+
+Nel novembre del ’75 la rivista torinese _Nuova Società_ impostava un dibattito dal titolo _Com’è bella la città_. L’articolo di Saverio Vertone che apriva il dibattito rimane, a mio parere, uno dei pezzi decisivi sul problema indicando come la crisi nasca anche da una mancanza di indicazioni mentali e dall’insufficienza dei progetti.
+
+E, senza paura di essere scandaloso, Saverio Vertone parla anche della bellezza della città. Anche se non amo fare citazioni lo cito integralmente perché è tanto raro leggere una pagina chiara, anticonformista e costruttiva, come questa, che è utile ripeterla tale e quale.
+
+> E c’è il problema della bellezza, fondamentale e ignoto. Può essere bella una persona, una cosa, una città, se significa solo se stessa, anzi il proprio uso? La bellezza non è il luogo dell’incontro tra sostanze e significati diversi, il punto della loro fusione, una specie di coincidenza dei contrari? E ci può essere posto per la bellezza là dove tutto ricade su se stesso, dove gli oggetti non esercitano la loro funzione ma la descrivono, dove domina incontrastata la tautologia? Non è scandaloso occuparsi di queste cose. La bellezza è utile.
+
+La bellezza è utile, e la bellezza urbana è ciò che più dà fastidio agli interventi maneschi, affaristici o burocratici: oltre tutto è un impiccio, una complicazione da quando il funzionalismo ha spiegato che una cosa significa il proprio uso. Ripeto che gli impianti tecnologici non sono l’avvenire della città moderna anche se sono la condizione per una vita più civile nella città; e certamente in un paese come il nostro è giusto porre gli obiettivi minimi in primo piano quando basta qualche giorno di pioggia per produrre disastri. Ma uno standard, destinato a migliorare nel tempo, non può sostituirsi ad una prospettiva politica e culturale. Dall’esaltazione dei tram milanesi di Marinetti, che vedeva in essi la Milano futura e futurista (e che oggi sono antiquati ordigni senza nemmeno la patina del sentimento) alle pompe di benzina-monumenti il discorso è immutato. Le macchine, celibi o meno, restano macchine e solo qualche bravo artista può usarle per rendere il senso di una solitudine biografica e civile. E quindi per rinnegarle.
+
+All’ultima Biennale di Venezia ho esposto una grande tavola intitolata appunto “La città analoga”. Un’opera, come ho detto, collettiva.
+
+Quest’opera non è la spiegazione della città analoga anche perché non crediamo che esistano spiegazioni. Inoltre ogni opera e ogni oggetto — se non vuole schiacciarsi sopra l’immagine del proprio uso, come dice il mio amico Saverio Vertone — possiede una propria autonomia, sviluppa una propria vita.
+
+Mi sembra comunque chiaro che la tavola renda in modo abbastanza plastico l’immagine del significato diverso che progetti distinti producono attraverso un montaggio relativamente arbitrario; per togliere ogni valore meccanico o di meccanismo a questa costruzione gli autori, più o meno automaticamente, hanno introdotto cose, oggetti, ricordi cercando di esprimere una dimensione dell’intorno e della memoria.
+
+Avevo pensato qualcosa di simile nel film _Ornamento e Delitto_ fatto per la Triennale di Milano; sempre di più mi sembra che le tecniche o le discipline in sé, una volta stabilite, tendano a rimescolarsi, e così il tempo di una pellicola cinematografica diventa un elemento di maggior importanza di un elemento propriamente architettonico. Al contrario nell’ultimo grande film che ho visto, _Andrej Rublëv_, ho ritrovato un interesse per l’architettura in sé che mi sembrava aver perso da molto tempo.
+
+Evidentemente in questa tavola si sono indicati alcuni aspetti della memoria, di una memoria circoscritta ad un territorio, o meglio ad una patria (l’alta Lombardia, il Lago Maggiore, il Canton Ticino) con i suoi segni e i suoi emblemi. Storia e geografia si confondono nella pittura di Tanzio da Varallo e nelle case di pietra e all’interno di esse si collocano e si sistemano i progetti. È certo che una discreta vita privata percorre i luoghi e dà un senso all’architettura: e forse proprio solo in questo risiede l’umanità dell’architettura.
+
+La dimensione di un luogo e di una patria è una condizione nello studio della città e dell’architettura e anche questo sposta il problema dell’impiccio della salvaguardia e del restauro come se la difesa di una città o di un luogo fosse un problema di polizia. La questione deve essere posta in modo molto più complesso. In altri termini: mi è molto difficile pensare oggi alla difesa o meglio al progetto, poniamo, di una città padana o della svizzera interna visto in sé. Credo che il problema sia quello di conoscere il significato della civiltà padana e della sua immagine, e così per la contrapposta immagine gotica.
+
+Ma perché ho riportato all’inizio di questo scritto il tema della città analoga alla realtà concreta e politica della nostra situazione? Perché credo che il tecnico e/o l’artista debba offrire delle alternative allo sviluppo della città per fare in modo che queste alternative siano discusse, capite, e quindi accettate o respinte dalla gente che vive la città. È finita l’epoca dei modelli urbani e insieme ad essi è finita anche l’epoca delle tecniche urbane, dell’autodescrizione, della funzione spacciata per soluzione.
+
+La città si risolve volta per volta, accogliendo e sviluppando le proprie contraddizioni, giorno per giorno, direttamente; ridicoli, se non fossero tragici nei loro risultati, i famosi _Piani Regolatori_ sempre falliti, mai compiuti, destinati ad una specie di funzione penitenziale attraverso la zonizzazione peraltro mai seriamente attuata.
+
+Così si dica per la contrapposizione tra centro storico e periferia così come è stata canonizzata; oggi le città hanno un loro volto caratterizzato da fatti nuovi e antichi, le grandi periferie urbane appartengono alla storia urbana, ne costituiscono il volto spesso più autentico. La città per parti non è certo una definizione accademica; essa esprime il modo di vita della città, la sua articolazione e anche il suo volto. Per questo ben venga una nuova urbanistica attraverso i consigli di zona, i comitati di quartiere a lottare per quella casa, per quell’asilo, per un preciso pezzo di terra che costituisce la città.
+
+Le occasioni concrete possono fornire il rimando ad un’altra soluzione, su una occasione concreta si possono verificare diverse soluzioni. Proprio perché non credo che sia possibile fornire un modello estetico e funzionale alla nuova città trovo che è importante fornire delle ipotesi: l’architettura moderna, o la città moderna, che è poi la stessa cosa, non esiste come categoria, ma esistono problemi su cui confrontarsi.
+
+A questo punto infine credo che il problema della storia, intesa come materiale dell’architettura e non come divagazione estetizzante, non sia né accademico né paranoico. Comprendere la bellezza di Prato della Valle a Padova significa vedere un momento particolare della storia di Venezia, la compenetrazione della città e della campagna nella costruzione di associazioni singolari. Comprendere i monumenti anche come pezzi della città, sedimentazioni di materiali, che si possono trasformare, adattare, predisporre ad una nuova vita non significa un’avventura culturale ma un grande progetto per le principali nazioni d’Europa. Questo è avvenuto in parte e spesso in modo catastrofico nel periodo napoleonico e dopo l’Unità d’Italia ma ha costituito, nonostante il modo con cui è stato attuato, un fatto progressivo.
+
+Oggi questa analisi può e deve essere fatta anche sulla periferia; vi sono fabbriche, cascine, sobborghi che propongono il loro uso non nel semplice riutilizzo ma attraverso un progetto.
+
+Chiudo questo scritto ritornando sulle prime argomentazioni e perché sono partito da esse per parlare della città analoga; perché mi sembra importante che la realtà e l’immaginazione costituiscano i due termini di un progresso civile o almeno di un miglioramento della città. Non mi interessava presentare la città analoga quasi fosse ridotta o riducibile ad una tavola disegnata, anche se di questa tavola come di altri progetti potrei parlare a lungo; ciò che mi importa è riaffermare il senso della libertà delle cose che facciamo, libertà che è tanto maggiore quanto più è legata o nasce creativamente dal concreto. Così misurare i propri progetti e quelli degli altri in un unico grande progetto mi sembra un’operazione oggi importante; una delle poche cose che ho costruito, l’unità residenziale al Quartiere Gallaratese a Milano è ai miei occhi più ricca per la presenza o la commistione con l’architettura di Carlo Aymonino; ma non credo che questa sia una mia impressione ma piuttosto un fatto oggettivo. È ancora un caso, quasi imprevisto nello scontro formale, dell’importanza delle associazioni o analogie.
+
+Su questa strada anche l’architettura può costruire un progetto del futuro e immaginarselo contro coloro che hanno paura del futuro; accettando per esempio le condizioni in parte cambiate o migliorate, almeno nelle speranze, per le nostre città per proporre e accelerare lo sviluppo.
+
+Tra passato e presente, realtà e immaginazione, la città analoga è forse semplicemente la città da progettare giorno per giorno, affrontando i problemi, superandoli, con una discreta certezza che alla fine le cose saranno migliori.
 
 [^1]: La mostra si è inaugurata il 25 giugno 2015 al Bonnefantenmuseum di Maastricht e si è protratta fino al 15 novembre 2015, per poi spostarsi all’École polytechnique fédérale de Lausanne (Archizoom) e alla Galleria d’Arte Moderna e Contemporanea di Bergamo (GAMeC). Ha riunito cento incisioni della collezione del museo insieme a quaranta disegni e dipinti da collezioni private, arricchiti da matrici e prove di stampa.
