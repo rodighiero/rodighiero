@@ -84,9 +84,33 @@ One card per `site.data.network.clusters` entry, each carrying its member slugs 
 `data-slugs` and a `cluster:<id>` action. **They are not edited here** — the text comes from
 `scripts/build-cards.py` and the miniature from `build-network.py`; see the `network` skill.
 
-They are interleaved into the year-sorted flow at the **midpoint of their span** (just before
-the publication named by the cluster's `anchor_slug`), so the cards spread through the
-timeline rather than clumping.
+### Where they land — spacing by count, order by year
+
+The two halves of the placement are decided in different places, on purpose.
+
+**Spacing is a count**, here in `home.html`: one card every `_cluster_step` publications,
+where `_cluster_step = publications ÷ (clusters + 1)`. The `+ 1` is the `view:network` tile,
+which takes the first of those slots at the top of the dated flow — so all eight
+non-publication tiles come out evenly spaced, and the gaps re-space themselves as the corpus
+grows. The test is `>=`, not `==`, so a slot that falls behind (the forthcoming works running
+past the network tile's own slot) catches up on the next publication rather than dropping a
+card.
+
+**Order is a year**, decided in `build-network.py` (`order_cluster_cards`): the array arrives
+sorted by each cluster's median original member, newest first, and `home.html` walks it as it
+comes — no `sort` filter. So the cards still descend in time as the gallery does.
+
+This replaced anchoring each card to the publication nearest **the midpoint of its span**,
+which read as chronology and delivered none of it. A midpoint is set by a cluster's two
+extremes, so it lands wherever they average — the anchor was a member of its own cluster in
+one case out of seven, two clusters sharing a span resolved to the same publication and
+rendered back to back, and since every span ends in the current year the whole set sank into
+the lower half: the first five rows carried none, and the last card sat three tiles from the
+bottom. It also computed the gallery order a second time, in Python, and could not reproduce
+`publication_order.rb`'s git-recency tie-break inside the current year.
+
+The masonry then keeps the spacing in the other axis — see `reference/grid.md` for the rule
+that stops two miniatures stacking in one column.
 
 Like the `view:network` card, a cluster card reads as a **short title over a quieter
 description** — the cluster's emitted `title` in the `.card-title` slot and its `description`
@@ -100,8 +124,8 @@ rule the same typography, a publication card gives its authors. Its meta line re
 - **Gallery view only** (hidden in network via CSS), and hidden whenever a filter is active.
 - Events lead the flow, sorted by `date` descending. Nothing expires them — a past event
   sits at the top of the homepage until its entry is deleted.
-- Cluster cards sit inline before their span-midpoint anchor, with the `view:network` card
-  leading the dated flow just after the forthcoming works.
+- Cluster cards sit one every `publications ÷ (clusters + 1)` entries, with the `view:network`
+  card leading the dated flow just after the forthcoming works.
 - The network and cluster tiles are hidden below 921px along with the view toggle and the filter
   count; events stay.
 

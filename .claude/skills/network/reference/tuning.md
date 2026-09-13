@@ -69,8 +69,18 @@ list markers. **Figure captions are deliberately kept** — they carry real cont
 | `_CLUSTER_STOP` | — | English/French/Italian stopwords for the TF-IDF labelling |
 
 Labels are TF-IDF unigrams plus a recurring bigram when both its words are top terms.
-`anchor_slug` is the first work at or below the cluster's span midpoint — the gallery tile
-the card renders just before.
+
+`order_cluster_cards()` then sorts the array into the order the cards run down the
+homepage: by the cluster's **median original member**, newest first. `slugs` is already
+year-descending, so that is the middle one — no averaging, and a Forthcoming work stays
+newest instead of dropping out of the arithmetic; translations are skipped for the same
+reason `size` skips them. The sort is stable, so two clusters whose middle work shares a
+year keep the size order `id` was assigned in.
+
+The homepage owns the *spacing* and reads nothing but this order — it emits one card
+every `publications / (clusters + 1)` entries. Reordering the array therefore moves the
+cards; it does **not** renumber anything, since `id` (and so `cluster:<id>`, the `?cluster=`
+URLs and `network-cluster-<id>.svg`) is assigned by size before this sort runs.
 
 ## Miniatures — `scripts/build-network.py`, `write_preview_svgs()`
 
