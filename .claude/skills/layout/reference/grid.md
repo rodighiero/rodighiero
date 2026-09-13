@@ -113,6 +113,23 @@ The number is written **once**, as the Liquid `{% assign _mobile_max = 921 %}` a
 and interpolated into all three places that ask for it — the pre-paint script in `<head>`,
 the `@media` rule, the `matchMedia` call. Three literals that must agree, from one source.
 
+## The pack, and the one tile it treats differently
+
+`layoutMasonry()` walks the tiles in DOM order and drops each into the shortest column. The
+single exception is a tile carrying a **miniature of the graph** — the `view:network` card and
+the seven cluster filters, matched as `.action, .filter` — which takes the shortest column
+*other than* the one the previous such tile took.
+
+The gallery loop already spaces those eight evenly **down** the flow (`reference/cards.md`);
+this is the same spacing **across**. Without it the shortest-column rule stacks them: three
+consecutive cluster tiles share a column at three columns wide, four of them at two, and eight
+near-identical small multiples in one vertical line read as a stripe rather than as a set.
+
+It costs the runner-up column's slack — tens of pixels — on eight tiles out of seventy-odd.
+The rule stands down at one column, which has no runner-up, and never fires for a tile that
+is not being placed at all (hidden by an active filter, or by the mobile media query), since
+those return before a column is recorded.
+
 ## The width gate
 
 Everything that schedules a pass — the window `resize` listener and the bio collapse's two

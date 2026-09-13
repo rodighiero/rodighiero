@@ -322,9 +322,10 @@ def build_clusters(pubs: list[dict], links: list[dict]) -> list[dict]:
     Each component with >= MIN_CLUSTER_SIZE works becomes a cluster; its label and
     supporting terms come from a TF-IDF ranking (unigrams + adjacent bigrams) over
     the members' cleaned text against the whole corpus, so a component's distinctive
-    vocabulary names it. Emits, per cluster: id, label, terms, member slugs, the
-    newest member's slug (for placement), the year span, and the size — ordered by
-    size descending. Deterministic: components and text are seed-independent.
+    vocabulary names it. Emits, per cluster: id, label, terms, member slugs, the year
+    span and the size. `id` is assigned by size descending; the **array order** is
+    then the homepage's card order (see the sort at the end).
+    Deterministic: components and text are seed-independent.
 
     Two tiers of edge decide clusters. A cluster only **qualifies** on the
     **mutual** backbone — the reciprocal mutual-kNN edges plus the forced
@@ -432,25 +433,49 @@ def build_clusters(pubs: list[dict], links: list[dict]) -> list[dict]:
         c["id"] = k
         c["action"] = f"cluster:{k}"
 
-    # Anchor each cluster to the **midpoint of its span** so the cards spread through
-    # the timeline instead of piling at one end (anchoring on year_start pushes them
-    # all low, on year_end all to the top). The gallery lists works year-descending, so
-    # `anchor_slug` is the first publication at or below the span's mid-year — the card
-    # renders at the head of that year (or the nearest older year that has one). An
-    # undated cluster (mid = -inf) falls back to the oldest work, so the anchor always
-    # names a real publication and the homepage needs no separate append pass.
-    #
-    # The two bounds are popped as they are used: they exist to place the card and to
-    # print `span`, and nothing downstream reads them off the artifact — the homepage
-    # shows `span`, already formatted.
-    gallery = sorted(pubs, key=lambda p: (-_year_key(p["year"]), p["title"]))
-    oldest = gallery[-1]["slug"] if gallery else ""
+    # The bounds are popped here: they exist to print `span`, and nothing downstream
+    # reads them off the artifact — the homepage shows `span`, already formatted.
     for c in clusters:
-        ys, ye = c.pop("year_start"), c.pop("year_end")
-        mid = (ys + ye) / 2 if ys is not None else float("-inf")
-        c["anchor_slug"] = next(
-            (p["slug"] for p in gallery if _year_key(p["year"]) <= mid), oldest
-        )
+        c.pop("year_start")
+        c.pop("year_end")
+    return order_cluster_cards(clusters, pubs)
+
+
+def order_cluster_cards(clusters: list[dict], pubs: list[dict]) -> list[dict]:
+    """Reorder `clusters` into the order their cards run down the homepage.
+
+    The homepage no longer places a cluster card by year — it spaces the cards
+    evenly by count, one every `publications / (clusters + 1)` entries (see the
+    gallery loop in _layouts/home.html). So this array's order *is* the placement:
+    slot 1 goes to the cluster whose work is most recent, the last slot to the
+    oldest, and the sequence rhymes with the year-descending gallery without a year
+    dictating a gap.
+
+    What replaced the year: cards used to sit beside the publication nearest the
+    **midpoint of their span**, which read as chronology and delivered none. A
+    midpoint is set by a cluster's two extremes, so it can land on a year the cluster
+    has no work in — Analogous City runs 2015–2026 with three works in 2026 and a
+    midpoint of 2020 that describes none of them. It also collided: two clusters
+    sharing a span resolved to the same publication and rendered back to back. And
+    the anchor was rarely a member of its own cluster, so the card sat next to a work
+    it had nothing to do with.
+
+    The key here is the cluster's **median original member**. `slugs` is already
+    year-descending, so that is simply the middle one — no averaging, and a
+    Forthcoming work stays newest instead of falling out of the arithmetic.
+    Translations are skipped for the same reason `size` skips them: a translation is
+    the same work as its original, and counting it twice would weight its year twice.
+    """
+    year_by_slug = {p["slug"]: p["year"] for p in pubs}
+    translations = {p["slug"] for p in pubs if p.get("translation_of")}
+
+    def median_year(c: dict) -> float:
+        originals = [s for s in c["slugs"] if s not in translations] or c["slugs"]
+        return _year_key(year_by_slug.get(originals[len(originals) // 2]))
+
+    # Stable, so two clusters whose middle work shares a year keep the size order
+    # `id` was assigned in.
+    clusters.sort(key=lambda c: -median_year(c))
     return clusters
 
 # ── Body-text scrubbing for the embedder ──────────────────────────────────────

@@ -109,8 +109,8 @@ changing a type or free-text filter all animate/fade the tiles in place and leav
 position where it was.
 
 The exception is **selecting a research cluster** (`scrollToResults()`), because it is the one
-filter whose control is not in the bar at the top: cluster cards are interleaved at their
-span's midpoint, so the click happens far down the flow while the works it selects pack at the
+filter whose control is not in the bar at the top: cluster cards are spaced down the whole
+gallery, so the click can happen far down the flow while the works it selects pack at the
 very top, leaving every result above where the reader is standing. (The short case needs
 nothing: a filtered page that no longer fills the viewport can only clamp to 0, which the
 browser does by itself.)

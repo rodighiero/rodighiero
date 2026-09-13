@@ -24,22 +24,25 @@ params   — {node_radius, mutual_k, strong_sim, fallback_sim}; layout-network.j
            without restating them
 nodes[]  — {slug, title, url, related[3]{slug, title, url, lang, sim}, x, y, tr?}
 links[]  — {source, target, fb?}
-clusters[] — {id, label, terms, slugs, span, size, anchor_slug, action,
-              title, description, filter_label}
+clusters[] — {id, label, terms, slugs, span, size, action,
+              title, description, filter_label}; the ARRAY ORDER is the
+              homepage's card order (see order_cluster_cards), while `id`
+              is size rank — the two deliberately disagree
 ```
 
-The file carries what someone reads, and nothing else. Four fields have been taken out
+The file carries what someone reads, and nothing else. Five fields have been taken out
 of it over time — `seed` and `nodes[].i`, then `links[].value` (the cosine that set an
 edge's rest length: internal to the simulation, and every consumer draws all edges at one
-weight), `nodes[].lang` (a *related* entry's language is shown, a node's own is not) and
-`clusters[].year_start`/`year_end` (they place the card and print `span`, both inside
-build-network.py). Each was written down, read by nobody, and free to drift.
+weight), `nodes[].lang` (a *related* entry's language is shown, a node's own is not),
+`clusters[].year_start`/`year_end` (they print `span`, inside build-network.py) and
+`clusters[].anchor_slug` (the card's old year-based placement, now the array order). Each
+was written down, read by nobody, and free to drift.
 
 `nodes` / `links` are index-parallel to the DOM elements the view builds once and never re-renders. The similarity matrix is deliberately **not** shipped.
 
 **Adding a field the network view needs is two edits, not one.** The browser does not see this file; it sees the projection in `_plugins/system_network_client.rb`. A field added here and not there arrives as `undefined` in the view, with nothing to say so.
 
-`clusters[].label`/`terms`/`slugs`/`span`/`size`/`anchor_slug` are **structural** (build-network.py); `title`/`description`/`filter_label` are **editorial** (build-cards.py).
+`clusters[].label`/`terms`/`slugs`/`span`/`size` and the array order are **structural** (build-network.py); `title`/`description`/`filter_label` are **editorial** (build-cards.py).
 
 ## The two commands
 

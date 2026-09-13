@@ -1052,8 +1052,8 @@ shows 3 columns. {%- endcomment -%}
       ignores them. Events lead the flow, newest first — they are the timely tile, and the one
       kind that goes somewhere else rather than filtering in place; they are the only special
       card that comes from _data/home_cards.yml. The network tile and the research-cluster
-      filter cards are generated below from site.data.network and merged into the dated flow
-      (each cluster just before its newest member). See scripts/build-network.py.
+      filter cards are generated below from site.data.network and spaced evenly through the
+      dated flow. See scripts/build-network.py.
       {%- endcomment -%}
       {% assign _events = site.data.home_cards.events | sort: 'date' | reverse %}
       {% for _event in _events %}{% include card-event.html event=_event %}{% endfor %}
@@ -1062,9 +1062,18 @@ shows 3 columns. {%- endcomment -%}
       decides the tie-break inside a year), so a single card block renders every card and the
       _card_i priority counter stays correct. {%- endcomment -%}
       {% assign _card_i = 0 %}
-      {% assign _clusters_az = site.data.network.clusters | sort: 'label' %}
       {% assign _cluster_n = 0 %}
       {% assign _net_done = false %}
+      {%- comment -%} The eight tiles that are not publications — the network card and the
+      seven cluster filters — are spread by *count*, one every `_cluster_step` publications,
+      rather than parked at a year. `_cluster_step` divides by clusters + 1 because the
+      network tile takes the first of those slots, so the whole set comes out evenly spaced
+      and the gaps re-space themselves as the corpus grows. See the cluster block below for
+      what the year used to do and why it stopped. {%- endcomment -%}
+      {% assign _clusters = site.data.network.clusters %}
+      {% assign _cluster_slots = _clusters.size | plus: 1 %}
+      {% assign _cluster_step = site.data.ordered_publications.size | divided_by: _cluster_slots %}
+      {% if _cluster_step < 1 %}{% assign _cluster_step = 1 %}{% endif %}
       {% for publication in site.data.ordered_publications %}
       {%- comment -%} A network-view card leads the dated flow: emit it once, right after the
       forthcoming works (before the first publication carrying a real year). {%- endcomment -%}
@@ -1072,17 +1081,27 @@ shows 3 columns. {%- endcomment -%}
       {% include card-action.html eyebrow="Action" venue="Publication network" label="The Shape of a Body of Work" sublabel="This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." action="view:network" year="now" media="network-preview.svg" gcclick=gc_network_click gctitle=gc_network_title %}
       {% assign _net_done = true %}
       {% endif %}
-      {%- comment -%} Auto cluster filter cards are distributed by the midpoint of their span:
-      build-network.py records `anchor_slug` — the first publication at or below the cluster's
-      mid-year (always a real publication) — so a 2015–2025 cluster renders around the 2020 works.
-      Emit before that anchor; iterating alphabetically by label stacks cards that share a slot.
+      {%- comment -%} Auto cluster filter cards, one every `_cluster_step` publications, taken
+      from `_clusters` in the order build-network.py put them in (newest median work first, see
+      order_cluster_cards) — so the cards descend in time the way the gallery does while the
+      *spacing* stays a matter of count. They used to sit at the publication nearest their span's
+      midpoint, which read as chronology and gave none: the anchor was almost never a member of
+      its own cluster, two clusters sharing a span landed on the same publication and rendered
+      back to back, and because every span ends in the current year the whole set sank into the
+      lower half — the first five rows of the gallery carried none at all.
+
+      The test is `>=`, not `==`, so a slot that falls behind (the forthcoming works run past the
+      network tile's own slot) catches up on the next publication instead of dropping a card.
+
       Each card carries its own miniature of the graph (network-cluster-<id>.svg, generated beside
       network-preview.svg): the same map in the same frame with the cluster lit and the rest faded,
       so the tiles are small multiples and each one previews what clicking it does. The meta line
       numbers them in the order they are emitted (`_cluster_n`) — so a reader scanning down the
       gallery meets cluster 1, 2, 3… in sequence — not by the cluster's internal `id`, which is
-      discovery order in build-network.py and would look arbitrary on the page. {%- endcomment -%}
-      {% for _cluster in _clusters_az %}{% if _cluster.anchor_slug == publication.slug %}
+      size order in build-network.py and would look arbitrary on the page. {%- endcomment -%}
+      {% assign _cluster_due = _cluster_n | plus: 1 | times: _cluster_step %}
+      {% if _net_done and _cluster_n < _clusters.size and forloop.index0 >= _cluster_due %}
+      {% assign _cluster = _clusters[_cluster_n] %}
       {% assign _cluster_n = _cluster_n | plus: 1 %}
       {% capture _cluster_media %}network-cluster-{{ _cluster.id }}.svg{% endcapture %}
       {% capture _cluster_venue %}Research cluster {{ _cluster_n }}{% endcapture %}
@@ -1090,7 +1109,7 @@ shows 3 columns. {%- endcomment -%}
       shows — not its internal id, so the dashboard reads "Peirce Manuscripts" rather than
       "cluster:3". card-action.html labels the event with the path unless given a title. {%- endcomment -%}
       {% include card-action.html eyebrow="Filter" venue=_cluster_venue label=_cluster.title sublabel=_cluster.description action=_cluster.action slugs=_cluster.slugs year=_cluster.span filterlabel=_cluster.filter_label media=_cluster_media gcclick=_cluster.title %}
-      {% endif %}{% endfor %}
+      {% endif %}
       {% assign _type_label = site.data.publication_types[publication.type].label %}
       {% capture _lang_terms %}{% if publication.lang == 'it' %}italian italiano{% elsif publication.lang == 'fr' %}french français francais{% elsif publication.lang == 'nl' %}dutch nederlands{% else %}english{% endif %}{% endcapture %}
       {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.interviewer }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ _lang_terms }}{% endcapture %}
@@ -1350,10 +1369,30 @@ shows 3 columns. {%- endcomment -%}
          exist as numbers first. Nothing here touches the DOM, so the reads above stay the
          one measuring pass. */
       var slots = [];
+      /* The column the last graph-miniature tile went into — the network card and the
+         seven cluster filters, the only tiles carrying a picture of the same map. The
+         gallery loop already spaces them evenly *down* the flow (one every
+         publications / (clusters + 1) entries); this is the same spacing *across*, so
+         two of them never stack in one column and read as a stripe instead of as small
+         multiples. Without it three consecutive cluster tiles share a column at three
+         columns wide, and four of them do at two.
+         It costs the runner-up column's slack, a few tens of pixels, on eight tiles out
+         of seventy-odd. One column has no runner-up, so there the rule stands down —
+         and so does a tile that is not being placed at all (hidden by a filter, or by
+         the mobile media query), because it returns above without recording a column. */
+      var lastMediaCol = -1;
       tiles.forEach(function(p, idx) {
         if (heights[idx] === null) { slots.push(null); return; }
-        // The shortest column, said the way the tallest is said a few lines down.
-        var minCol = colHeights.indexOf(Math.min(...colHeights));
+        var media = p.matches('.action, .filter');
+        var skip = media && cols > 1 ? lastMediaCol : -1;
+        // The shortest column, said the way the tallest is said a few lines down —
+        // but stated as a walk, because one column may be out of the running.
+        var minCol = -1;
+        for (var c = 0; c < cols; c++) {
+          if (c === skip) continue;
+          if (minCol < 0 || colHeights[c] < colHeights[minCol]) minCol = c;
+        }
+        if (media) lastMediaCol = minCol;
         var y = colHeights[minCol];
         slots.push({ x: minCol * (colWidth + GAP_X), y: y });
         colHeights[minCol] = y + heights[idx] + gapY;
@@ -1929,9 +1968,9 @@ shows 3 columns. {%- endcomment -%}
     }
     /* Selecting a research cluster is the one filter that moves the page for the reader,
        because it is the one filter whose control sits in the middle of the gallery rather
-       than in the bar at the top: the cluster cards are interleaved at their span's
-       midpoint, so the click happens far down the flow while the works it selects are
-       packed at the very top. The browser's own clamp already rescues the short case — a
+       than in the bar at the top: the cluster cards are spaced down the whole gallery, so
+       the click can happen far down the flow while the works it selects are packed at the
+       very top. The browser's own clamp already rescues the short case — a
        filtered page that no longer fills the viewport can only scroll to 0 — and between
        that and no change at all sits the state this exists for: a filtered gallery still
        taller than the screen, with every result above where the reader is standing.

@@ -3,7 +3,7 @@
 
 The heavy network math — embeddings, force layout, and cluster **membership** —
 lives in build-network.py, which writes each cluster's structural fields
-(id, label, terms, slugs, years, span, size, anchor_slug). This script owns only
+(id, label, terms, slugs, years, span, size) and their card order. This script owns only
 the **presentation**: the hand-written card `title` and `description`, plus the
 short `filter_label` shown in the search box. Because it needs no model, it runs in
 a blink, so a card reword is a one-second `uv run scripts/build-cards.py` instead
