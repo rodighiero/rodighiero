@@ -633,6 +633,75 @@ shows 3 columns. {%- endcomment -%}
       body[data-view="gallery"] #publications.animating .card { transition: none; }
     }
 
+    /* ── The mark in the gap below a card ──
+       A row of bullets in the empty CARD_W / 4 the pack leaves between two stacked
+       tiles: one dot, plus one more for every year between this publication and the
+       one the packer put under it. So a dense year reads as a steady single-dot pulse
+       and the mark widens exactly where time jumps.
+
+       Counting from one rather than zero is the whole reason it works as a separator.
+       Ten publications share 2026, ten share 2025 and nine share 2022, so a zero-dot
+       same-year gap would leave most gaps empty — the mark would go missing precisely
+       where two cards sit closest together, which is where a separator is most wanted.
+
+       Which two cards are adjacent in a column is the packer's decision, not the
+       corpus's: the neighbour below changes at 4→3→2 columns and again under any
+       filter. The span survives that because the gallery is globally date-descending,
+       so the tile below is always the older one and "N years pass here" stays true
+       under every packing — only the particular N moves. That is also what rules out
+       encoding network distance here instead: with 48 links over 67 nodes almost every
+       accidental neighbour is unrelated, so nearly every mark would read "far" and say
+       nothing. The graph's story is told where it means something, in the network view
+       and the related list.
+
+       The glyph is a plain U+2022, and it is genuinely Nunito's: the shipped
+       nunito-*-latin.woff2 carry it, and it falls inside the latin subset's declared
+       unicode-range (U+2000-206F, styles-font.css). The subsets hold no ornament
+       glyphs at all — no ❧, ❦ or ⁂ — so an aldine leaf would have had to be a drawn
+       SVG path rather than a character.
+
+       The string is written by layoutMasonry, which is the only thing that knows which
+       tile ended up under which. A tile with no data-gap is the last in its column and
+       has nothing below it to be separated from. */
+    body[data-view="gallery"] .card[data-gap]::after {
+      content: attr(data-gap);
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      /* The masonry's own gapY, derived from the same token rather than published out
+         of the JS: the pack uses CARD_W / 4 at every column count — a quarter of a
+         *card*, not of the full-width column that one column hands it. */
+      height: calc(var(--card-w) / 4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-xs);
+      line-height: 1;
+      /* Tracking is also trailing space: it is added after the last dot as well as
+         between them, so centring the box leaves the ink half a track left of centre.
+         The padding puts it back — box-sizing: border-box shrinks the content box by
+         the same amount it offsets it, which moves the centre right by exactly half. */
+      letter-spacing: 0.45em;
+      padding-left: 0.45em;
+      /* Derived from --fg like the --tint-* trio, so it follows the palette into dark
+         mode on its own. Deliberately quieter than --border: that weight belongs to the
+         hairline an action or cluster tile wears, and a mark repeated down every column
+         must not read as the same kind of line as a tile's own frame. */
+      color: color-mix(in srgb, var(--fg) 30%, transparent);
+      /* A pseudo-element takes pointer events for the element it hangs off, so without
+         this the card's hover tint would fire from 67.5px of empty gap beneath it. */
+      pointer-events: none;
+    }
+    /* Layered rather than declared outright: where the two-value syntax is unsupported
+       the whole content declaration is invalid, which would drop every dot on the page
+       instead of degrading. Same shape as the text-box-trim @supports above.
+       The empty alt text keeps the bullets out of the accessibility tree — the years
+       they encode are already announced from each card's own .card-meta line. */
+    @supports (content: "a" / "b") {
+      body[data-view="gallery"] .card[data-gap]::after { content: attr(data-gap) / ""; }
+    }
+
     /* The media slot above a card's text — a publication thumbnail, or an action/filter
        card's inlined graph miniature — framed once, so either sits the same among the tiles.
        One bare .card-media rule now covers both the live gallery tile and its clone in the
@@ -1113,7 +1182,7 @@ shows 3 columns. {%- endcomment -%}
       {% assign _type_label = site.data.publication_types[publication.type].label %}
       {% capture _lang_terms %}{% if publication.lang == 'it' %}italian italiano{% elsif publication.lang == 'fr' %}french français francais{% elsif publication.lang == 'nl' %}dutch nederlands{% else %}english{% endif %}{% endcapture %}
       {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.interviewer }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ _lang_terms }}{% endcapture %}
-      <div class="card publication" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-search="{{ _search_text | strip_newlines | escape }}">
+      <div class="card publication" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-year="{{ publication.year }}" data-search="{{ _search_text | strip_newlines | escape }}">
         {%- comment -%} Unconditional: `thumb` is required on every publication (see
         publication_validator.rb), so every card has a picture and _card_i counts them all. {%- endcomment -%}
         {% assign _card_i = _card_i | plus: 1 %}
@@ -1285,6 +1354,10 @@ shows 3 columns. {%- endcomment -%}
       tiles.forEach(function(p) {
         p.style.width = '';
         p.style.transform = '';
+        // Goes for the same reason the transform does: the details panel clones a
+        // .publication card, and a clone still carrying data-gap would sprout a row
+        // of dots inside the network sidebar, where there is no gap and no tile below.
+        p.removeAttribute('data-gap');
       });
       // Every transform just went: there are no positions left to travel from, so the
       // layout on the way back out of the network view has to take its slots outright.
@@ -1308,6 +1381,18 @@ shows 3 columns. {%- endcomment -%}
     // The height the last pass gave the container, remembered for the same reason placedY
     // is: reading it back off container.style would parse a string this function wrote.
     var lastHeight = 0;
+    /* The dots for the gap between two tiles the pack has stacked: one, plus one for
+       each year between them (see the .card[data-gap]::after rule for why the count
+       starts at one rather than zero). A tile with no parseable year contributes no
+       span and gets the bare separator — which is one branch covering every case that
+       has no year to give: a Forthcoming publication, an event card, the network tile
+       and the seven cluster tiles, whose own `year` is a span string or the build year. */
+    function gapDots(above, below) {
+      var a = parseInt(above.dataset.year, 10);
+      var b = parseInt(below.dataset.year, 10);
+      var span = isNaN(a) || isNaN(b) ? 0 : Math.abs(a - b);
+      return '\u2022'.repeat(span + 1);
+    }
     function layoutMasonry() {
       // Before the view check: a resize in network view must resize the page too.
       var sync = syncPageWidth();
@@ -1369,6 +1454,9 @@ shows 3 columns. {%- endcomment -%}
          exist as numbers first. Nothing here touches the DOM, so the reads above stay the
          one measuring pass. */
       var slots = [];
+      // The dot string each tile shows in the gap under it, indexed alongside `tiles`
+      // like `slots` is. Left undefined for a tile with nothing below it.
+      var gaps = [];
       /* The column the last graph-miniature tile went into — the network card and the
          seven cluster filters, the only tiles carrying a picture of the same map. The
          gallery loop already spaces them evenly *down* the flow (one every
@@ -1381,6 +1469,13 @@ shows 3 columns. {%- endcomment -%}
          and so does a tile that is not being placed at all (hidden by a filter, or by
          the mobile media query), because it returns above without recording a column. */
       var lastMediaCol = -1;
+      /* The tile last placed in each column, by index — which is the tile the one
+         being placed now lands directly beneath, and so the one whose gap the pair
+         decides. Collected here and written in the pass below, like the slots
+         themselves: an index still sitting in this array when the walk ends is the
+         last tile in its column, and has to come out of the pass with no attribute
+         at all rather than a stale one. */
+      var colLast = new Array(cols).fill(-1);
       tiles.forEach(function(p, idx) {
         if (heights[idx] === null) { slots.push(null); return; }
         var media = p.matches('.action, .filter');
@@ -1393,6 +1488,9 @@ shows 3 columns. {%- endcomment -%}
           if (minCol < 0 || colHeights[c] < colHeights[minCol]) minCol = c;
         }
         if (media) lastMediaCol = minCol;
+        var above = colLast[minCol];
+        if (above >= 0) gaps[above] = gapDots(tiles[above], p);
+        colLast[minCol] = idx;
         var y = colHeights[minCol];
         slots.push({ x: minCol * (colWidth + GAP_X), y: y });
         colHeights[minCol] = y + heights[idx] + gapY;
@@ -1423,6 +1521,8 @@ shows 3 columns. {%- endcomment -%}
           snapped.push(p);
         }
         p.style.transform = 'translate(' + slot.x + 'px,' + slot.y + 'px)';
+        if (gaps[idx]) p.setAttribute('data-gap', gaps[idx]);
+        else p.removeAttribute('data-gap');
         placedY[idx] = slot.y;
       });
       container.style.height = height + 'px';
