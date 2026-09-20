@@ -1,5 +1,5 @@
 ---
-title: "De Analoge Stad, de Kaart (Tweede Editie)"
+title: "La città analoga: the map / de kaart (Second revised edition / Tweede herziene editie)"
 year: 2026
 venue: "University of Groningen Press"
 type: "map"
