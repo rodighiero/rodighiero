@@ -68,9 +68,10 @@ Then check, before committing:
 - cluster count and labels (`python3 -c "import json;d=json.load(open('_data/network.json'));print([c['label'] for c in d['clusters']])"` — stdlib only, any python);
 - that every label still has a `CLUSTER_CARDS` key in `scripts/build-cards.py` — a shifted label falls back to auto text, and the script prints a `WARNING:` naming the label when it does;
 - the build's `node/edge clearance: N at settle, M after K pass(es)` line — `M` must be 0, and a non-zero `M` prints its own `WARNING:`;
+- the build's `edge crossings: N in the layout kept, chosen from M bake(s)` line — `N` must be 0, and a non-zero `N` prints its own `WARNING:`. `M` is how many bakes it had to draw to get there (usually 1); see `reference/tuning.md`;
 - `git status` for new/deleted `_includes/network-cluster-*.svg` (stale ones are auto-deleted).
 
-**The layout starts from a random scatter**, so a rebuild moves every node even when nothing changed, and it cannot be reproduced. Expect a large diff in `network.json` and in every SVG; that is normal, not a bug. Don't rebuild "to check" — rebuild when the inputs changed.
+**The layout starts from a random scatter**, so a rebuild moves every node even when nothing changed, and it cannot be reproduced. (The build draws several such scatters and keeps the cleanest — see the crossings check above — so what lands in the file is the best of a handful, not the first thing the simulation produced.) Expect a large diff in `network.json` and in every SVG; that is normal, not a bug. Don't rebuild "to check" — rebuild when the inputs changed.
 
 ### Reword a cluster card
 Edit the `CLUSTER_CARDS` table in `scripts/build-cards.py`, keyed on the cluster's auto `label`, then run `uv run scripts/build-cards.py` alone. Each entry is a `title` (the subject, as a name), a two-sentence `description` (what the work does to it, then why it matters), and an optional `filter` chip. Ground the text in the cluster's mutual core, not in its TF-IDF terms.
@@ -100,6 +101,7 @@ Add the `lang` code → opus-mt model to `OPUS_MODELS` in `build-network.py`, th
 | A cluster vanished | membership fell below `MIN_CLUSTER_SIZE` originals on the mutual backbone |
 | Orphan `network-cluster-N.svg` | shouldn't happen (stale files are deleted); if it does, check `PREVIEW_CLUSTER_GLOB` |
 | A node sits on a stranger's edge | `EDGE_CLEARANCE` pass failed — the build prints the residual count |
+| Two edges cross | every one of the `LAYOUT_ATTEMPTS` bakes had at least one — rerun to reroll, or raise the constant |
 | Miniature is black in night mode | it got referenced as `<img>` instead of inlined through the card's `media` slot |
 | Build fails at the layout step | Node missing from PATH (`scripts/layout-network.js` + vendored d3) |
 

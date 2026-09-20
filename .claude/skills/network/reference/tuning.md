@@ -20,6 +20,7 @@ Python) because the layout is what consumes it.
 | `EDGE_CLEAR_STRENGTH` | 0.4 | share of the shortfall applied per tick, as a force |
 | `EDGE_CLEAR_PASSES` | 60 | cap on the deterministic sweeps that finish the job |
 | `EDGE_CLEAR_EPSILON` | 0.05 | overshoot per nudge, so float noise doesn't re-report the same offender |
+| `LAYOUT_ATTEMPTS` | 12 | bakes drawn from fresh scatters; the cleanest is kept (see below). Raise it only if crossings start surviving |
 | `CHARGE_STRENGTH` | −280 | repulsion |
 | `CHARGE_DISTANCE_MAX` | 520 | repulsion cutoff |
 | `GRAVITY` | 0.45 | pull toward the well. Above ~0.6 it overpowers the link force and every edge is drawn at the same length |
@@ -28,6 +29,18 @@ Python) because the layout is what consumes it.
 | `ANCHOR` | `center` | one gravity well, so clusters settle as islands. `ring` centres the largest component and pins the rest on a perimeter — wrong for this many-small-components graph, which it scatters into a halo |
 | `CANVAS_W` / `CANVAS_H` | 564 / 564 | the stage's own square, so the client's fit is 1:1 on desktop and everything baked in px is drawn at the size it was measured at |
 | `FIT_MARGIN` | 40 | label headroom — a hovered two-line title reaches ~37px above its node |
+
+**Edge crossings are selected away, not repaired.** Two edges that cross read as a junction
+between publications that have no edge — the same misreading `EDGE_CLEARANCE` exists to stop
+for a node resting on a stranger's line. But there is no local repair: uncrossing two edges
+means walking whole components past each other. So `layout-network.js` bakes the arrangement
+up to `LAYOUT_ATTEMPTS` times from fresh scatters, counts residual incidences and crossings on
+each, and keeps the best — clearance first, then crossings — stopping early on a clean one.
+Only the scatter-dependent half repeats; the link rule, the components and the anchors are
+computed once. The build prints `edge crossings: N in the layout kept, chosen from M bake(s)`
+and warns if `N` is non-zero. On the current corpus a single bake is crossing-free about five
+times in six, so `M` is usually 1 and rarely above 3; an `M` that starts climbing means the
+graph is getting hard to draw flat, not that the constant is too low.
 
 **Keep the layout amorphous.** `NODE_SPACING` and `GRAVITY` decide together whether node
 *position* carries any information, and the failure is quiet: with spacing at 18 and gravity

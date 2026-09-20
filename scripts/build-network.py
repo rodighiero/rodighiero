@@ -874,6 +874,23 @@ def main() -> int:
             f"{_clear.get('passes')} pass(es) — inspect the graph before committing.",
             file=sys.stderr,
         )
+    # Edge crossings are chosen away rather than repaired: layout-network.js bakes
+    # the arrangement several times from fresh scatters and keeps the cleanest, so
+    # `attempts` is how many it had to draw. Two edges that cross read as a
+    # junction between publications that have no edge — the same misreading the
+    # clearance above exists to stop — so a survivor is worth saying out loud.
+    _cross = layout.get("crossings")
+    print(
+        f"edge crossings: {_cross} in the layout kept, "
+        f"chosen from {layout.get('attempts')} bake(s)",
+        file=sys.stderr,
+    )
+    if _cross:
+        print(
+            f"WARNING: {_cross} edge crossing(s) survived {layout.get('attempts')} "
+            f"bake(s) — rerun to reroll, or inspect the graph before committing.",
+            file=sys.stderr,
+        )
     for node, (x, y) in zip(nodes, layout["positions"]):
         node["x"], node["y"] = x, y
     for i in translations:

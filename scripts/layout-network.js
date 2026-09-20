@@ -70,6 +70,20 @@ const EDGE_CLEAR_PASSES = 60;      // cap on the sweeps that finish the job
 // incidence and the sweeps trade it back and forth until the cap. A hair past
 // converges instead, and survives the 2-decimal rounding of the output.
 const EDGE_CLEAR_EPSILON = 0.05;
+// Edge crossings. Two edges that cross read as a junction — the same misreading
+// EDGE_CLEARANCE exists to stop when a node comes to rest on a stranger's line —
+// but unlike the clearance there is nothing to repair locally: uncrossing two
+// edges means walking whole components past each other, which no nudge can do
+// without wrecking the arrangement it moves through. So crossings are handled by
+// selection instead of repair. The scatter is random and every bake is therefore
+// an independent sample, so the layout is baked up to this many times and the
+// cleanest sample kept; the loop stops early the moment one comes out perfect.
+// Measured over 25 rerolls of the current tuning, ~5 in 6 are already
+// crossing-free and a bake costs ~0.25s, so the usual price is one extra
+// quarter-second and the odds of all twelve coming back dirty are negligible.
+// This is a check, not a guarantee: a graph that genuinely cannot be drawn flat
+// reports what is left rather than being distorted until it looks flat.
+const LAYOUT_ATTEMPTS = 12;
 // Floor on centre-to-centre distance in those sweeps: nudging a node off an
 // edge must not park it on another node. Far below the simulation's collide
 // radius (NODE_RADIUS + NODE_SPACING) — this is the marker-overlap floor, not
@@ -170,17 +184,6 @@ function main(input) {
       transOf[t] = data.translations[k];
     });
   }
-
-  /* The starting scatter, against the canonical canvas. It was drawn from a
-     seeded LCG while the seed was an input worth reproducing; with nothing left
-     to replay it, the platform's RNG is the same scatter with less apparatus. */
-  const nodes = pubs.map(function (p, i) {
-    const n = { i: i };
-    n.x = CANVAS_W / 2 + (Math.random() - 0.5) * Math.min(CANVAS_W, CANVAS_H) * 0.6;
-    n.y = CANVAS_H / 2 + (Math.random() - 0.5) * Math.min(CANVAS_W, CANVAS_H) * 0.6;
-    n.vx = 0; n.vy = 0;
-    return n;
-  });
 
   // ── buildLinks: the core network uses mutual k-nearest-neighbor edges over
   // all original works (English + non-English originals, which share one
@@ -296,9 +299,9 @@ function main(input) {
   // Walk every (node, edge) pair where the node is not one of the edge's two
   // ends and lies closer to it than EDGE_CLEARANCE, calling `visit` with the
   // unit vector pointing off the segment and the shortfall to make up. Returns
-  // the count, so the same walk both measures and repairs. Reads positions
-  // live, which is what lets the repair pass re-check its own work.
-  function edgeIncidences(visit) {
+  // the count, so the same walk both measures and repairs. Reads the array it
+  // is handed, live, which is what lets the repair pass re-check its own work.
+  function edgeIncidences(nodes, visit) {
     let count = 0;
     for (let k = 0; k < links.length; k++) {
       const si = links[k].source, ti = links[k].target;
@@ -328,90 +331,161 @@ function main(input) {
   // The force half: push the node off the line, and let the segment yield half
   // as much, split between its ends by where along it the node sits — so a long
   // edge bows away rather than the node alone having to find room.
-  function forceEdgeClear(alpha) {
-    const k = EDGE_CLEAR_STRENGTH * alpha;
-    edgeIncidences(function (n, a, b, ox, oy, short, t) {
-      const f = short * k;
-      n.vx += ox * f; n.vy += oy * f;
-      a.vx -= ox * f * 0.5 * (1 - t); a.vy -= oy * f * 0.5 * (1 - t);
-      b.vx -= ox * f * 0.5 * t;       b.vy -= oy * f * 0.5 * t;
-    });
+  function makeEdgeClearForce(nodes) {
+    return function forceEdgeClear(alpha) {
+      const k = EDGE_CLEAR_STRENGTH * alpha;
+      edgeIncidences(nodes, function (n, a, b, ox, oy, short, t) {
+        const f = short * k;
+        n.vx += ox * f; n.vy += oy * f;
+        a.vx -= ox * f * 0.5 * (1 - t); a.vy -= oy * f * 0.5 * (1 - t);
+        b.vx -= ox * f * 0.5 * t;       b.vy -= oy * f * 0.5 * t;
+      });
+    };
   }
 
-  // forceLink mutates link.source/target into node refs — give it a copy so the
-  // emitted `links` keep their integer indices.
-  const simLinks = links.map(function (l) { return { source: l.source, target: l.target, value: l.value }; });
-
-  const simulation = d3.forceSimulation(nodes)
-    .alphaDecay(0.005)
-    .force('link', d3.forceLink(simLinks).id(function (d) { return d.i; })
-      .distance(function (d) { return LINK_DIST_BASE + (1 - d.value) * LINK_DIST_SPAN; })
-      .strength(function (d) { return 0.5 + d.value * 0.5; }))
-    .force('charge', d3.forceManyBody().strength(CHARGE_STRENGTH).distanceMax(CHARGE_DISTANCE_MAX))
-    .force('x', d3.forceX(function (d) { return targets[d.i].x; }).strength(GRAVITY))
-    .force('y', d3.forceY(function (d) { return targets[d.i].y; }).strength(GRAVITY))
-    .force('collide', d3.forceCollide().radius(NODE_RADIUS + NODE_SPACING))
-    .force('edgeClear', forceEdgeClear)
-    .stop();
-  for (let i = 0; i < LAYOUT_TICKS; i++) simulation.tick();
-
-  // Normalize the settled cloud to fit the canvas with a uniform margin, so
-  // every starting scatter yields a balanced, non-overflowing layout. Uniform
-  // scale preserves the shape; the translation centers it. The page then
-  // fit-scales this canvas into the live stage as before.
-  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-  nodes.forEach(function (n) {
-    if (n.x < minX) minX = n.x;
-    if (n.x > maxX) maxX = n.x;
-    if (n.y < minY) minY = n.y;
-    if (n.y > maxY) maxY = n.y;
-  });
-  const spanX = Math.max(1, maxX - minX);
-  const spanY = Math.max(1, maxY - minY);
-  const fit = Math.min((CANVAS_W - 2 * FIT_MARGIN) / spanX, (CANVAS_H - 2 * FIT_MARGIN) / spanY);
-  const tx = (CANVAS_W - spanX * fit) / 2 - minX * fit;
-  const ty = (CANVAS_H - spanY * fit) / 2 - minY * fit;
-  nodes.forEach(function (n) { n.x = n.x * fit + tx; n.y = n.y * fit + ty; });
-
-  // ── Node–edge clearance, guaranteed ──
-  // The force above shapes the arrangement around the clearance while the
-  // simulation is warm, but it is one force among several, it fades with alpha,
-  // and the fit just applied rescales every gap it won (a uniform scale under 1
-  // shrinks the distance to a line as surely as the distance between markers).
-  // So the invariant is established here, in the units the page will draw:
-  // sweep the incidences, move each offender straight out to the clearance,
-  // keep it inside the margin box and off its neighbours, then measure again —
-  // a nudge can create the next incidence, which is why this iterates instead
-  // of sweeping once. A node in a pocket too dense to free is left where it is
-  // and counted, rather than the map being distorted to satisfy a constant.
-  const clearAtSettle = edgeIncidences(null);
-  let clearPasses = 0;
-  for (; clearPasses < EDGE_CLEAR_PASSES; clearPasses++) {
-    let moved = 0;
-    edgeIncidences(function (n, a, b, ox, oy, short) {
-      const step = short + EDGE_CLEAR_EPSILON;
-      n.x += ox * step; n.y += oy * step;
-      moved++;
-    });
-    if (!moved) break;
-    nodes.forEach(function (n) {
-      n.x = Math.max(FIT_MARGIN, Math.min(CANVAS_W - FIT_MARGIN, n.x));
-      n.y = Math.max(FIT_MARGIN, Math.min(CANVAS_H - FIT_MARGIN, n.y));
-    });
-    for (let i = 0; i < N; i++) {          // one relaxation sweep at the
-      for (let j = i + 1; j < N; j++) {    // marker-overlap floor
-        const p = nodes[i], q = nodes[j];
-        let dx = q.x - p.x, dy = q.y - p.y;
-        let d = Math.sqrt(dx * dx + dy * dy);
-        if (d >= MIN_NODE_GAP) continue;
-        if (d < 1e-6) { dx = 1; dy = 0; d = 1; }   // coincident: split along x
-        const push = (MIN_NODE_GAP - d) / d / 2;
-        p.x -= dx * push; p.y -= dy * push;
-        q.x += dx * push; q.y += dy * push;
+  // ── Edge crossings ──
+  // Two edges sharing an endpoint meet at a node and are not counted; any other
+  // pair that intersects is a crossing. Orientation tests only — the crossing
+  // point is never needed, just whether each segment separates the other's ends.
+  function orient(px, py, qx, qy, rx, ry) {
+    const v = (qy - py) * (rx - qx) - (qx - px) * (ry - qy);
+    return Math.abs(v) < 1e-9 ? 0 : (v > 0 ? 1 : 2);
+  }
+  function countCrossings(nodes) {
+    let n = 0;
+    for (let i = 0; i < links.length; i++) {
+      const ai = links[i].source, bi = links[i].target;
+      const a = nodes[ai], b = nodes[bi];
+      for (let j = i + 1; j < links.length; j++) {
+        const ci = links[j].source, di = links[j].target;
+        if (ci === ai || ci === bi || di === ai || di === bi) continue;
+        const c = nodes[ci], d = nodes[di];
+        if (orient(a.x, a.y, b.x, b.y, c.x, c.y) !== orient(a.x, a.y, b.x, b.y, d.x, d.y) &&
+            orient(c.x, c.y, d.x, d.y, a.x, a.y) !== orient(c.x, c.y, d.x, d.y, b.x, b.y)) n++;
       }
     }
+    return n;
   }
-  const clearRemaining = edgeIncidences(null);
+
+  // ── One bake: scatter, settle, fit, clear ──
+  // Everything above this point is a function of the input alone — the link
+  // rule, the components, the anchors — so it is computed once and shared. What
+  // follows depends on the random scatter and is therefore a sample, which is
+  // what makes drawing several and keeping the cleanest (see LAYOUT_ATTEMPTS)
+  // meaningful rather than superstitious.
+  function bake() {
+    /* The starting scatter, against the canonical canvas. It was drawn from a
+       seeded LCG while the seed was an input worth reproducing; with nothing left
+       to replay it, the platform's RNG is the same scatter with less apparatus. */
+    const nodes = pubs.map(function (p, i) {
+      const n = { i: i };
+      n.x = CANVAS_W / 2 + (Math.random() - 0.5) * Math.min(CANVAS_W, CANVAS_H) * 0.6;
+      n.y = CANVAS_H / 2 + (Math.random() - 0.5) * Math.min(CANVAS_W, CANVAS_H) * 0.6;
+      n.vx = 0; n.vy = 0;
+      return n;
+    });
+
+    // forceLink mutates link.source/target into node refs — give it a copy so the
+    // emitted `links` keep their integer indices. A fresh copy per bake, since the
+    // previous one now holds the previous bake's node objects.
+    const simLinks = links.map(function (l) { return { source: l.source, target: l.target, value: l.value }; });
+
+    const simulation = d3.forceSimulation(nodes)
+      .alphaDecay(0.005)
+      .force('link', d3.forceLink(simLinks).id(function (d) { return d.i; })
+        .distance(function (d) { return LINK_DIST_BASE + (1 - d.value) * LINK_DIST_SPAN; })
+        .strength(function (d) { return 0.5 + d.value * 0.5; }))
+      .force('charge', d3.forceManyBody().strength(CHARGE_STRENGTH).distanceMax(CHARGE_DISTANCE_MAX))
+      .force('x', d3.forceX(function (d) { return targets[d.i].x; }).strength(GRAVITY))
+      .force('y', d3.forceY(function (d) { return targets[d.i].y; }).strength(GRAVITY))
+      .force('collide', d3.forceCollide().radius(NODE_RADIUS + NODE_SPACING))
+      .force('edgeClear', makeEdgeClearForce(nodes))
+      .stop();
+    for (let i = 0; i < LAYOUT_TICKS; i++) simulation.tick();
+
+    // Normalize the settled cloud to fit the canvas with a uniform margin, so
+    // every starting scatter yields a balanced, non-overflowing layout. Uniform
+    // scale preserves the shape; the translation centers it. The page then
+    // fit-scales this canvas into the live stage as before.
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    nodes.forEach(function (n) {
+      if (n.x < minX) minX = n.x;
+      if (n.x > maxX) maxX = n.x;
+      if (n.y < minY) minY = n.y;
+      if (n.y > maxY) maxY = n.y;
+    });
+    const spanX = Math.max(1, maxX - minX);
+    const spanY = Math.max(1, maxY - minY);
+    const fit = Math.min((CANVAS_W - 2 * FIT_MARGIN) / spanX, (CANVAS_H - 2 * FIT_MARGIN) / spanY);
+    const tx = (CANVAS_W - spanX * fit) / 2 - minX * fit;
+    const ty = (CANVAS_H - spanY * fit) / 2 - minY * fit;
+    nodes.forEach(function (n) { n.x = n.x * fit + tx; n.y = n.y * fit + ty; });
+
+    // ── Node–edge clearance, guaranteed ──
+    // The force above shapes the arrangement around the clearance while the
+    // simulation is warm, but it is one force among several, it fades with alpha,
+    // and the fit just applied rescales every gap it won (a uniform scale under 1
+    // shrinks the distance to a line as surely as the distance between markers).
+    // So the invariant is established here, in the units the page will draw:
+    // sweep the incidences, move each offender straight out to the clearance,
+    // keep it inside the margin box and off its neighbours, then measure again —
+    // a nudge can create the next incidence, which is why this iterates instead
+    // of sweeping once. A node in a pocket too dense to free is left where it is
+    // and counted, rather than the map being distorted to satisfy a constant.
+    const clearAtSettle = edgeIncidences(nodes, null);
+    let clearPasses = 0;
+    for (; clearPasses < EDGE_CLEAR_PASSES; clearPasses++) {
+      let moved = 0;
+      edgeIncidences(nodes, function (n, a, b, ox, oy, short) {
+        const step = short + EDGE_CLEAR_EPSILON;
+        n.x += ox * step; n.y += oy * step;
+        moved++;
+      });
+      if (!moved) break;
+      nodes.forEach(function (n) {
+        n.x = Math.max(FIT_MARGIN, Math.min(CANVAS_W - FIT_MARGIN, n.x));
+        n.y = Math.max(FIT_MARGIN, Math.min(CANVAS_H - FIT_MARGIN, n.y));
+      });
+      for (let i = 0; i < N; i++) {          // one relaxation sweep at the
+        for (let j = i + 1; j < N; j++) {    // marker-overlap floor
+          const p = nodes[i], q = nodes[j];
+          let dx = q.x - p.x, dy = q.y - p.y;
+          let d = Math.sqrt(dx * dx + dy * dy);
+          if (d >= MIN_NODE_GAP) continue;
+          if (d < 1e-6) { dx = 1; dy = 0; d = 1; }   // coincident: split along x
+          const push = (MIN_NODE_GAP - d) / d / 2;
+          p.x -= dx * push; p.y -= dy * push;
+          q.x += dx * push; q.y += dy * push;
+        }
+      }
+    }
+    const clearRemaining = edgeIncidences(nodes, null);
+
+    return {
+      nodes: nodes,
+      clearance: { atSettle: clearAtSettle, remaining: clearRemaining, passes: clearPasses },
+      crossings: countCrossings(nodes),
+    };
+  }
+
+  // ── Pick the cleanest bake ──
+  // Ranked lexicographically: residual node-on-edge incidences first — a marker
+  // printed on a line it does not end is the worse misreading of the two, and
+  // the one the clearance pass was supposed to have settled — then crossings.
+  // Clean on both ends the search: there is nothing a further sample could
+  // improve, and the bakes are independent, so an early one is as good as a
+  // late one.
+  let best = null;
+  let attempts = 0;
+  for (; attempts < LAYOUT_ATTEMPTS; attempts++) {
+    const cand = bake();
+    if (!best ||
+        cand.clearance.remaining < best.clearance.remaining ||
+        (cand.clearance.remaining === best.clearance.remaining &&
+         cand.crossings < best.crossings)) best = cand;
+    if (best.clearance.remaining === 0 && best.crossings === 0) break;
+  }
+  const nodes = best.nodes;
 
   const positions = nodes.map(function (n) {
     return [Math.round(n.x * 100) / 100, Math.round(n.y * 100) / 100];
@@ -420,7 +494,11 @@ function main(input) {
   process.stdout.write(JSON.stringify({
     // Reported by build-network.py: stderr here is captured and shown only on
     // failure, so what the build should say travels in the result.
-    clearance: { atSettle: clearAtSettle, remaining: clearRemaining, passes: clearPasses },
+    clearance: best.clearance,
+    /* How many bakes were drawn, and what the kept one still carries.
+       `crossings` is reported, never repaired — see LAYOUT_ATTEMPTS. */
+    crossings: best.crossings,
+    attempts: Math.min(attempts + 1, LAYOUT_ATTEMPTS),
     canvas: { w: CANVAS_W, h: CANVAS_H },
     /* The constants the page needs to say the same thing this file did: the radius it
        draws its markers at, and the three numbers its legend quotes. Shipped rather
