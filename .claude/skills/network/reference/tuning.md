@@ -14,7 +14,7 @@ Python) because the layout is what consumes it.
 | `STRONG_SIM` | 0.65 | floor for a reciprocal (backbone) edge |
 | `FALLBACK_SIM` | 0.60 | floor for the single rescue edge given to an unreciprocated node; kept **below** `STRONG_SIM` so these stay a distinct weaker tier (drawn at reduced opacity, flagged `fb`) |
 | `NODE_RADIUS` | 3 | marker radius, fixed px in the live view |
-| `NODE_SPACING` | 18 | collide radius — marker/click separation, not label legibility |
+| `NODE_SPACING` | 10 | collide radius — marker/click separation, not label legibility. Must stay **below** the link rest lengths and **above** half the page's hit circle: at 18 it was the binding constraint and the whole cloud jammed into a hexagonal crystal (see the note below) |
 | `MIN_NODE_GAP` | `2·R + 4` | node–node overlap relaxed to this in the deterministic pass |
 | `EDGE_CLEARANCE` | `R + 6` | a marker may not come this close to an edge it does not end |
 | `EDGE_CLEAR_STRENGTH` | 0.4 | share of the shortfall applied per tick, as a force |
@@ -22,12 +22,22 @@ Python) because the layout is what consumes it.
 | `EDGE_CLEAR_EPSILON` | 0.05 | overshoot per nudge, so float noise doesn't re-report the same offender |
 | `CHARGE_STRENGTH` | −280 | repulsion |
 | `CHARGE_DISTANCE_MAX` | 520 | repulsion cutoff |
-| `GRAVITY` | 0.9 | pull toward the well |
+| `GRAVITY` | 0.45 | pull toward the well. Above ~0.6 it overpowers the link force and every edge is drawn at the same length |
 | `LINK_DIST_BASE` / `LINK_DIST_SPAN` | 10 / 38 | edge length as a function of similarity |
 | `LAYOUT_TICKS` | 1400 | simulation length |
 | `ANCHOR` | `center` | one gravity well, so clusters settle as islands. `ring` centres the largest component and pins the rest on a perimeter — wrong for this many-small-components graph, which it scatters into a halo |
 | `CANVAS_W` / `CANVAS_H` | 564 / 564 | the stage's own square, so the client's fit is 1:1 on desktop and everything baked in px is drawn at the size it was measured at |
 | `FIT_MARGIN` | 40 | label headroom — a hovered two-line title reaches ~37px above its node |
+
+**Keep the layout amorphous.** `NODE_SPACING` and `GRAVITY` decide together whether node
+*position* carries any information, and the failure is quiet: with spacing at 18 and gravity
+at 0.9, collide was the binding constraint and 67 equal disks pressed into one well jammed
+into hexagonal close packing — every node exactly 59px from its neighbours, every edge drawn
+at that same length, so a linked pair was indistinguishable from an unlinked one. It looks
+tidy, which is why it survived. Measure it rather than eyeballing it: take each node's bond
+angles to its nearest neighbours mod 60° and compute the circular order parameter. Near 1 is
+a crystal, near 0 is amorphous; the retune took it from 0.99 to ~0.11. Both knobs are needed
+— dropping spacing alone unjams the packing but leaves edge length pinned to the spacing.
 
 The clearance is enforced **twice**: as a force during the simulation (which clears most
 starting scatters on its own) and as a deterministic pass **after** fit-normalization, since a uniform

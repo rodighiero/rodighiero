@@ -35,10 +35,23 @@ const d3 = require(path.resolve(__dirname, 'vendor', 'd3.v7.min.js'));
 // ── Layout constants (formerly in _layouts/home.html) ──
 const NODE_RADIUS = 3;
 // Collide radius = NODE_RADIUS + NODE_SPACING. Labels render only on hover (one
-// at a time, plus a selection's neighbors), so this spacing governs marker/
-// click separation, not label legibility — kept tight enough that linked nodes
-// pull into visibly distinct cluster knots rather than a uniform blob.
-const NODE_SPACING = 18;
+// at a time, plus a selection's neighbors), so this spacing governs marker and
+// click separation, not label legibility.
+//
+// It has to stay below the rest lengths forceLink asks for, or it becomes the
+// binding constraint and the arrangement stops meaning anything. At 18 it was:
+// 67 equal disks of radius 21, pressed into one gravity well, jam the way hard
+// spheres always do — into hexagonal close packing. Every node then sat 59px
+// from its neighbours (measured hexagonal order 0.99 out of 1) and every edge
+// was drawn at that one length, so a linked pair looked exactly like an
+// unlinked one: a crystal with the graph written on top of it. At 10 the
+// collide radius is 13, under the 10–48 band the link force works in, so
+// charge and link set the spacing instead and the packing comes out amorphous
+// (order ~0.1) with the knots visibly tighter than the gaps between them.
+// The floor is the page's hit circle (r = 12 in home.html): nearest-neighbour
+// distance must stay above 24 or two nodes share a click target. It settles
+// around 40 here, and the tightest pair seen over a dozen rerolls was 34.
+const NODE_SPACING = 10;
 // Node–edge clearance. A marker is filled with the page background and drawn
 // over the link layer, so a node resting on an edge knocks that line out on
 // both sides — which is exactly what a junction looks like, and the node then
@@ -83,7 +96,16 @@ const MUTUAL_K = 2;
 // back door into the backbone: it relaxes both mutuality and the floor, but
 // only for a node that would otherwise be isolated.
 const FALLBACK_SIM = 0.60;
-const GRAVITY = 0.9;
+// Pull toward the component anchor (see ANCHOR). Strong enough to keep the
+// unconnected nodes in the picture — under 'center' anchoring there is nothing
+// else holding them — and weak enough that a link can still win locally and
+// draw its pair closer than the crowd. At 0.9 it won everywhere: the cloud was
+// pressed until collide jammed it (see NODE_SPACING), and lowering the collide
+// radius alone only traded the crystal for an evenly spread blob, since edge
+// length stayed pinned to the spacing. At 0.45 edge lengths spread with
+// similarity while the outermost node still sits about 1.3× the median radius
+// from the centre, so no node is exiled to a perimeter halo.
+const GRAVITY = 0.45;
 const LAYOUT_TICKS = 1400;
 // Link-distance shaping (forceLink): distance = LINK_DIST_BASE + (1−sim)*LINK_DIST_SPAN.
 const LINK_DIST_BASE = 10;
