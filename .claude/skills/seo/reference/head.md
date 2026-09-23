@@ -39,11 +39,12 @@ one; it is a guard against an invisible failure, not a live transformation.
 
 ## `<title>`
 
-`{{ title }} — {{ names }}`: the authors only (the editors when there are none), **capped to
-`First Author et al.` past two names**, to stay inside Google's ~60-character display budget.
-Editors, translators and preface are left out — `credit-full.html`, which the page body uses,
-names everyone uncapped. Don't route the title back through it: its secondary roles pushed
-titles to 230 characters.
+The bare publication title, no names. Authorship is already declared three times over —
+`citation_author`, the JSON-LD `author` with Dario's ORCID `@id`, the visible byline — and
+Google takes the site name from the homepage's `WebSite` node, so a credit here only spent the
+~60-character display budget, usually truncated off the end anyway. A fixed
+`— Dario Rodighiero` suffix was rejected too: on papers he did not lead it reads as sole
+authorship.
 
 ## Language and translation sets
 
