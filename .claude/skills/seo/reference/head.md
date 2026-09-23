@@ -39,10 +39,11 @@ one; it is a guard against an invisible failure, not a live transformation.
 
 ## `<title>`
 
-`{{ title }} — {{ credit }}`, where the credit comes from `credit-full.html` — the same
-formatter the page body uses — but **capped to `First Author et al.` past two names**, to stay
-inside Google's ~60-character display budget. The body's version is uncapped. Two renderings
-of one function, deliberately.
+`{{ title }} — {{ names }}`: the authors only (the editors when there are none), **capped to
+`First Author et al.` past two names**, to stay inside Google's ~60-character display budget.
+Editors, translators and preface are left out — `credit-full.html`, which the page body uses,
+names everyone uncapped. Don't route the title back through it: its secondary roles pushed
+titles to 230 characters.
 
 ## Language and translation sets
 

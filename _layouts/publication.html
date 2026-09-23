@@ -18,10 +18,9 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
   <meta charset="utf-8">
   {% include site-head.html %}
   {% assign _ptype = site.data.publication_types[page.type] %}
-  {% capture _credit %}{% include credit-full.html item=page %}{% endcapture %}{% assign _credit = _credit | strip %}
-  {%- comment -%} The same full credit runs in the page body via credit-block.html; here in <title> it's capped to keep the tag within Google's ~60-char display budget on multi-author papers. {%- endcomment -%}
+  {%- comment -%} The full credit runs in the page body via credit-block.html; <title> names only the authors (the editors when there are none), capped to "First et al." past two, to keep the tag within Google's ~60-char display budget. Editors, translators and preface stay out of it. {%- endcomment -%}
   {% assign _title_names = page.author | default: page.editor | split: ' and ' %}
-  {% assign _title_credit = _credit %}
+  {% assign _title_credit = _title_names | join: ', ' %}
   {% if _title_names.size > 2 %}{% assign _title_credit = _title_names[0] | append: ' et al.' %}{% endif %}
   <title>{{ _title_attr }}{% if _title_credit != '' %} — {{ _title_credit | escape }}{% endif %}</title>
   <meta name="description" content="{{ _excerpt_attr }}">
