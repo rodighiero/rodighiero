@@ -59,20 +59,26 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
   <meta property="og:image:alt" content="{{ _title_attr }}">
   {% if _social_dims.width %}<meta property="og:image:width" content="{{ _social_dims.width }}">
   <meta property="og:image:height" content="{{ _social_dims.height }}">{% endif %}
-  {% if page.year != "Forthcoming" %}<meta property="article:published_time" content="{{ page.year }}-01-01">{% endif %}
+  {%- comment -%} No article:published_time: the front matter knows only the year, and the
+  full datetime that tag requires would invent a 1 January that Google may then print in the
+  snippet. JSON-LD datePublished and citation_publication_date carry the bare year. {%- endcomment -%}
   {%- comment -%} commit_date is the file's last commit date, already computed for the sitemap. {%- endcomment -%}
   <meta property="article:modified_time" content="{{ page.commit_date }}">
-  {% if page.author %}<meta property="article:author" content="{{ page.author | replace: ' and ', ', ' }}">{% endif %}
+  {% if page.author %}{% assign _oa = page.author | split: ' and ' %}{% for _a in _oa %}<meta property="article:author" content="{{ _a | strip | escape }}">
+  {% endfor %}{% endif %}
   <meta name="twitter:title" content="{{ _title_attr }}">
   <meta name="twitter:description" content="{{ _excerpt_attr }}">
   <meta name="twitter:image" content="{{ site.url }}/images/{{ _social_img }}">
   <meta name="twitter:image:alt" content="{{ _title_attr }}">
   <!-- HighWire Press / Google Scholar citation tags -->
   <meta name="citation_title" content="{{ _title_attr }}">
-  {%- comment -%} One authors string, three surfaces: citation_author below, DC.creator further
-  down, and the JSON-LD author node. The fallback name is written once so they cannot drift. {%- endcomment -%}
-  {% assign _authors_raw = page.author | default: 'Dario Rodighiero' %}
+  {%- comment -%} One creators string for meta author, citation_author and DC.creator: the
+  authors, or on an edited volume the editors — Scholar has no editor tag, and the old
+  fallback to Dario alone credited him with a four-editor book. The JSON-LD reads page.author
+  directly, since it has a real editor property for the volume case. {%- endcomment -%}
+  {% assign _authors_raw = page.author | default: page.editor %}
   {% assign _authors_list = _authors_raw | split: ' and ' %}
+  <meta name="author" content="{{ _authors_list | join: ', ' | escape }}">
   {% for _ca in _authors_list %}
   <meta name="citation_author" content="{{ _ca | strip | escape }}">
   {% endfor %}
@@ -88,8 +94,8 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
   {% if page.isbn %}<meta name="citation_isbn" content="{{ page.isbn }}">{% endif %}
   {% if page.doi and page.doi contains 'doi.org/' %}<meta name="citation_doi" content="{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}">{% endif %}
   <meta name="citation_abstract_html_url" content="{{ _url }}">
+  {% if page.content contains '<!--more-->' %}<meta name="citation_fulltext_html_url" content="{{ _url }}">{% endif %}
   <meta name="citation_language" content="{{ _lang }}">
-  {% if page.year != "Forthcoming" %}<meta name="citation_cover_date" content="{{ page.year }}-01-01">{% endif %}
   <meta name="DC.title" content="{{ _title_attr }}">
   {% for _da in _authors_list %}
   <meta name="DC.creator" content="{{ _da | strip | escape }}">
@@ -112,7 +118,7 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
     "@id": "{{ _url }}",
     "headline": {{ page.title | jsonify }},
     "name": {{ page.title | jsonify }},
-    {%- include jsonld-people.html property="author" names=_authors_raw %}
+    {%- include jsonld-people.html property="author" names=page.author %}
     {%- comment -%} The byline's other roles, so a work Dario edited, translated or conducted
     still carries his ORCID node rather than leaving him off the page's graph entirely (the
     interviews are cited under the interviewee, and the two Analogous City maps under Rossi

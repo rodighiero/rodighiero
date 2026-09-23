@@ -8,9 +8,10 @@ the page-specific block in `_layouts/home.html` or `_layouts/publication.html`.
 Everything here is page-invariant, which is the admission test: a tag whose value depends on
 the page does not belong in this file.
 
-`viewport`, `robots`, `author`, two `theme-color`s (light/dark), `color-scheme`, the RSS
+`viewport`, `robots`, two `theme-color`s (light/dark), `color-scheme`, the RSS
 `<link rel=alternate>`, `og:site_name`, `twitter:card`, the two Dublin Core schema links, and
-the icon/manifest set. It opens by including `_includes/site-scheme.html`, the pre-paint
+the icon/manifest set. `<meta name="author">` is *not* here: it names the page's creators, so
+each layout writes its own (Dario on the homepage, the creators list on a publication). It opens by including `_includes/site-scheme.html`, the pre-paint
 `colorScheme` restore script — not metadata, but it must run before the first paint. That one
 lives in its own file because `404.html` includes it directly and takes nothing else from here.
 
@@ -74,7 +75,8 @@ computed rather than paired, any number of language versions works, not just two
 `citation_title`, one `citation_author` per name, `citation_publication_date`,
 `citation_volume`, `citation_issue`, `citation_firstpage`/`citation_lastpage`,
 `citation_publisher`, `citation_issn`, `citation_isbn`, `citation_doi`,
-`citation_abstract_html_url`, `citation_language`, `citation_cover_date`.
+`citation_abstract_html_url`, `citation_fulltext_html_url` (when the body has a
+`<!--more-->`, i.e. carries the full text beyond the abstract), `citation_language`.
 
 The venue tag is **not fixed**: `publication_types.yml` says which one this type uses
 (`citation_journal_title`, `citation_conference_title`, `citation_book_title`), and a type
@@ -86,8 +88,12 @@ head splits on the dash and, when the last part is shorter than the first, borro
 leading digits — `309`. En dash, em dash and hyphen are all normalised first. The visible
 citation keeps `301–9`; only the meta tag is expanded.
 
-`citation_author` falls back to `Dario Rodighiero` when `author` is absent, so an entry always
-declares one.
+**Creators.** `citation_author`, `DC.creator` and `<meta name="author">` read one list: `author`,
+or `editor` on an edited volume (the validator requires one of the two). Scholar has no editor
+tag, so the editors stand in. The old fallback was the literal `Dario Rodighiero`, which
+credited him alone with a four-editor book. JSON-LD does not take the fallback: it has a real
+`editor` property, so an edited volume declares editors and no `author`. `article:author` is
+one tag per name, and only for real authors.
 
 ## Zotero import
 
@@ -123,9 +129,12 @@ journalArticle rather than magazineArticle. The venue is worth more than the typ
 
 | Tag | Source |
 |---|---|
-| `article:published_time` | `year`, as `YYYY-01-01`; omitted when `Forthcoming` |
 | `article:modified_time` | `commit_date` — the file's last commit, as a full ISO 8601 timestamp |
-| `citation_cover_date` | `year`, as `YYYY-01-01`; omitted when `Forthcoming` |
+| `citation_publication_date`, `DC.date`, JSON-LD `datePublished` | `year`, bare; omitted when `Forthcoming` |
+
+**No `article:published_time` or `citation_cover_date`.** The front matter knows only the year,
+and both used to emit `YYYY-01-01` — an invented 1 January that Google can print in a
+snippet as the publication date. Don't reintroduce them without a real month and day.
 
 Anything derived from `year` is skipped for `Forthcoming`, since `Forthcoming-01-01` is not a
 date. `commit_date`'s own no-git fallback accepts only a four-digit year and otherwise falls
