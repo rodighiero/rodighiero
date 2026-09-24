@@ -1138,8 +1138,8 @@ shows 3 columns. {%- endcomment -%}
       {% assign _events = site.data.home_cards.events | sort: 'date' | reverse %}
       {% for _event in _events %}{% include card-event.html event=_event %}{% endfor %}
 
-      {%- comment -%} One ordered list, year-desc with Forthcoming first (publication_order.rb
-      decides the tie-break inside a year), so a single card block renders every card and the
+      {%- comment -%} One ordered list, year-desc with Forthcoming counted as the current year
+      (publication_order.rb decides the tie-break inside a year), so a single card block renders every card and the
       _card_i priority counter stays correct. {%- endcomment -%}
       {% assign _card_i = 0 %}
       {% assign _cluster_n = 0 %}
@@ -1155,9 +1155,9 @@ shows 3 columns. {%- endcomment -%}
       {% assign _cluster_step = site.data.ordered_publications.size | divided_by: _cluster_slots %}
       {% if _cluster_step < 1 %}{% assign _cluster_step = 1 %}{% endif %}
       {% for publication in site.data.ordered_publications %}
-      {%- comment -%} A network-view card leads the dated flow: emit it once, right after the
-      forthcoming works (before the first publication carrying a real year). {%- endcomment -%}
-      {% if _net_done == false and publication.year != 'Forthcoming' %}
+      {%- comment -%} A network-view card leads the publication flow: emit it once, before the
+      first publication. {%- endcomment -%}
+      {% if _net_done == false %}
       {% include card-action.html eyebrow="Action" venue="Publication network" label="The Shape of a Body of Work" sublabel="This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." action="view:network" year="now" media="network-preview.svg" gcclick=gc_network_click gctitle=gc_network_title %}
       {% assign _net_done = true %}
       {% endif %}
@@ -1170,8 +1170,8 @@ shows 3 columns. {%- endcomment -%}
       back to back, and because every span ends in the current year the whole set sank into the
       lower half — the first five rows of the gallery carried none at all.
 
-      The test is `>=`, not `==`, so a slot that falls behind (the forthcoming works run past the
-      network tile's own slot) catches up on the next publication instead of dropping a card.
+      The test is `>=`, not `==`, so a slot that falls behind catches up on the next publication
+      instead of dropping a card.
 
       Each card carries its own miniature of the graph (network-cluster-<id>.svg, generated beside
       network-preview.svg): the same map in the same frame with the cluster lit and the rest faded,

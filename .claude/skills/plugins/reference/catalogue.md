@@ -60,10 +60,15 @@ tags, read only in a snippet or a card — rather than earning a thirteenth plug
 
 ### `publication_order.rb` → `site.data.ordered_publications` + `Jekyll::OrderedPublications`
 
-The site's single sort rule: **Forthcoming first, then year descending, title ascending within
-a year.** Implemented as a sort key — `[dated ? 1 : 0, dated ? -year : 0, title.downcase]`,
-where "dated" means the year matches `\A\d{4}\z`, so any non-four-digit year (not just the
-literal "Forthcoming") sorts ahead of every dated work.
+The site's single sort rule: **year descending; within the current year, newest-added first;
+within every other year, title ascending.** Forthcoming — any year not matching `\A\d{4}\z` —
+counts as the current year (`year_of`), so it sits among this year's additions by when it was
+added instead of pinned above everything, and giving it its real year later leaves it in place.
+The sort key is `[-year, recency, title.downcase]`, with `recency` the negated epoch of the
+commit that added the file for the current year and `0` for every other. The add dates come
+from one `git log --name-status --diff-filter=AR` walk; a rename hands the new path the old
+one's add date, so renaming a publication never moves it. The current-year test is
+`Time.now.year`, so on 1 January the outgoing year turns alphabetical by itself.
 
 It reaches three places: the published `site.data.ordered_publications` for the gallery flow,
 and the module itself, consumed by `publication_neighbors.rb` and `publication_date.rb`.
@@ -90,18 +95,15 @@ newest-first ordering reproduces the homepage's order. **The value is a sort key
 publication date.**
 
 Within a year the entries are all dated to January 1st and each gets a small offset —
-`Time.new(year, 1, 1, 12, 0, 0) + (size - 1 - i)` — so the alphabetically-first title
-carries the *latest* timestamp and therefore leads the feed. Noon, so a timezone shift cannot
+`Time.new(year, 1, 1, 12, 0, 0) + (size - 1 - i)` — so whichever title the homepage puts
+first carries the *latest* timestamp and therefore leads the feed. Noon, so a timezone shift cannot
 move the date. The offset is added as time arithmetic rather than passed as a seconds argument
 to `Time.new`, which would raise once a year held more than 86,400 titles.
 
-A non-numeric year yields `0`. Those entries are dated to the latest commit that *added* one
-of them, read from `Jekyll::OrderedPublications.added_dates` (the git walk the order already
-does), then `- i` for the homepage's order. Three guards: floored a day past the newest dated
-entry, so one added in an earlier year still leads the feed; capped at build time, since a
-future date trips Jekyll's future-date filter and drops the page; and the build clock only as
-the no-git fallback. It used to be the build clock outright, which re-dated both entries on
-every deploy and told feed readers they had just been published.
+Years are grouped by `Jekyll::OrderedPublications.year_of`, the same year the order sorts
+on, so a Forthcoming entry is dated inside the current year, where the homepage places it. The
+build clock never enters: it would re-date entries on every deploy and tell feed readers they
+had just been published.
 
 Its consumer is the gem, not a template in this repo.
 

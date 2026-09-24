@@ -1,6 +1,6 @@
-# The site's canonical publication order — year descending with Forthcoming
-# first, then, within a year, newest-added first for the current year and title
-# ascending for every other — defined once, here.
+# The site's canonical publication order — year descending, with Forthcoming
+# counted as the current year, then, within a year, newest-added first for the
+# current year and title ascending for every other — defined once, here.
 #
 # Reaches three places: site.data.ordered_publications (read by home.html for
 # the gallery flow), and the Jekyll::OrderedPublications module below, which
@@ -9,8 +9,10 @@
 require 'open3'
 
 module Jekyll::OrderedPublications
-  # Forthcoming — any year that is not four digits — sorts ahead of every dated
-  # work; dated works then run newest first.
+  # Works run newest year first. Forthcoming — any year that is not four digits
+  # — counts as the current year, so it sits among this year's additions by
+  # when it was added rather than pinned above everything; giving it its real
+  # year once it is out leaves it where it was.
   #
   # The tie-break inside a year is where the two rules part. The current year is
   # the block a returning reader scans for what is new, so it is ordered by when
@@ -18,15 +20,18 @@ module Jekyll::OrderedPublications
   # the year, so it keeps the alphabetical index. The test is Time.now.year, so
   # on 1 January the outgoing year falls back to alphabetical of its own accord —
   # nothing to remember at the turn of a year.
-  def self.sort_key(doc, added)
+  def self.year_of(doc)
     year = doc.data['year'].to_s
-    dated = year.match?(/\A\d{4}\z/)
-    current = dated && year.to_i == Time.now.year
+    year.match?(/\A\d{4}\z/) ? year.to_i : Time.now.year
+  end
+
+  def self.sort_key(doc, added)
+    year = year_of(doc)
     # Negated so the newest addition sorts first. Every other year puts 0 here,
     # which is inert and lets the title decide — and keeps the tuple one shape,
     # so no two keys ever compare an Integer against a String.
-    recency = current ? -(added[doc.relative_path] || 0) : 0
-    [dated ? 1 : 0, dated ? -year.to_i : 0, recency, doc.data['title'].to_s.downcase]
+    recency = year == Time.now.year ? -(added[doc.relative_path] || 0) : 0
+    [-year, recency, doc.data['title'].to_s.downcase]
   end
 
   def self.order(docs, site)

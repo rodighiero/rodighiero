@@ -138,11 +138,10 @@ ships.
   `--name-only` walk.
 - **`publication_date.rb`'s value is a sort key, not a publication date.** January 1st at
   noon plus a few seconds of offset, arranged so jekyll-feed's newest-first ordering reproduces
-  the homepage's alphabetical order within each year. Nothing may read it as a real date.
-- **A `Forthcoming` entry is dated to the latest commit that added one, never the build clock
-  and never the future.** The build clock re-dated it on every deploy, telling feed readers it
-  was just republished; a future date trips Jekyll's future-date filter and drops the page from
-  the build entirely.
+  the homepage's order within each year. Nothing may read it as a real date.
+- **A `Forthcoming` entry counts as the current year**, in the order and in the feed dates
+  alike (`Jekyll::OrderedPublications.year_of`). Never date one from the build clock, which
+  re-dates it on every deploy and tells feed readers it was just republished.
 - **`prev_pub`/`next_pub` store a plain hash (url + title), not the neighbouring Document.**
   Storing the document would make each page reference the other through page data.
 - **`publication_figures.rb` excludes `images/@cards/`** — generated gallery crops, not article

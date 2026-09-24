@@ -90,11 +90,10 @@ The two halves of the placement are decided in different places, on purpose.
 
 **Spacing is a count**, here in `home.html`: one card every `_cluster_step` publications,
 where `_cluster_step = publications ÷ (clusters + 1)`. The `+ 1` is the `view:network` tile,
-which takes the first of those slots at the top of the dated flow — so all eight
+which takes the first of those slots at the top of the publication flow — so all eight
 non-publication tiles come out evenly spaced, and the gaps re-space themselves as the corpus
-grows. The test is `>=`, not `==`, so a slot that falls behind (the forthcoming works running
-past the network tile's own slot) catches up on the next publication rather than dropping a
-card.
+grows. The test is `>=`, not `==`, so a slot that falls behind catches up on the next publication
+rather than dropping a card.
 
 **Order is a year**, decided in `build-network.py` (`order_cluster_cards`): the array arrives
 sorted by each cluster's median original member, newest first, and `home.html` walks it as it
@@ -125,12 +124,13 @@ rule the same typography, a publication card gives its authors. Its meta line re
 - Events lead the flow, sorted by `date` descending. Nothing expires them — a past event
   sits at the top of the homepage until its entry is deleted.
 - Cluster cards sit one every `publications ÷ (clusters + 1)` entries, with the `view:network`
-  card leading the dated flow just after the forthcoming works.
+  card leading the publication flow, before the first publication.
 - The network and cluster tiles are hidden below 921px along with the view toggle and the filter
   count; events stay.
 
-Publications render in one ordered loop, year-descending then title-ascending (Forthcoming
-first), so the `_card_i` priority counter stays correct.
+Publications render in one ordered loop in `publication_order.rb`'s order — year-descending,
+the current year (Forthcoming included) newest-added first, older years title-ascending — so
+the `_card_i` priority counter stays correct.
 
 ## Search
 

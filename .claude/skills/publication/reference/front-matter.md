@@ -7,7 +7,7 @@
 | Field | Notes |
 |---|---|
 | `title` | quoted; question marks and colons are fine |
-| `year` | four digits, or `Forthcoming` (which sorts first everywhere) |
+| `year` | four digits, or `Forthcoming` (which sorts as the current year, by when it was added) |
 | `venue` | **type-dependent** — see the table below |
 | `type` | a key of `_data/publication_types.yml`: book, chapter, journal, conference, magazine, interview, map |
 | `author` | ` and `-joined; may be replaced by `editor` when Dario did not author |
