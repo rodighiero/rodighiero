@@ -100,7 +100,7 @@ declared relationship. See the `network` skill.
 
 ## Two descriptions
 
-`description` is the 22-word/160-char truncation the meta description uses — it must fit a
+`description` is the 160-character `| snippet` of the abstract the meta description uses — it must fit a
 snippet. `abstract` has no budget and carries the abstract whole: on a full-text article the
 lead before `<!--more-->`, which *is* the abstract; on any other entry the body, which is the
 abstract already. Emitting the same string twice would waste the one field that can hold the

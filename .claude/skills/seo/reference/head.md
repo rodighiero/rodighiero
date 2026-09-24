@@ -25,8 +25,8 @@ Computed at the top of the head, before anything uses them:
 
 | Assign | What it is |
 |---|---|
-| `_excerpt` | `content \| strip_html \| decode_numeric_entities \| truncatewords: 22 \| truncate: 160` — the search-snippet budget |
 | `_abstract` | `content \| split: '<!--more-->' \| first \| strip_html \| …` — the abstract whole, no budget |
+| `_excerpt` | `_abstract \| snippet` — cut to the 160-character search-snippet budget, on a sentence end or a whole word plus `…` (see the `plugins` skill) |
 
 `_excerpt` feeds `description`, `og:description`, `twitter:description`, `DC.description`
 and JSON-LD `description`. `_abstract` feeds JSON-LD `abstract` only.

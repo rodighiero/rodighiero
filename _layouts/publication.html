@@ -7,14 +7,14 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
 <!DOCTYPE html>
 <html lang="{{ _lang }}">
 <head>
-  {% assign _excerpt = page.content | strip_html | decode_numeric_entities | truncatewords: 22 | truncate: 160 %}
-  {% assign _excerpt_attr = _excerpt | escape_once %}
-  {%- comment -%} The meta description has to fit a snippet, so it is the truncation above;
-  structured data has no such budget, so JSON-LD carries the abstract whole. On a full-text
-  article that is the lead before <!--more-->, which is exactly the abstract; on every other
-  entry the body is the abstract already. Split before strip_html — stripping tags takes the
-  <!--more--> comment with them. {%- endcomment -%}
+  {%- comment -%} JSON-LD carries the abstract whole; the meta description has to fit a
+  snippet, so it is the abstract cut by `snippet` (publication_decoder.rb), which ends on a
+  sentence or a whole word rather than mid-punctuation. On a full-text article the abstract is
+  the lead before <!--more-->; on every other entry the body is the abstract already. Split
+  before strip_html — stripping tags takes the <!--more--> comment with them. {%- endcomment -%}
   {% assign _abstract = page.content | split: '<!--more-->' | first | strip_html | decode_numeric_entities | normalize_whitespace | strip %}
+  {% assign _excerpt = _abstract | snippet %}
+  {% assign _excerpt_attr = _excerpt | escape_once %}
   <meta charset="utf-8">
   {% include site-head.html %}
   {% assign _ptype = site.data.publication_types[page.type] %}

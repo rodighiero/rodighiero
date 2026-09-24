@@ -116,8 +116,8 @@ not the template.
   `translator`, and `interviewer`/`preface` folded into `contributor`. That is what keeps
   Dario in the graph of works he did not author (the interviews, the two *Analogous City*
   maps), where it is his only appearance on the page.
-- **Two descriptions, two budgets.** `description` must fit a search snippet, so it stays the
-  22-word/160-char truncation; `abstract` has no budget and carries the abstract whole. Split
+- **Two descriptions, two budgets.** `description` must fit a search snippet, so it is the
+  abstract cut by `| snippet` to 160 characters, on a sentence end or a whole word; `abstract` has no budget and carries the abstract whole. Split
   on `<!--more-->` **before** `strip_html` — stripping tags takes the comment with it, and the
   abstract then silently becomes the entire article.
 - **`issn` only ever lands on a `Periodical`.** Schema.org does not define it for `Book`. An

@@ -23,7 +23,7 @@ it.** Everything here is one of three shapes:
 
 | Shape | Registered how | Examples |
 |---|---|---|
-| A **Liquid filter** | `Liquid::Template.register_filter` | `image_size`, `autolink_urls`, `decode_numeric_entities` |
+| A **Liquid filter** | `Liquid::Template.register_filter` | `image_size`, `autolink_urls`, `decode_numeric_entities`, `snippet` |
 | A **field on a document** | a generator or `post_read` hook writing `doc.data[…]` | `commit_date`, `figures`, `prev_pub`/`next_pub`, `date` |
 | A **site-wide datum** | writing `site.data[…]` | `ordered_publications`, `readme_content`, `commit_date` |
 
@@ -53,7 +53,7 @@ written down.
 |---|---|---|
 | `system_image_size.rb` | `\| image_size` | `home.html`, `publication.html`, both `figure-*` includes |
 | `publication_urls.rb` | `\| autolink_urls` | `publication.html` |
-| `publication_decoder.rb` | `\| decode_numeric_entities` | `publication.html` |
+| `publication_decoder.rb` | `\| decode_numeric_entities`, `\| snippet` | `publication.html` |
 | `publication_order.rb` | `site.data.ordered_publications` + the `OrderedPublications` module | `home.html`; the module by `publication_neighbors.rb`, `publication_date.rb` |
 | `publication_neighbors.rb` | `prev_pub` / `next_pub` | `publication-nav.html` |
 | `publication_date.rb` | `page.date` | the jekyll-feed gem |
@@ -139,8 +139,10 @@ ships.
 - **`publication_date.rb`'s value is a sort key, not a publication date.** January 1st at
   noon plus a few seconds of offset, arranged so jekyll-feed's newest-first ordering reproduces
   the homepage's alphabetical order within each year. Nothing may read it as a real date.
-- **A `Forthcoming` entry is dated `site.time - i`, never in the future** — a future date trips
-  Jekyll's future-date filter and drops the page from the build entirely.
+- **A `Forthcoming` entry is dated to the latest commit that added one, never the build clock
+  and never the future.** The build clock re-dated it on every deploy, telling feed readers it
+  was just republished; a future date trips Jekyll's future-date filter and drops the page from
+  the build entirely.
 - **`prev_pub`/`next_pub` store a plain hash (url + title), not the neighbouring Document.**
   Storing the document would make each page reference the other through page data.
 - **`publication_figures.rb` excludes `images/@cards/`** — generated gallery crops, not article

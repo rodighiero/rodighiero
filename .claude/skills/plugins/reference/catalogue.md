@@ -35,7 +35,7 @@ and re-emitted outside the anchor, so a URL ending a sentence doesn't swallow th
 footnote return arrow and Ruby's `\s` does not match it — without the exclusion the URL would
 swallow the nbsp and whatever preceded it.
 
-### `publication_decoder.rb` → `| decode_numeric_entities`
+### `publication_decoder.rb` → `| decode_numeric_entities`, `| snippet`
 
 Turns `&#8217;` / `&#x2019;` into UTF-8 characters, applied to excerpts *before*
 `escape_once`. `escape_once`'s exemption regexp covers named and decimal entities but not hex
@@ -47,6 +47,14 @@ transformation — kept because the failure it prevents is invisible on the page
 only in a social card or a search snippet. Named entities are deliberately left alone:
 `escape_once` handles those correctly, and decoding them would only hand it a bare `&` to
 re-escape.
+
+`snippet` cuts the abstract to the 160-character description budget, ellipsis included. It
+replaced `truncatewords: 22 | truncate: 160`, which cannot see punctuation and so shipped
+endings like `Consolascio,...`, `global....` and `starting from ...`. It ends on a full
+sentence when one closes in the back half of the budget; otherwise it cuts at the last whole
+word, drops dangling punctuation and appends a single `…`. Text already within budget passes
+through untouched. It shares the file because it guards the same surface — the description
+tags, read only in a snippet or a card — rather than earning a thirteenth plugin.
 
 ## Ordering and navigation
 
@@ -87,9 +95,13 @@ carries the *latest* timestamp and therefore leads the feed. Noon, so a timezone
 move the date. The offset is added as time arithmetic rather than passed as a seconds argument
 to `Time.new`, which would raise once a year held more than 86,400 titles.
 
-A non-numeric year yields `0` and is dated `site.time - i` — build time, so it sorts newest,
-but never in the future, which would trip Jekyll's future-date filter and drop the page from
-the build.
+A non-numeric year yields `0`. Those entries are dated to the latest commit that *added* one
+of them, read from `Jekyll::OrderedPublications.added_dates` (the git walk the order already
+does), then `- i` for the homepage's order. Three guards: floored a day past the newest dated
+entry, so one added in an earlier year still leads the feed; capped at build time, since a
+future date trips Jekyll's future-date filter and drops the page; and the build clock only as
+the no-git fallback. It used to be the build clock outright, which re-dated both entries on
+every deploy and told feed readers they had just been published.
 
 Its consumer is the gem, not a template in this repo.
 
