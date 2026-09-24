@@ -70,8 +70,11 @@ from one `git log --name-status --diff-filter=AR` walk; a rename hands the new p
 one's add date, so renaming a publication never moves it. The current-year test is
 `Time.now.year`, so on 1 January the outgoing year turns alphabetical by itself.
 
-It reaches three places: the published `site.data.ordered_publications` for the gallery flow,
-and the module itself, consumed by `publication_neighbors.rb` and `publication_date.rb`.
+It reaches three places: the published `site.data.ordered_publications` for the gallery flow
+and for `publication_date.rb` (a Generator, so it runs after the hook that publishes it), and
+the module itself, called by `publication_neighbors.rb` (a `post_read` hook like this one). The
+git walk is redone per call rather than memoized, since a module-level memo outlives the build
+under `jekyll serve`.
 Naming the file after any one of the three would have lied about the other two; naming it for
 the rule does not.
 

@@ -92,11 +92,13 @@ once and writing it down keeps the spring feel at no weight.
 The tiles use an **underdamped** spring (damping 0.75, 2.8% overshoot) so a tile travels a
 hair past its slot and settles back.
 
-The `linear()` declaration is preceded by an equivalent `cubic-bezier` one — a browser without
-`linear()` drops the whole shorthand, so the bezier stands as the fallback rather than leaving
-the property with no transition at all. This is also why the curve is written out literally
-rather than held in a custom property: a `var()` that fails at computed-value time discards
-the earlier declaration instead of falling back to it.
+There is no `cubic-bezier` fallback ahead of the curve: `light-dark()`, which carries every
+colour on the site, shipped after `linear()` in all three engines, so a browser that could miss
+the curve could not draw the page at all. With no fallback to protect, each curve is pasted
+**once**, into a custom property on `:root` at the top of the homepage's `<style>` —
+`--spring-tile` for the tiles, `--spring-settle` for the bio panel — and the transitions name
+it. The tiles' duration is `--tile-move`, which the JS reads back as `TILE_MOVE_MS` rather than
+keeping a copy in step.
 
 Homepage thumbnails are **warmed** after first idle (still-`lazy` images promoted to `eager`),
 so a card revealed by clearing a filter is not an empty frame.

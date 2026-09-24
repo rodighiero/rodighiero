@@ -18,10 +18,8 @@ Params:
 {%- if _yr == 'now' -%}{%- assign _yr = site.time | date: '%Y' -%}{%- endif -%}
 {%- comment -%} Two kinds of special card: a cluster tile applies a filter (.filter);
 the network tile triggers a one-off view switch (.action). {%- endcomment -%}
-{%- assign _is_cluster = false -%}
-{%- if include.action contains 'cluster:' -%}{%- assign _is_cluster = true -%}{%- endif -%}
 {%- assign _kind = 'action' -%}
-{%- if _is_cluster -%}{%- assign _kind = 'filter' -%}{%- endif -%}
+{%- if include.action contains 'cluster:' -%}{%- assign _kind = 'filter' -%}{%- endif -%}
 {%- comment -%} GoatCounter event tracking: count.js auto-binds a click listener to any element
 carrying data-goatcounter-click, using its value as the event path. The caller decides what a
 card is worth measuring as, so the path arrives as a param rather than being derived here from

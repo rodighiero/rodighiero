@@ -3,9 +3,10 @@
 # current year and title ascending for every other — defined once, here.
 #
 # Reaches three places: site.data.ordered_publications (read by home.html for
-# the gallery flow), and the Jekyll::OrderedPublications module below, which
-# publication_neighbors.rb and publication_date.rb both consume. So the
-# gallery, the prev/next nav and the RSS feed cannot disagree.
+# the gallery flow, and by publication_date.rb, a Generator that runs after
+# every post_read hook), and the Jekyll::OrderedPublications module below,
+# which publication_neighbors.rb — a post_read hook itself — calls directly. So
+# the gallery, the prev/next nav and the RSS feed cannot disagree.
 require 'open3'
 
 module Jekyll::OrderedPublications
@@ -35,7 +36,7 @@ module Jekyll::OrderedPublications
   end
 
   def self.order(docs, site)
-    added = added_dates(site)
+    added = walk_added(site.source)
     docs.sort_by { |doc| sort_key(doc, added) }
   end
 
@@ -45,16 +46,15 @@ module Jekyll::OrderedPublications
 
   # Epoch seconds of the commit that introduced each publication, keyed by the
   # path Document#relative_path reports. One `git log` walk for the whole
-  # collection, memoized because order() is asked for three times per build.
+  # collection, about 20 ms, redone on each order() call rather than memoized: a
+  # module-level memo outlives the build under `jekyll serve`, so a publication
+  # committed mid-session would get no date and sink until a restart.
   #
   # This walks git rather than reading the commit_date system_commit_date.rb
   # attaches, for two reasons. That value is the *last* commit touching a file,
   # so ordering by it would reshuffle the year on every typo fix. And it is
   # attached by a Generator, which runs after the post_read hooks that ask for
   # this order — it does not exist yet when the question is put.
-  def self.added_dates(site)
-    @added_dates ||= walk_added(site.source)
-  end
 
   # --diff-filter=AR asks only for the commits that introduce or rename a file.
   # Both sides of a rename inside _publications/ fall under the pathspec, so git

@@ -1,4 +1,5 @@
-# Every language a publication may declare in `lang:`, mapped to its Open Graph locale.
+# Every language a publication may declare in `lang:`, mapped to its Open Graph locale and
+# the words the homepage search matches it by (so "italiano" finds the Italian entries).
 #
 # `lang` drives six declarations. Five are the bare code and so are right for any
 # language without this file existing: <html lang>, hreflang, citation_language,
@@ -9,7 +10,7 @@
 # refuses a type that is not in publication_types.yml.
 #
 # Adding a language means adding a line here and nothing else.
-en: en_US
-it: it_IT
-fr: fr_FR
-nl: nl_NL
+en: { locale: en_US, search: "english" }
+it: { locale: it_IT, search: "italian italiano" }
+fr: { locale: fr_FR, search: "french français francais" }
+nl: { locale: nl_NL, search: "dutch nederlands" }

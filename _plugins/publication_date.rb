@@ -13,16 +13,12 @@ class Jekyll::PublicationDateGenerator < Jekyll::Generator
   priority :high
 
   def generate(site)
-    docs = site.collections['publications']&.docs
-    return unless docs
-
-    # Grouping the canonically ordered list keeps each year's titles in exactly
-    # the order the homepage shows (Jekyll::OrderedPublications, defined in
-    # publication_order.rb), so the feed and the gallery can never disagree.
-    # year_of is the same year the order sorts on, so Forthcoming groups with
-    # the current year here as well.
-    ordered = Jekyll::OrderedPublications.order(docs, site)
-    ordered.group_by { |doc| Jekyll::OrderedPublications.year_of(doc) }.each do |year, sorted|
+    # The list the homepage renders (publication_order.rb's post_read hook, which
+    # has run by the time any Generator does), grouped by year, keeps each year's
+    # titles in exactly the gallery's order, so the feed and the gallery can never
+    # disagree. year_of is the same year the order sorts on, so Forthcoming groups
+    # with the current year here as well.
+    site.data['ordered_publications'].group_by { |doc| Jekyll::OrderedPublications.year_of(doc) }.each do |year, sorted|
       sorted.each_with_index do |doc, i|
         # Add the offset as time arithmetic: a raw seconds argument to
         # Time.new would raise once a year holds more than 86400 titles.

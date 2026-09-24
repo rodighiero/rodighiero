@@ -47,8 +47,8 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
   {%- comment -%} og:locale is the one thing lang does not supply verbatim, so the mapping is
   a lookup in _data/languages.yml rather than a branch repeated here and below — and that
   file is also what the validator checks a new lang against. {%- endcomment -%}
-  <meta property="og:locale" content="{{ site.data.languages[page.lang] | default: 'en_US' }}">
-  {% for _t in _alt_pages %}<meta property="og:locale:alternate" content="{{ site.data.languages[_t.lang] | default: 'en_US' }}">
+  <meta property="og:locale" content="{{ site.data.languages[page.lang].locale | default: 'en_US' }}">
+  {% for _t in _alt_pages %}<meta property="og:locale:alternate" content="{{ site.data.languages[_t.lang].locale | default: 'en_US' }}">
   {% endfor %}
   {%- comment -%} `thumb` is required, so the portrait fallback this used to carry was
   unreachable: a publication without one aborts the build. Only the dimensions stay

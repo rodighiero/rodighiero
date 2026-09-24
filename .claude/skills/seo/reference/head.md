@@ -51,10 +51,10 @@ authorship.
 
 `lang` (defaulting to `en`) drives, on one page: `<html lang>`, `og:locale`,
 `citation_language`, `DC.language`, JSON-LD `inLanguage`, and the homepage's language search
-term. Five of those are the bare code. `og:locale` is the exception — a lookup in
-`_data/languages.yml` (`en: en_US`, `it: it_IT`, `fr: fr_FR`), which is also the list
-`publication_validator.rb` refuses an unknown `lang` against, since that one declaration is
-the only one an unlisted code would get silently wrong. Adding a language is a line in that
+term. Five of those are the bare code. `og:locale` and the search term are the exceptions —
+lookups in `_data/languages.yml` (`it: { locale: it_IT, search: "italian italiano" }`), which is
+also the list `publication_validator.rb` refuses an unknown `lang` against, since those are the
+declarations an unlisted code would get silently wrong. Adding a language is a line in that
 file and nothing else.
 
 Across pages, `translation_of` resolves once into two variables the rest of the head reads:

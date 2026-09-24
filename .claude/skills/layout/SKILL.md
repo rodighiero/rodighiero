@@ -84,7 +84,7 @@ one `applySearch`. Adding a field means adding it to `data-search` and, if it sh
 filterable on its own, giving the card a `data-*` attribute the way `data-type` works.
 
 ### Retune the motion
-`node scripts/spring-easing.js` prints the CSS `linear()` curves to paste into
+`node scripts/spring-easing.js` prints the CSS `linear()` curves to paste into the `--spring-*` tokens at the top of
 `_layouts/home.html`. It writes nothing — the point is that a retune is a parameter change
 rather than a hand-tweaked list of numbers. Which mechanism runs when, and what is
 deliberately cut rather than animated: `reference/motion.md`.

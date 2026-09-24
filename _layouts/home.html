@@ -141,6 +141,19 @@ shows 3 columns. {%- endcomment -%}
   }
   </script>
   <style>
+    /* The two springs scripts/spring-easing.js generates, each pasted once and named here:
+       --spring-settle is the critically damped curve the bio panel opens and closes on,
+       --spring-tile the underdamped one the gallery tiles travel on. --tile-move is the
+       tiles' duration, which the JS reads back (TILE_MOVE_MS) rather than copying. */
+    :root {
+      --spring-settle: linear(0, 0.034, 0.112, 0.211, 0.316, 0.417, 0.51, 0.593, 0.665,
+        0.726, 0.777, 0.82, 0.855, 0.884, 0.908, 0.927, 0.942, 0.954, 0.964, 0.971,
+        0.978, 0.982, 0.986, 0.989, 0.992, 0.993, 0.995, 0.996, 0.997, 0.998, 1);
+      --spring-tile: linear(0, 0.05, 0.167, 0.314, 0.465, 0.604, 0.723, 0.82, 0.894,
+        0.948, 0.985, 1.008, 1.021, 1.027, 1.028, 1.026, 1.023, 1.018, 1.014, 1.01,
+        1.007, 1.005, 1.003, 1.001, 1);
+      --tile-move: 0.42s;
+    }
 {% include styles-font.css %}
 {% include styles-base.css %}
     /* The gallery's current column count, shared by everything on the page that is laid
@@ -253,12 +266,8 @@ shows 3 columns. {%- endcomment -%}
          before the panel is fully open on the way back — and on its own curve, since a
          spring is a shape for distance, not for a fade. */
       transition:
-        height 0.6s linear(0, 0.034, 0.112, 0.211, 0.316, 0.417, 0.51, 0.593, 0.665,
-          0.726, 0.777, 0.82, 0.855, 0.884, 0.908, 0.927, 0.942, 0.954, 0.964, 0.971,
-          0.978, 0.982, 0.986, 0.989, 0.992, 0.993, 0.995, 0.996, 0.997, 0.998, 1),
-        margin-bottom 0.6s linear(0, 0.034, 0.112, 0.211, 0.316, 0.417, 0.51, 0.593,
-          0.665, 0.726, 0.777, 0.82, 0.855, 0.884, 0.908, 0.927, 0.942, 0.954, 0.964,
-          0.971, 0.978, 0.982, 0.986, 0.989, 0.992, 0.993, 0.995, 0.996, 0.997, 0.998, 1),
+        height 0.6s var(--spring-settle),
+        margin-bottom 0.6s var(--spring-settle),
         opacity 0.4s ease;
     }
     html[data-bio-visible="0"] .bio-shell { height: 0; overflow: hidden; margin-bottom: 0; opacity: 0; }
@@ -267,7 +276,7 @@ shows 3 columns. {%- endcomment -%}
     }
 
     /* ── Header ──
-       No top/bottom padding: the 2rem of spacing below it lives in .bio-shell's
+       No top/bottom padding: the spacing below it lives in .bio-shell's
        margin-bottom instead.
        The columns mirror the gallery's own grid exactly — --card-w each with a
        --card-gap gap, not a fluid 1fr/2rem split — so column 2's left edge lands on
@@ -365,7 +374,7 @@ shows 3 columns. {%- endcomment -%}
 
     /* ── Search bar + view toggle ── */
     /* Sticky so the view toggle stays reachable without scrolling back up — keeps
-       the three views feeling like one page rather than three. */
+       the two views feeling like one page rather than two. */
     .filters {
       position: sticky;
       top: 0;
@@ -511,14 +520,9 @@ shows 3 columns. {%- endcomment -%}
        Safari actually reads — stays in styles-base.css, where the article body reads it
        too. Only the special cards: the other .card-text is a byline, and a split surname
        (Rodig-hiero) reads as a different name, a name being parsed as a unit in a way
-       prose is not.
-       Naming the element rather than describing where it sits is also what makes that last
-       sentence true. This was `:is(.action, .filter, .event) .card-text`, and an event card
-       holds two .card-text elements, not one: the description this means, and the byline
-       credit-short.html renders under it. So the rule reached a byline after all — the
-       standing event card credits Rosenbergova, at 6/3/3 — which is precisely what the
-       sentence above says must not happen. A class on the description alone cannot. */
-    :is(.action, .filter, .event) .card-text { --hyphen-word: 6; --hyphen-min: 3; }
+       prose is not — and an event card holds a byline .card-text under its description, so
+       the rule names .hyphenate-prose, which only the description wears. */
+    :is(.action, .filter, .event) .hyphenate-prose { --hyphen-word: 6; --hyphen-min: 3; }
 
     /* Shared meta-line, likewise unqualified. */
     .card-meta { font-size: var(--text-xxs); }
@@ -539,8 +543,8 @@ shows 3 columns. {%- endcomment -%}
     h2 a:hover { text-decoration: none; }
     h2 a:focus-visible { outline: none; }
 
-    /* ── Special cards (shown in gallery only) ── Three kinds: .action (a one-off
-       view/type/search trigger), .filter (a cluster tile, which sets a persistent
+    /* ── Special cards (shown in gallery only) ── Three kinds: .action (a view
+       switch), .filter (a cluster tile, which sets a persistent
        filter instead) and .event (an announcement linking out to another site — the
        only one that is an <a> rather than a <button>, and the only one kept on
        mobile, since it is news rather than a way of re-cutting the gallery).
@@ -619,9 +623,7 @@ shows 3 columns. {%- endcomment -%}
          snap when it moved from outline-color to an inset box-shadow. (On why there is no
          bezier declared ahead of the curve, see .bio-shell above.) */
       transition:
-        transform 0.42s linear(0, 0.05, 0.167, 0.314, 0.465, 0.604, 0.723, 0.82, 0.894,
-          0.948, 0.985, 1.008, 1.021, 1.027, 1.028, 1.026, 1.023, 1.018, 1.014, 1.01,
-          1.007, 1.005, 1.003, 1.001, 1),
+        transform var(--tile-move) var(--spring-tile),
         opacity 0.28s ease,
         background 0.15s ease,
         box-shadow 0.15s ease;
@@ -667,8 +669,8 @@ shows 3 columns. {%- endcomment -%}
        (2009 with 2026) at 160px — long, but still visibly short of a boundary, so no
        cap is needed.
 
-       Counting from one rather than zero is what keeps it a separator. Ten publications
-       share 2026, ten share 2025 and nine share 2022, so a zero-length same-year gap
+       Counting from one rather than zero is what keeps it a separator. Several
+       publications share most years, so a zero-length same-year gap
        would leave most gaps empty — the mark would go missing precisely where two cards
        sit closest together, which is where a separator is most wanted.
 
@@ -874,7 +876,6 @@ shows 3 columns. {%- endcomment -%}
       .node.connected .marker { stroke: var(--fg); stroke-width: 1.25; }
       .link.highlight { stroke-width: 1; }
       .link.fallback.highlight { opacity: 1; }
-      .labels text.hover { fill: var(--fg); }
       /* Click-selection (.dimmed on non-neighbors) and search filter (.filtered-out on non-matches) recolor to muted. */
       .node.dimmed .marker,
       .node.filtered-out .marker { stroke: var(--muted); }
@@ -898,18 +899,14 @@ shows 3 columns. {%- endcomment -%}
         padding: var(--card-pad);
       }
       .details[hidden] { display: none; }
-      /* :scope for weight, not for matching: styles-base.css's
+      /* :scope for weight, not for matching: the gallery's
          .publication:has(h2 a:focus-visible) is two classes *and* two pseudo-classes,
          so the plain two-class form would lose `background` to it the moment the
          cloned title link takes keyboard focus. */
       :scope .details .publication {
-        position: static;
-        width: auto;
         padding: 0;
         cursor: default;
         background: none;
-        transform: none;
-        border-top: none;
       }
       :scope .details .publication:hover { background: none; }
       /* No background tint here (above), so the title link needs its own hover affordance
@@ -1132,18 +1129,19 @@ shows 3 columns. {%- endcomment -%}
       ignores them. Events lead the flow, newest first — they are the timely tile, and the one
       kind that goes somewhere else rather than filtering in place; they are the only special
       card that comes from _data/home_cards.yml. The network tile and the research-cluster
-      filter cards are generated below from site.data.network and spaced evenly through the
-      dated flow. See scripts/build-network.py.
+      filter cards are generated below from site.data.network: the network tile leads the
+      publications, the cluster cards are spaced evenly through them. See scripts/build-network.py.
       {%- endcomment -%}
       {% assign _events = site.data.home_cards.events | sort: 'date' | reverse %}
       {% for _event in _events %}{% include card-event.html event=_event %}{% endfor %}
 
+      {%- comment -%} A network-view card leads the publication flow. {%- endcomment -%}
+      {% include card-action.html eyebrow="Action" venue="Publication network" label="The Shape of a Body of Work" sublabel="This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." action="view:network" year="now" media="network-preview.svg" gcclick=gc_network_click gctitle=gc_network_title %}
+
       {%- comment -%} One ordered list, year-desc with Forthcoming counted as the current year
-      (publication_order.rb decides the tie-break inside a year), so a single card block renders every card and the
-      _card_i priority counter stays correct. {%- endcomment -%}
-      {% assign _card_i = 0 %}
+      (publication_order.rb decides the tie-break inside a year), so a single card block renders
+      every card and forloop.index is each card's position. {%- endcomment -%}
       {% assign _cluster_n = 0 %}
-      {% assign _net_done = false %}
       {%- comment -%} The eight tiles that are not publications — the network card and the
       seven cluster filters — are spread by *count*, one every `_cluster_step` publications,
       rather than parked at a year. `_cluster_step` divides by clusters + 1 because the
@@ -1155,12 +1153,6 @@ shows 3 columns. {%- endcomment -%}
       {% assign _cluster_step = site.data.ordered_publications.size | divided_by: _cluster_slots %}
       {% if _cluster_step < 1 %}{% assign _cluster_step = 1 %}{% endif %}
       {% for publication in site.data.ordered_publications %}
-      {%- comment -%} A network-view card leads the publication flow: emit it once, before the
-      first publication. {%- endcomment -%}
-      {% if _net_done == false %}
-      {% include card-action.html eyebrow="Action" venue="Publication network" label="The Shape of a Body of Work" sublabel="This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." action="view:network" year="now" media="network-preview.svg" gcclick=gc_network_click gctitle=gc_network_title %}
-      {% assign _net_done = true %}
-      {% endif %}
       {%- comment -%} Auto cluster filter cards, one every `_cluster_step` publications, taken
       from `_clusters` in the order build-network.py put them in (newest median work first, see
       order_cluster_cards) — so the cards descend in time the way the gallery does while the
@@ -1170,9 +1162,6 @@ shows 3 columns. {%- endcomment -%}
       back to back, and because every span ends in the current year the whole set sank into the
       lower half — the first five rows of the gallery carried none at all.
 
-      The test is `>=`, not `==`, so a slot that falls behind catches up on the next publication
-      instead of dropping a card.
-
       Each card carries its own miniature of the graph (network-cluster-<id>.svg, generated beside
       network-preview.svg): the same map in the same frame with the cluster lit and the rest faded,
       so the tiles are small multiples and each one previews what clicking it does. The meta line
@@ -1180,7 +1169,7 @@ shows 3 columns. {%- endcomment -%}
       gallery meets cluster 1, 2, 3… in sequence — not by the cluster's internal `id`, which is
       size order in build-network.py and would look arbitrary on the page. {%- endcomment -%}
       {% assign _cluster_due = _cluster_n | plus: 1 | times: _cluster_step %}
-      {% if _net_done and _cluster_n < _clusters.size and forloop.index0 >= _cluster_due %}
+      {% if _cluster_n < _clusters.size and forloop.index0 == _cluster_due %}
       {% assign _cluster = _clusters[_cluster_n] %}
       {% assign _cluster_n = _cluster_n | plus: 1 %}
       {% capture _cluster_media %}network-cluster-{{ _cluster.id }}.svg{% endcapture %}
@@ -1191,14 +1180,11 @@ shows 3 columns. {%- endcomment -%}
       {% include card-action.html eyebrow="Filter" venue=_cluster_venue label=_cluster.title sublabel=_cluster.description action=_cluster.action slugs=_cluster.slugs year=_cluster.span filterlabel=_cluster.filter_label media=_cluster_media gcclick=_cluster.title %}
       {% endif %}
       {% assign _type_label = site.data.publication_types[publication.type].label %}
-      {% capture _lang_terms %}{% if publication.lang == 'it' %}italian italiano{% elsif publication.lang == 'fr' %}french français francais{% elsif publication.lang == 'nl' %}dutch nederlands{% else %}english{% endif %}{% endcapture %}
-      {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.interviewer }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ _lang_terms }}{% endcapture %}
+      {% assign _lang = site.data.languages[publication.lang] | default: site.data.languages.en %}
+      {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.interviewer }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ _type_label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ _lang.search }}{% endcapture %}
       <div class="card publication" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-year="{{ publication.year }}" data-search="{{ _search_text | strip_newlines | escape }}">
-        {%- comment -%} Unconditional: `thumb` is required on every publication (see
-        publication_validator.rb), so every card has a picture and _card_i counts them all. {%- endcomment -%}
-        {% assign _card_i = _card_i | plus: 1 %}
         <div class="card-media{% if publication.img_border %} bordered{% endif %}">
-          {%- comment -%} The first row (4 columns) is the likely LCP: load it eagerly with high priority; lazy-load below the fold. Reserve space from the thumbnail's own dimensions.
+          {%- comment -%} The first rows are the likely LCP: load it eagerly with high priority; lazy-load below the fold. Reserve space from the thumbnail's own dimensions.
           alt is empty on purpose: the card's <h2> link right below carries the title, so
           naming the image would make a screen reader announce every publication twice —
           once as a picture of the title, once as the link. The thumbnail is a crop of a
@@ -1207,7 +1193,7 @@ shows 3 columns. {%- endcomment -%}
           search through the publication page and og:image; only this derivative is silent.) {%- endcomment -%}
           {%- assign _thumb = '/images/@cards/' | append: publication.slug | append: '.webp' -%}
           {%- assign _thumb_dims = _thumb | image_size -%}
-          <img src="{{ _thumb }}" alt="" {% if _card_i <= 4 %}fetchpriority="high"{% elsif _card_i > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width }}" height="{{ _thumb_dims.height }}">
+          <img src="{{ _thumb }}" alt="" {% if forloop.index <= 4 %}fetchpriority="high"{% elsif forloop.index > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width }}" height="{{ _thumb_dims.height }}">
         </div>
         {% include card-meta.html item=publication %}
         {%- comment -%} lang on the title alone, not the card: the title is the only part
@@ -1404,9 +1390,11 @@ shows 3 columns. {%- endcomment -%}
       var b = parseInt(below.dataset.year, 10);
       return isNaN(a) || isNaN(b) ? 0 : Math.abs(a - b);
     }
-    function layoutMasonry() {
+    // `synced` is syncPageWidth()'s result when the caller has just run it, so a resize
+    // does one write/read cycle rather than two.
+    function layoutMasonry(synced) {
       // Before the view check: a resize in network view must resize the page too.
-      var sync = syncPageWidth();
+      var sync = synced || syncPageWidth();
       if (document.body.dataset.view !== 'gallery') return;
       // The body was just sized to fit exactly cols × CARD_W (plus gutters), so the
       // container spans it precisely — no need to re-measure or recompute cols from it.
@@ -1576,8 +1564,8 @@ shows 3 columns. {%- endcomment -%}
       var before = pageWidth;
       // Runs in every view: a resize in network view must resize the page too, even though
       // there is no gallery to pack (see layoutMasonry, which returns on the view check).
-      syncPageWidth();
-      if (pageWidth !== before) layoutMasonry();
+      var sync = syncPageWidth();
+      if (pageWidth !== before) layoutMasonry(sync);
     }
     function scheduleWidthPass() {
       if (layoutFrame) return;
@@ -1587,7 +1575,7 @@ shows 3 columns. {%- endcomment -%}
     /* No re-layout on image load. Every card thumbnail carries width and height from
        image_size and is styled height:auto, so the browser reserves the tile's box from
        the intrinsic ratio before a byte arrives — a decoded image cannot change the pack.
-       There used to be a load listener on all ~60 of them, each firing a full
+       There used to be a load listener on every one of them, each firing a full
        measure-and-write pass to learn a height already known. If an image ever does turn
        up without dimensions, give it dimensions: that is the fix, and image_size does it
        automatically. */
@@ -1640,9 +1628,8 @@ shows 3 columns. {%- endcomment -%}
     // slot with the transition suppressed — it still carries the transform of wherever it
     // last sat, and gliding in from a slot it no longer relates to reads as noise — then
     // fades in from there.
-    /* Kept in step with the `transform` duration on .animating .card (see the styles
-       above), which spring-easing.js generates from the same 0.42s. */
-    var TILE_MOVE_MS = 420;
+    // The `transform` duration on .animating .card, read rather than copied, like CARD_W.
+    var TILE_MOVE_MS = parseFloat(rootStyle.getPropertyValue('--tile-move')) * 1000;
     /* The spring overshoots and settles, so it is still moving fractionally after its
        nominal duration; disarming on the tick would strip the transition mid-settle. */
     var ARM_SLACK_MS = 80;
@@ -1650,8 +1637,8 @@ shows 3 columns. {%- endcomment -%}
     /* Arms the tile transition for one change and disarms it once the travel is over.
        Called from both places a tile can be sent to a new slot: a filter change, below,
        and a column-count change in layoutMasonry. It has to be disarmed again because the
-       ordinary layout passes — the first one, every resize within a count, a late image
-       load — write transforms too, and those have to stay instant. Re-arming while a
+       ordinary layout passes — the first one, every resize within a count — write
+       transforms too, and those have to stay instant. Re-arming while a
        change is still in flight just extends the window, which is what a second change
        landing on top of the first wants. */
     function armTileMotion() {
@@ -1758,7 +1745,7 @@ shows 3 columns. {%- endcomment -%}
     // One object rather than two independently-nullable globals, so callers can't
     // observe one half wired up before the other.
     var networkApi = null;
-    var activeType = null; // publication-type filter set by an action card / ?type= URL param
+    var activeType = null; // publication-type filter set by the ?type= URL param
     // Active cluster filter as one value — { id, slugs } or null — so the id and its
     // member slugs cannot drift apart (they were two variables that could disagree).
     var activeCluster = null;
@@ -2002,7 +1989,7 @@ shows 3 columns. {%- endcomment -%}
       matchedSlugs = filterActive ? matched : null;
       /* Only while the graph is on screen. matchedSlugs is assigned either way, and
          setView re-applies it on every entry to the network view, so a filter changed
-         from the gallery still lands — without walking 64 nodes and 44 links inside a
+         from the gallery still lands — without walking every node and link inside a
          display:none subtree on every settled keystroke. */
       if (networkApi && document.body.dataset.view === 'network') networkApi.filter(matchedSlugs);
       noResults.hidden = visible !== 0;
@@ -2051,14 +2038,9 @@ shows 3 columns. {%- endcomment -%}
 
     // Action cards: switch view (view:<name>) or set a cluster filter (cluster:<id>, whose
     // member slugs ride on the card's data-slugs). Those are the two the page emits — the
-    // network tile and the six cluster tiles.
-    //
-    // The cluster branch re-reads its own state first, so clicking a card that is already
-    // active clears it. In practice that never fires from a click: applySearch() hides every
-    // special card the moment any filter is active, so the card that set the filter is gone
-    // before it could be clicked again. The re-read stays because it is what makes the
-    // branch a toggle rather than a setter, and clearing runs through Escape and the search
-    // box instead (see resetFilters and the input handler below).
+    // network tile and the cluster tiles. A cluster card only ever sets: applySearch()
+    // hides every special card once a filter is active, so clearing runs through Escape
+    // and the search box instead (see resetFilters and the input handler below).
     /* The one place a cluster filter is constructed, so the {id, slugs} pair this design
        merged into a single object cannot be assembled two different ways. Membership rides
        on the card's data-slugs, which Liquid emits from the same network.json the graph
@@ -2137,22 +2119,13 @@ shows 3 columns. {%- endcomment -%}
           withCrossfade(function() { setView(val); });
           return;
         }
-        if (verb !== 'cluster' || !val) return;
-        // Setting a cluster — not clearing one, and not a card with nothing to select —
-        // takes the reader to the results (see scrollToResults). The test repeats the
-        // cluster branch's own, because the branch runs inside the transition and the
-        // scroll has to have happened before it does.
-        if (btn.dataset.slugs && !(activeCluster && activeCluster.id === val)) {
-          scrollToResults();
-        }
+        if (verb !== 'cluster' || !val || !btn.dataset.slugs) return;
+        // Setting a cluster takes the reader to the results (see scrollToResults), before
+        // the transition runs.
+        scrollToResults();
         withTileTransition(function() {
-          if (activeCluster && activeCluster.id === val) {
-            activeCluster = null;
-            clearFilterInput();
-          } else if (btn.dataset.slugs) {
-            setClusterFilter(btn, val);
-            showFilterInInput(btn.dataset.filterLabel || '');
-          }
+          setClusterFilter(btn, val);
+          showFilterInInput(btn.dataset.filterLabel || '');
           applySearch();
           updateURL();
         });
@@ -2478,7 +2451,7 @@ shows 3 columns. {%- endcomment -%}
         if (k <= 1) { titleLines[key] = [title]; return titleLines[key]; }
         /* Greedy fills each line to the brim and leaves the remainder on the last one,
            which on this corpus strands a single short word — "Care", "Model", "Object" —
-           on 23 of the 65 titles. Centred under a node that reads as a mistake rather
+           on about a third of the titles. Centred under a node that reads as a mistake rather
            than as a line. So the same k lines are refilled to even out their lengths:
            minimum raggedness, summing squared slack, by DP over (word, line) pairs.
            Breaking at the colon was tried first and abandoned: it is the seam the author
