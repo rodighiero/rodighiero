@@ -96,7 +96,7 @@ One entry in `_data/publication_types.yml` — `label`, `schema`, `dc`, optional
 - **Curly quotes** (`“ ”`) for English and Italian; French guillemets only inside French quotations.
 - **American English** in English entries (`livable`, not `liveable`). Italian and French entries keep their own orthography.
 - **Chicago author-date** throughout, in three places that are not the same thing:
-  - the **bibliography** — a `## References` (or `Bibliography` / `Références` / `Bibliographie`) section of `- ` bullets, in most files: `Bertin, Jacques. 1981. *Graphics and Graphic Information-Processing*. Berlin and New York: De Gruyter.`
+  - the **bibliography** — a `## References` (or `Bibliography` / `Références` / `Bibliographie`) section of `- ` bullets: `Bertin, Jacques. 1981. *Graphics and Graphic Information-Processing*. Berlin and New York: De Gruyter.`
   - **inline citations** — parenthetical `(Author Year)`, no comma before the year;
   - **footnotes** — kramdown (`[^1]` … `[^1]:`), for discursive notes rather than for bare references.
 

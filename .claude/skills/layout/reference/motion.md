@@ -36,9 +36,8 @@ display flips, so the tiles get one destination rather than a second one written
 into the movement.
 
 `applySearch()` deliberately does **not** lay out — it decides which tiles show, and packing
-them is the caller's to ask for, because only the caller knows when. It used to end by
-scheduling a pass, which `layoutMasonry()` then had to cancel on its way out; the two knew
-about each other for no reason a caller could see.
+them is the caller's to ask for, because only the caller knows when. It schedules nothing,
+so `layoutMasonry()` has nothing to cancel (`grid.md`, the width gate).
 
 Typing is debounced by `SEARCH_SETTLE` (180 ms) so a burst of keystrokes animates once rather
 than restarting the tiles on every character, and `prefers-reduced-motion` falls through to
@@ -66,8 +65,8 @@ On one principle: **don't animate a move the reader cannot follow.**
 **Per tile.** A slot moving further than `window.innerHeight` gets class `snapping`
 (`transition: none`) for that one style change and is released after a flush. Past a screen of
 travel there is nothing for the eye to follow, and a column change moves the deepest tiles in
-this gallery by thousands of pixels — measured on 4 → 3 at 897px of viewport, 47 of the 68
-tiles were beyond the line, all far below the fold.
+this gallery by thousands of pixels — on 4 → 3 at 897px of viewport, most tiles travel beyond
+the line, all far below the fold.
 
 **Per pass.** A change that shortens the gallery past where the reader is standing is left to
 cut entirely: the browser then clamps the scroll position — 3 → 4 at the foot of the page
@@ -104,8 +103,7 @@ so a card revealed by clearing a filter is not an empty frame.
 
 ## Scrolling — exactly one case
 
-The old blanket `scrollToTop` jump to the filter bar is gone. Switching view, typing, and
-changing a type or free-text filter all animate/fade the tiles in place and leave the scroll
+Switching view, typing, and changing a type or free-text filter all animate/fade the tiles in place and leave the scroll
 position where it was.
 
 The exception is **selecting a research cluster** (`scrollToResults()`), because it is the one
@@ -115,7 +113,7 @@ very top, leaving every result above where the reader is standing. (The short ca
 nothing: a filtered page that no longer fills the viewport can only clamp to 0, which the
 browser does by itself.)
 
-Three constraints keep it from becoming the old behaviour again:
+Three constraints keep it narrow:
 
 - It fires **only on setting a cluster** — not clearing one, not a type or text filter — so
   the test is duplicated at the call site, ahead of the transition the cluster branch runs

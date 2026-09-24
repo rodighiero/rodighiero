@@ -30,9 +30,8 @@ clusters[] — {id, label, terms, slugs, span, size, action,
               is size rank — the two deliberately disagree
 ```
 
-The file carries what someone reads, and nothing else: a field no surface reads is left
-out, because an unread field drifts without anyone noticing. Before adding one, name its
-reader.
+The file carries only what some surface reads; an unread field drifts unnoticed. Before
+adding a field, name its reader.
 
 `nodes` / `links` are index-parallel to the DOM elements the view builds once and never re-renders. The similarity matrix is deliberately **not** shipped.
 

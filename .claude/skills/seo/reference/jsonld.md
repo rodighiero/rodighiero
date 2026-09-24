@@ -35,7 +35,7 @@ is the entire mechanism** tying sixty-odd publication pages to the homepage's su
 and each page declares an unrelated person who happens to share a name. Co-authors stay bare
 names — there is no stable identifier for them, and inventing one would be worse than none.
 
-The identity is now structural rather than agreed: `orcid:` lives once in `_config.yml` and the
+The identity is structural, not a convention: `orcid:` lives once in `_config.yml` and the
 six places that name it — this include, plus `rel="me"`, `mainEntity`, the `Person` `@id`,
 `sameAs` and the footer link in `home.html` — all read `site.orcid`. Editing `_config.yml`
 needs a `jekyll serve` restart to take effect; nothing else does.

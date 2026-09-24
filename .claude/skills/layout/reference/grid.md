@@ -125,7 +125,7 @@ this is the same spacing **across**. Without it the shortest-column rule stacks 
 consecutive cluster tiles share a column at three columns wide, four of them at two, and eight
 near-identical small multiples in one vertical line read as a stripe rather than as a set.
 
-It costs the runner-up column's slack — tens of pixels — on eight tiles out of seventy-odd.
+It costs the runner-up column's slack — tens of pixels — on the cluster tiles alone.
 The rule stands down at one column, which has no runner-up, and never fires for a tile that
 is not being placed at all (hidden by an active filter, or by the mobile media query), since
 those return before a column is recorded.
@@ -145,13 +145,12 @@ each. **No column change is possible without a width change**, which is what mak
 safe; the 921px media query that hides the action cards sits exactly on the 2↔3 boundary
 (`pageWidth` 628 → 922), so that flip is packed too.
 
-A 1200→700px drag is ~125 frames, of which one crosses a threshold: 125 full
-measure-and-write passes over ~75 tiles became 1.
+A 1200→700px drag is ~125 frames, of which one crosses a threshold: one full
+measure-and-write pass over every tile, not 125.
 
-It also removes a cancellation. `layoutMasonry()` used to end by cancelling any pending
-scheduled pass, because `applySearch()` queued one that a synchronous filter layout had to
-retract. Neither half exists now: `applySearch()` schedules nothing, and a pass queued before
-a synchronous layout and fired after finds the width already synced and returns on its own.
+The gate also means `layoutMasonry()` cancels nothing: `applySearch()` schedules no pass, and
+a pass queued before a synchronous layout and fired after finds the width already synced and
+returns on its own.
 
 ## Two things to keep in mind when touching `setView`
 
