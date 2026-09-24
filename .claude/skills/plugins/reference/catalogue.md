@@ -70,26 +70,20 @@ from one `git log --name-status --diff-filter=AR` walk; a rename hands the new p
 one's add date, so renaming a publication never moves it. The current-year test is
 `Time.now.year`, so on 1 January the outgoing year turns alphabetical by itself.
 
-It reaches three places: the published `site.data.ordered_publications` for the gallery flow
-and for `publication_date.rb` (a Generator, so it runs after the hook that publishes it), and
-the module itself, called by `publication_neighbors.rb` (a `post_read` hook like this one). The
-git walk is redone per call rather than memoized, since a module-level memo outlives the build
-under `jekyll serve`.
-Naming the file after any one of the three would have lied about the other two; naming it for
-the rule does not.
+It is computed once per build, in a `post_read` hook, and published as
+`site.data.ordered_publications`, which three places read: the gallery flow, and
+`publication_neighbors.rb` and `publication_date.rb`, both Generators, so both run after the
+hook. Naming the file after any one of the three would have lied about the other two; naming it
+for the rule does not.
 
 ### `publication_neighbors.rb` → `prev_pub` / `next_pub`
 
-A `post_read` hook giving each document its two neighbours up front, so the layout reads
-`page.prev_pub` instead of scanning the collection in Liquid on each of sixty-odd pages.
+A Generator giving each document its two neighbours up front, so the layout reads
+`page.prev_pub` instead of scanning the collection in Liquid on each page.
 
 Each ref is a **plain hash of url + title** — only what `publication-nav.html` reads. Storing
 the neighbouring `Document` would make each pair reference the other through page data; the
 hash keeps the graph acyclic.
-
-It asks `Jekyll::OrderedPublications` for the order directly rather than reading
-`site.data.ordered_publications`, because both are `post_read` hooks and calling the shared
-module makes this one independent of which hook Jekyll happens to run first.
 
 ### `publication_date.rb` → `page.date`
 
@@ -98,8 +92,8 @@ newest-first ordering reproduces the homepage's order. **The value is a sort key
 publication date.**
 
 Within a year the entries are all dated to January 1st and each gets a small offset —
-`Time.new(year, 1, 1, 12, 0, 0) + (size - 1 - i)` — so whichever title the homepage puts
-first carries the *latest* timestamp and therefore leads the feed. Noon, so a timezone shift cannot
+`Time.new(year, 1, 1, 12) + i` over the year's list reversed — so whichever title the
+homepage puts first carries the *latest* timestamp and therefore leads the feed. Noon, so a timezone shift cannot
 move the date. The offset is added as time arithmetic rather than passed as a seconds argument
 to `Time.new`, which would raise once a year held more than 86,400 titles.
 

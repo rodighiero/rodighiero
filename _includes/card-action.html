@@ -18,8 +18,6 @@ Params:
 {%- if _yr == 'now' -%}{%- assign _yr = site.time | date: '%Y' -%}{%- endif -%}
 {%- comment -%} Two kinds of special card: a cluster tile applies a filter (.filter);
 the network tile triggers a one-off view switch (.action). {%- endcomment -%}
-{%- assign _kind = 'action' -%}
-{%- if include.action contains 'cluster:' -%}{%- assign _kind = 'filter' -%}{%- endif -%}
 {%- comment -%} GoatCounter event tracking: count.js auto-binds a click listener to any element
 carrying data-goatcounter-click, using its value as the event path. The caller decides what a
 card is worth measuring as, so the path arrives as a param rather than being derived here from
@@ -30,8 +28,7 @@ The title is always sent alongside it. Left out, count.js falls back to the elem
 (js/count.js:188) and every card here is markup — the network tile, whose first child is the
 graph miniature, reports a screenful of raw SVG as its event title. Defaulting the title to the
 path means a caller that names an event can't forget to label it. {%- endcomment -%}
-{%- assign _gc_title = include.gctitle | default: include.gcclick -%}
-<button type="button" class="card {{ _kind }}" data-action="{{ include.action }}"{% if include.slugs %} data-slugs="{{ include.slugs | join: ' ' }}"{% endif %}{% if include.filterlabel %} data-filter-label="{{ include.filterlabel }}"{% endif %}{% if include.gcclick %} data-goatcounter-click="{{ include.gcclick }}" data-goatcounter-title="{{ _gc_title }}"{% endif %}>
+<button type="button" class="card {% if include.action contains 'cluster:' %}filter{% else %}action{% endif %}" data-action="{{ include.action }}"{% if include.slugs %} data-slugs="{{ include.slugs | join: ' ' }}"{% endif %}{% if include.filterlabel %} data-filter-label="{{ include.filterlabel }}"{% endif %}{% if include.gcclick %} data-goatcounter-click="{{ include.gcclick }}" data-goatcounter-title="{{ include.gctitle | default: include.gcclick }}"{% endif %}>
   {%- if include.media -%}<span class="card-media">{% include {{ include.media }} %}</span>{%- endif -%}
   {%- if _yr or include.eyebrow or include.venue -%}
   <span class="card-meta">{% if _yr %}{% if _yr contains '–' or _yr contains '-' %}<span>{{ _yr }}</span>{% else %}<time datetime="{{ _yr }}">{{ _yr }}</time>{% endif %}{% if include.eyebrow %} · {% endif %}{% endif %}{{ include.eyebrow }}{% if include.venue %}<br><span class="venue">{{ include.venue }}</span>{% endif %}</span>

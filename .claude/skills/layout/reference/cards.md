@@ -92,8 +92,7 @@ The two halves of the placement are decided in different places, on purpose.
 where `_cluster_step = publications ÷ (clusters + 1)`. The `+ 1` is the `view:network` tile,
 which takes the first of those slots at the top of the publication flow — so all eight
 non-publication tiles come out evenly spaced, and the gaps re-space themselves as the corpus
-grows. The test is `>=`, not `==`, so a slot that falls behind catches up on the next publication
-rather than dropping a card.
+grows.
 
 **Order is a year**, decided in `build-network.py` (`order_cluster_cards`): the array arrives
 sorted by each cluster's median original member, newest first, and `home.html` walks it as it
@@ -130,7 +129,7 @@ rule the same typography, a publication card gives its authors. Its meta line re
 
 Publications render in one ordered loop in `publication_order.rb`'s order — year-descending,
 the current year (Forthcoming included) newest-added first, older years title-ascending — so
-the `_card_i` priority counter stays correct.
+`forloop.index` is each card's position, which is what the thumbnail loading priority reads.
 
 ## Search
 

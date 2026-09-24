@@ -54,7 +54,7 @@ written down.
 | `system_image_size.rb` | `\| image_size` | `home.html`, `publication.html`, both `figure-*` includes |
 | `publication_urls.rb` | `\| autolink_urls` | `publication.html` |
 | `publication_decoder.rb` | `\| decode_numeric_entities`, `\| snippet` | `publication.html` |
-| `publication_order.rb` | `site.data.ordered_publications` + the `OrderedPublications` module | `home.html`; the module by `publication_neighbors.rb`, `publication_date.rb` |
+| `publication_order.rb` | `site.data.ordered_publications` + the `OrderedPublications` module | `home.html`, `publication_neighbors.rb`, `publication_date.rb` (which also calls `year_of`) |
 | `publication_neighbors.rb` | `prev_pub` / `next_pub` | `publication-nav.html` |
 | `publication_date.rb` | `page.date` | the jekyll-feed gem |
 | `publication_figures.rb` | `figures` | `sitemap.xml` |
@@ -70,8 +70,9 @@ Per-file detail — what each actually does and the decisions inside it: `refere
 
 | Stage | Who |
 |---|---|
-| `post_read` hook | `publication_order.rb`, `publication_neighbors.rb`, `system_readme.rb` |
+| `post_read` hook | `publication_order.rb`, `system_readme.rb` |
 | Generator, `priority :high` | `publication_validator.rb`, `publication_figures.rb`, `system_commit_date.rb`, `publication_date.rb`, `system_network_client.rb` |
+| Generator, default priority | `publication_neighbors.rb` |
 | Generator, `priority :low` | `publication_redirect.rb` (last, so every page it might alias exists) |
 | `pre_render` hook | `system_image_size.rb`'s cache clear |
 
@@ -80,11 +81,10 @@ Two consequences worth holding on to:
 - **Generators run before rendering, so `doc.content` is still the raw Markdown.**
   `publication_figures.rb` depends on this — it scans for `{% include figure-single.html … %}`
   as *source text*, which would be gone after rendering.
-- **Hook order among same-stage hooks is not something to rely on.**
-  `publication_neighbors.rb` needs the canonical order and could have read
-  `site.data.ordered_publications`, but both are `post_read` hooks, so it calls
-  `Jekyll::OrderedPublications.order(…)` directly instead. **Copy that pattern**: share a
-  module, not a hook's output, whenever one same-stage plugin needs another's work.
+- **A Generator can read a `post_read` hook's output; a same-stage plugin cannot.** Every
+  `post_read` hook has run before the first Generator, so `publication_neighbors.rb` and
+  `publication_date.rb` read `site.data.ordered_publications` rather than sorting again. Two
+  plugins of the same stage have no order to rely on: there, share a module instead.
 
 ## Three rules that hold across all of them
 
@@ -164,6 +164,6 @@ ships.
 | An image is missing from the sitemap | `publication_figures:` warned it isn't on disk, or it lives under `images/@cards/` |
 | `width`/`height` empty on a figure | not a WebP, or a WebP variant the parser doesn't cover (it reads VP8, VP8L, VP8X) |
 | A constant is `uninitialized` inside a plugin | compact-form nesting — qualify it as `Jekyll::Thing` |
-| The feed's order disagrees with the gallery | something re-derived the sort instead of calling `Jekyll::OrderedPublications` |
+| The feed's order disagrees with the gallery | something re-derived the sort instead of reading `site.data.ordered_publications` |
 | An alias 404s | skipped as a duplicate, or for not starting with `/` — `publication_redirect:` names the file |
 | The bio is empty | `system_readme:` couldn't find `README.md` |
