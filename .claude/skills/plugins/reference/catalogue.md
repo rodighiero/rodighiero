@@ -138,7 +138,7 @@ timestamp, unlike the `Article` one, which is happy with a date. A timestamp is 
 surface a date was valid in, so the plugin emits one format rather than two.
 
 All per-file dates come from **one** `git log --name-only` walk keyed by path, not a
-subprocess per document: 61+ forks per build otherwise. Git is invoked via `Open3.capture2`
+subprocess per document, which would fork once per publication on every build. Git is invoked via `Open3.capture2`
 with `chdir: @source`, so the relative paths don't depend on where Jekyll was invoked from,
 and a missing `git` warns rather than raising.
 

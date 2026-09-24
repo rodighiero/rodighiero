@@ -13,7 +13,7 @@ toggled in the search bar and persisted in `localStorage` under `publicationView
 | **gallery** | custom JS masonry — newest first, packed by shortest column |
 | **network** | the publication similarity graph (data and geometry: see the `network` skill) |
 
-A third **list** view was removed; cards no longer carry an abstract/`.card-desc` at all.
+There is no third view, and cards carry no abstract (no `.card-desc`).
 
 ## The one idea
 
@@ -148,9 +148,9 @@ offline it was ceremony over a one-time build, and D3 was a 93KB-gzipped depende
   file, so the JS reads them straight — as is every `.publication` card's `h2 a`, which the
   Liquid loop always emits. **Wrapping any of them in a Liquid conditional breaks
   the page**, and the failure is a `TypeError` at load rather than a quiet degradation —
-  which is the trade: the old `if (el)` guards asserted a contract nothing broke and left
-  every new call site guessing which convention applied. Guards remain only where absence is
-  real: `networkApi` (built lazily on first network open) and `#net-data`. The same rule now
+  which is the trade: an `if (el)` guard asserts a contract nothing breaks and leaves every
+  new call site guessing which convention applies. Guards exist only where absence is
+  real: `networkApi` (built lazily on first network open) and `#net-data`. The same rule
   holds in `_includes/site-scripts.html`, shared by both layouts: `#live-msg` is unconditional
   in each, and a `.cite-btn` only exists inside publication.html's `<article>` beside the
   `.cite-data` its own `page.doi` conditional emits.

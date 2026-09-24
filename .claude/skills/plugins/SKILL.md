@@ -135,7 +135,7 @@ ships.
 - **It needs full git history** — `deploy.yml` checks out with `fetch-depth: 0`. A shallow
   checkout degrades every date to a fallback, silently.
 - **One `git log` walk, not one per document.** The per-file dates come from a single
-  `--name-only` walk; a subprocess per publication would be 61+ forks per build.
+  `--name-only` walk, not a subprocess forked per publication on every build.
 - **`publication_date.rb`'s value is a sort key, not a publication date.** January 1st at
   noon plus a few seconds of offset, arranged so jekyll-feed's newest-first ordering reproduces
   the homepage's alphabetical order within each year. Nothing may read it as a real date.

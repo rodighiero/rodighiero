@@ -30,13 +30,9 @@ clusters[] — {id, label, terms, slugs, span, size, action,
               is size rank — the two deliberately disagree
 ```
 
-The file carries what someone reads, and nothing else. Five fields have been taken out
-of it over time — `seed` and `nodes[].i`, then `links[].value` (the cosine that set an
-edge's rest length: internal to the simulation, and every consumer draws all edges at one
-weight), `nodes[].lang` (a *related* entry's language is shown, a node's own is not),
-`clusters[].year_start`/`year_end` (they print `span`, inside build-network.py) and
-`clusters[].anchor_slug` (the card's old year-based placement, now the array order). Each
-was written down, read by nobody, and free to drift.
+The file carries what someone reads, and nothing else: a field no surface reads is left
+out, because an unread field drifts without anyone noticing. Before adding one, name its
+reader.
 
 `nodes` / `links` are index-parallel to the DOM elements the view builds once and never re-renders. The similarity matrix is deliberately **not** shipped.
 
