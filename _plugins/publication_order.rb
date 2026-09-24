@@ -51,36 +51,45 @@ module Jekyll::OrderedPublications
     @added_dates ||= walk_added(site.source)
   end
 
-  # --diff-filter=A asks only for the commits that introduce a file, so the walk
-  # is the adds and nothing else. A rename registers as an add at the new path
-  # (--follow cannot be combined with a whole-directory pathspec), so renaming a
-  # publication of the current year moves it to the top of that year. Renames
-  # are rare and the slot is only a tie-break, so this stays a known edge rather
-  # than a second git walk per file.
+  # --diff-filter=AR asks only for the commits that introduce or rename a file.
+  # Both sides of a rename inside _publications/ fall under the pathspec, so git
+  # reports it as a rename, not an add — an add-only walk would leave the new
+  # path with no entry and sink it to the bottom of the current year. Instead a
+  # rename hands the new path the add date of the old one, so renaming a
+  # publication never moves it.
   #
   # No git, or a shallow checkout missing the introducing commit, yields no
   # entry; the recency slot stays 0 and the year falls back to alphabetical —
   # the same degradation system_commit_date.rb takes.
   def self.walk_added(source)
     stdout, status = Open3.capture2(
-      'git', 'log', '--name-only', '--diff-filter=A', '--pretty=format:%x00%ct',
+      'git', 'log', '--name-status', '--diff-filter=AR', '--pretty=format:%x00%ct',
       '--', '_publications', chdir: source
     )
     return {} unless status&.success?
 
     added = {}
+    renames = []
     stdout.split("\0").each do |chunk|
       lines = chunk.split("\n")
       stamp = lines.shift
       next unless stamp
 
       lines.each do |line|
-        file = line.strip
+        kind, *paths = line.strip.split("\t")
+        next unless kind
+
         # git log is newest-first, and a path can be added more than once (a
         # delete and re-add), so the last one seen is the earliest add.
-        added[file] = stamp.to_i unless file.empty?
+        if kind == 'A'
+          added[paths.first] = stamp.to_i
+        elsif kind.start_with?('R')
+          renames << paths
+        end
       end
     end
+    # Oldest rename first, so a chain a→b→c carries a's date all the way to c.
+    renames.reverse_each { |from, to| added[to] = added[from] if added[from] }
     added
   rescue Errno::ENOENT
     Jekyll.logger.warn 'publication_order:', 'git not found on PATH'
