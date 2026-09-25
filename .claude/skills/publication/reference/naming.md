@@ -13,6 +13,7 @@ then which one of them this is. The rule is deliberately the same shape as the o
 | `publication-` | cite, nav |
 | `site-` | analytics, head, scheme, scripts, toggle |
 | `styles-` | base, font |
+| `scripts-` | gallery, network (the homepage's JS, inlined into one `<script>`) |
 | `network-` | the generated `*.svg` miniatures |
 
 ## The three rules

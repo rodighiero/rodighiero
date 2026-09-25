@@ -34,7 +34,9 @@ Token values, the derived thresholds and the per-block grids: `reference/grid.md
 
 | Concern | File |
 |---|---|
-| Markup, all JS, page-specific CSS | `_layouts/home.html` |
+| Markup, page-specific CSS | `_layouts/home.html` |
+| Gallery, filters, view toggle, bio collapse JS | `_includes/scripts-gallery.js` |
+| Network view JS (`buildNetwork`) | `_includes/scripts-network.js` |
 | Tokens, `.card*`, `.authors`, `.card-meta`, mode toggle | `_includes/styles-base.css` |
 | Publication card markup | inline in the Liquid loop in `_layouts/home.html` |
 | Action and cluster tile markup | `_includes/card-action.html` (both kinds; `card-meta.html` is the meta line every card shares) |
@@ -127,6 +129,11 @@ offline it was ceremony over a one-time build, and D3 was a 93KB-gzipped depende
 - **The 921 literal is written once**, as `{% assign _mobile_max = 921 %}`, and interpolated
   into all three consumers (the pre-paint `<head>` script, the `@media` rule, the
   `matchMedia` call).
+- **The two script includes share one `<script>` tag.** A page opening in the network view
+  calls `buildNetwork` from the boot `setView`, before a second tag would have run, and
+  classic-script hoisting only reaches across one. Keep them Liquid-free so `node --check`
+  runs on them as files: the layout defines `TYPE_LABELS` ahead of the includes, and
+  `_mobile_max` appears only inside a string literal (the `matchMedia` query).
 - **The bio collapse must not store its open height.** The header's height *is* a function
   of the column count, so any remeasure races a layout that already changed shape and a
   stale number clips the bio under its own `overflow`. `auto` cannot go stale.
