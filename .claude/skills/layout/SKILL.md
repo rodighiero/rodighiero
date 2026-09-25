@@ -34,7 +34,9 @@ Token values, the derived thresholds and the per-block grids: `reference/grid.md
 
 | Concern | File |
 |---|---|
-| Markup, page-specific CSS | `_layouts/home.html` |
+| `<head>` and markup | `_layouts/home.html` |
+| Motion tokens, masthead, search bar, cards, masonry, footer CSS | `_includes/styles-gallery.css` |
+| Network view CSS | `_includes/styles-network.css` |
 | Gallery, filters, view toggle, bio collapse JS | `_includes/scripts-gallery.js` |
 | Network view JS (`buildNetwork`) | `_includes/scripts-network.js` |
 | Tokens, `.card*`, `.authors`, `.card-meta`, mode toggle | `_includes/styles-base.css` |
@@ -87,7 +89,7 @@ filterable on its own, giving the card a `data-*` attribute the way `data-type` 
 
 ### Retune the motion
 `node scripts/spring-easing.js` prints the CSS `linear()` curves to paste into the `--spring-*` tokens at the top of
-`_layouts/home.html`. It writes nothing — the point is that a retune is a parameter change
+`_includes/styles-gallery.css`. It writes nothing — the point is that a retune is a parameter change
 rather than a hand-tweaked list of numbers. Which mechanism runs when, and what is
 deliberately cut rather than animated: `reference/motion.md`.
 

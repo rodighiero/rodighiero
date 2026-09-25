@@ -1,0 +1,364 @@
+/* The homepage's own rules — motion tokens, masthead, search bar, cards, masonry,
+   footer — inlined by home.html after styles-base.css. Liquid: _mobile_max. */
+/* Springs from scripts/spring-easing.js; the JS reads --tile-move back. No bezier
+   fallback: light-dark() shipped after linear() everywhere. */
+:root {
+  --spring-settle: linear(0, 0.034, 0.112, 0.211, 0.316, 0.417, 0.51, 0.593, 0.665,
+    0.726, 0.777, 0.82, 0.855, 0.884, 0.908, 0.927, 0.942, 0.954, 0.964, 0.971,
+    0.978, 0.982, 0.986, 0.989, 0.992, 0.993, 0.995, 0.996, 0.997, 0.998, 1);
+  --spring-tile: linear(0, 0.05, 0.167, 0.314, 0.465, 0.604, 0.723, 0.82, 0.894,
+    0.948, 0.985, 1.008, 1.021, 1.027, 1.028, 1.026, 1.023, 1.018, 1.014, 1.01,
+    1.007, 1.005, 1.003, 1.001, 1);
+  --tile-move: 0.42s;
+}
+/* The column count; the masonry overwrites it before first paint, so 4 stands only
+   for a reader without JS. */
+body { --cols: 4; }
+
+/* ── Bio toggle ── */
+.bio-toggle {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  /* -6px cancels the left padding, so the chevron itself lines up with the portrait. */
+  margin: 0 0 0.5rem calc(var(--card-pad) - 6px);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  padding: 2px 6px;
+  font: inherit;
+  font-size: var(--text-xs);
+  line-height: var(--lh-normal);
+}
+.bio-toggle:hover { color: var(--fg); }
+.bio-toggle svg, .filter-search-icon, .view-toggle svg { width: 16px; height: 16px; }
+.bio-toggle svg {
+  fill: none; stroke: currentColor; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round; overflow: visible;
+  /* Quicker than the 0.6s panel, but not so quick it lands and waits. */
+  transition: transform 0.35s ease;
+  flex-shrink: 0;
+}
+html[data-bio-visible="0"] .bio-toggle svg { transform: rotate(-90deg); }
+/* The word appears only while the bio is hidden, when nothing else says what the
+   control brings back. max-width, since text has no width to interpolate from. */
+.bio-toggle-label {
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 0;
+  opacity: 0;
+  margin-left: 0;
+  transition: max-width 0.35s ease, opacity 0.3s ease, margin-left 0.35s ease;
+}
+html[data-bio-visible="0"] .bio-toggle-label {
+  max-width: 6rem;
+  opacity: 1;
+  margin-left: 0.4rem;
+}
+
+/* ── Bio shell ──
+   The collapsing wrapper; the header's bottom spacing is this margin, so it goes to
+   zero with the height. At rest it holds no measurement — open is `auto`, closed is
+   0 — because the header's height follows the column count and a stored height goes
+   stale. A pixel height exists only during the travel (setBioVisible), as does the
+   clip: the bio's first line is trimmed flush to the top edge, so clipping while open
+   would shave its ascenders. */
+.bio-shell {
+  height: auto;
+  margin-bottom: 6.2rem;
+  /* The critically damped spring: a panel must not open past its own height. The fade
+     is shorter and plain, so the masthead dismisses itself rather than being cropped. */
+  transition:
+    height 0.6s var(--spring-settle),
+    margin-bottom 0.6s var(--spring-settle),
+    opacity 0.4s ease;
+}
+html[data-bio-visible="0"] .bio-shell { height: 0; overflow: hidden; margin-bottom: 0; opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .bio-shell { transition: none; }
+}
+
+/* ── Header ──
+   The gallery's own columns (--card-w tracks, --card-gap gaps), so every interior
+   boundary lands on a card edge, and auto-fill so it takes as many as the gallery
+   does. min(…, 100%) lets a viewport narrower than one card shrink the column.
+   The portrait wears .card-media and the name and links .card-title/.card-text, so
+   the identity block is laid out exactly as a card is. */
+.header {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--card-w), 100%), 1fr));
+  gap: var(--card-gap);
+}
+/* Padded per column, as each card pads itself. */
+.header-about, .header .bio-col { padding: 0 var(--card-pad); }
+/* At three columns the four blocks don't divide evenly: send all three paragraphs to
+   the second row rather than stranding the last one under the portrait. */
+body[data-cols="3"] .header .bio-col { grid-row: 2; }
+.header .bio-col {
+  font-size: var(--text-xs);
+  line-height: var(--lh-loose);
+}
+/* Trim the first line to its cap height so it starts optically level with the
+   portrait, not a line box's leading below it. On the <p>, where the line boxes are.
+   Where unsupported, remove the computable half-leading at least. */
+.header .bio-col p {
+  margin: 0;
+  text-box-trim: trim-start;
+  text-box-edge: cap alphabetic;
+}
+@supports not (text-box-trim: trim-start) {
+  .header .bio-col p { margin-top: calc((1 - var(--lh-loose)) / 2 * var(--text-xs)); }
+}
+.header .bio-col a { text-decoration: underline; }
+
+/* ── Search bar + view toggle ── sticky, so the toggle stays in reach. */
+.filters {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  margin: 0 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding: 0.4rem 0;
+}
+.filters:focus-within { border-bottom-color: var(--fg); }
+.filters-search {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.filter-search-icon { flex-shrink: 0; color: var(--muted); }
+.filters input[type="search"] {
+  flex: 1;
+  min-width: 0;
+  color: var(--fg);
+  background: none;
+  border: none;
+  padding: 0.2rem 0;
+  font: inherit;
+  font-size: var(--text-base);
+  line-height: var(--lh-normal);
+}
+.filters input[type="search"]:focus { outline: none; }
+.filters input[type="search"]::placeholder { color: var(--muted); }
+.filters input[type="search"]::-webkit-search-cancel-button,
+.filters input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
+.filter-count {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-xs);
+  flex-shrink: 0;
+}
+.view-toggle { display: flex; gap: 0.25rem; flex-shrink: 0; }
+.view-toggle button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  border-radius: 3px;
+}
+.view-toggle button:hover { color: var(--fg); }
+.view-toggle button[aria-pressed="true"] {
+  color: var(--fg);
+  background: var(--tint-active);
+}
+/* The tint already marks the active view; a focus ring would repeat it. */
+.view-toggle button:focus-visible { outline: none; }
+/* Centres the fixed mode toggle (20px) on the 28px view buttons once the bar is
+   stuck at the top. */
+.mode-toggle { top: calc(0.4rem + (28px - 20px) / 2); }
+/* Fades both ways: allow-discrete holds display until the fade-out ends,
+   @starting-style gives the fade-in its start. */
+.no-results {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  padding: 2rem 0;
+  transition: opacity 0.2s ease, display 0.2s allow-discrete;
+  @starting-style { opacity: 0; }
+  @media (prefers-reduced-motion: reduce) { transition: none; }
+}
+.no-results[hidden] { display: none; opacity: 0; }
+/* Network view fades non-matching nodes in place, so the empty-state copy would duplicate the signal. */
+body[data-view="network"] .no-results { display: none; }
+
+/* ── Publications (shared) ── */
+#publications { position: relative; }
+body[data-view="gallery"] #publications:not(.ready) { visibility: hidden; }
+/* ── Card base, shared by every tile kind; only the special tiles' hairline differs. */
+.card {
+  padding: var(--card-pad);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+.card:hover,
+.publication:has(h2 a:focus-visible) { background: var(--tint-hover); }
+/* Scoped, or a publication card would gain a hairline on hover. */
+:is(.action, .filter, .event):hover { box-shadow: inset 0 0 0 1px var(--border-hover); }
+.card:focus-visible,
+.publication:has(h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
+
+/* inline-block is load-bearing: its margin does not collapse with the meta line's,
+   so the gap above a title is 0.3 + 0.3rem on every card kind. */
+.card-title {
+  font-size: var(--text-base);
+  font-weight: 500;
+  margin: 0.3rem 0 0;
+  line-height: var(--lh-tight);
+  display: inline-block;
+  max-width: 100%;
+}
+
+.card-text { margin-top: 0.4rem; }
+/* Looser than the bio's hyphenation: a card is narrower still. Descriptions only — a
+   byline never wears the class, since a split surname reads as another name. */
+.card .hyphenate-prose { --hyphen-word: 6; --hyphen-min: 3; }
+.card-meta { font-size: var(--text-xxs); }
+
+.card-media img,
+.card-media .network-preview { width: 100%; height: auto; display: block; }
+/* The card's tint already signals the link (the sidebar clone restores the underline). */
+h2 a:hover { text-decoration: none; }
+h2 a:focus-visible { outline: none; }
+
+/* ── Special cards ── .action (a view switch), .filter (a cluster tile) and .event
+   (an <a> linking out, the one kind kept on mobile). They reset the UA button and
+   draw a hairline as an inset box-shadow: a border would eat 1px of content width a
+   publication card keeps, putting the kinds on different inner grids. Their <span>
+   rows go block, as a publication's <div>s already are. */
+.action,
+.filter,
+.event {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  -webkit-user-select: none;
+  user-select: none;
+  border: none;
+  box-shadow: inset 0 0 0 1px var(--border);
+  background: none;
+}
+.event:hover { text-decoration: none; }
+.card-meta, .card-text { display: block; }
+
+/* ── Gallery view (masonry) ── */
+body[data-view="gallery"] .card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  will-change: transform;
+}
+/* The real tiles travel to their new slots on a spring (2.8% overshoot), armed only
+   while a change is in flight — the first layout and resizes stay instant. This
+   replaces .card's transition outright, so background and box-shadow are restated. */
+body[data-view="gallery"] #publications.animating .card {
+  transition:
+    transform var(--tile-move) var(--spring-tile),
+    opacity 0.28s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+/* An arriving tile takes its slot outright and fades in there. */
+body[data-view="gallery"] #publications.animating .card.entering {
+  transition: none;
+  opacity: 0;
+}
+/* A move longer than the viewport is cut: the eye has nothing to follow. */
+body[data-view="gallery"] #publications.animating .card.snapping {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-view="gallery"] #publications.animating .card { transition: none; }
+}
+
+/* ── The mark in the gap below a card ──
+   A short centred rule whose length is the years between this tile and the one the
+   pack put under it (--gap-span, written by layoutMasonry; no data-gap means last in
+   its column). The gallery is date-descending, so the tile below is always older and
+   the reading holds under any packing. A sixteenth of a card for a same-year gap,
+   plus a thirty-second per year, so it stays punctuation rather than a boundary. */
+body[data-view="gallery"] .card[data-gap]::after {
+  content: "";
+  position: absolute;
+  top: calc(100% + var(--card-w) / 8); /* the middle of the pack's CARD_W / 4 gap */
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: calc(var(--card-w) / 16 + var(--gap-span, 0) * var(--card-w) / 32);
+  height: 1px;
+  /* Half the --border weight: repeated down every column, a full hairline reads as
+     structure. */
+  background: color-mix(in srgb, var(--fg) 10%, transparent);
+  pointer-events: none; /* or the card's hover would fire from the gap */
+}
+
+.card-media {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.8rem;
+  border-radius: 2px;
+  overflow: hidden;
+}
+/* A thumbnail rests on a tint while it loads; a miniature stays transparent. */
+.publication .card-media { background: var(--tint-surface); }
+
+
+/* On the gallery's own columns, so the quote's edge lands on a card's at every count. */
+footer {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: var(--card-gap);
+  margin-top: 6rem;
+  padding: 3rem 0 4rem;
+}
+/* The last two columns at any count (the whole row at two). */
+footer :is(blockquote, cite) {
+  grid-column: -3 / -1;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+/* At one column -3 has no line to land on and would add an implicit column. */
+body[data-cols="1"] footer :is(blockquote, cite) { grid-column: 1 / -1; }
+footer blockquote {
+  line-height: var(--lh-normal);
+  margin: 0 0 0.25rem;
+}
+footer cite {
+  font-style: normal;
+  text-align: right;
+}
+
+/* Where the grid drops below 3 columns (_mobile_max): no view toggle, so no tiles
+   that re-cut the gallery either. Events stay. */
+@media (max-width: {{ _mobile_max }}px) {
+  .filter-count, .view-toggle, .action, .filter { display: none; }
+}
+
+@media print {
+  @page { margin: 2cm 2.8cm; }
+  html, body { font-size: 9pt; }
+  .mode-toggle, .bio-toggle, .header .profile-links, main, footer { display: none !important; }
+  /* The masthead is the whole sheet, so undo a persisted collapse at its specificity. */
+  .bio-shell,
+  html[data-bio-visible="0"] .bio-shell { height: auto; overflow: visible; margin-bottom: 0; opacity: 1; }
+  .header { display: block; margin-bottom: 0; }
+  .header .card-media { display: none; }
+  .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }
+  .header .bio-col { font-size: 8.5pt; margin-top: 0.6rem; }
+  a { text-decoration: none; }
+}

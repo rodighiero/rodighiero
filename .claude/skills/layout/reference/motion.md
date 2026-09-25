@@ -95,7 +95,7 @@ hair past its slot and settles back.
 There is no `cubic-bezier` fallback ahead of the curve: `light-dark()`, which carries every
 colour on the site, shipped after `linear()` in all three engines, so a browser that could miss
 the curve could not draw the page at all. With no fallback to protect, each curve is pasted
-**once**, into a custom property on `:root` at the top of the homepage's `<style>` —
+**once**, into a custom property on `:root` at the top of `_includes/styles-gallery.css` —
 `--spring-tile` for the tiles, `--spring-settle` for the bio panel — and the transitions name
 it. The tiles' duration is `--tile-move`, which the JS reads back as `TILE_MOVE_MS` rather than
 keeping a copy in step.

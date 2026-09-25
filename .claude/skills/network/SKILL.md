@@ -100,4 +100,4 @@ Add the `lang` code → opus-mt model to `OPUS_MODELS` in `build-network.py`, th
 | Miniature is black in night mode | it got referenced as `<img>` instead of inlined through the card's `media` slot |
 | Build fails at the layout step | Node missing from PATH (`scripts/layout-network.js` + vendored d3) |
 
-Homepage/gallery behaviour that merely *consumes* the network (stage sizing, `--cols`, filters, view transitions) lives in `_layouts/home.html` and is documented in the **`layout`** skill — not here. The seam: this skill owns the baked coordinates, the links and the `related` arrays; `layout` owns the stage they are fit-scaled into.
+Homepage/gallery behaviour that merely *consumes* the network (stage sizing, `--cols`, filters, view transitions) lives in `_layouts/home.html` and its `styles-`/`scripts-` gallery and network includes, and is documented in the **`layout`** skill — not here. The seam: this skill owns the baked coordinates, the links and the `related` arrays; `layout` owns the stage they are fit-scaled into.

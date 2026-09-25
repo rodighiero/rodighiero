@@ -12,7 +12,7 @@ then which one of them this is. The rule is deliberately the same shape as the o
 | `jsonld-` | people, person |
 | `publication-` | cite, nav |
 | `site-` | analytics, head, scheme, scripts, toggle |
-| `styles-` | base, font |
+| `styles-` | base, font; gallery, network (the homepage's own rules) |
 | `scripts-` | gallery, network (the homepage's JS, inlined into one `<script>`) |
 | `network-` | the generated `*.svg` miniatures |
 

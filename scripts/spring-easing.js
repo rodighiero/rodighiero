@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 //
-// Generates the CSS linear() easing curves used by _layouts/home.html.
+// Generates the CSS linear() easing curves used by the homepage (_includes/styles-gallery.css).
 //
 //   node scripts/spring-easing.js
 //
