@@ -18,11 +18,8 @@ permalink: /404.html
   <style>
     {% include styles-font.css %}
     *, *::before, *::after { box-sizing: border-box; }
-    /* Same two drivers as the rest of the site, for the same reason: light-dark() resolves
-       against the used color-scheme, so the system preference and the stored manual choice
-       (stamped on <html> by site-scheme.html above) both land on one set of declarations.
-       A prefers-color-scheme media query alone would honour only the first, and this is the
-       one page with no toggle to correct it with. */
+    /* light-dark() honours both the system preference and the stored choice
+       site-scheme.html stamps on <html>. */
     :root {
       color-scheme: light dark;
       --fg: light-dark(#000, #e8e8e8);
@@ -53,13 +50,9 @@ permalink: /404.html
     <h1>Page not found</h1>
     <p>This page no longer exists. Go back to the <a href="https://dariorodighiero.com">homepage</a>.</p>
   </div>
-  {%- comment -%}
-    Report the missing URL to GoatCounter instead of the canonical above. count.js
-    derives its path from link[rel=canonical] when it points at this host, which would
-    log every 404 as the homepage — inflating "/" and hiding which dead links people
-    follow. A `path` callback overrides that; it must be set before the async count.js
-    runs, and count.js keeps an existing window.goatcounter object.
-  {%- endcomment -%}
+  {%- comment -%} Logs the missing URL under a "404: " prefix, so GoatCounter shows which
+  dead links people follow. Set before count.js, which keeps an existing
+  window.goatcounter. {%- endcomment -%}
   <script>window.goatcounter = {path: function () { return '404: ' + location.pathname }}</script>
   {% include site-analytics.html %}
 </body>

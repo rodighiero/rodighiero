@@ -1,28 +1,12 @@
 {% if jekyll.environment == "production" and site.goatcounter_code %}
+{%- comment -%} Counts human visits without turning anyone away: an automated visitor gets
+the page in full and is simply not tallied. The gate is on the loader, because count.js
+overwrites any window.goatcounter.filter set ahead of it (js/count.js:114), and loading late
+still counts the view and binds the click events (js/count.js:106). Self-declared bots are
+dropped first, but a headless Chrome passes those tests, so the real gate is engagement:
+count.js loads on the first genuine input event. A reader who never moves is uncounted,
+which is the bias wanted. {%- endcomment %}
 <script>
-  // Count human visits without turning anyone away. Nothing is blocked or
-  // challenged: an automated visitor is served the page, its images and its
-  // text in full, and simply isn't tallied. The bias runs toward not counting,
-  // since a missed tally costs a number and a blocked fetch costs a reader.
-  //
-  // Gating the loader is the only place this works. count.js assigns
-  // window.goatcounter.filter unconditionally (js/count.js:114), so a filter
-  // defined ahead of it is overwritten before it can decline anything. Loading
-  // late is safe: on_load() runs immediately when the body already exists
-  // (js/count.js:106), so the view still counts and the data-goatcounter-click
-  // buttons still bind.
-  //
-  // What the client declares about itself is checked first, but it only
-  // catches the careless. A headless Chrome presenting an ordinary macOS
-  // user-agent passes every such test — and note that GoatCounter's Language
-  // column is read from the Accept-Language header server-side, not from
-  // anything count.js sends (js/count.js:24), so navigator.languages never
-  // corresponded to the "(unknown)" rows at all.
-  //
-  // So the real gate is engagement, not identity: the loader waits for one
-  // genuine input event. A crawler that renders the page and moves on never
-  // fires one. The cost is a reader who arrives, reads nothing above the fold
-  // and leaves without moving a pointer — uncounted, which is the bias we want.
   (function () {
     var n = navigator, uad = n.userAgentData
 

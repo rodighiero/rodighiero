@@ -3,10 +3,8 @@ Formatted Chicago author-date reference for the "Cite" button, emitted as a
 hidden <pre> and copied to the clipboard (see site-scripts.html). Plain text:
 titles are not italicised — the reader can style them after pasting.
 
-Primary contributor is the author, or the editor(s) when there is no author.
-There is no third branch for "neither": publication_validator.rb requires one of
-the two and aborts the build without them, so a work with no primary contributor
-never reaches this file.
+Primary contributor is the author, or the editor(s) when there is no author
+(publication_validator.rb requires one of the two).
 
 The first name is inverted (Family, Given); the rest stay in normal order, with
 a serial comma before "and". Formatting branches on the publication type.
@@ -33,22 +31,15 @@ name can lead the list the rest joins onto. {%- endcomment -%}
 {%- assign _rest_people = _people | slice: 1, 9999 -%}
 {%- assign _display_people = _first_formatted | split: "~~~" | concat: _rest_people -%}
 {%- capture _authors -%}{%- include credit-join.html items=_display_people serial_comma=true -%}{%- endcapture -%}
-{%- comment -%} The secondary roles below the author block — editor, translator, interviewer —
-are the same list in the same voice three times over, so the split, the Chicago serial-comma
-rule and the join live once in credit-role.html rather than being spelled out per role.
-Interpolating the front-matter string directly would leave its " and " separators standing
-between every name. {%- endcomment -%}
+{%- comment -%} The secondary roles, each split and re-joined by credit-role.html. {%- endcomment -%}
 {%- capture _editors -%}{%- include credit-role.html raw=_item.editor -%}{%- endcapture -%}
 {%- capture _translators -%}{%- include credit-role.html raw=_item.translator -%}{%- endcapture -%}
 {%- capture _interviewers -%}{%- include credit-role.html raw=_item.interviewer -%}{%- endcapture -%}
 {%- assign _t = _item.type -%}
-{%- comment -%} What `venue` names is per-type, and publication_types.yml already owns that
-question: `container` omitted means venue names the press itself, so it stands in when no
-`publisher` is given; any other value means venue names something the work sits inside (a
-periodical, a book) and must not be reused as the publisher. Reading the table rather than
-re-listing which types are which is what makes a newly added type come out right on arrival —
-the reference grammar below is the one place that still knows type names by heart, and it has
-to, because Chicago's shapes are not a property of the taxonomy. {%- endcomment -%}
+{%- comment -%} Without a `container` (publication_types.yml) the venue is the press and
+stands in for a missing publisher; with one, it names what the work sits inside. Only the
+reference grammar below knows type names, since Chicago's shapes are not in the
+taxonomy. {%- endcomment -%}
 {%- assign _container = site.data.publication_types[_t].container -%}
 {%- if _container -%}{%- assign _pub = _item.publisher -%}{%- else -%}{%- assign _pub = _item.publisher | default: _item.venue -%}{%- endif -%}
 {%- comment -%} Drop the title-final period when the title already ends in ? or !. {%- endcomment -%}

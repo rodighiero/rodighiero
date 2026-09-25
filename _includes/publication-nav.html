@@ -1,3 +1,5 @@
+{%- assign _prev = page.prev_pub -%}
+{%- assign _next = page.next_pub -%}
 <nav class="publication-nav {{ include.modifier }}" aria-label="{{ include.label }}">
   <div class="nav-siblings">
     <div class="nav-prev">{% if _prev %}<a href="{{ _prev.url }}"><span class="nav-label">←&nbsp;</span>{{ _prev.title }}</a>{% endif %}</div>

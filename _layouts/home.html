@@ -1,10 +1,8 @@
 {% assign _meta_desc = "Dario Rodighiero researches data visualization, digital humanities, and Science and Technology Studies at Groningen and Harvard's metaLAB." %}
 {% assign _page_title = "Dario Rodighiero — Science and Technology Studies" %}
-{%- comment -%} The mobile boundary, in one place: it is asked three times below — by the
-pre-paint script in <head>, by the CSS, and by the masonry script — and all three have to
-be the same number or they disagree about what the page currently is. It is the gallery's
-own boundary, not a device size: gridWidth(3) + PAGE_PAD - 1, the last width that still
-shows 3 columns. {%- endcomment -%}
+{%- comment -%} The mobile boundary, read by the pre-paint script, the CSS and the masonry
+script, which must agree. It is the gallery's own: gridWidth(3) + PAGE_PAD - 1, the last
+width that still shows 3 columns. {%- endcomment -%}
 {% assign _mobile_max = 921 %}
 <!DOCTYPE html>
 <html lang="en">
@@ -41,10 +39,8 @@ shows 3 columns. {%- endcomment -%}
   <meta name="DC.format" content="text/html">
   <meta name="DC.language" content="en">
   <meta name="DC.identifier" content="{{ site.url }}/">
-  {%- comment -%} Same date the sitemap declares for this page: the last commit touching
-  something that reaches _site, not the build clock. site.time would move on every deploy
-  and tell a crawler the homepage changed when nothing a reader sees did — which is the
-  whole reason system_commit_date.rb computes this value. {%- endcomment -%}
+  {%- comment -%} The sitemap's date for this page (system_commit_date.rb), not site.time,
+  which would move on every deploy. {%- endcomment -%}
   <meta name="DCTERMS.modified" content="{{ site.data.commit_date }}">
   <link rel="me" href="https://github.com/rodighiero/">
   <link rel="me" href="https://www.linkedin.com/in/dariorodighiero/">
@@ -93,17 +89,11 @@ shows 3 columns. {%- endcomment -%}
           { "@type": "Organization", "name": "University of Groningen", "url": "https://www.rug.nl/" },
           { "@type": "Organization", "name": "metaLAB (at) Harvard", "url": "https://metalab.harvard.edu/" }
         ],
-        {%- comment -%} Two kinds of link under one property. The first eight are profiles of
-        Dario, kept by him or by his institutions (an Organization's own url is its home page,
-        not his page there); the rest are authority records institutions keep about him, and
-        those are the half that does the reconciliation work — they tell a crawler this Person is the one
-        the libraries and the bibliographic databases already hold a file on, rather than a name
-        that happens to match. Wikidata points back here through its own official-website claim,
-        so that pair is reciprocal. Each ID was read off its issuing register rather than copied
-        between them: a wrong sameAs merges Dario with a different person, which is worse than
-        declaring nothing — the same reasoning the `seo` skill applies to ISSN and ISBN. Note
-        that viaf.org, isni.org, id.loc.gov and openalex.org all answer 403 to a plain HTTP
-        client; that is a bot wall rather than rot, and links.yml already accepts 403. {%- endcomment %}
+        {%- comment -%} The first eight are profiles of Dario; the rest are authority records
+        (Wikidata links back here), which tie this Person to the file libraries already hold.
+        Each ID was read off its issuing register: a wrong sameAs merges Dario with someone
+        else. viaf, isni, id.loc.gov and openalex answer 403 to a plain client — a bot wall,
+        not rot. {%- endcomment %}
         "sameAs": [
           "https://github.com/rodighiero/",
           "https://scholar.google.com/citations?user=h065R1oAAAAJ",
@@ -122,10 +112,9 @@ shows 3 columns. {%- endcomment -%}
           "https://openalex.org/A5028604593"
         ],
         "knowsAbout": ["Data Visualization", "Digital Humanities", "Science and Technology Studies", "Information Design", "Mapping"],
-        {%- comment -%} The bio's "alumnus of MIT, Harvard, and EPFL": EPFL for the doctorate,
-        MIT and Harvard for the postdocs — both list Dario on their official alumni pages, and
-        Schema.org does not restrict alumniOf to degrees. Harvard is named as the Berkman Klein
-        Center, the body whose alumni roll carries him, with Harvard as its parent. {%- endcomment %}
+        {%- comment -%} The bio's "alumnus of MIT, Harvard, and EPFL": the doctorate and two
+        postdocs (alumniOf is not limited to degrees). Harvard appears as the Berkman Klein
+        Center, whose alumni roll carries him. {%- endcomment %}
         "alumniOf": [
           { "@type": "CollegeOrUniversity", "name": "École Polytechnique Fédérale de Lausanne", "url": "https://www.epfl.ch/" },
           { "@type": "CollegeOrUniversity", "name": "Massachusetts Institute of Technology", "url": "https://www.mit.edu/" },
@@ -141,10 +130,8 @@ shows 3 columns. {%- endcomment -%}
   }
   </script>
   <style>
-    /* The springs scripts/spring-easing.js generates, each pasted once; --tile-move is the
-       tiles' duration, which the JS reads back (TILE_MOVE_MS). No cubic-bezier fallback ahead
-       of either: light-dark(), which carries every colour on the site, shipped after linear()
-       in all three engines, so a browser without linear() could not draw the page anyway. */
+    /* Springs from scripts/spring-easing.js; the JS reads --tile-move back. No bezier
+       fallback: light-dark() shipped after linear() everywhere. */
     :root {
       --spring-settle: linear(0, 0.034, 0.112, 0.211, 0.316, 0.417, 0.51, 0.593, 0.665,
         0.726, 0.777, 0.82, 0.855, 0.884, 0.908, 0.927, 0.942, 0.954, 0.964, 0.971,
@@ -156,11 +143,8 @@ shows 3 columns. {%- endcomment -%}
     }
 {% include styles-font.css %}
 {% include styles-base.css %}
-    /* The gallery's current column count, shared by everything on the page that is laid
-       out on the grid (the header, the footer, the network view). The masonry overwrites
-       it on the body's own style attribute the moment it runs — which is before the first
-       paint — so this value only stands in for the widest case until then, and for a
-       reader with no JS at all, where the page keeps the stylesheet's 4-column width. */
+    /* The column count; the masonry overwrites it before first paint, so 4 stands only
+       for a reader without JS. */
     body { --cols: 4; }
 
     /* ── Bio toggle ── */
@@ -168,40 +152,29 @@ shows 3 columns. {%- endcomment -%}
       display: inline-flex;
       align-items: center;
       height: 28px;
-      /* The -6px cancels this button's own left padding, so the chevron's edge — not the
-         hit area's — is what gets positioned; --card-pad then puts that edge on the same
-         line the portrait and the name start from, since .header-about insets its content
-         by exactly that. The control that opens the masthead lines up with what it opens
-         rather than hanging a card's padding to the left of it. */
+      /* -6px cancels the left padding, so the chevron itself lines up with the portrait. */
       margin: 0 0 0.5rem calc(var(--card-pad) - 6px);
       background: none;
       border: none;
       cursor: pointer;
       color: var(--muted);
-      padding: 2px 6px 2px 6px;
+      padding: 2px 6px;
       font: inherit;
       font-size: var(--text-xs);
       line-height: var(--lh-normal);
     }
     .bio-toggle:hover { color: var(--fg); }
-    /* Shared 16px icon footprint for the header/filter-bar controls. */
     .bio-toggle svg, .filter-search-icon, .view-toggle svg { width: 16px; height: 16px; }
     .bio-toggle svg {
       fill: none; stroke: currentColor; stroke-width: 2;
       stroke-linecap: round; stroke-linejoin: round; overflow: visible;
-      /* Quicker than the panel it controls — a chevron is a small thing making a short
-         move, and matching the full 0.6s would read as sluggish — but not so much quicker
-         that it lands and waits: the two are one gesture. */
+      /* Quicker than the 0.6s panel, but not so quick it lands and waits. */
       transition: transform 0.35s ease;
       flex-shrink: 0;
     }
-    /* The chevron points down at an open panel and swings to point at a closed one. */
     html[data-bio-visible="0"] .bio-toggle svg { transform: rotate(-90deg); }
-    /* The word only appears when the bio is hidden. Open, the collapsed masthead is
-       right there under the chevron and needs no naming; closed, nothing on screen says
-       what the control would bring back, so it says so itself. Animated on max-width
-       rather than width because the text has no width to interpolate from otherwise;
-       6rem is simply past the label's natural width, and the clip does the rest. */
+    /* The word appears only while the bio is hidden, when nothing else says what the
+       control brings back. max-width, since text has no width to interpolate from. */
     .bio-toggle-label {
       overflow: hidden;
       white-space: nowrap;
@@ -217,46 +190,17 @@ shows 3 columns. {%- endcomment -%}
     }
 
     /* ── Bio shell ──
-       The collapsing wrapper around the header, and the reason the header itself has no
-       bottom padding: that spacing is this element's margin, so it can go to zero with
-       the height and leave nothing behind.
-
-       **At rest it holds no measurement**, and that is the whole design. Open, its height
-       is `auto`; closed, it is 0. The previous version instead kept the open height as an
-       explicit pixel number maintained by a ResizeObserver, which is precisely what could
-       not survive this page: the header's height is a function of the column count (four
-       blocks in one row at four columns, two rows at three, stacked at one), so every
-       remeasure raced a layout that had already changed shape, and a stale number clipped
-       the bio's tail under its own overflow. `auto` cannot go stale, so a resize at any
-       time, in either state, needs no handling at all.
-
-       A pixel number does appear, but only *during* the travel and never at rest: `auto`
-       is not an interpolable value in most engines, so the toggle script pins the height
-       it currently occupies, flips the state, and hands the height back to this stylesheet
-       the moment the transition ends (see setBioVisible). interpolate-size would remove
-       even that, but it is too new to depend on — where it is missing the height would
-       simply jump, which is the one thing this rule exists to prevent.
-
-       The clip is on the same schedule as the pin, and for the same reason. The bio's
-       first paragraph is trimmed to its cap height (see .header .bio-col p), so the text
-       box's top edge *is* the cap line and every ascender — and the antialiased top row of
-       the capitals themselves — sits above it. A permanent overflow:hidden cuts exactly
-       that row off the first line. So the shell clips while it is closed, where clipping is
-       the whole point, and while it is moving, where the script sets it beside the height it
-       pins; open and at rest it clips nothing and the line is whole. */
+       The collapsing wrapper; the header's bottom spacing is this margin, so it goes to
+       zero with the height. At rest it holds no measurement — open is `auto`, closed is
+       0 — because the header's height follows the column count and a stored height goes
+       stale. A pixel height exists only during the travel (setBioVisible), as does the
+       clip: the bio's first line is trimmed flush to the top edge, so clipping while open
+       would shave its ascenders. */
     .bio-shell {
       height: auto;
       margin-bottom: 6.2rem;
-      /* The same sampled spring as the gallery tiles, in its critically damped variant —
-         it approaches the end value from below and never crosses it. The tiles' 2.8%
-         overshoot would mean a panel that opens slightly past its own height and settles
-         back, which reads as a bounce in a surface whose height is supposed to *be* its
-         content. */
-      /* Opacity rides along on a plain ease, shorter than the travel: the masthead reads
-         as dismissing itself rather than being cropped by the search bar sliding over it.
-         Shorter deliberately — gone before the clip finishes on the way out, and legible
-         before the panel is fully open on the way back — and on its own curve, since a
-         spring is a shape for distance, not for a fade. */
+      /* The critically damped spring: a panel must not open past its own height. The fade
+         is shorter and plain, so the masthead dismisses itself rather than being cropped. */
       transition:
         height 0.6s var(--spring-settle),
         margin-bottom 0.6s var(--spring-settle),
@@ -268,92 +212,28 @@ shows 3 columns. {%- endcomment -%}
     }
 
     /* ── Header ──
-       No top/bottom padding: the spacing below it lives in .bio-shell's
-       margin-bottom instead.
-       The columns mirror the gallery's own grid exactly — --card-w each with a
-       --card-gap gap, not a fluid 1fr/2rem split — so column 2's left edge lands on
-       card 2's left edge, column 3's on card 3's, and so on, not just the row's outer
-       ends. A 1fr grid can only ever match a card row's overall left/right extent (both
-       fill the same total width by construction); it can't reproduce the interior
-       boundaries between columns unless it uses the identical per-column/gap math. Both
-       custom properties live in styles-base.css and are also what the masonry script
-       reads at runtime for CARD_W/GAP_X — one number, not two hand-matched literals.
-       auto-fill rather than a literal 4: the body is sized to whatever the grid spans,
-       so the header takes exactly as many columns as the gallery below it, and the bio
-       keeps a card's measure at every count instead of becoming one full-width line of
-       12px text the moment the 4th column stops fitting (an 858px measure, more than
-       three times the column it reads at when there are four). The paragraphs wrap onto
-       a second row as the count drops — at three columns the last one sits under the
-       portrait — and at one column the grid is the stacked mobile layout, with the row
-       gap standing in for the margins the old media query set by hand.
-       minmax(min(…), 1fr) rather than a bare --card-w track, so a viewport narrower than
-       a single card (below any count this grid plans for) shrinks the column instead of
-       overflowing it; where the body *is* grid-sized, 1fr resolves to --card-w exactly. */
+       The gallery's own columns (--card-w tracks, --card-gap gaps), so every interior
+       boundary lands on a card edge, and auto-fill so it takes as many as the gallery
+       does. min(…, 100%) lets a viewport narrower than one card shrink the column.
+       The portrait wears .card-media and the name and links .card-title/.card-text, so
+       the identity block is laid out exactly as a card is. */
     .header {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(min(var(--card-w), 100%), 1fr));
       gap: var(--card-gap);
     }
-    /* Each column pads itself the same --card-pad a card pads its own content with,
-       rather than padding the row once — a card's photo/title is inset from *that
-       card's own* edges, not from the row's outer edges, so the header's columns
-       (this one and .bio-col below) have to match that per-column, not just overall. */
-    .header-about { padding: 0 var(--card-pad); }
-    /* Three columns is the one count where the header's four blocks don't divide evenly
-       into the row, and letting them wrap where they fall puts two paragraphs beside the
-       portrait and the third alone underneath it — the bio read as two pieces rather than
-       one. Sending every paragraph to the second row instead keeps them side by side, all
-       three across the full measure, with the identity block holding the first column
-       above them. Only at three: four gives every block a column of its own, two makes a
-       tidy pair of rows already, and one is the stacked layout. */
+    /* Padded per column, as each card pads itself. */
+    .header-about, .header .bio-col { padding: 0 var(--card-pad); }
+    /* At three columns the four blocks don't divide evenly: send all three paragraphs to
+       the second row rather than stranding the last one under the portrait. */
     body[data-cols="3"] .header .bio-col { grid-row: 2; }
-    /* The portrait has no rule of its own: it wears .card-media, the same slot a
-       publication's thumbnail sits in, so it fills its column exactly as a card's photo
-       fills its own — same width, same 2px radius, same 0.8rem beneath it — at every
-       column count, one column included, where the cards' photos go full-width and a
-       portrait pinned to a fixed width used to be the one thing on the page that didn't
-       follow the grid. It picks up no loading tint: that belongs to `.publication
-       .card-media`, for a thumbnail that arrives late, and this one is fetched first. */
-    /* The name and the profile-links line reuse .card-title/.card-text directly
-       (classes in the markup) rather than parallel hand-tuned rules — the same look as
-       a card's title/byline, in the same order (media, title, text) a card lays them
-       out in. That reuse is also what sets the rhythm between them: .card-title is
-       inline-block specifically so its own margin doesn't collapse with .card-text's
-       margin-top below it, so the gap comes out to the same 0.4rem a real card uses,
-       with nothing hand-tuned here. On screen the <h1> tag is the only thing that still
-       marks this as a name rather than a card title; everything about how it looks
-       comes from .card-title alone. The single exception is the print block at the
-       foot of this file, where the masthead prints alone and sets its own size. */
-    /* The bio columns wear .hyphenate-prose in the markup — the shared policy, defined
-       once in styles-base.css, that the article body wears too. The case for it is
-       stronger here than there: a bio column is one of four, about 270px wide, so its
-       measure is well under half the article's and a single long word costs a whole
-       line. On narrow viewports the header goes to one full-width column and the
-       opportunities mostly disappear on their own. */
     .header .bio-col {
-      /* Matches .header-about's own padding (see above) — this column's text then
-         starts and ends exactly where the card below it pads its own title/photo in
-         from its edges, the same relationship .header-about has to card 1. */
-      padding: 0 var(--card-pad);
       font-size: var(--text-xs);
       line-height: var(--lh-loose);
     }
-    /* The bio's first line and the portrait's top edge already start on the same grid
-       line — but a line box is taller than the letters inside it, so starting level is
-       not looking level. Half the leading stands above the capitals (--lh-loose is 1.5,
-       so 0.25em) and above that again sits the gap between Nunito's ascender and its cap
-       height, which together drop the text about 5px below the photo it reads as
-       beginning with. text-box-trim takes exactly that off the block-start edge, cutting
-       to the cap rather than to the line box, so the alignment is optical instead of
-       nominal — and it stays right if the type scale or the line height is ever retuned,
-       which a measured offset would not.
-       On the paragraph rather than on .bio-col, because that is where the line boxes
-       are: a block container holding only block-level children has none of its own to
-       trim. Firefox has not shipped the property, so @supports hands it the part a
-       stylesheet can actually compute — the half-leading, derived from the same two
-       tokens — leaving only the font's internal ascent-to-cap gap, which no stylesheet
-       can know. That lands it a couple of pixels short of flush rather than the full
-       five, and nothing moves at all where the property is understood. */
+    /* Trim the first line to its cap height so it starts optically level with the
+       portrait, not a line box's leading below it. On the <p>, where the line boxes are.
+       Where unsupported, remove the computable half-leading at least. */
     .header .bio-col p {
       margin: 0;
       text-box-trim: trim-start;
@@ -364,9 +244,7 @@ shows 3 columns. {%- endcomment -%}
     }
     .header .bio-col a { text-decoration: underline; }
 
-    /* ── Search bar + view toggle ── */
-    /* Sticky so the view toggle stays reachable without scrolling back up — keeps
-       the two views feeling like one page rather than two. */
+    /* ── Search bar + view toggle ── sticky, so the toggle stays in reach. */
     .filters {
       position: sticky;
       top: 0;
@@ -428,26 +306,13 @@ shows 3 columns. {%- endcomment -%}
       color: var(--fg);
       background: var(--tint-active);
     }
-    /* aria-pressed already shows the active view via background tint, so the
-       default focus ring (which Chrome/Safari can (re)apply on a later keypress,
-       e.g. pressing Esc right after a mouse click) would be redundant here. */
+    /* The tint already marks the active view; a focus ring would repeat it. */
     .view-toggle button:focus-visible { outline: none; }
-    /* Lines up .mode-toggle (styles-base.css, shared with publication.html —
-       overridden here rather than there, since the reasoning is specific to
-       this row) with these view-toggle icons once .filters is scrolled up and
-       stuck at the viewport top (position: sticky; top: 0): .filters' own top
-       padding, then centered against its 28px-tall row item (this button) —
-       not the mode-toggle's own smaller 20px box (16px icon + 2 * 2px padding
-       there vs. 28px here). Fixed rather than joining the sticky bar itself, so
-       it stays put at every scroll position — this is exactly where it needs
-       to be once .filters reaches the top, and before that point .filters is
-       further down the page, not up here. */
+    /* Centres the fixed mode toggle (20px) on the 28px view buttons once the bar is
+       stuck at the top. */
     .mode-toggle { top: calc(0.4rem + (28px - 20px) / 2); }
-    /* The empty state fades both ways. Nothing shares its slot, so `display` can
-       join the transition with allow-discrete, which holds it at block until the
-       opacity has finished on the way out; @starting-style supplies the entry
-       value on the way in. Between them they animate an element into and out of
-       display:none, which CSS could not express at all before. */
+    /* Fades both ways: allow-discrete holds display until the fade-out ends,
+       @starting-style gives the fade-in its start. */
     .no-results {
       font-size: var(--text-xs);
       color: var(--muted);
@@ -463,12 +328,7 @@ shows 3 columns. {%- endcomment -%}
     /* ── Publications (shared) ── */
     #publications { position: relative; }
     body[data-view="gallery"] #publications:not(.ready) { visibility: hidden; }
-    /* ── Card base: publication tiles and plain action/cluster cards all carry the
-       .card class, which holds everything they have in common — padding, radius,
-       cursor, hover/focus feedback, gallery positioning — plus (below) title
-       size/weight/margin, sub-row gap and the meta-line. The one deliberate difference
-       left is the frame: a publication tile is frameless, an action/filter tile carries
-       a hairline border (see the action/filter block below). ── */
+    /* ── Card base, shared by every tile kind; only the special tiles' hairline differs. */
     .card {
       padding: var(--card-pad);
       border-radius: 4px;
@@ -477,19 +337,13 @@ shows 3 columns. {%- endcomment -%}
     }
     .card:hover,
     .publication:has(h2 a:focus-visible) { background: var(--tint-hover); }
-    /* Scoped to the hairline cards themselves, unlike the old outline-color rule this
-       replaces: box-shadow has no color-only sub-property that stays a no-op without a
-       shadow already present, so applying it to .card:hover generally would have drawn
-       a hairline onto plain publication cards too, on hover. */
+    /* Scoped, or a publication card would gain a hairline on hover. */
     :is(.action, .filter, .event):hover { box-shadow: inset 0 0 0 1px var(--border-hover); }
     .card:focus-visible,
     .publication:has(h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
 
-    /* Every card titles itself with .card-title (publication: <h2>, action/filter: <span>),
-       so one rule sets the box, type and weight for all three kinds.
-       `inline-block` is load-bearing: its top margin does not collapse with the meta
-       line's bottom margin, so the gap above a title is 0.3 + 0.3rem — a block title
-       would collapse the pair to 0.3rem and sit tighter than the publication beside it. */
+    /* inline-block is load-bearing: its margin does not collapse with the meta line's,
+       so the gap above a title is 0.3 + 0.3rem on every card kind. */
     .card-title {
       font-size: var(--text-base);
       font-weight: 500;
@@ -499,71 +353,23 @@ shows 3 columns. {%- endcomment -%}
       max-width: 100%;
     }
 
-    /* Shared sub-row: a publication's authors and an action/filter card's description
-       both render through one class, .card-text (styles-base.css sets its type); only the
-       gap belongs here. */
     .card-text { margin-top: 0.4rem; }
-    /* Hyphenated for the same reason as the bio column above, but looser: a gallery card
-       is narrower still, so one long word costs a whole line of a two-sentence description
-       — 6/3/3 rather than the header's 8/4/4 takes the opportunities the stricter limit
-       leaves on the table. The card wears .hyphenate-prose in the markup (see
-       card-action.html and card-event.html) and states only the two numbers it differs by;
-       the policy itself — which properties, in which order, with the -webkit- longhands
-       Safari actually reads — stays in styles-base.css, where the article body reads it
-       too. Descriptions only: a byline never wears the class, since a split surname
-       (Rodig-hiero) reads as a different name, a name being parsed as a unit in a way
-       prose is not. */
+    /* Looser than the bio's hyphenation: a card is narrower still. Descriptions only — a
+       byline never wears the class, since a split surname reads as another name. */
     .card .hyphenate-prose { --hyphen-word: 6; --hyphen-min: 3; }
-
-    /* Shared meta-line, likewise unqualified. */
     .card-meta { font-size: var(--text-xxs); }
 
-    /* Whatever fills a media slot spans it and keeps its own aspect ratio. .card-media is
-       the one wrapper class for both content types — a publication's <img> thumbnail or
-       an action/filter's inlined SVG miniature — so no ancestor qualifier is needed: an
-       <img> only ever occurs in the former, `.network-preview`/`.bordered` only in the mix
-       that actually uses them. */
     .card-media img,
     .card-media .network-preview { width: 100%; height: auto; display: block; }
-    /* The title link is the only <h2> on the page, so it needs no ancestor qualifier either;
-       styles-base.css's `a { color: inherit; text-decoration: none; }` already covers its base
-       look. No underline on hover either: the whole card already signals clickability (background
-       tint), so styles-base.css's sitewide a:hover underline would be a redundant, noisier cue.
-       (The network-view sidebar clone has no tint on hover, so it restores the underline —
-       see .details .publication h2 a:hover inside @scope (#network-view) below.) */
+    /* The card's tint already signals the link (the sidebar clone restores the underline). */
     h2 a:hover { text-decoration: none; }
     h2 a:focus-visible { outline: none; }
 
-    /* ── Special cards (shown in gallery only) ── Three kinds: .action (a view
-       switch), .filter (a cluster tile, which sets a persistent
-       filter instead) and .event (an announcement linking out to another site — the
-       only one that is an <a> rather than a <button>, and the only one kept on
-       mobile, since it is news rather than a way of re-cutting the gallery).
-       All three skip the count/search/network logic
-       (which queries .publication) and get placed by the masonry; they share every
-       rule below since the only real difference between them is behavioural, not
-       visual — undo the UA button's own default border, centered text and font/color
-       (background: none clears the UA <button> face too), add the hairline, and lay
-       out the rows of their <span> markup as blocks, which a publication card's <div>s
-       have by default. (.card-meta/.card-text go block unconditionally: a no-op on a
-       publication's already-block <div>, the fix needed for a special card's <span>.)
-       The button resets are inert on .event's <a> but harmless, and keeping one rule
-       for the three is what keeps the kinds looking identical; the anchor needs one
-       thing of its own — no underline on hover, since the card's background tint
-       already says it is clickable and styles-base.css underlines every other <a>.
-       The `border: none` reset matters here specifically: left in place, the UA's own
-       default button border sits right under the hairline below and doubles up with
-       it into a visibly heavier line than a plain 1px border like .filters' own
-       border-bottom draws.
-       The hairline itself is an inset box-shadow, not a real border: border-box
-       already keeps a bordered card's own outer box at exactly colWidth regardless,
-       but a real border still eats 1px of content width per side that a plain
-       publication card doesn't give up, so the two kinds would sit on very slightly
-       different inner grids. An inset box-shadow, like the outline this replaced, is
-       painted outside the box model entirely, so every card kind measures and lays
-       out identically — box-shadow over outline is a smaller belt-and-braces choice
-       on top of the border reset above: it paints through the same path a real border
-       does, rather than outline's own separate anti-aliasing. */
+    /* ── Special cards ── .action (a view switch), .filter (a cluster tile) and .event
+       (an <a> linking out, the one kind kept on mobile). They reset the UA button and
+       draw a hairline as an inset box-shadow: a border would eat 1px of content width a
+       publication card keeps, putting the kinds on different inner grids. Their <span>
+       rows go block, as a publication's <div>s already are. */
     .action,
     .filter,
     .event {
@@ -581,7 +387,7 @@ shows 3 columns. {%- endcomment -%}
     .event:hover { text-decoration: none; }
     .card-meta, .card-text { display: block; }
 
-    /* ── Gallery view (masonry) ── Every card kind is positioned identically. */
+    /* ── Gallery view (masonry) ── */
     body[data-view="gallery"] .card {
       position: absolute;
       top: 0;
@@ -589,48 +395,22 @@ shows 3 columns. {%- endcomment -%}
       width: 100%;
       will-change: transform;
     }
-    /* A filter change carries the tiles that survive it to new slots. Since the masonry
-       gives every tile a transform of its own, that move is a transform change the browser
-       can animate on the real elements — the actual <img> travels, at full resolution,
-       rather than a snapshot of it (which is what a view transition animates, and why a
-       large photograph could drop out mid-slide). See withTileTransition.
-
-       Armed only while a filter change is in flight: the first layout and every resize
-       pass write transforms too, and those have to stay instant.
-
-       The transform runs on a spring rather than a bezier: a tile slows into its slot,
-       carries a hair past it and settles back — a 2.8% overshoot, enough to read as
-       weight rather than as bounce. The curve is an underdamped spring (damping ratio 0.75)
-       sampled at 24 points — the same shape a JS animation library produces at runtime,
-       measured once and written down, so it costs nothing and stays a CSS transition.
-       ω₀ is solved so the spring has genuinely settled by --tile-move: a curve still moving at
-       its last sample would snap to its final value, which is the discontinuity all of
-       this is meant to remove. Opacity keeps a plain ease — a fade has nothing to settle
-       into, and a spring on it would only delay the arrival. */
+    /* The real tiles travel to their new slots on a spring (2.8% overshoot), armed only
+       while a change is in flight — the first layout and resizes stay instant. This
+       replaces .card's transition outright, so background and box-shadow are restated. */
     body[data-view="gallery"] #publications.animating .card {
-      /* background and box-shadow ride along with the travel because this rule replaces
-         .card's own transition outright rather than adding to it: anything left out here
-         stops animating while the class is on, which is how the hairline came to snap
-         when it moved from outline-color to an inset box-shadow. */
       transition:
         transform var(--tile-move) var(--spring-tile),
         opacity 0.28s ease,
         background 0.15s ease,
         box-shadow 0.15s ease;
     }
-    /* A tile arriving from a hidden state still carries the transform of wherever it last
-       sat, so it takes its new slot with the transition off and fades in from there
-       instead of gliding in from a slot it no longer has any relation to. */
+    /* An arriving tile takes its slot outright and fades in there. */
     body[data-view="gallery"] #publications.animating .card.entering {
       transition: none;
       opacity: 0;
     }
-    /* A tile whose slot moves further than the screen is cut rather than slid: past a
-       viewport of travel the eye has nothing to follow, so the slide reads as a streak and
-       arrives as a jump anyway. Only a column change produces moves that long — it re-packs
-       every column, so the deepest tiles in a gallery this tall move by thousands of pixels
-       while the ones the reader is actually looking at move by a card or two. See
-       layoutMasonry, which adds the class for the one style change and takes it off again. */
+    /* A move longer than the viewport is cut: the eye has nothing to follow. */
     body[data-view="gallery"] #publications.animating .card.snapping {
       transition: none;
     }
@@ -639,76 +419,26 @@ shows 3 columns. {%- endcomment -%}
     }
 
     /* ── The mark in the gap below a card ──
-       A short rule in the empty CARD_W / 4 the pack leaves between two stacked tiles,
-       its length the years between this publication and the one the packer put under
-       it. A dense year reads as a steady short tick and the rule lengthens exactly
-       where time jumps.
-
-       Length rather than a count is the whole reason it is a line: relative length is
-       read at a glance with no tallying step, and a seven-year gap comes out as a
-       longer rule instead of seven objects to count. It is the one thing a line does
-       better than the dots this replaces.
-
-       Short and centred, deliberately. A rule spanning the card would read as a
-       boundary and stack the column into a list; at a fraction of the width it stays
-       punctuation between two tiles that remain separate things. Both numbers derive
-       from --card-w rather than being picked, so a card retune carries them: a
-       same-year gap is a sixteenth of a card and each year adds a thirty-second, which
-       puts the widest gap the gallery actually produces (seven years, at four columns)
-       at about 76px of a 270px card, and even a filter pairing the corpus's two ends
-       (2009 with 2026) at 160px — long, but still visibly short of a boundary, so no
-       cap is needed.
-
-       Counting from one rather than zero is what keeps it a separator. Several
-       publications share most years, so a zero-length same-year gap
-       would leave most gaps empty — the mark would go missing precisely where two cards
-       sit closest together, which is where a separator is most wanted.
-
-       Which two cards are adjacent in a column is the packer's decision, not the
-       corpus's: the neighbour below changes at 4→3→2 columns and again under any
-       filter. The span survives that because the gallery is globally date-descending,
-       so the tile below is always the older one and "N years pass here" stays true
-       under every packing — only the particular N moves. That is also what rules out
-       encoding network distance here instead: with 48 links over 67 nodes almost every
-       accidental neighbour is unrelated, so nearly every mark would read "far" and say
-       nothing. The graph's story is told where it means something, in the network view
-       and the related list.
-
-       layoutMasonry is the only thing that knows which tile ended up under which, so it
-       writes the span; the arithmetic stays here, where the tokens are. A tile with no
-       data-gap is the last in its column and has nothing below it to be separated from. */
+       A short centred rule whose length is the years between this tile and the one the
+       pack put under it (--gap-span, written by layoutMasonry; no data-gap means last in
+       its column). The gallery is date-descending, so the tile below is always older and
+       the reading holds under any packing. A sixteenth of a card for a same-year gap,
+       plus a thirty-second per year, so it stays punctuation rather than a boundary. */
     body[data-view="gallery"] .card[data-gap]::after {
       content: "";
       position: absolute;
-      /* The centre of the pack's own gapY, derived from the same token rather than
-         published out of the JS: the pack uses CARD_W / 4 at every column count — a
-         quarter of a *card*, not of the full-width column that one column hands it. */
-      top: calc(100% + var(--card-w) / 8);
-      /* Centred without a transform: auto margins against both edges of the card do it,
-         and leave the pseudo-element's transform free. */
+      top: calc(100% + var(--card-w) / 8); /* the middle of the pack's CARD_W / 4 gap */
       left: 0;
       right: 0;
       margin: 0 auto;
       width: calc(var(--card-w) / 16 + var(--gap-span, 0) * var(--card-w) / 32);
       height: 1px;
-      /* Half the --border hairline the rest of the site is drawn in, and deliberately
-         so: a rule covers far more area than the dot it replaces, and it repeats in
-         every gap down every column, so at the shared hairline weight it read as
-         structure rather than as punctuation. Mixed from --fg the way the --tint-*
-         trio is, rather than reusing --tint-active — same 10% recipe, but that token
-         names a state and this is ink, and a rule is the wrong place to borrow a
-         background tint's meaning. Following --fg is what carries it into dark mode
-         on its own. */
+      /* Half the --border weight: repeated down every column, a full hairline reads as
+         structure. */
       background: color-mix(in srgb, var(--fg) 10%, transparent);
-      /* A pseudo-element takes pointer events for the element it hangs off, so without
-         this the card's hover tint would fire from 67.5px of empty gap beneath it. */
-      pointer-events: none;
+      pointer-events: none; /* or the card's hover would fire from the gap */
     }
 
-    /* The media slot above a card's text — a publication thumbnail, or an action/filter
-       card's inlined graph miniature — framed once, so either sits the same among the tiles.
-       One bare .card-media rule now covers both the live gallery tile and its clone in the
-       network-view sidebar, since both carry the same class. */
     .card-media {
       display: block;
       width: 100%;
@@ -716,52 +446,34 @@ shows 3 columns. {%- endcomment -%}
       border-radius: 2px;
       overflow: hidden;
     }
-    /* A thumbnail rests on a tint while it loads; a miniature must not — its ground is
-       transparent so the inlined SVG inherits the page (see the `network` skill). */
+    /* A thumbnail rests on a tint while it loads; a miniature stays transparent. */
     .publication .card-media { background: var(--tint-surface); }
 
     /* ── Network view ── */
-    /* Whether the view shows at all is driven by body[data-view], an ancestor of
-       the scope below, so these three rules stay outside it. */
     #network-view { display: none; }
     body[data-view="network"] #publications { display: none; }
     body[data-view="network"] #network-view {
       display: grid;
-      /* The gallery's own columns, not a fixed four (see footer): sidebar = 1 column,
-         stage = the rest, both measuring exactly what a card measures. The view is only
-         reachable above the mobile boundary, so `--cols` here is only ever 3 or 4. */
+      /* The gallery's columns (3 or 4 here): sidebar one, stage the rest. */
       grid-template-columns: repeat(var(--cols), 1fr);
       gap: var(--card-gap);
       margin-bottom: 2rem;
     }
 
-    /* Everything *inside* the view is scoped instead of chained off the id: the root
-       is named once, and the rules below carry no id weight, so where they meet the
-       gallery's card rules (the details panel clones a .publication card) they win on
-       class count rather than on an id. The two places where that margin is thin
-       enough to matter are marked with :scope, which adds exactly one class-unit. */
+    /* Scoped rather than chained off the id, so these rules meet the cloned card's
+       gallery rules on class count; :scope adds one class where that is close. */
     @scope (#network-view) {
       .sidebar {
         font-size: var(--text-xs);
         line-height: var(--lh-normal);
-        /* Don't stretch to the stage's fixed height: let the panel grow with its
-           content into the space beside/below the graph, up to the viewport, and
-           only scroll internally when it genuinely exceeds that. */
         align-self: start;
         max-height: calc(100vh - 9rem);
         overflow-y: auto;
-        /* Reserve the scrollbar's track whether or not it is showing: this panel
-           swaps a short lede for a long details list on every selection, so its
-           content width would otherwise change the moment the list overflows.
-           No-op under macOS overlay scrollbars, which take no space to begin with. */
+        /* The lede and the details swap here; keep the width steady when one overflows. */
         scrollbar-gutter: stable;
       }
-      /* Panel swap: the lede and the details panel take turns in this one slot,
-         and @starting-style gives whichever is arriving an entry value, so it
-         fades up out of display:none instead of appearing whole. Only the way in
-         is animated — the outgoing panel is cut. They share a flow slot, so
-         holding the old one on screen (allow-discrete, as .no-results does) would
-         stack the two and jolt the sidebar's height mid-transition. */
+      /* The arriving panel fades in; the outgoing one is cut, since holding both in
+         one slot would jolt the sidebar's height. */
       .lede,
       .details {
         transition: opacity 0.2s ease;
@@ -771,13 +483,10 @@ shows 3 columns. {%- endcomment -%}
       .lede {
         color: var(--muted);
         margin: 0 0 1.5rem;
-        /* Same footprint/spacing as the plain cards, but no border or background. */
         padding: var(--card-pad);
       }
       .lede p { margin: 0 0 0.9rem; }
       .lede p:last-child { margin-bottom: 0; }
-      /* Card pattern: a small caps meta line, then the title in the card-title face.
-         Shares its type with .details h3 below. */
       .lede .lede-eyebrow,
       .details h3 {
         font-size: var(--text-xxs);
@@ -793,19 +502,11 @@ shows 3 columns. {%- endcomment -%}
         font-weight: 500;
         margin: 0 0 0.9rem;
       }
-      .lede ol {
-        margin: 0 0 0.9rem;
-        padding-left: 1.1rem;
-      }
+      .lede ol { margin: 0 0 0.9rem; padding-left: 1.1rem; }
       .lede ol li { margin-bottom: 0.35rem; }
       .lede ol li:last-child { margin-bottom: 0; }
-      .lede code {
-        font-family: inherit;
-        color: var(--fg);
-      }
-      /* Inline edge sample echoing the three link styles drawn on the graph:
-         solid (mutual backbone), faint (fallback rescue), dashed (translation).
-         Two classes, so it keeps overriding the bare `svg` sizing rule below. */
+      .lede code { font-family: inherit; color: var(--fg); }
+      /* The graph's three link styles, inline. Two classes, to beat the bare `svg` rule. */
       .lede .edge-sample {
         display: inline-block;
         width: 34px;
@@ -818,12 +519,8 @@ shows 3 columns. {%- endcomment -%}
       .lede .edge-sample circle { fill: var(--bg); stroke: var(--fg); stroke-width: 1; }
       .lede .edge-sample.fallback line { opacity: 0.55; }
       .lede .edge-sample.translation line { stroke-dasharray: 3 2.5; stroke-width: 1.4; }
-      /* The stage is a square two columns wide — the same 2 × --card-w + gap the
-         canvas is baked at, so the fit-scale is 1:1 on a desktop — centred in
-         whatever the sidebar leaves: the whole span at three columns (where two
-         columns is exactly it), and centred within three at four. Its height
-         comes from its width, so the view is as tall as the graph rather than a
-         slice of the viewport with empty bands above and below it. */
+      /* A square two columns wide — the size the canvas is baked at — centred in what
+         the sidebar leaves. */
       .stage {
         grid-column: 2 / -1;
         justify-self: center;
@@ -841,10 +538,9 @@ shows 3 columns. {%- endcomment -%}
       }
       .node .marker { fill: var(--bg); }
       .node .ring { fill: none; opacity: 0; }
-      .node.hover .ring { opacity: 1; }
-      /* Keyboard focus reuses the hover ring as its visible indicator. */
+      /* Keyboard focus reuses the hover ring. */
       .node:focus { outline: none; }
-      .node:focus-visible .ring { opacity: 1; }
+      :is(.node.hover, .node:focus-visible) .ring { opacity: 1; }
       .labels text {
         font-family: var(--font);
         font-size: var(--text-xs);
@@ -856,58 +552,41 @@ shows 3 columns. {%- endcomment -%}
         stroke-width: 3px;
         stroke-linejoin: round;
       }
-      /* A translation is the same work in another language: an ordinary node,
-         set apart only by a more pronounced dashed edge to its original. */
+      /* Dashed to its original; a fallback (unreciprocated rescue edge) faint. */
       .link.translation { stroke-width: 0.9; stroke-dasharray: 3 2.5; }
-      /* A fallback is a one-directional rescue edge for a node with no reciprocated
-         neighbor: drawn faint so the mutual backbone stays visually dominant. */
       .link.fallback { opacity: 0.5; }
       .node.highlight .marker { fill: var(--fg); }
       .node.connected .marker { stroke: var(--fg); stroke-width: 1.25; }
       .link.highlight { stroke-width: 1; }
       .link.fallback.highlight { opacity: 1; }
-      /* Click-selection (.dimmed on non-neighbors) and search filter (.filtered-out on non-matches) recolor to muted. */
-      .node.dimmed .marker,
-      .node.filtered-out .marker { stroke: var(--muted); }
-      .link.dimmed,
-      .link.filtered-out { stroke: var(--muted); }
-      .labels text.dimmed,
-      .labels text.filtered-out { fill: var(--muted); }
+      /* Muted: non-neighbours of a selection (.dimmed) and search misses (.filtered-out),
+         which also fade, as a thin stroke alone is invisible on markers this small. */
+      .node:is(.dimmed, .filtered-out) .marker,
+      .link:is(.dimmed, .filtered-out) { stroke: var(--muted); }
+      .labels text:is(.dimmed, .filtered-out) { fill: var(--muted); }
       .node.dimmed.hover .marker { stroke: var(--fg); }
       .labels text.dimmed.hover { fill: var(--fg); }
-      /* Search filter: fade non-matches out so the on/off signal is visible (a thin
-         muted stroke alone is imperceptible on these tiny markers). */
       .node.filtered-out { pointer-events: none; opacity: 0.5; }
       .link.filtered-out { opacity: 0.5; }
 
-      /* Details panel — replaces the lede in the first column on selection. Same
-         padding as the lede and the plain cards, so the selected publication's text lines
-         up with the text inside those cards rather than sitting flush to the sidebar edge. */
       .details {
         font-size: var(--text-xs);
         line-height: var(--lh-normal);
         padding: var(--card-pad);
       }
       .details[hidden] { display: none; }
-      /* :scope for weight, not for matching: the gallery's
-         .publication:has(h2 a:focus-visible) is two classes *and* two pseudo-classes,
-         so the plain two-class form would lose `background` to it the moment the
-         cloned title link takes keyboard focus. */
+      /* :scope for weight: .publication:has(h2 a:focus-visible) would otherwise win
+         `background` when the cloned title takes focus. */
       :scope .details .publication {
         padding: 0;
         cursor: default;
         background: none;
       }
       :scope .details .publication:hover { background: none; }
-      /* No background tint here (above), so the title link needs its own hover affordance
-         back — three classes beat the blanket h2 a:hover suppression above. */
+      /* No tint here, so the title link gets its underline back. */
       .details .publication h2 a:hover { text-decoration: underline; }
       .details h3 { margin: 0 0 0.5rem; font-weight: 500; }
-      /* Selected document + its closest matches: separated by margin whitespace like the
-         list/page rhythm, no hairline border. */
-      .details .neighbors {
-        margin-top: 1.5rem;
-      }
+      .details .neighbors { margin-top: 1.5rem; }
       .details .neighbors ol { list-style: none; padding: 0; margin: 0; }
       .details .neighbors li {
         display: flex;
@@ -924,13 +603,7 @@ shows 3 columns. {%- endcomment -%}
       .details .neighbors li .nb-body { min-width: 0; flex: 1; }
     }
 
-
-    /* Laid out on the gallery's own columns, not on four fluid ones: the page is sized
-       to whatever the grid spans (see syncPageWidth), so `--cols` equal columns with the
-       card gutter between them reproduce a card's width exactly — the quote's left edge
-       lands on a card's left edge instead of a few pixels off it, and keeps doing so at
-       three and two columns, where a fixed four-column footer used to keep dividing a
-       page the cards had already divided differently. */
+    /* On the gallery's own columns, so the quote's edge lands on a card's at every count. */
     footer {
       display: grid;
       grid-template-columns: repeat(var(--cols), 1fr);
@@ -938,21 +611,13 @@ shows 3 columns. {%- endcomment -%}
       margin-top: 6rem;
       padding: 3rem 0 4rem;
     }
-    /* The quote takes the last two columns, wherever there are two to take — which is
-       one declaration for four, three and two columns rather than a rule per count,
-       because both endpoints are counted from the end of the grid: -3 resolves to
-       cols - 1, so the span follows the count on its own. At two columns that is the
-       whole row, which is the intent — half of a two-column page is too narrow a measure
-       for a quotation this long, and the indent has no room left to read as one. */
+    /* The last two columns at any count (the whole row at two). */
     footer :is(blockquote, cite) {
       grid-column: -3 / -1;
       font-size: var(--text-xs);
       color: var(--muted);
     }
-    /* One column is the exception the count-from-the-end form can't cover: there is no
-       second-to-last line to reach back to, so -3 would land before the grid's first line
-       and the browser would manufacture an implicit column there to hold the item —
-       widening the footer past the page it is supposed to end with. Named forward. */
+    /* At one column -3 has no line to land on and would add an implicit column. */
     body[data-cols="1"] footer :is(blockquote, cite) { grid-column: 1 / -1; }
     footer blockquote {
       line-height: var(--lh-normal);
@@ -963,36 +628,21 @@ shows 3 columns. {%- endcomment -%}
       text-align: right;
     }
 
-    /* The gallery's own boundary, not an arbitrary device size (see _mobile_max at the
-       top of this file): it's where cols drops from 3 to 2, so the network view and the
-       action/cluster tiles stay reachable at every window width that still shows 3
-       columns, and only drop away once the grid itself does. */
+    /* Where the grid drops below 3 columns (_mobile_max): no view toggle, so no tiles
+       that re-cut the gallery either. Events stay. */
     @media (max-width: {{ _mobile_max }}px) {
-      .filter-count, .view-toggle { display: none; }
-      /* Mobile: drop the action / cluster / network tiles — every one of them re-cuts a
-         gallery that has no view toggle left to re-cut it into. .event stays: it is an
-         announcement that reads the same at any width. Same specificity as the base
-         .action, .filter, .event rule above, so later source order alone wins here. */
-      .action, .filter { display: none; }
+      .filter-count, .view-toggle, .action, .filter { display: none; }
     }
 
     @media print {
       @page { margin: 2cm 2.8cm; }
       html, body { font-size: 9pt; }
       .mode-toggle, .bio-toggle, .header .profile-links, main, footer { display: none !important; }
-      /* With main and footer gone the masthead is the entire sheet, and the reader may
-         have left it collapsed — the state persists in localStorage, so it survives from
-         one visit to the next. The collapse rule (html[data-bio-visible="0"] .bio-shell,
-         0-2-0) applies in print like anywhere else and clips it to zero height, so the
-         second selector here has to match its specificity to undo it; a bare .bio-shell
-         only reached 0-1-0 and the page printed blank. */
+      /* The masthead is the whole sheet, so undo a persisted collapse at its specificity. */
       .bio-shell,
       html[data-bio-visible="0"] .bio-shell { height: auto; overflow: visible; margin-bottom: 0; opacity: 1; }
       .header { display: block; margin-bottom: 0; }
       .header .card-media { display: none; }
-      /* The one .header h1 rule on the page: the name is styled by .card-title everywhere
-         else (see the header block above), but the printed sheet has no card next to it
-         to keep the size honest. */
       .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }
       .header .bio-col { font-size: 8.5pt; margin-top: 0.6rem; }
       a { text-decoration: none; }
@@ -1003,45 +653,26 @@ shows 3 columns. {%- endcomment -%}
   <script>document.body.dataset.view = document.documentElement.dataset.initialView || 'gallery'</script>
   <a class="skip-link" href="#main">Skip to content</a>
   {% include site-toggle.html %}
-  {%- comment -%} "profile", not "bio": the button collapses the whole masthead — portrait,
-  name, affiliations and profile links along with the bio — and for a screen reader this
-  label is the only description of that scope. The class and the id stay `bio-*`, being
-  internal names. {%- endcomment -%}
+  {%- comment -%} "profile", not "bio": the button collapses the whole masthead, and the
+  label is a screen reader's only description of that scope. {%- endcomment -%}
   <button class="bio-toggle" type="button" aria-controls="bio" aria-expanded="true" aria-label="Hide profile" title="Hide profile">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
     <span class="bio-toggle-label" aria-hidden="true">Show profile</span>
   </button>
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
 
-  <!-- ── Header ── -->
   <div class="bio-shell" id="bio">
   <header class="header">
     <div class="header-about">
-      {%- comment -%} The portrait is a card's photo, so it is as wide as its column: a
-      fixed 251px at two columns and up, and the whole page at one, which is where the
-      file sizes are decided. A 430px phone shows it at 346.8 CSS px, so it asks for 694
-      device pixels at 2x — just past the 640 copy — and with only 640 and 1200 to choose
-      from, the larger phones took the 1200 (35KB) for want of anything between. Hence the
-      ladder: 768 (17KB) covers those, 1024 (25KB) covers 3x (a 390px phone asks 920), and
-      the 1200 original — the same file the OG card and the JSON-LD point at — is left for
-      the widest one-column case, which asks 1090 at 2x. Desktop is untouched at 640, and
-      so is a 390px phone at 2x, which asks 614 and fits inside it. All four are one
-      family: cwebp -m 6 -sharp_yuv -q 81, matching the quality the 640 copy was already
-      made at.
-      A ladder only pays if `sizes` is honest, so the column is stated as it is rather
-      than as 100vw: an overstatement is safe with two candidates (it can only bias the
-      choice upward) but with four it costs a rung — 100vw on that 390px phone asks 780 at
-      2x and takes the 1024 instead of the 640, two rungs up. 83.2px is the page's own
-      inset, --page-gutter × 2 + --card-pad × 2 = 64 + 19.2. (100vw itself counts a
-      scrollbar the layout doesn't, which leaves a hair of overstatement — the safe
-      direction.)
-      Every number here is hand-computed from values that live elsewhere: an attribute the
-      preload scanner reads before any stylesheet exists is the one place on this page
-      that cannot say var(--card-w). So they are written out to be greppable when those
-      are retuned — 628px is the two-column threshold, gridWidth(2) + PAGE_PAD =
-      2 × --card-w + --card-gap + 64; 251px is a card's photo, --card-w − 2 × --card-pad =
-      270 − 2 × 9.6. Nothing breaks if they drift, which is exactly the risk: the browser
-      just picks the wrong rung, silently. {%- endcomment -%}
+      {%- comment -%} The portrait is a card's photo: 251px from two columns up, the page
+      width at one, where phones need the 768 and 1024 rungs (all cwebp -m 6 -sharp_yuv
+      -q 81; the 1200 is the OG/JSON-LD original). `sizes` states the column honestly, since
+      100vw would cost a rung. Its numbers are hand-derived, because the preload scanner
+      reads them before any CSS — retune them with the tokens, or the wrong rung is picked
+      silently:
+        628px  = two-column threshold, 2 × --card-w + --card-gap + 2 × --page-gutter
+        251px  = --card-w − 2 × --card-pad
+        83.2px = 2 × --page-gutter + 2 × --card-pad {%- endcomment -%}
       <div class="card-media">
         <img src="/images/Dario-Rodighiero-640.webp"
              srcset="/images/Dario-Rodighiero-640.webp 640w,
@@ -1053,32 +684,23 @@ shows 3 columns. {%- endcomment -%}
       </div>
       <h1 class="card-title">Dario Rodighiero</h1>
       <div class="profile-links card-text">
-      {%- comment -%} One line, in a 250.8px column, which is what decides the wording: the
-      labels are bare service names (Scholar, not Google Scholar; ORCID, not ORCID Profile),
-      and five of them with ordinary word spaces measure 232px. Spelling a label out or
-      adding a sixth wraps to a second line and lengthens the identity column with it — six
-      only fit by tightening the separators to hair spaces, which bought the width back at
-      the cost of an invisible character doing load-bearing work. Dropping the feed instead
-      leaves 19px of slack and ordinary punctuation, which is the better trade.
-      So the feed is the one profile deliberately absent: it stays discoverable through the
-      rel="alternate" link in <head>, which is where feed readers look, so the row spends
-      its width on the destinations a person would click. {%- endcomment -%}
+      {%- comment -%} One line in a 251px column: five bare names measure 232px, and a
+      longer label or a sixth link wraps. The feed is left to <head>'s rel="alternate",
+      where feed readers look. {%- endcomment -%}
         <a href="https://github.com/rodighiero/">GitHub</a> · <a href="https://scholar.google.com/citations?user=h065R1oAAAAJ&amp;sortby=pubdate">Scholar</a> · <a href="https://www.linkedin.com/in/dariorodighiero/">LinkedIn</a> · <a href="{{ site.orcid }}">ORCID</a> · <a href="https://www.zotero.org/rodighiero">Zotero</a>
       </div>
     </div>
-    {% assign bio_raw = site.data.readme_content %}
-    {% assign bio_paragraphs = bio_raw | split: "<!-- split -->" %}
-    {% for para in bio_paragraphs %}
-      {% assign para_trimmed = para | strip %}
-      {% if para_trimmed != "" %}
-    <div class="bio-col hyphenate-prose">{{ para_trimmed | markdownify }}</div>
-      {% endif %}
-    {% endfor %}
+    {%- assign _bio = site.data.readme_content | split: "<!-- split -->" -%}
+    {%- for _para in _bio -%}
+      {%- assign _para = _para | strip -%}
+      {%- if _para != "" %}
+    <div class="bio-col hyphenate-prose">{{ _para | markdownify }}</div>
+      {%- endif -%}
+    {%- endfor %}
   </header>
   </div>
 
   <main id="main" tabindex="-1">
-    <!-- ── Search bar ── -->
     <div class="filters">
       <label class="filters-search" aria-label="Search publications">
         <svg class="filter-search-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
@@ -1089,105 +711,63 @@ shows 3 columns. {%- endcomment -%}
         <button type="button" data-view="gallery" aria-label="Gallery view" aria-pressed="false">
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         </button>
-        {%- comment -%} The network view is reachable two ways — this toggle and the action card
-        further down the gallery — and both send the one GoatCounter event, so its path and title
-        are named once here and passed into card-action.html rather than spelled out twice.
-        The title is explicit because count.js otherwise falls back to the element's innerHTML
-        (js/count.js:188), which for both of these is raw SVG. {%- endcomment -%}
+        {%- comment -%} One GoatCounter event for this toggle and the network card below.
+        The title is explicit, or count.js would report the raw SVG. {%- endcomment -%}
         {%- assign gc_network_click = 'network-view' -%}
         {%- assign gc_network_title = 'Network view' -%}
         <button type="button" data-view="network" aria-label="Network view" aria-pressed="false" data-goatcounter-click="{{ gc_network_click }}" data-goatcounter-title="{{ gc_network_title }}">
-          {%- comment -%} Same stroke-width as the search, gallery and bio-toggle icons, so the
-          four read as one set. The node dots grew with it (1.9 → 2.1, hub 2.3 → 2.6): at a
-          2-wide edge, the old radii were barely fatter than the line they sat on.
-
-          The hexagon is sized on its edges, which span 2 to 22 on both axes — the same 20-unit
-          box as the gallery icon's four squares, so the two structures measure alike. The node
-          dots then sit outside that box (out to 0.9 and 23.1), which is the point: they read as
-          marks laid on the shape rather than as its corners, and the small optical credit a
-          ring of round marks needs against four solid squares comes for free. {%- endcomment -%}
+          {%- comment -%} Same stroke as the other icons. The hexagon's edges span the gallery
+          icon's 20-unit box; the dots sit just outside it, as marks on the shape. {%- endcomment -%}
           <svg aria-hidden="true" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="currentColor"><line x1="21" y1="12" x2="16.5" y2="3"/><line x1="16.5" y1="3" x2="7.5" y2="3"/><line x1="7.5" y1="3" x2="3" y2="12"/><line x1="3" y1="12" x2="7.5" y2="21"/><line x1="7.5" y1="21" x2="16.5" y2="21"/><line x1="16.5" y1="21" x2="21" y2="12"/><line x1="12" y1="12" x2="21" y2="12"/><line x1="12" y1="12" x2="7.5" y2="3"/><line x1="12" y1="12" x2="7.5" y2="21"/><circle cx="12" cy="12" r="2.6" stroke="none"/><circle cx="21" cy="12" r="2.1" stroke="none"/><circle cx="16.5" cy="3" r="2.1" stroke="none"/><circle cx="7.5" cy="3" r="2.1" stroke="none"/><circle cx="3" cy="12" r="2.1" stroke="none"/><circle cx="7.5" cy="21" r="2.1" stroke="none"/><circle cx="16.5" cy="21" r="2.1" stroke="none"/></svg>
         </button>
       </div>
     </div>
 
-    <!-- ── Publications ── -->
     <div id="publications">
-      {%- comment -%} Special cards (non-.publication tiles): event announcements and clickable
-      action cards. They live in the gallery flow but carry the .event, .action or .filter class
-      (not .publication) so the count / search / network logic (which queries .publication)
-      ignores them. Events lead the flow, newest first — they are the timely tile, and the one
-      kind that goes somewhere else rather than filtering in place; they are the only special
-      card that comes from _data/home_cards.yml. The network tile and the research-cluster
-      filter cards are generated below from site.data.network: the network tile leads the
-      publications, the cluster cards are spaced evenly through them. See scripts/build-network.py.
-      {%- endcomment -%}
-      {% assign _events = site.data.home_cards.events | sort: 'date' | reverse %}
-      {% for _event in _events %}{% include card-event.html event=_event %}{% endfor %}
+      {%- comment -%} Special tiles carry .event, .action or .filter rather than .publication,
+      which the count, search and network logic select on. Events (_data/home_cards.yml) lead,
+      newest first; then the network tile, with the cluster filters spread through the
+      publications one every `_cluster_step` — divided by clusters + 1, since the network
+      tile takes the first slot (cards.md in the layout skill has why). Clusters come newest
+      first from build-network.py and are numbered in emitted order, not by `id`; each
+      carries its own miniature, and its GoatCounter path is its title. {%- endcomment -%}
+      {%- assign _events = site.data.home_cards.events | sort: 'date' | reverse -%}
+      {%- for _event in _events %}{% include card-event.html event=_event %}{% endfor %}
 
       {% include card-action.html eyebrow="Action" venue="Publication network" label="The Shape of a Body of Work" sublabel="This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." action="view:network" year="now" media="network-preview.svg" gcclick=gc_network_click gctitle=gc_network_title %}
-
-      {%- comment -%} One ordered list (publication_order.rb), so a single card block renders
-      every card and forloop.index is each card's position.
-
-      The network card and the cluster filters are spread by *count*, one every `_cluster_step`
-      publications, rather than parked at a year (cards.md in the layout skill has why).
-      `_cluster_step` divides by clusters + 1 because the network tile takes the first of those
-      slots, so the whole set comes out evenly spaced and the gaps re-space themselves as the
-      corpus grows. The clusters come in the order build-network.py put them in (newest median
-      work first, see order_cluster_cards), so they descend in time the way the gallery does.
-
-      Each card carries its own miniature of the graph (network-cluster-<id>.svg, generated beside
-      network-preview.svg): the same map in the same frame with the cluster lit and the rest faded,
-      so the tiles are small multiples and each one previews what clicking it does. The meta line
-      numbers them in the order they are emitted (`_cluster_n`) — so a reader scanning down the
-      gallery meets cluster 1, 2, 3… in sequence — not by the cluster's internal `id`, which is
-      size order in build-network.py and would look arbitrary on the page. {%- endcomment -%}
-      {% assign _cluster_n = 0 %}
-      {% assign _clusters = site.data.network.clusters %}
-      {% assign _cluster_slots = _clusters.size | plus: 1 %}
-      {% assign _cluster_step = site.data.ordered_publications.size | divided_by: _cluster_slots | at_least: 1 %}
-      {% for publication in site.data.ordered_publications %}
-      {% assign _cluster_due = _cluster_n | plus: 1 | times: _cluster_step %}
-      {% if _cluster_n < _clusters.size and forloop.index0 == _cluster_due %}
-      {% assign _cluster = _clusters[_cluster_n] %}
-      {% assign _cluster_n = _cluster_n | plus: 1 %}
-      {% capture _cluster_media %}network-cluster-{{ _cluster.id }}.svg{% endcapture %}
-      {% capture _cluster_venue %}Research cluster {{ _cluster_n }}{% endcapture %}
-      {%- comment -%} The GoatCounter event path is the cluster's title — the same text the card
-      shows — not its internal id, so the dashboard reads "Peirce Manuscripts" rather than
-      "cluster:3". card-action.html labels the event with the path unless given a title. {%- endcomment -%}
+      {%- assign _cluster_n = 0 -%}
+      {%- assign _clusters = site.data.network.clusters -%}
+      {%- assign _cluster_slots = _clusters.size | plus: 1 -%}
+      {%- assign _cluster_step = site.data.ordered_publications.size | divided_by: _cluster_slots | at_least: 1 -%}
+      {%- for publication in site.data.ordered_publications -%}
+      {%- assign _cluster_due = _cluster_n | plus: 1 | times: _cluster_step -%}
+      {%- if _cluster_n < _clusters.size and forloop.index0 == _cluster_due -%}
+      {%- assign _cluster = _clusters[_cluster_n] -%}
+      {%- assign _cluster_n = _cluster_n | plus: 1 -%}
+      {%- capture _cluster_media %}network-cluster-{{ _cluster.id }}.svg{% endcapture -%}
+      {%- capture _cluster_venue %}Research cluster {{ _cluster_n }}{% endcapture %}
       {% include card-action.html eyebrow="Filter" venue=_cluster_venue label=_cluster.title sublabel=_cluster.description action=_cluster.action slugs=_cluster.slugs year=_cluster.span filterlabel=_cluster.filter_label media=_cluster_media gcclick=_cluster.title %}
-      {% endif %}
-      {% assign _lang = publication.lang | default: 'en' %}
-      {% capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.interviewer }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ site.data.publication_types[publication.type].label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ site.data.languages[_lang].search }}{% endcapture %}
+      {%- endif -%}
+      {%- assign _lang = publication.lang | default: 'en' -%}
+      {%- capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.interviewer }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ site.data.publication_types[publication.type].label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ site.data.languages[_lang].search }}{% endcapture %}
       <div class="card publication" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-year="{{ publication.year }}" data-search="{{ _search_text | strip_newlines | escape }}">
         <div class="card-media{% if publication.img_border %} bordered{% endif %}">
-          {%- comment -%} The first rows are the likely LCP: load it eagerly with high priority; lazy-load below the fold. Reserve space from the thumbnail's own dimensions.
-          alt is empty on purpose: the card's <h2> link right below carries the title, so
-          naming the image would make a screen reader announce every publication twice —
-          once as a picture of the title, once as the link. The thumbnail is a crop of a
-          figure standing in for the work, not information the title doesn't already give,
-          which is exactly what alt="" is for. (The full-size original still reaches image
-          search through the publication page and og:image; only this derivative is silent.) {%- endcomment -%}
+          {%- comment -%} The first row is the likely LCP; below the fold loads lazily.
+          alt is empty: the <h2> link below already names the work. {%- endcomment -%}
           {%- assign _thumb = '/images/@cards/' | append: publication.slug | append: '.webp' -%}
-          {%- assign _thumb_dims = _thumb | image_size -%}
+          {%- assign _thumb_dims = _thumb | image_size %}
           <img src="{{ _thumb }}" alt="" {% if forloop.index <= 4 %}fetchpriority="high"{% elsif forloop.index > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width }}" height="{{ _thumb_dims.height }}">
         </div>
         {% include card-meta.html item=publication %}
-        {%- comment -%} lang on the title alone, not the card: the title is the only part
-        of a tile written in the work's own language (the meta line and byline prefixes
-        are English UI chrome either way). It tells a screen reader to pronounce the
-        French and Italian titles properly instead of reading them with English
-        phonetics. {%- endcomment -%}
+        {%- comment -%} lang on the title alone: the only part of a tile in the work's own
+        language. {%- endcomment %}
         <h2 class="card-title" lang="{{ _lang }}"><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
         {% include credit-short.html item=publication %}
       </div>
-      {% endfor %}
+      {%- endfor %}
     </div>
     <p id="no-results" class="no-results" hidden>No publications match your search.</p>
 
-    <!-- ── Network view (similarity graph) ── -->
     <div id="network-view">
       <aside class="sidebar">
         <div class="lede">
@@ -1197,14 +777,9 @@ shows 3 columns. {%- endcomment -%}
             <li>Each file in <code>_publications/</code> is stripped to plain prose — no footnotes, headings, links, or markup.</li>
             <li>Its text becomes a 768-dimension vector via <code>gte-base-en-v1.5</code>; non-English originals are machine-translated first.</li>
             <li>Cosine similarity is measured between every pair of embedded papers.</li>
-            {%- comment -%} The three numbers below are quoted from the build, not typed:
-            scripts/layout-network.js owns MUTUAL_K, STRONG_SIM and FALLBACK_SIM, and ships
-            them in network.json's `params` so retuning one cannot leave this list stating
-            the number it used to be. {%- endcomment -%}
+            {%- comment -%} The numbers come from the build (network.json `params`), not typed.
+            JSON turns 0.60 into 0.6, so two decimals are rebuilt by hand. {%- endcomment -%}
             {%- assign _p = site.data.network.params -%}
-            {%- comment -%} JSON drops a trailing zero, so 0.60 arrives as 0.6 and would sit
-            beside 0.65 a digit short. Both are cosine thresholds in (0.10, 0.99), so two
-            decimals is the whole number: scale to an integer and re-prefix. {%- endcomment -%}
             {%- assign _strong = _p.strong_sim | times: 100 | round | prepend: '0.' -%}
             {%- assign _fallback = _p.fallback_sim | times: 100 | round | prepend: '0.' -%}
             <li>Edges use mutual nearest neighbors (<em>k</em>&nbsp;=&nbsp;{{ _p.mutual_k }}): each ranks the other in its top {% if _p.mutual_k == 2 %}two{% else %}{{ _p.mutual_k }}{% endif %}, above {{ _strong }}.<svg class="edge-sample" viewBox="0 0 34 8" aria-hidden="true"><line x1="4" y1="4" x2="30" y2="4"/><circle cx="4" cy="4" r="2"/><circle cx="30" cy="4" r="2"/></svg></li>
@@ -1220,10 +795,8 @@ shows 3 columns. {%- endcomment -%}
         <svg id="net" aria-label="Publication similarity network"></svg>
       </div>
     </div>
-    {%- comment -%} The browser's share of network.json, projected by
-    _plugins/system_network_client.rb — roughly half the file, because the rest of it
-    (clusters, the related list's titles and urls) is read by Liquid at build time and
-    would otherwise be inlined a second time for a reader who never uses it. {%- endcomment -%}
+    {%- comment -%} Only the browser's share of network.json (system_network_client.rb).
+    {%- endcomment -%}
     <script id="net-data" type="application/json">{{ site.data.network_client | jsonify }}</script>
   </main>
 
@@ -1240,55 +813,30 @@ shows 3 columns. {%- endcomment -%}
     var container = document.getElementById('publications');
     var viewButtons = document.querySelectorAll('.view-toggle button');
     var total = publications.length;
-    // Masonry packs every .card tile (publications + .action/.filter/.event);
-    // count/search/network keep operating on .publication only.
+    // The masonry packs every tile; count, search and network read .publication only.
     var tiles = container.querySelectorAll(':scope > .card');
     var specialCards = container.querySelectorAll('.action, .filter, .event');
 
     // ── Masonry layout (gallery only) ──
-    /* Read from the CSS custom properties in styles-base.css rather than hardcoded here:
-       the header's grid (see .header in this file) is built to match a card's width and
-       gap exactly, and reading the same declaration both places is what keeps that true
-       — a retune only has one number to change, not two copies to keep in step. */
+    // The tokens are read from styles-base.css, never copied. The card width is the
+    // constant: as many CARD_W columns as fit, up to MAX_COLS; one full-width below two.
     var rootStyle = getComputedStyle(document.documentElement);
     var GAP_X = parseFloat(rootStyle.getPropertyValue('--card-gap'));
-    /* The card width is the constant and the column count follows from it, rather than
-       the other way round: fit as many CARD_W columns as the container holds, so a card
-       is the same size at every size above mobile and the leftover goes to the margins.
-       Below two columns there is no grid left to speak of: one full-width column, which
-       is the mobile layout (window < 628). The count steps 1 → 2 → 3 → 4, and the widest
-       grid a window can afford is the widest of those that still fits. */
     var CARD_W = parseFloat(rootStyle.getPropertyValue('--card-w'));
+    var PAGE_PAD = 2 * parseFloat(rootStyle.getPropertyValue('--page-gutter'));
     var MAX_COLS = 4;
     function gridWidth(n) { return n * CARD_W + GAP_X * (n - 1); }
-    // gridWidth(n) <= w rearranged, which is the same count at every width without
-    // walking a table to find it: n columns fit when n*CARD_W + (n-1)*GAP_X <= w.
     function columnCount(w) {
       return Math.max(1, Math.min(MAX_COLS, Math.floor((w + GAP_X) / (CARD_W + GAP_X))));
     }
-    /* The grid is the page's measure: the body is sized to whatever the current column
-       count actually spans, so the header, bio, search bar and footer end exactly where
-       the last card ends. Without this the page keeps the full 1152 while a 2- or
-       3-column grid sits centred inside it, and the bio visibly overhangs the cards.
-       Derived from the window rather than from the body's own width, which is the value
-       being written — reading it back would feed the result into its own input. */
-    // The body's --page-gutter, both sides — read rather than copied, like CARD_W and
-    // GAP_X above. That token is sized to hold the mode toggle (see styles-base.css), so
-    // the grid and the toggle's clearance move together instead of drifting apart.
-    var PAGE_PAD = 2 * parseFloat(rootStyle.getPropertyValue('--page-gutter'));
-    var MAX_CONTENT = gridWidth(MAX_COLS); // the grid's own width at MAX_COLS
-    var pageWidth = null;                  // the last width written, to spot real changes
-    /* clientWidth, not innerWidth: innerWidth counts a classic scrollbar as page width,
-       and the columns are then laid out into space the scrollbar is already using. On
-       macOS (overlay scrollbars) the two are equal and nothing shows; where the scrollbar
-       takes a track — Windows, Linux, macOS set to always show them — the grid overhangs
-       the body by exactly its width, which is a horizontal scrollbar on the whole page:
-       at every window width in one-column mode (where the page is sized to the window
-       itself), and in a scrollbar-wide band just above each of the 2-, 3- and 4-column
-       thresholds. clientWidth is the width the content actually gets, which is what the
-       CSS breakpoints below are matched against too. */
-    // Returns the values it just wrote, so layoutMasonry doesn't re-derive cols from a
-    // second, independent read of the DOM it was just told to resize.
+    var MAX_CONTENT = gridWidth(MAX_COLS);
+    var pageWidth = null; // the last width written, to spot real changes
+    /* Sizes the body to exactly what the column count spans, so every block ends where
+       the last card does, and publishes the count as --cols (to compute with) and
+       data-cols (for rules that can't). clientWidth, never innerWidth, which counts a
+       classic scrollbar and makes the grid overhang the body. Returns what it wrote, so
+       layoutMasonry needn't read it back. The graph's ResizeObserver catches its own
+       stage changes. */
     function syncPageWidth() {
       var avail = Math.min(document.documentElement.clientWidth, MAX_CONTENT + PAGE_PAD) - PAGE_PAD;
       var cols = columnCount(avail);
@@ -1296,171 +844,77 @@ shows 3 columns. {%- endcomment -%}
       if (width !== pageWidth) {
         pageWidth = width;
         document.body.style.maxWidth = width + 'px';
-        /* The count itself, published for the rest of the page: the footer and the
-           network view are laid out on the same columns the cards are in, so their
-           interior boundaries land on card edges at every count rather than only at
-           four. --cols is the number to compute with, data-cols the hook for the rules
-           that can't (a grid line counted from the end needs a line to exist). Both are
-           written here because this is where the count is decided; the CSS carries a
-           4-column default for the moment before this first runs. */
         document.body.style.setProperty('--cols', cols);
         document.body.dataset.cols = cols;
-        // Nothing to notify: the stage is a square two columns wide, so a change of
-        // count moves it within the grid without resizing it, and where it does
-        // change size — the view coming out of display:none, or a page too narrow
-        // for the square, where min(100%, …) bites — the graph's own ResizeObserver
-        // picks that up (see buildNetwork), including a page-width change with no
-        // window resize behind it, such as a late image load.
       }
       return { avail: avail, cols: cols };
     }
-    // Only ever runs on the way into the network view, where #publications is
-    // display:none — so the widths and transforms are dropped (a card cloned into the
-    // network's details panel must not inherit its masonry slot), but the container
-    // *keeps* its height. Clearing it is what used to bump the reader up the page:
-    // the height is the only thing holding the gallery open, since every card is
-    // absolutely positioned and contributes nothing to it. Coming back, the view flips
-    // to gallery with the height still cleared, so the document collapses to header +
-    // filter bar + footer — and layoutMasonry's measuring pass then forces a layout
-    // inside that collapsed window, at which point the browser clamps the scroll
-    // position to the short page's maximum. Restoring the height a few statements later
-    // brings the page back but not the scroll position. A stale height on a hidden
-    // element costs nothing and is overwritten by layoutMasonry on the way back.
+    /* On the way into the network view: drop the widths, transforms and gap marks (the
+       details panel clones a card, which must not inherit them), but keep the container's
+       height — clearing it collapses the page on the way back, and the browser clamps
+       the scroll position. With the transforms gone there is nothing to travel from. */
     function clearMasonry() {
       tiles.forEach(function(p) {
         p.style.width = '';
         p.style.transform = '';
-        // Goes for the same reason the transform does: the details panel clones a
-        // .publication card, and a clone still carrying data-gap would draw a rule
-        // inside the network sidebar, where there is no gap and no tile below.
         p.removeAttribute('data-gap');
         p.style.removeProperty('--gap-span');
       });
-      // Every transform just went: there are no positions left to travel from, so the
-      // layout on the way back out of the network view has to take its slots outright.
       lastCols = null;
       placedY = [];
       lastHeight = 0;
     }
-    /* The column count the tiles were last laid out into, so a pass that changes it can be
-       told from one that doesn't — a window resize within a count rewrites nothing (above
-       one column a card's width is fixed, so neither x nor y moves), while a pass that
-       crosses a threshold re-packs the whole gallery. null means "nothing to travel from":
-       before the first layout, and after clearMasonry drops the transforms. */
+    // The last pass's column count (null: nothing to travel from), each tile's y, and
+    // the container height — remembered rather than parsed back out of the styles.
     var lastCols = null;
-    /* Where the pack put each tile last time, indexed alongside `tiles` — the y a re-pack
-       would move it away from, and the only thing needed to tell a short move from a long
-       one. Remembered rather than read back out of the transform string this function
-       itself wrote: it is the same number either way, without the parse. A tile that isn't
-       placed on a pass (hidden by a filter, or by the mobile media query) keeps its entry,
-       exactly as it keeps the transform that entry describes. */
     var placedY = [];
-    // The height the last pass gave the container, remembered for the same reason placedY
-    // is: reading it back off container.style would parse a string this function wrote.
     var lastHeight = 0;
-    /* The years between two tiles the pack has stacked, which is what sets the length
-       of the rule drawn in the gap between them (the arithmetic itself lives with the
-       tokens, in the .card[data-gap]::after rule). A tile with no parseable year
-       contributes no span and gets the base rule — one branch covering every case that
-       has no year to give: a Forthcoming publication, an event card, the network tile
-       and the seven cluster tiles, whose own `year` is a span string or the build year. */
+    // Years between two stacked tiles, for the gap mark; 0 where either has no year
+    // (Forthcoming, events, the network and cluster tiles).
     function gapSpan(above, below) {
       var a = parseInt(above.dataset.year, 10);
       var b = parseInt(below.dataset.year, 10);
       return isNaN(a) || isNaN(b) ? 0 : Math.abs(a - b);
     }
-    // `synced` is syncPageWidth()'s result when the caller has just run it, so a resize
-    // does one write/read cycle rather than two.
+    // `synced` is syncPageWidth()'s result when the caller has just run it.
     function layoutMasonry(synced) {
       // Before the view check: a resize in network view must resize the page too.
       var sync = synced || syncPageWidth();
       if (document.body.dataset.view !== 'gallery') return;
-      // The body was just sized to fit exactly cols × CARD_W (plus gutters), so the
-      // container spans it precisely — no need to re-measure or recompute cols from it.
-      var containerWidth = sync.avail;
       var cols = sync.cols;
-      /* A count change re-packs the gallery, which is the same kind of event as a filter
-         change — every surviving tile gets a new slot — so it gets the same motion: the
-         one `.animating` class, the same spring, on the real elements (see
-         withTileTransition). Nothing enters or leaves here, so there is no fade to run
-         alongside it, and the tiles that would have to cross more than a screen to get
-         there are cut (see `snapping` below).
-
-         The one-column boundary is excluded, on both sides. From two columns up a card is
-         always CARD_W, so the tiles that travel are the same tiles at the same size, and
-         the move is the whole change. At one column the card is the page's full width
-         instead: crossing that line resizes every tile as well as moving it, and width is
-         a layout property — animating it would reflow every card's text on every frame,
-         so it can only change instantly, and a card that changes size instantly while
-         gliding to a new slot reads as two unrelated things happening at once. The whole
-         page also roughly doubles or halves in height there, so almost every tile is past
-         the distance cut anyway. Better to let that one change simply happen. */
+      /* A column-count change re-packs the gallery and travels like a filter change —
+         except across the one-column boundary, where every card also changes width, which
+         can only happen instantly. */
       var animate = lastCols !== null && lastCols !== cols && cols > 1 && lastCols > 1
         && motionOK();
       lastCols = cols;
-      var colWidth = cols === 1 ? containerWidth : CARD_W;
-      /* Vertical gap between stacked tiles: a quarter of a *card*, not of the column it
-         sits in. The two are the same thing from two columns up, but the single column
-         is the page's whole width, and a quarter of that is a gap the size of a card —
-         it made the one-column page more than three times taller than the two-column
-         one, most of it empty. */
+      var colWidth = cols === 1 ? sync.avail : CARD_W;
+      // A quarter of a card, not of the column: at one column that would be a card tall.
       var gapY = CARD_W / 4;
       var colHeights = new Array(cols).fill(0);
       tiles.forEach(function(p) {
         p.style.width = colWidth + 'px';
       });
-      /* Read all heights in one pass (single reflow), then write transforms. A tile is out
-         of the pack if it is hidden inline (search/view state) or via CSS (a media query
-         hides the action cards on mobile) — asked once, here, so the measuring and the
-         packing cannot disagree about a tile. A null entry is "not placed": no height, no
-         slot.
-         checkVisibility() asks that question directly: with its default options it answers
-         "does this generate a box" — display:none on the tile or on any ancestor, and
-         nothing else — which is exactly what this used to spell out by hand as
-         `style.display === 'none' || offsetParent === null`. The case neither form catches
-         is the one that matters most here: #publications is `visibility: hidden` until the
-         first pack lands (see .ready), and visibility is only consulted when the call asks
-         for it (visibilityProperty), so the tiles measured on that very first pass still
-         count as present. */
+      /* Read every height in one pass, then write. checkVisibility() is "does it generate
+         a box" — display:none on the tile (filter) or via CSS (mobile) — and ignores the
+         pre-.ready visibility:hidden, so the first pass still measures. null: not placed. */
       var heights = [];
       tiles.forEach(function(p) {
         heights.push(p.checkVisibility() ? p.getBoundingClientRect().height : null);
       });
-      /* Pack into an array before writing anything. The height the pack comes to decides
-         whether the change can be animated at all (see below), and a transform written
-         outside the armed class cannot be taken back — so the whole arrangement has to
-         exist as numbers first. Nothing here touches the DOM, so the reads above stay the
-         one measuring pass. */
+      /* Pack into numbers first: the resulting height decides whether the change may
+         animate, and a transform written outside the armed class cannot be taken back. */
       var slots = [];
-      // The year span each tile's gap mark measures, indexed alongside `tiles` like
-      // `slots` is. Left undefined for a tile with nothing below it.
-      var gaps = [];
-      /* The column the last graph-miniature tile went into — the network card and the
-         seven cluster filters, the only tiles carrying a picture of the same map. The
-         gallery loop already spaces them evenly *down* the flow (one every
-         publications / (clusters + 1) entries); this is the same spacing *across*, so
-         two of them never stack in one column and read as a stripe instead of as small
-         multiples. Without it three consecutive cluster tiles share a column at three
-         columns wide, and four of them do at two.
-         It costs the runner-up column's slack, a few tens of pixels, on eight tiles out
-         of seventy-odd. One column has no runner-up, so there the rule stands down —
-         and so does a tile that is not being placed at all (hidden by a filter, or by
-         the mobile media query), because it returns above without recording a column. */
+      var gaps = []; // each tile's gap-mark span; undefined when nothing is below it
+      /* No two graph-miniature tiles (network + clusters) in the same column in a row,
+         so they read as small multiples rather than a stripe. Not at one column. */
       var lastMediaCol = -1;
-      /* The tile last placed in each column, by index — which is the tile the one
-         being placed now lands directly beneath, and so the one whose gap the pair
-         decides. Collected here and written in the pass below, like the slots
-         themselves: an index still sitting in this array when the walk ends is the
-         last tile in its column, and has to come out of the pass with no attribute
-         at all rather than a stale one. */
-      var colLast = new Array(cols).fill(-1);
+      var colLast = new Array(cols).fill(-1); // the tile last placed in each column
       tiles.forEach(function(p, idx) {
         if (heights[idx] === null) { slots.push(null); return; }
         var media = p.matches('.action, .filter');
         var skip = media && cols > 1 ? lastMediaCol : -1;
-        // The shortest column, said the way the tallest is said a few lines down —
-        // but stated as a walk, because one column may be out of the running.
-        var minCol = -1;
+        var minCol = -1; // the shortest column, bar `skip`
         for (var c = 0; c < cols; c++) {
           if (c === skip) continue;
           if (minCol < 0 || colHeights[c] < colHeights[minCol]) minCol = c;
@@ -1474,35 +928,26 @@ shows 3 columns. {%- endcomment -%}
         colHeights[minCol] = y + heights[idx] + gapY;
       });
       var height = Math.max(0, Math.max(...colHeights) - gapY);
-      /* A pass that shortens the gallery past where the reader is standing ends with the
-         browser clamping the scroll position: three columns to four at the foot of the
-         page pulls the viewport some 2500px up. Nothing here can prevent that — the page
-         really is shorter — but a slide playing while the viewport is dragged the other
-         way reads as the page coming apart, so that pass is left to cut. One jump, rather
-         than a jump with movement inside it. Only a rising count can clamp: fewer columns
-         is a taller page, and a taller page leaves the scroll position alone. */
+      /* A pass that shortens the page below the reader gets its scroll position clamped;
+         a slide under that jump reads as the page coming apart, so it cuts instead. */
       if (animate) {
         var docHeight = document.documentElement.scrollHeight - lastHeight + height;
         if (window.scrollY > docHeight - window.innerHeight) animate = false;
       }
-      // Arm before the transforms are written, so the change the browser sees is already
-      // a transitioned one, and mark the tiles too far from their new slot to be followed.
-      var farMove = window.innerHeight;
+      // Arm before writing, and cut the tiles moving further than a screen.
       var snapped = [];
       if (animate) armTileMotion();
       tiles.forEach(function(p, idx) {
         var slot = slots[idx];
         if (!slot) return;
         if (animate && (placedY[idx] === undefined
-              || Math.abs(slot.y - placedY[idx]) > farMove)) {
+              || Math.abs(slot.y - placedY[idx]) > window.innerHeight)) {
           p.classList.add('snapping');
           snapped.push(p);
         }
         p.style.transform = 'translate(' + slot.x + 'px,' + slot.y + 'px)';
-        /* Two writes, one job: the attribute is the presence flag the CSS selects on
-           (a custom property cannot be selected for), the property the number it does
-           the arithmetic with. `undefined` is the last tile in its column; 0 is a real
-           span and has to keep its mark, so the test is explicit rather than truthy. */
+        // The attribute is what CSS selects on, the property what it computes with;
+        // 0 is a real span, so the test is explicit.
         if (gaps[idx] === undefined) {
           p.removeAttribute('data-gap');
           p.style.removeProperty('--gap-span');
@@ -1516,34 +961,20 @@ shows 3 columns. {%- endcomment -%}
       lastHeight = height;
       container.classList.add('ready');
       if (snapped.length) {
-        // Flush, so those jumps land as the state the next change starts from, then hand
-        // the tiles their transition back: the class exists for one style change only, and
-        // a tile still wearing it would cut on the next filter too.
+        // Flush the jumps, then hand the transition back for the next change.
         void container.offsetWidth;
         snapped.forEach(function(p) { p.classList.remove('snapping'); });
       }
     }
-    /* Everything that schedules a pass now does so for one reason: the page's own width
-       may have changed. A window resize, and the bio collapse taking a scrollbar with it —
-       a scrollbar is width, which is the column count.
-
-       So the pass asks first. syncPageWidth is the authority: above one column the width is
-       quantized to the grid, so dragging a window inside a column count cannot move a tile
-       (a card is CARD_W at every size up there, so neither x nor y changes) and the pass
-       returns having written nothing. At one column the width tracks the window and every
-       pixel counts, which is exactly when the cards do need re-fitting, and it runs. A
-       two-second drag is ~120 frames of which at most three cross a threshold; this is the
-       difference between three packs and 120.
-
-       It also removes the need to cancel a queued pass when a layout runs synchronously
-       underneath it: layoutMasonry syncs the width itself, so a pass queued before it and
-       fired after finds nothing changed and returns on its own. */
+    /* A scheduled pass exists for one reason: the page's width may have changed (a
+       resize, or the bio collapse taking a scrollbar with it). Above one column the width
+       is quantized to the grid, so most frames of a drag find nothing to do. A pass
+       queued before a synchronous layout finds nothing changed either. No pass on image
+       load: every thumbnail carries its dimensions. */
     var layoutFrame = 0;
     function layoutIfPageResized() {
       var before = pageWidth;
-      // Runs in every view: a resize in network view must resize the page too, even though
-      // there is no gallery to pack (see layoutMasonry, which returns on the view check).
-      var sync = syncPageWidth();
+      var sync = syncPageWidth(); // in every view: the page resizes in network view too
       if (pageWidth !== before) layoutMasonry(sync);
     }
     function scheduleWidthPass() {
@@ -1551,24 +982,11 @@ shows 3 columns. {%- endcomment -%}
       layoutFrame = requestAnimationFrame(function() { layoutFrame = 0; layoutIfPageResized(); });
     }
     window.addEventListener('resize', scheduleWidthPass);
-    /* No re-layout on image load. Every card thumbnail carries width and height from
-       image_size and is styled height:auto, so the browser reserves the tile's box from
-       the intrinsic ratio before a byte arrives — a decoded image cannot change the pack.
-       There used to be a load listener on every one of them, each firing a full
-       measure-and-write pass to learn a height already known. If an image ever does turn
-       up without dimensions, give it dimensions: that is the fix, and image_size does it
-       automatically. */
 
     // ── Thumbnail warming ──
-    // A card below the fold carries loading="lazy", and a card hidden by a filter loads
-    // nothing at all while it is display:none — so the first time a filter is cleared,
-    // the tiles coming back have no picture yet: they fade in as empty frames and fill
-    // once the image arrives. Once the page has settled, quietly promote whatever is
-    // still lazy to eager — the first paint keeps its lazy loading, which is the point of
-    // it, and by the time anyone filters, every card has its image ready to travel.
-    function warmThumbnails() {
-      promoteLazyImages(container);
-    }
+    // A lazy or filtered-out card has no picture yet the first time it returns, so once
+    // the page settles, promote whatever is still lazy.
+    function warmThumbnails() { promoteLazyImages(container); }
     function warmWhenIdle() {
       if (window.requestIdleCallback) requestIdleCallback(warmThumbnails, { timeout: 2000 });
       else setTimeout(warmThumbnails, 500);
@@ -1576,50 +994,25 @@ shows 3 columns. {%- endcomment -%}
     if (document.readyState === 'complete') warmWhenIdle();
     else window.addEventListener('load', warmWhenIdle, { once: true });
 
-    // ── Animating between states ──
-    // Every change of state — switching view, applying a filter, clearing one, and typing
-    // once a burst of keystrokes has settled (see searchFromInput below) — runs through
-    // the two helpers here, so the page animates between states instead of cutting. Both
-    // fall straight through to fn() when the reader has asked for reduced motion, leaving
-    // the old instant behaviour intact.
+    // ── Animating between states ── both helpers fall through to fn() on reduced motion.
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     function motionOK() { return !reduceMotion.matches; }
 
-    // Switching view: the gallery and the graph share nothing on screen, so there is
-    // nothing to match up — a plain cross-fade of the page is the whole effect.
+    // A view switch: the two views share nothing, so a cross-fade is the whole effect.
     function withCrossfade(fn) {
       if (!document.startViewTransition || !motionOK()) { fn(); return; }
       document.startViewTransition(fn);
     }
 
-    // A filter change *within* the gallery, where the tiles that survive it should travel
-    // to their new masonry slots rather than blink into them. This is deliberately NOT a
-    // view transition. A view transition replaces the live page with rasterised snapshots
-    // for its whole duration, so a tile in flight is a picture of a card rather than the
-    // card — with the tile's own snapshot and the page's cross-fading against each other,
-    // which is what made the portrait drop out of the interview tile mid-slide. The
-    // masonry already positions every tile absolutely and moves it with a transform, so
-    // the destination is a transform we write ourselves and the browser can animate the
-    // real elements: the actual <img> travels, sharp, the whole way across.
-    //
-    // Three behaviours, as before. A tile in both states slides to its new slot. A tile
-    // that leaves is cut, which suits a filter. A tile that arrives is pinned at its new
-    // slot with the transition suppressed — it still carries the transform of wherever it
-    // last sat, and gliding in from a slot it no longer relates to reads as noise — then
-    // fades in from there.
-    // The `transform` duration on .animating .card, read rather than copied, like CARD_W.
+    /* A filter change in the gallery. Deliberately not a view transition, which animates
+       rasterised snapshots (a photo once dropped out mid-slide): the masonry's own
+       transforms move the real tiles. A surviving tile slides, a leaving one is cut, an
+       arriving one takes its slot outright and fades in. */
     var TILE_MOVE_MS = parseFloat(rootStyle.getPropertyValue('--tile-move')) * 1000;
-    /* The spring overshoots and settles, so it is still moving fractionally after its
-       nominal duration; disarming on the tick would strip the transition mid-settle. */
-    var ARM_SLACK_MS = 80;
+    var ARM_SLACK_MS = 80; // the spring still settles just past its nominal duration
     var animatingTimer = null;
-    /* Arms the tile transition for one change and disarms it once the travel is over.
-       Called from both places a tile can be sent to a new slot: a filter change, below,
-       and a column-count change in layoutMasonry. It has to be disarmed again because the
-       ordinary layout passes — the first one, every resize within a count — write
-       transforms too, and those have to stay instant. Re-arming while a
-       change is still in flight just extends the window, which is what a second change
-       landing on top of the first wants. */
+    /* Arms the tile transition for one change (a filter, or a column-count change) and
+       disarms it after, since ordinary passes must stay instant. Re-arming extends it. */
     function armTileMotion() {
       container.classList.add('animating');
       clearTimeout(animatingTimer);
@@ -1628,13 +1021,9 @@ shows 3 columns. {%- endcomment -%}
       }, TILE_MOVE_MS + ARM_SLACK_MS);
     }
     function withTileTransition(fn) {
-      // Any deliberate change supersedes a filter still waiting out a typing burst
-      // (see searchFromInput below), so it never lands a second time behind this one.
-      cancelPendingSearch();
-      var gallery = document.body.dataset.view === 'gallery';
-      // In network view there are no tiles to move — the graph fades its nodes instead,
-      // and a page cross-fade is the whole effect, exactly as for a view switch.
-      if (!gallery) { withCrossfade(fn); return; }
+      cancelPendingSearch(); // a deliberate change supersedes a pending typed one
+      // In network view the graph fades its own nodes; the page just cross-fades.
+      if (document.body.dataset.view !== 'gallery') { withCrossfade(fn); return; }
       if (!motionOK()) { fn(); layoutMasonry(); return; }
 
       var before = new Set();
@@ -1648,26 +1037,17 @@ shows 3 columns. {%- endcomment -%}
         p.classList.add('entering');
         entering.push(p);
       });
-      // Synchronous, not scheduled: the transform each tile animates towards has to be
-      // written now, in the same task as the display changes, so the browser sees one
-      // style change to transition rather than a jump followed by a second one.
+      // Synchronous, in the same task as the display changes: one style change to animate.
       layoutMasonry();
       if (entering.length) {
-        // Flush the pinned state (new slot, opacity 0, transitions off) so it becomes the
-        // value the fade starts from, then release them: the transform is already where it
-        // belongs, so only opacity moves.
+        // Flush the pinned state, then release it: only opacity moves.
         void container.offsetWidth;
         entering.forEach(function(p) { p.classList.remove('entering'); });
       }
     }
 
-    // Typing gets the same animation as the cards and Escape, but only once a burst of
-    // keystrokes has settled. Run per keystroke it would restart the tiles mid-flight on
-    // every character, so nothing would ever arrive anywhere. Waiting out the burst costs
-    // the results SEARCH_SETTLE ms and buys them the motion everything else has —
-    // including the cards coming *back* as a query is deleted, which is the largest
-    // reflow the search box produces. Readers on reduced motion keep the old instant
-    // per-keystroke filtering rather than paying the delay for motion they never see.
+    // Typing animates too, once a burst of keystrokes settles; per keystroke the tiles
+    // would restart mid-flight. Reduced motion filters instantly, without the delay.
     var SEARCH_SETTLE = 180;
     var searchTimer = null;
     function cancelPendingSearch() {
@@ -1683,60 +1063,41 @@ shows 3 columns. {%- endcomment -%}
     }
 
     // ── View toggle ──
-    // Reflect the current view + search into the URL query string (via
-    // replaceState, so it never adds history entries) to make any state
-    // shareable and deep-linkable. Only user-initiated changes call this;
-    // initial load and responsive coercion leave an incoming shared URL untouched.
+    // Mirrors the state into the query string (replaceState: no history entries). Only
+    // user changes call it, so an incoming shared URL is left alone.
     function updateURL() {
       var params;
       try { params = new URLSearchParams(location.search); } catch (e) { return; }
       var view = document.body.dataset.view;
       if (view && view !== 'gallery') params.set('view', view); else params.delete('view');
-      // The box holds a filter label (not a query) while a structured filter is active,
-      // so persist ?type/?cluster then, not ?q.
-      var structured = structuredFilterActive();
-      var q = structured ? '' : searchInput.value.trim();
+      // While a type/cluster filter is on, the box holds its label, not a query.
+      var q = structuredFilterActive() ? '' : searchInput.value.trim();
       if (q) params.set('q', q); else params.delete('q');
       if (activeType) params.set('type', activeType); else params.delete('type');
       if (activeCluster) params.set('cluster', activeCluster.id); else params.delete('cluster');
       var qs = params.toString();
       history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
     }
-    // Debounced for the search box: the URL is never read back mid-typing, so
-    // there's no need to sync it on every keystroke.
     var urlTimer = null;
     function scheduleURLUpdate() {
       clearTimeout(urlTimer);
       urlTimer = setTimeout(updateURL, 200);
     }
 
-    /* The filter and view state, declared here rather than further down with the search
-       code that owns it, because the boot call to setView below reads all four — and on a
-       page opening straight into the network view it also *writes* networkApi, by way of
-       buildNetwork. Left further down, `var` hoisted the names above that call but ran the
-       initializers after it, so the boot assignment was overwritten with null a few
-       statements later and every later switch to the gallery threw on
-       networkApi.clearSelection, leaving the page with no cards. The others were reading
-       undefined for the same reason: structuredFilterActive compares against null, so it
-       called an unfiltered page filtered. Declare before the first use. */
+    /* Declared before the boot call to setView, which reads them and may build the
+       network: declared later, `var` hoisting would run the initializers after it and
+       null out a networkApi already built. */
     var matchedSlugs = null;
-    // Set once buildNetwork() finishes initializing: { filter(slugs), clearSelection() }.
-    // One object rather than two independently-nullable globals, so callers can't
-    // observe one half wired up before the other.
-    var networkApi = null;
-    var activeType = null; // publication-type filter set by the ?type= URL param
-    // Active cluster filter as one value — { id, slugs } or null — so the id and its
-    // member slugs cannot drift apart (they were two variables that could disagree).
-    var activeCluster = null;
+    var networkApi = null;    // { filter(slugs), clearSelection() }, once built
+    var activeType = null;    // from ?type=
+    var activeCluster = null; // { id, slugs }
 
     function setView(view, persist) {
       var prev = document.body.dataset.view;
       document.body.dataset.view = view;
       if (persist !== false) {
         try { localStorage.setItem('publicationView', view); } catch (e) {}
-        // Keep in sync with the pre-paint head script's resolved preference (see
-        // <head>), so a responsive resize back to desktop width restores this
-        // choice rather than the value that was current at page load.
+        // So a resize back from mobile restores this choice, not the one at load.
         document.documentElement.dataset.preferredView = view;
         updateURL();
       }
@@ -1744,80 +1105,43 @@ shows 3 columns. {%- endcomment -%}
         b.setAttribute('aria-pressed', b.dataset.view === view ? 'true' : 'false');
       });
       updateViewButtonLabels();
-      // Leaving the network view means it was entered, and entering it builds the
-      // module — so networkApi is never null here. That holds only because the var above
-      // is declared before the boot call to setView; when it was declared after, its
-      // initializer ran second and put a null back over the module built at boot.
-      if (prev === 'network' && view !== 'network') {
-        networkApi.clearSelection();
-      }
-      // Both branches lay out synchronously rather than deferring to a scheduled
-      // next-frame pass, so the view is settled by the time it paints
-      // (layoutMasonry's syncPageWidth, or clearMasonry).
+      // Leaving the network view means it was built.
+      if (prev === 'network' && view !== 'network') networkApi.clearSelection();
+      // Both branches lay out synchronously, so the view is settled before it paints.
       if (view === 'gallery') {
         layoutMasonry();
       } else if (view === 'network') {
         clearMasonry();
-        // The page is sized to the gallery's grid, and the network view is laid out on
-        // those same columns — so the width has to be written before the graph is
-        // fitted into its stage. layoutMasonry is what normally writes it, and this
-        // branch must not run that. Without this the very first paint of a page that
-        // opens straight into the network view (?view=network, or the view persisted
-        // in localStorage) keeps the stylesheet's 4-column cap whatever the column
-        // count actually is, and the stage is centred against a page it overhangs.
+        // The stage sits on the gallery's columns, so write the width first; the graph's
+        // ResizeObserver refits it as the stage appears.
         syncPageWidth();
         if (!networkApi) buildNetwork();
-        // No refit call here either: showing the view takes the stage from 0×0 to its
-        // real size, which is a resize its own observer sees — so a graph that was left
-        // scaled to a stage the reader has since resized away from catches up on its
-        // own (see buildNetwork).
-        // Apply the current filter — on a first visit to catch the graph up to a search
-        // already in the box, on a later one to catch it up to whatever changed while
-        // another view was showing. Both cases land here now that buildNetwork runs
-        // synchronously: with d3 gone there is nothing to fetch, so networkApi is always
-        // wired by this line and the module needs no filter call of its own.
-        networkApi.filter(matchedSlugs);
+        networkApi.filter(matchedSlugs); // catch up with any filter set meanwhile
       }
     }
-    // Hint that clicking the active view button resets the current filter,
-    // since the behaviour is otherwise invisible.
+    // Clicking the active view button clears the filter; say so, since nothing else does.
     function updateViewButtonLabels() {
       var currentView = document.body.dataset.view;
       var hasFilter = searchInput.value.length > 0 || structuredFilterActive();
       viewButtons.forEach(function(b) {
         var v = b.dataset.view;
-        var name = v.charAt(0).toUpperCase() + v.slice(1);
-        var resettable = v === currentView && hasFilter;
-        var label = resettable ? 'Clear search filter' : name + ' view';
+        var label = v === currentView && hasFilter ? 'Clear search filter'
+          : v.charAt(0).toUpperCase() + v.slice(1) + ' view';
         b.setAttribute('aria-label', label);
         b.setAttribute('title', label);
       });
     }
-    /* The same boundary the CSS mobile breakpoint uses, from the same source (see
-       _mobile_max at the top of this file). Asked as a media query rather than measured
-       with innerWidth so it is the identical test — innerWidth counts the scrollbar the
-       query doesn't (see syncPageWidth) — because in the band between the two answers
-       the CSS would hide the view toggle while this kept the network view alive, leaving
-       a reader who had it persisted in a view with no visible way out of it. */
+    /* The CSS boundary, asked as the same media query: innerWidth would count the
+       scrollbar, and in between the toggle could be hidden with the network still live. */
     var mobileQuery = window.matchMedia('(max-width: {{ _mobile_max }}px)');
     function applyResponsiveView() {
-      if (mobileQuery.matches) {
-        if (document.body.dataset.view !== 'gallery') setView('gallery', false);
-      } else {
-        // Restore the resolved preference from <head> (kept in sync by setView),
-        // rather than re-deriving it from the URL/localStorage a second time.
-        var preferred = document.documentElement.dataset.preferredView || 'gallery';
-        if (document.body.dataset.view !== preferred) setView(preferred, false);
-      }
+      var view = mobileQuery.matches ? 'gallery'
+        : document.documentElement.dataset.preferredView || 'gallery';
+      if (document.body.dataset.view !== view) setView(view, false);
     }
-    /* Clears the search input and any structured (type/cluster) filter, shared by
-       the active-view-button reset and the global Escape handler below. Both used to
-       ask whether there was anything to clear before calling; the question belongs
-       here, once, so neither caller has to know what "filtered" means. */
+    // Clears the search and any type/cluster filter, travelling like any filter change.
     function resetFilters() {
       if (!searchInput.value && !structuredFilterActive()) return;
-      // Mirrors applying a filter (below): clearing one changes the result set just
-      // as much, so it moves the same way and lands the same way.
       withTileTransition(function() {
         clearStructuredFilter();
         searchInput.value = '';
@@ -1829,62 +1153,37 @@ shows 3 columns. {%- endcomment -%}
       b.addEventListener('click', function() {
         var clicked = this.dataset.view;
         if (document.body.dataset.view === clicked) {
-          // Clicking the active view button resets the view: clear the search
-          // filter (text + type + cluster) and, on network, drop any node selection.
+          // The active button resets: clear the filter and any node selection.
           resetFilters();
-          // Reachable only from within the network view, so networkApi is built by now.
           if (clicked === 'network') networkApi.clearSelection();
         } else {
           withCrossfade(function() { setView(clicked); });
         }
       });
     });
-    // data-view is always set: the inline script under <body> writes it before this runs.
-    setView(document.body.dataset.view, false);
-    // Fires exactly when the boundary is crossed, so there is nothing to debounce and
-    // no width to re-test on the resizes that don't cross it.
+    setView(document.body.dataset.view, false); // written by the script under <body>
     mobileQuery.addEventListener('change', applyResponsiveView);
 
     // ── Bio toggle ──
-    // The state is one attribute on <html> (set here, restored before the first paint by
-    // the script in <head>, read by every rule that changes with it). What this adds is
-    // the one thing CSS cannot do on its own: `height: auto` is not an interpolable value
-    // in most engines today, so a bare auto↔0 transition doesn't animate, it jumps.
-    //
-    // So the height is pinned to the pixels the panel currently occupies, the state is
-    // flipped, and the height is handed straight back to the stylesheet when the travel
-    // ends. The pin exists only while the panel is moving — never at rest, which is the
-    // difference from the version that broke. That one kept the open height pinned
-    // permanently and chased the header's shape with a ResizeObserver; every column change
-    // raced it. Here a resize while open finds plain `auto`, and while closed finds 0.
+    // `height: auto` does not interpolate, so the travel pins the pixel height, flips
+    // the state, and hands the height back to the stylesheet when it ends. Never at rest.
     var bioToggle = document.querySelector('.bio-toggle');
     var bioShell = document.getElementById('bio');
-    // Hands the height back to the stylesheet: `auto` when open, the rule's own 0 when
-    // closed. On cancel too, or an interrupted double-click would leave a pin behind —
-    // exactly the stale number this design exists to avoid. The clip goes back with it:
-    // open and at rest the shell must not clip, or it cuts the top row off the bio's
-    // first line, which is trimmed to sit exactly on the shell's edge.
+    // On cancel too, or an interrupted toggle would leave a pin behind. The clip goes
+    // with it, since an open shell must not clip the trimmed first line.
     function releaseBioHeight(e) {
       if (e.target !== bioShell || e.propertyName !== 'height') return;
       bioShell.style.height = '';
       bioShell.style.overflow = '';
-      // The scrollbar goes when the travel does, and a scrollbar is width, which is the
-      // column count.
-      if (document.body.dataset.view === 'gallery') scheduleWidthPass();
+      if (document.body.dataset.view === 'gallery') scheduleWidthPass(); // the scrollbar may go
     }
     function setBioVisible(visible, persist, animate) {
-      // scrollHeight reports the content's full height even while the panel is clipped to
-      // nothing, so the same read gives the target opening and the starting point closing.
       if (animate && motionOK()) {
-        // One read, used as both ends of the travel: clipping the panel doesn't change
-        // what scrollHeight reports, so the second read this replaced returned the same
-        // number at the cost of a second forced layout.
+        // scrollHeight ignores the clip, so one read gives both ends of the travel.
         var full = bioShell.scrollHeight;
-        // A panel between 0 and its full height has to clip, in both directions: opening,
-        // the content is already full size behind an edge that hasn't reached it yet.
         bioShell.style.overflow = 'hidden';
         bioShell.style.height = (visible ? 0 : full) + 'px';
-        void bioShell.offsetHeight;  // flush, so the pin is a state the browser has drawn
+        void bioShell.offsetHeight;
         bioShell.style.height = (visible ? full : 0) + 'px';
       } else {
         bioShell.style.height = '';
@@ -1895,21 +1194,15 @@ shows 3 columns. {%- endcomment -%}
       var label = visible ? 'Hide profile' : 'Show profile';
       bioToggle.setAttribute('aria-label', label);
       bioToggle.setAttribute('title', label);
-      // A panel clipped to zero height still holds the portrait's link, the affiliations
-      // and the profile links: without this they stay in the tab order and in the
-      // accessibility tree, so a keyboard reader tabs into content that isn't there.
-      bioShell.inert = !visible;
+      bioShell.inert = !visible; // keep a collapsed masthead out of the tab order
       if (persist !== false) {
         try { localStorage.setItem('bioVisible', visible ? '1' : '0'); } catch (e) {}
       }
-      // The masonry doesn't depend on the header's height — tiles are positioned inside
-      // #publications, which only moves — but the page losing ~400px can take a scrollbar
-      // with it, and a scrollbar is width, which is the column count. This call covers the
-      // reduced-motion path, where no transition runs and releaseBioHeight never fires.
+      // A scrollbar appearing or going is a width change; this covers reduced motion,
+      // where releaseBioHeight never fires.
       if (document.body.dataset.view === 'gallery') scheduleWidthPass();
     }
-    // Sync the button and the inert state to whatever <head> restored, without persisting
-    // it back and without animating from a state the page was never in.
+    // Sync the button and inert state to what <head> restored.
     setBioVisible(document.documentElement.dataset.bioVisible !== '0', false, false);
     bioToggle.addEventListener('click', function() {
       setBioVisible(document.documentElement.dataset.bioVisible === '0', true, true);
@@ -1931,60 +1224,39 @@ shows 3 columns. {%- endcomment -%}
         : 'Showing ' + visible + ' of ' + total;
     }
 
-    var activeFilterLabel = null; // label shown in the search box while a type/cluster filter is active
+    var activeFilterLabel = null; // the box's text while a type/cluster filter is on
 
-    // True while a type or cluster filter (as opposed to free-text search) is active.
     function structuredFilterActive() {
       return activeType !== null || activeCluster !== null;
     }
 
+    /* Decides which tiles show; never lays out. The caller asks for the pack, since only
+       it knows whether it must be synchronous (inside a tile transition it must). */
     function applySearch() {
-      // While a structured filter (type/cluster) is active the search box holds that
-      // filter's label, not a free-text query — so its text is ignored for matching and
-      // the type/slug filter alone drives the results.
-      var structured = structuredFilterActive();
+      var structured = structuredFilterActive(); // then the box holds a label, not a query
       var query = structured ? '' : searchInput.value;
       var tokens = query ? normalize(query).split(/\s+/).filter(Boolean) : [];
       var filterActive = tokens.length > 0 || structured;
-      var visible = 0;
       var matched = new Set();
       publications.forEach(function(p) {
-        // Every token has to appear. `every` stops at the first miss, as the loop
-        // this replaced did with a flag and a break.
-        var match = tokens.every(function(t) { return p._haystack.indexOf(t) !== -1; });
         var slug = p.dataset.slug;
-        if (match && activeType !== null && p.dataset.type !== activeType) match = false;
-        if (match && activeCluster !== null && !activeCluster.slugs.has(slug)) match = false;
+        var match = tokens.every(function(t) { return p._haystack.indexOf(t) !== -1; })
+          && (activeType === null || p.dataset.type === activeType)
+          && (activeCluster === null || activeCluster.slugs.has(slug));
         p.style.display = match ? '' : 'none';
-        if (match) {
-          visible++;
-          // Every .publication is a gallery card and carries data-slug.
-          matched.add(slug);
-        }
+        if (match) matched.add(slug);
       });
-      // Special cards are chrome, not results: hide them whenever a filter is active.
+      // Special cards are chrome, not results.
       specialCards.forEach(function(c) { c.style.display = filterActive ? 'none' : ''; });
       matchedSlugs = filterActive ? matched : null;
-      /* Only while the graph is on screen. matchedSlugs is assigned either way, and
-         setView re-applies it on every entry to the network view, so a filter changed
-         from the gallery still lands — without walking every node and link inside a
-         display:none subtree on every settled keystroke. */
+      // Only while the graph shows; setView applies matchedSlugs on the way in.
       if (networkApi && document.body.dataset.view === 'network') networkApi.filter(matchedSlugs);
-      noResults.hidden = visible !== 0;
-      updateCount(visible);
+      noResults.hidden = matched.size !== 0;
+      updateCount(matched.size);
       updateViewButtonLabels();
-      /* No layout call here. This decides which tiles show; packing them is the caller's
-         to ask for, because only the caller knows when. withTileTransition needs the pack
-         synchronously, in the same task as the display changes, so the browser sees one
-         style change to animate — and a pass queued here would land a frame into that
-         movement and rewrite every transform mid-flight. It used to do exactly that, and
-         layoutMasonry ended by cancelling the pass this function had just asked for. */
     }
 
-    // The type slugs and their human labels, straight from _data/publication_types.yml —
-    // the same table the meta line reads, so a type filter names itself the way the cards
-    // below it do ("Book Chapter", not "chapter"). A ?type= URL is the only way to reach
-    // one — no tile on the page sets a type — so this table is where its label comes from.
+    // Type labels from _data/publication_types.yml; only a ?type= URL sets a type filter.
     var TYPE_LABELS = { {% for t in site.data.publication_types %}{{ t[0] | jsonify }}: {{ t[1].label | jsonify }}{% unless forloop.last %}, {% endunless %}{% endfor %} };
 
     try {
@@ -1994,50 +1266,32 @@ shows 3 columns. {%- endcomment -%}
       var _initialType = _params.get('type');
       if (_initialType) {
         activeType = _initialType;
-        // Reflect the filter as its label in the box (no focus on load).
         showFilterInInput(TYPE_LABELS[_initialType] || _initialType, false);
       }
       var _initialCluster = _params.get('cluster');
       if (_initialCluster) {
         var _cEl = document.querySelector('[data-action="cluster:' + _initialCluster + '"]');
-        if (_cEl && _cEl.dataset.slugs) {
-          setClusterFilter(_cEl, _initialCluster, false);
-        }
+        if (_cEl && _cEl.dataset.slugs) setClusterFilter(_cEl, _initialCluster, false);
       }
     } catch (e) {}
-    /* The initial state, from ?q= / ?type= / ?cluster=. The pack is asked for here rather
-       than left to a queued pass: a shared filter link would otherwise paint the whole
-       gallery for one frame and re-pack on the next. setView above has already laid out
-       once, so on an unfiltered load this re-packs the same arrangement; on a filtered one
-       it is the pass that hides what the link excluded. */
+    // Packed now, or a shared filter link would paint the whole gallery for a frame.
     applySearch();
     layoutMasonry();
 
-    // Action cards: switch view (view:<name>) or set a cluster filter (cluster:<id>, whose
-    // member slugs ride on the card's data-slugs). Those are the two the page emits — the
-    // network tile and the cluster tiles. A cluster card only ever sets: applySearch()
-    // hides every special card once a filter is active, so clearing runs through Escape
-    // and the search box instead (see resetFilters and the input handler below).
-    /* The one place a cluster filter is constructed, so the {id, slugs} pair this design
-       merged into a single object cannot be assembled two different ways. Membership rides
-       on the card's data-slugs, which Liquid emits from the same network.json the graph
-       reads. `focus` is passed on to showFilterInInput. */
+    /* The one place a cluster filter is built. Membership rides on the card's data-slugs,
+       from the same network.json the graph reads. */
     function setClusterFilter(card, id, focus) {
       activeCluster = { id: id, slugs: new Set(card.dataset.slugs.split(' ')) };
       activeType = null;
       showFilterInInput(card.dataset.filterLabel || '', focus);
     }
-    /* Show a structured filter's label in the search box (cursor at the end) so the whole
-       filter is managed there: the user deletes the text to clear it. Clearing wipes the box.
-       `focus` is false on the load path, where the reader has not touched anything yet. */
+    /* A type/cluster filter is shown as its label in the box, so deleting the text clears
+       it. No focus on load, where the reader has touched nothing. */
     function showFilterInInput(label, focus) {
       activeFilterLabel = label;
       searchInput.value = label;
       if (focus === false) return;
-      // preventScroll, because focusing an element also asks the browser to scroll it into
-      // view — a second scroll, which cancels the one scrollToResults has in flight and
-      // parks the page wherever the glide had got to. The bar is sticky and already on
-      // screen, so there was never anything to scroll to.
+      // preventScroll, or the focus scroll cancels scrollToResults' glide mid-way.
       searchInput.focus({ preventScroll: true });
       var n = searchInput.value.length;
       try { searchInput.setSelectionRange(n, n); } catch (e) {}
@@ -2047,32 +1301,10 @@ shows 3 columns. {%- endcomment -%}
       activeCluster = null;
       activeFilterLabel = null;
     }
-    /* Selecting a research cluster is the one filter that moves the page for the reader,
-       because it is the one filter whose control sits in the middle of the gallery rather
-       than in the bar at the top: the cluster cards are spaced down the whole gallery, so
-       the click can happen far down the flow while the works it selects are packed at the
-       very top. The browser's own clamp already rescues the short case — a
-       filtered page that no longer fills the viewport can only scroll to 0 — and between
-       that and no change at all sits the state this exists for: a filtered gallery still
-       taller than the screen, with every result above where the reader is standing.
-
-       Only ever upward. A reader already above the gallery's first row has the results
-       below them and will meet them by scrolling; pulling them down would take the
-       masthead away to solve a problem they do not have.
-
-       It runs *before* the filter rather than after. The gallery's top edge is fixed by
-       the header above it and does not move when the tiles do, so the destination is
-       known without laying anything out first — and going first means the tiles rearrange
-       inside the viewport the reader ends up watching, instead of behind it.
-
-       Distance decides whether it glides, on the rule the tiles already follow: past a
-       screen of travel there is nothing for the eye to follow, so it cuts.
-
-       It stops at the foot of the bio panel — the last position before the biography
-       starts to unroll — rather than at the gallery's own top edge. That clears the whole
-       filter bar into view instead of pinning it stickily over the first row, and the
-       strip of masthead left showing keeps the jump legible as a move within the page.
-       With the bio collapsed there is nothing above to hold back, so it goes to the top. */
+    /* A cluster card can be clicked far down the gallery while its results pack at the
+       top, so bring the reader up — never down — to the foot of the bio panel (the top
+       when it is collapsed), before the filter runs so the tiles rearrange in view.
+       Past a screen of travel it cuts rather than glides. */
     function scrollToResults() {
       if (document.body.dataset.view !== 'gallery') return;
       var target = 0;
@@ -2084,10 +1316,10 @@ shows 3 columns. {%- endcomment -%}
       window.scrollTo({ top: target, behavior: (far || !motionOK()) ? 'auto' : 'smooth' });
     }
 
+    /* Action cards: view:<name> switches view, cluster:<id> sets a filter. They hide once
+       a filter is on, so clearing goes through Escape and the search box. */
     document.querySelectorAll('[data-action]').forEach(function(btn) {
-      // The card hides itself when it applies a filter; a mousedown here would otherwise
-      // start a text selection that lingers across the publications behind it (visible on
-      // reset). Suppressing the default mousedown stops the selection at its source.
+      // The card hides as it filters; a mousedown would leave a stray text selection.
       btn.addEventListener('mousedown', function(e) { e.preventDefault(); });
       btn.addEventListener('click', function() {
         var parts = (btn.dataset.action || '').split(':');
@@ -2107,23 +1339,18 @@ shows 3 columns. {%- endcomment -%}
     });
 
     searchInput.addEventListener('input', function() {
-      // While the box shows a type/cluster label, backspacing from the end (a shorter
-      // prefix of the label) keeps the filter; it's released only when the box is fully
-      // cleared or a letter is typed (the text no longer prefixes the label) — the
-      // remaining text then becomes a normal free-text search.
-      if (structuredFilterActive()) {
-        var v = searchInput.value;
-        if (v === '' || activeFilterLabel === null || activeFilterLabel.indexOf(v) !== 0) {
-          clearStructuredFilter();
-        }
+      // Backspacing a type/cluster label keeps the filter; emptying the box or typing
+      // anything that no longer prefixes the label releases it into a text search.
+      var v = searchInput.value;
+      if (structuredFilterActive()
+          && (v === '' || activeFilterLabel === null || activeFilterLabel.indexOf(v) !== 0)) {
+        clearStructuredFilter();
       }
       searchFromInput();
       scheduleURLUpdate();
     });
 
-    // Keyboard: "/" jumps to the search box. Esc is a global reset — from any
-    // view and any focus/selection state it clears the search input and drops
-    // any network node selection or focus.
+    // "/" focuses the search; Escape resets filters, selection, focus and text selection.
     document.addEventListener('keydown', function(e) {
       var t = e.target;
       var typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
@@ -2133,22 +1360,15 @@ shows 3 columns. {%- endcomment -%}
       } else if (e.key === 'Escape') {
         resetFilters();
         if (networkApi) networkApi.clearSelection();
-        // Drop focus outright rather than special-casing which element kind:
-        // a focused control (e.g. the network-view toggle, just clicked to get
-        // here) can otherwise keep showing a focus ring after the reset —
-        // Safari's Full Keyboard Access ring in particular ignores `outline:
-        // none` entirely, so removing focus is the only way to clear it.
+        // Blur outright: Safari's Full Keyboard Access ring ignores `outline: none`.
         var active = document.activeElement;
         if (active && active !== document.body) active.blur();
-        // Drop any lingering text selection (e.g. from clicking a card) so the reset
-        // doesn't leave the page looking selected.
         var sel = window.getSelection();
         if (sel) sel.removeAllRanges();
       }
     });
 
-    // Make the whole card a target for the publication page,
-    // without breaking inline links or text selection.
+    // The whole card links to its page, sparing inner links and text selection.
     publications.forEach(function(p) {
       var href = p.querySelector('h2 a').getAttribute('href');
       p.addEventListener('click', function(e) {
@@ -2160,10 +1380,9 @@ shows 3 columns. {%- endcomment -%}
       });
     });
 
-    // ── Network view ────────────────────────────────────────────────────
-    // Built on first open and never rebuilt: the graph is baked offline (positions,
-    // links and all), so there is nothing to load and nothing to re-render. buildNetwork
-    // assigns networkApi synchronously as its last act, so that is the built flag.
+    // ── Network view ──
+    // Built once, on first open: the graph is baked offline, so nothing is fetched or
+    // re-rendered. networkApi, assigned last, is the built flag.
     function buildNetwork() {
       var dataNode = document.getElementById('net-data');
       if (!dataNode) return;
@@ -2172,14 +1391,8 @@ shows 3 columns. {%- endcomment -%}
       var idxBySlug = {};
       pubs.forEach(function(p, i) { idxBySlug[p.slug] = i; });
 
-      // The gallery card for a given slug never changes post-load, so cache one
-      // detached clone per slug and hand out copies of it, instead of re-querying
-      // the document on every node selection.
-      //
-      // The query always finds its card: the graph's nodes are built from the same
-      // publications the gallery loops over (one node per file in _publications, see
-      // build-network.py), so a slug on the canvas is a slug in the DOM. This used to
-      // return null when it missed, and the caller used to test for it.
+      // One detached clone of each gallery card, copied out per selection. Every node
+      // has its card: both come from the same _publications.
       var cardCache = {};
       function cardFor(slug) {
         if (!(slug in cardCache)) {
@@ -2190,22 +1403,19 @@ shows 3 columns. {%- endcomment -%}
         return cardCache[slug].cloneNode(true);
       }
 
-      /* Both baked by scripts/layout-network.js and shipped in the data: the canonical
-         canvas the positions were laid out on, and the radius the clearance pass kept
-         every marker clear of an edge by. Neither is restated here — a literal copy is
-         a second source of truth that goes stale silently, and the failure it produces
-         (markers printed on top of links) looks like a layout bug rather than a drifted
-         constant. */
+      // Both baked by scripts/layout-network.js; a copy here would drift silently.
       var NODE_RADIUS = data.params.node_radius;
       var CANVAS = data.canvas;
 
-      // SVG elements have to be created in the SVG namespace — document.createElement
-      // would make an unknown HTML element that happens to be spelled "circle" and
-      // renders as nothing.
-      var SVG_NS = 'http://www.w3.org/2000/svg';
       function svgEl(name, attrs) {
-        var e = document.createElementNS(SVG_NS, name);
+        var e = document.createElementNS('http://www.w3.org/2000/svg', name);
         for (var k in attrs) e.setAttribute(k, attrs[k]);
+        return e;
+      }
+      function el(name, cls, text) {
+        var e = document.createElement(name);
+        if (cls) e.className = cls;
+        if (text != null) e.textContent = text;
         return e;
       }
 
@@ -2226,29 +1436,20 @@ shows 3 columns. {%- endcomment -%}
       svg.addEventListener('click', clearSelection);
 
       function dimensions() { return { w: stage.clientWidth, h: stage.clientHeight }; }
-      // Positions are precomputed offline at canonical canvas size (bx, by);
-      // fitLayout() scales them into the live stage at render time.
+      // (bx, by) are the baked canvas positions; fitLayout() scales them into the stage.
       var nodes = pubs.map(function(p, i) {
         return { i: i, slug: p.slug, title: p.title, bx: p.x, by: p.y, tr: !!p.tr };
       });
-
-      // Baked links: resolve integer endpoints to node refs (the force
-      // simulation used to do this in the browser). Only the endpoints are
-      // needed now — edges are drawn straight and the closest-matches panel
-      // reads each node's baked `related` list.
       var links = data.links.map(function(l) {
         var s = nodes[l.source], t = nodes[l.target];
         return { source: s, target: t, translation: !!(s.tr || t.tr), fallback: !!l.fb };
       });
-      // One element per entry, parallel to `nodes` and `links` — built once by build()
-      // below and never rebuilt, so an index is the only lookup anything needs: nodes[i]
-      // is drawn by nodeEls[i] and titled by labelEls[i], links[k] by linkEls[k].
+      // Index-parallel to nodes and links, built once: an index is the only lookup.
       var nodeEls = [];
       var labelEls = [];
       var linkEls = [];
       var selectedNode = null;
 
-      // Precomputed once so highlight() doesn't rescan every link per click.
       var neighborsByIdx = nodes.map(function() { return []; });
       links.forEach(function(l) {
         neighborsByIdx[l.source.i].push(l.target.i);
@@ -2270,23 +1471,11 @@ shows 3 columns. {%- endcomment -%}
         });
       }
 
-      // Fit the precomputed canonical-canvas positions (bx, by) into the live
-      // stage: uniform scale + center (object-fit: contain), so markers, labels
-      // and link strokes keep their fixed pixel sizes. Runs once at render and
-      // again on resize — no force simulation in the browser anymore.
-      /* Blank band kept at the top of the stage for the tallest label to grow into.
-         Labels always stack upward and the stage is overflow:hidden, so without it the
-         highest node loses the top of its first line. Sized off the worst case in the
-         corpus — a 3-line title on a node sitting right on FIT_MARGIN, which overran by
-         8px — with margin for a longer title landing there later. */
+      /* Uniform scale and centre (object-fit: contain), so markers, labels and strokes
+         keep their pixel sizes. Labels stack upward in an overflow:hidden stage, so the
+         graph is nudged down by LABEL_HEADROOM for the highest one — cheaper than raising
+         FIT_MARGIN, which would reshuffle every node. */
       var LABEL_HEADROOM = 16;
-      // The canvas is square and so is the stage, so the fit has no slack of its
-      // own to spend on the labels — and FIT_MARGIN, the headroom baked into the
-      // coordinates, was sized back when a title was always two lines. A wrapped
-      // label can now run to five, so the graph is nudged down by LABEL_HEADROOM
-      // and scaled into what is left. It is bought here rather than in
-      // layout-network.js because it costs under 3% of the graph and needs no
-      // rebuild; raising FIT_MARGIN would reshuffle every node to the same end.
       function fitLayout() {
         var dim = dimensions();
         var usableH = dim.h - LABEL_HEADROOM;
@@ -2306,8 +1495,7 @@ shows 3 columns. {%- endcomment -%}
       }
       function wireNode(g, n) {
         g.addEventListener('mouseenter', function() {
-          // Mouse takes over from the keyboard: drop the previously
-          // tab-focused node so only the hovered one stays lit.
+          // The mouse takes over from the keyboard: only the hovered node stays lit.
           var active = document.activeElement;
           if (active && active !== g && active.classList.contains('node')) {
             active.blur();
@@ -2319,8 +1507,7 @@ shows 3 columns. {%- endcomment -%}
           e.stopPropagation();
           select(n);
         });
-        // Keyboard parity: focus previews the title (like hover); Enter/Space
-        // selects (like click); Esc drops the selection.
+        // Keyboard parity: focus is hover, Enter/Space is click.
         g.addEventListener('focus', function() { setNodeHover(n.i, true); });
         g.addEventListener('blur', function() { setNodeHover(n.i, false); });
         g.addEventListener('keydown', function(e) {
@@ -2333,11 +1520,7 @@ shows 3 columns. {%- endcomment -%}
         });
       }
 
-      // Draws the graph once. There is no update pass and no keyed join: the nodes and
-      // links come baked out of build-network.py and never change identity for the life
-      // of the page — only their coordinates move (placeNodes, on a re-fit) and their
-      // classes toggle (highlight, filter). Everything is appended in array order, which
-      // is what lets nodeEls/labelEls/linkEls stay index-parallel to nodes/links.
+      // Drawn once, in array order; afterwards only coordinates move and classes toggle.
       function build() {
         fitLayout();
 
@@ -2349,8 +1532,6 @@ shows 3 columns. {%- endcomment -%}
         });
 
         nodes.forEach(function(n) {
-          // Nodes are focusable buttons so the graph is keyboard- and screen-reader
-          // reachable; the gallery view carries the same publications as a fallback.
           var g = svgEl('g', { class: 'node', tabindex: 0, role: 'button', 'aria-label': n.title });
           g.appendChild(svgEl('circle', { class: 'hit', r: 12 }));
           g.appendChild(svgEl('circle', { class: 'marker', r: NODE_RADIUS }));
@@ -2363,11 +1544,7 @@ shows 3 columns. {%- endcomment -%}
         placeNodes();
       }
 
-      /* Labels are measured, not counted. String.length misjudges proportional type,
-         and badly so on a corpus that mixes English with accented French and Italian,
-         so the wrap asks a canvas 2D context for the real advance width. The font is
-         read off a live label rather than restated here, which keeps --font and
-         --text-xs the single source of truth. */
+      // Labels are measured in the live label's font, not counted in characters.
       var measureText = (function() {
         var ctx = document.createElement('canvas').getContext('2d'), font = '';
         return function(s) {
@@ -2380,55 +1557,38 @@ shows 3 columns. {%- endcomment -%}
         };
       })();
 
-      /* The widest a label line may get, in CSS pixels. The stage has no viewBox — the
-         graph is scaled into it by fitLayout while the text stays 12px — so a budget in
-         canvas units would mean nothing, and on a stage narrower than the canvas the
-         label grows relative to the graph. Hence the second clamp against stage width. */
+      // A label line's widest, in CSS px (clamped again to the stage in setLabel).
       var LABEL_MAX_W = 230;
       var LINE_H = 13;
 
-      /* Where a title breaks is a property of the title and the budget, not of the hover
-         that revealed it, so the wrap is computed once per pair and kept. Nothing is ever
-         dropped: length becomes lines, never an ellipsis. */
+      // Wrapped once per title and budget; long titles gain lines, never an ellipsis.
       var titleLines = {};
       function wrapTitle(title, budget) {
         var key = budget + '|' + title;
         if (key in titleLines) return titleLines[key];
-        /* French sets a space before its colons and question marks, so a naive split
-           makes ":" a word of its own and a line can begin with it. Glue such a token
-           to the word before, keeping the space that French orthography wants. */
+        // French punctuation after a space sticks to the word before it.
         var words = [];
         title.split(/\s+/).forEach(function(tok) {
           if (words.length && /^[:;?!»]+$/.test(tok)) words[words.length - 1] += ' ' + tok;
           else words.push(tok);
         });
         var n = words.length;
-        /* Width of words[i..j) as it will actually be drawn. Measured on the joined
-           string rather than summed per word, so the real space advance and any kerning
-           across it are counted. Quadratic, but n is a title's word count and the whole
-           result is memoized. */
+        // Width of words[i..j), measured joined so spaces and kerning count.
         var w = [];
         for (var i = 0; i < n; i++) {
           w.push([]);
           for (var j = i + 1; j <= n; j++) w[i].push(measureText(words.slice(i, j).join(' ')));
         }
         function width(i, j) { return w[i][j - i - 1]; }
-        // Fewest lines the budget allows, found greedily. The fill below uses exactly
-        // that many — the budget decides the line count, the balance decides the breaks.
+        // The budget decides the line count (greedily), the balance below the breaks.
         var k = 1, cur = words[0];
         for (var g = 1; g < n; g++) {
           var cand = cur + ' ' + words[g];
           if (measureText(cand) > budget) { k++; cur = words[g]; } else { cur = cand; }
         }
         if (k <= 1) { titleLines[key] = [title]; return titleLines[key]; }
-        /* Greedy fills each line to the brim and leaves the remainder on the last one,
-           which on this corpus strands a single short word — "Care", "Model", "Object" —
-           on about a third of the titles. Centred under a node that reads as a mistake rather
-           than as a line. So the same k lines are refilled to even out their lengths:
-           minimum raggedness, summing squared slack, by DP over (word, line) pairs.
-           Breaking at the colon was tried first and abandoned: it is the seam the author
-           wrote, but it forces its own orphan — "Experiments of Network Literacy for
-           Urban / Designers: / …" — and costs a line to do it. */
+        /* Greedy strands a short word on the last line of a third of the titles, so the
+           k lines are refilled for minimum raggedness (squared slack, by DP). */
         var INF = Infinity, dp = [], ch = [];
         for (var a = 0; a <= n; a++) {
           dp.push([]); ch.push([]);
@@ -2439,8 +1599,7 @@ shows 3 columns. {%- endcomment -%}
           for (var l = 1; l <= k; l++) {
             for (var q = p + 1; q <= n; q++) {
               var lw = width(p, q);
-              // A lone word wider than the budget still gets its line: overflowing by one
-              // word beats breaking mid-word, and it keeps a path through the table.
+              // A lone overlong word still gets its line rather than a mid-word break.
               if (lw > budget && q > p + 1) break;
               if (dp[q][l - 1] === INF) continue;
               var slack = budget - lw, cost = slack * slack + dp[q][l - 1];
@@ -2457,22 +1616,15 @@ shows 3 columns. {%- endcomment -%}
         titleLines[key] = lines;
         return lines;
       }
-      // Shared by node hover/focus (mouse and keyboard) and the neighbor-list
-      // rows that mirror hovering a node on the canvas.
+      // Node hover and focus, and the neighbour rows that mirror them.
       function setNodeHover(idx, on) {
         nodeEls[idx].classList.toggle('hover', on);
         labelEls[idx].classList.toggle('hover', on);
         setLabel(labelEls[idx], on ? nodes[idx].title : '', nodes[idx]);
       }
-      /* Titles always render above the node, stacked upward from y=-12 — one placement,
-         never flipped, so the eye knows where to look. The stage is overflow:hidden and the
-         stack grows with the title, which is what LABEL_HEADROOM in fitLayout pays for:
-         the room the tallest label needs is taken off the top of the stage once, rather
-         than the label dodging to find it. Horizontally the anchor is middle, so a wide
-         label reaches half its width either side; there the block does move, sliding back
-         inside rather than clipping, because no amount of reserved margin would cover a
-         node at the far left or right. At most one label is ever visible, so neither the
-         stack nor the slide can collide with another label. */
+      /* Always above the node, stacked upward (LABEL_HEADROOM pays for the height);
+         sideways it slides back inside the stage rather than clip. At most one label
+         shows, so none can collide. */
       function setLabel(textEl, title, n) {
         textEl.textContent = '';  // drops any tspans from the last title
         if (!title) return;
@@ -2506,9 +1658,7 @@ shows 3 columns. {%- endcomment -%}
           linkEls[k].classList.toggle('dimmed', !touches);
           linkEls[k].classList.toggle('highlight', touches);
         });
-        // No pinned label on the selected node — its title lives in the details
-        // panel, and the canvas shows a floating title only while hovering, so
-        // at most one label is ever visible and two can never overlap.
+        // No pinned label: the selection's title is in the details panel.
       }
       function unhighlight() {
         nodeEls.forEach(function(g, i) {
@@ -2524,16 +1674,11 @@ shows 3 columns. {%- endcomment -%}
       function showDetails(d) {
         lede.hidden = true;
         var pub = pubs[d.i];
-        // "Three closest" is the very same all-languages `related` list the
-        // publication pages show (built once in build-network.py — machine-
-        // translated into one embedding space, deduplicated by work). Map each
-        // entry to its node index for the hover-mirroring below.
+        // The same `related` list the publication pages show, as node indices.
         var top = (pub.related || [])
           .map(function(r) { return [idxBySlug[r.slug], r.sim]; })
           .filter(function(t) { return t[0] != null; });
-        /* Built with DOM calls, like everything else in this module: textContent escapes
-           titles and URLs by construction, so a title carrying an ampersand or a quote
-           needs no hand-written escaper to be safe here. */
+        // DOM calls, so textContent does the escaping.
         var parts = [cardFor(pub.slug)];
         if (top.length) {
           var box = el('div', 'neighbors');
@@ -2542,13 +1687,11 @@ shows 3 columns. {%- endcomment -%}
           top.forEach(function(t) {
             var j = t[0], s = t[1];
             var li = ol.appendChild(el('li'));
-            // Floor rather than round: a score just under STRONG_SIM must never
-            // display as if it cleared it (e.g. 0.6483 should read 0.64, not 0.65).
+            // Floored, so a score just under STRONG_SIM never reads as clearing it.
             li.appendChild(el('span', 'sim', (Math.floor(s * 100) / 100).toFixed(2)));
             var body = li.appendChild(el('div', 'nb-body'));
             var a = body.appendChild(el('a', null, pubs[j].title));
             a.href = pubs[j].url;
-            // Hovering a neighbor in the list mirrors hovering its node on the canvas.
             li.addEventListener('mouseenter', function() { setNodeHover(j, true); });
             li.addEventListener('mouseleave', function() { setNodeHover(j, false); });
           });
@@ -2557,20 +1700,10 @@ shows 3 columns. {%- endcomment -%}
         details.replaceChildren(...parts);
         details.hidden = false;
       }
-      // The HTML counterpart of svgEl above.
-      function el(name, cls, text) {
-        var e = document.createElement(name);
-        if (cls) e.className = cls;
-        if (text != null) e.textContent = text;
-        return e;
-      }
 
       build();
 
-      // A null `slugs` means no filter, which is just the case where everything shows —
-      // so one pass covers both, rather than a branch per state. Non-matching nodes also
-      // drop out of the tab order and from AT, so keyboard navigation follows the same
-      // nodes the search surfaces.
+      // null means no filter. Misses leave the tab order and the accessibility tree too.
       function filter(slugs) {
         nodes.forEach(function(n, i) {
           var shown = !slugs || slugs.has(n.slug);
@@ -2585,18 +1718,8 @@ shows 3 columns. {%- endcomment -%}
           linkEls[k].classList.toggle('filtered-out', !shown);
         });
       }
-      // Re-fit the baked layout whenever the stage changes size — a scale and a
-      // translate, no simulation. Watching the stage itself rather than the window is
-      // what makes this one path instead of three: the stage is the only box fitLayout
-      // measures, and it moves for reasons the window never hears about — the page
-      // being resized to the gallery's column count (see syncPageWidth), the view
-      // switch that reveals it, a window resize that happened while the gallery was on
-      // screen. An observer sees all of them, so no caller has to remember to ask.
-      // It also runs after layout and before paint, where reading the stage's size
-      // costs nothing, unlike a refit called mid-script straight after a style write.
-      // A hidden stage measures 0×0 (#network-view is display:none under the gallery):
-      // fitting to that would collapse the graph onto a point, so those deliveries are
-      // skipped and the one that arrives when the view is shown again does the work.
+      /* Re-fit whenever the stage changes size, whatever the cause (a column change, the
+         view being shown, a resize while hidden). A hidden stage is 0×0 and is skipped. */
       new ResizeObserver(function() {
         var dim = dimensions();
         if (!dim.w || !dim.h) return;
@@ -2604,9 +1727,7 @@ shows 3 columns. {%- endcomment -%}
         placeNodes();
       }).observe(stage);
 
-      // Both halves of the module's public surface are ready together, so external
-      // callers never see one wired up without the other (see networkApi above).
-      networkApi = { filter: filter, clearSelection: clearSelection };
+      networkApi ={ filter: filter, clearSelection: clearSelection };
     }
   </script>
   {% include site-scripts.html %}

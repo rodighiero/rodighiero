@@ -1,28 +1,28 @@
-{%- comment -%} Three strings this page spells out a dozen times between them, worked out once
-here rather than at each use. `_lang` has to be resolved before <html> below, which is why
-these sit ahead of the doctype; the other two follow it so the three stay together. {%- endcomment -%}
+{%- comment -%} Strings used a dozen times over; `_lang` is needed before <html>. {%- endcomment -%}
 {%- assign _lang = page.lang | default: 'en' -%}
 {%- assign _url = site.url | append: page.url -%}
 {%- assign _title_attr = page.title | escape -%}
 <!DOCTYPE html>
 <html lang="{{ _lang }}">
 <head>
-  {%- comment -%} JSON-LD carries the abstract whole; the meta description has to fit a
-  snippet, so it is the abstract cut by `snippet` (publication_decoder.rb), which ends on a
-  sentence or a whole word rather than mid-punctuation. On a full-text article the abstract is
-  the lead before <!--more-->; on every other entry the body is the abstract already. Split
-  before strip_html — stripping tags takes the <!--more--> comment with them. {%- endcomment -%}
+  {%- comment -%} The abstract is the lead before <!--more--> (or the whole body), split
+  before strip_html removes the marker. JSON-LD takes it whole; the meta description takes
+  it cut to a sentence or word by `snippet` (publication_decoder.rb). {%- endcomment -%}
   {% assign _abstract = page.content | split: '<!--more-->' | first | strip_html | decode_numeric_entities | normalize_whitespace | strip %}
   {% assign _excerpt = _abstract | snippet %}
   {% assign _excerpt_attr = _excerpt | escape_once %}
   <meta charset="utf-8">
   {% include site-head.html %}
   {% assign _ptype = site.data.publication_types[page.type] %}
-  {%- comment -%} The bare title: authorship is declared by citation_author, the JSON-LD and the byline, and the site name by the homepage's WebSite node, so names here would only spend Google's ~60-char display budget. {%- endcomment -%}
+  {%- comment -%} The bare title: authors and site name are declared elsewhere and would
+  only spend Google's ~60-character budget. {%- endcomment -%}
   <title>{{ _title_attr }}</title>
   <meta name="description" content="{{ _excerpt_attr }}">
   <link rel="canonical" href="{{ _url }}">
-  {%- comment -%} Language set of this work: _origin is the original (this page, or the source it translates), _siblings every translation of that original (this page included when it is one). hreflang lists origin + siblings — which always contains the page itself, supplying the required self-reference — with x-default on the original. _alt_pages is the same set minus this page, for og:locale:alternate; _translated_by is siblings minus this page, for JSON-LD workTranslation. {%- endcomment -%}
+  {%- comment -%} The language set: _origin is the original, _siblings its translations.
+  hreflang lists both (so it self-references), x-default the original. _alt_pages is the
+  set minus this page (og:locale:alternate), _translated_by the siblings minus this page
+  (workTranslation). {%- endcomment -%}
   {%- assign _source = nil -%}
   {%- if page.translation_of -%}
     {%- capture _src_url -%}/{{ page.translation_of }}{%- endcapture -%}
@@ -44,24 +44,18 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
   <meta property="og:description" content="{{ _excerpt_attr }}">
   <meta property="og:url" content="{{ _url }}">
   <meta property="og:type" content="article">
-  {%- comment -%} og:locale is the one thing lang does not supply verbatim: a lookup in
-  _data/languages.yml, the list the validator checks a new lang against. {%- endcomment -%}
   <meta property="og:locale" content="{{ site.data.languages[_lang].locale }}">
   {% for _t in _alt_pages %}<meta property="og:locale:alternate" content="{{ site.data.languages[_t.lang].locale | default: 'en_US' }}">
   {% endfor %}
-  {%- comment -%} `thumb` is required, so the portrait fallback this used to carry was
-  unreachable: a publication without one aborts the build. Only the dimensions stay
-  conditional — image_size yields nils on a file it cannot parse. {%- endcomment -%}
+  {%- comment -%} `thumb` is required; image_size yields nils on a file it cannot parse. {%- endcomment -%}
   {% assign _social_img = page.thumb %}
   {% assign _social_dims = _social_img | prepend: '/images/' | image_size %}
   <meta property="og:image" content="{{ site.url }}/images/{{ _social_img }}">
   <meta property="og:image:alt" content="{{ _title_attr }}">
   {% if _social_dims.width %}<meta property="og:image:width" content="{{ _social_dims.width }}">
   <meta property="og:image:height" content="{{ _social_dims.height }}">{% endif %}
-  {%- comment -%} No article:published_time: the front matter knows only the year, and the
-  full datetime that tag requires would invent a 1 January that Google may then print in the
-  snippet. JSON-LD datePublished and citation_publication_date carry the bare year. {%- endcomment -%}
-  {%- comment -%} commit_date is the file's last commit date, already computed for the sitemap. {%- endcomment -%}
+  {%- comment -%} No article:published_time: a bare year would become an invented
+  1 January. {%- endcomment -%}
   <meta property="article:modified_time" content="{{ page.commit_date }}">
   {% if page.author %}{% assign _oa = page.author | split: ' and ' %}{% for _a in _oa %}<meta property="article:author" content="{{ _a | strip | escape }}">
   {% endfor %}{% endif %}
@@ -71,10 +65,8 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
   <meta name="twitter:image:alt" content="{{ _title_attr }}">
   <!-- HighWire Press / Google Scholar citation tags -->
   <meta name="citation_title" content="{{ _title_attr }}">
-  {%- comment -%} One creators string for meta author, citation_author and DC.creator: the
-  authors, or on an edited volume the editors — Scholar has no editor tag, and the old
-  fallback to Dario alone credited him with a four-editor book. The JSON-LD reads page.author
-  directly, since it has a real editor property for the volume case. {%- endcomment -%}
+  {%- comment -%} The authors, or an edited volume's editors: Scholar has no editor tag.
+  The JSON-LD has one, so it reads page.author directly. {%- endcomment -%}
   {% assign _authors_raw = page.author | default: page.editor %}
   {% assign _authors_list = _authors_raw | split: ' and ' %}
   <meta name="author" content="{{ _authors_list | join: ', ' | escape }}">
@@ -85,7 +77,7 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
   {% if _ptype.citation_venue %}<meta name="{{ _ptype.citation_venue }}" content="{{ page.venue | escape }}">{% endif %}
   {% if page.volume %}<meta name="citation_volume" content="{{ page.volume }}">{% endif %}
   {% if page.issue %}<meta name="citation_issue" content="{{ page.issue }}">{% endif %}
-  {%- comment -%} Scholar reads first/last page as literal numbers, so a Chicago-condensed range ("301–9") must be expanded back to its full last page ("309") by borrowing the missing leading digits from the first page. {%- endcomment -%}
+  {%- comment -%} Scholar wants literal page numbers: "301–9" expands to 309. {%- endcomment -%}
   {% if page.pages %}{% assign _pp = page.pages | replace: '–', '-' | replace: '—', '-' | split: '-' %}{% assign _fp = _pp | first | strip %}<meta name="citation_firstpage" content="{{ _fp }}">
   {% if _pp.size > 1 %}{% assign _lp = _pp | last | strip %}{% if _lp.size < _fp.size %}{% assign _pad = _fp.size | minus: _lp.size %}{% assign _lp = _fp | slice: 0, _pad | append: _lp %}{% endif %}<meta name="citation_lastpage" content="{{ _lp }}">{% endif %}{% endif %}
   {% if page.publisher %}<meta name="citation_publisher" content="{{ page.publisher | escape }}">{% endif %}
@@ -118,33 +110,23 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
     "headline": {{ page.title | jsonify }},
     "name": {{ page.title | jsonify }},
     {%- include jsonld-people.html property="author" names=page.author %}
-    {%- comment -%} The byline's other roles, so a work Dario edited, translated or conducted
-    still carries his ORCID node rather than leaving him off the page's graph entirely (the
-    interviews are cited under the interviewee, and the two Analogous City maps under Rossi
-    et al., so on those pages this is his only appearance). editor and translator are real
-    CreativeWork properties; interviewer and preface have no Schema.org equivalent, so they
-    fold into the general contributor. {%- endcomment -%}
-    {%- comment -%} Each include tests its own `names` and emits nothing when it is empty, so
-    the callers do not repeat that test. {%- endcomment -%}
+    {%- comment -%} The other roles, so a work Dario edited, translated or conducted still
+    carries his ORCID node. Interviewer and preface have no Schema.org property, so they
+    fold into contributor. An empty `names` emits nothing. {%- endcomment -%}
     {%- capture _contributors -%}{{ page.interviewer }}{% if page.interviewer and page.preface %} and {% endif %}{{ page.preface }}{%- endcapture -%}
     {% include jsonld-people.html property="editor" names=page.editor %}
     {% include jsonld-people.html property="translator" names=page.translator %}
     {% include jsonld-people.html property="contributor" names=_contributors %}
     {% if page.year != "Forthcoming" %}"datePublished": "{{ page.year }}",{% endif %}
     "dateModified": "{{ page.commit_date }}",
-    {%- comment -%} venue is type-dependent (see the `seo` skill): for a book or a map it names
-    the press, so it stays the publisher; for every other type it names the container the
-    work sits inside, which is isPartOf — a Periodical (nested through PublicationVolume /
-    PublicationIssue when those are known) or the book/proceedings. Which is which comes
-    from publication_types.yml, so the taxonomy stays defined in one place. publisher then
-    carries only a real press, and is dropped when the front matter names none. {%- endcomment -%}
+    {%- comment -%} What `venue` names follows the type's `container` (publication_types.yml):
+    none, the press (publisher); otherwise isPartOf, a Periodical (through volume and issue
+    when known) or a Book. publisher then carries only a real press. {%- endcomment -%}
     {% if _ptype.container == 'periodical' %}"isPartOf": {% if page.issue %}{ "@type": "PublicationIssue", "issueNumber": {{ page.issue | jsonify }}, "isPartOf": {% endif %}{% if page.volume %}{ "@type": "PublicationVolume", "volumeNumber": {{ page.volume | jsonify }}, "isPartOf": {% endif %}{ "@type": "Periodical", "name": {{ page.venue | jsonify }}{% if page.issn %}, "issn": {{ page.issn | jsonify }}{% endif %} }{% if page.volume %} }{% endif %}{% if page.issue %} }{% endif %},
     {% elsif _ptype.container == 'book' %}"isPartOf": { "@type": "Book", "name": {{ page.venue | jsonify }}{% if page.isbn %}, "isbn": {{ page.isbn | jsonify }}{% endif %} },
     {% endif %}
-    {%- comment -%} An isbn belongs to whichever node it identifies: where the type has a
-    container the front-matter isbn is the containing book's (set just above), and where it
-    has none the work is its own book, so it goes on the entity itself. issn only ever sits
-    on a Periodical — Schema.org does not define it for Book. {%- endcomment -%}
+    {%- comment -%} An isbn goes on the containing book when there is one, else on the work;
+    issn only ever on a Periodical. {%- endcomment -%}
     {% unless _ptype.container %}{% if page.isbn %}"isbn": {{ page.isbn | jsonify }},{% endif %}{% endunless %}{% if _ptype.container %}{% if page.publisher %}"publisher": { "@type": "Organization", "name": {{ page.publisher | jsonify }} },{% endif %}{% else %}"publisher": { "@type": "Organization", "name": {{ page.publisher | default: page.venue | jsonify }} },{% endif %}
     "url": "{{ _url }}",
     {% if page.doi %}"sameAs": "{{ page.doi }}",{% endif %}
@@ -152,13 +134,8 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
     {% if _source %}{% assign _st = site.data.publication_types[_source.type].schema %}"translationOfWork": { "@type": "{{ _st }}", "@id": "{{ site.url }}{{ _source.url }}", "name": {{ _source.title | jsonify }}, "inLanguage": "{{ _source.lang | default: 'en' }}" },{% endif %}
     {% if _translated_by.size > 0 %}"workTranslation": [{% for _t in _translated_by %}{% assign _tt = site.data.publication_types[_t.type].schema %}{ "@type": "{{ _tt }}", "@id": "{{ site.url }}{{ _t.url }}", "name": {{ _t.title | jsonify }}, "inLanguage": "{{ _t.lang | default: 'en' }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}
     "image": "{{ site.url }}/images/{{ _social_img }}",
-    {%- comment -%} The page and the work it carries are two nodes, so they need two @ids —
-    @id *is* the merge key, and giving both the bare URL asks a consumer to collapse them
-    into one thing that is somehow a ScholarlyArticle and a WebPage at once. The work keeps
-    the bare URL, which is what its own "url" says and what a sibling's translationOfWork
-    points at; the page takes a fragment, the way the homepage's #website and #profilepage
-    already do. isPartOf then ties all sixty-odd pages back to the site node — the same job
-    the shared ORCID @id does for the author. {%- endcomment -%}
+    {%- comment -%} Two nodes need two @ids: the work keeps the bare URL, the page takes
+    #webpage and ties back to the site node. {%- endcomment -%}
     "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ _url }}#webpage", "url": "{{ _url }}", "isPartOf": { "@id": "{{ site.url }}/#website" } },
     "inLanguage": "{{ _lang }}",
     {% if _abstract != '' %}"abstract": {{ _abstract | jsonify }},{% endif %}
@@ -179,41 +156,27 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
 {% include styles-font.css %}
 {% include styles-base.css %}
     body { max-width: 660px; line-height: var(--lh-normal); }
-    h1 { font-size: var(--text-xxl); font-weight: 500; margin: 0.6rem 0 0.6rem; }
+    h1 { font-size: var(--text-xxl); font-weight: 500; margin: 0.6rem 0; }
     .authors { margin-bottom: 0.6rem; font-size: var(--text-base); }
     .doi { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; font-size: var(--text-xs); line-height: var(--lh-loose); margin-bottom: 2rem; }
     .doi .pill-btn { padding: 0.3rem 0.55rem; }
-    .content {
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-    }
-    .title-block { max-width: 660px; }
-    /* Hyphenation comes from .hyphenate-prose in the markup — the shared policy defined
-       once in styles-base.css (the homepage bio wears the same one); its own comment
-       carries the terms and the Safari longhand caveat. What is specific to this page is
-       why it earns its place: the dictionary is picked by the page's own language, and
-       every publication already declares its real one on <html> (see the `seo` skill),
-       so the French and Italian articles break by their own rules rather than English
-       ones — at a 660px measure their longer words otherwise leave a very deep rag. And
-       limit-lines caps the ladder of consecutive hyphenated lines, which at this measure
-       is the more visible problem than any single break. */
+    .content { margin-top: 2rem; padding-top: 1.5rem; }
+    /* .hyphenate-prose (styles-base.css) breaks by the page's own <html lang>, so French
+       and Italian follow their own rules. */
     .body {
-      max-width: 660px;
       font-size: var(--text-base);
       line-height: var(--lh-loose);
       color: var(--fg);
       overflow-wrap: break-word;
     }
-    /* Opt back out where a split word reads as an error rather than as typography:
-       headings, inline code, and table cells (whose measure is set by the column, not
-       by the text). `manual` rather than `none`, so an explicit &shy; still works. */
+    /* Opt out where a split word reads as an error; `manual` keeps an explicit &shy;. */
     .body :is(h2, h3, code, figure.data-table) { -webkit-hyphens: manual; hyphens: manual; }
     .body p { margin: 0 0 1.1rem; }
     .body .abstract { font-style: italic; color: var(--muted); margin-bottom: 2rem; }
     .body h2 { font-size: var(--text-lg); font-weight: 500; margin: 3rem 0 0.8rem; color: var(--fg); }
     .body h3 { font-size: var(--text-base); font-weight: 700; margin: 2rem 0 0.6rem; color: var(--fg); }
     .body h2, .body h3 { scroll-margin-top: 1.5rem; }
-    .body blockquote { margin: 1.5rem 0 1.5rem 0; padding-left: 1.2rem; color: var(--fg); font-style: italic; }
+    .body blockquote { margin: 1.5rem 0; padding-left: 1.2rem; color: var(--fg); font-style: italic; }
     .body blockquote p { margin-bottom: 0; }
     .body strong { font-weight: 500; color: var(--fg); }
     .body ul, .body ol { padding-left: 1.4em; }
@@ -222,49 +185,30 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
     .body figure { margin: 2rem 0; }
     .body figure img { width: 100%; height: auto; display: block; }
     .body figcaption { margin-top: 0.5rem; font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
-    /* Multi-panel figures (see _includes/figure-group.html): each panel keeps
-       its own natural width (centered, capped at the text column) so unequal
-       panels are no longer stretched to a shared box. */
+    /* Multi-panel figures (figure-group.html): each panel keeps its natural width. */
     .body figure.figure-group .subfig { margin: 0 0 1.5rem; }
     .body figure.figure-group .subfig img { width: auto; max-width: 100%; margin: 0 auto; }
-    /* three-quarter narrows the panels to 75% of the text column (matching the
-       single-image width modifier); the shared caption keeps full width. */
     .body figure.figure-group.three-quarter .subfig img { max-width: 75%; }
-    /* Data tables in full-text bodies — wrap any markdown table in
-       <figure class="data-table" markdown="1"> … <figcaption>…</figcaption></figure>
-       so it inherits the figure margin/caption styling; alignment is set per
-       column in the markdown header (e.g. |:--|--:|). */
+    /* Data tables: a markdown table inside <figure class="data-table" markdown="1">. */
     .body figure.data-table { overflow-x: auto; }
     .body figure.data-table table { width: 100%; border-collapse: collapse; font-size: var(--text-xs); line-height: var(--lh-normal); font-variant-numeric: tabular-nums; }
     .body figure.data-table th, .body figure.data-table td { padding: 0.4rem 0.7rem; border-bottom: 1px solid var(--border); white-space: nowrap; }
     .body figure.data-table thead th { font-weight: 500; color: var(--fg); border-bottom: 1px solid var(--fg); }
     .body figure.data-table tbody tr:last-child td { border-bottom: 1px solid var(--fg); }
-    /* opt back into wrapping for tables with long-form prose cells: class="data-table wrap" */
+    /* .wrap: prose cells wrap, the label column does not. */
     .body figure.data-table.wrap th, .body figure.data-table.wrap td { white-space: normal; }
-    /* tables that pair data with images (class="data-table media"): cells hold
-       an <img> plus a stacked info column; center images, align rows middle.
-       Explicit per-column widths override the generic `.body figure img`
-       width:100% so the taxonomy icon and map keep a sensible display size. */
+    /* .media: image cells at fixed widths, the table sized to its content and centred. */
     .body figure.data-table.media td, .body figure.data-table.media th { white-space: normal; vertical-align: middle; }
-    /* size the table to its content and center it, rather than stretching to the
-       full `wide` canvas — the fixed-size images otherwise leave empty gaps */
     .body figure.data-table.media table { width: auto; margin-left: auto; margin-right: auto; }
     .body figure.data-table.media td img { display: block; height: auto; margin: 0.25rem auto; }
     .body figure.data-table.media td:nth-child(2) img { width: 200px; max-width: 100%; }
     .body figure.data-table.media td:nth-child(3) img { width: 300px; max-width: 100%; }
-    /* …but keep the first (label) column on one line */
     .body figure.data-table.wrap th:first-child, .body figure.data-table.wrap td:first-child { white-space: nowrap; }
-    /* Displayed equations in full-text bodies — a centered formula via
-       <p class="equation"><span class="eq-formula">…</span></p>. */
+    /* <p class="equation"><span class="eq-formula">…</span></p> */
     .body p.equation { display: flex; justify-content: center; align-items: baseline; margin: 1.6rem 0; }
     .body code { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: var(--text-xs); }
     @media screen {
-      /* Breaks out past the 660px measure, but stops at the page's own --page-gutter
-         rather than at the window: below 990px the old 100vw ran the figure edge to edge,
-         straight under the fixed .mode-toggle parked in that gutter (see styles-base.css).
-         Nothing is lost — under 660px + 2 gutters the breakout was already no wider than
-         the text column. The width is named once and reused by the centring offset, which
-         had been carrying a second copy of the same min(). */
+      /* Breaks out of the measure, but stops at --page-gutter, where the mode toggle sits. */
       .body figure.wide { --bleed: min(990px, calc(100vw - 2 * var(--page-gutter))); display: block; width: var(--bleed); max-width: none; margin-left: calc(50% - var(--bleed) / 2); }
       .body figure.wide img { display: block; width: auto; height: auto; max-width: 100%; max-height: 660px; margin: 0 auto; }
       .body figure.wide figcaption { width: calc(min(660px, 100vw) - 3rem); max-width: 100%; margin-left: auto; margin-right: auto; }
@@ -273,17 +217,12 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
       .body figure.half img { width: 50%; }
       .body figure.three-quarter img { width: 75%; }
       .body figure.full img { width: 100%; }
-      /* same width-modifier vocabulary as images: narrow 33%, half 50%,
-         three-quarter 75% (all centered) */
       .body figure.data-table:is(.half, .three-quarter) table { margin: 0 auto; }
       .body figure.data-table.half table { width: 50%; }
       .body figure.data-table.three-quarter table { width: 75%; }
-      /* Caption width clamps between 3/4 and the full text column: figures and
-         tables narrowed to 1/2 or 3/4 get a 3/4-width centered caption (never
-         cramped to the figure's own 1/2), so a short caption stays readable
-         while figure and caption remain visually coupled. */
+      /* A narrowed figure's caption is 3/4 of the column, never cramped to 1/2; a
+         full-width table's is full width. */
       .body figure:is(.narrow, .half, .three-quarter, .data-table.half, .data-table.three-quarter) figcaption { width: 75%; margin-left: auto; margin-right: auto; }
-      /* full-width (and wide) tables keep a full-width caption */
       .body figure.data-table figcaption { width: auto; margin-left: 0; margin-right: 0; }
     }
     .body sup a.footnote { font-size: 0.7em; font-weight: 500; text-decoration: none; padding: 0 0.1em; }
@@ -297,19 +236,15 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
     footer.editorial-note p { margin: 0; }
     @media print {
       .mode-toggle, .publication-nav, .related-pubs, .doi, .cite-data, [hidden] { display: none !important; }
-      /* horizontal spacing — body padding (sides render on every page) */
+      /* Body padding, since it repeats on every page. */
       body { padding: 0 4cm !important; max-width: none !important; margin: 0 !important; }
-      .title-block, .body { max-width: none !important; }
-      /* font sizes */
       html { font-size: 8pt; }
       h1 { font-size: 13pt; }
       .body h2 { font-size: 9.5pt; }
       .body h3 { font-size: 8.5pt; }
-      /* keep headings with their following paragraph/list/figure */
       h1, .body h2, .body h3 { page-break-after: avoid; break-after: avoid; }
-      /* keep figure and caption together */
+      /* Figures stay whole; long tables flow. */
       .body figure { page-break-inside: avoid; break-inside: avoid; }
-      /* but let long data tables flow across pages */
       .body figure.data-table { page-break-inside: auto; break-inside: auto; }
       .body figure.data-table thead { display: table-header-group; }
     }
@@ -319,8 +254,8 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
     .publication-nav a, .related-pubs a { color: inherit; text-decoration: none; }
     .publication-nav a:hover, .related-pubs a:hover { color: var(--fg); text-decoration: underline; }
     .publication-nav .nav-prev a, .publication-nav .nav-next a { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .publication-nav .nav-label { font-size: var(--text-xs); display: inline-block; }
-    .publication-nav .nav-all { text-align: center; font-size: var(--text-xs); }
+    .publication-nav .nav-label { display: inline-block; }
+    .publication-nav .nav-all { text-align: center; }
     .publication-nav .nav-all a { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
     .nav-siblings { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: start; }
     .publication-nav .nav-next { text-align: right; }
@@ -335,10 +270,6 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
   <a class="skip-link" href="#main">Skip to content</a>
   {% include site-toggle.html %}
   <div aria-live="polite" class="sr-only" id="live-msg"></div>
-  {%- comment -%} Neighbors in the canonical order come precomputed from
-  _plugins/publication_neighbors.rb. {%- endcomment -%}
-  {% assign _prev = page.prev_pub %}
-  {% assign _next = page.next_pub %}
   <main id="main" tabindex="-1">
   {% include publication-nav.html modifier="publication-nav-top" label="Project navigation" %}
   <article>
@@ -371,11 +302,8 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
 
   {% include site-scripts.html %}
   <script>
-    /* Ensure all lazy-loaded figures are fetched before printing. beforeprint flips them
-       to eager, which covers a print the browser starts on its own; every route we control
-       — Cmd/Ctrl+P and the Print button — goes through printWhenImagesReady instead, so it
-       awaits the loads rather than racing them. Returns false when there was nothing to
-       wait for, leaving the caller's own print to proceed. */
+    /* Print only once the lazy figures have loaded: Cmd/Ctrl+P and the Print button wait
+       here, beforeprint covers the browser's own menu. false: nothing to wait for. */
     function printWhenImagesReady() {
       var imgs = Array.from(document.querySelectorAll('img')).filter(function(i) { return !i.complete || i.naturalWidth === 0; });
       if (imgs.length === 0) return false;
@@ -397,7 +325,6 @@ these sit ahead of the doctype; the other two follow it so the three stay togeth
       if (printWhenImagesReady()) e.preventDefault();
     });
 
-    // The button is this layout's alone, and takes the same waiting path as Cmd/Ctrl+P.
     document.querySelectorAll('.print-btn').forEach(function(btn) {
       btn.addEventListener('click', function() { if (!printWhenImagesReady()) window.print(); });
     });

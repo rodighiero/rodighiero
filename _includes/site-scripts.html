@@ -1,8 +1,5 @@
 <script>
-  /* Promote whatever is still lazy inside `root` to eager. Both layouts want this, for
-     different reasons — the homepage warms thumbnails so a filtered-in card travels with
-     its picture, the publication page fetches figures before printing — so the rule for
-     what counts as warmable lives here once rather than in each of them. */
+  // Lazy images inside `root` go eager: homepage thumbnails, figures before printing.
   function promoteLazyImages(root) {
     (root || document).querySelectorAll('img[loading="lazy"]').forEach(function(img) {
       img.loading = 'eager';
@@ -22,11 +19,8 @@
     });
   })();
 
-  /* Copy button: formatted citation. Nothing here is guarded, because nothing here can be
-     absent: #live-msg is unconditional markup in both layouts, and a .cite-btn only exists
-     inside publication.html's <article>, where the same `page.doi` conditional that emits
-     the button emits publication-cite.html's .cite-data beside it. Wrapping either in a Liquid
-     conditional now fails loudly at the click rather than silently doing nothing. */
+  /* Copy the formatted citation. Unguarded: #live-msg is in both layouts, and the same
+     `page.doi` conditional emits a .cite-btn and its .cite-data. */
   (function() {
     var liveMsg = document.getElementById('live-msg');
     document.querySelectorAll('.cite-btn').forEach(function(btn) {
