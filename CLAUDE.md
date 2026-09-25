@@ -28,6 +28,12 @@ No test suite, no asset pipeline, no npm for the site itself. The build runs
 `_plugins/publication_validator.rb`, which **aborts** on bad front matter — a failed build is
 usually a publication, not the tooling.
 
+The stand-in for tests is **`uv run scripts/diff-build.py [REF]`**: it builds REF (default
+`HEAD`) in a temporary worktree and the working tree beside it, strips comments and
+whitespace, and diffs the two `_site`s — so a refactor that should change nothing for readers
+is checked in one command (exit 0 when clean). `--ignore-dates` masks commit dates when REF is
+older than `HEAD`; `--keep` leaves both builds to inspect.
+
 The `scripts/` tooling is Python, managed by **`uv`** (`pyproject.toml` + `uv.lock`, both
 committed; `.venv/` is ignored). Run any script with `uv run scripts/<name>.py` — uv syncs
 the environment from the lockfile first. No manual venv, no `pip install`. The site build
