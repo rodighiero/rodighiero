@@ -243,7 +243,7 @@ As we look toward closing the collection process when the pandemic ends, we prop
 
 | Resource | URL |
 |:--|:--|
-| COVIC website | http://covic-archive.org/index.html |
+| COVIC website | https://covic-archive.org/index.html |
 | COVIC Visualizer | https://covic-visualizer.herokuapp.com/ |
 | COVIC Trails | https://covic.fra1.digitaloceanspaces.com/index.html |
 | COVIC GitHub code repository | https://github.com/dubberlydesign/covic-visualizer |
@@ -261,7 +261,7 @@ We hope the collection will become a field for continuing critique of comparison
 - Bourne, Charles P., and Trudi Bellardo Hahn. 2003. _A History of Online Information Services, 1963–1976_. Cambridge, MA: MIT Press.
 - _Collection of COVID-19 Visualization Worldwide_. n.d. Peking University Visualization Lab.
 - Dong, Ensheng, Hongru Du, and Lauren Gardner. 2020. “An Interactive Web-Based Dashboard to Track COVID-19 in Real Time.” _The Lancet Infectious Diseases_ 20 (5): 533–34. <https://doi.org/10.1016/S1473-3099(20)30120-1>.
-- _Hurricane Digital Memory Bank_. n.d. Roy Rosenzweig Center for History and New Media, George Mason University. <http://hurricanearchive.org/>.
+- _Hurricane Digital Memory Bank_. n.d. Roy Rosenzweig Center for History and New Media, George Mason University. <https://hurricanearchive.org/>.
 - “Inside the New York Times’ Photo Morgue, A Possible New Life for Print.” 2012. WNYC. <https://www.wnyc.org/story/206643-wnyc-tumblr/>.
 - _Japan Disaster Digital Archive_. n.d. Edwin O. Reischauer Institute of Japanese Studies, Harvard University. <https://jdarchive.org/en>.
 - Parry, Kyle Thomas. 2015. “Crisis Archives: Assemblage, Interaction, Participation.” PhD diss., Harvard University. <https://dash.harvard.edu/bitstream/handle/1/23845456/PARRY-DISSERTATION-2015.pdf> ([archived](https://web.archive.org/web/20230803060838/https://dash.harvard.edu/bitstream/handle/1/23845456/PARRY-DISSERTATION-2015.pdf)).

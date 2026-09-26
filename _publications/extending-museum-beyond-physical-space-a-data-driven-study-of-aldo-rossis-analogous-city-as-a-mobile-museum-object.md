@@ -145,7 +145,7 @@ The role of museums is to facilitate the circulation of knowledge, and digital o
 - Davies, Martin. 1999. _Aldus Manutius: Printer and Publisher of Renaissance Venice_. 2nd printing. Tempe: Arizona Center for Medieval and Renaissance Studies.
 - Davis, Douglas. 1995. “The Work of Art in the Age of Digital Reproduction (An Evolving Thesis: 1991–1995).” _Leonardo_ 28 (5): 381. <https://doi.org/10/btp8xd>.
 - De Michelis, Giorgio. 2014. “What Design Tells Us about Objects and Things.” _Design and Culture_ 6 (2): 187–202. <https://doi.org/10/gc8z22>.
-- Dufour, Guillaume-Henri. 1865. “Topographic Map of Switzerland.” Switzerland: Swiss Confederation. <http://map.geo.admin.ch>.
+- Dufour, Guillaume-Henri. 1865. “Topographic Map of Switzerland.” Switzerland: Swiss Confederation. <https://map.geo.admin.ch>.
 - Fera, Francesco Saverio, and Luca Conti. 2007. _Fabio Reinhart: architettura della coerenza_. Bologna: CLUEB.
 - Ferlenga, Alberto. 2021. “Aldo Rossi: The Architect and the Cities.” MAXXI – Museo Nazionale delle Arti del XXI Secolo. <https://www.maxxi.art/en/events/aldo-rossi-larchitetto-e-le-citta/>.
 - Ferlenga, Alberto, and Marco Biraghi. 2015. _Comunità Italia: architettura, città, paesaggio 1945–2000_. Cinisello Balsamo: Silvana Editoriale.

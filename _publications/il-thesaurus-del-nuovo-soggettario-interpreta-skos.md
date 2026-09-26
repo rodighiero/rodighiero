@@ -131,7 +131,7 @@ Il Thesaurus del Nuovo soggettario potrebbe diventare un “servizio terminologi
 - ———. 2006. *Nuovo soggettario: Guida al sistema italiano di indicizzazione per soggetto. Prototipo del Thesaurus*. Milano: Editrice Bibliografica.
 - British Standards Institution (BSI). 2005–2008. *BS 8723: Structured Vocabularies for Information Retrieval*. London: British Standards Institution.
 - Broughton, Vanda. 2008. *Costruire thesauri: Strumenti per indicizzazione e metadati semantici*. A cura di Piero Cavaleri, Laura Ballestra e Luisa Venuti. Milano: Editrice Bibliografica.
-- Cavaleri, Piero. 2009. “Il thesauro di economia e scienze sociali della Biblioteca Rostoni e SKOS.” Intervento al convegno “I thesauri tra cataloghi e Web,” Firenze, Istituto degli Innocenti, 6 febbraio. [www.iskoi.org/doc/thesauri4.htm](http://www.iskoi.org/doc/thesauri4.htm).
+- Cavaleri, Piero. 2009. “Il thesauro di economia e scienze sociali della Biblioteca Rostoni e SKOS.” Intervento al convegno “I thesauri tra cataloghi e Web,” Firenze, Istituto degli Innocenti, 6 febbraio. [www.iskoi.org/doc/thesauri4.htm](https://www.iskoi.org/doc/thesauri4.htm).
 - Cheti, Alberto, e Federica Paradisi. 2008. “Facet Analysis in the Development of a General Controlled Vocabulary.” *Axiomathes* 18 (2): 223–241.
 - International Organization for Standardization (ISO). 1986. *ISO 2788: Documentation — Guidelines for the Establishment and Development of Monolingual Thesauri*. Geneva: ISO.
 - Lucarelli, Anna. 2008. “Quando una collezione speciale chiede ospitalità ad una grande biblioteca.” In *Piccoli scritti di biblioteconomia per Luigi Crocetti: 10 marzo 2007–10 marzo 2008*, a cura di Carmela Cavallaro e Perla Innocenti, 183–201. Manziana: Vecchiarelli.
@@ -141,7 +141,7 @@ Il Thesaurus del Nuovo soggettario potrebbe diventare un “servizio terminologi
 - Svenonius, Elaine. 2000. *The Intellectual Foundation of Information Organization*. Cambridge, MA: MIT Press.
 - “TELplus.” n.d. [www.theeuropeanlibrary.org](http://www.theeuropeanlibrary.org/portal/organisation/cooperation/telplus/index.php).
 - Van Assem, Mark, Véronique Malaisé, Alistair Miles, e Guus Schreiber. 2006. “A Method to Convert Thesauri to SKOS.” [www.cs.vu.nl](http://www.cs.vu.nl/~mark/papers/Assem06b.pdf) ([archiviato](https://web.archive.org/web/20070125043216/http://www.cs.vu.nl/~mark/papers/Assem06b.pdf)).
-- “Zthes.” n.d. [zthes.z3950.org](http://zthes.z3950.org/).
+- “Zthes.” n.d. [zthes.z3950.org](https://zthes.z3950.org/).
 
 [^1]: LCSH (Library of Congress Subject Headings) è il repertorio delle voci di soggetto utilizzate dalla Library of Congress a partire dal 1898.
 [^2]: RAMEAU (Répertoire d’autorité-matière encyclopédique et alphabétique unifié) è la lista controllata delle voci di soggetto assegnate dal 1980 ai record bibliografici inseriti nel catalogo in linea della Bibliothèque nationale de France, integrata con voci proposte da biblioteche universitarie, di pubblica lettura e di ricerca. Le voci di RAMEAU derivano in massima parte dal *Répertoire de vedettes-matière*, elaborato dalla biblioteca dell’Université de Laval (Québec) sulla base delle LCSH.

@@ -129,7 +129,7 @@ The point of this section is that, if the intimate reading brings new insights, 
 - Moretti, Franco. 2007. _Graphs, Maps, Trees: Abstract Models for Literary History_. London; New York: Verso.
 - Norman, Donald A. 2013. _The Design of Everyday Things_. New York: Basic Books.
 - Obscura Digital. 2011. “Connections for Facebook.”
-- Pavillon de l’Arsenal. 2011. “Paris, a City in the Making.” <http://www.parismetropole2020.com/evenement/>.
+- Pavillon de l’Arsenal. 2011. “Paris, a City in the Making.” <https://www.parismetropole2020.com/evenement/>.
 - Ricoeur, Paul. 2005. _The Course of Recognition_. Cambridge, MA: Harvard University Press.
 - Rigal, Alexandre, and Dario Rodighiero. 2015. “Trajectoire d’une représentation cartographique en réseau.” _Cartes & Géomatique_ 225: 33–41.
 - Rodighiero, Dario. 2015. “Representing the Digital Humanities Community: Unveiling the Social Network Visualization of an International Conference.” _Parsons Journal of Information Mapping_ VII (2).

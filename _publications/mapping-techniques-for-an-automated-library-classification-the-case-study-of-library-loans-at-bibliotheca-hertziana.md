@@ -144,7 +144,7 @@ It is promising that the primary focus of some experts’ critiques is on enhanc
 
 Scientists engaged with a scientific library form a clear target group for a recommendation system that not only leverages simple user interactions with books, but also examines the connection of these interactions to the studied fields. In this context, exploring the dynamics among borrowing, referencing, and acquiring books could potentially resolve concerns mentioned by an interviewee about the motivations and viewpoints that influence a scholar’s selection of books. Consequently, this could enhance conventional bibliometric methods by fostering a bottom-up comprehension of the development of specific academic fields.
 
-[^1]: More information about Bibliotheca Hertziana at [biblhertz.it](http://www.biblhertz.it/).
+[^1]: More information about Bibliotheca Hertziana at [biblhertz.it](https://www.biblhertz.it/).
 [^2]: Details of the questionnaire, answers, and code repository can be found in Casey (2024).
 
 ## References

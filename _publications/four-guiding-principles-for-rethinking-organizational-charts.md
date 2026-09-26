@@ -133,7 +133,7 @@ If you want to read more, you can discover the further scope of the Affinity Map
 - Garfield, E. 1970. “Citation Indexing for Studying Science.” _Nature_ 227 (5259): 669–671. https://doi.org/10/b9962z
 - ———. 2006. “The History and Meaning of the Journal Impact Factor.” _JAMA_ 295 (1): 90–93. https://doi.org/10/bgvhsf
 - Gingras, Y. 2014. _Les dérives de l’évaluation de la recherche: du bon usage de la bibliométrie_. Paris: Raisons d’agir éditions.
-- Groys, B. 2008. “The Obligation to Self-Design.” _E-Flux_, November 1. http://www.e-flux.com/journal/00/68457/the-obligation-to-self-design/
+- Groys, B. 2008. “The Obligation to Self-Design.” _E-Flux_, November 1. https://www.e-flux.com/journal/00/68457/the-obligation-to-self-design/
 - Hatch, M. J. 2011. _Organizations: A Very Short Introduction_. Vol. 264. New York: Oxford University Press.
 - Hatch, M. J., and A. L. Cunliffe. 2013. _Organization Theory: Modern, Symbolic, and Postmodern Perspectives_. 3rd ed. Oxford: Oxford University Press.
 - King, D. B., and M. Wertheimer. 2005. _Max Wertheimer & Gestalt Theory_. New Brunswick: Transaction Publishers.

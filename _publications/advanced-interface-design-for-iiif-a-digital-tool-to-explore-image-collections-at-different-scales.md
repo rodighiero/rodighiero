@@ -222,7 +222,7 @@ The main purpose of our future research will precisely be to use these empirical
 - Pietsch, Christopher. (2018) 2023. “VIKUS Viewer.” GitHub. https://github.com/cpietsch/vikus-viewer
 - Rodighiero, Dario, José Higuera, Alberto Romele, Celeste Pedro, Matteo Azzi, Christopher Pietsch, Christoph Sander, Stephanie J. Lahey, and Benjamin Kozlowski. 2022a. “From Data to Wisdom IIIF Reader: Multilevel Visualization Research.” Workshop, Bibliotheca Hertziana, Rome, Winter. https://vimeo.com/711138374
 - Rodighiero, Dario, Lins Derry, Douglas Duhaime, Jordan Kruguer, Maximilian C. Mueller, Christopher Pietsch, Jeffrey T. Schnapp, Jeff Steward, and metaLAB. 2022b. “Surprise Machines: Revealing Harvard Art Museums’ Image Collection.” _Information Design Journal_ 27 (1): 21–34. https://doi.org/10.1075/idj.22013.rod
-- Romanello, Matteo, Maud Ehrmann, Simon Clematide, and Daniele Guido. 2020. “The Impresso System Architecture in a Nutshell.” http://infoscience.epfl.ch/record/283595
+- Romanello, Matteo, Maud Ehrmann, Simon Clematide, and Daniele Guido. 2020. “The Impresso System Architecture in a Nutshell.” https://infoscience.epfl.ch/record/283595
 - Rosenberg, Daniel, and Anthony Grafton. 2010. _Cartographies of Time_. New York: Princeton Architectural Press.
 - Salonius, Pippa, and Andrea Worm, eds. 2014. _The Tree: Symbol, Allegory, and Mnemonic Device in Medieval Art and Thought_. International Medieval Research 20. Turnhout: Brepols.
 - Scott, John. (1991) 2000. _Social Network Analysis: A Handbook_. 2nd ed. London: SAGE Publications.

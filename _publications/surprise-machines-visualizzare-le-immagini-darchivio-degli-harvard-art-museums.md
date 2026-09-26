@@ -115,7 +115,7 @@ Oltre ai meriti tecnici, _Surprise Machines_ è stato soprattutto un progetto co
 - Danchilla, B. (2012). _Beginning WebGL for HTML5_. Apress.
 - Derry, L., Kruguer, J., Mueller, M., & Schnapp, J. (2022). _Designing a choreographic interface during covid-19_. Movement and Computing Conference. https://doi.org/10.1145/3537972.3538020
 - DiMaggio, P., & Hargittai, E. (2001). _From the “digital divide” to “digital inequality”: Studying internet use as penetration increases_. Center for Arts and Cultural Policy Studies, Princeton University.
-- Drucker, J. (2013). Performative materiality and theoretical approaches to interface. _Digital Humanities Quarterly_, 7(1). http://www.digitalhumanities.org/dhq/vol/7/1/000143/000143.html
+- Drucker, J. (2013). Performative materiality and theoretical approaches to interface. _Digital Humanities Quarterly_, 7(1). https://www.digitalhumanities.org/dhq/vol/7/1/000143/000143.html
 - Duhaime, D. (2021). _PixPlot_ [Computer software]. Yale Digital Humanities Lab. https://github.com/YaleDHLab/pix-plot (Original work published 2017)
 - Foster, H. (2011). _The art-architecture complex_. Verso.
 - Geismar, H. (2018). _Museum object lessons for the digital age_. UCL Press. https://doi.org/10.2307/j.ctv1xz0wz
@@ -127,7 +127,7 @@ Oltre ai meriti tecnici, _Surprise Machines_ è stato soprattutto un progetto co
 - Kräutli, F. (2016). _Visualising cultural data: Exploring digital collections through timeline visualisations_. Royal College of Art.
 - Latour, B. (1988). _The pasteurization of France_ (A. Sheridan & J. Law, Trans.; English edition). Harvard University Press.
 - Lima, M. (2011). _Visual complexity: Mapping patterns of information_. Princeton Architectural Press.
-- Maaten, L. van der, & Hinton, G. (2008). Visualizing data using t-SNE. _Journal of Machine Learning Research_, 9(86), 2579–2605. http://jmlr.org/papers/v9/vandermaaten08a.html
+- Maaten, L. van der, & Hinton, G. (2008). Visualizing data using t-SNE. _Journal of Machine Learning Research_, 9(86), 2579–2605. https://jmlr.org/papers/v9/vandermaaten08a.html
 - Manovich, L. (2008). Data visualization as new abstraction and anti-sublime. In B. Hawk, D. M. Rieder, & O. O. Oviedo (Eds.), _Small tech: The culture of digital tools_. University of Minnesota Press.
 - Manovich, L. (2020). _Cultural analytics_. MIT Press.
 - Manzini, E. (2016). Design culture and dialogic design. _Design Issues_, 32(1), 52–59. https://doi.org/10/c2s8
@@ -135,17 +135,17 @@ Oltre ai meriti tecnici, _Surprise Machines_ è stato soprattutto un progetto co
 - McInnes, L., Healy, J., & Melville, J. (2018). UMAP: Uniform Manifold Approximation and Projection for dimension reduction. _arXiv_, stat.ML. https://arxiv.org/pdf/1802.03426.pdf
 - metaLAB. (2022). _metaLAB (at) Harvard & FU Berlin_. https://mlml.io/
 - Moon, C. Y. E., & Rodighiero, D. (2020). Mapping as a contemporary instrument for orientation in conferences. _Proceedings of the IX Annual Conference of the Association for Humanities and Digital Culture (AIUCD)_. https://doi.org/10.5281/zenodo.3611340
-- O’Shea, K., & Nash, R. (2015). An introduction to convolutional neural networks. _arXiv:1511.08458 [cs]_. http://arxiv.org/abs/1511.08458
+- O’Shea, K., & Nash, R. (2015). An introduction to convolutional neural networks. _arXiv:1511.08458 [cs]_. https://arxiv.org/abs/1511.08458
 - Pietsch, C. (2023). _VIKUS viewer_. GitHub. https://github.com/cpietsch/vikus-viewer (Original work published 2018)
 - Rodighiero, D. (2021a). _Mapping affinities: Democratizing data visualization_ (Open-access English edition). Métis Presses. https://doi.org/10.37866/0563-99-9
 - Rodighiero, D. (2021b, August 18). Ars memorativa as the genesis of information design: A conversation with Manuel Lima. _Nightingale_. https://nightingaledvs.com/ars-memorativa-as-the-genesis-of-information-design-a-conversation-with-manuel-lima/
 - Rodighiero, D., Wandl-Vogt, E., & Carsenat, E. (2021). Making visible the invisible work of scientists during the COVID-19 pandemic. _Visual Culture Studies_, 2, 143–165. https://doi.org/10.5281/zenodo.5115621
 - Rodighiero, D., Wandl-Vogt, E., & Carsenat, E. (2022). A visual translation of the pandemic. _Leonardo_, 55(3), 297–303. https://doi.org/10.1162/leon_a_02203
-- Russakovsky, O., Deng, J., Su, H., Krause, J., Satheesh, S., Ma, S., Huang, Z., Karpathy, A., Khosla, A., Bernstein, M., Berg, A. C., & Fei-Fei, L. (2015). Imagenet large scale visual recognition challenge. _arXiv:1409.0575 [cs]_. http://arxiv.org/abs/1409.0575
+- Russakovsky, O., Deng, J., Su, H., Krause, J., Satheesh, S., Ma, S., Huang, Z., Karpathy, A., Khosla, A., Bernstein, M., Berg, A. C., & Fei-Fei, L. (2015). Imagenet large scale visual recognition challenge. _arXiv:1409.0575 [cs]_. https://arxiv.org/abs/1409.0575
 - Schnapp, J., Maizels, M., Battles, M., & Qiu, C. (Eds.). (2020). _Curatorial A(i)gents_. metaLAB (at) Harvard. https://www.printedmatter.org/catalog/57243/
 - Seguin, B. (2018). The Replica project: Building a visual search engine for art historians. _XRDS: Crossroads, The ACM Magazine for Students_, 24(3), 24–29. https://doi.org/10.1145/3186653
 - Shneiderman, B. (1996). The eyes have it: A task by data type taxonomy for information visualizations. _Proceedings 1996 IEEE Symposium on Visual Languages_, 336–343. https://doi.org/10/fwdq26
 - Steward, J. (2021). _API documentation_ [Computer software]. Harvard Art Museums. https://github.com/harvardartmuseums/api-docs (Original work published 2015)
 - Turing, A. M. (1950). Computing machinery and intelligence. _Mind_, LIX(236), 433–460. https://doi.org/10/b262dj
 - Vane, O. (2019). _Timeline design for visualising cultural heritage data_. Royal College of Art.
-- Weaver, W. (1948). Science and complexity. _American Scientist_, 36(4), 536–544. http://www.jstor.org/stable/27826254
+- Weaver, W. (1948). Science and complexity. _American Scientist_, 36(4), 536–544. https://www.jstor.org/stable/27826254

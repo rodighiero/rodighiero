@@ -159,7 +159,7 @@ Among many data visualizations that are scaring the world, the cartography of CO
 - Hobbs, Robert Carleton. 2004. *Mark Lombardi: Global Networks*. New York: Independent Curators International.
 - Horowitz, Jason, and Fabio Bucciarelli. 2020. “The Lost Days That Made Bergamo a Coronavirus Tragedy.” *The New York Times*, November 29. [nytimes.com/2020/11/29/world/europe/coronavirus-bergamo-italy.html](https://www.nytimes.com/2020/11/29/world/europe/coronavirus-bergamo-italy.html).
 - Johns Hopkins University. (2020) 2021. “Johns Hopkins Coronavirus Resource Center.” [coronavirus.jhu.edu](https://coronavirus.jhu.edu/).
-- Jones, David S., and Stefan Helmreich. 2020. “The Shape of Epidemics.” *Boston Review*, June 26. [bostonreview.net/science-nature/david-s-jones-stefan-helmreich-shape-epidemics](http://bostonreview.net/science-nature/david-s-jones-stefan-helmreich-shape-epidemics).
+- Jones, David S., and Stefan Helmreich. 2020. “The Shape of Epidemics.” *Boston Review*, June 26. [bostonreview.net/science-nature/david-s-jones-stefan-helmreich-shape-epidemics](https://bostonreview.net/science-nature/david-s-jones-stefan-helmreich-shape-epidemics).
 - Keidl, Philipp Dominik, Laliv Melamed, Vinzenz Hediger, and Antonio Somaini. 2020. *Pandemic Media: Preliminary Notes toward an Inventory*. Lüneburg: Meson Press.
 - Kubrick, Stanley, dir. 1964. *Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb*. Columbia Pictures.
 - Lanciano, Tiziana, Giusi Graziano, Antonietta Curci, et al. 2020. “Risk Perceptions and Psychological Effects During the Italian COVID-19 Emergency.” *Frontiers in Psychology* 11: 580053. [doi:10/gh2dz2](https://doi.org/10/gh2dz2).
@@ -174,7 +174,7 @@ Among many data visualizations that are scaring the world, the cartography of CO
 - Lima, Manuel. 2011. *Visual Complexity: Mapping Patterns of Information*. New York: Princeton Architectural Press.
 - Lorusso, Anna Maria, Gianfranco Marrone, and Stefano Jacoviello. 2020. *Diario semiotico sul coronavirus*. Associazione Italiana Studi Semiotici.
 - Luhn, Hans Peter. 1957. “A Statistical Approach to Mechanized Encoding and Searching of Literary Information.” *IBM Journal of Research and Development* 1 (4): 309–17. [doi:10/ds9qfr](https://doi.org/10/ds9qfr).
-- Lynch, Michael. 1988. “The Externalized Retina: Selection and Mathematization in the Visual Documentation of Objects in the Life Sciences.” *Human Studies* 11 (2/3): 201–34. [jstor.org/stable/20009026](http://www.jstor.org/stable/20009026).
+- Lynch, Michael. 1988. “The Externalized Retina: Selection and Mathematization in the Visual Documentation of Objects in the Life Sciences.” *Human Studies* 11 (2/3): 201–34. [jstor.org/stable/20009026](https://www.jstor.org/stable/20009026).
 - Manning, Christopher D., and Hinrich Schütze. 1999. *Foundations of Statistical Natural Language Processing*. Cambridge, MA: MIT Press.
 - McLuhan, Marshall. 1994. *Understanding Media: The Extensions of Man*. Cambridge, MA: MIT Press.
 - Mitchell, W. J. T. 2010. *Cloning Terror: The War of Images, 9/11 to the Present*. Chicago: University of Chicago Press.
@@ -187,7 +187,7 @@ Among many data visualizations that are scaring the world, the cartography of CO
 - Rodighiero, Dario, Eveline Wandl-Vogt, and Elian Carsenat. (2020) 2021. *Cartography of COVID-19*. JavaScript. [doi:10.5281/zenodo.3940636](https://doi.org/10.5281/zenodo.3940636).
 - ———. 2022. “A Visual Translation of the Pandemic.” *Leonardo* 55 (3): 297–303. [doi:10.1162/leon_a_02203](https://doi.org/10.1162/leon_a_02203).
 - Scaglioni, Massimo, and Marianna Sala, eds. 2020. *L’altro virus: comunicazione e disinformazione al tempo del Covid-19*. Milano: Vita e Pensiero.
-- Scherlis, Lily. 2020. “Distantiated Communities.” *Cabinet Magazine*, April 30. [cabinetmagazine.org/kiosk/scherlis_lily_30_april_2020.php](http://cabinetmagazine.org/kiosk/scherlis_lily_30_april_2020.php).
+- Scherlis, Lily. 2020. “Distantiated Communities.” *Cabinet Magazine*, April 30. [cabinetmagazine.org/kiosk/scherlis_lily_30_april_2020.php](https://cabinetmagazine.org/kiosk/scherlis_lily_30_april_2020.php).
 - Scott, John. (1991) 2000. *Social Network Analysis: A Handbook*. 2nd ed. London: SAGE Publications.
 - Shaw, D. M. 2020. “Invisible Enemies: Coronavirus and Other Hidden Threats.” *Journal of Bioethical Inquiry* 17 (4): 531–34. [doi:10/gh4d26](https://doi.org/10/gh4d26).
 - Spärck Jones, Karen. 1972. “A Statistical Interpretation of Term Specificity and Its Application in Retrieval.” *Journal of Documentation* 28 (1): 11–21. [doi:10/fjhg7g](https://doi.org/10/fjhg7g).

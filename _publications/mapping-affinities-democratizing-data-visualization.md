@@ -92,14 +92,14 @@ This book is the result of five years working at the École Polytechnique Fédé
 - Bringhurst, Robert. 2004. _The Elements of Typographic Style_. Third edition. Point Roberts, WA: Hartley & Marks Publishers.
 - Brinton, Willard C. 1919. _Graphic Methods for Presenting Facts_. New York: Engineering Magazine Company.
 - Brinton, Willard C. 1939. _Graphic Presentation_. Brinton Associates.
-- Callon, Michel. 1986. “Éléments pour une sociologie de la traduction: la domestication des coquilles Saint-Jacques et des marins-pêcheurs dans la Baie de Saint-Brieuc.” _L’Année sociologique_ 36: 169–208. http://jstor.org/stable/27889913
+- Callon, Michel. 1986. “Éléments pour une sociologie de la traduction: la domestication des coquilles Saint-Jacques et des marins-pêcheurs dans la Baie de Saint-Brieuc.” _L’Année sociologique_ 36: 169–208. https://jstor.org/stable/27889913
 - Cohen, S. Marc, and C. D. C. Reeve. 2020. “Aristotle’s Metaphysics.” In _The Stanford Encyclopedia of Philosophy_, edited by Edward N. Zalta, Winter 2020. Metaphysics Research Lab, Stanford University. https://plato.stanford.edu/archives/win2020/entries/aristotle-metaphysics
 - Critchlow, Keith. 1976. _Islamic Patterns: An Analytical and Cosmological Approach_. London: Thames and Hudson.
 - Deleuze, Gilles, and Claire Parnet. 2007. _Dialogues II_. Revised edition. European Perspectives. New York: Columbia University Press.
 - Desrosières, Alain. 1995. “Classer et mesurer: les deux faces de l’argument statistique.” _Réseaux_ 13 (71): 11–29. https://doi.org/10/bk66rs
 - Didi-Huberman, Georges. 2013. “Mnemosyne 42.” _Manifesta Journal_, 16: 98–103.
 - Dondis, Donis A. 1975. _A Primer of Visual Literacy_. Third edition. Cambridge, MA: MIT Press. First edition: 1973.
-- Drucker, Johanna. 2011. “Humanities Approaches to Graphical Display.” _Digital Humanities Quarterly_ 5 (1). http://digitalhumanities.org/dhq/vol/5/1/000091/000091.html
+- Drucker, Johanna. 2011. “Humanities Approaches to Graphical Display.” _Digital Humanities Quarterly_ 5 (1). https://digitalhumanities.org/dhq/vol/5/1/000091/000091.html
 - Duchamp, Marcel. 1994. _The Creative Act_. Brussels: Sub Rosa Records.
 - Eames, Charles, and Ray Eames. 1977. _Powers of Ten_. https://youtube.com/watch?v=0fKBhvDjuy0
 - Elias, Norbert. 1991. _The Society of Individuals_, edited by Michael Schröter. Oxford and Cambridge, MA: Basil Blackwell.
@@ -118,7 +118,7 @@ This book is the result of five years working at the École Polytechnique Fédé
 - Georges, Fanny. 2009. “Représentation de soi et identité numérique. Une approche sémiotique et quantitative de l’emprise culturelle du web 2.0.” _Réseaux_ 154 (2). https://doi.org/10/dj3w4p
 - Gibson, James J. 2015. _The Ecological Approach to Visual Perception_. Classic Editions. New York and London: Psychology Press.
 - Gingras, Yves. 2014. _Les Dérives de l’évaluation de la recherche: du bon usage de la bibliométrie_. Raisons d’agir. Paris: Raisons d’agir éditions.
-- Goethe, Johann Wolfgang von. 1872. _Elective Affinities_. Boston: D. W. Niles. http://archive.org/details/cu31924062545433. First edition: 1809.
+- Goethe, Johann Wolfgang von. 1872. _Elective Affinities_. Boston: D. W. Niles. https://archive.org/details/cu31924062545433. First edition: 1809.
 - Hall, Edward T. 1990. _The Hidden Dimension_. New York: Anchor Books. First edition: 1966.
 - Hall, Stuart, ed. 1997. _Representation: Cultural Representations and Signifying Practices_. Culture, Media, and Identities. London and Thousand Oaks, CA: Sage in association with the Open University.
 - Halpern, Orit. 2014. _Beautiful Data: A History of Vision and Reason since 1945_. Experimental Futures. Durham: Duke University Press.
@@ -149,7 +149,7 @@ This book is the result of five years working at the École Polytechnique Fédé
 - Lima, Manuel. 2014. _The Book of Trees: Visualizing Branches of Knowledge_. First edition. New York: Princeton Architectural Press.
 - Löwgren, Jonas, and Erik Stolterman. 2004. _Thoughtful Interaction Design: A Design Perspective on Information Technology_. Cambridge, MA: MIT Press.
 - Lupi, Giorgia. 2017. “Data Humanism: The Revolutionary Future of Data Visualization.” _Print Magazine_. https://printmag.com/post/data-humanism-future-of-data-visualization
-- Manovich, Lev. 2007. “What Comes after Remix?” _Remix Theory_, 10. http://manovich.net/index.php/projects/what-comes-after-remix
+- Manovich, Lev. 2007. “What Comes after Remix?” _Remix Theory_, 10. https://manovich.net/index.php/projects/what-comes-after-remix
 - Mari, Enzo. 2001. _Progetto e passione_. Saggi. Arte e letteratura. Turin: Bollati Boringhieri.
 - Mari, Enzo. 2020. _Enzo Mari curated by Hans Ulrich Obrist: with Francesca Giacomelli_, edited by Hans Ulrich Obrist and Francesca Giacomelli. Milan: Electa.
 - Marres, Noortje, and Esther Weltevrede. 2013. “Scraping the Social?: Issues in Live Social Research.” _Journal of Cultural Economy_ 6 (3): 313–335. https://doi.org/10/gdtnsv

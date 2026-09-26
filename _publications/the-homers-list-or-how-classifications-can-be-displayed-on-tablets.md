@@ -126,14 +126,14 @@ Knowledge classifications are widespread tools and needed in many disciplines, t
 - De Michelis, Giorgio. 2003. “The Design of Interactive Applications: A Different Way—First Notes.” In _Proceedings of the International Workshop on Ambient Intelligence Computing_, edited by Paul Spirakis, Achilles Kameas, and Sotiris Nikoletseas, 101–14. Athens: CTI Press.
 - Eco, Umberto. 2009. _Vertigine della lista_. Milan: Bompiani.
 - Ferigato, Carlo, et al. 2009. “Role of Thesauri in a Scientific Organisation.” In _Networks of Design: Proceedings of the 2008 Annual International Conference of the Design History Society_, edited by Jonathan Glynne, Fiona Hackney, and Viv Minton, 301–9. Boca Raton: Universal Publishers.
-- Fry, Ben. 2009. _On the Origin of Species: The Preservation of Favoured Traces_. http://benfry.com/traces/.
+- Fry, Ben. 2009. _On the Origin of Species: The Preservation of Favoured Traces_. https://benfry.com/traces/.
 - Gibson, James J. 1986. _The Ecological Approach to Visual Perception_. Hillsdale, NJ: Lawrence Erlbaum.
 - Lancaster, Frederick Wilfrid. 1972. _Vocabulary Control for Information Retrieval_. Washington, DC: Information Resources Press.
 - Latour, Bruno, et al. 2012. “The Whole Is Always Smaller Than Its Parts: A Digital Test of Gabriel Tarde’s Monads.” _The British Journal of Sociology_ 63 (4): 590–615. https://doi.org/10.1111/j.1468-4446.2012.01428.x
 - Löwgren, Jonas, and Erik Stolterman. 2004. _Thoughtful Interaction Design: A Design Perspective on Information Technology_. Cambridge, MA: MIT Press.
 - Ricci, Donato. 2013. “Documenti di scena: assemblare una ricerca di metafisica empirica.” _Progetto Grafico_ 23: 102–3.
 - Ridi, Riccardo. 2010. _Il mondo dei documenti: cosa sono, come valutarli e organizzarli_. Rome: Laterza.
-- Rodighiero, Dario. 2011. “Il tesauro non è un dinosauro.” Master’s thesis, University of Milano-Bicocca. http://eprints.rclis.org/15427/.
+- Rodighiero, Dario. 2011. “Il tesauro non è un dinosauro.” Master’s thesis, University of Milano-Bicocca. https://eprints.rclis.org/15427/.
 - Rodighiero, Dario, and Matina Halkia. 2009. “Mapping for Multi-Source Visualization: Scientific Information Retrieval Service (SIRS).” In _Human-Computer Interaction. Interacting in Various Application Domains_, edited by Julie A. Jacko, 597–605. Lecture Notes in Computer Science 5613. Berlin: Springer.
 - Svenonius, Elaine. 2000. _The Intellectual Foundation of Information Organization_. Cambridge, MA: MIT Press.
 - Warr, Andrew, and Ed H. Chi. 2013. “Swipe vs. Scroll: Web Page Switching on Mobile Browsers.” In _Proceedings of the SIGCHI Conference on Human Factors in Computing Systems (CHI ’13)_, 2171–74. New York: ACM.

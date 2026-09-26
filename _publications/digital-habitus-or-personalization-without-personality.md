@@ -189,13 +189,13 @@ However, as the short route’s individualism is naive, so it would be naive to 
 - Ignatow, G., and L. Robinson. 2017. “Pierre Bourdieu: Theorizing the Digital.” _Information, Communication & Society_ 20 (7): 950–966.
 - Kale-Lostuvali, E. 2016. “Two Sociologies of Science in Search of Truth: Bourdieu Versus Latour.” _Social Epistemology_ 30 (3): 273–296.
 - Latour, B. 2017. “Anti-Zoom.” In _Scale in Literature and Culture_, edited by M. T. Clarke and D. Wittenberg, 93–101. London: Palgrave.
-- Latour, B. 2010. “Networks, Societies, Spheres: Reflections of an Actor-Network Theorist.” Keynote speech for the International Seminar on Network Theory: Network Multidimensionality in the Digital Age, February 19, 2010, Annenberg School for Communication and Journalism, Los Angeles. <http://www.bruno-latour.fr/sites/default/files/121-CASTELLS-GB.pdf>.
+- Latour, B. 2010. “Networks, Societies, Spheres: Reflections of an Actor-Network Theorist.” Keynote speech for the International Seminar on Network Theory: Network Multidimensionality in the Digital Age, February 19, 2010, Annenberg School for Communication and Journalism, Los Angeles. <https://www.bruno-latour.fr/sites/default/files/121-CASTELLS-GB.pdf>.
 - Latour, B. 2008. “A Cautious Prometheus? A Few Steps Toward a Philosophy of Design (with Special Attention to Peter Sloterdijk).” In _Networks of Design: Proceedings of the 2008 Annual International Conference of the Design History Society_, edited by F. Hackney, J. Glynne, and V. Minton, 2–10. Boca Raton: Universal Publishers.
-- Latour, B. 2007. “Beware, Your Imagination Leaves Digital Traces.” _Times Higher Literary Supplement_, April 6, 2007. <http://www.bruno-latour.fr/sites/default/files/P-129-THES-GB.pdf>.
+- Latour, B. 2007. “Beware, Your Imagination Leaves Digital Traces.” _Times Higher Literary Supplement_, April 6, 2007. <https://www.bruno-latour.fr/sites/default/files/P-129-THES-GB.pdf>.
 - Latour, B. 2005. _Reassembling the Social: An Introduction to Actor-Network Theory_. Oxford: Oxford University Press.
 - Latour, B. 1998. “Thought Experiments in Social Science: From the Social Contract to Virtual Society.” 1st Virtual Society Annual Public Lecture, April 1, 1998, Brunel University. <http://www.artefaktum.hu/it/Latour.htm> ([archived](https://web.archive.org/web/20250802232438/http://www.artefaktum.hu/it/Latour.htm)).
 - Latour, B. 1996. “On Interobjectivity.” _Mind, Culture, and Activity_ 3 (4): 228–245.
-- Latour, B. 1986. “Visualisation and Cognition: Thinking with Eyes and Hands.” In _Knowledge and Society: Studies in the Sociology of Culture Past and Present_, edited by H. Kuklick, 1–40. Vol. 6. Jai Press. <http://www.bruno-latour.fr/sites/default/files/21-DRAWING-THINGS-TOGETHER-GB.pdf>.
+- Latour, B. 1986. “Visualisation and Cognition: Thinking with Eyes and Hands.” In _Knowledge and Society: Studies in the Sociology of Culture Past and Present_, edited by H. Kuklick, 1–40. Vol. 6. Jai Press. <https://www.bruno-latour.fr/sites/default/files/21-DRAWING-THINGS-TOGETHER-GB.pdf>.
 - Latour, B., et al. 2012. “The Whole Is Always Smaller Than Its Parts: A Digital Test of Gabriel Tarde’s Monads.” _The British Journal of Sociology_ 63 (4): 590–615.
 - Lebaron, F. 2009. “How Bourdieu Quantified Bourdieu: The Geometric Modelling of Data.” In _Quantifying Theory: Pierre Bourdieu_, edited by K. Robson and C. Sanders, 11–29. Basingstoke: Springer.
 - Lynch, M. 1996. “DeKanting Agency: Comments on Bruno Latour’s ‘On Interobjectivity’.” _Mind, Culture, and Activity_ 3 (4): 246–251.
@@ -208,7 +208,7 @@ However, as the short route’s individualism is naive, so it would be naive to 
 - Panofsky, E. 1976. _Gothic Architecture and Scholasticism_. New York: New American Library.
 - Papilloud, C. 2018. _Sociology Through Relation: Theoretical Assessments From the French Tradition_. London: Palgrave.
 - Rahwan, I., et al. 2019. “Machine Behaviour.” _Nature_ 568: 477–486.
-- Reigeluth, T. 2019. “Connaissances du transindividuel. Sur une convergence possible de Simondon et Bourdieu.” _Klesis_ 44. <http://www.revue-klesis.org/pdf/klesis-44-varia-Reigeluth-Connaissances-transindividuel-convergence-possible-Simondon-Bourdieu.pdf>.
+- Reigeluth, T. 2019. “Connaissances du transindividuel. Sur une convergence possible de Simondon et Bourdieu.” _Klesis_ 44. <https://www.revue-klesis.org/pdf/klesis-44-varia-Reigeluth-Connaissances-transindividuel-convergence-possible-Simondon-Bourdieu.pdf>.
 - Reigeluth, T. 2018. “La prédiction algorithmique comme activité sociale.” _Réseaux_ 5 (211): 35–67.
 - Rist, G. 1984. “La notion médiévale d’‘habitus’ dans la sociologie de Pierre Bourdieu.” _Revue européenne des sciences sociales_ 67 (22): 201–212.
 - Rogers, R. 2013. _Digital Methods_. Cambridge, MA: The MIT Press.

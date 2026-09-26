@@ -110,10 +110,10 @@ Coltivare l’alfabetizzazione delle reti, dunque, non significa soltanto impara
 - Dondis, Donis A. (1973) 1975. *A Primer of Visual Literacy*. Cambridge, MA: MIT Press.
 - Duhaime, Douglas. (2017) 2021. *PixPlot*. Yale Digital Humanities Lab. [github.com/YaleDHLab/pix-plot](https://github.com/YaleDHLab/pix-plot).
 - Eco, Umberto. 2009. *Vertigine della lista*. Milano: Bompiani.
-- Euler, Leonhard. 1953. “Leonhard Euler and the Koenigsberg Bridges.” *Scientific American* 189 (1): 66–72. [jstor.org/stable/24944279](http://www.jstor.org/stable/24944279).
+- Euler, Leonhard. 1953. “Leonhard Euler and the Koenigsberg Bridges.” *Scientific American* 189 (1): 66–72. [jstor.org/stable/24944279](https://www.jstor.org/stable/24944279).
 - Ficozzi, Matilde, Mathieu Jacomy, Dario Rodighiero, Anne Beaulieu e Anders Kristian Munk. 2025. “Grounding AI Map: The Consequences of Living with the Trouble of an Irreductionist Map.” *Design et Abstractions, Revue Design Arts Medias*, giugno. [journal.dampress.org/issues/design-et-abstractions/grounding-ai-map](https://journal.dampress.org/issues/design-et-abstractions/grounding-ai-map-the-consequences-of-living-with-the-trouble-of-an-irreductionist-map).
 - Grandjean, Martin. 2014. “La connaissance est un réseau.” *Les Cahiers du Numérique* 10 (3): 37–54. [doi:10.3166/lcn.10.3.37-54](https://doi.org/10.3166/lcn.10.3.37-54).
-- ———. 2015. “GEPHI – Introduction to Network Analysis and Visualization.” martingrandjean.ch. [martingrandjean.ch/gephi-introduction](http://www.martingrandjean.ch/gephi-introduction).
+- ———. 2015. “GEPHI – Introduction to Network Analysis and Visualization.” martingrandjean.ch. [martingrandjean.ch/gephi-introduction](https://www.martingrandjean.ch/gephi-introduction).
 - ———. 2021. “Introduction to Social Network Analysis.” Paper presentato alla HNR+ResHist Conference, 30 giugno. [halshs.archives-ouvertes.fr/halshs-03351755](https://halshs.archives-ouvertes.fr/halshs-03351755/document).
 - Gray, Jonathan, Carolin Gerlitz e Liliana Bounegru. 2018. “Data Infrastructure Literacy.” *Big Data & Society* 5 (2). [doi:10.1177/2053951718786316](https://doi.org/10.1177/2053951718786316).
 - Harman, Graham. 2009. *Prince of Networks: Bruno Latour and Metaphysics*. Melbourne: Re.press.
@@ -125,7 +125,7 @@ Coltivare l’alfabetizzazione delle reti, dunque, non significa soltanto impara
 - Lévy, Jacques, Ogier Maitre e Thibault Romany. 2016. “Rebattre les cartes.” *Réseaux* 195 (1): 17. [doi:10/ghqdk7](https://doi.org/10/ghqdk7).
 - Lima, Manuel. 2011. *Visual Complexity: Mapping Patterns of Information*. New York: Princeton Architectural Press.
 - Löwgren, Jonas e Erik Stolterman. 2004. *Thoughtful Interaction Design*. Cambridge, MA: MIT Press.
-- Maaten, Laurens van der e Geoffrey Hinton. 2008. “Visualizing Data Using T-SNE.” *Journal of Machine Learning Research* 9 (86): 2579–605. [jmlr.org/papers/v9/vandermaaten08a.html](http://jmlr.org/papers/v9/vandermaaten08a.html).
+- Maaten, Laurens van der e Geoffrey Hinton. 2008. “Visualizing Data Using T-SNE.” *Journal of Machine Learning Research* 9 (86): 2579–605. [jmlr.org/papers/v9/vandermaaten08a.html](https://jmlr.org/papers/v9/vandermaaten08a.html).
 - Manovich, Lev. 2018. “Can We Think Without Categories?” *Digital Culture & Society* 4 (1): 17–27. [doi:10/gjt7qq](https://doi.org/10/gjt7qq).
 - Marres, Noortje. 2017. *Digital Sociology: The Reinvention of Social Research*. Cambridge: Polity.
 - McInnes, Leland. 2025. “Toponymy.” GitHub. [github.com/TutteInstitute/toponymy](https://github.com/TutteInstitute/toponymy).

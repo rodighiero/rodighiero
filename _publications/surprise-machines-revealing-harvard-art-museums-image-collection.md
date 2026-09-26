@@ -116,7 +116,7 @@ Beyond the technical merits, Surprise Machines is a collective project developed
 - Derry, Lins, Jordan Kruguer, Maximilian Mueller, and Jeffrey Schnapp. 2022. “Designing a Choreographic Interface during Covid-19.” *Movement and Computing Conference*. [doi:10.1145/3537972.3538020](https://doi.org/10.1145/3537972.3538020).
 - Diagne, Cyril, Nicolas Barradeau, and Simon Doury. 2018. *T-SNE Map*. Experiments with Google. [experiments.withgoogle.com/t-sne-map](https://experiments.withgoogle.com/t-sne-map).
 - DiMaggio, Paul, and Eszter Hargittai. 2001. *From the “Digital Divide” to “Digital Inequality”: Studying Internet Use as Penetration Increases*. Princeton, NJ: Center for Arts and Cultural Policy Studies, Princeton University.
-- Drucker, Johanna. 2013. “Performative Materiality and Theoretical Approaches to Interface.” *Digital Humanities Quarterly* 7 (1). [digitalhumanities.org/dhq/vol/7/1/000143/000143.html](http://www.digitalhumanities.org/dhq/vol/7/1/000143/000143.html).
+- Drucker, Johanna. 2013. “Performative Materiality and Theoretical Approaches to Interface.” *Digital Humanities Quarterly* 7 (1). [digitalhumanities.org/dhq/vol/7/1/000143/000143.html](https://www.digitalhumanities.org/dhq/vol/7/1/000143/000143.html).
 - Duhaime, Douglas. (2017) 2021. *PixPlot*. Yale Digital Humanities Lab. [github.com/YaleDHLab/pix-plot](https://github.com/YaleDHLab/pix-plot).
 - Foster, Hal. 2011. *The Art-Architecture Complex*. London: Verso.
 - Geismar, Haidy. 2018. *Museum Object Lessons for the Digital Age*. London: UCL Press. [doi:10.2307/j.ctv1xz0wz](https://doi.org/10.2307/j.ctv1xz0wz).
@@ -130,7 +130,7 @@ Beyond the technical merits, Surprise Machines is a collective project developed
 - Kräutli, Florian. 2016. *Visualising Cultural Data: Exploring Digital Collections through Timeline Visualisations*. PhD thesis, Royal College of Art.
 - Latour, Bruno. 1988. *The Pasteurization of France*. Translated by Alan Sheridan and John Law. Cambridge, MA: Harvard University Press.
 - Lima, Manuel. 2011. *Visual Complexity: Mapping Patterns of Information*. New York: Princeton Architectural Press.
-- Maaten, Laurens van der, and Geoffrey Hinton. 2008. “Visualizing Data Using t-SNE.” *Journal of Machine Learning Research* 9 (86): 2579–605. [jmlr.org/papers/v9/vandermaaten08a.html](http://jmlr.org/papers/v9/vandermaaten08a.html).
+- Maaten, Laurens van der, and Geoffrey Hinton. 2008. “Visualizing Data Using t-SNE.” *Journal of Machine Learning Research* 9 (86): 2579–605. [jmlr.org/papers/v9/vandermaaten08a.html](https://jmlr.org/papers/v9/vandermaaten08a.html).
 - Maizels, Mike, and Chelsea Qiu, eds. 2020. *Curatorial A(i)gents*. Cambridge, MA: metaLAB (at) Harvard. [printedmatter.org/catalog/57243](https://www.printedmatter.org/catalog/57243/).
 - Manovich, Lev. 2008. “Data Visualization as New Abstraction and Anti-Sublime.” In *Small Tech: The Culture of Digital Tools*, edited by Byron Hawk, David M. Rieder, and Ollie O. Oviedo. Minneapolis: University of Minnesota Press.
 - ———. 2020. *Cultural Analytics*. Cambridge, MA: MIT Press. [doi:10.7551/mitpress/11214.001.0001](https://doi.org/10.7551/mitpress/11214.001.0001).

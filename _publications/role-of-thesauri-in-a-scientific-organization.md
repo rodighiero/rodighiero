@@ -155,12 +155,12 @@ More work remains to be done, since we have only shallowly touched the problem o
 - Euratom Treaty. 1957. *Treaty Establishing the European Atomic Energy Community*, 298 U.N.T.S. 140, as amended in *Treaties Establishing the European Communities*. Brussels: EC Official Publications Office, 1987.
 - Eurovoc Thesaurus. 2007. Vol. 1, *Permuted Alphabetical Version*, parts A and B; vol. 2, *Subject-Oriented Version*. Luxembourg: Office for Official Publications of the European Communities.
 - Gueben, G. 1962. *Ispra, Centre Commun de Recherche de l’Euratom*. EUR Report 54.f. Originally published in *Bulletin d’Information de l’Association Belge pour le Développement Pacifique de l’Energie Atomique* 37.
-- Harvest. 1999. “Harvest Web Indexing Package.” Accessed September 26, 2008. http://sourceforge.net/projects/webharvest/.
+- Harvest. 1999. “Harvest Web Indexing Package.” Accessed September 26, 2008. https://sourceforge.net/projects/webharvest/.
 - Lancaster, F. Wilfrid. 1972. *Vocabulary Control for Information Retrieval*. Washington, DC: Information Resources Press.
 - Latour, Bruno. (1992) 1996. *Aramis, or the Love of Technology*. Cambridge, MA: Harvard University Press.
 - Mangani, Giorgio. 2006. *Cartografia Morale*. Modena: Franco Cosimo Panini.
 - MARC. 1975. “Machine-Readable Cataloguing Program.” In *Encyclopedia of Library and Information Science*, vol. 16, edited by Allen Kent et al. New York: M. Dekker.
-- Organizational Chart. 2008. “Organizational Chart of the JRC in July 2008.” Accessed August 27, 2008. http://www.europa.eu/.
+- Organizational Chart. 2008. “Organizational Chart of the JRC in July 2008.” Accessed August 27, 2008. https://www.europa.eu/.
 - Petri, Carl Adam. 1977. “Communication Disciplines.” In *Proceedings of the Joint IBM University of Newcastle upon Tyne Seminar*, edited by B. Shaw, 171–83. Newcastle upon Tyne: University of Newcastle upon Tyne.
 - Petri, Carl Adam. 2001. “Cultural Aspects of Net Theory.” *Soft Computing* 5: 141–45.
 - Rolling, L. N. 1966. “A Computer-Aided Information Service for Nuclear Science and Technology.” *Journal of Documentation* 22 (2): 93–115.

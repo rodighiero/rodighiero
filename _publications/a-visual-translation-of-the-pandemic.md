@@ -120,7 +120,7 @@ Some data visualizations are created to prove facts, others to allow exploration
 - ———. 2018. *Down to Earth: Politics in the New Climatic Regime*. Translated by Catherine Porter. Cambridge: Polity Press.
 - Latour, Bruno, and Steve Woolgar. (1979) 1986. *Laboratory Life: The Construction of Scientific Facts*. Princeton: Princeton University Press.
 - Luhn, Hans Peter. 1957. “A Statistical Approach to Mechanized Encoding and Searching of Literary Information.” *IBM Journal of Research and Development* 1 (4): 309–17. [doi:10/ds9qfr](https://doi.org/10/ds9qfr).
-- Lynch, Michael. 1988. “The Externalized Retina: Selection and Mathematization in the Visual Documentation of Objects in the Life Sciences.” *Human Studies* 11 (2/3): 201–34. [jstor.org/stable/20009026](http://www.jstor.org/stable/20009026).
+- Lynch, Michael. 1988. “The Externalized Retina: Selection and Mathematization in the Visual Documentation of Objects in the Life Sciences.” *Human Studies* 11 (2/3): 201–34. [jstor.org/stable/20009026](https://www.jstor.org/stable/20009026).
 - Manning, Christopher D., and Hinrich Schütze. 1999. *Foundations of Statistical Natural Language Processing*. Cambridge, MA: MIT Press.
 - Manovich, Lev. 2008. “Data Visualization as New Abstraction and Anti-Sublime.” In *Small Tech: The Culture of Digital Tools*, edited by Byron Hawk, David M. Rieder, and Ollie O. Oviedo. Minneapolis: University of Minnesota Press.
 - Mitchell, W. J. T. 2015. *Image Science: Iconology, Visual Culture, and Media Aesthetics*. Chicago: University of Chicago Press.
