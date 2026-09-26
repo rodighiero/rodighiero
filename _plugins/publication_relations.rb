@@ -15,7 +15,8 @@
 # related is the page's node's `related` list from _data/network.json, the same list
 # the network view's details panel shows; empty for a page with no node.
 #
-# Entries are plain hashes of what the layout reads, not Documents, so no page
+# Entries are plain hashes of what the layout reads (doi so a translation can tell
+# whether it shares its source's identifier), not Documents, so no page
 # references another through its data (as publication_neighbors.rb does).
 class Jekyll::PublicationRelationsGenerator < Jekyll::Generator
   def generate(site)
@@ -41,6 +42,6 @@ class Jekyll::PublicationRelationsGenerator < Jekyll::Generator
   end
 
   def ref(doc)
-    doc.data.slice('title', 'lang', 'type').merge('url' => doc.url)
+    doc.data.slice('title', 'lang', 'type', 'doi').merge('url' => doc.url)
   end
 end

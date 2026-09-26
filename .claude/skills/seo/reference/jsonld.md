@@ -16,7 +16,9 @@ every publication page.
 
 Fallback is `ScholarlyArticle`. The node carries `@id` (the page URL), `headline` + `name`,
 the person properties, `datePublished` / `dateModified`, the container or publisher, `url`,
-`sameAs` (the DOI), `pagination`, translation links, `image`, `mainEntityOfPage`,
+`sameAs` (the DOI — dropped on a translation whose `doi` equals its source's, since one
+shared identifier on both would declare two works one entity against `translationOfWork`),
+`pagination`, translation links, `image`, `mainEntityOfPage`,
 `inLanguage`, `abstract` and `description`.
 
 The work and the page carrying it are **two nodes with two `@id`s**: the work takes the bare
