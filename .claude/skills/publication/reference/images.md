@@ -9,10 +9,23 @@ entry has no article figures at all (a book cover, a map, a magazine spread).
 
 ## `images/@cards/` — wholly generated
 
-One flat max-800px copy per publication, named `<slug>.webp` after the .md filename, written
-by `scripts/generate-thumbnails.py` from whatever that publication's `thumb` points at (always
-re-encoded at card quality, committed to the repo — rerun it after adding or changing a card
-image).
+Three widths per publication, written by `scripts/generate-thumbnails.py` from whatever that
+publication's `thumb` points at (always re-encoded at card quality, never upscaled, committed
+to the repo — rerun it after adding or changing a card image):
+
+| File | Width | Taken by |
+|---|---|---|
+| `<slug>.webp` | max 800 | a phone (one column, page-wide card); also the `src` and what `image_size` measures |
+| `<slug>-520.webp` | 520 | a retina desktop or tablet — a card is drawn 251 CSS px wide, 502 device px |
+| `<slug>-400.webp` | 400 | a 1× desktop |
+
+A rung is written only when the source is wider than it, so a narrow `thumb` has fewer files.
+The homepage lists whichever exist in one `srcset`, at their real widths (read with
+`image_size`), with the **same `sizes` as the portrait** — `_media_sizes` in `home.html`,
+because a card's image and the portrait are the same slot. The rung list is written twice,
+`RUNGS` in the generator and `_card_rungs` in `home.html`; change both together. The whole
+homepage used to download all 67 at 800px (3.8 MB, the warming loads every card); a retina
+desktop now takes about 1.9 MB, a 1× one about 1.2 MB.
 
 `@cards/` is safe to delete and rebuild, is the **only** image set the homepage loads, and is
 **never a source**: `og:image` keeps pointing at the full-size original in the publication's

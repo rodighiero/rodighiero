@@ -153,20 +153,21 @@ width that still shows 3 columns. {%- endcomment -%}
     <div class="header-about">
       {%- comment -%} The portrait is a card's photo: 251px from two columns up, the page
       width at one, where phones need the 768 and 1024 rungs (all cwebp -m 6 -sharp_yuv
-      -q 81; the 1200 is the OG/JSON-LD original). `sizes` states the column honestly, since
-      100vw would cost a rung. Its numbers are hand-derived, because the preload scanner
-      reads them before any CSS — retune them with the tokens, or the wrong rung is picked
-      silently:
+      -q 81; the 1200 is the OG/JSON-LD original). `_media_sizes` states that slot honestly,
+      since 100vw would cost a rung, and every card thumbnail below uses it too. Its numbers
+      are hand-derived, because the preload scanner reads them before any CSS — retune them
+      with the tokens, or the wrong rung is picked silently:
         628px  = two-column threshold, 2 × --card-w + --card-gap + 2 × --page-gutter
         251px  = --card-w − 2 × --card-pad
         83.2px = 2 × --page-gutter + 2 × --card-pad {%- endcomment -%}
+      {%- assign _media_sizes = "(min-width: 628px) 251px, calc(100vw - 83.2px)" %}
       <div class="card-media">
         <img src="/images/Dario-Rodighiero-640.webp"
              srcset="/images/Dario-Rodighiero-640.webp 640w,
                      /images/Dario-Rodighiero-768.webp 768w,
                      /images/Dario-Rodighiero-1024.webp 1024w,
                      /images/Dario-Rodighiero.webp 1200w"
-             sizes="(min-width: 628px) 251px, calc(100vw - 83.2px)"
+             sizes="{{ _media_sizes }}"
              alt="Dario Rodighiero" width="640" height="360" fetchpriority="high" decoding="async">
       </div>
       <h1 class="card-title">Dario Rodighiero</h1>
@@ -226,6 +227,8 @@ width that still shows 3 columns. {%- endcomment -%}
       {%- assign _clusters = site.data.network.clusters -%}
       {%- assign _cluster_slots = _clusters.size | plus: 1 -%}
       {%- assign _cluster_step = site.data.ordered_publications.size | divided_by: _cluster_slots | at_least: 1 -%}
+      {%- comment -%} The smaller thumbnail copies generate-thumbnails.py writes (its RUNGS). {%- endcomment -%}
+      {%- assign _card_rungs = "400,520" | split: "," -%}
       {%- for publication in site.data.ordered_publications -%}
       {%- assign _cluster_due = _cluster_n | plus: 1 | times: _cluster_step -%}
       {%- if _cluster_n < _clusters.size and forloop.index0 == _cluster_due -%}
@@ -240,10 +243,14 @@ width that still shows 3 columns. {%- endcomment -%}
       <div class="card publication" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-year="{{ publication.year }}" data-search="{{ _search_text | strip_newlines | escape }}">
         <div class="card-media{% if publication.img_border %} bordered{% endif %}">
           {%- comment -%} The first row is the likely LCP; below the fold loads lazily.
-          alt is empty: the <h2> link below already names the work. {%- endcomment -%}
-          {%- assign _thumb = '/images/@cards/' | append: publication.slug | append: '.webp' -%}
-          {%- assign _thumb_dims = _thumb | image_size %}
-          <img src="{{ _thumb }}" alt="" {% if forloop.index <= 4 %}fetchpriority="high"{% elsif forloop.index > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width }}" height="{{ _thumb_dims.height }}">
+          alt is empty: the <h2> link below already names the work. The srcset lists the
+          rungs that exist, at their real widths; width/height are the 800's, the same
+          ratio. {%- endcomment -%}
+          {%- assign _card = '/images/@cards/' | append: publication.slug -%}
+          {%- assign _thumb = _card | append: '.webp' -%}
+          {%- assign _thumb_dims = _thumb | image_size -%}
+          {%- capture _srcset -%}{%- for _w in _card_rungs -%}{%- assign _rung = _card | append: '-' | append: _w | append: '.webp' -%}{%- assign _rd = _rung | image_size -%}{% if _rd.width %}{{ _rung }} {{ _rd.width }}w, {% endif %}{%- endfor -%}{{ _thumb }} {{ _thumb_dims.width }}w{%- endcapture %}
+          <img src="{{ _thumb }}" srcset="{{ _srcset }}" sizes="{{ _media_sizes }}" alt="" {% if forloop.index <= 4 %}fetchpriority="high"{% elsif forloop.index > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width }}" height="{{ _thumb_dims.height }}">
         </div>
         {% include card-meta.html item=publication %}
         {%- comment -%} lang on the title alone: the only part of a tile in the work's own

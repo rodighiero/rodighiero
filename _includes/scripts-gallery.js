@@ -180,8 +180,12 @@ window.addEventListener('resize', scheduleWidthPass);
 
 // ── Thumbnail warming ──
 // A lazy or filtered-out card has no picture yet the first time it returns, so once
-// the page settles, promote whatever is still lazy.
-function warmThumbnails() { promoteLazyImages(container); }
+// the page settles, promote whatever is still lazy. Not for a reader who asked the
+// browser to save data: a returning card then loads its picture on arrival.
+function warmThumbnails() {
+  if (navigator.connection && navigator.connection.saveData) return;
+  promoteLazyImages(container);
+}
 function warmWhenIdle() {
   if (window.requestIdleCallback) requestIdleCallback(warmThumbnails, { timeout: 2000 });
   else setTimeout(warmThumbnails, 500);

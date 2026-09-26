@@ -101,7 +101,9 @@ it. The tiles' duration is `--tile-move`, which the JS reads back as `TILE_MOVE_
 keeping a copy in step.
 
 Homepage thumbnails are **warmed** after first idle (still-`lazy` images promoted to `eager`),
-so a card revealed by clearing a filter is not an empty frame.
+so a card revealed by clearing a filter is not an empty frame — except when the browser reports
+`navigator.connection.saveData`: a reader saving data does not prefetch cards they may never
+bring back, and a returning card loads its picture on arrival.
 
 ## Scrolling — exactly one case
 
