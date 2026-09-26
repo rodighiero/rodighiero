@@ -1,14 +1,15 @@
 ---
-title: "Network Literacy: How to Understand, Design, and Read a Visual Relational Model"
+title: "Network Literacy: How to Understand, Design, and Read Visual Relational Models"
 year: 2025
 venue: "Progetto Grafico"
 type: "journal"
 author: "Dario Rodighiero"
 doi: "https://hdl.handle.net/11370/3648f43f-5e55-48a4-b130-6537029226fc"
 issn: "1824-1301"
-thumb: "network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_003.webp"
+thumb: "network-literacy-how-to-understand-design-and-read-visual-relational-models/fig_003.webp"
 redirect_from:
   - /Progetto-Grafico
+  - /network-literacy-how-to-understand-design-and-read-a-visual-relational-model
 ---
 Models help us navigate the complexity of social life, offering simplified structures that make invisible dynamics legible. Networks stand out for their ability to represent relations directly: nodes and links reduce society to actors and their connections, exposing patterns that often remain hidden in linear accounts. Since the eighteenth century, networks have evolved from mathematical curiosities to essential tools across disciplines. Early sociograms revealed classroom friendships, sociological diagrams exposed social reproduction and inequality, and computational studies now map everything from recipes to scientific collaborations. With their visual grammar, networks invite comparison, clustering, and interpretation across diverse domains. Yet their ubiquity also introduces risks: layouts may be mistaken for objective spaces, central nodes assumed to be more important, and dense graphs admired more for aesthetics than insight. To address these challenges, a new form of literacy is required. Network literacy can be defined as the ability to understand, design, and read visual relational models, combining conceptual knowledge of complex systems with practical skills of visualization and critical interpretation. This paper develops the notion of network literacy as a civic and professional competency, bridging traditions of data literacy and visual literacy. It traces the history of networks from their mathematical and sociological origins to their integration into digital media and design, showing how they reconfigure the codex into a relational mode of reading. It then explores three dimensions: design choices that shape meaning, spatial thinking that guides interpretation, and experimental projects that turn visualization into performative practice. By situating networks at the intersection of information design, critical inquiry, and cultural practice, the paper argues that cultivating network literacy is essential for engaging responsibly with the relational fabric of contemporary knowledge.
 
@@ -40,7 +41,7 @@ From that moment on, networks developed in parallel with the rise of computation
 
 Once networks began circulating in public discourse and media, their visualization became a key mode of interpretation. Design, as Löwgren and Stolterman (2004) argue, makes complex systems legible by highlighting patterns and relations. Manuel Lima (2011) further shows how visual metaphors and aesthetics shape comprehension. What originated in mathematics and sociology now also lives as visual culture, where design plays a central role in how networks are produced and understood.
 
-{% include figure-single.html class="wide" src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_001.webp" caption="Figure 1. Jacob L. Moreno’s original sociogram from Who Shall Survive?, visualizing interpersonal choices in a group to reveal attractions, repulsions, and the emergent social structure. This foundational diagram demonstrates how sociometry uncovers hidden dynamics of affiliation and exclusion within communities (Moreno 1934)." %}
+{% include figure-single.html class="wide" src="/images/network-literacy-how-to-understand-design-and-read-visual-relational-models/fig_001.webp" caption="Figure 1. Jacob L. Moreno’s original sociogram from Who Shall Survive?, visualizing interpersonal choices in a group to reveal attractions, repulsions, and the emergent social structure. This foundational diagram demonstrates how sociometry uncovers hidden dynamics of affiliation and exclusion within communities (Moreno 1934)." %}
 
 ## Network Design
 
@@ -56,7 +57,7 @@ In a more technical arena, dimensionality reduction techniques like t-SNE (van d
 
 As these design choices and methods show, every step in network visualization leads naturally to considering how space shapes meaning. Spatial arrangements guide how viewers interpret network structures, turning tabular data into visual patterns. Understanding networks as designed spaces prepares us to explore how spatial thinking influences perception, revealing not just what networks contain but how they communicate insights through their spatial organization.
 
-{% include figure-single.html src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_002.webp" caption="Figure 2. The Grounded AI Map, a large-scale network visualization translating two million scientific articles on artificial intelligence into a walkable 100 m² installation. Clusters are annotated using large language models, enabling visitors to explore and question algorithmic knowledge through interactive bots and a dedicated app (Ficozzi et al. 2025)." %}
+{% include figure-single.html src="/images/network-literacy-how-to-understand-design-and-read-visual-relational-models/fig_002.webp" caption="Figure 2. The Grounded AI Map, a large-scale network visualization translating two million scientific articles on artificial intelligence into a walkable 100 m² installation. Clusters are annotated using large language models, enabling visitors to explore and question algorithmic knowledge through interactive bots and a dedicated app (Ficozzi et al. 2025)." %}
 
 ## Spatial Thinking
 
@@ -72,7 +73,7 @@ Reading networks spatially is much like reading a city map: just as a street map
 
 To illustrate these ideas in practice, the next case study, Surprise Machines, explores how experimental network visualizations engage spatial thinking and challenge our expectations.
 
-{% include figure-single.html class="wide" src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_003.webp" caption="Figure 3. Visualization by Martin Grandjean showing the network of influence among 4,300 philosophers in the English Wikipedia, illustrating how encyclopedic knowledge structures can reveal or obscure intellectual traditions (Grandjean 2014)." %}
+{% include figure-single.html class="wide" src="/images/network-literacy-how-to-understand-design-and-read-visual-relational-models/fig_003.webp" caption="Figure 3. Visualization by Martin Grandjean showing the network of influence among 4,300 philosophers in the English Wikipedia, illustrating how encyclopedic knowledge structures can reveal or obscure intellectual traditions (Grandjean 2014)." %}
 
 ## Surprise Machines
 
@@ -86,7 +87,7 @@ The project foregrounds the viewer’s interpretative agency, positioning explor
 
 Finally, Surprise Machines brings together spatial and design decisions in a way that highlights the playful, performative dimension of network literacy. By choreographing visitors’ gestures to interact with the visualization—through a choreographic interface—the project merges physical exploration with digital navigation. This spatial engagement transforms reading a network into a kind of dance, where each movement reshapes the visual field and opens new interpretations. The design choices, from clustering algorithms to interactive transitions, encourage experimentation and surprise, underscoring that networks are not static maps but evolving spaces that respond to viewers’ actions. This performative aspect embodies the core of network literacy: understanding that meaning in networks arises not only from data and design but also from how users move through, manipulate, and interpret these complex structures. Surprise Machines thus stands as a testament to how thoughtful spatial and interactive design can transform network visualizations into immersive, interpretative experiences.
 
-{% include figure-single.html src="/images/network-literacy-how-to-understand-design-and-read-a-visual-relational-model/fig_004.webp" caption="Figure 4. Surprise Machines visualization of Harvard Art Museums’ 200,000+ digitized images, mapping visual similarities to enable visitors to explore the museum’s vast collection through unexpected connections and choreographic interaction (Rodighiero et al. 2022)." %}
+{% include figure-single.html src="/images/network-literacy-how-to-understand-design-and-read-visual-relational-models/fig_004.webp" caption="Figure 4. Surprise Machines visualization of Harvard Art Museums’ 200,000+ digitized images, mapping visual similarities to enable visitors to explore the museum’s vast collection through unexpected connections and choreographic interaction (Rodighiero et al. 2022)." %}
 
 ## Conclusion
 

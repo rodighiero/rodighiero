@@ -99,7 +99,7 @@ Journal article:
 
 ```yaml
 ---
-title: "Network Literacy: How to Understand, Design, and Read a Visual Relational Model"
+title: "Network Literacy: How to Understand, Design, and Read Visual Relational Models"
 year: 2025
 venue: "Progetto Grafico"
 type: "journal"
@@ -140,6 +140,6 @@ doi: "https://doi.org/10.…"
 issn: "1824-1301"
 thumb: "network-literacy-…/fig_001.webp"
 lang: it
-translation_of: network-literacy-how-to-understand-design-and-read-a-visual-relational-model
+translation_of: network-literacy-how-to-understand-design-and-read-visual-relational-models
 ---
 ```

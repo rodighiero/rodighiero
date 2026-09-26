@@ -207,7 +207,7 @@ The contribution is both theoretical and practical. By situating network visuali
 - Rodighiero, Dario. 2015. _The Analogous City, the Map_. Lausanne: EPFL Archizoom.
 - ———. 2021. _Mapping Affinities: Democratizing Data Visualization_. Open-access English ed. Geneva: Métis Presses. https://doi.org/10.37866/0563-99-9
 - ———. 2022. “Extending Museum Beyond Physical Space: A Data-Driven Study of Aldo Rossi’s Analogous City as a Mobile Museum Object.” _International Journal for Digital Art History_, no. 6: 3.34–3.47. https://doi.org/10.11588/dah.2021.6.77681
-- ———. 2025a. “Network Literacy: How to Understand, Design, and Read a Visual Relational Model.” _Progetto Grafico_, no. 41. https://hdl.handle.net/11370/3648f43f-5e55-48a4-b130-6537029226fc
+- ———. 2025a. “Network Literacy: How to Understand, Design, and Read Visual Relational Models.” _Progetto Grafico_, no. 41. https://hdl.handle.net/11370/3648f43f-5e55-48a4-b130-6537029226fc
 - ———. 2025b. _Urban-Mapper_. GitHub. https://doi.org/10.5281/zenodo.16942879
 - Rosi, Gianfranco, dir. 2013. _Sacro GRA_. DocLab, La Femme Endormie, Cinecittà Luce, and Rai Cinema.
 - Rossi, Aldo. 1976. “La città analoga: Tavola.” _Lotus International_, no. 13: 4–9.
