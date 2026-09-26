@@ -24,6 +24,9 @@ jobs:
         with:
           ruby-version: '3.3'
           bundler-cache: true
+      # The homepage JS is plain files inlined by Liquid, so a syntax error would build
+      # fine and ship a dead gallery. Fail here instead (node is preinstalled).
+      - run: for f in _includes/scripts-*.js; do node --check "$f"; done
       - id: pages
         uses: actions/configure-pages@v6
       - run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
