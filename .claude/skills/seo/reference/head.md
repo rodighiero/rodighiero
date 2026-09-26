@@ -57,18 +57,19 @@ also the list `publication_validator.rb` refuses an unknown `lang` against, sinc
 declarations an unlisted code would get silently wrong. Adding a language is a line in that
 file and nothing else.
 
-Across pages, `translation_of` resolves once into two variables the rest of the head reads:
+Across pages, `translation_of` is resolved once per build by `publication_relations.rb` (the
+**`plugins`** skill), which attaches two lists the head reads:
 
-| Variable | What it holds |
+| Field | What it holds |
 |---|---|
-| `_origin` | the original — this page, or the source it translates |
-| `_siblings` | every translation of that original, **this page included** when it is one |
-| `_translated_by` | siblings minus this page → JSON-LD `workTranslation` |
-| `_alt_pages` | origin + siblings minus this page → `og:locale:alternate` |
+| `page.translation_set` | the original first, then every translation — **this page included**; empty without translations |
+| `page.translated_by` | the set's translations minus this page → JSON-LD `workTranslation` |
 
-`hreflang` covers origin + siblings, which always contains the page itself — that supplies the
-required self-reference for free. `x-default` goes on the original. Because the set is
-computed rather than paired, any number of language versions works, not just two.
+`hreflang` covers the whole set, which always contains the page itself — that supplies the
+required self-reference for free. `x-default` goes on entry 0, the original, which on a
+translation is also its `translationOfWork`. `og:locale:alternate` is the set minus this page.
+Because the set is computed rather than paired, any number of language versions works, not
+just two.
 
 ## Google Scholar — the HighWire tags
 

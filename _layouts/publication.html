@@ -19,27 +19,12 @@
   <title>{{ _title_attr }}</title>
   <meta name="description" content="{{ _excerpt_attr }}">
   <link rel="canonical" href="{{ _url }}">
-  {%- comment -%} The language set: _origin is the original, _siblings its translations.
-  hreflang lists both (so it self-references), x-default the original. _alt_pages is the
-  set minus this page (og:locale:alternate), _translated_by the siblings minus this page
-  (workTranslation). {%- endcomment -%}
-  {%- assign _source = nil -%}
-  {%- if page.translation_of -%}
-    {%- capture _src_url -%}/{{ page.translation_of }}{%- endcapture -%}
-    {%- assign _source = site.publications | where_exp: 'p', 'p.url == _src_url' | first -%}
-  {%- endif -%}
-  {%- assign _origin = _source | default: page -%}
-  {%- assign _origin_slug = _origin.url | remove_first: '/' -%}
-  {%- assign _siblings = site.publications | where: 'translation_of', _origin_slug -%}
-  {%- assign _translated_by = _siblings | where_exp: 't', 't.url != page.url' -%}
-  {%- assign _alt_pages = _translated_by -%}
-  {%- unless _origin.url == page.url -%}
-    {%- assign _origin_arr = site.publications | where_exp: 'p', 'p.url == _origin.url' -%}
-    {%- assign _alt_pages = _origin_arr | concat: _alt_pages -%}
-  {%- endunless -%}
-  {% if _siblings.size > 0 %}<link rel="alternate" hreflang="{{ _origin.lang }}" href="{{ site.url }}{{ _origin.url }}">
-  {% for _t in _siblings %}<link rel="alternate" hreflang="{{ _t.lang }}" href="{{ site.url }}{{ _t.url }}">
-  {% endfor %}<link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ _origin.url }}">
+  {%- comment -%} The language set, original first (publication_relations.rb): hreflang
+  lists all of it, x-default the original; og:locale:alternate all but this page. {%- endcomment -%}
+  {%- assign _set = page.translation_set -%}
+  {%- assign _alt_pages = _set | where_exp: 't', 't.url != page.url' -%}
+  {% if _set.size > 0 %}{% for _t in _set %}<link rel="alternate" hreflang="{{ _t.lang }}" href="{{ site.url }}{{ _t.url }}">
+  {% endfor %}<link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ _set[0].url }}">
   {% endif %}<meta property="og:title" content="{{ _title_attr }}">
   <meta property="og:description" content="{{ _excerpt_attr }}">
   <meta property="og:url" content="{{ _url }}">
@@ -131,8 +116,8 @@
     "url": "{{ _url }}",
     {% if page.doi %}"sameAs": "{{ page.doi }}",{% endif %}
     {% if page.pages %}"pagination": {{ page.pages | jsonify }},{% endif %}
-    {% if _source %}{% assign _st = site.data.publication_types[_source.type].schema %}"translationOfWork": { "@type": "{{ _st }}", "@id": "{{ site.url }}{{ _source.url }}", "name": {{ _source.title | jsonify }}, "inLanguage": "{{ _source.lang }}" },{% endif %}
-    {% if _translated_by.size > 0 %}"workTranslation": [{% for _t in _translated_by %}{% assign _tt = site.data.publication_types[_t.type].schema %}{ "@type": "{{ _tt }}", "@id": "{{ site.url }}{{ _t.url }}", "name": {{ _t.title | jsonify }}, "inLanguage": "{{ _t.lang }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}
+    {% if page.translation_of and _set.size > 0 %}{% assign _source = _set[0] %}{% assign _st = site.data.publication_types[_source.type].schema %}"translationOfWork": { "@type": "{{ _st }}", "@id": "{{ site.url }}{{ _source.url }}", "name": {{ _source.title | jsonify }}, "inLanguage": "{{ _source.lang }}" },{% endif %}
+    {% if page.translated_by.size > 0 %}"workTranslation": [{% for _t in page.translated_by %}{% assign _tt = site.data.publication_types[_t.type].schema %}{ "@type": "{{ _tt }}", "@id": "{{ site.url }}{{ _t.url }}", "name": {{ _t.title | jsonify }}, "inLanguage": "{{ _t.lang }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}
     "image": "{{ site.url }}/images/{{ _social_img }}",
     {%- comment -%} Two nodes need two @ids: the work keeps the bare URL, the page takes
     #webpage and ties back to the site node. {%- endcomment -%}
@@ -286,12 +271,11 @@
   </div>
   </article>
   {% if _content_parts.size > 1 %}<footer class="editorial-note"><p>Editorial note: this text is republished from its original venue and lightly edited for uniformity across the site. Citations and references have been restated in Chicago author-date style; obvious typos, incidental reference errors, and occasional language slips have been corrected. Small differences from the original publication may therefore exist; the version of record is the publisher’s, linked at the top of this page.</p></footer>{% endif %}
-  {% assign _net_node = site.data.network.nodes | where: "url", page.url | first %}
-  {% if _net_node.related.size > 0 %}
+  {% if page.related.size > 0 %}
   <nav class="related-pubs" aria-label="Related publications">
     <h2>Related publications</h2>
     <ul>
-      {% for _r in _net_node.related %}
+      {% for _r in page.related %}
       <li><a href="{{ _r.url }}">{{ _r.title }}{% unless _r.lang == 'en' %} <span class="related-lang">{{ _r.lang }}</span>{% endunless %}</a></li>
       {% endfor %}
     </ul>

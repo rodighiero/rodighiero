@@ -5,8 +5,8 @@ file is the content; this file is the vocabulary that content is written against
 
 Its `<head>` is not documented here — every meta, link and JSON-LD tag on this page belongs
 to the **`seo`** skill. The "Related publications" list is data, and belongs to the
-**`network`** skill; this page only reads the `related` array on the node whose `url`
-matches, and tags a non-English suggestion with its language.
+**`network`** skill; this page only reads `page.related` — the matching node's `related` array, attached by
+`publication_relations.rb` — and tags a non-English suggestion with its language.
 
 ## What the page assembles
 
@@ -15,7 +15,7 @@ matches, and tags a non-English suggestion with its language.
 | Byline | `credit-block.html` → `credit-full.html` — every contributor in citation order. The `<title>` tag calls `credit-full.html` directly and caps it at a first author plus *et al.*, to stay inside Google's display budget |
 | "Cite" button | `publication-cite.html` writes a Chicago author-date reference into a hidden `<pre class="cite-data">`; `site-scripts.html` copies it on click |
 | Prev/next | `publication-nav.html`, reading the `prev_pub` / `next_pub` refs that `publication_neighbors.rb` precomputes — no page scans the collection in Liquid |
-| Related publications | `site.data.network`, matched by `url` |
+| Related publications | `page.related`, the page's node in `site.data.network` (`publication_relations.rb`) |
 
 ## The body vocabulary
 

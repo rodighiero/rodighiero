@@ -7,7 +7,7 @@ follow, but the first word is drawn from a closed set of **two**.
 
 | Prefix | Count | Means |
 |---|---|---|
-| `publication_` | 8 | the file reads, orders, validates or decorates the `publications` collection |
+| `publication_` | 9 | the file reads, orders, validates or decorates the `publications` collection |
 | `system_` | 4 | everything else — build infrastructure whose output no reader sees as prose |
 
 The second word is then free to say what the file does to that subject: `publication_order`,

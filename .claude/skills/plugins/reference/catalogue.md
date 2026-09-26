@@ -1,4 +1,4 @@
-# The twelve, in detail
+# The thirteen, in detail
 
 Ordered by what they do, not alphabetically. Each heading gives the identifier the file
 produces — which is what you are usually searching for.
@@ -54,7 +54,7 @@ endings like `Consolascio,...`, `global....` and `starting from ...`. It ends on
 sentence when one closes in the back half of the budget; otherwise it cuts at the last whole
 word, drops dangling punctuation and appends a single `…`. Text already within budget passes
 through untouched. It shares the file because it guards the same surface — the description
-tags, read only in a snippet or a card — rather than earning a thirteenth plugin.
+tags, read only in a snippet or a card — rather than earning a plugin of its own.
 
 `doi_id` and `page_range` joined it for the same reason: both turn a front-matter value into
 what a machine-facing tag needs, and both replaced Liquid that was hard to read. `doi_id`
@@ -94,6 +94,22 @@ A Generator giving each document its two neighbours up front, so the layout read
 Each ref is a **plain hash of url + title** — only what `publication-nav.html` reads. Storing
 the neighbouring `Document` would make each pair reference the other through page data; the
 hash keeps the graph acyclic.
+
+### `publication_relations.rb` → `translation_set` / `translated_by`, `related`
+
+A Generator for a page's links to other publications, which `publication.html` used to derive
+in Liquid by scanning `site.publications` three times per page (and `network.nodes` once).
+
+- **`translation_set`** — the work's language set, **original first**, then each translation
+  in collection order, this page included (hreflang's self-reference). Empty when the work has
+  no translations. On a translation, entry 0 is therefore its source (`translationOfWork`).
+- **`translated_by`** — the set's translations minus this page: all of them on the original,
+  the siblings on a translation (`workTranslation`).
+- **`related`** — the page's node's `related` list from `_data/network.json`, empty without a
+  node.
+
+Entries are plain hashes (`url`, `title`, `lang`, `type`), for the same acyclicity reason as
+`prev_pub`. Output was identical to the Liquid's when it replaced it (`scripts/diff-build.py`).
 
 ### `publication_date.rb` → `page.date`
 
