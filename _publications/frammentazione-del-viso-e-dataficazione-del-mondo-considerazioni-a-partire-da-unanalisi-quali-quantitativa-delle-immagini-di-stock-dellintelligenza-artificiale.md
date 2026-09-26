@@ -9,7 +9,7 @@ publisher: "FrancoAngeli"
 place: "Milano"
 pages: "42–58"
 isbn: "9788835146049"
-thumb: "ethical-and-aesthetical-questions-on-stock-images-the-case-of-ais-depictions/fig_005.webp"
+thumb: "ethical-and-aesthetical-questions-on-stock-images-the-case-of-ais-depictions/fig_001.webp"
 lang: it
 translation_of: ethical-and-aesthetical-questions-on-stock-images-the-case-of-ais-depictions
 ---
