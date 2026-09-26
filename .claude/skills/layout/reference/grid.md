@@ -157,10 +157,15 @@ image load changes a tile's height, but text does not. The boot pack measures in
 face, because Nunito is only requested once that layout needs it, and on a cold first load
 it lands about 300ms later (measured: pack before 495ms, fonts done at 757–784ms). A title
 that rewraps changes its card's height (up to 19px), so without a re-pack stacked cards sat
-48 or 79.5px apart instead of 67.5. `document.fonts`' `loadingdone` therefore calls
-`layoutMasonry()` directly. The width did not move, so the gate would drop it. It fires for
-every loading cycle, which also covers a face first requested when a filter reveals a card.
-It is instant, in the same frame as the text's own reflow. A metric-matched fallback
+48 or 79.5px apart instead of 67.5. So `layoutMasonry()` calls `packWhenFontsReady()` right
+after its height reads. Those reads are what request a face, so `document.fonts.status` is
+already `loading` then, and one more pack is queued on `document.fonts.ready`. The width did
+not move, so the gate would drop it. The same path covers a face first requested when a
+filter reveals a card. The queued pack is instant, in the same frame as the text's own
+reflow, and finds nothing loading, so it does not queue another. It is not the
+`loadingdone` event, which Safari never fires for a CSS `@font-face`: the first version
+used it and was verified dead on a cold load. `ready` does wait for CSS faces in Safari.
+A metric-matched fallback
 (`size-adjust`) was considered and rejected: it matches the average advance, not each word,
 so a title can still break on a different line.
 

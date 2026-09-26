@@ -97,6 +97,7 @@ function layoutMasonry(synced) {
   tiles.forEach(function(p) {
     heights.push(p.checkVisibility() ? p.getBoundingClientRect().height : null);
   });
+  packWhenFontsReady();
   /* Pack into numbers first: the resulting height decides whether the change may
      animate, and a transform written outside the armed class cannot be taken back. */
   var slots = [];
@@ -167,12 +168,18 @@ function layoutMasonry(synced) {
    queued before a synchronous layout finds nothing changed either. No pass on image
    load: every thumbnail carries its dimensions. */
 var layoutFrame = 0;
-/* Text carries no dimensions, though. The first pack runs in the fallback face, since
-   Nunito is only requested once that layout needs it, and a title that rewraps when it
-   lands changes its card's height — 19px, measured, on a gap of 67.5. So re-pack
-   whenever a font arrives: the first swap, and any face a filter first reveals. Not
-   width-gated (the width is unchanged), and wrapped so the event is not read as `synced`. */
-document.fonts.addEventListener('loadingdone', function() { layoutMasonry(); });
+/* Text carries no dimensions, though. A pack's own measuring is what requests a face
+   (Nunito at boot, a latin-ext or italic face a filter first reveals), so it measures
+   the fallback, and a title that rewraps when the face lands changes its card's height
+   — 19px, measured, on a gap of 67.5. So a pack that leaves a font loading asks for one
+   more once the fonts are ready. Not width-gated: the width is unchanged. Not
+   `loadingdone`, which Safari never fires for a CSS @font-face. */
+var fontPackQueued = false;
+function packWhenFontsReady() {
+  if (fontPackQueued || document.fonts.status !== 'loading') return;
+  fontPackQueued = true;
+  document.fonts.ready.then(function() { fontPackQueued = false; layoutMasonry(); });
+}
 function layoutIfPageResized() {
   var before = pageWidth;
   var sync = syncPageWidth(); // in every view: the page resizes in network view too
