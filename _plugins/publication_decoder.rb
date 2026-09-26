@@ -1,8 +1,11 @@
 # | decode_numeric_entities — read by publication.html (the excerpt and the abstract).
 # | snippet — read by publication.html (the excerpt).
+# | doi_id — read by publication.html (citation_doi, the DOI button) and publication-cite.html.
+# | page_range — read by publication.html (citation_firstpage / citation_lastpage).
 #
-# The two text filters behind a publication's description tags, the ones a reader
-# only ever sees in a search snippet or a social card.
+# The filters that turn front-matter and body text into what a publication's
+# machine-facing tags need — the ones a reader only ever sees in a search snippet,
+# a social card or a Scholar record.
 #
 # decode_numeric_entities turns numeric character references (&#8217; / &#x2019;)
 # into their UTF-8 characters. Used on excerpts before escape_once, whose regexp
@@ -22,8 +25,16 @@
 # one closes in the second half of the budget; otherwise it cuts at the last
 # whole word, drops the dangling punctuation, and appends a single "…". Text
 # already inside the budget passes through untouched.
+#
+# doi_id reads the bare DOI off a doi.org URL ("https://doi.org/10.1/x" → "10.1/x"),
+# and returns nil for any other link, which the templates test for: the `doi` field
+# holds a handle or a repository URL when the work has no DOI.
+#
+# page_range splits `pages` into [first, last] for Scholar, which reads both as
+# literal numbers: a Chicago-condensed "301–9" gives ["301", "309"], the missing
+# leading digits borrowed from the first page. A single page gives [first].
 module Jekyll
-  module DecodeNumericEntitiesFilter
+  module DecoderFilter
     def decode_numeric_entities(input)
       input.to_s.gsub(/&#(x[0-9a-fA-F]+|\d+);/) do
         code = Regexp.last_match(1)
@@ -52,7 +63,19 @@ module Jekyll
       cut = cut[0, cut.rindex(' ') || cut.length] unless text[max - 1] == ' '
       cut.sub(/[\s,;:.–—\-(“‘"']+\z/, '') + '…'
     end
+
+    def doi_id(input)
+      input.to_s[%r{\Ahttps?://(?:dx\.)?doi\.org/(.+)\z}, 1]
+    end
+
+    def page_range(input)
+      parts = input.to_s.split(/[-–—]/).map(&:strip)
+      first, last = parts.first, parts.last
+      return [first] if parts.size < 2
+      last = first[0, first.length - last.length] + last if last.length < first.length
+      [first, last]
+    end
   end
 end
 
-Liquid::Template.register_filter(Jekyll::DecodeNumericEntitiesFilter)
+Liquid::Template.register_filter(Jekyll::DecoderFilter)

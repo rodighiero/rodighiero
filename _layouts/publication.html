@@ -1,5 +1,5 @@
 {%- comment -%} Strings used a dozen times over; `_lang` is needed before <html>. {%- endcomment -%}
-{%- assign _lang = page.lang | default: 'en' -%}
+{%- assign _lang = page.lang -%}
 {%- assign _url = site.url | append: page.url -%}
 {%- assign _title_attr = page.title | escape -%}
 <!DOCTYPE html>
@@ -37,15 +37,15 @@
     {%- assign _origin_arr = site.publications | where_exp: 'p', 'p.url == _origin.url' -%}
     {%- assign _alt_pages = _origin_arr | concat: _alt_pages -%}
   {%- endunless -%}
-  {% if _siblings.size > 0 %}<link rel="alternate" hreflang="{{ _origin.lang | default: 'en' }}" href="{{ site.url }}{{ _origin.url }}">
-  {% for _t in _siblings %}<link rel="alternate" hreflang="{{ _t.lang | default: 'en' }}" href="{{ site.url }}{{ _t.url }}">
+  {% if _siblings.size > 0 %}<link rel="alternate" hreflang="{{ _origin.lang }}" href="{{ site.url }}{{ _origin.url }}">
+  {% for _t in _siblings %}<link rel="alternate" hreflang="{{ _t.lang }}" href="{{ site.url }}{{ _t.url }}">
   {% endfor %}<link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ _origin.url }}">
   {% endif %}<meta property="og:title" content="{{ _title_attr }}">
   <meta property="og:description" content="{{ _excerpt_attr }}">
   <meta property="og:url" content="{{ _url }}">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="{{ site.data.languages[_lang].locale }}">
-  {% for _t in _alt_pages %}<meta property="og:locale:alternate" content="{{ site.data.languages[_t.lang].locale | default: 'en_US' }}">
+  {% for _t in _alt_pages %}<meta property="og:locale:alternate" content="{{ site.data.languages[_t.lang].locale }}">
   {% endfor %}
   {%- comment -%} `thumb` is required; image_size yields nils on a file it cannot parse. {%- endcomment -%}
   {% assign _social_img = page.thumb %}
@@ -78,12 +78,12 @@
   {% if page.volume %}<meta name="citation_volume" content="{{ page.volume }}">{% endif %}
   {% if page.issue %}<meta name="citation_issue" content="{{ page.issue }}">{% endif %}
   {%- comment -%} Scholar wants literal page numbers: "301–9" expands to 309. {%- endcomment -%}
-  {% if page.pages %}{% assign _pp = page.pages | replace: '–', '-' | replace: '—', '-' | split: '-' %}{% assign _fp = _pp | first | strip %}<meta name="citation_firstpage" content="{{ _fp }}">
-  {% if _pp.size > 1 %}{% assign _lp = _pp | last | strip %}{% if _lp.size < _fp.size %}{% assign _pad = _fp.size | minus: _lp.size %}{% assign _lp = _fp | slice: 0, _pad | append: _lp %}{% endif %}<meta name="citation_lastpage" content="{{ _lp }}">{% endif %}{% endif %}
+  {% if page.pages %}{% assign _pp = page.pages | page_range %}<meta name="citation_firstpage" content="{{ _pp[0] }}">
+  {% if _pp[1] %}<meta name="citation_lastpage" content="{{ _pp[1] }}">{% endif %}{% endif %}
   {% if page.publisher %}<meta name="citation_publisher" content="{{ page.publisher | escape }}">{% endif %}
   {% if page.issn %}<meta name="citation_issn" content="{{ page.issn }}">{% endif %}
   {% if page.isbn %}<meta name="citation_isbn" content="{{ page.isbn }}">{% endif %}
-  {% if page.doi and page.doi contains 'doi.org/' %}<meta name="citation_doi" content="{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}">{% endif %}
+  {% assign _doi = page.doi | doi_id %}{% if _doi %}<meta name="citation_doi" content="{{ _doi }}">{% endif %}
   <meta name="citation_abstract_html_url" content="{{ _url }}">
   {% if page.content contains '<!--more-->' %}<meta name="citation_fulltext_html_url" content="{{ _url }}">{% endif %}
   <meta name="citation_language" content="{{ _lang }}">
@@ -131,8 +131,8 @@
     "url": "{{ _url }}",
     {% if page.doi %}"sameAs": "{{ page.doi }}",{% endif %}
     {% if page.pages %}"pagination": {{ page.pages | jsonify }},{% endif %}
-    {% if _source %}{% assign _st = site.data.publication_types[_source.type].schema %}"translationOfWork": { "@type": "{{ _st }}", "@id": "{{ site.url }}{{ _source.url }}", "name": {{ _source.title | jsonify }}, "inLanguage": "{{ _source.lang | default: 'en' }}" },{% endif %}
-    {% if _translated_by.size > 0 %}"workTranslation": [{% for _t in _translated_by %}{% assign _tt = site.data.publication_types[_t.type].schema %}{ "@type": "{{ _tt }}", "@id": "{{ site.url }}{{ _t.url }}", "name": {{ _t.title | jsonify }}, "inLanguage": "{{ _t.lang | default: 'en' }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}
+    {% if _source %}{% assign _st = site.data.publication_types[_source.type].schema %}"translationOfWork": { "@type": "{{ _st }}", "@id": "{{ site.url }}{{ _source.url }}", "name": {{ _source.title | jsonify }}, "inLanguage": "{{ _source.lang }}" },{% endif %}
+    {% if _translated_by.size > 0 %}"workTranslation": [{% for _t in _translated_by %}{% assign _tt = site.data.publication_types[_t.type].schema %}{ "@type": "{{ _tt }}", "@id": "{{ site.url }}{{ _t.url }}", "name": {{ _t.title | jsonify }}, "inLanguage": "{{ _t.lang }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}
     "image": "{{ site.url }}/images/{{ _social_img }}",
     {%- comment -%} Two nodes need two @ids: the work keeps the bare URL, the page takes
     #webpage and ties back to the site node. {%- endcomment -%}
@@ -277,7 +277,7 @@
   {% include card-meta.html item=page %}
   <h1>{{ page.title }}</h1>
   {% include credit-block.html item=page %}
-  {% if page.doi %}<div class="doi"><button class="cite-btn pill-btn" type="button">Cite</button><button class="print-btn pill-btn" type="button">Print</button><a class="pill-btn" href="{{ page.doi }}">{% if page.doi contains 'doi.org/' %}{{ page.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}URL{% endif %}</a></div>{% endif %}
+  {% if page.doi %}<div class="doi"><button class="cite-btn pill-btn" type="button">Cite</button><button class="print-btn pill-btn" type="button">Print</button><a class="pill-btn" href="{{ page.doi }}">{{ _doi | default: 'URL' }}</a></div>{% endif %}
   </div>
   {% if page.doi %}{% include publication-cite.html item=page %}{% endif %}
   <div class="content">

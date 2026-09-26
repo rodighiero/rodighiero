@@ -49,6 +49,7 @@ taxonomy. {%- endcomment -%}
 {%- assign _authblock = _authors | append: _roleword -%}
 {%- assign _ablast = _authblock | slice: -1, 1 -%}
 {%- unless _ablast == '.' -%}{%- assign _authblock = _authblock | append: '.' -%}{%- endunless -%}
+{%- assign _doi_id = _item.doi | doi_id -%}
 {%- capture _ref -%}
 {{ _authblock }} {{ _item.year }}.
 {%- if _t == 'book' or _t == 'map' %} {{ _item.title }}{{ _dot }}{% if _item.translator %} Translated by {{ _translators }}.{% endif %}{% if _item.place %} {{ _item.place }}:{% endif %} {{ _pub }}.
@@ -57,6 +58,6 @@ taxonomy. {%- endcomment -%}
 {%- elsif _t == 'interview' %} “{{ _item.title }}{{ _dot }}”{% if _item.interviewer %} Interview by {{ _interviewers }}.{% endif %}{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}.
 {%- else %} “{{ _item.title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}.
 {%- endif -%}
-{%- if _item.doi %} {% if _item.doi contains 'doi.org/' %}https://doi.org/{{ _item.doi | remove: 'https://doi.org/' | remove: 'http://doi.org/' }}{% else %}{{ _item.doi }}{% endif %}.{% endif -%}
+{%- if _item.doi %} {% if _doi_id %}https://doi.org/{{ _doi_id }}{% else %}{{ _item.doi }}{% endif %}.{% endif -%}
 {%- endcapture -%}
 <pre class="cite-data" hidden>{{ _ref | normalize_whitespace | replace: ' .', '.' | replace: ' :', ':' | strip }}</pre>

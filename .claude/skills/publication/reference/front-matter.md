@@ -31,7 +31,7 @@
 
 These do **not** appear in the visible meta line but do appear in the formatted Chicago
 reference and in the homepage search haystack. `pages` may be Chicago-condensed
-(`"301–9"`); the layout expands it back to a full `citation_lastpage` for Scholar while the
+(`"301–9"`); the `page_range` filter expands it back to a full `citation_lastpage` for Scholar while the
 visible citation keeps the short form.
 
 ## Byline contributors
@@ -67,7 +67,7 @@ The validator checks both check digits and warns on a bad one. Coverage is parti
 | `lang: it` / `fr` | `<html lang>`, `og:locale` (`it_IT`/`fr_FR`), `citation_language`, `DC.language`, JSON-LD `inLanguage`, and the homepage language search term (full names only — `italian`/`italiano`, `french`/`français`) |
 | `translation_of: <slug>` | marks this file a translation: `hreflang` alternates with `x-default` on the original, `og:locale:alternate`, JSON-LD `translationOfWork`/`workTranslation`, and the forced dashed network edge. A translation is never embedded — it borrows its source's vector |
 
-Absent `lang` means English. The homepage UI stays English; there is no per-language page tree.
+Absent `lang` means English: `_config.yml`'s `defaults:` sets `lang: en` on every publication, so templates never need a fallback (and English feed entries carry `xml:lang` like the others). The homepage UI stays English; there is no per-language page tree.
 
 ## Other
 

@@ -35,7 +35,7 @@ and re-emitted outside the anchor, so a URL ending a sentence doesn't swallow th
 footnote return arrow and Ruby's `\s` does not match it — without the exclusion the URL would
 swallow the nbsp and whatever preceded it.
 
-### `publication_decoder.rb` → `| decode_numeric_entities`, `| snippet`
+### `publication_decoder.rb` → `| decode_numeric_entities`, `| snippet`, `| doi_id`, `| page_range`
 
 Turns `&#8217;` / `&#x2019;` into UTF-8 characters, applied to excerpts *before*
 `escape_once`. `escape_once`'s exemption regexp covers named and decimal entities but not hex
@@ -55,6 +55,16 @@ sentence when one closes in the back half of the budget; otherwise it cuts at th
 word, drops dangling punctuation and appends a single `…`. Text already within budget passes
 through untouched. It shares the file because it guards the same surface — the description
 tags, read only in a snippet or a card — rather than earning a thirteenth plugin.
+
+`doi_id` and `page_range` joined it for the same reason: both turn a front-matter value into
+what a machine-facing tag needs, and both replaced Liquid that was hard to read. `doi_id`
+returns the bare DOI of a `doi.org` URL (optionally `dx.`) and **nil for anything else** —
+the `doi` field holds a handle or a repository link when a work has no DOI, and the templates
+branch on that nil: `citation_doi` only for a real DOI, the pill reading `URL` otherwise, the
+Chicago reference normalising to `https://doi.org/…`. It replaced a `contains 'doi.org/' |
+remove: … | remove: …` chain written out three times. `page_range` splits `pages` on any
+dash into `[first, last]` (or `[first]`), expanding a condensed last page — see the `seo`
+skill for why Scholar needs it.
 
 ## Ordering and navigation
 

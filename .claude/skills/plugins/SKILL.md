@@ -23,7 +23,7 @@ it.** Everything here is one of three shapes:
 
 | Shape | Registered how | Examples |
 |---|---|---|
-| A **Liquid filter** | `Liquid::Template.register_filter` | `image_size`, `autolink_urls`, `decode_numeric_entities`, `snippet` |
+| A **Liquid filter** | `Liquid::Template.register_filter` | `image_size`, `autolink_urls`, `decode_numeric_entities`, `snippet`, `doi_id`, `page_range` |
 | A **field on a document** | a generator or `post_read` hook writing `doc.data[…]` | `commit_date`, `figures`, `prev_pub`/`next_pub`, `date` |
 | A **site-wide datum** | writing `site.data[…]` | `ordered_publications`, `readme_content`, `commit_date` |
 
@@ -53,7 +53,7 @@ written down.
 |---|---|---|
 | `system_image_size.rb` | `\| image_size` | `home.html`, `publication.html`, both `figure-*` includes |
 | `publication_urls.rb` | `\| autolink_urls` | `publication.html` |
-| `publication_decoder.rb` | `\| decode_numeric_entities`, `\| snippet` | `publication.html` |
+| `publication_decoder.rb` | `\| decode_numeric_entities`, `\| snippet`, `\| doi_id`, `\| page_range` | `publication.html`, `publication-cite.html` |
 | `publication_order.rb` | `site.data.ordered_publications` + the `OrderedPublications` module | `home.html`, `publication_neighbors.rb`, `publication_date.rb` (which also calls `year_of`) |
 | `publication_neighbors.rb` | `prev_pub` / `next_pub` | `publication-nav.html` |
 | `publication_date.rb` | `page.date` | the jekyll-feed gem |

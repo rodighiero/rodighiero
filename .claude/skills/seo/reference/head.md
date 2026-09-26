@@ -84,8 +84,8 @@ with no `citation_venue` emits none.
 
 **The page-range expansion.** Scholar reads first/last page as literal numbers, so a
 Chicago-condensed `pages: "301–9"` would claim a nine-page-long article ending at page 9. The
-head splits on the dash and, when the last part is shorter than the first, borrows the missing
-leading digits — `309`. En dash, em dash and hyphen are all normalised first. The visible
+`page_range` filter (`publication_decoder.rb`) splits on any dash — en, em or hyphen — and,
+when the last part is shorter than the first, borrows the missing leading digits: `309`. The visible
 citation keeps `301–9`; only the meta tag is expanded.
 
 **Creators.** `citation_author`, `DC.creator` and `<meta name="author">` read one list: `author`,

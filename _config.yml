@@ -54,3 +54,4 @@ defaults:
       type: publications
     values:
       layout: publication
+      lang: en
