@@ -264,7 +264,7 @@ We hope the collection will become a field for continuing critique of comparison
 - _Hurricane Digital Memory Bank_. n.d. Roy Rosenzweig Center for History and New Media, George Mason University. <http://hurricanearchive.org/>.
 - “Inside the New York Times’ Photo Morgue, A Possible New Life for Print.” 2012. WNYC. <https://www.wnyc.org/story/206643-wnyc-tumblr/>.
 - _Japan Disaster Digital Archive_. n.d. Edwin O. Reischauer Institute of Japanese Studies, Harvard University. <https://jdarchive.org/en>.
-- Parry, Kyle Thomas. 2015. “Crisis Archives: Assemblage, Interaction, Participation.” PhD diss., Harvard University. <https://dash.harvard.edu/bitstream/handle/1/23845456/PARRY-DISSERTATION-2015.pdf>.
+- Parry, Kyle Thomas. 2015. “Crisis Archives: Assemblage, Interaction, Participation.” PhD diss., Harvard University. <https://dash.harvard.edu/bitstream/handle/1/23845456/PARRY-DISSERTATION-2015.pdf> ([archived](https://web.archive.org/web/20230803060838/https://dash.harvard.edu/bitstream/handle/1/23845456/PARRY-DISSERTATION-2015.pdf)).
 - Simon, Herbert A. 1996. “Finding New Problem Representations.” In _The Sciences of the Artificial_, 3rd ed. Cambridge, MA: MIT Press.
 - Star, Susan Leigh, and James R. Griesemer. 1989. “Institutional Ecology, ‘Translations’ and Boundary Objects: Amateurs and Professionals in Berkeley’s Museum of Vertebrate Zoology, 1907–39.” _Social Studies of Science_ 19 (3): 387–420. <https://doi.org/10.1177/030631289019003001>.
 - Zhang, Yixuan, et al. 2021. “Mapping the Landscape of COVID-19 Crisis Visualizations.” In _Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems_, art. no. 608, 1–23. <https://doi.org/10.1145/3411764.3445381>.
