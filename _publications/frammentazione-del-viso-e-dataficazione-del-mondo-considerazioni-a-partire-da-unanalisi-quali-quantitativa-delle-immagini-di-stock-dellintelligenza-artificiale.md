@@ -7,6 +7,7 @@ author: "Alberto Romele and Dario Rodighiero"
 editor: "Andrea Osti"
 publisher: "FrancoAngeli"
 place: "Milano"
+pages: "42–58"
 isbn: "9788835146049"
 thumb: "ethical-and-aesthetical-questions-on-stock-images-the-case-of-ais-depictions/fig_005.webp"
 lang: it
