@@ -1,4 +1,4 @@
-# The thirteen, in detail
+# The fourteen, in detail
 
 Ordered by what they do, not alphabetically. Each heading gives the identifier the file
 produces — which is what you are usually searching for.
@@ -65,6 +65,19 @@ Chicago reference normalising to `https://doi.org/…`. It replaced a `contains 
 remove: … | remove: …` chain written out three times. `page_range` splits `pages` on any
 dash into `[first, last]` (or `[first]`), expanding a condensed last page — see the `seo`
 skill for why Scholar needs it.
+
+### `publication_credits.rb` → `| credit_short`
+
+The homepage cards' short byline, from Dario's point of view: each credit field's names minus
+his, joined `X, Y and Z` (no Oxford comma) behind a prefix that says whether he was among them
+— `edited with` / `edited by`, `translated with` / `translated by`, and so on; plain `with` for
+authors. Editors show only when there is no co-author. The parts join with `. `, each after
+the first capitalised. The surname match is loose on purpose (contains `Rodighiero`): it only
+decides whose name to strip, unlike `jsonld-person.html`'s exact match, which attaches the ORCID.
+
+It replaced `credit-names.html` and the body of `credit-short.html`, about 70 lines of Liquid
+faking arrays with a `~~~` sentinel; output was identical (`scripts/diff-build.py`). It takes
+any item with the name fields — a publication or a `home_cards.yml` event alike.
 
 ## Ordering and navigation
 

@@ -1,52 +1,7 @@
 {%- comment -%}
-  The short credit voice, used by homepage cards: written from Dario's point of
-  view, with his own name stripped out. The full voice — everyone named, in
-  citation order — is credit-full.html.
-  - Author:    "with X and Y"  (empty if Dario was solo)
-  - Editor:    "edited with X and Y"  (Dario among editors)
-               "edited by X and Y"    (Dario absent from editors)
-               Shown only when Dario has no co-author (sole-authored);
-               suppressed here when co-authors exist. Always on the pub page.
-  - Translator unchanged: "translated by X and Y"
-  - Preface:   "preface with / preface by X and Y"
-  - Interview: "interview with / interview by X and Y" (interviewer of an interview)
-  - Lists join with ", " and "and" before the last name (no Oxford comma).
-  The per-field formatting (split, strip Dario, re-join) is delegated to
-  credit-names.html; this file only assembles the parts and capitalizes each
-  segment that follows a period.
+  The short credit voice on homepage cards — "with X and Y", Dario stripped — built by the
+  credit_short filter (publication_credits.rb). The full voice, everyone in citation
+  order, is credit-full.html.
 {%- endcomment -%}
-
-{%- capture auth_part -%}{%- include credit-names.html raw=include.item.author prefix_with="with " prefix_by="" -%}{%- endcapture -%}
-{%- assign auth_part = auth_part | strip -%}
-
-{%- capture ed_part -%}{%- include credit-names.html raw=include.item.editor prefix_with="edited with " prefix_by="edited by " -%}{%- endcapture -%}
-{%- assign ed_part = ed_part | strip -%}
-{%- comment -%} Editors only surface on the homepage when Dario has no co-author. {%- endcomment -%}
-{%- if auth_part != "" -%}{%- assign ed_part = "" -%}{%- endif -%}
-
-{%- capture tr_part -%}{%- include credit-names.html raw=include.item.translator prefix_with="translated with " prefix_by="translated by " -%}{%- endcapture -%}
-{%- assign tr_part = tr_part | strip -%}
-
-{%- capture intro_part -%}{%- include credit-names.html raw=include.item.preface prefix_with="preface with " prefix_by="preface by " -%}{%- endcapture -%}
-{%- assign intro_part = intro_part | strip -%}
-
-{%- capture iv_part -%}{%- include credit-names.html raw=include.item.interviewer prefix_with="interview with " prefix_by="interview by " -%}{%- endcapture -%}
-{%- assign iv_part = iv_part | strip -%}
-
-{%- comment -%} Join the five parts with ". ", capitalizing each one that follows a
-period. The parts are appended with the "~~~" sentinel and split back apart (the
-credit includes' convention for building an array — see credit-names.html); empty
-parts fall out in the loop. {%- endcomment -%}
-{%- assign parts = auth_part | append: "~~~" | append: ed_part | append: "~~~" | append: tr_part | append: "~~~" | append: intro_part | append: "~~~" | append: iv_part | split: "~~~" -%}
-{%- assign out = "" -%}
-{%- for part in parts -%}
-  {%- if part != "" -%}
-    {%- if out != "" -%}
-      {%- assign part_first = part | slice: 0, 1 | upcase -%}
-      {%- assign part_rest = part | slice: 1, 9999 -%}
-      {%- assign out = out | append: ". " | append: part_first | append: part_rest -%}
-    {%- else -%}{%- assign out = part -%}{%- endif -%}
-  {%- endif -%}
-{%- endfor -%}
-
-{%- if out != "" -%}<div class="card-text">{{ out }}</div>{%- endif -%}
+{%- assign _credit = include.item | credit_short -%}
+{%- if _credit != "" -%}<div class="card-text">{{ _credit }}</div>{%- endif -%}

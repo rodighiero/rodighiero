@@ -18,7 +18,7 @@ a serial comma before "and". Formatting branches on the publication type.
   {%- if _people.size > 1 -%}{%- assign _roleword = ', eds' -%}{%- else -%}{%- assign _roleword = ', ed' -%}{%- endif -%}
 {%- endif -%}
 {%- comment -%} First contributor is inverted to Family, Given for Chicago style; the
-rest join with a serial comma via the same credit-join.html credit-names.html uses. {%- endcomment -%}
+rest join with a serial comma via credit-join.html. {%- endcomment -%}
 {%- assign _first_p = _people | first | strip -%}
 {%- assign _words = _first_p | split: ' ' -%}
 {%- assign _family = _words | last -%}
@@ -26,7 +26,7 @@ rest join with a serial comma via the same credit-join.html credit-names.html us
 {%- assign _given = _given | strip -%}
 {%- capture _first_formatted -%}{{ _family }}{%- if _given != '' -%}, {{ _given }}{%- endif -%}{%- endcapture -%}
 {%- comment -%} Splitting on the absent "~~~" sentinel is Liquid's only way to wrap
-one string in an array (same convention as credit-names.html), so the inverted first
+one string in an array, so the inverted first
 name can lead the list the rest joins onto. {%- endcomment -%}
 {%- assign _rest_people = _people | slice: 1, 9999 -%}
 {%- assign _display_people = _first_formatted | split: "~~~" | concat: _rest_people -%}
