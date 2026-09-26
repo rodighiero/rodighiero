@@ -12,8 +12,8 @@ then which one of them this is. The rule is deliberately the same shape as the o
 | `jsonld-` | people, person |
 | `publication-` | cite, nav |
 | `site-` | analytics, head, scheme, scripts, toggle |
-| `styles-` | base, font; gallery, network (the homepage's own rules) |
-| `scripts-` | gallery, network (the homepage's JS, inlined into one `<script>`) |
+| `styles-` | base, font; gallery, network (the homepage's rules); article (the publication page's) |
+| `scripts-` | gallery, network (the homepage's JS, one `<script>`); print (the publication page's) |
 | `network-` | the generated `*.svg` miniatures |
 
 ## The three rules

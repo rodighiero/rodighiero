@@ -1,7 +1,10 @@
 # The publication page
 
 `_layouts/publication.html` — what a single `_publications/*.md` renders into. The Markdown
-file is the content; this file is the vocabulary that content is written against.
+file is the content; this page is the vocabulary that content is written against. The layout
+holds the `<head>` and the markup; its rules are `_includes/styles-article.css` (the body,
+figure, table and print vocabulary below) and its print path `_includes/scripts-print.js`,
+both inlined like the homepage's.
 
 Its `<head>` is not documented here — every meta, link and JSON-LD tag on this page belongs
 to the **`seo`** skill. The "Related publications" list is data, and belongs to the
@@ -12,7 +15,7 @@ to the **`seo`** skill. The "Related publications" list is data, and belongs to 
 
 | Part | From |
 |---|---|
-| Byline | `credit-block.html` → `credit-full.html` — every contributor in citation order. The `<title>` tag calls `credit-full.html` directly and caps it at a first author plus *et al.*, to stay inside Google's display budget |
+| Byline | `credit-block.html` → `credit-full.html` — every contributor in citation order. The `<title>` is the bare title, to stay inside Google's display budget |
 | "Cite" button | `publication-cite.html` writes a Chicago author-date reference into a hidden `<pre class="cite-data">`; `site-scripts.html` copies it on click |
 | Prev/next | `publication-nav.html`, reading the `prev_pub` / `next_pub` refs that `publication_neighbors.rb` precomputes — no page scans the collection in Liquid |
 | Related publications | `page.related`, the page's node in `site.data.network` (`publication_relations.rb`) |

@@ -18,7 +18,7 @@ and `redirect_from`. Renaming a file means renaming all of those.
 |---|---|
 | `reference/front-matter.md` | field-by-field schema, per type |
 | `reference/images.md` | image layout, compression, the portrait ladder, the icon set |
-| `reference/page.md` | `_layouts/publication.html` — the figure, table and equation vocabulary the bodies are written against |
+| `reference/page.md` | `_layouts/publication.html` and `_includes/styles-article.css` — the figure, table and equation vocabulary the bodies are written against |
 | `reference/naming.md` | how `_includes/` are named, and the renames already settled |
 
 ## Adding a publication — the whole sequence

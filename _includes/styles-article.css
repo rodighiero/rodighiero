@@ -1,0 +1,110 @@
+/* The publication page's own rules, inlined by publication.html after styles-base.css. */
+body { max-width: 660px; line-height: var(--lh-normal); }
+h1 { font-size: var(--text-xxl); font-weight: 500; margin: 0.6rem 0; }
+.authors { margin-bottom: 0.6rem; font-size: var(--text-base); }
+.doi { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; font-size: var(--text-xs); line-height: var(--lh-loose); margin-bottom: 2rem; }
+.doi .pill-btn { padding: 0.3rem 0.55rem; }
+.content { margin-top: 2rem; padding-top: 1.5rem; }
+/* .hyphenate-prose (styles-base.css) breaks by the page's own <html lang>, so French
+   and Italian follow their own rules. */
+.body {
+  font-size: var(--text-base);
+  line-height: var(--lh-loose);
+  color: var(--fg);
+  overflow-wrap: break-word;
+}
+/* Opt out where a split word reads as an error; `manual` keeps an explicit &shy;. */
+.body :is(h2, h3, code, figure.data-table) { -webkit-hyphens: manual; hyphens: manual; }
+.body p { margin: 0 0 1.1rem; }
+.body .abstract { font-style: italic; color: var(--muted); margin-bottom: 2rem; }
+.body h2 { font-size: var(--text-lg); font-weight: 500; margin: 3rem 0 0.8rem; color: var(--fg); }
+.body h3 { font-size: var(--text-base); font-weight: 700; margin: 2rem 0 0.6rem; color: var(--fg); }
+.body h2, .body h3 { scroll-margin-top: 1.5rem; }
+.body blockquote { margin: 1.5rem 0; padding-left: 1.2rem; color: var(--fg); font-style: italic; }
+.body blockquote p { margin-bottom: 0; }
+.body strong { font-weight: 500; color: var(--fg); }
+.body ul, .body ol { padding-left: 1.4em; }
+.body li { margin-bottom: 0.8rem; padding-left: 0.3em; }
+.body ul li::marker { font-size: 0.7em; }
+.body figure { margin: 2rem 0; }
+.body figure img { width: 100%; height: auto; display: block; }
+.body figcaption { margin-top: 0.5rem; font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
+/* Multi-panel figures (figure-group.html): each panel keeps its natural width. */
+.body figure.figure-group .subfig { margin: 0 0 1.5rem; }
+.body figure.figure-group .subfig img { width: auto; max-width: 100%; margin: 0 auto; }
+.body figure.figure-group.three-quarter .subfig img { max-width: 75%; }
+/* Data tables: a markdown table inside <figure class="data-table" markdown="1">. */
+.body figure.data-table { overflow-x: auto; }
+.body figure.data-table table { width: 100%; border-collapse: collapse; font-size: var(--text-xs); line-height: var(--lh-normal); font-variant-numeric: tabular-nums; }
+.body figure.data-table th, .body figure.data-table td { padding: 0.4rem 0.7rem; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.body figure.data-table thead th { font-weight: 500; color: var(--fg); border-bottom: 1px solid var(--fg); }
+.body figure.data-table tbody tr:last-child td { border-bottom: 1px solid var(--fg); }
+/* .wrap: prose cells wrap, the label column does not. */
+.body figure.data-table.wrap th, .body figure.data-table.wrap td { white-space: normal; }
+/* .media: image cells at fixed widths, the table sized to its content and centred. */
+.body figure.data-table.media td, .body figure.data-table.media th { white-space: normal; vertical-align: middle; }
+.body figure.data-table.media table { width: auto; margin-left: auto; margin-right: auto; }
+.body figure.data-table.media td img { display: block; height: auto; margin: 0.25rem auto; }
+.body figure.data-table.media td:nth-child(2) img { width: 200px; max-width: 100%; }
+.body figure.data-table.media td:nth-child(3) img { width: 300px; max-width: 100%; }
+.body figure.data-table.wrap th:first-child, .body figure.data-table.wrap td:first-child { white-space: nowrap; }
+/* <p class="equation"><span class="eq-formula">…</span></p> */
+.body p.equation { display: flex; justify-content: center; align-items: baseline; margin: 1.6rem 0; }
+.body code { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: var(--text-xs); }
+@media screen {
+  /* Breaks out of the measure, but stops at --page-gutter, where the mode toggle sits. */
+  .body figure.wide { --bleed: min(990px, calc(100vw - 2 * var(--page-gutter))); display: block; width: var(--bleed); max-width: none; margin-left: calc(50% - var(--bleed) / 2); }
+  .body figure.wide img { display: block; width: auto; height: auto; max-width: 100%; max-height: 660px; margin: 0 auto; }
+  .body figure.wide figcaption { width: calc(min(660px, 100vw) - 3rem); max-width: 100%; margin-left: auto; margin-right: auto; }
+  .body figure:is(.narrow, .half, .three-quarter, .full) img { margin: 0 auto; }
+  .body figure.narrow img { width: 33%; }
+  .body figure.half img { width: 50%; }
+  .body figure.three-quarter img { width: 75%; }
+  .body figure.full img { width: 100%; }
+  .body figure.data-table:is(.half, .three-quarter) table { margin: 0 auto; }
+  .body figure.data-table.half table { width: 50%; }
+  .body figure.data-table.three-quarter table { width: 75%; }
+  /* A narrowed figure's caption is 3/4 of the column, never cramped to 1/2; a
+     full-width table's is full width. */
+  .body figure:is(.narrow, .half, .three-quarter, .data-table.half, .data-table.three-quarter) figcaption { width: 75%; margin-left: auto; margin-right: auto; }
+  .body figure.data-table figcaption { width: auto; margin-left: 0; margin-right: 0; }
+}
+.body sup a.footnote { font-size: 0.7em; font-weight: 500; text-decoration: none; padding: 0 0.1em; }
+.body .footnotes { margin-top: 3rem; padding-top: 1.2rem; font-size: var(--text-xs); line-height: var(--lh-normal); color: var(--muted); }
+.body .footnotes ol { padding-left: 1.3em; }
+.body .footnotes li { margin-bottom: 0.5rem; }
+.body .footnotes li::marker { color: var(--muted); }
+.body .footnotes p { margin: 0; }
+.body .footnotes a.reversefootnote { text-decoration: none; margin-left: 0.3em; }
+footer.editorial-note { margin-top: 4rem; padding-top: 1.5rem; font-size: var(--text-xs); color: var(--muted); font-style: italic; }
+footer.editorial-note p { margin: 0; }
+@media print {
+  .mode-toggle, .publication-nav, .related-pubs, .doi, .cite-data, [hidden] { display: none !important; }
+  /* Body padding, since it repeats on every page. */
+  body { padding: 0 4cm !important; max-width: none !important; margin: 0 !important; }
+  html { font-size: 8pt; }
+  h1 { font-size: 13pt; }
+  .body h2 { font-size: 9.5pt; }
+  .body h3 { font-size: 8.5pt; }
+  h1, .body h2, .body h3 { page-break-after: avoid; break-after: avoid; }
+  /* Figures stay whole; long tables flow. */
+  .body figure { page-break-inside: avoid; break-inside: avoid; }
+  .body figure.data-table { page-break-inside: auto; break-inside: auto; }
+  .body figure.data-table thead { display: table-header-group; }
+}
+.publication-nav { font-size: var(--text-xs); color: var(--muted); }
+.publication-nav-top { margin-bottom: 3rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+.publication-nav-footer, .related-pubs { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.publication-nav a, .related-pubs a { color: inherit; text-decoration: none; }
+.publication-nav a:hover, .related-pubs a:hover { color: var(--fg); text-decoration: underline; }
+.publication-nav .nav-prev a, .publication-nav .nav-next a { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.publication-nav .nav-label { display: inline-block; }
+.publication-nav .nav-all { text-align: center; }
+.publication-nav .nav-all a { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+.nav-siblings { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: start; }
+.publication-nav .nav-next { text-align: right; }
+.related-pubs h2 { font-size: var(--text-xs); font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: var(--tracking-caps); margin: 0 0 0.9rem; }
+.related-pubs ul { list-style: none; margin: 0; padding: 0; }
+.related-pubs li { font-size: var(--text-base); line-height: var(--lh-normal); margin-bottom: 0.5rem; }
+.related-pubs li:last-child { margin-bottom: 0; }
+.related-pubs .related-lang { color: var(--muted); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: var(--tracking-caps); }
