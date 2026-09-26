@@ -11,12 +11,20 @@ function promoteLazyImages(root) {
 // Mode toggle
 (function() {
   var html = document.documentElement;
+  // A manual choice retints the browser toolbar too: the two theme-color metas in
+  // site-head.html follow only the system setting, so both take the page's own background.
+  function syncThemeColor() {
+    var bg = getComputedStyle(document.body).backgroundColor;
+    document.querySelectorAll('meta[name="theme-color"]').forEach(function(m) { m.content = bg; });
+  }
+  if (html.classList.contains('dark') || html.classList.contains('light')) syncThemeColor();
   document.querySelector('.mode-toggle').addEventListener('click', function() {
     var isDark = html.classList.contains('dark') ||
       (!html.classList.contains('light') && window.matchMedia('(prefers-color-scheme: dark)').matches);
     html.classList.remove('dark', 'light');
     var next = isDark ? 'light' : 'dark';
     html.classList.add(next);
+    syncThemeColor();
     try { localStorage.setItem('colorScheme', next); } catch (e) {}
   });
 })();

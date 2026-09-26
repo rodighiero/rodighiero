@@ -15,6 +15,12 @@ each layout writes its own (Dario on the homepage, the creators list on a public
 `colorScheme` restore script — not metadata, but it must run before the first paint. That one
 lives in its own file because `404.html` includes it directly and takes nothing else from here.
 
+The two `theme-color`s are keyed to `prefers-color-scheme`, so they follow the system only.
+Once a reader has made a manual choice, `_includes/scripts-site.js` (the mode toggle) rewrites
+both to the page's computed `body` background, on load and on every toggle, so the browser
+toolbar matches the page rather than the system. The colour is read, not restated, so it
+cannot drift from `--bg`.
+
 `robots` is `index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1`.
 Indexing was never blocked; the three `max-*` directives only lift the caps on how a result
 may *render* in Search and Discover.
