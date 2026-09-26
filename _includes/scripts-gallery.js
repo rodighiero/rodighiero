@@ -167,6 +167,12 @@ function layoutMasonry(synced) {
    queued before a synchronous layout finds nothing changed either. No pass on image
    load: every thumbnail carries its dimensions. */
 var layoutFrame = 0;
+/* Text carries no dimensions, though. The first pack runs in the fallback face, since
+   Nunito is only requested once that layout needs it, and a title that rewraps when it
+   lands changes its card's height — 19px, measured, on a gap of 67.5. So re-pack
+   whenever a font arrives: the first swap, and any face a filter first reveals. Not
+   width-gated (the width is unchanged), and wrapped so the event is not read as `synced`. */
+document.fonts.addEventListener('loadingdone', function() { layoutMasonry(); });
 function layoutIfPageResized() {
   var before = pageWidth;
   var sync = syncPageWidth(); // in every view: the page resizes in network view too

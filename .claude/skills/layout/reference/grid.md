@@ -152,6 +152,18 @@ The gate also means `layoutMasonry()` cancels nothing: `applySearch()` schedules
 a pass queued before a synchronous layout and fired after finds the width already synced and
 returns on its own.
 
+One pack does run ungated: **a font arriving**. Thumbnails carry their dimensions, so no
+image load changes a tile's height, but text does not. The boot pack measures in the fallback
+face, because Nunito is only requested once that layout needs it, and on a cold first load
+it lands about 300ms later (measured: pack before 495ms, fonts done at 757–784ms). A title
+that rewraps changes its card's height (up to 19px), so without a re-pack stacked cards sat
+48 or 79.5px apart instead of 67.5. `document.fonts`' `loadingdone` therefore calls
+`layoutMasonry()` directly. The width did not move, so the gate would drop it. It fires for
+every loading cycle, which also covers a face first requested when a filter reveals a card.
+It is instant, in the same frame as the text's own reflow. A metric-matched fallback
+(`size-adjust`) was considered and rejected: it matches the average advance, not each word,
+so a title can still break on a different line.
+
 ## Two things to keep in mind when touching `setView`
 
 `syncPageWidth()` is called from `layoutMasonry()`, which the network branch must **not** run
