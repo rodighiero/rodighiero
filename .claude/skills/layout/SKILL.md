@@ -160,7 +160,7 @@ offline it was ceremony over a one-time build, and D3 was a 93KB-gzipped depende
   which is the trade: a guard on markup that is always there only leaves each new call site
   guessing which convention applies. Guards exist only where absence is
   real: `networkApi` (built lazily on first network open) and `#net-data`. The same rule
-  holds in `_includes/site-scripts.html`, shared by both layouts: `#live-msg` is unconditional
+  holds in `_includes/scripts-site.js`, shared by both layouts: `#live-msg` is unconditional
   in each, and a `.cite-btn` only exists inside publication.html's `<article>` beside the
   `.cite-data` its own `page.doi` conditional emits.
 - **A scheduled pass is width-gated** — `layoutIfPageResized()` packs only when the page's

@@ -1,4 +1,4 @@
-// The publication page's print path, inlined by publication.html after site-scripts.html
+// The publication page's print path, inlined by publication.html after scripts-site.js
 // (whose promoteLazyImages it calls).
 /* Print only once the lazy figures have loaded: Cmd/Ctrl+P and the Print button wait
    here, beforeprint covers the browser's own menu. false: nothing to wait for. */
