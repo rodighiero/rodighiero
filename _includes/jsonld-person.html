@@ -9,4 +9,4 @@ ORCID on the wrong person.
 Params: name — a single author name (whitespace is stripped here).
 {%- endcomment -%}
 {%- assign _n = include.name | strip -%}
-{ "@type": "Person", "name": {{ _n | jsonify }}{% if _n == site.title %}, "@id": "{{ site.orcid }}", "url": "{{ site.url }}"{% endif %} }
+{ "@type": "Person", "name": {{ _n | jsonify }}{% if _n == site.title %}, "@id": "{{ site.orcid }}", "url": "{{ site.url }}/"{% endif %} }

@@ -85,7 +85,7 @@
   <meta name="DC.identifier" content="{{ _url }}">
   {% if page.doi %}<meta name="DC.identifier" content="{{ page.doi }}">{% endif %}
   <meta name="DC.publisher" content="{{ page.publisher | default: 'Dario Rodighiero' | escape }}">
-  <meta name="DCTERMS.isPartOf" content="{{ site.url }}">
+  <meta name="DCTERMS.isPartOf" content="{{ site.url }}/">
   {% assign _schema_type = _ptype.schema %}
   <script type="application/ld+json">
   {
@@ -135,7 +135,7 @@
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": {{ site.title | jsonify }}, "item": "{{ site.url }}" },
+      { "@type": "ListItem", "position": 1, "name": {{ site.title | jsonify }}, "item": "{{ site.url }}/" },
       { "@type": "ListItem", "position": 2, "name": {{ page.title | jsonify }}, "item": "{{ _url }}" }
     ]
   }
