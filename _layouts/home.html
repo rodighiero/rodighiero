@@ -222,7 +222,7 @@ width that still shows 3 columns. {%- endcomment -%}
       {%- assign _events = site.data.home_cards.events | sort: 'date' | reverse -%}
       {%- for _event in _events %}{% include card-event.html event=_event %}{% endfor %}
 
-      {% include card-action.html eyebrow="Action" venue="Publication network" label="Distant View" sublabel="This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen — wander in and see what emerged." action="view:network" year="now" media="network-preview.svg" gcclick=gc_network_click gctitle=gc_network_title %}
+      {% include card-action.html eyebrow="Action" venue="Publication network" label="Distant View" sublabel="This map reads each publication in full and sets it beside what it most resembles. The groupings were measured, not chosen. Wander in and see what emerged." action="view:network" year="now" media="network-preview.svg" gcclick=gc_network_click gctitle=gc_network_title %}
       {%- assign _cluster_n = 0 -%}
       {%- assign _clusters = site.data.network.clusters -%}
       {%- assign _cluster_slots = _clusters.size | plus: 1 -%}
