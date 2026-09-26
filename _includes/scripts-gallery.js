@@ -374,9 +374,16 @@ function releaseBioHeight(e) {
   if (e.target !== bioShell || e.propertyName !== 'height') return;
   bioShell.style.height = '';
   bioShell.style.overflow = '';
+  if (document.documentElement.dataset.bioVisible === '0') hideBio();
   if (document.body.dataset.view === 'gallery') scheduleWidthPass(); // the scrollbar may go
 }
+// A closed bio is hidden="until-found" rather than inert, because find-in-page skips
+// inert text: the browser can then match inside it and fires beforematch to open it.
+// It skips the contents' rendering, so it goes on only once the fade has run, and
+// comes off before the open travel measures scrollHeight.
+function hideBio() { bioShell.setAttribute('hidden', 'until-found'); }
 function setBioVisible(visible, persist, animate) {
+  if (visible) bioShell.removeAttribute('hidden');
   if (animate && motionOK()) {
     // scrollHeight ignores the clip, so one read gives both ends of the travel.
     var full = bioShell.scrollHeight;
@@ -387,13 +394,13 @@ function setBioVisible(visible, persist, animate) {
   } else {
     bioShell.style.height = '';
     bioShell.style.overflow = '';
+    if (!visible) hideBio();
   }
   document.documentElement.dataset.bioVisible = visible ? '1' : '0';
   bioToggle.setAttribute('aria-expanded', visible ? 'true' : 'false');
   var label = visible ? 'Hide profile' : 'Show profile';
   bioToggle.setAttribute('aria-label', label);
   bioToggle.setAttribute('title', label);
-  bioShell.inert = !visible; // keep a collapsed masthead out of the tab order
   if (persist !== false) {
     try { localStorage.setItem('bioVisible', visible ? '1' : '0'); } catch (e) {}
   }
@@ -401,11 +408,14 @@ function setBioVisible(visible, persist, animate) {
   // where releaseBioHeight never fires.
   if (document.body.dataset.view === 'gallery') scheduleWidthPass();
 }
-// Sync the button and inert state to what <head> restored.
+// Sync the button and hidden state to what <head> restored.
 setBioVisible(document.documentElement.dataset.bioVisible !== '0', false, false);
 bioToggle.addEventListener('click', function() {
   setBioVisible(document.documentElement.dataset.bioVisible === '0', true, true);
 });
+// Instant, since the browser scrolls to the match straight away; and not persisted,
+// since a search is a passing reason to look rather than a choice of layout.
+bioShell.addEventListener('beforematch', function() { setBioVisible(true, false, false); });
 bioShell.addEventListener('transitionend', releaseBioHeight);
 bioShell.addEventListener('transitioncancel', releaseBioHeight);
 

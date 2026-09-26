@@ -356,6 +356,9 @@ footer cite {
   /* The masthead is the whole sheet, so undo a persisted collapse at its specificity. */
   .bio-shell,
   html[data-bio-visible="0"] .bio-shell { height: auto; overflow: visible; margin-bottom: 0; opacity: 1; }
+  /* …and the UA's rule for hidden="until-found": content-visibility where it is
+     supported, display where it falls back to plain `hidden`. */
+  .bio-shell[hidden] { display: block; content-visibility: visible; }
   .header { display: block; margin-bottom: 0; }
   .header .card-media { display: none; }
   .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }

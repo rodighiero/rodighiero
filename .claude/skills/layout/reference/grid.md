@@ -193,8 +193,14 @@ jumps, which is the one thing the rule exists to prevent.) `prefers-reduced-moti
 pin entirely and lets the state flip instantly.
 
 The JS owns only the state: it flips the attribute, updates `aria-expanded`/label/title,
-persists, and sets `.inert` on the shell — a panel clipped to zero height still holds real
-links, which would otherwise stay in the tab order. It also calls `scheduleWidthPass()` on
+persists, and sets `hidden="until-found"` on a closed shell — a panel clipped to zero
+height still holds real links, which would otherwise stay in the tab order. Not `inert`,
+which it used to be: find-in-page skips inert text, whereas an until-found panel is
+searched, and a match fires `beforematch`, which opens it (instantly, unpersisted). The
+attribute skips rendering the contents, so it is set only after the close travel ends
+(`releaseBioHeight`) and removed before the open travel reads `scrollHeight`; where it is
+unsupported it degrades to plain `hidden`, the same invisible panel. Print overrides it
+(`.bio-shell[hidden]`), since the masthead is the printed sheet. It also calls `scheduleWidthPass()` on
 toggle and on the height's `transitionend`, not because the masonry depends on the header
 (tiles sit inside `#publications`, which merely moves) but because losing ~400px of page can
 take a scrollbar with it, and a scrollbar is width, which is the column count. If it didn't,
