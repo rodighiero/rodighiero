@@ -161,8 +161,8 @@ offline it was ceremony over a one-time build, and D3 was a 93KB-gzipped depende
   guessing which convention applies. Guards exist only where absence is
   real: `networkApi` (built lazily on first network open) and `#net-data`. The same rule
   holds in `_includes/scripts-site.js`, shared by both layouts: `#live-msg` is unconditional
-  in each, and a `.cite-btn` only exists inside publication.html's `<article>` beside the
-  `.cite-data` its own `page.doi` conditional emits.
+  in each, and a `.cite-btn` only exists inside publication.html's `<article>`, always
+  beside its `.cite-data` (both are unconditional; only the DOI/URL pill needs `page.doi`).
 - **A scheduled pass is width-gated** — `layoutIfPageResized()` packs only when the page's
   own width actually moved, which is safe because no column change can happen without one.
   A new caller that needs a pack for some *other* reason must call `layoutMasonry()` itself,

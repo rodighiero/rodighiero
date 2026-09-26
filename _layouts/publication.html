@@ -154,9 +154,9 @@
   {% include card-meta.html item=page %}
   <h1>{{ page.title }}</h1>
   {% include credit-block.html item=page %}
-  {% if page.doi %}<div class="doi"><button class="cite-btn pill-btn" type="button">Cite</button><button class="print-btn pill-btn" type="button">Print</button><a class="pill-btn" href="{{ page.doi }}">{{ _doi | default: 'URL' }}</a></div>{% endif %}
+  <div class="doi"><button class="cite-btn pill-btn" type="button">Cite</button><button class="print-btn pill-btn" type="button">Print</button>{% if page.doi %}<a class="pill-btn" href="{{ page.doi }}">{{ _doi | default: 'URL' }}</a>{% endif %}</div>
   </div>
-  {% if page.doi %}{% include publication-cite.html item=page %}{% endif %}
+  {% include publication-cite.html item=page %}
   <div class="content">
     {% assign _content_parts = content | split: '<!--more-->' %}
     {% if _content_parts.size > 1 %}<div class="body hyphenate-prose"><div class="abstract">{{ _content_parts[0] }}</div>{{ _content_parts[1] | autolink_urls }}</div>{% else %}<div class="body hyphenate-prose">{{ content | autolink_urls }}</div>{% endif %}

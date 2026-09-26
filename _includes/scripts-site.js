@@ -29,8 +29,8 @@ function promoteLazyImages(root) {
   });
 })();
 
-/* Copy the formatted citation. Unguarded: #live-msg is in both layouts, and the same
-   `page.doi` conditional emits a .cite-btn and its .cite-data. */
+/* Copy the formatted citation. Unguarded: #live-msg is in both layouts, and every
+   .cite-btn is emitted beside its .cite-data. */
 (function() {
   var liveMsg = document.getElementById('live-msg');
   document.querySelectorAll('.cite-btn').forEach(function(btn) {
