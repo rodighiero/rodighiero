@@ -222,7 +222,9 @@ body[data-view="gallery"] #publications:not(.ready) { visibility: hidden; }
 }
 
 .card-text { margin-top: 0.4rem; }
-/* Looser than the bio's hyphenation: a card is narrower still. Descriptions only — a
+/* Looser than the bio's hyphenation, on the same measure: a description runs a line or
+   three, where one unbroken long word leaves a gap the text never recovers from, while
+   the bio's paragraphs have room to even out. Descriptions only — a
    byline never wears the class, since a split surname reads as another name. */
 .card .hyphenate-prose { --hyphen-word: 6; --hyphen-min: 3; }
 .card-meta { font-size: var(--text-xxs); }
