@@ -320,7 +320,7 @@ body[data-view="gallery"] .card[data-gap]::after {
 .publication .card-media { background: var(--tint-surface); }
 
 
-/* On the gallery's own columns, so the quote's edge lands on a card's at every count. */
+/* On the gallery's own columns, so the quote's edges land on the cards' at every count. */
 footer {
   display: grid;
   grid-template-columns: repeat(var(--cols), 1fr);
@@ -328,9 +328,11 @@ footer {
   margin-top: 6rem;
   padding: 3rem 0 4rem;
 }
-/* The last two columns at any count (the whole row at two). */
+/* The last two columns at any count (the whole row at two), padded as a card pads
+   itself, so the text's edges land on the card text's rather than the card box's. */
 footer :is(blockquote, cite) {
   grid-column: -3 / -1;
+  padding: 0 var(--card-pad);
   font-size: var(--text-xs);
   color: var(--muted);
 }
