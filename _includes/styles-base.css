@@ -144,8 +144,9 @@ main:focus { outline: none; }
    never fewer than 4 letters either side, never more than 2 hyphenated lines in a row.
    Worn by publication.html's .body, home.html's bio columns, and the special cards'
    descriptions — all three of which had once declared these six lines for themselves.
-   Two numbers, not six. The shorter a text gets the more a single long word costs, so
-   the special cards run looser terms than the bio and the article body do (6/3/3 against 8/4/4), and
+   Two numbers, not six. The narrower a measure gets the more a single long word costs, so
+   the homepage's bio and special cards, on one card's width, run looser terms than the
+   article body does (6/3/3 against 8/4/4), and
    that is the whole of the difference between them: --hyphen-word is the shortest word
    worth splitting and --hyphen-min the letters that must stay either side. One property
    for before and after, because no caller has ever wanted them apart. The rule below is
