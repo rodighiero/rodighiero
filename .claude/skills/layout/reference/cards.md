@@ -142,10 +142,11 @@ fades non-matching nodes and edges (and links touching them) instead of hiding t
 appended to each card's `data-search` haystack. Only distinctive full names are indexed, not
 the 2-letter ISO codes, which as substrings would match unrelated words.
 
-Author/editor/translator/preface lines come from `_includes/credit-short.html` — the `credit_short`
-filter in `publication_credits.rb` — which strips
-"Rodighiero" and prefixes with `with` / `edited with` / `translated with` / `preface with`
-(or `edited by` / `translated by` / `preface by` when Dario is not in the list).
+Author/editor/preface/translator lines, in that order, come from `_includes/credit-short.html`
+— the `credit_short` filter in `publication_credits.rb`, whose `ROLES` table sets the order —
+which strips "Rodighiero" and prefixes with `with` / `edited with` / `preface with` /
+`translated with` (or `edited by` / `preface by` / `translated by` when Dario is not in the
+list).
 
 ## The three filters
 

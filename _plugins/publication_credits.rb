@@ -18,7 +18,8 @@ module Jekyll
   module CreditFilter
     ME = 'Rodighiero'
 
-    # [field, prefix when Dario is among the names, prefix when he is not]
+    # [field, prefix when Dario is among the names, prefix when he is not], in the
+    # order a card lists them.
     ROLES = [
       ['author',      'with ',            ''],
       ['editor',      'edited with ',     'edited by '],
@@ -28,15 +29,15 @@ module Jekyll
     ].freeze
 
     def credit_short(item)
-      parts = ROLES.map do |field, with, by|
+      parts = ROLES.to_h do |field, with, by|
         names = item[field].to_s.split(' and ').map(&:strip)
         others = names.reject { |n| n.include?(ME) }
-        next '' if others.empty?
+        next [field, ''] if others.empty?
 
-        (others.size < names.size ? with : by) + join_names(others)
+        [field, (others.size < names.size ? with : by) + join_names(others)]
       end
-      parts[1] = '' unless parts[0].empty?
-      parts.reject(&:empty?)
+      parts.delete('editor') unless parts['author'].empty?
+      parts.values.reject(&:empty?)
            .each_with_index.map { |p, i| i.zero? ? p : p[0].upcase + p[1..] }
            .join('. ')
     end

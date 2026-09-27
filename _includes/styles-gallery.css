@@ -224,9 +224,10 @@ body[data-view="gallery"] #publications:not(.ready) { visibility: hidden; }
 .card-text { margin-top: 0.4rem; }
 /* The homepage's prose — bio columns and special-card descriptions — shares one measure
    (a card's), so it shares one hyphenation, looser than the article body's: at ~251px
-   one unbroken long word leaves a gap a short text never recovers from. Prose only —
-   titles and bylines never wear the class, since a split surname reads as another name. */
-.header .bio-col, .card .hyphenate-prose { --hyphen-word: 6; --hyphen-min: 3; }
+   one unbroken long word leaves a gap a short text never recovers from. This file is
+   the homepage's alone, so the bare class is the scope. Titles and bylines never wear
+   it, since a split surname reads as another name. */
+.hyphenate-prose { --hyphen-word: 6; --hyphen-min: 3; }
 .card-meta { font-size: var(--text-xxs); }
 
 .card-media img,
