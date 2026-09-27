@@ -133,8 +133,9 @@ main:focus { outline: none; }
   margin-bottom: 0.3rem;
 }
 .card-meta .venue { font-style: italic; }
-/* The line under a card title: an action or filter card's description. */
-.card-text { font-size: var(--text-xs); line-height: var(--lh-normal); color: var(--fg); }
+/* The lines under a card title: a card's byline, a special card's description. Loose,
+   as the bio is, so the homepage's small running text shares one leading. */
+.card-text { font-size: var(--text-xs); line-height: var(--lh-loose); color: var(--fg); }
 /* Opt-in hairline frame for a thumbnail/figure image (publication front matter's
    img_border, or a figure's class="bordered"). Shared by home.html's .card-media
    and publication.html's .body figure. */
