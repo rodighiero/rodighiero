@@ -22,8 +22,8 @@ module Jekyll
     ROLES = [
       ['author',      'with ',            ''],
       ['editor',      'edited with ',     'edited by '],
-      ['translator',  'translated with ', 'translated by '],
       ['preface',     'preface with ',    'preface by '],
+      ['translator',  'translated with ', 'translated by '],
       ['interviewer', 'interview with ',  'interview by '],
     ].freeze
 
