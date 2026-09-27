@@ -334,14 +334,12 @@ footer :is(blockquote, cite) {
   grid-column: -3 / -1;
   padding: 0 var(--card-pad);
   font-size: var(--text-xs);
+  line-height: var(--lh-loose);
   color: var(--muted);
 }
 /* At one column -3 has no line to land on and would add an implicit column. */
 body[data-cols="1"] footer :is(blockquote, cite) { grid-column: 1 / -1; }
-footer blockquote {
-  line-height: var(--lh-loose);
-  margin: 0 0 0.25rem;
-}
+footer blockquote { margin: 0 0 0.25rem; }
 footer cite {
   font-style: normal;
   text-align: right;
