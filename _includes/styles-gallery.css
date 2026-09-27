@@ -99,6 +99,8 @@ html[data-bio-visible="0"] .bio-shell { height: 0; overflow: hidden; margin-bott
    its own margin as the minimum gap where there is none (a row to itself). */
 .header-about { display: flex; flex-direction: column; }
 .header-about .card-media { flex-grow: 1; }
+/* One step up the scale from a card title, so the page's name outranks its entries. */
+.header-about .card-title { font-size: var(--text-lg); }
 /* At three columns the four blocks don't divide evenly: send all three paragraphs to
    the second row rather than stranding the last one under the portrait. */
 body[data-cols="3"] .header .bio-col { grid-row: 2; }
