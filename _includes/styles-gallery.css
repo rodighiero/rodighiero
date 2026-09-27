@@ -339,7 +339,7 @@ footer :is(blockquote, cite) {
 /* At one column -3 has no line to land on and would add an implicit column. */
 body[data-cols="1"] footer :is(blockquote, cite) { grid-column: 1 / -1; }
 footer blockquote {
-  line-height: var(--lh-normal);
+  line-height: var(--lh-loose);
   margin: 0 0 0.25rem;
 }
 footer cite {
