@@ -191,5 +191,6 @@ offline it was ceremony over a one-time build, and D3 was a 93KB-gzipped depende
 | Bio clipped under its own overflow | an open height got pinned and went stale |
 | Top pixel row shaved off the bio's first line | the shell is clipping while open — `overflow: hidden` escaped the collapsed rule and the in-flight pin |
 | Stacked cards unevenly spaced after a cold first load | `packWhenFontsReady()` is gone, or was moved to the event Safari never fires (`loadingdone`), so the gallery kept the fallback font's heights |
+| Page stays thousands of px too tall after a filter, or scrolls sideways after narrowing the window | the in-flight `overflow-x: clip` on `#publications.animating` was removed — it is what makes the gallery lay out again once the tiles land (`reference/motion.md`) |
 | Tiles overlap after some non-resize change | it went through `scheduleWidthPass()`, which packs only on a width change — call `layoutMasonry()` |
 | Empty frame where a card's image should be | the after-idle thumbnail warming (`lazy` → `eager`) didn't run |

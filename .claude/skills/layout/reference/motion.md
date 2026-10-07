@@ -37,6 +37,20 @@ instant**. `layoutMasonry()` runs synchronously inside the change, in the same t
 display flips, so the tiles get one destination rather than a second one written a frame
 into the movement.
 
+**The armed state also clips sideways** (`#publications.animating { overflow-x: clip }`), and
+that rule carries the page's scroll extent, not its looks. Scrollable overflow counts each tile
+where its transform stands at the *last layout*, and in a flight that layout runs as the
+transitions start, with every tile still at its old slot; a transform animation never lays out
+again. Measured in Safari: a filter to three results left the page 4776px tall where 1357 was
+right (blank, scrollable space under the footer), and narrowing the window from four columns
+to two left the page 1248px wide in a 756px window. Both stayed until something
+else happened to lay the gallery out. The clip keeps the dropped column out of the page during
+the flight, and removing it when the tiles land is a real style change that lays the gallery
+out, now at rest. It is horizontal only, so a tile travelling up from below the new height is
+never cut, and it exists only for the ~0.4s of a flight. The cost is a focus ring on an
+outer-column card being clipped during that flight. `overflow-clip-margin` would spare it,
+but Safari does not support it.
+
 `applySearch()` deliberately does **not** lay out — it decides which tiles show, and packing
 them is the caller's to ask for, because only the caller knows when. It schedules nothing,
 so `layoutMasonry()` has nothing to cancel (`grid.md`, the width gate).

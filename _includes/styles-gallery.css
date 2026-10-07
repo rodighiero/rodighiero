@@ -278,6 +278,13 @@ body[data-view="gallery"] .card {
 /* The real tiles travel to their new slots on a spring (2.8% overshoot), armed only
    while a change is in flight — the first layout and resizes stay instant. This
    replaces .card's transition outright, so background and box-shadow are restated. */
+/* Scrollable overflow counts a tile where its transform stands at the last layout, and
+   that layout runs as the flight starts, with every tile still at its old slot: nothing
+   lays out again once they land. So a filter left the page thousands of pixels too tall,
+   and a column lost to a narrower window left it scrolling sideways. Clipping sideways
+   while in flight keeps the dropped column out of the page; taking the clip off as the
+   tiles land is a layout, which counts them where they came to rest. */
+body[data-view="gallery"] #publications.animating { overflow-x: clip; }
 body[data-view="gallery"] #publications.animating .card {
   transition:
     transform var(--tile-move) var(--spring-tile),
