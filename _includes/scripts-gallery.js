@@ -163,10 +163,10 @@ function layoutMasonry(synced) {
   }
 }
 /* A scheduled pass exists for one reason: the page's width may have changed (a
-   resize, or the bio collapse taking a scrollbar with it). Above one column the width
-   is quantized to the grid, so most frames of a drag find nothing to do. A pass
-   queued before a synchronous layout finds nothing changed either. No pass on image
-   load: every thumbnail carries its dimensions. */
+   resize, or a scrollbar coming or going as the page grows or shrinks). Above one
+   column the width is quantized to the grid, so most frames of a drag find nothing to
+   do. A pass queued before a synchronous layout finds nothing changed either. No pass
+   on image load: every thumbnail carries its dimensions. */
 var layoutFrame = 0;
 /* Text carries no dimensions, though. A pack's own measuring is what requests a face
    (Nunito at boot, a latin-ext or italic face a filter first reveals), so it measures
@@ -189,7 +189,11 @@ function scheduleWidthPass() {
   if (layoutFrame) return;
   layoutFrame = requestAnimationFrame(function() { layoutFrame = 0; layoutIfPageResized(); });
 }
-window.addEventListener('resize', scheduleWidthPass);
+/* Watched on <html> rather than on window resize: its box is the viewport less any
+   classic scrollbar, so it also changes when a filter or the bio collapse makes the
+   scrollbar come or go, which fires no resize event. It changes height on every pack
+   too; the width gate drops those. */
+new ResizeObserver(scheduleWidthPass).observe(document.documentElement);
 
 // ── Thumbnail warming ──
 // A lazy or filtered-out card has no picture yet the first time it returns, so once
@@ -220,17 +224,26 @@ function withCrossfade(fn) {
    rasterised snapshots (a photo once dropped out mid-slide): the masonry's own
    transforms move the real tiles. A surviving tile slides, a leaving one is cut, an
    arriving one takes its slot outright and fades in. */
-var TILE_MOVE_MS = parseFloat(rootStyle.getPropertyValue('--tile-move')) * 1000;
-var ARM_SLACK_MS = 80; // the spring still settles just past its nominal duration
-var animatingTimer = null;
+/* Resolves once every transition running on `el` (and inside it, with `subtree`) has
+   finished or been cancelled. Called after the change's last style write in the same
+   task, and getAnimations() flushes style, so the transitions it starts are counted. */
+function transitionsSettled(el, subtree) {
+  return Promise.allSettled(el.getAnimations({ subtree: subtree })
+    .map(function(a) { return a.finished; }));
+}
 /* Arms the tile transition for one change (a filter, or a column-count change) and
-   disarms it after, since ordinary passes must stay instant. Re-arming extends it. */
+   disarms it once the tiles have landed, since ordinary passes must stay instant.
+   The wait starts after the writes (a microtask: this task's writes come first), and
+   only the latest arming disarms, so a change mid-flight extends it. */
+var tileMotionRun = 0;
 function armTileMotion() {
   container.classList.add('animating');
-  clearTimeout(animatingTimer);
-  animatingTimer = setTimeout(function() {
-    container.classList.remove('animating');
-  }, TILE_MOVE_MS + ARM_SLACK_MS);
+  var run = ++tileMotionRun;
+  queueMicrotask(function() {
+    transitionsSettled(container, true).then(function() {
+      if (run === tileMotionRun) container.classList.remove('animating');
+    });
+  });
 }
 function withTileTransition(fn) {
   cancelPendingSearch(); // a deliberate change supersedes a pending typed one
@@ -381,23 +394,25 @@ mobileQuery.addEventListener('change', applyResponsiveView);
 // the state, and hands the height back to the stylesheet when it ends. Never at rest.
 var bioToggle = document.querySelector('.bio-toggle');
 var bioShell = document.getElementById('bio');
-// On cancel too, or an interrupted toggle would leave a pin behind. The clip goes
-// with it, since an open shell must not clip the trimmed first line.
-function releaseBioHeight(e) {
-  if (e.target !== bioShell || e.propertyName !== 'height') return;
+// The clip goes with the pin, since an open shell must not clip the trimmed first line.
+function releaseBioHeight() {
   bioShell.style.height = '';
   bioShell.style.overflow = '';
   if (document.documentElement.dataset.bioVisible === '0') hideBio();
-  if (document.body.dataset.view === 'gallery') scheduleWidthPass(); // the scrollbar may go
 }
+// Only the latest toggle releases: an interrupted travel's transitions settle (as
+// cancelled) while the one that replaced it is still pinned.
+var bioRun = 0;
 // A closed bio is hidden="until-found" rather than inert, because find-in-page skips
 // inert text: the browser can then match inside it and fires beforematch to open it.
 // It skips the contents' rendering, so it goes on only once the fade has run, and
 // comes off before the open travel measures scrollHeight.
 function hideBio() { bioShell.setAttribute('hidden', 'until-found'); }
 function setBioVisible(visible, persist, animate) {
+  var run = ++bioRun;
+  var travel = animate && motionOK();
   if (visible) bioShell.removeAttribute('hidden');
-  if (animate && motionOK()) {
+  if (travel) {
     // scrollHeight ignores the clip, so one read gives both ends of the travel.
     var full = bioShell.scrollHeight;
     bioShell.style.overflow = 'hidden';
@@ -417,9 +432,12 @@ function setBioVisible(visible, persist, animate) {
   if (persist !== false) {
     try { localStorage.setItem('bioVisible', visible ? '1' : '0'); } catch (e) {}
   }
-  // A scrollbar appearing or going is a width change; this covers reduced motion,
-  // where releaseBioHeight never fires.
-  if (document.body.dataset.view === 'gallery') scheduleWidthPass();
+  // After every write, so the state flip's margin and opacity transitions count too.
+  if (travel) {
+    transitionsSettled(bioShell, false).then(function() {
+      if (run === bioRun) releaseBioHeight();
+    });
+  }
 }
 // Sync the button and hidden state to what <head> restored.
 setBioVisible(document.documentElement.dataset.bioVisible !== '0', false, false);
@@ -429,8 +447,6 @@ bioToggle.addEventListener('click', function() {
 // Instant, since the browser scrolls to the match straight away; and not persisted,
 // since a search is a passing reason to look rather than a choice of layout.
 bioShell.addEventListener('beforematch', function() { setBioVisible(true, false, false); });
-bioShell.addEventListener('transitionend', releaseBioHeight);
-bioShell.addEventListener('transitioncancel', releaseBioHeight);
 
 function normalize(s) {
   return s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();

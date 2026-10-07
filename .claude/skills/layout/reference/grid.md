@@ -132,8 +132,11 @@ those return before a column is recorded.
 
 ## The width gate
 
-Everything that schedules a pass — the window `resize` listener and the bio collapse's two
-calls — does so for one reason: the page's own width may have changed. So the scheduled
+Everything that schedules a pass — one `ResizeObserver` on `<html>` — does so for one reason:
+the page's own width may have changed. `<html>`'s box is the viewport less any classic
+scrollbar, so it changes on a window resize *and* when a scrollbar comes or goes because a
+filter or the bio collapse changed the page's height, which fires no `resize` event. It also
+changes height on every pack; those deliveries meet the gate and do nothing. So the scheduled
 function asks before packing. `layoutIfPageResized()` runs `syncPageWidth()` and returns
 unless `pageWidth` actually moved.
 
@@ -202,9 +205,11 @@ cannot go stale, so a resize at any time in either state needs no handling at al
 
 A pixel number does appear, but only **during** the travel: `height: auto` is not an
 interpolable value in most engines, so `setBioVisible` pins the height the panel currently
-occupies, flips the state, and hands the height back to the stylesheet on `transitionend` —
-and on `transitioncancel` too, or an interrupted double-click would leave a pin behind, which
-is the stale number all over again. (`interpolate-size: allow-keywords` would remove even
+occupies, flips the state, and hands the height back to the stylesheet once the shell's
+transitions settle — `Promise.allSettled` over `getAnimations()`, so a cancelled travel
+settles too and cannot leave a pin behind, which would be the stale number all over again.
+Only the latest toggle releases (`bioRun`): an interrupted travel settles as cancelled while
+the reversal that replaced it is still pinned, and releasing then would snap it. (`interpolate-size: allow-keywords` would remove even
 that and was tried first, but it is too new to rely on: where it is missing the height simply
 jumps, which is the one thing the rule exists to prevent.) `prefers-reduced-motion` skips the
 pin entirely and lets the state flip instantly.
@@ -217,11 +222,10 @@ searched, and a match fires `beforematch`, which opens it (instantly, unpersiste
 attribute skips rendering the contents, so it is set only after the close travel ends
 (`releaseBioHeight`) and removed before the open travel reads `scrollHeight`; where it is
 unsupported it degrades to plain `hidden`, the same invisible panel. Print overrides it
-(`.bio-shell[hidden]`), since the masthead is the printed sheet. It also calls `scheduleWidthPass()` on
-toggle and on the height's `transitionend`, not because the masonry depends on the header
-(tiles sit inside `#publications`, which merely moves) but because losing ~400px of page can
-take a scrollbar with it, and a scrollbar is width, which is the column count. If it didn't,
-the pass costs nothing: see the width gate below.
+(`.bio-shell[hidden]`), since the masthead is the printed sheet. It schedules no pass
+itself: the masonry does not depend on the header (tiles sit inside `#publications`, which
+merely moves), and when losing ~400px of page takes a scrollbar with it, that width change
+reaches the observer on `<html>` like any other (see the width gate).
 
 Bio prose itself lives in `README.md`, split into three paragraphs with `<!-- split -->`
 comments; `_plugins/system_readme.rb` exposes it as `site.data.readme_content`, so `README.md`

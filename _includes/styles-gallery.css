@@ -1,7 +1,7 @@
 /* The homepage's own rules — motion tokens, masthead, search bar, cards, masonry,
    footer — inlined by home.html after styles-base.css. Liquid: _mobile_max. */
-/* Springs from scripts/spring-easing.js; the JS reads --tile-move back. No bezier
-   fallback: light-dark() shipped after linear() everywhere. */
+/* Springs from scripts/spring-easing.js. No bezier fallback: light-dark() shipped
+   after linear() everywhere. */
 :root {
   --spring-settle: linear(0, 0.034, 0.112, 0.211, 0.316, 0.417, 0.51, 0.593, 0.665,
     0.726, 0.777, 0.82, 0.855, 0.884, 0.908, 0.927, 0.942, 0.954, 0.964, 0.971,

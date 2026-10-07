@@ -97,8 +97,8 @@ deliberately cut rather than animated: `reference/motion.md`.
 `.bio-shell` is the collapsing wrapper; the state is one attribute (`data-bio-visible`) on
 `<html>`, persisted under `bioVisible` and restored before first paint. **At rest the
 collapse holds no measurement** — open is `height: auto`, closed is 0. A pixel height
-exists only during the travel, pinned by `setBioVisible` and handed back on `transitionend`
-*and* `transitioncancel`. **`overflow: hidden` is on the same schedule** — inline while the
+exists only during the travel, pinned by `setBioVisible` and handed back once the shell's
+transitions settle (`getAnimations()`), by the latest toggle only. **`overflow: hidden` is on the same schedule** — inline while the
 travel runs, from the collapsed rule while it is closed, and absent while it is open, because
 the bio's first paragraph is trimmed to its cap height and sits flush on the shell's top
 edge. See the invariants below before changing any of that.
