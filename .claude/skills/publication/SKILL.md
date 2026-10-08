@@ -44,7 +44,8 @@ feeds: the **`plugins`** skill (`system_commit_date.rb`).
 
 ### Add a translation
 The translation is its own file with its own slug and its own front matter, carrying
-`lang: it|fr` and `translation_of: <original-slug>`. It shares the original's `thumb`.
+`lang: it|fr` and `translation_of: <original-slug>`. It points its `thumb` at a *different* figure from the original's folder, so the two cards
+don't repeat on the homepage — every translation on the site does this.
 That one field then drives the whole alternates set (the **`seo`** skill) and the forced
 dashed network edge (the **`network`** skill, which also explains why a translation is
 never embedded).
