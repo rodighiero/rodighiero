@@ -203,8 +203,9 @@ width that still shows 3 columns. {%- endcomment -%}
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         </button>
         {%- comment -%} One GoatCounter event for this toggle and the network card below.
-        The title is explicit, or count.js would report the raw SVG. {%- endcomment -%}
-        {%- assign gc_network_click = 'network-view' -%}
+        The title is explicit, or count.js would report the raw SVG. The path was
+        'network-view' until GoatCounter froze that path's first, raw-SVG title. {%- endcomment -%}
+        {%- assign gc_network_click = 'network' -%}
         {%- assign gc_network_title = 'Network view' -%}
         <button type="button" data-view="network" aria-label="Network view" aria-pressed="false" data-goatcounter-click="{{ gc_network_click }}" data-goatcounter-title="{{ gc_network_title }}">
           {%- comment -%} Same stroke as the other icons. The hexagon's edges span the gallery
