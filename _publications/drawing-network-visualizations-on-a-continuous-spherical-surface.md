@@ -6,7 +6,7 @@ type: "conference"
 author: "Dario Rodighiero"
 doi: "https://hdl.handle.net/11370/33d1eac9-ce4d-4417-98d8-bea7abdfbbf2"
 isbn: "9781728191348"
-thumb: "drawing-network-visualizations-on-a-continuous-spherical-surface/fig_008.webp"
+thumb: "drawing-network-visualizations-on-a-continuous-spherical-surface/fig_007.webp"
 redirect_from:
   - /Spherical-Surface
   - /Flat-Network-Conspiracy
