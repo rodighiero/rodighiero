@@ -5,7 +5,7 @@ venue: "Progetto Grafico"
 type: "journal"
 author: "Dario Rodighiero"
 issn: "1824-1301"
-thumb: "design-without-hands-rebuilding-a-web-application-with-ai/fig_003.webp"
+thumb: "design-without-hands-rebuilding-a-web-application-with-ai/fig_008.webp"
 ---
 What remains of design when the designer no longer draws any part of it? This essay answers through a single case study: a network visualization that lays a scientific community on a sphere, rebuilt in dialogue with an AI six years after its first publication. Behind the rebuild stands a long inheritance, from Ptolemy’s cartography to Peirce’s projection and open-source code, all turned against the same enemy: the unjust margin. And behind the inheritance stands a traditional figure, the architect who conceives but does not build. Across five working sessions the machine proposes and executes while the designer judges, refuses, and answers for the final result. Design without hands, the essay argues, is not authorship diminished but authorship sharpened.
 
