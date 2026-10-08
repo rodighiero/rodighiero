@@ -5,7 +5,7 @@ venue: "Progetto Grafico"
 type: "journal"
 author: "Dario Rodighiero"
 issn: "1824-1301"
-thumb: "design-without-hands-rebuilding-a-web-application-with-ai/fig_002.webp"
+thumb: "design-without-hands-rebuilding-a-web-application-with-ai/fig_004.webp"
 lang: it
 translation_of: design-without-hands-rebuilding-a-web-application-with-ai
 ---
