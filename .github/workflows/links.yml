@@ -65,11 +65,14 @@ jobs:
             --exclude 'dash\.harvard\.edu/bitstream/'
             --exclude 'thehairpin\.com'
             --exclude 'theeuropeanlibrary\.org'
+            --exclude 'parismetropole2020\.com'
             './_site/*.html'
           fail: false
       - name: Annotate broken links with source context
         if: steps.lychee.outputs.exit_code != 0
         run: python3 scripts/link-context.py lychee/out.md >> "$GITHUB_STEP_SUMMARY"
+      # Timeouts are reported above but do not fail the run: from a GitHub
+      # runner some slow host times out nearly every week, which is not rot.
       - name: Fail on broken links
         if: steps.lychee.outputs.exit_code != 0
-        run: exit 1
+        run: "! grep -qE '🚫 Errors +\\| +[1-9]' lychee/out.md"

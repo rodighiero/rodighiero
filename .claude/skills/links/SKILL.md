@@ -19,6 +19,9 @@ carries a hand-maintained `--exclude` list of hosts that block crawlers outright
 excluded because publisher landing pages behind a DOI answer inconsistently, so a resolving
 DOI still reports as broken.
 
+Timeouts appear in the report but **do not fail the run** — from a GitHub runner some slow
+host times out almost every week. Only lychee's `Errors` count turns the run red.
+
 Adding a host to `--exclude` is the right move when it blocks crawlers *categorically*. It is
 the wrong move for a single URL that has genuinely died — that one gets an archive fallback.
 
