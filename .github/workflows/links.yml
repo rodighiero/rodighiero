@@ -27,12 +27,14 @@ jobs:
           args: >-
             --no-progress
             --accept 200,202,206,302,403,429,999
-            --max-retries 2
+            --max-retries 3
+            --retry-wait-time 10
             --timeout 30
             --root-dir ${{ github.workspace }}/_site
             --fallback-extensions html
             --exclude-path _site/assets
             --exclude '^/$'
+            --exclude '^https?://purl\.org/dc/'
             --exclude 'linkedin\.com'
             --exclude 'fu-berlin\.de'
             --exclude 'cyber\.harvard\.edu'
@@ -62,6 +64,7 @@ jobs:
             --exclude 'are\.admin\.ch'
             --exclude 'dash\.harvard\.edu/bitstream/'
             --exclude 'thehairpin\.com'
+            --exclude 'theeuropeanlibrary\.org'
             './_site/*.html'
           fail: false
       - name: Annotate broken links with source context

@@ -139,7 +139,7 @@ Il Thesaurus del Nuovo soggettario potrebbe diventare un “servizio terminologi
 - Motta, Marta, e Melissa Tiberi. 2009. “Riflessi dello standard britannico BS 8723 nel Thesaurus del Nuovo soggettario.” *Bollettino AIB* 49 (3): 325–340.
 - “Multilingual Access to Subjects (MACS).” n.d. [macs.vub.ac.be/pub](https://macs.vub.ac.be/pub) ([archiviato](https://web.archive.org/web/20070613072941/https://macs.vub.ac.be/pub/)).
 - Svenonius, Elaine. 2000. *The Intellectual Foundation of Information Organization*. Cambridge, MA: MIT Press.
-- “TELplus.” n.d. [www.theeuropeanlibrary.org](http://www.theeuropeanlibrary.org/portal/organisation/cooperation/telplus/index.php).
+- “TELplus.” n.d. [www.theeuropeanlibrary.org](http://www.theeuropeanlibrary.org/portal/organisation/cooperation/telplus/index.php) ([archiviato](https://web.archive.org/web/20100528233141/http://www.theeuropeanlibrary.org/portal/organisation/cooperation/telplus/index.php)).
 - Van Assem, Mark, Véronique Malaisé, Alistair Miles, e Guus Schreiber. 2006. “A Method to Convert Thesauri to SKOS.” [www.cs.vu.nl](http://www.cs.vu.nl/~mark/papers/Assem06b.pdf) ([archiviato](https://web.archive.org/web/20070125043216/http://www.cs.vu.nl/~mark/papers/Assem06b.pdf)).
 - “Zthes.” n.d. [zthes.z3950.org](https://zthes.z3950.org/).
 
