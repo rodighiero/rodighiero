@@ -50,6 +50,16 @@ Below two columns there is no grid left to speak of: one full-width column, whic
 mobile layout. But the vertical gap between stacked tiles stays `CARD_W / 4` — a quarter of
 a *card*, not of that full-width column, which would make the gap itself the size of a card.
 
+## Before masonry is ready
+
+`#publications` starts as a responsive CSS grid, with cards in normal flow and
+`align-items: start` so the first JS pass measures each card's natural height. Only
+`#publications.ready` switches to a block with absolutely positioned cards. Transforms are
+suppressed until then, so a failed first pack still leaves readable publication links.
+The initial gallery/network choice is applied by the main script, with a failed network
+boot restoring the static gallery. With scripting disabled, a `<noscript>` stylesheet
+hides search, toggles and action/filter buttons; publication and event links remain.
+
 ## Everything else sits on those same columns
 
 The page is one grid, not a grid with a header and a footer beside it.
@@ -98,9 +108,9 @@ before the first paint) and for a reader with no JS.
 
 ## The 921px boundary
 
-Where the grid drops from 3 columns to 2, and where the view toggle, the filter count and the
-action/cluster tiles are hidden (event cards stay) and the network view is forced back to
-gallery.
+Where the grid drops from 3 columns to 2, the view toggle and action/cluster tiles are hidden
+(event cards stay) and the network view is forced back to gallery. The filter count is only
+visually hidden, so its status updates remain available to screen readers.
 
 The JS asks for it as a **`matchMedia` query** rather than measuring `innerWidth`, so it runs
 the identical test the CSS does: a media query is matched against the viewport *without* its

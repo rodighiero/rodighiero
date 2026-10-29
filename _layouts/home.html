@@ -129,9 +129,12 @@ width that still shows 3 columns. {%- endcomment -%}
 {% include styles-gallery.css %}
 {% include styles-network.css %}
   </style>
+  <noscript><style>
+    /* These controls need JavaScript; publication and event links work without it. */
+    .filters, .bio-toggle, .mode-toggle, .action, .filter { display: none; }
+  </style></noscript>
 </head>
 <body data-view="gallery">
-  <script>document.body.dataset.view = document.documentElement.dataset.initialView || 'gallery'</script>
   <a class="skip-link" href="#main">Skip to content</a>
   {% include site-toggle.html %}
   {%- comment -%} "profile", not "bio": the button collapses the whole masthead, and the

@@ -148,6 +148,11 @@ offline it was ceremony over a one-time build, and D3 was a 93KB-gzipped depende
   is how a large photograph dropped out of its tile mid-slide.
 - **The tile transition is armed only while a change is in flight** (`.animating` on
   `#publications`). The first layout writes transforms too, and it must stay instant.
+- **Cards stay in a static CSS grid until `.ready`.** The first pack measures their natural
+  heights (`align-items: start`), then enables absolute positioning only after writing every
+  slot and the container height. Do not hide the fallback gallery while it initializes.
+- **View buttons keep the shared keyboard focus ring.** The active-view tint identifies
+  the selected view; it does not identify which control has focus.
 - **`applySearch()` must not lay out.** It decides which tiles show; the caller asks for the
   pack, because only the caller knows whether it needs to be synchronous (it does, inside a
   tile transition). See `reference/motion.md`.

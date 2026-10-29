@@ -124,8 +124,8 @@ rule the same typography, a publication card gives its authors. Its meta line re
   sits at the top of the homepage until its entry is deleted.
 - Cluster cards sit one every `publications ÷ (clusters + 1)` entries, with the `view:network`
   card leading the publication flow, before the first publication.
-- The network and cluster tiles are hidden below 921px along with the view toggle and the filter
-  count; events stay.
+- The network and cluster tiles are hidden below 921px along with the view toggle; events
+  stay. The filter count is visually hidden while remaining available to screen readers.
 
 Publications render in one ordered loop in `publication_order.rb`'s order — year-descending,
 the current year (Forthcoming included) newest-added first, older years title-ascending — so

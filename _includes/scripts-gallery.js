@@ -92,7 +92,8 @@ function layoutMasonry(synced) {
   });
   /* Read every height in one pass, then write. checkVisibility() is "does it generate
      a box" — display:none on the tile (filter) or via CSS (mobile) — and ignores the
-     pre-.ready visibility:hidden, so the first pass still measures. null: not placed. */
+     visibility:hidden. The fallback grid aligns items to the top, so the first pass
+     measures their natural heights too. null: not placed. */
   var heights = [];
   tiles.forEach(function(p) {
     heights.push(p.checkVisibility() ? p.getBoundingClientRect().height : null);
@@ -381,7 +382,14 @@ viewButtons.forEach(function(b) {
     }
   });
 });
-setView(document.body.dataset.view, false); // written by the script under <body>
+// Keep the static gallery until initialization actually runs. A failed network boot
+// must also leave the publication links reachable in that fallback grid.
+try {
+  setView(document.documentElement.dataset.initialView || 'gallery', false);
+} catch (e) {
+  document.body.dataset.view = 'gallery';
+  throw e;
+}
 mobileQuery.addEventListener('change', applyResponsiveView);
 
 // ── Bio toggle ──
