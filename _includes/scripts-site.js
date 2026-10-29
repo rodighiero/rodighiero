@@ -35,18 +35,29 @@ function promoteLazyImages(root) {
   var liveMsg = document.getElementById('live-msg');
   document.querySelectorAll('.cite-btn').forEach(function(btn) {
     var label = btn.textContent;
-    btn.addEventListener('click', function() {
+    var resetTimer;
+    btn.addEventListener('click', async function() {
       var data = btn.closest('article').querySelector('.cite-data');
-      navigator.clipboard.writeText(data.textContent.trim()).then(function() {
+      clearTimeout(resetTimer);
+      btn.disabled = true;
+      btn.classList.remove('copied');
+      try {
+        await navigator.clipboard.writeText(data.textContent.trim());
         btn.textContent = 'Copied!';
         btn.classList.add('copied');
         liveMsg.textContent = 'Citation copied to clipboard.';
-        setTimeout(function() {
+      } catch (e) {
+        // Includes browsers where the Clipboard API is unavailable.
+        btn.textContent = 'Copy failed';
+        liveMsg.textContent = 'Could not copy citation. Please try again.';
+      } finally {
+        btn.disabled = false;
+        resetTimer = setTimeout(function() {
           btn.textContent = label;
           btn.classList.remove('copied');
           liveMsg.textContent = '';
         }, 1500);
-      });
+      }
     });
   });
 })();

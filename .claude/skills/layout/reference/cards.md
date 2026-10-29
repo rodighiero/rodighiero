@@ -157,3 +157,9 @@ which is what the type filter reads.
 
 All three are shareable in the URL (alongside `?view=`) and cleared together by Escape or by
 clicking the active view button.
+
+Whole-card navigation is delegated from `document` in `scripts-gallery.js`, so the network
+details panel's cloned publication cards work like the originals. Inner links, modifier
+clicks and selected text keep their native behaviour. The network clones the gallery card
+on selection without keeping a second cache; a filter that excludes the selected node also
+clears its details, and hovered labels are refitted when the stage resizes.

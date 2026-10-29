@@ -57,7 +57,8 @@ so `layoutMasonry()` has nothing to cancel (`grid.md`, the width gate).
 
 Typing is debounced by `SEARCH_SETTLE` (180 ms) so a burst of keystrokes animates once rather
 than restarting the tiles on every character, and `prefers-reduced-motion` falls through to
-instant filtering in both the CSS and the JS.
+instant filtering in both the CSS and the JS. The same callback updates the query string
+after applying the search; there is no separate URL timer to outlive a filter reset.
 
 ## A change of column count is the same event
 

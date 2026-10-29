@@ -2,17 +2,27 @@
 // (whose promoteLazyImages it calls).
 /* Print only once the lazy figures have loaded: Cmd/Ctrl+P and the Print button wait
    here, beforeprint covers the browser's own menu. false: nothing to wait for. */
+var pendingPrint = null;
 function printWhenImagesReady() {
-  var imgs = Array.from(document.querySelectorAll('img')).filter(function(i) { return !i.complete || i.naturalWidth === 0; });
+  if (pendingPrint) return true;
+  // complete includes failed images: they have already settled, so don't wait again.
+  var imgs = Array.from(document.querySelectorAll('img')).filter(function(i) { return !i.complete; });
   if (imgs.length === 0) return false;
-  promoteLazyImages();
-  Promise.all(imgs.map(function(img) {
+  pendingPrint = Promise.all(imgs.map(function(img) {
     return new Promise(function(resolve) {
-      img.addEventListener('load', resolve, { once: true });
-      img.addEventListener('error', resolve, { once: true });
-      setTimeout(resolve, 5000);
+      function done() {
+        clearTimeout(timer);
+        img.removeEventListener('load', done);
+        img.removeEventListener('error', done);
+        resolve();
+      }
+      img.addEventListener('load', done);
+      img.addEventListener('error', done);
+      var timer = setTimeout(done, 5000);
     });
-  })).then(function() { window.print(); });
+  })).then(function() { pendingPrint = null; window.print(); });
+  // Register listeners first, including for images already in the browser's cache.
+  promoteLazyImages();
   return true;
 }
 

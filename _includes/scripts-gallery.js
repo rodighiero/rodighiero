@@ -280,11 +280,12 @@ function cancelPendingSearch() {
 }
 function searchFromInput() {
   cancelPendingSearch();
-  if (!motionOK()) { applySearch(); layoutMasonry(); return; }
-  searchTimer = setTimeout(function() {
+  function run() {
     searchTimer = null;
-    withTileTransition(applySearch);
-  }, SEARCH_SETTLE);
+    withTileTransition(function() { applySearch(); updateURL(); });
+  }
+  if (motionOK()) searchTimer = setTimeout(run, SEARCH_SETTLE);
+  else run();
 }
 
 // ── View toggle ──
@@ -303,12 +304,6 @@ function updateURL() {
   var qs = params.toString();
   history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
 }
-var urlTimer = null;
-function scheduleURLUpdate() {
-  clearTimeout(urlTimer);
-  urlTimer = setTimeout(updateURL, 200);
-}
-
 /* Declared before the boot call to setView, which reads them and may build the
    network: declared later, `var` hoisting would run the initializers after it and
    null out a networkApi already built. */
@@ -505,7 +500,7 @@ try {
   }
   var _initialCluster = _params.get('cluster');
   if (_initialCluster) {
-    var _cEl = document.querySelector('[data-action="cluster:' + _initialCluster + '"]');
+    var _cEl = document.querySelector('[data-action="' + CSS.escape('cluster:' + _initialCluster) + '"]');
     if (_cEl && _cEl.dataset.slugs) setClusterFilter(_cEl, _initialCluster, false);
   }
 } catch (e) {}
@@ -582,7 +577,6 @@ searchInput.addEventListener('input', function() {
     clearStructuredFilter();
   }
   searchFromInput();
-  scheduleURLUpdate();
 });
 
 // "/" focuses the search; Escape resets filters, selection, focus and text selection.
@@ -603,14 +597,13 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-// The whole card links to its page, sparing inner links and text selection.
-publications.forEach(function(p) {
-  var href = p.querySelector('h2 a').getAttribute('href');
-  p.addEventListener('click', function(e) {
-    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    if (e.target.closest('a')) return;
-    var sel = window.getSelection();
-    if (sel && sel.toString().length > 0) return;
-    window.location.href = href;
-  });
+// Delegate so cloned network detail cards behave like their gallery originals.
+// Inner links, modifier clicks and text selection keep their native behaviour.
+document.addEventListener('click', function(e) {
+  if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  var p = e.target.closest('.publication');
+  if (!p || e.target.closest('a')) return;
+  var sel = window.getSelection();
+  if (sel && sel.toString().length > 0) return;
+  window.location.href = p.querySelector('h2 a').getAttribute('href');
 });

@@ -11,16 +11,12 @@ function buildNetwork() {
   var idxBySlug = {};
   pubs.forEach(function(p, i) { idxBySlug[p.slug] = i; });
 
-  // One detached clone of each gallery card, copied out per selection. Every node
-  // has its card: both come from the same _publications.
-  var cardCache = {};
+  // Every node has a gallery card. Clone it only when needed for the details panel.
   function cardFor(slug) {
-    if (!(slug in cardCache)) {
-      var src = document.querySelector('.publication[data-slug="' + CSS.escape(slug) + '"]');
-      cardCache[slug] = src.cloneNode(true);
-      cardCache[slug].removeAttribute('style');
-    }
-    return cardCache[slug].cloneNode(true);
+    var src = document.querySelector('.publication[data-slug="' + CSS.escape(slug) + '"]');
+    var card = src.cloneNode(true);
+    card.removeAttribute('style');
+    return card;
   }
 
   // Both baked by scripts/layout-network.js; a copy here would drift silently.
@@ -325,8 +321,10 @@ function buildNetwork() {
 
   // null means no filter. Misses leave the tab order and the accessibility tree too.
   function filter(slugs) {
+    if (selectedNode && slugs && !slugs.has(selectedNode.slug)) clearSelection();
     nodes.forEach(function(n, i) {
       var shown = !slugs || slugs.has(n.slug);
+      if (!shown) setNodeHover(i, false);
       nodeEls[i].classList.toggle('filtered-out', !shown);
       nodeEls[i].setAttribute('tabindex', shown ? 0 : -1);
       if (shown) nodeEls[i].removeAttribute('aria-hidden');
@@ -345,6 +343,10 @@ function buildNetwork() {
     if (!dim.w || !dim.h) return;
     fitLayout();
     placeNodes();
+    // A visible label needs its wrapping and edge offset refitted as well.
+    nodes.forEach(function(n, i) {
+      if (labelEls[i].textContent) setLabel(labelEls[i], n.title, n);
+    });
   }).observe(stage);
 
   networkApi = { filter: filter, clearSelection: clearSelection };
