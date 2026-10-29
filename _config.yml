@@ -24,6 +24,8 @@ exclude:
   - CLAUDE.md
   - README.md
   - scripts/
+  - pyproject.toml
+  - uv.lock
   - Gemfile
   - Gemfile.lock
   - gemfiles

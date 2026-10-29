@@ -1,4 +1,7 @@
+---
+layout: null
+---
 User-agent: *
 Allow: /
 
-Sitemap: https://dariorodighiero.com/sitemap.xml
+Sitemap: {{ site.url }}/sitemap.xml

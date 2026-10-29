@@ -5,15 +5,15 @@ layout: null
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>{{ site.url }}/</loc>
+    <loc>{{ site.url | append: '/' | escape }}</loc>
     <lastmod>{{ site.data.commit_date }}</lastmod>
-    <image:image><image:loc>{{ site.url }}/images/Dario-Rodighiero.webp</image:loc></image:image>
+    <image:image><image:loc>{{ site.url | append: '/images/Dario-Rodighiero.webp' | escape }}</image:loc></image:image>
   </url>
   {% for project in site.publications %}
   <url>
-    <loc>{{ site.url }}{{ project.url | remove: '.html' }}</loc>
+    <loc>{{ site.url | append: project.url | escape }}</loc>
     <lastmod>{{ project.commit_date }}</lastmod>
-    {% for figure in project.figures %}<image:image><image:loc>{{ site.url }}{{ figure }}</image:loc></image:image>
+    {% for figure in project.figures %}<image:image><image:loc>{{ site.url | append: figure | escape }}</image:loc></image:image>
     {% endfor %}</url>
   {% endfor %}
 </urlset>

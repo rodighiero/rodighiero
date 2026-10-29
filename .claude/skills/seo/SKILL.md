@@ -35,6 +35,7 @@ usually edit `_data/publication_types.yml` or a plugin, not the sixty-odd public
 | Concern | File |
 |---|---|
 | Tags both `<head>`s share verbatim | `_includes/site-head.html` |
+| Social image URL, alt text and intrinsic dimensions | `_includes/site-image.html` |
 | Homepage tags + the `WebSite`/`ProfilePage`/`Person` graph | `_layouts/home.html` (head) |
 | Publication tags + the work's JSON-LD | `_layouts/publication.html` (head) |
 | `schema` / `dc` / `citation_venue` / `container` per type | `_data/publication_types.yml` |

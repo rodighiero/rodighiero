@@ -7,6 +7,8 @@ which one is canonical; what each page then says about itself is `head.md`.
 
 Hand-written Liquid, not a gem. One `<url>` for the homepage, then one per
 `site.publications`. Each carries exactly three things: `loc`, `lastmod`, and its images.
+Publication URLs use `project.url` unchanged, matching each page's canonical. All URLs are
+XML-escaped.
 
 **Dropped on purpose:** `changefreq` and `priority` — Google stopped reading them in 2023.
 Don't add them back.
@@ -49,8 +51,9 @@ shallow checkout silently degrades every date to the fallback.
 
 ## `robots.txt`
 
-Four lines: `Allow: /` for everyone, plus the sitemap URL. Nothing is disallowed, and the
-`@cards/` note above is the reason to keep it that way.
+The rendered file allows `/` for everyone and declares the sitemap URL, derived from
+`site.url` through Liquid front matter. Nothing is disallowed, and the `@cards/` note above
+is the reason to keep it that way.
 
 ## URL aliases
 

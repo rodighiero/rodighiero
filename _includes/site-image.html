@@ -1,0 +1,9 @@
+{%- comment -%} One source image for both social cards; dimensions come from the file. {%- endcomment -%}
+{%- assign _image_url = site.url | append: include.src -%}
+{%- assign _image_dims = include.src | image_size -%}
+<meta property="og:image" content="{{ _image_url | escape }}">
+<meta property="og:image:alt" content="{{ include.alt | escape }}">
+{% if _image_dims.width %}<meta property="og:image:width" content="{{ _image_dims.width }}">
+<meta property="og:image:height" content="{{ _image_dims.height }}">{% endif %}
+<meta name="twitter:image" content="{{ _image_url | escape }}">
+<meta name="twitter:image:alt" content="{{ include.alt | escape }}">

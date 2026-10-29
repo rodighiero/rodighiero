@@ -1,5 +1,7 @@
 {% assign _meta_desc = "Dario Rodighiero researches data visualization, digital humanities, and Science and Technology Studies at Groningen and Harvard's metaLAB." %}
 {% assign _page_title = "Dario Rodighiero — Science and Technology Studies" %}
+{% assign _portrait = '/images/Dario-Rodighiero.webp' %}
+{% assign _portrait_dims = _portrait | image_size %}
 {%- comment -%} The mobile boundary, read by the pre-paint script, the CSS and the masonry
 script, which must agree. It is the gallery's own: gridWidth(3) + PAGE_PAD - 1, the last
 width that still shows 3 columns. {%- endcomment -%}
@@ -19,17 +21,9 @@ width that still shows 3 columns. {%- endcomment -%}
   <meta property="og:url" content="{{ site.url }}/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="{{ site.url }}/images/Dario-Rodighiero.webp">
-  <meta property="og:image:alt" content="Dario Rodighiero">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="675">
+  {% include site-image.html src=_portrait alt=site.title %}
   <meta name="twitter:title" content="{{ _page_title }}">
   <meta name="twitter:description" content="{{ _meta_desc }}">
-  <meta name="twitter:image" content="{{ site.url }}/images/Dario-Rodighiero.webp">
-  <meta name="twitter:image:alt" content="Dario Rodighiero">
-  <meta property="profile:first_name" content="Dario">
-  <meta property="profile:last_name" content="Rodighiero">
-  <meta property="profile:username" content="rodighiero">
   <meta name="DC.title" content="{{ _page_title }}">
   <meta name="DC.creator" content="Dario Rodighiero">
   <meta name="DC.subject" content="Data Visualization; Digital Humanities; Science and Technology Studies; Information Design; Mapping">
@@ -45,7 +39,7 @@ width that still shows 3 columns. {%- endcomment -%}
   <link rel="me" href="https://github.com/rodighiero/">
   <link rel="me" href="https://www.linkedin.com/in/dariorodighiero/">
   <link rel="me" href="{{ site.orcid }}">
-  <link rel="image_src" href="{{ site.url }}/images/Dario-Rodighiero.webp">
+  <link rel="image_src" href="{{ site.url }}{{ _portrait }}">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -53,7 +47,7 @@ width that still shows 3 columns. {%- endcomment -%}
       {
         "@type": "WebSite",
         "@id": "{{ site.url }}/#website",
-        "name": "Dario Rodighiero",
+        "name": {{ site.title | jsonify }},
         "url": "{{ site.url }}/",
         "description": "Personal website of Dario Rodighiero — researcher in data visualization, digital humanities, and Science and Technology Studies."
       },
@@ -64,7 +58,7 @@ width that still shows 3 columns. {%- endcomment -%}
         "isPartOf": { "@id": "{{ site.url }}/#website" },
         "dateModified": "{{ site.data.commit_date }}",
         "mainEntity": { "@id": "{{ site.orcid }}" },
-        "primaryImageOfPage": { "@id": "{{ site.url }}/images/Dario-Rodighiero.webp" }
+        "primaryImageOfPage": { "@id": "{{ site.url }}{{ _portrait }}" }
       },
       {
         "@type": "Person",
@@ -73,13 +67,13 @@ width that still shows 3 columns. {%- endcomment -%}
         "url": "{{ site.url }}/",
         "image": {
           "@type": "ImageObject",
-          "@id": "{{ site.url }}/images/Dario-Rodighiero.webp",
-          "url": "{{ site.url }}/images/Dario-Rodighiero.webp",
-          "contentUrl": "{{ site.url }}/images/Dario-Rodighiero.webp",
+          "@id": "{{ site.url }}{{ _portrait }}",
+          "url": "{{ site.url }}{{ _portrait }}",
+          "contentUrl": "{{ site.url }}{{ _portrait }}",
           "name": "Dario Rodighiero",
           "caption": "Dario Rodighiero, Assistant Professor of Science and Technology Studies at the University of Groningen",
-          "width": 1200,
-          "height": 675,
+          "width": {{ _portrait_dims.width | jsonify }},
+          "height": {{ _portrait_dims.height | jsonify }},
           "representativeOfPage": true
         },
         "description": "Dario Rodighiero researches data visualization, digital humanities, and Science and Technology Studies. Assistant Professor at University of Groningen, Principal at Harvard's metaLAB.",

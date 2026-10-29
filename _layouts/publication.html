@@ -32,13 +32,10 @@
   <meta property="og:locale" content="{{ site.data.languages[_lang].locale }}">
   {% for _t in _alt_pages %}<meta property="og:locale:alternate" content="{{ site.data.languages[_t.lang].locale }}">
   {% endfor %}
-  {%- comment -%} `thumb` is required; image_size yields nils on a file it cannot parse. {%- endcomment -%}
+  {%- comment -%} `thumb` is required and supplies both social cards. {%- endcomment -%}
   {% assign _social_img = page.thumb %}
-  {% assign _social_dims = _social_img | prepend: '/images/' | image_size %}
-  <meta property="og:image" content="{{ site.url }}/images/{{ _social_img }}">
-  <meta property="og:image:alt" content="{{ _title_attr }}">
-  {% if _social_dims.width %}<meta property="og:image:width" content="{{ _social_dims.width }}">
-  <meta property="og:image:height" content="{{ _social_dims.height }}">{% endif %}
+  {% assign _social_src = _social_img | prepend: '/images/' %}
+  {% include site-image.html src=_social_src alt=page.title %}
   {%- comment -%} No article:published_time: a bare year would become an invented
   1 January. {%- endcomment -%}
   <meta property="article:modified_time" content="{{ page.commit_date }}">
@@ -46,8 +43,6 @@
   {% endfor %}{% endif %}
   <meta name="twitter:title" content="{{ _title_attr }}">
   <meta name="twitter:description" content="{{ _excerpt_attr }}">
-  <meta name="twitter:image" content="{{ site.url }}/images/{{ _social_img }}">
-  <meta name="twitter:image:alt" content="{{ _title_attr }}">
   <!-- HighWire Press / Google Scholar citation tags -->
   <meta name="citation_title" content="{{ _title_attr }}">
   {%- comment -%} The authors, or an edited volume's editors: Scholar has no editor tag.

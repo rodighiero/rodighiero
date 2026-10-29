@@ -1,7 +1,8 @@
 # The head tags
 
-Three sources compose each `<head>`: `_includes/site-head.html` (verbatim on both pages), then
-the page-specific block in `_layouts/home.html` or `_layouts/publication.html`.
+Each `<head>` combines `_includes/site-head.html` (verbatim on both pages) with the
+page-specific block in `_layouts/home.html` or `_layouts/publication.html`. Both layouts
+use `_includes/site-image.html` for the social image tags, passing its path and alt text.
 
 ## Shared — `_includes/site-head.html`
 
@@ -155,11 +156,15 @@ homepage's `ProfilePage` as "Invalid datetime value for dateModified". See the `
 
 Title and description are two literal `assign`s at the very top of `home.html` — the only
 page whose description is written by hand rather than derived. It also carries
-`profile:first_name` / `last_name` / `username`, three `<link rel="me">` (GitHub, LinkedIn,
-ORCID), `<link rel="image_src">`, and `DCTERMS.modified` from `site.data.commit_date` — the
+three `<link rel="me">` (GitHub, LinkedIn, ORCID), `<link rel="image_src">`, and
+`DCTERMS.modified` from `site.data.commit_date` — the
 same repo-wide date the sitemap declares for this page, not the build clock, so a deploy that
 changes nothing a reader sees does not claim the page changed.
 
-Its `og:image` is always the portrait, at a hardcoded `1200×675`. A publication's is always
-`thumb` — a required field, so there is no portrait fallback — sized by `| image_size`, which is the one part still conditional: a file it
-cannot parse yields no width or height rather than empty ones.
+Its `og:image` is always the portrait. The `_portrait` assign also supplies the homepage's
+JSON-LD image URLs, whose dimensions come from `| image_size`. A publication's social image
+is always `thumb` — a required field, so there is no portrait fallback. `site-image.html`
+emits the Open Graph and Twitter image URL and alt tags together, sizing both layouts'
+images with `| image_size`: a file it cannot parse yields no width or height rather than
+empty ones. The homepage uses `og:type: website`, so profile-only `profile:*` properties
+are omitted; its person identity lives in JSON-LD.
