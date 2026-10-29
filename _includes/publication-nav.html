@@ -1,9 +1,9 @@
 {%- assign _prev = page.prev_pub -%}
 {%- assign _next = page.next_pub -%}
-<nav class="publication-nav {{ include.modifier }}" aria-label="{{ include.label }}">
+<nav class="publication-nav {{ include.modifier }}" aria-label="{{ include.label | escape }}" lang="en">
   <div class="nav-siblings">
-    <div class="nav-prev">{% if _prev %}<a href="{{ _prev.url }}"><span class="nav-label">←&nbsp;</span>{{ _prev.title }}</a>{% endif %}</div>
+    <div class="nav-prev">{% if _prev %}<a href="{{ _prev.url }}" lang="{{ _prev.lang }}"><span class="nav-label">←&nbsp;</span>{{ _prev.title }}</a>{% endif %}</div>
     <div class="nav-all"><a href="/"><svg width="11" height="11" viewBox="0 0 11 11" fill="currentColor" aria-hidden="true"><rect y="0" width="11" height="1.5"/><rect y="4.25" width="11" height="1.5"/><rect y="8.5" width="11" height="1.5"/></svg>All publications</a></div>
-    <div class="nav-next">{% if _next %}<a href="{{ _next.url }}"><span class="nav-label">→&nbsp;</span>{{ _next.title }}</a>{% endif %}</div>
+    <div class="nav-next">{% if _next %}<a href="{{ _next.url }}" lang="{{ _next.lang }}"><span class="nav-label">→&nbsp;</span>{{ _next.title }}</a>{% endif %}</div>
   </div>
 </nav>

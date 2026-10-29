@@ -1,4 +1,5 @@
-# | decode_numeric_entities — read by publication.html (the excerpt and the abstract).
+# | decode_numeric_entities — read by publication.html (the excerpt and the abstract)
+# and figure-image.html (plain alt text).
 # | snippet — read by publication.html (the excerpt).
 # | doi_id — read by publication.html (citation_doi, the DOI button) and publication-cite.html.
 # | page_range — read by publication.html (citation_firstpage / citation_lastpage).

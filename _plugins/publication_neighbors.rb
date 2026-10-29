@@ -17,6 +17,6 @@ class Jekyll::PublicationNeighborsGenerator < Jekyll::Generator
   # itself would make each pair reference the other through page data, so a
   # plain hash keeps the graph acyclic.
   def nav_ref(doc)
-    doc && { 'url' => doc.url, 'title' => doc.data['title'] }
+    doc && doc.data.slice('title', 'lang').merge('url' => doc.url)
   end
 end

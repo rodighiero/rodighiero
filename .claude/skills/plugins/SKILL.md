@@ -42,8 +42,8 @@ The full rule, its three genuine edge cases, and the two schemes tried and rejec
 ## The index
 
 Every plugin opens with a **header comment naming what it registers, publishes or attaches,
-and who reads it** — `# | image_size — read by home.html, publication.html and both figure-*
-includes`. That line is the index, and it matters more here than under a scheme where the
+and who reads it** — `# | image_size — read by home.html, site-image.html and figure-image.html`.
+That line is the index, and it matters more here than under a scheme where the
 filename spelled out the identifier: `publication_decoder.rb` does not say
 `| decode_numeric_entities`, and `publication_neighbors.rb` does not say `prev_pub`. **Keep it
 accurate when the file or its consumers change** — it is the only place the coupling is
@@ -51,9 +51,9 @@ written down.
 
 | File | Produces | Read by |
 |---|---|---|
-| `system_image_size.rb` | `\| image_size` | `home.html`, `publication.html`, both `figure-*` includes |
+| `system_image_size.rb` | `\| image_size` | `home.html`, `site-image.html`, `figure-image.html` |
 | `publication_urls.rb` | `\| autolink_urls` | `publication.html` |
-| `publication_decoder.rb` | `\| decode_numeric_entities`, `\| snippet`, `\| doi_id`, `\| page_range` | `publication.html`, `publication-cite.html` |
+| `publication_decoder.rb` | `\| decode_numeric_entities`, `\| snippet`, `\| doi_id`, `\| page_range` | `publication.html`, `publication-cite.html`, `figure-image.html` |
 | `publication_order.rb` | `site.data.ordered_publications` + the `OrderedPublications` module | `home.html`, `publication_neighbors.rb`, `publication_date.rb` (which also calls `year_of`) |
 | `publication_neighbors.rb` | `prev_pub` / `next_pub` | `publication-nav.html` |
 | `publication_credits.rb` | `\| credit_short` | `credit-short.html` |
@@ -144,7 +144,7 @@ ships.
 - **A `Forthcoming` entry counts as the current year**, in the order and in the feed dates
   alike (`Jekyll::OrderedPublications.year_of`). Never date one from the build clock, which
   re-dates it on every deploy and tells feed readers it was just republished.
-- **`prev_pub`/`next_pub` store a plain hash (url + title), not the neighbouring Document.**
+- **`prev_pub`/`next_pub` store a plain hash (url + title + lang), not the neighbouring Document.**
   Storing the document would make each page reference the other through page data.
 - **`publication_figures.rb` excludes `images/@cards/`** — generated gallery crops, not article
   imagery — and drops a path missing from disk, because a 404 in an image sitemap is a crawl

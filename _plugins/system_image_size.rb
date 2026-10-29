@@ -1,4 +1,4 @@
-# | image_size — read by home.html, publication.html and both figure-* includes.
+# | image_size — read by home.html, site-image.html and figure-image.html.
 #
 # Exposes an image's intrinsic pixel dimensions at build time,
 # so figure markup can set width/height and avoid layout shift (CLS).

@@ -11,14 +11,13 @@ Params (pipe-delimited lists align by position):
 {%- endcomment -%}
 {%- assign _imgs = include.images | split: "|" -%}
 {%- assign _alts = include.alts | split: "|" -%}
-<figure class="figure-group{% if include.class %} {{ include.class }}{% endif %}">
+<figure class="figure-group{% if include.class %} {{ include.class | escape }}{% endif %}">
   {%- for src in _imgs -%}
     {%- assign _src = src | strip -%}
     {%- assign _full = "/images/" | append: _src -%}
-    {%- assign _dims = _full | image_size -%}
     {%- assign _alt = _alts[forloop.index0] | default: include.caption -%}
     <div class="subfig">
-      <img src="{{ _full }}" alt="{{ _alt | strip }}"{% if _dims.width %} width="{{ _dims.width }}" height="{{ _dims.height }}"{% endif %} loading="lazy" decoding="async">
+      {% include figure-image.html src=_full alt=_alt %}
     </div>
   {%- endfor -%}
   {%- if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif -%}

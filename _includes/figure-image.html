@@ -1,0 +1,4 @@
+{%- comment -%} Shared by single and grouped figures. Captions may contain HTML;
+alt text is plain text, escaped for its attribute. {%- endcomment -%}
+{%- assign _figure_dims = include.src | image_size -%}
+<img src="{{ include.src | escape }}" alt="{{ include.alt | strip_html | decode_numeric_entities | normalize_whitespace | escape_once }}"{% if _figure_dims.width %} width="{{ _figure_dims.width }}" height="{{ _figure_dims.height }}"{% endif %} loading="lazy" decoding="async">

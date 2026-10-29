@@ -104,7 +104,8 @@ for the rule does not.
 A Generator giving each document its two neighbours up front, so the layout reads
 `page.prev_pub` instead of scanning the collection in Liquid on each page.
 
-Each ref is a **plain hash of url + title** — only what `publication-nav.html` reads. Storing
+Each ref is a **plain hash of url + title + lang** — only what `publication-nav.html` reads,
+including the language of the linked title. Storing
 the neighbouring `Document` would make each pair reference the other through page data; the
 hash keeps the graph acyclic.
 

@@ -142,9 +142,9 @@
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main" lang="en">Skip to content</a>
   {% include site-toggle.html %}
-  <div aria-live="polite" class="sr-only" id="live-msg"></div>
+  <div role="status" aria-atomic="true" class="sr-only" id="live-msg" lang="en"></div>
   <main id="main" tabindex="-1">
   {% include publication-nav.html modifier="publication-nav-top" label="Project navigation" %}
   <article>
@@ -152,21 +152,23 @@
   {% include card-meta.html item=page %}
   <h1>{{ page.title }}</h1>
   {% include credit-block.html item=page %}
-  <div class="doi"><button class="cite-btn pill-btn" type="button">Cite</button><button class="print-btn pill-btn" type="button">Print</button>{% if page.doi %}<a class="pill-btn" href="{{ page.doi }}">{{ _doi | default: 'URL' }}</a>{% endif %}</div>
+  <div class="doi" lang="en"><button class="cite-btn pill-btn" type="button">Cite</button><button class="print-btn pill-btn" type="button">Print</button>{% if page.doi %}<a class="pill-btn" href="{{ page.doi | escape }}">{{ _doi | default: 'URL' }}</a>{% endif %}</div>
   </div>
   {% include publication-cite.html item=page %}
   <div class="content">
     {% assign _content_parts = content | split: '<!--more-->' %}
-    {% if _content_parts.size > 1 %}<div class="body hyphenate-prose"><div class="abstract">{{ _content_parts[0] }}</div>{{ _content_parts[1] | autolink_urls }}</div>{% else %}<div class="body hyphenate-prose">{{ content | autolink_urls }}</div>{% endif %}
+    <div class="body hyphenate-prose">
+      {% if _content_parts.size > 1 %}<div class="abstract">{{ _content_parts[0] }}</div>{{ _content_parts[1] | autolink_urls }}{% else %}{{ content | autolink_urls }}{% endif %}
+    </div>
   </div>
+  {% if _content_parts.size > 1 %}<footer class="editorial-note" lang="en"><p>Editorial note: this text is republished from its original venue and lightly edited for uniformity across the site. Citations and references have been restated in Chicago author-date style; obvious typos, incidental reference errors, and occasional language slips have been corrected. Small differences from the original publication may therefore exist; the version of record is the publisher’s, linked at the top of this page.</p></footer>{% endif %}
   </article>
-  {% if _content_parts.size > 1 %}<footer class="editorial-note"><p>Editorial note: this text is republished from its original venue and lightly edited for uniformity across the site. Citations and references have been restated in Chicago author-date style; obvious typos, incidental reference errors, and occasional language slips have been corrected. Small differences from the original publication may therefore exist; the version of record is the publisher’s, linked at the top of this page.</p></footer>{% endif %}
   {% if page.related.size > 0 %}
-  <nav class="related-pubs" aria-label="Related publications">
+  <nav class="related-pubs" aria-label="Related publications" lang="en">
     <h2>Related publications</h2>
     <ul>
       {% for _r in page.related %}
-      <li><a href="{{ _r.url }}">{{ _r.title }}{% unless _r.lang == 'en' %} <span class="related-lang">{{ _r.lang }}</span>{% endunless %}</a></li>
+      <li><a href="{{ _r.url }}" lang="{{ _r.lang }}">{{ _r.title }}{% unless _r.lang == 'en' %} <span class="related-lang">{{ _r.lang }}</span>{% endunless %}</a></li>
       {% endfor %}
     </ul>
   </nav>

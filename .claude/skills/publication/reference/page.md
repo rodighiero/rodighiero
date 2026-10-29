@@ -17,10 +17,15 @@ to the **`seo`** skill. The "Related publications" list is data, and belongs to 
 |---|---|
 | Byline | `credit-block.html` → `credit-full.html` — every contributor in citation order. The `<title>` is the bare title, to stay inside Google's display budget |
 | "Cite" button | `publication-cite.html` writes a Chicago author-date reference into a hidden `<pre class="cite-data">`; `scripts-site.js` copies it on click |
-| Prev/next | `publication-nav.html`, reading the `prev_pub` / `next_pub` refs that `publication_neighbors.rb` precomputes — no page scans the collection in Liquid |
+| Prev/next | `publication-nav.html`, reading the `prev_pub` / `next_pub` refs (URL, title, language) that `publication_neighbors.rb` precomputes — no page scans the collection in Liquid |
 | Related publications | `page.related`, the page's node in `site.data.network` (`publication_relations.rb`) |
 
 ## The body vocabulary
+
+The body wrapper is shared by abstract-only and full-text entries. A full-text entry's
+editorial note is a footer inside its article. The English controls, navigation labels and
+editorial note declare `lang="en"`; navigation and related-work titles declare each work's
+own language.
 
 Everything below is CSS in this file, scoped to `.body`. The publications are written
 against it, so **these class names are an interface** — changing one means rewriting call
@@ -51,6 +56,10 @@ without decoupling from its figure. `wide` and full-width tables keep a full-wid
 `figure-group.three-quarter` narrows the *panels* to 75% while the caption stays full width.
 
 `bordered` (from `styles-base.css`) puts a hairline on an image whose own edges are white.
+
+Both figure includes use `figure-image.html` for the image element, intrinsic dimensions,
+lazy loading and decoding. An explicit alt (or the caption fallback) is stripped of HTML,
+normalized and attribute-escaped there; the visible caption keeps its markup.
 
 ### Tables
 
