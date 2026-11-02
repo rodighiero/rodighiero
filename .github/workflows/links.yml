@@ -50,6 +50,7 @@ jobs:
             --exclude 'hollisarchives\.lib\.harvard\.edu'
             --exclude 'krisis\.eu'
             --exclude 'artefaktum\.hu'
+            --exclude 'bruno-latour\.fr'
             --exclude 'assembla\.com'
             --exclude 'twitter\.com'
             --exclude 'insights\.dice\.com'
