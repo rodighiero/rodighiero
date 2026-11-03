@@ -63,7 +63,13 @@
   {% if page.publisher %}<meta name="citation_publisher" content="{{ page.publisher | escape }}">{% endif %}
   {% if page.issn %}<meta name="citation_issn" content="{{ page.issn }}">{% endif %}
   {% if page.isbn %}<meta name="citation_isbn" content="{{ page.isbn }}">{% endif %}
-  {% assign _doi = page.doi | doi_id %}{% if _doi %}<meta name="citation_doi" content="{{ _doi }}">{% endif %}
+  {%- comment -%} A translation sharing its original's identifier (one bilingual object,
+  one DOI) leaves the identifier to the original: claiming it too, in citation_doi,
+  DC.identifier or sameAs, would declare the two works one entity, against
+  translationOfWork, and Scholar would merge the two languages. The visible DOI link stays. {%- endcomment -%}
+  {% assign _doi = page.doi | doi_id %}
+  {% assign _claims_doi = false %}{% if page.doi %}{% assign _claims_doi = true %}{% if page.translation_of and _set.size > 0 and _set[0].doi == page.doi %}{% assign _claims_doi = false %}{% endif %}{% endif %}
+  {% if _claims_doi and _doi %}<meta name="citation_doi" content="{{ _doi }}">{% endif %}
   <meta name="citation_abstract_html_url" content="{{ _url }}">
   {% if page.content contains '<!--more-->' %}<meta name="citation_fulltext_html_url" content="{{ _url }}">{% endif %}
   <meta name="citation_language" content="{{ _lang }}">
@@ -78,7 +84,7 @@
   <meta name="DC.format" content="text/html">
   <meta name="DC.language" content="{{ _lang }}">
   <meta name="DC.identifier" content="{{ _url }}">
-  {% if page.doi %}<meta name="DC.identifier" content="{{ page.doi }}">{% endif %}
+  {% if _claims_doi %}<meta name="DC.identifier" content="{{ page.doi }}">{% endif %}
   <meta name="DC.publisher" content="{{ page.publisher | default: 'Dario Rodighiero' | escape }}">
   <meta name="DCTERMS.isPartOf" content="{{ site.url }}/">
   {% assign _schema_type = _ptype.schema %}
@@ -109,10 +115,7 @@
     issn only ever on a Periodical. {%- endcomment -%}
     {% unless _ptype.container %}{% if page.isbn %}"isbn": {{ page.isbn | jsonify }},{% endif %}{% endunless %}{% if _ptype.container %}{% if page.publisher %}"publisher": { "@type": "Organization", "name": {{ page.publisher | jsonify }} },{% endif %}{% else %}"publisher": { "@type": "Organization", "name": {{ page.publisher | default: page.venue | jsonify }} },{% endif %}
     "url": "{{ _url }}",
-    {%- comment -%} A translation sharing its original's identifier (one bilingual object,
-    one DOI) leaves sameAs to the original: claiming it too would declare the two works one
-    entity, against translationOfWork. {%- endcomment -%}
-    {% if page.doi %}{% unless page.translation_of and _set.size > 0 and _set[0].doi == page.doi %}"sameAs": "{{ page.doi }}",{% endunless %}{% endif %}
+    {% if _claims_doi %}"sameAs": "{{ page.doi }}",{% endif %}
     {% if page.pages %}"pagination": {{ page.pages | jsonify }},{% endif %}
     {% if page.translation_of and _set.size > 0 %}{% assign _source = _set[0] %}{% assign _st = site.data.publication_types[_source.type].schema %}"translationOfWork": { "@type": "{{ _st }}", "@id": "{{ site.url }}{{ _source.url }}", "name": {{ _source.title | jsonify }}, "inLanguage": "{{ _source.lang }}" },{% endif %}
     {% if page.translated_by.size > 0 %}"workTranslation": [{% for _t in page.translated_by %}{% assign _tt = site.data.publication_types[_t.type].schema %}{ "@type": "{{ _tt }}", "@id": "{{ site.url }}{{ _t.url }}", "name": {{ _t.title | jsonify }}, "inLanguage": "{{ _t.lang }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}

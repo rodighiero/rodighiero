@@ -86,6 +86,11 @@ just two.
 `citation_abstract_html_url`, `citation_fulltext_html_url` (when the body has a
 `<!--more-->`, i.e. carries the full text beyond the abstract), `citation_language`.
 
+`citation_doi`, the DOI `DC.identifier` and the JSON-LD `sameAs` all follow one flag,
+`_claims_doi`: a translation whose `doi` equals its source's (one bilingual article, one
+DOI, as Progetto Grafico publishes) leaves all three to the original, so Scholar does not
+merge the two languages into one record. Its visible DOI pill still links the DOI.
+
 The venue tag is **not fixed**: `publication_types.yml` says which one this type uses
 (`citation_journal_title`, `citation_conference_title`, `citation_book_title`), and a type
 with no `citation_venue` emits none.
@@ -127,7 +132,7 @@ journalArticle rather than magazineArticle. The venue is worth more than the typ
 
 `DC.title`, one `DC.creator` per author, `DC.description`, `DC.source` (the venue), `DC.date`,
 `DC.type` (from the taxonomy, falling back to `text`), `DC.format`, `DC.language`,
-`DC.identifier` (the URL, plus the DOI as a second one when present), `DC.publisher`, and
+`DC.identifier` (the URL, plus the DOI as a second one when present and claimed — see above), `DC.publisher`, and
 `DCTERMS.isPartOf` pointing at the site.
 
 `DC.publisher` is the front-matter `publisher` when present, falling back to
