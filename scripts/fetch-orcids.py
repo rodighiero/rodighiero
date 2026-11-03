@@ -10,6 +10,7 @@ import re
 import time
 import unicodedata
 from urllib.parse import quote
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 import yaml
@@ -37,6 +38,39 @@ def orcid_url(value):
     return "https://orcid.org/" + match[1]
 
 
+def fetch_authors(doi):
+    """Return names and identifiers from the DOI's registration agency."""
+    source = "https://api.crossref.org/works/" + quote(doi, safe="")
+    def read(url):
+        request = Request(url, headers={"User-Agent": "RodighieroMetadata/1.0 (https://dariorodighiero.com)"})
+        with urlopen(request, timeout=30) as response:
+            return json.load(response)
+    try:
+        return source, read(source)["message"].get("author", [])
+    except HTTPError as error:
+        if error.code != 404:
+            raise
+    source = "https://api.datacite.org/dois/" + quote(doi, safe="")
+    creators = read(source)["data"]["attributes"].get("creators", [])
+    authors = []
+    for creator in creators:
+        identifiers = [i.get("nameIdentifier", "") for i in creator.get("nameIdentifiers", [])
+                       if i.get("nameIdentifierScheme", "").upper() == "ORCID"]
+        if len(identifiers) != 1:
+            continue
+        identifier = identifiers[0]
+        if not identifier.startswith("http"):
+            identifier = "https://orcid.org/" + identifier
+        name = creator.get("name", "")
+        if "," in name:
+            family, given = name.split(",", 1)
+            name = given.strip() + " " + family.strip()
+        authors.append({"given": creator.get("givenName", ""),
+                        "family": creator.get("familyName", ""),
+                        "name": name, "ORCID": identifier})
+    return source, authors
+
+
 def main():
     people = json.loads(OUTPUT.read_text()) if OUTPUT.exists() else {}
     works = {}
@@ -48,18 +82,16 @@ def main():
             names.update(str(front.get("author", "")).split(" and "))
     failures = []
     for doi, names in works.items():
-        source = "https://api.crossref.org/works/" + quote(doi, safe="")
         try:
-            request = Request(source, headers={"User-Agent": "RodighieroMetadata/1.0 (https://dariorodighiero.com)"})
-            with urlopen(request, timeout=30) as response:
-                authors = json.load(response)["message"].get("author", [])
+            source, authors = fetch_authors(doi)
         except Exception as error:
             failures.append(doi)
             print(f"Skipped {doi}: {error}")
             continue
         for name in sorted(names):
             matches = [a for a in authors if normalized(name) == normalized(
-                a.get("given", "") + " " + a.get("family", ""))]
+                (a.get("given", "") + " " + a.get("family", "")).strip()
+                or a.get("name", ""))]
             if len(matches) != 1:
                 continue
             orcid = orcid_url(matches[0].get("ORCID", ""))

@@ -1,14 +1,126 @@
 {
+  "Aida Slavic": {
+    "orcid": "https://orcid.org/0000-0002-1934-6824",
+    "sources": [
+      "https://udcc.org/index.php/site/page?view=editorinchief"
+    ]
+  },
+  "Alberto Romele": {
+    "orcid": "https://orcid.org/0000-0001-8648-6619",
+    "sources": [
+      "https://api.datacite.org/dois/10.5281%2Fzenodo.3950030"
+    ]
+  },
+  "Alessandro Adamou": {
+    "orcid": "https://orcid.org/0000-0002-9272-908X",
+    "sources": [
+      "https://alexdma.github.io/"
+    ]
+  },
+  "Alexandre Rigal": {
+    "orcid": "https://orcid.org/0000-0002-5096-0179",
+    "sources": [
+      "https://orcid.org/0000-0002-5096-0179"
+    ]
+  },
+  "Almila Akdag Salah": {
+    "orcid": "https://orcid.org/0000-0002-7204-5633",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-7204-5633/person",
+      "https://pub.orcid.org/v3.0/0000-0002-7204-5633/record"
+    ]
+  },
+  "Anders Koed Madsen": {
+    "orcid": "https://orcid.org/0000-0003-2842-4908",
+    "sources": [
+      "https://www.dtu.dk/person/anders-koed-madsen?id=30787"
+    ]
+  },
   "Anders Kristian Munk": {
     "orcid": "https://orcid.org/0000-0002-5542-3065",
     "sources": [
       "https://api.crossref.org/works/10.21827%2F69de53fee06e8"
     ]
   },
+  "Andreas Fickers": {
+    "orcid": "https://orcid.org/0000-0002-6541-228X",
+    "sources": [
+      "https://orcid.org/0000-0002-6541-228X"
+    ]
+  },
+  "Angela Locoro": {
+    "orcid": "https://orcid.org/0000-0002-6740-8620",
+    "sources": [
+      "https://ceur-ws.org/Vol-3408/short-s2-06.pdf"
+    ]
+  },
+  "Anne Beaulieu": {
+    "orcid": "https://orcid.org/0000-0002-2431-8975",
+    "sources": [
+      "https://research-portal.uu.nl/en/persons/anne-beaulieu/"
+    ]
+  },
+  "Anya Shchetvina": {
+    "orcid": "https://orcid.org/0000-0002-0433-3764",
+    "sources": [
+      "https://orcid.org/0000-0002-0433-3764"
+    ]
+  },
+  "Beatrice Gobbo": {
+    "orcid": "https://orcid.org/0000-0001-7085-0017",
+    "sources": [
+      "https://wrap.warwick.ac.uk/191087/1/marres-et-al-2024-ai-as-super-controversy-eliciting-ai-and-society-controversies-with-an-extended-expert-community-in.pdf"
+    ]
+  },
+  "Boris Beaude": {
+    "orcid": "https://orcid.org/0000-0003-1219-9830",
+    "sources": [
+      "https://www.beaude.net/boris/downloads/Output_Beaude_Extended.pdf"
+    ]
+  },
+  "Carlo Teo Pedretti": {
+    "orcid": "https://orcid.org/0000-0002-4115-0078",
+    "sources": [
+      "https://cris.unibo.it/retrieve/handle/11585/1009700/2c365157-f208-449d-bafc-2893d4f6a8ed/SSW-60-SSW240030.pdf"
+    ]
+  },
+  "Carol Garzon Lopez": {
+    "orcid": "https://orcid.org/0000-0002-4099-2740",
+    "sources": [
+      "https://research.rug.nl/en/persons/carol-garzon-lopez/"
+    ]
+  },
+  "Celeste Pedro": {
+    "orcid": "https://orcid.org/0000-0002-8020-3734",
+    "sources": [
+      "https://sigarra.up.pt/flup/en/func_geral.formview?p_codigo=654477"
+    ]
+  },
   "Christopher Pietsch": {
     "orcid": "https://orcid.org/0000-0001-8371-4161",
     "sources": [
       "https://api.crossref.org/works/10.1075%2Fidj.22013.rod"
+    ]
+  },
+  "Damla Çay": {
+    "orcid": "https://orcid.org/0000-0002-1674-4704",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-1674-4704/person",
+      "https://pub.orcid.org/v3.0/0000-0002-1674-4704/record"
+    ]
+  },
+  "Daniela Fogli": {
+    "orcid": "https://orcid.org/0000-0003-1479-2240",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0003-1479-2240/person",
+      "https://pub.orcid.org/v3.0/0000-0003-1479-2240/record"
+    ]
+  },
+  "Daniele Guido": {
+    "orcid": "https://orcid.org/0000-0003-1601-4274",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0003-1601-4274/person",
+      "https://pub.orcid.org/v3.0/0000-0003-1601-4274/record"
     ]
   },
   "Dario Rodighiero": {
@@ -22,13 +134,42 @@
       "https://api.crossref.org/works/10.31235%2Fosf.io%2F3g7bt",
       "https://api.crossref.org/works/10.31235%2Fosf.io%2Ffsj3z",
       "https://api.crossref.org/works/10.31235%2Fosf.io%2Fqrhzu",
-      "https://api.crossref.org/works/10.3390%2Fland14091901"
+      "https://api.crossref.org/works/10.3390%2Fland14091901",
+      "https://api.datacite.org/dois/10.5281%2Fzenodo.3464433",
+      "https://api.datacite.org/dois/10.5281%2Fzenodo.3516222",
+      "https://api.datacite.org/dois/10.5281%2Fzenodo.3611340",
+      "https://api.datacite.org/dois/10.5281%2Fzenodo.3950030",
+      "https://api.datacite.org/dois/10.5281%2Fzenodo.5115621"
+    ]
+  },
+  "Davide Picca": {
+    "orcid": "https://orcid.org/0000-0003-2014-0855",
+    "sources": [
+      "https://pure.mpg.de/cone/persons/resource/persons276213?lang=en"
+    ]
+  },
+  "Dominik Balazka": {
+    "orcid": "https://orcid.org/0000-0002-1070-8673",
+    "sources": [
+      "https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2020.00031/full"
+    ]
+  },
+  "Donato Ricci": {
+    "orcid": "https://orcid.org/0000-0002-4739-1622",
+    "sources": [
+      "https://orcid.org/0000-0002-4739-1622"
     ]
   },
   "Douglas Duhaime": {
     "orcid": "https://orcid.org/0000-0002-8463-6705",
     "sources": [
       "https://api.crossref.org/works/10.1075%2Fidj.22013.rod"
+    ]
+  },
+  "Efe Cengiz": {
+    "orcid": "https://orcid.org/0000-0001-5718-6692",
+    "sources": [
+      "https://www.rug.nl/staff/e.cengiz/?lang=en"
     ]
   },
   "Elian Carsenat": {
@@ -43,10 +184,55 @@
       "https://api.crossref.org/works/10.1075%2Fidj.22016.rod"
     ]
   },
+  "Federico Cabitza": {
+    "orcid": "https://orcid.org/0000-0002-4065-3415",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-4065-3415/person",
+      "https://pub.orcid.org/v3.0/0000-0002-4065-3415/record"
+    ]
+  },
+  "Florentina Armaselu": {
+    "orcid": "https://orcid.org/0000-0003-2386-6889",
+    "sources": [
+      "https://orbilu.uni.lu/profile?uid=50022829"
+    ]
+  },
+  "Frédéric Kaplan": {
+    "orcid": "https://orcid.org/0000-0002-6991-5730",
+    "sources": [
+      "https://journals.openedition.org/revuehn/pdf/1786"
+    ]
+  },
+  "Giulia Taurino": {
+    "orcid": "https://orcid.org/0000-0002-1065-840X",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-1065-840X/person",
+      "https://pub.orcid.org/v3.0/0000-0002-1065-840X/record"
+    ]
+  },
+  "Guillaume Drevon": {
+    "orcid": "https://orcid.org/0000-0002-9671-3560",
+    "sources": [
+      "https://onlinelibrary.wiley.com/doi/abs/10.1002/psp.2472"
+    ]
+  },
+  "Jeffrey Schnapp": {
+    "orcid": "https://orcid.org/0000-0003-4612-3762",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0003-4612-3762/record"
+    ]
+  },
   "Jeffrey T. Schnapp": {
     "orcid": "https://orcid.org/0000-0003-4612-3762",
     "sources": [
-      "https://api.crossref.org/works/10.1075%2Fidj.22013.rod"
+      "https://api.crossref.org/works/10.1075%2Fidj.22013.rod",
+      "https://pub.orcid.org/v3.0/0000-0003-4612-3762/record"
+    ]
+  },
+  "Johan Malmstedt": {
+    "orcid": "https://orcid.org/0000-0001-5207-4296",
+    "sources": [
+      "https://umu.diva-portal.org/smash/person.jsf?faces-redirect=true&language=no&pid=authority-person%3A104041&searchType=SIMPLE"
     ]
   },
   "Jordan Kruguer": {
@@ -55,10 +241,77 @@
       "https://api.crossref.org/works/10.1075%2Fidj.22013.rod"
     ]
   },
+  "José Higuera Rubio": {
+    "orcid": "https://orcid.org/0000-0001-7555-0742",
+    "sources": [
+      "https://revistas.ucm.es/index.php/ASHF/en/article/view/73753"
+    ]
+  },
+  "Letizia Bollini": {
+    "orcid": "https://orcid.org/0000-0001-6491-4838",
+    "sources": [
+      "https://webservices.scientificnet.org/rest/uisdata/api/v1/people/44032/cv"
+    ]
+  },
   "Lins Derry": {
     "orcid": "https://orcid.org/0000-0002-6213-7809",
     "sources": [
       "https://api.crossref.org/works/10.1075%2Fidj.22013.rod"
+    ]
+  },
+  "Lorenzo Zangari": {
+    "orcid": "https://orcid.org/0009-0009-9057-1299",
+    "sources": [
+      "https://mlnteam-unical.github.io/members/zangari-lorenzo.html"
+    ]
+  },
+  "Loup Cellard": {
+    "orcid": "https://orcid.org/0000-0002-9506-2639",
+    "sources": [
+      "https://cv.hal.science/loup-cellard"
+    ]
+  },
+  "Luc Gwiazdzinski": {
+    "orcid": "https://orcid.org/0000-0003-2128-9088",
+    "sources": [
+      "https://orcid.org/0000-0003-2128-9088"
+    ]
+  },
+  "Maarten Loonen": {
+    "orcid": "https://orcid.org/0000-0002-3426-4595",
+    "sources": [
+      "https://research.rug.nl/en/persons/maarten-loonen/"
+    ]
+  },
+  "Marco Maretto": {
+    "orcid": "https://orcid.org/0000-0002-3281-5437",
+    "sources": [
+      "https://phd.uniroma1.it/web/MARCO-MARETTO_nC2656_EN.aspx"
+    ]
+  },
+  "Marije Miedema": {
+    "orcid": "https://orcid.org/0000-0002-1259-8690",
+    "sources": [
+      "https://research.rug.nl/nl/persons/marije-miedema/"
+    ]
+  },
+  "Martina R. Fröschl": {
+    "orcid": "https://orcid.org/0000-0002-3972-2479",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-3972-2479/record"
+    ]
+  },
+  "Massimiliano Giacomin": {
+    "orcid": "https://orcid.org/0000-0003-4771-4265",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0003-4771-4265/person",
+      "https://pub.orcid.org/v3.0/0000-0003-4771-4265/record"
+    ]
+  },
+  "Massimo Leone": {
+    "orcid": "https://orcid.org/0000-0002-8144-4337",
+    "sources": [
+      "https://www.dfe.unito.it/persone/massimo.leone"
     ]
   },
   "Mathieu Jacomy": {
@@ -67,10 +320,77 @@
       "https://api.crossref.org/works/10.21827%2F69de53fee06e8"
     ]
   },
+  "Matilde Ficozzi": {
+    "orcid": "https://orcid.org/0009-0001-8660-5734",
+    "sources": [
+      "https://research.rug.nl/en/persons/matilde-ficozzi/"
+    ]
+  },
+  "Nathalie Fridzema": {
+    "orcid": "https://orcid.org/0009-0006-3044-8246",
+    "sources": [
+      "https://research.rug.nl/en/persons/nathalie-fridzema/"
+    ]
+  },
+  "Olivier Klein": {
+    "orcid": "https://orcid.org/0000-0001-6661-9883",
+    "sources": [
+      "https://liser.elsevierpure.com/en/persons/olivier-klein/"
+    ]
+  },
+  "Raul Cordero Carrasco": {
+    "orcid": "https://orcid.org/0000-0001-7607-7993",
+    "sources": [
+      "https://research.rug.nl/nl/persons/raul-cordero-carrasco/"
+    ]
+  },
+  "Ruth Howison": {
+    "orcid": "https://orcid.org/0000-0001-6470-6131",
+    "sources": [
+      "https://pure.rug.nl/ws/files/61202696/Howison_et_al_2018_Journal_of_Applied_Ecology.pdf"
+    ]
+  },
+  "Sabina Rosenbergova": {
+    "orcid": "https://orcid.org/0000-0002-4372-0476",
+    "sources": [
+      "https://research.rug.nl/nl/persons/sabina-rosenbergov%C3%A1/"
+    ]
+  },
+  "Sarah Feron": {
+    "orcid": "https://orcid.org/0000-0002-0572-5639",
+    "sources": [
+      "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/gcb.17131"
+    ]
+  },
   "Sarah Kenderdine": {
     "orcid": "https://orcid.org/0000-0002-7190-9946",
     "sources": [
       "https://api.crossref.org/works/10.1515%2FJDH-2023-0004"
+    ]
+  },
+  "Selen Eren": {
+    "orcid": "https://orcid.org/0000-0001-9453-4350",
+    "sources": [
+      "https://journals.sagepub.com/doi/abs/10.1177/02632764231187584"
+    ]
+  },
+  "Stephanie Hobbis": {
+    "orcid": "https://orcid.org/0000-0001-7038-7413",
+    "sources": [
+      "https://journals.sagepub.com/doi/abs/10.1177/1329878X241253011"
+    ]
+  },
+  "Tyler Reigeluth": {
+    "orcid": "https://orcid.org/0000-0002-9908-1052",
+    "sources": [
+      "https://journals.sagepub.com/doi/abs/10.1177/2053951719858742"
+    ]
+  },
+  "Weidi Zhang": {
+    "orcid": "https://orcid.org/0009-0000-0785-0794",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0009-0000-0785-0794/person",
+      "https://pub.orcid.org/v3.0/0009-0000-0785-0794/record"
     ]
   }
 }
