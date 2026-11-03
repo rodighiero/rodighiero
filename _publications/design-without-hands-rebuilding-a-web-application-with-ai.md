@@ -1,9 +1,13 @@
 ---
 title: "Design Without Hands: Rebuilding a Web Application with AI"
-year: Forthcoming
+year: 2026
 venue: "Progetto Grafico"
 type: "journal"
 author: "Dario Rodighiero"
+volume: "23"
+issue: "43"
+pages: "312–25"
+doi: "https://doi.org/10.82068/pgjournal.2026.23.43.13"
 issn: "1824-1301"
 thumb: "design-without-hands-rebuilding-a-web-application-with-ai/fig_008.webp"
 ---
