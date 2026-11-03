@@ -12,6 +12,9 @@ goatcounter_code: fumoseaffabulazioni
 # files, kept in step by a sentence in the `seo` skill. See that skill's reference/jsonld.md.
 orcid: https://orcid.org/0000-0002-1405-7062
 
+# Local dev server port for `jekyll serve`; ignored by `jekyll build` and the deploy.
+port: 8000
+
 plugins:
   - jekyll-feed
 

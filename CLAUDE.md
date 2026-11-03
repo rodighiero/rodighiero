@@ -20,7 +20,7 @@ of them.
 ## Commands
 
 ```bash
-bundle exec jekyll serve   # local dev server (http://localhost:4000)
+bundle exec jekyll serve   # local dev server (http://localhost:8000, set in _config.yml)
 bundle exec jekyll build   # build to _site/
 ```
 
