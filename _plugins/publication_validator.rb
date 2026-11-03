@@ -75,6 +75,11 @@ class Jekyll::FrontMatterValidator < Jekyll::Generator
       @warnings << "#{slug}: doi '#{data['doi']}' doesn't look like a URL (should start with http:// or https://)"
     end
 
+    # PDFs may be external repository copies, linked separately from the DOI.
+    if data['pdf_url'] && !data['pdf_url'].to_s.match?(/\Ahttps?:\/\/[^\s]+\z/)
+      @errors << "#{slug}: pdf_url must be an absolute HTTP(S) URL"
+    end
+
     # Check that thumb image exists
     if data['thumb']
       thumb_path = File.join(@site.source, 'images', data['thumb'])

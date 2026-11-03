@@ -4,7 +4,8 @@ year: 2023
 venue: "ACM Conference on Hypertext and Social Media"
 type: "conference"
 author: "Davide Picca and Antonin Schnyder and Eri Kostina and Alessandro Adamou and Dario Rodighiero and Jeffrey Schnapp"
-doi: "https://pure.rug.nl/ws/portalfiles/portal/780076742/3603163.3609066.pdf"
+doi: "https://doi.org/10.1145/3603163.3609066"
+pdf_url: "https://pure.rug.nl/ws/portalfiles/portal/780076742/3603163.3609066.pdf"
 isbn: "9798400702327"
 thumb: orchestrating-cultural-heritage-exploring-the-automated-analysis-and-organization-of-charles-s-peirce-s-pap-manuscript/cover.webp
 redirect_from:

@@ -21,3 +21,12 @@ been verified. `orcid-review.md` records the remaining names from the latest aud
 
 Publication credits and JSON-LD look up the exact credited name. Dario's identity
 continues to come from `site.orcid` in `_config.yml`.
+
+# Scholar audit
+
+Run `uv run scripts/audit-scholar.py` to check the live publication pages,
+homepage links, robots.txt and sitemap against the current publication records.
+It writes `scripts/scholar-audit.md` and a detailed JSON snapshot in
+`/tmp/rodighiero-scholar-audit.json`. Network access is required. This checks
+technical readiness, not membership of Google Scholar’s index. Publisher comparisons
+and verified corrections are documented separately in `scholar-review.md`.

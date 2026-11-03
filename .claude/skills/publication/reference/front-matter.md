@@ -55,6 +55,7 @@ subject of the homepage are one person.
 | Field | Visible? | Purpose |
 |---|---|---|
 | `doi` | yes | full `https://doi.org/…` URL |
+| `pdf_url` | yes | optional absolute HTTP(S) link to a full-text PDF, shown separately from the DOI; external PDFs are not declared as `citation_pdf_url` |
 | `issn` | no | Scholar + Zotero; ISSN-L, check digit may be `X` |
 | `isbn` | no | Scholar + Zotero; unhyphenated |
 
