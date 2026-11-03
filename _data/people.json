@@ -1,0 +1,76 @@
+{
+  "Anders Kristian Munk": {
+    "orcid": "https://orcid.org/0000-0002-5542-3065",
+    "sources": [
+      "https://api.crossref.org/works/10.21827%2F69de53fee06e8"
+    ]
+  },
+  "Christopher Pietsch": {
+    "orcid": "https://orcid.org/0000-0001-8371-4161",
+    "sources": [
+      "https://api.crossref.org/works/10.1075%2Fidj.22013.rod"
+    ]
+  },
+  "Dario Rodighiero": {
+    "orcid": "https://orcid.org/0000-0002-1405-7062",
+    "sources": [
+      "https://api.crossref.org/works/10.1075%2Fidj.22013.rod",
+      "https://api.crossref.org/works/10.1075%2Fidj.22016.rod",
+      "https://api.crossref.org/works/10.1177%2F14703572241248408",
+      "https://api.crossref.org/works/10.1515%2FJDH-2023-0004",
+      "https://api.crossref.org/works/10.1515%2Fpdtc-2025-0066",
+      "https://api.crossref.org/works/10.31235%2Fosf.io%2F3g7bt",
+      "https://api.crossref.org/works/10.31235%2Fosf.io%2Ffsj3z",
+      "https://api.crossref.org/works/10.31235%2Fosf.io%2Fqrhzu",
+      "https://api.crossref.org/works/10.3390%2Fland14091901"
+    ]
+  },
+  "Douglas Duhaime": {
+    "orcid": "https://orcid.org/0000-0002-8463-6705",
+    "sources": [
+      "https://api.crossref.org/works/10.1075%2Fidj.22013.rod"
+    ]
+  },
+  "Elian Carsenat": {
+    "orcid": "https://orcid.org/0000-0002-8240-3182",
+    "sources": [
+      "https://api.crossref.org/works/10.1075%2Fidj.22016.rod"
+    ]
+  },
+  "Eveline Wandl-Vogt": {
+    "orcid": "https://orcid.org/0000-0002-0802-0255",
+    "sources": [
+      "https://api.crossref.org/works/10.1075%2Fidj.22016.rod"
+    ]
+  },
+  "Jeffrey T. Schnapp": {
+    "orcid": "https://orcid.org/0000-0003-4612-3762",
+    "sources": [
+      "https://api.crossref.org/works/10.1075%2Fidj.22013.rod"
+    ]
+  },
+  "Jordan Kruguer": {
+    "orcid": "https://orcid.org/0000-0002-9198-824X",
+    "sources": [
+      "https://api.crossref.org/works/10.1075%2Fidj.22013.rod"
+    ]
+  },
+  "Lins Derry": {
+    "orcid": "https://orcid.org/0000-0002-6213-7809",
+    "sources": [
+      "https://api.crossref.org/works/10.1075%2Fidj.22013.rod"
+    ]
+  },
+  "Mathieu Jacomy": {
+    "orcid": "https://orcid.org/0000-0002-6417-6895",
+    "sources": [
+      "https://api.crossref.org/works/10.21827%2F69de53fee06e8"
+    ]
+  },
+  "Sarah Kenderdine": {
+    "orcid": "https://orcid.org/0000-0002-7190-9946",
+    "sources": [
+      "https://api.crossref.org/works/10.1515%2FJDH-2023-0004"
+    ]
+  }
+}

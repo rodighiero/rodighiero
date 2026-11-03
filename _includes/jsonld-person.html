@@ -1,12 +1,11 @@
 {%- comment -%}
 One JSON-LD Person node for an author name (no trailing comma — the caller joins).
 
-Dario's node takes `site.orcid` as its @id, the same as home.html's Person, which is
-what makes the author of every page and the homepage's subject one entity. Co-authors
-stay bare names. The match is exact, against site.title: a looser one could hang the
-ORCID on the wrong person.
+Dario's node uses the homepage identity; co-authors use the locally sourced ORCID
+registry. Both lookups are exact. Unknown contributors remain name-only nodes.
 
 Params: name — a single author name (whitespace is stripped here).
 {%- endcomment -%}
 {%- assign _n = include.name | strip -%}
-{ "@type": "Person", "name": {{ _n | jsonify }}{% if _n == site.title %}, "@id": "{{ site.orcid }}", "url": "{{ site.url }}/"{% endif %} }
+{%- assign _person = site.data.people[_n] -%}
+{ "@type": "Person", "name": {{ _n | jsonify }}{% if _n == site.title %}, "@id": "{{ site.orcid }}", "url": "{{ site.url }}/", "sameAs": {{ site.orcid | jsonify }}{% elsif _person.orcid %}, "@id": {{ _person.orcid | jsonify }}, "sameAs": {{ _person.orcid | jsonify }}{% endif %} }
