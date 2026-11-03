@@ -7,7 +7,7 @@ author: "Carlo Ferigato and Giuseppe Merlo and Daniela Panfili and Dario Rodighi
 editor: "Fiona Hackney and Jonathan Glynne and Viv Minton"
 publisher: "Universal-Publishers"
 place: "Boca Raton, FL"
-pages: "301–9"
+pages: "301–309"
 doi: "https://publications.jrc.ec.europa.eu/repository/handle/JRC48348"
 isbn: "9781599429069"
 thumb: "role-of-thesauri-in-a-scientific-organization/fig_002.webp"
