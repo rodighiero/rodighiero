@@ -5,6 +5,7 @@ venue: "Journal of Digital History"
 type: "journal"
 author: "Dario Rodighiero and Philippe Rivière and Sarah Kenderdine"
 doi: "https://doi.org/10.1515/JDH-2023-0004"
+issue: 3
 issn: "2747-5271"
 thumb: "super-vision-tracing-epfl-history-through-8000-doctoral-theses/fig_001.webp"
 redirect_from:

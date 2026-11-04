@@ -7,7 +7,9 @@ author: "Dario Rodighiero"
 editor: "Anders Koed Madsen and Anders Kristian Munk"
 publisher: "Edward Elgar Publishing"
 place: "Cheltenham"
-doi: "https://hdl.handle.net/11370/6021c844-43e3-4fe8-b3c2-b8afa1361872"
+# Repository record: https://hdl.handle.net/11370/6021c844-43e3-4fe8-b3c2-b8afa1361872
+doi: "https://doi.org/10.4337/9781802208993.00012"
+pages: "80–94"
 isbn: "9781802208986"
 thumb: "four-guiding-principles-for-rethinking-organizational-charts/fig_002.webp"
 redirect_from:
