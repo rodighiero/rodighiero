@@ -45,13 +45,18 @@
   <meta name="twitter:description" content="{{ _excerpt_attr }}">
   <!-- HighWire Press / Google Scholar citation tags -->
   <meta name="citation_title" content="{{ _title_attr }}">
-  {%- comment -%} The authors, or an edited volume's editors: Scholar has no editor tag.
-  The JSON-LD has one, so it reads page.author directly. {%- endcomment -%}
-  {% assign _authors_raw = page.author | default: page.editor %}
-  {% assign _authors_list = _authors_raw | split: ' and ' %}
-  <meta name="author" content="{{ _authors_list | join: ', ' | escape }}">
+  {%- comment -%} Scholar requires actual authors; editors must never stand in for them.
+  citation_editor preserves the editor role in Zotero, including on editor-only books.
+  The general HTML author tag can still name the page's primary creators. {%- endcomment -%}
+  {% assign _creators_raw = page.author | default: page.editor %}
+  {% assign _creators_list = _creators_raw | split: ' and ' %}
+  {% assign _authors_list = page.author | split: ' and ' %}
+  <meta name="author" content="{{ _creators_list | join: ', ' | escape }}">
   {% for _ca in _authors_list %}
   <meta name="citation_author" content="{{ _ca | strip | escape }}">
+  {% endfor %}
+  {% assign _editors_list = page.editor | split: ' and ' %}
+  {% for _ce in _editors_list %}<meta name="citation_editor" content="{{ _ce | strip | escape }}">
   {% endfor %}
   {% if page.year != "Forthcoming" %}<meta name="citation_publication_date" content="{{ page.year }}">{% endif %}
   {% if _ptype.citation_venue %}<meta name="{{ _ptype.citation_venue }}" content="{{ page.venue | escape }}">{% endif %}
@@ -75,11 +80,14 @@
   {% assign _claims_doi = false %}{% if page.doi %}{% assign _claims_doi = true %}{% if page.translation_of and _set.size > 0 and _set[0].doi == page.doi %}{% assign _claims_doi = false %}{% endif %}{% endif %}
   {% if _claims_doi and _doi %}<meta name="citation_doi" content="{{ _doi }}">{% endif %}
   <meta name="citation_abstract_html_url" content="{{ _url }}">
+  {% if _abstract != '' %}<meta name="citation_abstract" content="{{ _abstract | escape_once }}">{% endif %}
   {% if page.content contains '<!--more-->' %}<meta name="citation_fulltext_html_url" content="{{ _url }}">{% endif %}
   <meta name="citation_language" content="{{ _lang }}">
   <meta name="DC.title" content="{{ _title_attr }}">
   {% for _da in _authors_list %}
   <meta name="DC.creator" content="{{ _da | strip | escape }}">
+  {% endfor %}
+  {% for _de in _editors_list %}<meta name="DC.contributor" content="{{ _de | strip | escape }}">
   {% endfor %}
   <meta name="DC.description" content="{{ _excerpt_attr }}">
   <meta name="DC.source" content="{{ page.venue | escape }}">

@@ -30,3 +30,11 @@ It writes `scripts/scholar-audit.md` and a detailed JSON snapshot in
 `/tmp/rodighiero-scholar-audit.json`. Network access is required. This checks
 technical readiness, not membership of Google Scholar’s index. Publisher comparisons
 and verified corrections are documented separately in `scholar-review.md`.
+
+Run `uv run scripts/audit-scholar.py --site-dir _site --strict` after a Jekyll
+build to check the generated site without network requests. Deployment runs the
+same check. Technical errors fail the command; forthcoming dates, editor-only
+works and publication types needing scholarly eligibility review remain advisory.
+Local reports default to `/tmp/rodighiero-scholar-build-audit.md` and `.json`, so
+they do not overwrite the live audit. Use `--report` and `--snapshot` to choose
+other destinations. See `seo-review.md` for the latest implementation review.

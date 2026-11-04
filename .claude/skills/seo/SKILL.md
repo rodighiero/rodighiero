@@ -106,6 +106,12 @@ in source but the output is plain. Validate structured data at
 `https://validator.schema.org/` or Google's Rich Results Test by pasting the rendered JSON-LD,
 not the template.
 
+Run `uv run scripts/audit-scholar.py --site-dir _site --strict` for the offline
+metadata and discovery check also used by deployment. It fails technical errors,
+while reporting forthcoming dates, editor-only works and scholarly eligibility as
+advisory notes. `citation_author` must contain actual authors only; preserve editors
+with `citation_editor`, `DC.contributor` and JSON-LD `editor` instead.
+
 ## Invariants — don't break these
 
 - **One author identity.** Every name renders through `jsonld-person.html`, which stamps

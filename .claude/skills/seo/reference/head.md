@@ -83,6 +83,7 @@ just two.
 `citation_title`, one `citation_author` per name, `citation_publication_date`,
 `citation_volume`, `citation_issue`, `citation_firstpage`/`citation_lastpage`,
 `citation_publisher`, `citation_issn`, `citation_isbn`, `citation_doi`,
+`citation_abstract` (the full abstract, also used by Zotero),
 `citation_abstract_html_url`, `citation_fulltext_html_url` (when the body has a
 `<!--more-->`, i.e. carries the full text beyond the abstract), `citation_language`.
 
@@ -101,12 +102,12 @@ Chicago-condensed `pages: "301–9"` would claim a nine-page-long article ending
 when the last part is shorter than the first, borrows the missing leading digits: `309`. The visible
 citation keeps `301–9`; only the meta tag is expanded.
 
-**Creators.** `citation_author`, `DC.creator` and `<meta name="author">` read one list: `author`,
-or `editor` on an edited volume (the validator requires one of the two). Scholar has no editor
-tag, so the editors stand in. The old fallback was the literal `Dario Rodighiero`, which
-credited him alone with a four-editor book. JSON-LD does not take the fallback: it has a real
-`editor` property, so an edited volume declares editors and no `author`. `article:author` is
-one tag per name, and only for real authors.
+**Creators.** `citation_author` and `DC.creator` read only `author`: Scholar explicitly
+requires actual authors, so editors never stand in. Each editor gets `citation_editor`
+(supported by Zotero) and `DC.contributor`; JSON-LD uses its real `editor` property.
+An editor-only book therefore has no declared author, and the Scholar audit reports that
+limitation without failing the build. `<meta name="author">`, the general page-creator tag,
+still uses `author` or, if absent, `editor`. `article:author` names only actual authors.
 
 ## Zotero import
 
