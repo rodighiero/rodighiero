@@ -135,8 +135,12 @@ journalArticle rather than magazineArticle. The venue is worth more than the typ
 `DC.identifier` (the URL, plus the DOI as a second one when present and claimed — see above), `DC.publisher`, and
 `DCTERMS.isPartOf` pointing at the site.
 
-`DC.publisher` is the front-matter `publisher` when present, falling back to
-`Dario Rodighiero` for self-published pages.
+`citation_publisher`, `DC.publisher` and the JSON-LD `publisher` share one value,
+`_publisher`, by the rule `publication-cite.html` uses: for a type with no `container`
+(book, map, interview) `venue` *is* the press, so it is the fallback; for a contained type
+only a real `publisher` field counts. With neither, all three are omitted. There is no
+fallback to the site owner: Zotero takes `DC.publisher` as a book's press, so “Dario
+Rodighiero” imported as the publisher of a Métis Presses book.
 
 ## Dates
 

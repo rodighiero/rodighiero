@@ -60,7 +60,11 @@
   {%- comment -%} Scholar wants literal page numbers: "301–9" expands to 309. {%- endcomment -%}
   {% if page.pages %}{% assign _pp = page.pages | page_range %}<meta name="citation_firstpage" content="{{ _pp[0] }}">
   {% if _pp[1] %}<meta name="citation_lastpage" content="{{ _pp[1] }}">{% endif %}{% endif %}
-  {% if page.publisher %}<meta name="citation_publisher" content="{{ page.publisher | escape }}">{% endif %}
+  {%- comment -%} The press, by the same rule as the citation and the JSON-LD: with no
+  container, venue names the press itself; with one, only a real publisher field does.
+  Never a fallback to the site owner — Zotero takes DC.publisher as a book's press. {%- endcomment -%}
+  {% if _ptype.container %}{% assign _publisher = page.publisher %}{% else %}{% assign _publisher = page.publisher | default: page.venue %}{% endif %}
+  {% if _publisher %}<meta name="citation_publisher" content="{{ _publisher | escape }}">{% endif %}
   {% if page.issn %}<meta name="citation_issn" content="{{ page.issn }}">{% endif %}
   {% if page.isbn %}<meta name="citation_isbn" content="{{ page.isbn }}">{% endif %}
   {%- comment -%} A translation sharing its original's identifier (one bilingual object,
@@ -85,7 +89,7 @@
   <meta name="DC.language" content="{{ _lang }}">
   <meta name="DC.identifier" content="{{ _url }}">
   {% if _claims_doi %}<meta name="DC.identifier" content="{{ page.doi }}">{% endif %}
-  <meta name="DC.publisher" content="{{ page.publisher | default: 'Dario Rodighiero' | escape }}">
+  {% if _publisher %}<meta name="DC.publisher" content="{{ _publisher | escape }}">{% endif %}
   <meta name="DCTERMS.isPartOf" content="{{ site.url }}/">
   {% assign _schema_type = _ptype.schema %}
   <script type="application/ld+json">
@@ -113,7 +117,7 @@
     {% endif %}
     {%- comment -%} An isbn goes on the containing book when there is one, else on the work;
     issn only ever on a Periodical. {%- endcomment -%}
-    {% unless _ptype.container %}{% if page.isbn %}"isbn": {{ page.isbn | jsonify }},{% endif %}{% endunless %}{% if _ptype.container %}{% if page.publisher %}"publisher": { "@type": "Organization", "name": {{ page.publisher | jsonify }} },{% endif %}{% else %}"publisher": { "@type": "Organization", "name": {{ page.publisher | default: page.venue | jsonify }} },{% endif %}
+    {% unless _ptype.container %}{% if page.isbn %}"isbn": {{ page.isbn | jsonify }},{% endif %}{% endunless %}{% if _publisher %}"publisher": { "@type": "Organization", "name": {{ _publisher | jsonify }} },{% endif %}
     "url": "{{ _url }}",
     {% if _claims_doi %}"sameAs": "{{ page.doi }}",{% endif %}
     {% if page.pages %}"pagination": {{ page.pages | jsonify }},{% endif %}
