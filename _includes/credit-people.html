@@ -1,9 +1,0 @@
-{%- comment -%}Visible names with verified ORCID links; unknown names stay plain.{%- endcomment -%}
-{%- assign _credit_people = include.names | split: ' and ' -%}
-{%- for _name in _credit_people -%}
-  {%- assign _name = _name | strip -%}
-  {%- assign _identity = site.data.people[_name] -%}
-  {%- assign _orcid = _identity.orcid -%}
-  {%- if _name == site.title -%}{%- assign _orcid = site.orcid -%}{%- endif -%}
-  {{- _name | escape -}}{% if _orcid %} <a href="{{ _orcid | escape }}" aria-label="ORCID for {{ _name | escape }}">(ORCID)</a>{% endif %}{% unless forloop.last %}, {% endunless %}
-{%- endfor -%}
