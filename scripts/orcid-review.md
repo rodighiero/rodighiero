@@ -69,7 +69,7 @@ as well as the collective credit metaLAB. Search results for namesakes were excl
 
 ## Matching decisions
 
-- Jeffrey Schnapp and Jeffrey T. Schnapp share the ORCID whose public record lists both *Orchestrating Cultural Heritage* and *Surprise machines*.
+- Jeffrey Schnapp: the public ORCID record lists both *Orchestrating Cultural Heritage* and *Surprise machines*; the corpus spells him "Jeffrey Schnapp" throughout.
 - Sabina Rosenbergova/Rosenbergová and Martina R. Fröschl/Froeschl were verified using institutional or ORCID records, without changing their credited spellings.
 - Weidi Zhang was matched to the Arizona State University artist, rather than the mineral-processing researcher with the same name.
 - Daniele Guido was matched to the C²DH designer and developer, rather than the mathematician.

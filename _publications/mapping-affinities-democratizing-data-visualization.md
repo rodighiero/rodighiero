@@ -4,7 +4,7 @@ year: 2021
 venue: "Métis Presses"
 type: "book"
 author: "Dario Rodighiero"
-preface: "Jeffrey T. Schnapp"
+preface: "Jeffrey Schnapp"
 doi: "https://library.oapen.org/handle/20.500.12657/91793"
 isbn: "9782940563999"
 thumb: mapping-affinities-democratizing-data-visualization/cover.webp

@@ -222,13 +222,6 @@
       "https://pub.orcid.org/v3.0/0000-0003-4612-3762/record"
     ]
   },
-  "Jeffrey T. Schnapp": {
-    "orcid": "https://orcid.org/0000-0003-4612-3762",
-    "sources": [
-      "https://api.crossref.org/works/10.1075%2Fidj.22013.rod",
-      "https://pub.orcid.org/v3.0/0000-0003-4612-3762/record"
-    ]
-  },
   "Johan Malmstedt": {
     "orcid": "https://orcid.org/0000-0001-5207-4296",
     "sources": [

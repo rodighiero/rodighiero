@@ -7,7 +7,7 @@ lang: fr
 translation_of: mapping-affinities-democratizing-data-visualization
 author: "Dario Rodighiero"
 translator: "Martine Sgard"
-preface: "Jeffrey T. Schnapp"
+preface: "Jeffrey Schnapp"
 doi: "https://www.metispresses.ch/fr/cartographie-des-affinites"
 isbn: "9782940563913"
 thumb: cartographie-des-affinites-democratiser-la-visualisation-des-donnees/cover.webp
