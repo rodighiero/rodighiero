@@ -11,7 +11,7 @@ thumb: grounding-ai-exploring-the-role-of-algorithms-in-science/cover.webp
 redirect_from:
   - /Grounding-AI
 ---
-{% include figure-single.html class="wide" src="/images/grounding-ai-exploring-the-role-of-algorithms-in-science/cover.webp" alt="Title card for “Grounding AI: Exploring the Role of Algorithms in Science,” set over an iridescent microscopic texture on a blue-grey gradient" %}
+{% include figure-single.html src="/images/grounding-ai-exploring-the-role-of-algorithms-in-science/cover.webp" alt="Title card for “Grounding AI: Exploring the Role of Algorithms in Science,” set over an iridescent microscopic texture on a blue-grey gradient" %}
 
 You are seeing a map — but not of streets or cities. This is a map of two million scientific papers about artificial intelligence, machine learning, and algorithms, where each dot is a paper and each cluster is a conversation happening in science about how algorithms are being put to work in the world. Like any city map, it invites you to explore: zoom in on a neighborhood, follow a path, or simply wander, and the further you walk the more the landscape changes — from medicine to education, from language to vision, from prediction to control. Take your time with it, asking yourself which of these applications you had heard of, which ones surprised you, and whether more of them should be part of the public conversation we are all having about AI.
 

@@ -29,11 +29,6 @@ This file lives under `scripts/`, which Jekyll excludes from the published site.
   where appropriate. Keep separate canonical URLs and reciprocal language links.
   The claim that suppression prevents unwanted Scholar merging remains unverified.
 
-- [ ] **Check abstract visibility in a browser.** Inspect desktop and mobile
-  publication pages, especially those placing cover images before abstract text.
-  Confirm the abstract is easy to see without interaction. The review could not
-  perform viewport checks because the browser host was unavailable.
-
 - [ ] **Verify actual Scholar coverage.** Search exact titles for several dozen
   representative papers and inspect “All versions” for personal-site copies.
   Record the date, query, observed result and version URL. Distinguish inaccessible
