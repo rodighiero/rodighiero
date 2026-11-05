@@ -16,9 +16,8 @@ every publication page.
 
 Fallback is `ScholarlyArticle`. The node carries `@id` (the page URL), `headline` + `name`,
 the person properties, `datePublished` / `dateModified`, the container or publisher, `url`,
-`sameAs` (the DOI — dropped on a translation whose `doi` equals its source's, since one
-shared identifier on both would declare two works one entity against `translationOfWork`;
-the same `_claims_doi` flag drops `citation_doi` and the DOI `DC.identifier`),
+`sameAs` (the DOI, on every page that has one — a translation sharing its source's DOI
+declares it too, since that DOI names one bilingual item; see `head.md`),
 `pagination`, translation links, `image`, `mainEntityOfPage`,
 `inLanguage`, `abstract` and `description`.
 

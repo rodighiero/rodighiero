@@ -16,12 +16,6 @@ This file lives under `scripts/`, which Jekyll excludes from the published site.
   `citation_abstract` and `citation_editor`. Text presence alone must not be
   reported as proof of visibility or completeness.
 
-- [ ] **Review shared DOIs on translations.** `_layouts/publication.html` suppresses
-  identifiers when a translation shares its original's DOI. Check the bilingual
-  Progetto Grafico records and preserve verified identifiers in citation exports
-  where appropriate. Keep separate canonical URLs and reciprocal language links.
-  The claim that suppression prevents unwanted Scholar merging remains unverified.
-
 - [ ] **Verify actual Scholar coverage.** Search exact titles for several dozen
   representative papers and inspect “All versions” for personal-site copies.
   Record the date, query, observed result and version URL. Distinguish inaccessible

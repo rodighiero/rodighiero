@@ -88,10 +88,12 @@ just two.
 `<!--more-->`, i.e. carries the full text beyond the abstract, unless the entry sets
 `fulltext: false`), `citation_language`.
 
-`citation_doi`, the DOI `DC.identifier` and the JSON-LD `sameAs` all follow one flag,
-`_claims_doi`: a translation whose `doi` equals its source's (one bilingual article, one
-DOI, as Progetto Grafico publishes) leaves all three to the original, so Scholar does not
-merge the two languages into one record. Its visible DOI pill still links the DOI.
+`citation_doi`, the DOI `DC.identifier` and the JSON-LD `sameAs` are emitted on every
+page with a `doi`, translations included. A translation whose `doi` equals its source's
+(one bilingual article, one DOI, as Progetto Grafico publishes) declares it too: the DOI
+names one bilingual item and both language pages are that item, so Scholar grouping them as
+versions is the accurate reading (Dario's call, 2026-11-05). Until then the translation
+left all three to its source; that suppression was removed, not lost.
 
 The venue tag is **not fixed**: `publication_types.yml` says which one this type uses
 (`citation_journal_title`, `citation_conference_title`, `citation_book_title`), and a type

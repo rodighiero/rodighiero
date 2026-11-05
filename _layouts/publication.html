@@ -72,13 +72,11 @@
   {% if _publisher %}<meta name="citation_publisher" content="{{ _publisher | escape }}">{% endif %}
   {% if page.issn %}<meta name="citation_issn" content="{{ page.issn }}">{% endif %}
   {% if page.isbn %}<meta name="citation_isbn" content="{{ page.isbn }}">{% endif %}
-  {%- comment -%} A translation sharing its original's identifier (one bilingual object,
-  one DOI) leaves the identifier to the original: claiming it too, in citation_doi,
-  DC.identifier or sameAs, would declare the two works one entity, against
-  translationOfWork, and Scholar would merge the two languages. The visible DOI link stays. {%- endcomment -%}
+  {%- comment -%} Every page declares its doi, translations included: a DOI shared by
+  two language pages names one bilingual item, and both pages are that item, so Scholar
+  grouping them as versions of one work is the accurate reading. {%- endcomment -%}
   {% assign _doi = page.doi | doi_id %}
-  {% assign _claims_doi = false %}{% if page.doi %}{% assign _claims_doi = true %}{% if page.translation_of and _set.size > 0 and _set[0].doi == page.doi %}{% assign _claims_doi = false %}{% endif %}{% endif %}
-  {% if _claims_doi and _doi %}<meta name="citation_doi" content="{{ _doi }}">{% endif %}
+  {% if _doi %}<meta name="citation_doi" content="{{ _doi }}">{% endif %}
   <meta name="citation_abstract_html_url" content="{{ _url }}">
   {% if _abstract != '' %}<meta name="citation_abstract" content="{{ _abstract | escape_once }}">{% endif %}
   {% if page.content contains '<!--more-->' and page.fulltext != false %}<meta name="citation_fulltext_html_url" content="{{ _url }}">{% endif %}
@@ -96,7 +94,7 @@
   <meta name="DC.format" content="text/html">
   <meta name="DC.language" content="{{ _lang }}">
   <meta name="DC.identifier" content="{{ _url }}">
-  {% if _claims_doi %}<meta name="DC.identifier" content="{{ page.doi }}">{% endif %}
+  {% if page.doi %}<meta name="DC.identifier" content="{{ page.doi }}">{% endif %}
   {% if _publisher %}<meta name="DC.publisher" content="{{ _publisher | escape }}">{% endif %}
   <meta name="DCTERMS.isPartOf" content="{{ site.url }}/">
   {% assign _schema_type = _ptype.schema %}
@@ -127,7 +125,7 @@
     issn only ever on a Periodical. {%- endcomment -%}
     {% unless _ptype.container %}{% if page.isbn %}"isbn": {{ page.isbn | jsonify }},{% endif %}{% endunless %}{% if _publisher %}"publisher": { "@type": "Organization", "name": {{ _publisher | jsonify }} },{% endif %}
     "url": "{{ _url }}",
-    {% if _claims_doi %}"sameAs": "{{ page.doi }}",{% endif %}
+    {% if page.doi %}"sameAs": "{{ page.doi }}",{% endif %}
     {% if page.pages %}"pagination": {{ page.pages | jsonify }},{% endif %}
     {% if page.translation_of and _set.size > 0 %}{% assign _source = _set[0] %}{% assign _st = site.data.publication_types[_source.type].schema %}"translationOfWork": { "@type": "{{ _st }}", "@id": "{{ site.url }}{{ _source.url }}", "name": {{ _source.title | jsonify }}, "inLanguage": "{{ _source.lang }}" },{% endif %}
     {% if page.translated_by.size > 0 %}"workTranslation": [{% for _t in page.translated_by %}{% assign _tt = site.data.publication_types[_t.type].schema %}{ "@type": "{{ _tt }}", "@id": "{{ site.url }}{{ _t.url }}", "name": {{ _t.title | jsonify }}, "inLanguage": "{{ _t.lang }}" }{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}
