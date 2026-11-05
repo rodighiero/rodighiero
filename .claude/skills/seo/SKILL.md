@@ -107,9 +107,14 @@ in source but the output is plain. Validate structured data at
 not the template.
 
 Run `uv run scripts/audit-scholar.py --site-dir _site --strict` for the offline
-metadata and discovery check also used by deployment. It fails technical errors,
-while reporting forthcoming dates, editor-only works and scholarly eligibility as
-advisory notes. `citation_author` must contain actual authors only; preserve editors
+metadata and discovery check also used by deployment. Every finding is filed as
+**scholar** (a requirement Scholar's guidelines state), **source** (the page disagrees with
+its own front matter: venue, identifiers, pages, the hreflang set `translation_of` implies,
+the work JSON-LD, the full-text claim against `<!--more-->` and `fulltext:`), **convention**
+(`citation_abstract`, `citation_editor`, the description) or **note** (forthcoming dates,
+editor-only works). `--strict` fails on all but notes. Hiding is judged from markup only,
+so a pass is not proof the abstract is visible. Every type is treated as scholarly output,
+by Dario's decision, so no eligibility note is raised. `citation_author` must contain actual authors only; preserve editors
 with `citation_editor`, `DC.contributor` and JSON-LD `editor` instead.
 
 ## Invariants — don't break these

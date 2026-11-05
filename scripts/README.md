@@ -33,8 +33,10 @@ and verified corrections are documented separately in `scholar-review.md`.
 
 Run `uv run scripts/audit-scholar.py --site-dir _site --strict` after a Jekyll
 build to check the generated site without network requests. Deployment runs the
-same check. Technical errors fail the command; forthcoming dates, editor-only
-works and publication types needing scholarly eligibility review remain advisory.
+same check. Findings are grouped as scholar requirements, source consistency
+(front matter against the rendered page, including pages, hreflang sets, JSON-LD and
+the full-text claim), export conventions, and advisory notes; all but notes fail
+`--strict`. Forthcoming dates and editor-only works are the notes.
 Local reports default to `/tmp/rodighiero-scholar-build-audit.md` and `.json`, so
 they do not overwrite the live audit. Use `--report` and `--snapshot` to choose
 other destinations. See `seo-review.md` for the latest implementation review.

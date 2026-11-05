@@ -6,16 +6,6 @@ Super-Vision are complete and pushed in `ac7cb21`.
 
 This file lives under `scripts/`, which Jekyll excludes from the published site.
 
-- [ ] **Strengthen `scripts/audit-scholar.py`.** The independent temporary fixtures
-  passed despite a hidden abstract, incorrect first page, missing last page,
-  missing language alternates, an unrelated JSON-LD headline, and an empty article
-  body retaining its full-text claim. Compare pagination and structured data with
-  source records, derive expected translation sets, and detect hidden abstracts
-  and missing article content. Clearly distinguish source consistency, actual
-  Scholar requirements, and optional citation-export conventions such as
-  `citation_abstract` and `citation_editor`. Text presence alone must not be
-  reported as proof of visibility or completeness.
-
 - [ ] **Verify actual Scholar coverage.** Search exact titles for several dozen
   representative papers and inspect “All versions” for personal-site copies.
   Record the date, query, observed result and version URL. Distinguish inaccessible

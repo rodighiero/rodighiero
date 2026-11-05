@@ -36,7 +36,7 @@ jobs:
         with:
           python-version: '3.13'
       # Audit the generated HTML, not just the templates. No live requests or
-      # Scholar searches: a missing author/year on an editorial item is advisory.
+      # Scholar searches; forthcoming and editor-only entries are advisory notes.
       - run: python -m pip install PyYAML==6.0.3
       - run: python scripts/audit-scholar.py --site-dir _site --strict
       # jekyll-feed always emits a posts feed (no toggle); it's parked empty at
