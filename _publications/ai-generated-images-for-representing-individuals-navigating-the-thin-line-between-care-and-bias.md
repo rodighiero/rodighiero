@@ -5,6 +5,7 @@ venue: "IEEE VIS Arts Program (VISAP)"
 type: "conference"
 author: "Julia C. Ahrend and Björn Döge and Tom M. Duscher and Dario Rodighiero"
 doi: "https://doi.org/10.48550/arXiv.2509.03071"
+isbn: "9798331579975"
 thumb: "ai-generated-images-for-representing-individuals-navigating-the-thin-line-between-care-and-bias/fig_001.webp"
 redirect_from:
   - /AI-Generated-Images-for-Representing-Individuals

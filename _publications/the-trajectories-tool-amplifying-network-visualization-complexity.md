@@ -5,6 +5,7 @@ venue: "Digital Humanities"
 type: "conference"
 author: "Alexandre Rigal and Dario Rodighiero and Loup Cellard"
 doi: "https://infoscience.epfl.ch/record/215853"
+isbn: "9788394276034"
 thumb: "the-trajectories-tool-amplifying-network-visualization-complexity/fig_003.webp"
 ---
 Network visualizations are among the most complex visualizations possible, yet they sometimes fail to describe system-complexity: their relations alone are not enough to analyze it, and they do not distinguish the qualitative differences between the entities they represent. Starting from the standard network model, this paper proposes a solution called the trajectory—a network that represents not only distances but also durations, displaying kinetic entities according to their evolution over time. Built on a vertical timeline, the trajectory offers digital humanists a new visual language and a tool to lend their networks the most complex of all possible visualizations.

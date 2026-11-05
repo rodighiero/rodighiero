@@ -5,6 +5,7 @@ venue: "IEEE VIS Arts Program (VISAP)"
 type: "conference"
 author: "Johan Malmstedt and Giacomo Nanni and Dario Rodighiero"
 doi: "https://doi.org/10.48550/arXiv.2509.00114"
+isbn: "9798331579975"
 thumb: "living-library-of-trees-mapping-knowledge-ecology-in-arnold-arboretum/fig_001.webp"
 redirect_from:
   - /Living-library-of-trees
