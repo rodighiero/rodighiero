@@ -23,11 +23,16 @@ This file lives under `scripts/`, which Jekyll excludes from the published site.
   `citation_abstract` and `citation_editor`. Text presence alone must not be
   reported as proof of visibility or completeness.
 
-- [ ] **Use ordered bibliography markup.** The review found 60 generated pages
-  with reference headings followed by `<ul>`. Scholar documents `<ol>` for HTML
-  references. Update bibliography rendering and the publication skill's house
-  style; preserve the intended visual appearance with CSS. Do not claim this
-  discrepancy has caused indexing failures without evidence.
+- [ ] **Use ordered bibliography markup.** The build of 4 November 2026 has 67
+  generated pages with reference headings followed by `<ul>` (68 headings: 53
+  References, 6 Bibliographie, 6 Bibliografia, 1 Referenties, 1 Références, and
+  one Bibliographie complémentaire on a page that already has another). Any fix
+  or audit check must match all of these, not only English “References”, and
+  must exclude the layout's own “Related publications” list
+  (`_layouts/publication.html`), which is not a bibliography. Scholar documents
+  `<ol>` for HTML references. Update bibliography rendering and the publication
+  skill's house style; preserve the intended visual appearance with CSS. Do not
+  claim this discrepancy has caused indexing failures without evidence.
 
 - [ ] **Review shared DOIs on translations.** `_layouts/publication.html` suppresses
   identifiers when a translation shares its original's DOI. Check the bilingual
