@@ -1,4 +1,4 @@
-# The fourteen, in detail
+# The fifteen, in detail
 
 Ordered by what they do, not alphabetically. Each heading gives the identifier the file
 produces — which is what you are usually searching for.
@@ -34,6 +34,24 @@ and re-emitted outside the anchor, so a URL ending a sentence doesn't swallow th
 ` ` is excluded explicitly because kramdown inserts a non-breaking space before the
 footnote return arrow and Ruby's `\s` does not match it — without the exclusion the URL would
 swallow the nbsp and whatever preceded it.
+
+### `publication_references.rb` → `| ordered_references`
+
+Rewrites the `<ul>` right after a bibliography heading as `<ol class="references">`, the
+markup Google Scholar's inclusion guidelines name for HTML reference lists. Chained after
+`autolink_urls` on the body in `publication.html`. The Markdown keeps `- ` bullets, so the
+corpus never changes for it, and `.body ol.references { list-style-type: disc; }` in
+`styles-article.css` keeps the bullets on screen: Chicago author-date entries are
+alphabetical, and numbers would suggest a numbered citation system.
+
+The heading has to match the vocabulary in `HEADINGS` (References, Références, Referenties,
+Bibliography, Bibliographie, Bibliografia; a word may follow, as in *Bibliographie
+complémentaire*). A heading in a new language needs adding there, or its list stays `<ul>`.
+The heading text is not allowed to cross another heading tag — a plain lazy `.*?` started
+at the body's first `<h2>` and swallowed everything up to the list, converting 13 of 68. A
+list containing a nested `<ul>` is left alone, since the lazy match would end at the inner
+`</ul>`. The layout's "Related publications" `<ul>` sits outside the body, so it is never
+seen.
 
 ### `publication_decoder.rb` → `| decode_numeric_entities`, `| snippet`, `| doi_id`, `| page_range`
 

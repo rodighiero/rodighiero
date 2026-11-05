@@ -25,7 +25,8 @@ h1 { font-size: var(--text-xxl); font-weight: 500; margin: 0.6rem 0; }
 .body strong { font-weight: 500; color: var(--fg); }
 .body ul, .body ol { padding-left: 1.4em; }
 .body li { margin-bottom: 0.8rem; padding-left: 0.3em; }
-.body ul li::marker { font-size: 0.7em; }
+.body ol.references { list-style-type: disc; }
+.body ul li::marker, .body ol.references li::marker { font-size: 0.7em; }
 .body figure { margin: 2rem 0; }
 .body figure img { width: 100%; height: auto; display: block; }
 .body figcaption { margin-top: 0.5rem; font-size: var(--text-xs); color: var(--muted); line-height: var(--lh-normal); }
