@@ -35,14 +35,6 @@ This file lives under `scripts/`, which Jekyll excludes from the published site.
   search results from missing papers. HTTP 200, ordinary Google results, and
   `site:` result counts do not establish Scholar inclusion or exclusion.
 
-- [ ] **Resolve remaining editorial questions.** Verify publication status and
-  dates for *Curatorial A(i)gents* and *Data Storytelling* before replacing
-  `Forthcoming` (Zotero, 5 November 2026: *Data Storytelling* still marked
-  forthcoming; *Curatorial A(i)gents* accepted for JCS 16.1, editors and
-  issue recorded from the acceptance email of 4 June 2026). Review scholarly
-  eligibility of maps, magazines, interviews, catalogs and edited volumes without
-  assuming that an academic website makes every item a scholarly paper.
-
 ## Sources and validation
 
 - [Google Scholar inclusion guidelines](https://scholar.google.com/intl/en/scholar/inclusion.html)
