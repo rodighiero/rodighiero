@@ -6,6 +6,7 @@ type: "book"
 author: "Damla Çay and Dario Rodighiero and Weidi Zhang and Martina R. Fröschl and Peter Mindek and Beatrice Gobbo"
 doi: "https://visap.net/2025/downloads/visap-2025-booklet.pdf"
 thumb: collective-care-visap-25-catalog/cover.webp
+fulltext: false
 img_border: true
 redirect_from:
   - /VISAP-2025-Catalog

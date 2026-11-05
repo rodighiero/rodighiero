@@ -75,6 +75,7 @@ Absent `lang` means English: `_config.yml`'s `defaults:` sets `lang: en` on ever
 | Field | Effect |
 |---|---|
 | `img_border: true` | hairline around the homepage card |
+| `fulltext: false` | the text after `<!--more-->` is only part of the work (a book's preface and introduction, a catalogue's editorial), so the page does not emit `citation_fulltext_html_url`. Set on the four books: *From Wisdom to Data*, *Mapping Affinities*, *Cartographie des affinités*, *Collective Care*. Every other entry is a complete text |
 | `redirect_from` | string or list of site-absolute paths; each becomes a refresh stub canonicalised to the real page |
 
 `page.date` is **derived**, not declared — `publication_date.rb` synthesizes it from `year`

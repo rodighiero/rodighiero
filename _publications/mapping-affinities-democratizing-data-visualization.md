@@ -8,6 +8,7 @@ preface: "Jeffrey Schnapp"
 doi: "https://library.oapen.org/handle/20.500.12657/91793"
 isbn: "9782940563999"
 thumb: mapping-affinities-democratizing-data-visualization/cover.webp
+fulltext: false
 redirect_from:
   - /Mapping-Affinities
 ---

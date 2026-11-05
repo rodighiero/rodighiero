@@ -85,7 +85,8 @@ just two.
 `citation_publisher`, `citation_issn`, `citation_isbn`, `citation_doi`,
 `citation_abstract` (the full abstract, also used by Zotero),
 `citation_abstract_html_url`, `citation_fulltext_html_url` (when the body has a
-`<!--more-->`, i.e. carries the full text beyond the abstract), `citation_language`.
+`<!--more-->`, i.e. carries the full text beyond the abstract, unless the entry sets
+`fulltext: false`), `citation_language`.
 
 `citation_doi`, the DOI `DC.identifier` and the JSON-LD `sameAs` all follow one flag,
 `_claims_doi`: a translation whose `doi` equals its source's (one bilingual article, one

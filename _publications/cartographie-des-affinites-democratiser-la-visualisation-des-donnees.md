@@ -11,6 +11,7 @@ preface: "Jeffrey Schnapp"
 doi: "https://www.metispresses.ch/fr/cartographie-des-affinites"
 isbn: "9782940563913"
 thumb: cartographie-des-affinites-democratiser-la-visualisation-des-donnees/cover.webp
+fulltext: false
 ---
 {% include figure-single.html class="half" src="/images/cartographie-des-affinites-democratiser-la-visualisation-des-donnees/cover.webp" alt="Couverture du livre « Cartographie des affinités » de Dario Rodighiero (MétisPresses), avec un réseau de nœuds reliés sur fond bleu foncé" %}
 

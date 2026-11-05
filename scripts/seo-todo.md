@@ -6,13 +6,6 @@ Super-Vision are complete and pushed in `ac7cb21`.
 
 This file lives under `scripts/`, which Jekyll excludes from the published site.
 
-- [ ] **Correct full-text declarations.** Replace the assumption that `<!--more-->`
-  means complete full text with an explicit distinction between abstracts,
-  excerpts, and full works. Review every publication currently emitting
-  `citation_fulltext_html_url`, particularly *From Wisdom to Data* and
-  *Mapping Affinities*. Emit the tag only for complete works; retain appropriate
-  abstract metadata for excerpts. Verify generated HTML after building.
-
 - [ ] **Strengthen `scripts/audit-scholar.py`.** The independent temporary fixtures
   passed despite a hidden abstract, incorrect first page, missing last page,
   missing language alternates, an unrelated JSON-LD headline, and an empty article

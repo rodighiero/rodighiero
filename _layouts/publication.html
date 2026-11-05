@@ -81,7 +81,7 @@
   {% if _claims_doi and _doi %}<meta name="citation_doi" content="{{ _doi }}">{% endif %}
   <meta name="citation_abstract_html_url" content="{{ _url }}">
   {% if _abstract != '' %}<meta name="citation_abstract" content="{{ _abstract | escape_once }}">{% endif %}
-  {% if page.content contains '<!--more-->' %}<meta name="citation_fulltext_html_url" content="{{ _url }}">{% endif %}
+  {% if page.content contains '<!--more-->' and page.fulltext != false %}<meta name="citation_fulltext_html_url" content="{{ _url }}">{% endif %}
   <meta name="citation_language" content="{{ _lang }}">
   <meta name="DC.title" content="{{ _title_attr }}">
   {% for _da in _authors_list %}
