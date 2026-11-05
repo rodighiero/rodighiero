@@ -37,8 +37,8 @@ This file lives under `scripts/`, which Jekyll excludes from the published site.
 
 - [ ] **Resolve remaining editorial questions.** Verify publication status and
   dates for *Curatorial A(i)gents* and *Data Storytelling* before replacing
-  `Forthcoming`. Check *From Wisdom to Data* editor ordering against the book's
-  title page; the publisher listing differs from the local order. Review scholarly
+  `Forthcoming` (Zotero, 5 November 2026: *Data Storytelling* still marked
+  forthcoming; no record of the *Curatorial A(i)gents* article). Review scholarly
   eligibility of maps, magazines, interviews, catalogs and edited volumes without
   assuming that an academic website makes every item a scholarly paper.
 
