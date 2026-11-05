@@ -38,7 +38,8 @@ This file lives under `scripts/`, which Jekyll excludes from the published site.
 - [ ] **Resolve remaining editorial questions.** Verify publication status and
   dates for *Curatorial A(i)gents* and *Data Storytelling* before replacing
   `Forthcoming` (Zotero, 5 November 2026: *Data Storytelling* still marked
-  forthcoming; no record of the *Curatorial A(i)gents* article). Review scholarly
+  forthcoming; *Curatorial A(i)gents* accepted for JCS 16.1, editors and
+  issue recorded from the acceptance email of 4 June 2026). Review scholarly
   eligibility of maps, magazines, interviews, catalogs and edited volumes without
   assuming that an academic website makes every item a scholarly paper.
 
