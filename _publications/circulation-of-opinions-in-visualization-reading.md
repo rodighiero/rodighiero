@@ -9,6 +9,7 @@ doi: "https://ceur-ws.org/Vol-1658/paper3.pdf"
 publisher: "CEUR-WS.org"
 place: "Bari"
 pages: "13–19"
+issn: "1613-0073"
 thumb: "circulation-of-opinions-in-visualization-reading/fig_002.webp"
 ---
 Visualizations need interpretation as a way to grasp the meaning of visual representation. They are complex, and often the process of creation is hidden to the public. Because of this, the following text illustrates a way to read the visual representation of data by analyzing the reading in three intervals: detail, visualization, and context. These three different moments make explicit the structure of reading, which will end with the interpretation—the moment in which the observer gets insights and becomes conscious about a personal kind of knowledge. Interpretation, which is composed of personal opinions, is a very important medium to keep the information circulating and to permit an open dialogue with other observers who are reading the same visualization, even in the medical field. In this paper the photography of Luigi Ghirri will illustrate the schematic approach; successively, the three intervals will be exemplified using a medical example, where my parents will be involved in the reading of a blood test. The simple idea is that, through the circulation of opinions and the dialogue, visualization interpretation will foster the creation of a common knowledge and improve the capacity of reading by each single observer.

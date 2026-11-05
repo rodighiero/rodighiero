@@ -8,6 +8,7 @@ editor: "José Higuera Rubio and Alberto Romele and Dario Rodighiero and Celeste
 publisher: "University of Porto Press"
 place: "Porto"
 doi: "https://doi.org/10.31235/osf.io/qrhzu"
+isbn: "9789897463150"
 thumb: "are-we-all-narcissists-the-pseudo-narcissism-of-the-internet/fig_002.webp"
 ---
 Journalists and psychologists claim we are more narcissistic than ever because of the extensive use of social networks and digital tools. They are wrong: social networks and other digital tools don’t increase our self-love but amplify our quest for the approval of others. René Girard’s theory contradicts Sigmund Freud’s psychoanalysis by stating that digital users are not narcissistic but pseudo-narcissistic, opening a new era of pseudo-narcissism.
