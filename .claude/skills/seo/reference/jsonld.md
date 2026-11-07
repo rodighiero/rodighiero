@@ -102,13 +102,19 @@ declared relationship. See the `network` skill.
 
 ## Two descriptions
 
-`description` is the 160-character `| snippet` of the abstract the meta description uses — it must fit a
-snippet. `abstract` has no budget and carries the abstract whole: on a full-text article the
+`description` uses a front-matter summary when supplied, otherwise the
+160-character `| snippet` of the abstract. Search and social previews share this
+value. `abstract` has no budget and carries the abstract whole: on a full-text article the
 lead before `<!--more-->`, which *is* the abstract; on any other entry the body, which is the
 abstract already. Emitting the same string twice would waste the one field that can hold the
 real thing.
 
 ## BreadcrumbList
+
+`_data/publication_series.yml` defines curated groups of editions and research.
+The relations generator validates their slugs and exposes plain references as
+`publication_series`. Members render this navigation instead of the automatic
+related-publications list; the network data and translations remain unchanged.
 
 Two levels — site title → page title. Flat by design: publications have no category pages to
 sit under, so a deeper trail would invent structure the site does not have.

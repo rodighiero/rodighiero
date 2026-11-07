@@ -58,7 +58,7 @@ written down.
 | `publication_order.rb` | `site.data.ordered_publications` + the `OrderedPublications` module | `home.html`, `publication_neighbors.rb`, `publication_date.rb` (which also calls `year_of`) |
 | `publication_neighbors.rb` | `prev_pub` / `next_pub` | `publication-nav.html` |
 | `publication_credits.rb` | `\| credit_short` | `credit-short.html` |
-| `publication_relations.rb` | `translation_set` / `translated_by`, `related` | `publication.html` |
+| `publication_relations.rb` | `translation_set` / `translated_by`, `related`, `publication_series` | `publication.html` |
 | `publication_date.rb` | `page.date` | the jekyll-feed gem |
 | `publication_figures.rb` | `figures` | `sitemap.xml` |
 | `system_commit_date.rb` | `commit_date` (per doc **and** `site.data`) | `sitemap.xml`, `publication.html` |

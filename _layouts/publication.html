@@ -9,7 +9,7 @@
   before strip_html removes the marker. JSON-LD takes it whole; the meta description takes
   it cut to a sentence or word by `snippet` (publication_decoder.rb). {%- endcomment -%}
   {% assign _abstract = page.content | split: '<!--more-->' | first | strip_html | decode_numeric_entities | normalize_whitespace | strip %}
-  {% assign _excerpt = _abstract | snippet %}
+  {% assign _excerpt = page.description | default: _abstract | strip_html | normalize_whitespace | snippet %}
   {% assign _excerpt_attr = _excerpt | escape_once %}
   <meta charset="utf-8">
   {% include site-head.html %}
@@ -178,7 +178,16 @@
   </div>
   {% if _content_parts.size > 1 %}<footer class="editorial-note" lang="en"><p>Editorial note: this text is republished from its original venue and lightly edited for uniformity across the site. Citations and references have been restated in Chicago author-date style; obvious typos, incidental reference errors, and occasional language slips have been corrected. Small differences from the original publication may therefore exist; the version of record is the publisher’s, linked at the top of this page.</p></footer>{% endif %}
   </article>
-  {% if page.related.size > 0 %}
+  {% if page.publication_series %}
+  <nav class="related-pubs" aria-label="{{ page.publication_series.title | escape }}" lang="en">
+    <h2>{{ page.publication_series.title }}</h2>
+    <ul>
+      {% for _r in page.publication_series.items %}{% unless _r.url == page.url %}
+      <li><a href="{{ _r.url }}" lang="{{ _r.lang }}">{{ _r.title }} <span class="related-lang">{{ _r.year }} · {{ _r.lang }}</span></a></li>
+      {% endunless %}{% endfor %}
+    </ul>
+  </nav>
+  {% elsif page.related.size > 0 %}
   <nav class="related-pubs" aria-label="Related publications" lang="en">
     <h2>Related publications</h2>
     <ul>

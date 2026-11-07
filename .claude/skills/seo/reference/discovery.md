@@ -57,6 +57,13 @@ is the reason to keep it that way.
 
 ## URL aliases
 
+`_data/legacy_redirects.yml` holds reviewed migration routes as old-path → current
+path mappings, including category routes to homepage `?type=` filters. Targets
+must be real pages, never aliases; the build fails on a missing target or output
+collision. Category stubs use the unfiltered homepage as their canonical while
+the refresh retains the filter. This avoids changing publication modification
+dates solely to restore historical routes.
+
 `redirect_from` on any page or document (`publication_redirect.rb` scans
 `site.pages + site.documents`, so a top-level page would work too — today every alias happens
 to sit on a publication). The stub is:

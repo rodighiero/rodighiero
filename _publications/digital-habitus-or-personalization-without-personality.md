@@ -1,5 +1,6 @@
 ---
 title: "Digital Habitus or Personalization without Personality"
+description: "How machine-learning algorithms classify people and shape identity: digital habitus and personalization through Bourdieu, Latour, and data visualization."
 year: 2020
 venue: "HUMANA.MENTE"
 type: "journal"

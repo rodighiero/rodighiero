@@ -5,6 +5,8 @@
 # document's `redirect_from` front matter, so shortened or retired URLs keep
 # resolving to the canonical page. Local replacement for jekyll-redirect-from,
 # with no external gem.
+# Site migration aliases live in _data/legacy_redirects.yml, keeping restored
+# historical routes separate from publications' content modification dates.
 #
 # The stub carries rel=canonical and deliberately no `noindex`. The two are
 # contradictory instructions — Google resolves the conflict by picking the
@@ -21,6 +23,10 @@
 # An alias without an extension is written as `<alias>.html` (served at the
 # extensionless URL by both GitHub Pages and `jekyll serve`); one ending in a
 # slash is written as `<alias>/index.html`.
+require 'cgi'
+require 'json'
+require 'uri'
+
 module Jekyll
   class RedirectPage < PageWithoutAFile
     def initialize(site, dir, name, target, canonical)
@@ -30,18 +36,19 @@ module Jekyll
       # site.publications rather than site.pages, and the target below is interpolated
       # into the markup rather than read back off the page.
       self.data = {}
+      target_attr = CGI.escapeHTML(target)
       self.content = <<~HTML
         <!DOCTYPE html>
         <html lang="en">
         <head>
           <meta charset="utf-8">
           <title>Redirecting…</title>
-          <link rel="canonical" href="#{canonical}">
-          <meta http-equiv="refresh" content="0; url=#{target}">
-          <script>location.replace("#{target}");</script>
+          <link rel="canonical" href="#{CGI.escapeHTML(canonical)}">
+          <meta http-equiv="refresh" content="0; url=#{target_attr}">
+          <script>location.replace(#{JSON.generate(target)});</script>
         </head>
         <body>
-          <p>Redirecting to <a href="#{target}">#{target}</a>…</p>
+          <p>Redirecting to <a href="#{target_attr}">#{target_attr}</a>…</p>
         </body>
         </html>
       HTML
@@ -54,8 +61,11 @@ module Jekyll
 
     def generate(site)
       seen = {}
+      items = site.pages + site.documents
+      real_paths = items.map(&:url)
+      occupied = real_paths.map { |path| split_path(path) }
 
-      (site.pages + site.documents).each do |item|
+      items.each do |item|
         Array(item.data["redirect_from"]).each do |alias_path|
           alias_path = alias_path.to_s.strip
           next if alias_path.empty?
@@ -74,8 +84,28 @@ module Jekyll
           target    = File.join(site.baseurl.to_s, item.url)   # relative: works locally and in production
           canonical = "#{site.config['url']}#{target}"         # absolute: what search engines should keep
           dir, name = split_path(alias_path)
+          if occupied.include?([dir, name])
+            raise Jekyll::Errors::FatalException, "publication_redirect: alias '#{alias_path}' would overwrite a real page"
+          end
+          occupied << [dir, name]
           site.pages << RedirectPage.new(site, dir, name, target, canonical)
         end
+      end
+
+      (site.data['legacy_redirects'] || {}).each do |alias_path, destination|
+        uri = URI.parse(destination)
+        unless alias_path.start_with?('/') && !alias_path.start_with?('//') &&
+               uri.host.nil? && uri.scheme.nil? && real_paths.include?(uri.path)
+          raise Jekyll::Errors::FatalException, "publication_redirect: invalid migration alias #{alias_path.inspect} -> #{destination.inspect}"
+        end
+        dir, name = split_path(alias_path)
+        if seen.key?(alias_path) || occupied.include?([dir, name])
+          raise Jekyll::Errors::FatalException, "publication_redirect: migration alias '#{alias_path}' duplicates an existing page or alias"
+        end
+        occupied << [dir, name]
+        target = "#{site.baseurl}#{destination}"
+        canonical = "#{site.config['url']}#{site.baseurl}#{uri.path}"
+        site.pages << RedirectPage.new(site, dir, name, target, canonical)
       end
     end
 

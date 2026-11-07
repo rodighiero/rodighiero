@@ -1,5 +1,6 @@
 ---
 title: "Extending Museum beyond Physical Space: A Data-Driven Study of Aldo Rossi’s Analogous City as a Mobile Museum Object"
+description: "Explore Aldo Rossi’s 1976 Analogous City collage through a reconstructed map and mobile app, revealing its sources and extending the museum beyond its walls."
 year: 2022
 venue: "International Journal for Digital Art History"
 type: "journal"

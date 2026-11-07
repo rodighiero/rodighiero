@@ -1,5 +1,6 @@
 ---
 title: "Visual Abstraction"
+description: "How visual abstraction makes complex ideas understandable, from ARPANET diagrams and Facebook friendship maps to the visualization of academic communities."
 year: 2026
 venue: "Imagining the Internet(s): A Collaborative Glossary"
 type: "chapter"

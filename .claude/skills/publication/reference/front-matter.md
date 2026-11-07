@@ -27,6 +27,10 @@
 
 ## Optional — enrich the citation and the search index
 
+`description`: an optional plain-text summary for search and social previews (up to
+160 characters). It falls back to the abstract; citation metadata and JSON-LD
+`abstract` always keep the full lead.
+
 `editor`, `translator`, `publisher`, `place`, `volume`, `issue`, `pages`.
 
 These do **not** appear in the visible meta line but do appear in the formatted Chicago

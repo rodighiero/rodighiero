@@ -1,6 +1,7 @@
 # translation_set / translated_by on each publication — read by publication.html
 # (hreflang, og:locale:alternate, JSON-LD translationOfWork / workTranslation).
 # related on each publication — read by publication.html ("Related publications").
+# publication_series — curated edition/research links from publication_series.yml.
 #
 # A publication's links to other publications, worked out once per build instead of
 # by Liquid scanning the whole collection three times on every page.
@@ -32,6 +33,16 @@ class Jekyll::PublicationRelationsGenerator < Jekyll::Generator
       doc.data['translation_set'] = siblings.empty? ? [] : [origin, *siblings].map { |d| ref(d) }
       doc.data['translated_by'] = (siblings - [doc]).map { |d| ref(d) }
       doc.data['related'] = related[doc.url] || []
+    end
+
+    (site.data['publication_series'] || []).each do |series|
+      members = series.fetch('publications').map do |member|
+        by_slug.fetch(member) do
+          raise Jekyll::Errors::FatalException, "publication_relations: unknown series publication '#{member}'"
+        end
+      end
+      group = { 'title' => series.fetch('title'), 'items' => members.map { |d| ref(d).merge('year' => d.data['year']) } }
+      members.each { |doc| doc.data['publication_series'] = group }
     end
   end
 
