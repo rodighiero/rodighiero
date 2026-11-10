@@ -67,6 +67,8 @@ jobs:
             --exclude 'thehairpin\.com'
             --exclude 'theeuropeanlibrary\.org'
             --exclude 'parismetropole2020\.com'
+            --exclude 'infoscience\.epfl\.ch'
+            --exclude 'biblhertz\.it'
             './_site/*.html'
           fail: false
       - name: Annotate broken links with source context
