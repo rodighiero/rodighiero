@@ -167,7 +167,7 @@
   {% include credit-block.html item=page %}
   {%- comment -%} External repository PDFs stay visible links: Scholar only accepts
   citation_pdf_url for a PDF hosted in the abstract page's own subdirectory. {%- endcomment -%}
-  <div class="doi" lang="en"><button class="cite-btn pill-btn" type="button" commandfor="cite-data" command="--copy">Cite</button><button class="print-btn pill-btn" type="button">Print</button>{% if page.doi %}<a class="pill-btn" href="{{ page.doi | escape }}">{{ _doi | default: 'URL' }}</a>{% endif %}{% if page.pdf_url %}<a class="pill-btn" href="{{ page.pdf_url | escape }}">PDF</a>{% endif %}</div>
+  <div class="doi" lang="en"><button class="cite-btn pill-btn" type="button">Cite</button><button class="print-btn pill-btn" type="button">Print</button>{% if page.doi %}<a class="pill-btn" href="{{ page.doi | escape }}">{{ _doi | default: 'URL' }}</a>{% endif %}{% if page.pdf_url %}<a class="pill-btn" href="{{ page.pdf_url | escape }}">PDF</a>{% endif %}</div>
   </div>
   {% include publication-cite.html item=page %}
   <div class="content">

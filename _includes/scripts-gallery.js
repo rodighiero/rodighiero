@@ -444,8 +444,7 @@ function setBioVisible(visible, persist, animate) {
 }
 // Sync the button and hidden state to what <head> restored.
 setBioVisible(document.documentElement.dataset.bioVisible !== '0', false, false);
-bioShell.addEventListener('command', function(e) {
-  if (e.command !== '--toggle') return;
+bioToggle.addEventListener('click', function() {
   setBioVisible(document.documentElement.dataset.bioVisible === '0', true, true);
 });
 // Instant, since the browser scrolls to the match straight away; and not persisted,
