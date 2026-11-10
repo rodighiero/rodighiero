@@ -57,6 +57,7 @@
   --tint-surface: color-mix(in srgb, var(--fg) 4%, transparent);
   --tint-hover: color-mix(in srgb, var(--fg) 5%, transparent);
   --tint-active: color-mix(in srgb, var(--fg) 10%, transparent);
+  --tint-mark: color-mix(in srgb, var(--fg) 15%, transparent);
 }
 /* More contrast, when the reader's system asks for it: the secondary text and the
    hairlines firm up, and nothing else moves. */
@@ -67,10 +68,9 @@
     --border-hover: light-dark(rgba(0,0,0,0.75), rgba(255,255,255,0.75));
   }
 }
-/* Forced colors (Windows high contrast): the palette is the system's. The browser forces
-   most colour properties itself; the tokens follow, so the places that opt out of forcing
-   (the network graph, the active view button) draw from the same system colours. After
-   the contrast block, which a high-contrast theme can match as well. */
+/* Forced colors (Windows high contrast): the tokens take the system palette, so the
+   rules that opt out of forcing draw from it too. After the contrast block, which a
+   high-contrast theme can also match. */
 @media (forced-colors: active) {
   :root {
     --fg: CanvasText;
@@ -116,7 +116,7 @@ a:hover { text-decoration: underline; }
    because the UA pairs its own background with its own text colour, black in either
    scheme. */
 ::target-text {
-  background: color-mix(in srgb, var(--fg) 15%, transparent);
+  background: var(--tint-mark);
   color: var(--fg);
 }
 :focus { outline: none; }

@@ -277,11 +277,10 @@ h2 a:focus-visible { outline: none; }
 .card-meta, .card-text { display: block; }
 /* Forced colors remove box-shadow, and the special tiles' hairline with it: an inset
    outline draws the same line, and like the shadow takes no content width. The active
-   view and the gap marks are tints the system would paint over, so they opt out and take
-   system colours instead. */
+   view and the gap marks are tints the system would paint over, so they opt out. */
 @media (forced-colors: active) {
-  :is(.action, .filter, .event) { outline: 1px solid CanvasText; outline-offset: -1px; }
-  :is(.action, .filter, .event):hover { outline-color: Highlight; }
+  :is(.action, .filter, .event) { outline: 1px solid var(--border); outline-offset: -1px; }
+  :is(.action, .filter, .event):hover { outline-color: var(--border-hover); }
   .view-toggle button[aria-pressed="true"] {
     forced-color-adjust: none;
     background: Highlight;
@@ -289,7 +288,7 @@ h2 a:focus-visible { outline: none; }
   }
   body[data-view="gallery"] .card[data-gap]::after {
     forced-color-adjust: none;
-    background: GrayText;
+    background: var(--muted);
   }
 }
 

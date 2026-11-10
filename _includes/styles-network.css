@@ -154,9 +154,8 @@ body[data-view="network"] #network-view {
   .details .neighbors li .nb-body { min-width: 0; flex: 1; }
 }
 
-/* Forced colors: the graph opts out and keeps its own drawing, in the system colours the
-   tokens switch to (styles-base.css), so a selection, its neighbours and the dimmed rest
-   stay apart however a browser would force SVG fill and stroke. */
+/* Forced colors: the graph opts out and draws in the tokens' system palette, so a
+   selection, its neighbours and the dimmed rest stay apart. */
 @media (forced-colors: active) {
   #network-view svg { forced-color-adjust: none; }
 }

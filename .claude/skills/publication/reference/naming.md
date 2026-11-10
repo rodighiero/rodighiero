@@ -34,8 +34,8 @@ then which one of them this is. The rule is deliberately the same shape as the o
 
 The same two-word shape carries into the **behavioural class hooks** the JS selects on,
 which stay separate from the classes that style them: `.cite-btn` (the trigger) and
-`.cite-data` (the hidden `<pre>` it copies) are one `cite-` family, wearing `.pill-btn` for
-their looks. Restyling never breaks a selector, and vice versa.
+`.cite-data` (the hidden `<pre>` it copies, reached by its `id` through the button's
+`commandfor`) are one `cite-` family, wearing `.pill-btn` for their looks. Restyling never breaks a selector, and vice versa.
 
 ## Settled — don't re-derive
 

@@ -15,10 +15,10 @@ function promoteLazyImages(root) {
 if (!('commandForElement' in HTMLButtonElement.prototype)) {
   document.addEventListener('click', function(e) {
     var btn = e.target.closest('button[commandfor][command]');
-    if (!btn || btn.disabled) return;
+    if (!btn) return;
     var target = document.getElementById(btn.getAttribute('commandfor'));
     if (!target) return;
-    var ev = new Event('command', { cancelable: true });
+    var ev = new Event('command');
     ev.command = btn.getAttribute('command');
     ev.source = btn;
     target.dispatchEvent(ev);
@@ -46,9 +46,9 @@ if (!('commandForElement' in HTMLButtonElement.prototype)) {
   });
 })();
 
-/* Copy the formatted citation: the button's --copy command lands on the .cite-data it
-   names. Unguarded: #live-msg is in both layouts, and every .cite-btn is emitted with
-   its .cite-data. */
+/* Copy the formatted citation: the button's --copy command lands on the #cite-data it
+   names. Unguarded: #live-msg is in both layouts, and every .cite-btn names a
+   #cite-data that publication.html always emits. */
 (function() {
   var liveMsg = document.getElementById('live-msg');
   document.querySelectorAll('.cite-btn').forEach(function(btn) {
