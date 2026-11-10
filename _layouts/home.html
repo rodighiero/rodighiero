@@ -139,7 +139,7 @@ width that still shows 3 columns. {%- endcomment -%}
   {% include site-toggle.html %}
   {%- comment -%} "profile", not "bio": the button collapses the whole masthead, and the
   label is a screen reader's only description of that scope. {%- endcomment -%}
-  <button class="bio-toggle" type="button" aria-controls="bio" aria-expanded="true" aria-label="Hide profile" title="Hide profile">
+  <button class="bio-toggle" type="button" commandfor="bio" command="--toggle" aria-controls="bio" aria-expanded="true" aria-label="Hide profile" title="Hide profile">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
     <span class="bio-toggle-label" aria-hidden="true">Show profile</span>
   </button>

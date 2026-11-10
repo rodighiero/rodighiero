@@ -167,7 +167,14 @@ offline it was ceremony over a one-time build, and D3 was a 93KB-gzipped depende
   real: `networkApi` (built lazily on first network open) and `#net-data`. The same rule
   holds in `_includes/scripts-site.js`, shared by both layouts: `#live-msg` is unconditional
   in each, and a `.cite-btn` only exists inside publication.html's `<article>`, always
-  beside its `.cite-data` (both are unconditional; only the DOI/URL pill needs `page.doi`).
+  naming its `#cite-data` through `commandfor` (both are unconditional; only the DOI/URL
+  pill needs `page.doi`).
+- **A button that acts on one element is an invoker command** — `commandfor="<id>"
+  command="--<verb>"` in the markup, and the handler listens for `command` on the target
+  (the bio toggle → `#bio`, Cite → `#cite-data`). `scripts-site.js` dispatches the same
+  event from the click where the browser lacks the feature, so never bind such a button's
+  `click` as well: newer browsers would run it twice. `aria-controls` stays, since a
+  custom command maps to no ARIA relationship.
 - **A scheduled pass is width-gated** — `layoutIfPageResized()` packs only when the page's
   own width actually moved, which is safe because no column change can happen without one.
   A new caller that needs a pack for some *other* reason must call `layoutMasonry()` itself,

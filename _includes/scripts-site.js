@@ -8,6 +8,23 @@ function promoteLazyImages(root) {
   });
 }
 
+/* Invoker commands: a button names its target and verb in the markup (commandfor,
+   command) and the target hears a `command` event, so a handler lives on the element it
+   acts on. Browsers from before the feature (Chrome 135, Firefox 144, Safari 26.2) get
+   the same event dispatched from the click. Custom verbs only, prefixed `--`. */
+if (!('commandForElement' in HTMLButtonElement.prototype)) {
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('button[commandfor][command]');
+    if (!btn || btn.disabled) return;
+    var target = document.getElementById(btn.getAttribute('commandfor'));
+    if (!target) return;
+    var ev = new Event('command', { cancelable: true });
+    ev.command = btn.getAttribute('command');
+    ev.source = btn;
+    target.dispatchEvent(ev);
+  });
+}
+
 // Mode toggle
 (function() {
   var html = document.documentElement;
@@ -29,15 +46,17 @@ function promoteLazyImages(root) {
   });
 })();
 
-/* Copy the formatted citation. Unguarded: #live-msg is in both layouts, and every
-   .cite-btn is emitted beside its .cite-data. */
+/* Copy the formatted citation: the button's --copy command lands on the .cite-data it
+   names. Unguarded: #live-msg is in both layouts, and every .cite-btn is emitted with
+   its .cite-data. */
 (function() {
   var liveMsg = document.getElementById('live-msg');
   document.querySelectorAll('.cite-btn').forEach(function(btn) {
     var label = btn.textContent;
     var resetTimer;
-    btn.addEventListener('click', async function() {
-      var data = btn.closest('article').querySelector('.cite-data');
+    var data = document.getElementById(btn.getAttribute('commandfor'));
+    data.addEventListener('command', async function(e) {
+      if (e.command !== '--copy') return;
       clearTimeout(resetTimer);
       btn.disabled = true;
       btn.classList.remove('copied');

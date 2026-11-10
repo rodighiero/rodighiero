@@ -60,4 +60,4 @@ taxonomy. {%- endcomment -%}
 {%- endif -%}
 {%- if _item.doi %} {% if _doi_id %}https://doi.org/{{ _doi_id }}{% else %}{{ _item.doi }}{% endif %}.{% endif -%}
 {%- endcapture -%}
-<pre class="cite-data" hidden>{{ _ref | normalize_whitespace | replace: ' .', '.' | replace: ' :', ':' | strip }}</pre>
+<pre class="cite-data" id="cite-data" hidden>{{ _ref | normalize_whitespace | replace: ' .', '.' | replace: ' :', ':' | strip }}</pre>
