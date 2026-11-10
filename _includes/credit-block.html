@@ -1,5 +1,0 @@
-{%- comment -%}
-  credit-full.html in the publication page's byline element. Unconditional:
-  publication_validator.rb requires an author or an editor.
-{%- endcomment -%}
-{% capture _credit_text %}{% include credit-full.html item=include.item %}{% endcapture %}<div class="authors">{{ _credit_text | strip }}</div>

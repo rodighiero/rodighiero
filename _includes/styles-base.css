@@ -68,18 +68,6 @@
     --border-hover: light-dark(rgba(0,0,0,0.75), rgba(255,255,255,0.75));
   }
 }
-/* Forced colors (Windows high contrast): the tokens take the system palette, so the
-   rules that opt out of forcing draw from it too. After the contrast block, which a
-   high-contrast theme can also match. */
-@media (forced-colors: active) {
-  :root {
-    --fg: CanvasText;
-    --bg: Canvas;
-    --muted: GrayText;
-    --border: CanvasText;
-    --border-hover: Highlight;
-  }
-}
 html.dark { color-scheme: dark; }
 html.light { color-scheme: light; }
 html { font-size: 16px; }

@@ -1,4 +1,5 @@
 # | credit_short — read by credit-short.html (homepage publication and event cards).
+# | chicago_names — read by publication-cite.html (the Chicago reference).
 #
 # The short credit voice, written from Dario's point of view with his own name
 # stripped: "with X and Y". It replaced two includes' worth of Liquid, which had to
@@ -14,6 +15,13 @@
 # The surname match is deliberately loose (contains "Rodighiero"): it only decides
 # whose name to strip from a byline, where a false positive costs nothing. The
 # exact match that hangs an ORCID on a name lives in jsonld-person.html.
+#
+# chicago_names joins one " and "-joined field for the Chicago reference. Passed
+# true, it is the leading author block: the first name inverted to "Family, Given"
+# and a serial comma from two names up, which the inversion needs ("Rodighiero,
+# Dario, and X"). Otherwise it is a secondary role — editors, translators,
+# interviewers — in normal order, with the serial comma from three names up, so a
+# pair joins on a bare " and ". An absent field gives an empty string.
 module Jekyll
   module CreditFilter
     ME = 'Rodighiero'
@@ -40,6 +48,19 @@ module Jekyll
       parts.values.reject(&:empty?)
            .each_with_index.map { |p, i| i.zero? ? p : p[0].upcase + p[1..] }
            .join('. ')
+    end
+
+    def chicago_names(input, lead = false)
+      names = input.to_s.split(' and ').map(&:strip)
+      return '' if names.empty?
+
+      if lead
+        *given, family = names[0].split(' ')
+        names[0] = given.empty? ? family : "#{family}, #{given.join(' ')}"
+      end
+      return names.join(' and ') if names.size < 2 || (names.size == 2 && !lead)
+
+      "#{names[0..-2].join(', ')}, and #{names[-1]}"
     end
 
     private

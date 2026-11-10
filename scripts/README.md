@@ -17,7 +17,7 @@ in `sources`; check affiliations or publications as well as the name before addi
 one. A spelling variant can have its own exact-name key when those sources verify
 that it is the same person. The importer preserves these entries and their sources.
 An unlinked contributor does not imply they have no ORCID, only that it has not
-been verified. `orcid-review.md` records the remaining names from the latest audit.
+been verified.
 
 Publication credits and JSON-LD look up the exact credited name. Dario's identity
 continues to come from `site.orcid` in `_config.yml`.
@@ -26,10 +26,9 @@ continues to come from `site.orcid` in `_config.yml`.
 
 Run `uv run scripts/audit-scholar.py` to check the live publication pages,
 homepage links, robots.txt and sitemap against the current publication records.
-It writes `scripts/scholar-audit.md` and a detailed JSON snapshot in
+It writes `scripts/scholar-audit.md` (ignored by git) and a detailed JSON snapshot in
 `/tmp/rodighiero-scholar-audit.json`. Network access is required. This checks
-technical readiness, not membership of Google Scholar’s index. Publisher comparisons
-and verified corrections are documented separately in `scholar-review.md`.
+technical readiness, not membership of Google Scholar’s index.
 
 Run `uv run scripts/audit-scholar.py --site-dir _site --strict` after a Jekyll
 build to check the generated site without network requests. Deployment runs the
@@ -39,4 +38,4 @@ the full-text claim), export conventions, and advisory notes; all but notes fail
 `--strict`. Forthcoming dates and editor-only works are the notes.
 Local reports default to `/tmp/rodighiero-scholar-build-audit.md` and `.json`, so
 they do not overwrite the live audit. Use `--report` and `--snapshot` to choose
-other destinations. See `seo-review.md` for the latest implementation review.
+other destinations.

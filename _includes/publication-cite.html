@@ -11,30 +11,18 @@ a serial comma before "and". Formatting branches on the publication type.
 {%- endcomment -%}
 {%- assign _item = include.item -%}
 {%- if _item.author -%}
-  {%- assign _people = _item.author | split: ' and ' -%}
+  {%- assign _authors = _item.author | chicago_names: true -%}
   {%- assign _roleword = '' -%}
 {%- elsif _item.editor -%}
+  {%- assign _authors = _item.editor | chicago_names: true -%}
   {%- assign _people = _item.editor | split: ' and ' -%}
   {%- if _people.size > 1 -%}{%- assign _roleword = ', eds' -%}{%- else -%}{%- assign _roleword = ', ed' -%}{%- endif -%}
 {%- endif -%}
-{%- comment -%} First contributor is inverted to Family, Given for Chicago style; the
-rest join with a serial comma via credit-join.html. {%- endcomment -%}
-{%- assign _first_p = _people | first | strip -%}
-{%- assign _words = _first_p | split: ' ' -%}
-{%- assign _family = _words | last -%}
-{%- capture _given -%}{% for w in _words %}{% unless forloop.last %}{{ w }} {% endunless %}{% endfor %}{%- endcapture -%}
-{%- assign _given = _given | strip -%}
-{%- capture _first_formatted -%}{{ _family }}{%- if _given != '' -%}, {{ _given }}{%- endif -%}{%- endcapture -%}
-{%- comment -%} Splitting on the absent "~~~" sentinel is Liquid's only way to wrap
-one string in an array, so the inverted first
-name can lead the list the rest joins onto. {%- endcomment -%}
-{%- assign _rest_people = _people | slice: 1, 9999 -%}
-{%- assign _display_people = _first_formatted | split: "~~~" | concat: _rest_people -%}
-{%- capture _authors -%}{%- include credit-join.html items=_display_people serial_comma=true -%}{%- endcapture -%}
-{%- comment -%} The secondary roles, each split and re-joined by credit-role.html. {%- endcomment -%}
-{%- capture _editors -%}{%- include credit-role.html raw=_item.editor -%}{%- endcapture -%}
-{%- capture _translators -%}{%- include credit-role.html raw=_item.translator -%}{%- endcapture -%}
-{%- capture _interviewers -%}{%- include credit-role.html raw=_item.interviewer -%}{%- endcapture -%}
+{%- comment -%} The joins, the first name's inversion and the serial-comma rule are the
+chicago_names filter (publication_credits.rb). {%- endcomment -%}
+{%- assign _editors = _item.editor | chicago_names -%}
+{%- assign _translators = _item.translator | chicago_names -%}
+{%- assign _interviewers = _item.interviewer | chicago_names -%}
 {%- assign _t = _item.type -%}
 {%- comment -%} Without a `container` (publication_types.yml) the venue is the press and
 stands in for a missing publisher; with one, it names what the work sits inside. Only the

@@ -454,7 +454,6 @@ def main():
               f'- “No findings” is not proof of visibility or completeness. Hiding is judged from markup only (the `hidden` attribute, `aria-hidden`, inline `display:none`, hiding classes, closed `<details>`, `<template>`, `<noscript>`); stylesheets and scripts are not evaluated. A full-text claim needs {FULLTEXT_MIN_WORDS}+ visible words after the abstract, which shows that text exists, not that the work is complete; the `fulltext: false` flag records that judgment.',
               '- An external publisher or repository PDF is not suitable for this domain’s `citation_pdf_url`: Scholar requires the linked PDF in the same subdirectory as the abstract page. HTML full text can remain indexable without a local PDF.',
               '- Do not infer “not indexed” from inaccessible Scholar results or from missing ordinary search results.', '']
-    lines += ['See [publisher and PDF review](scholar-review.md) for verified corrections and source conflicts.', '']
     report.write_text('\n'.join(lines))
     error_count = len(shared_errors) + sum(len(r.get('errors', r['findings'])) for r in rows)
     print(f'Audited {len(rows)} publication URLs; {error_count} errors '

@@ -153,9 +153,3 @@ body[data-view="network"] #network-view {
   }
   .details .neighbors li .nb-body { min-width: 0; flex: 1; }
 }
-
-/* Forced colors: the graph opts out and draws in the tokens' system palette, so a
-   selection, its neighbours and the dimmed rest stay apart. */
-@media (forced-colors: active) {
-  #network-view svg { forced-color-adjust: none; }
-}

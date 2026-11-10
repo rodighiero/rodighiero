@@ -19,18 +19,17 @@ then which one of them this is. The rule is deliberately the same shape as the o
 ## The three rules
 
 1. **The family word classifies, so it comes first and is always a noun** — never a verb
-   phrase. `join-and.html` was the shape this replaced.
+   phrase (`join-and.html` was the shape this replaced).
 2. **A helper that would found a family of one folds into the family it serves.**
-   `credit-join.html` joins name lists for the Chicago reference, so it is a `credit-`, not a
-   `list-`.
+   `figure-image.html`, the `<img>` both figure includes share, is a `figure-`, not an `image-`.
 3. **Members are named for the voice or role, not the surface or the place.** `credit-full`
    names every contributor in citation order (publication page and `<title>`);
    `credit-short` writes from Dario's point of view with his own name stripped ("with X and
    Y", homepage cards). They were `-text` / `-home`, which named a format and a place while
-   the real distinction between them is neither. `credit-role` formats a single credit field
-   for the Chicago reference (every name, serial comma from three up). Its short-voice
-   counterpart, `credit-names`, became the `credit_short` filter (`publication_credits.rb`)
-   in September 2026, so `credit-short.html` is now a three-line wrapper around it.
+   the real distinction between them is neither. The name joining behind both the short
+   voice and the Chicago reference is Ruby now — the `credit_short` and `chicago_names`
+   filters in `publication_credits.rb` — which retired `credit-names`, `credit-join`,
+   `credit-role` and the `credit-block` wrapper.
 
 The same two-word shape carries into the **behavioural class hooks** the JS selects on,
 which stay separate from the classes that style them: `.cite-btn` (the trigger) and
@@ -44,7 +43,6 @@ their looks. Restyling never breaks a selector, and vice versa.
   in prose and in `publication_validator.rb`'s error message, where it means the author line
   and is exactly right.
 - **`credit-text` / `credit-home` → `credit-full` / `credit-short`.** See rule 3.
-- **`join-and.html` → `credit-join.html`.** See rules 1 and 2.
 
 ## Think twice about `figure-single` / `figure-group`
 
