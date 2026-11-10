@@ -7,11 +7,16 @@ follow, but the first word is drawn from a closed set of **two**.
 
 | Prefix | Count | Means |
 |---|---|---|
-| `publication_` | 11 | the file reads, orders, validates or decorates the `publications` collection |
+| `publication_` | 8 | the file reads, orders, validates or decorates the `publications` collection |
 | `system_` | 4 | everything else — build infrastructure whose output no reader sees as prose |
 
 The second word is then free to say what the file does to that subject: `publication_order`,
 `publication_figures`, `publication_decoder`.
+
+**A file may hold more than one registration when they share a subject.** `publication_order.rb`
+is the order, the prev/next refs and the feed date read from it; `publication_body.rb` is the
+two filters that rewrite a rendered body. Four files of 20–30 lines each were folded this way
+(2026-11-09); split one out again only when it grows a second subject.
 
 **Two prefixes with no third case is the point.** A plugin either works on the collection or it
 does not, so there is nothing to adjudicate at naming time. Read the prefix as a claim about
@@ -32,11 +37,10 @@ two earn it cleanly: every one of `system_image_size.rb`'s four call sites emits
 attribute, and everything `system_commit_date.rb` feeds is machine-facing, including where it
 also writes a tag on a page.
 
-**Two `publication_` names carry a caveat the filename cannot.** `publication_date.rb` sets
-`page.date`, but the value is a **feed sort key**, not a publication date. And
-`publication_order.rb` is named for the *rule* rather than for any consumer, because it has
-three — the gallery, the prev/next nav and the RSS feed — and naming it for one would have
-lied about the other two.
+**`publication_order.rb` carries two caveats the filename cannot.** The `page.date` it sets is a
+**feed sort key**, not a publication date. And it is named for the *rule* rather than for any
+consumer, because it has three — the gallery, the prev/next nav and the RSS feed — and naming
+it for one would have lied about the other two.
 
 ## Two schemes tried and rejected
 
@@ -44,7 +48,7 @@ Don't re-derive these.
 
 **Name each plugin after its consuming template.** Resolved for only 4 of 10 — several plugins
 have two or four consuming templates, and three have none at all (`publication_validator`,
-`publication_redirect`, and `publication_date`, whose consumer is a gem).
+`publication_redirect`, and the then-separate `publication_date`, whose consumer is a gem).
 
 **A four-prefix surface rule — `home_` / `publication_` / `both_` / `system_`.** Needed a
 tie-break rule for files that straddled two categories, and the `both_`/`system_` pair turned
@@ -65,7 +69,7 @@ down.
 ## Checklist for a new file
 
 1. Does it work on the `publications` collection? → `publication_`, else `system_`.
-2. Second word: what it does — a noun for what it produces (`figures`, `neighbors`, `order`)
+2. Second word: what it does — a noun for what it produces (`figures`, `body`, `order`)
    or an agent noun for what it is (`validator`, `decoder`).
 3. Header comment: what it registers, publishes or attaches, and who reads it.
 4. `Jekyll::`-namespaced constants, compact form.

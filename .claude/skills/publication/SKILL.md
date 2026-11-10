@@ -97,7 +97,7 @@ One entry in `_data/publication_types.yml` — `label`, `schema`, `dc`, optional
 - **Curly quotes** (`“ ”`) for English and Italian; French guillemets only inside French quotations.
 - **American English** in English entries (`livable`, not `liveable`). Italian and French entries keep their own orthography.
 - **Chicago author-date** throughout, in three places that are not the same thing:
-  - the **bibliography** — a `## References` (or `Bibliography` / `Références` / `Bibliographie`) section of `- ` bullets: `Bertin, Jacques. 1981. *Graphics and Graphic Information-Processing*. Berlin and New York: De Gruyter.` Keep writing bullets: `publication_references.rb` renders the list as `<ol class="references">` for Google Scholar, still shown with bullets. A heading outside that vocabulary (References, Références, Referenties, Bibliography, Bibliographie, Bibliografia) stays `<ul>`, so a new language needs adding to the plugin;
+  - the **bibliography** — a `## References` (or `Bibliography` / `Références` / `Bibliographie`) section of `- ` bullets: `Bertin, Jacques. 1981. *Graphics and Graphic Information-Processing*. Berlin and New York: De Gruyter.` Keep writing bullets: `publication_body.rb` renders the list as `<ol class="references">` for Google Scholar, still shown with bullets. A heading outside that vocabulary (References, Références, Referenties, Bibliography, Bibliographie, Bibliografia) stays `<ul>`, so a new language needs adding to the plugin;
   - **inline citations** — parenthetical `(Author Year)`, no comma before the year;
   - **footnotes** — kramdown (`[^1]` … `[^1]:`), for discursive notes rather than for bare references.
 

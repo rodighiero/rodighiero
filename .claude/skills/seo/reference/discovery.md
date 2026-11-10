@@ -23,7 +23,7 @@ content by scanning the `figure-single` / `figure-group` includes. Not the `thum
 `images/@cards/` copies are excluded — gallery and social crops, not article content — and so
 is any path missing from disk. Excluding a card image does **not** deindex it: it stays on the
 page as a lead figure and as `og:image`. How the two call conventions are normalised and why
-each filter exists: the **`plugins`** skill (`reference/catalogue.md`, `publication_figures.rb`).
+each filter exists: the header comment of `_plugins/publication_figures.rb`.
 
 ## `lastmod`
 
@@ -76,7 +76,7 @@ to sit on a publication). The stub is:
 
 **It deliberately carries no `noindex`** — the refresh is what keeps an alias out of the
 index, and the canonical is what hands the real page the alias's link credit. The full
-argument: the **`plugins`** skill (`reference/catalogue.md`, `publication_redirect.rb`).
+argument: the header comment of `_plugins/publication_redirect.rb`.
 
 Path rules: an alias with no extension is written `<alias>.html` (served extensionless by both
 GitHub Pages and `jekyll serve`); one ending in `/` becomes `<alias>/index.html`. A duplicate
@@ -89,8 +89,8 @@ set `sitemap: false`, and `sitemap.xml` loops `site.publications` only, so they 
 carries its abstract rather than the full body. The gem *always* emits a posts feed too, so it
 is parked at `/feed/posts.xml` (empty) and deleted by `deploy.yml`.
 
-Ordering is the reason `publication_date.rb` exists: most entries declare only a `year`, so it
-synthesises `page.date` as January 1st at noon plus a few seconds of offset, arranged so the
+Ordering is the reason `publication_order.rb` sets `page.date`: most entries declare only a
+`year`, so it synthesises `page.date` as January 1st at noon plus a few seconds of offset, arranged so the
 feed's newest-first ordering reproduces the homepage's alphabetical order within each year.
 The value is a **sort key**, not a publication date, and nothing else should read it as one.
 

@@ -82,7 +82,7 @@ Absent `lang` means English: `_config.yml`'s `defaults:` sets `lang: en` on ever
 | `fulltext: false` | the text after `<!--more-->` is only part of the work (a book's preface and introduction, a catalogue's editorial), so the page does not emit `citation_fulltext_html_url`. Set on the four books: *From Wisdom to Data*, *Mapping Affinities*, *Cartographie des affinités*, *Collective Care*. Every other entry is a complete text |
 | `redirect_from` | string or list of site-absolute paths; each becomes a refresh stub canonicalised to the real page |
 
-`page.date` is **derived**, not declared — `publication_date.rb` synthesizes it from `year`
+`page.date` is **derived**, not declared — `publication_order.rb` synthesizes it from `year`
 purely as an RSS sort key (Jan 1 at noon plus offsets, so the feed reproduces the homepage
 order). Don't add a `date:` field.
 
@@ -90,7 +90,7 @@ order). Don't add a `date:` field.
 optional refinements of the derived `page.date`; no entry ever used them, and since the value
 they refined is a sort key rather than a date anyone reads, they were dropped rather than
 kept working for a caller that never came. Adding either back means reviving the clamp in
-`publication_date.rb` and the range check in `publication_validator.rb` together.
+`publication_order.rb` and the range check in `publication_validator.rb` together.
 
 ## Body
 

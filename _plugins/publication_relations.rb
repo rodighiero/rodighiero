@@ -18,7 +18,7 @@
 #
 # Entries are plain hashes of what the layout reads (doi so a translation can tell
 # whether it shares its source's identifier), not Documents, so no page
-# references another through its data (as publication_neighbors.rb does).
+# references another through its data (as publication_order.rb does for prev/next).
 class Jekyll::PublicationRelationsGenerator < Jekyll::Generator
   def generate(site)
     docs = site.collections['publications'].docs

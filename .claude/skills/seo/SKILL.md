@@ -44,7 +44,7 @@ usually edit `_data/publication_types.yml` or a plugin, not the sixty-odd public
 | URL discovery and consolidation | `sitemap.xml`, `robots.txt`, `_plugins/publication_redirect.rb` |
 | Which images a publication declares | `_plugins/publication_figures.rb` |
 | `lastmod` / `dateModified` / `article:modified_time` | `_plugins/system_commit_date.rb` |
-| RSS ordering | `_plugins/publication_date.rb` (consumer is jekyll-feed) |
+| RSS ordering | `_plugins/publication_order.rb` (consumer is jekyll-feed) |
 | The missing-page case | `404.html` |
 
 Per-tag inventory: `reference/head.md`. The structured-data graphs: `reference/jsonld.md`.

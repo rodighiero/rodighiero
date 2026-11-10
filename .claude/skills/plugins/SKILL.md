@@ -1,17 +1,17 @@
 ---
 name: plugins
-description: The fifteen local Ruby plugins in _plugins/ — what each registers, publishes or attaches, who reads it, and the naming scheme and cross-cutting rules they all follow. Use when adding or editing a plugin, when a Liquid filter or a page-data field is missing at render time, when a build warning or fatal error names a plugin, when working out where a derived value comes from, or when deciding whether a new behaviour belongs in a plugin at all.
+description: The twelve local Ruby plugins in _plugins/ — what each registers, publishes or attaches, who reads it, and the naming scheme and cross-cutting rules they all follow. Use when adding or editing a plugin, when a Liquid filter or a page-data field is missing at render time, when a build warning or fatal error names a plugin, when working out where a derived value comes from, or when deciding whether a new behaviour belongs in a plugin at all.
 ---
 
 # The plugin layer
 
-Fifteen Ruby files in `_plugins/`, plus one gem (`jekyll-feed`). They exist so that templates
+Twelve Ruby files in `_plugins/`, plus one gem (`jekyll-feed`). They exist so that templates
 read values rather than derive them: a Liquid loop that scans the whole collection on each of
 sixty-odd pages is the thing these replace.
 
 They run **only because the site deploys through GitHub Actions** rather than GitHub's branch
 build, which whitelists gems and ignores `_plugins/` entirely. That is not a preference; the
-site would silently lose all fifteen under branch deployment.
+site would silently lose all twelve under branch deployment.
 
 **No plugin depends on a gem.** `system_image_size.rb` is a hand-written WebP parser rather
 than ImageMagick, and `publication_redirect.rb` replaced `jekyll-redirect-from` outright.
@@ -33,7 +33,7 @@ Two files fit none of them and produce no identifier a template can read:
 
 ## The naming scheme, in one line
 
-Two words. The first is **`publication_`** (eleven files) if the file works on the
+Two words. The first is **`publication_`** (eight files) if the file works on the
 `publications` collection, or **`system_`** (four) if it does not; the second says what it
 does to that subject. Two prefixes with no third case means there is nothing to adjudicate.
 The full rule, its three genuine edge cases, and the two schemes tried and rejected:
@@ -45,21 +45,18 @@ Every plugin opens with a **header comment naming what it registers, publishes o
 and who reads it** — `# | image_size — read by home.html, site-image.html and figure-image.html`.
 That line is the index, and it matters more here than under a scheme where the
 filename spelled out the identifier: `publication_decoder.rb` does not say
-`| decode_numeric_entities`, and `publication_neighbors.rb` does not say `prev_pub`. **Keep it
+`| decode_numeric_entities`, and `publication_order.rb` does not say `prev_pub`. **Keep it
 accurate when the file or its consumers change** — it is the only place the coupling is
 written down.
 
 | File | Produces | Read by |
 |---|---|---|
 | `system_image_size.rb` | `\| image_size` | `home.html`, `site-image.html`, `figure-image.html` |
-| `publication_urls.rb` | `\| autolink_urls` | `publication.html` |
-| `publication_references.rb` | `\| ordered_references` | `publication.html` |
+| `publication_body.rb` | `\| autolink_urls`, `\| ordered_references` | `publication.html` |
 | `publication_decoder.rb` | `\| decode_numeric_entities`, `\| snippet`, `\| doi_id`, `\| page_range` | `publication.html`, `publication-cite.html`, `figure-image.html` |
-| `publication_order.rb` | `site.data.ordered_publications` + the `OrderedPublications` module | `home.html`, `publication_neighbors.rb`, `publication_date.rb` (which also calls `year_of`) |
-| `publication_neighbors.rb` | `prev_pub` / `next_pub` | `publication-nav.html` |
+| `publication_order.rb` | `site.data.ordered_publications`; `prev_pub` / `next_pub`; `page.date` | `home.html`; `publication-nav.html`; the jekyll-feed gem |
 | `publication_credits.rb` | `\| credit_short` | `credit-short.html` |
 | `publication_relations.rb` | `translation_set` / `translated_by`, `related`, `publication_series` | `publication.html` |
-| `publication_date.rb` | `page.date` | the jekyll-feed gem |
 | `publication_figures.rb` | `figures` | `sitemap.xml` |
 | `system_commit_date.rb` | `commit_date` (per doc **and** `site.data`) | `sitemap.xml`, `publication.html` |
 | `system_readme.rb` | `site.data.readme_content` | `home.html` |
@@ -67,15 +64,16 @@ written down.
 | `publication_redirect.rb` | redirect stub pages | crawlers |
 | `publication_validator.rb` | build-log warnings; a fatal error | the deploy |
 
-Per-file detail — what each actually does and the decisions inside it: `reference/catalogue.md`.
+Per-file detail — what each actually does and the decisions inside it — is the file's own
+header comment and nowhere else, so it cannot drift from the code.
 
 ## When things run
 
 | Stage | Who |
 |---|---|
-| `post_read` hook | `publication_order.rb`, `system_readme.rb` |
-| Generator, `priority :high` | `publication_validator.rb`, `publication_figures.rb`, `system_commit_date.rb`, `publication_date.rb`, `system_network_client.rb` |
-| Generator, default priority | `publication_neighbors.rb`, `publication_relations.rb` |
+| `post_read` hook | `publication_order.rb` (the order itself), `system_readme.rb` |
+| Generator, `priority :high` | `publication_validator.rb`, `publication_figures.rb`, `system_commit_date.rb`, `publication_order.rb` (`page.date`), `system_network_client.rb` |
+| Generator, default priority | `publication_order.rb` (`prev_pub` / `next_pub`), `publication_relations.rb` |
 | Generator, `priority :low` | `publication_redirect.rb` (last, so every page it might alias exists) |
 | `pre_render` hook | `system_image_size.rb`'s cache clear |
 
@@ -85,8 +83,8 @@ Two consequences worth holding on to:
   `publication_figures.rb` depends on this — it scans for `{% include figure-single.html … %}`
   as *source text*, which would be gone after rendering.
 - **A Generator can read a `post_read` hook's output; a same-stage plugin cannot.** Every
-  `post_read` hook has run before the first Generator, so `publication_neighbors.rb` and
-  `publication_date.rb` read `site.data.ordered_publications` rather than sorting again. Two
+  `post_read` hook has run before the first Generator, so the two Generators in
+  `publication_order.rb` read `site.data.ordered_publications` rather than sorting again. Two
   plugins of the same stage have no order to rely on: there, share a module instead.
 
 ## Three rules that hold across all of them
@@ -94,7 +92,7 @@ Two consequences worth holding on to:
 1. **Every constant is namespaced under `Jekyll::`**, in the compact form —
    `class Jekyll::CommitDateGenerator < Jekyll::Generator` — so a plugin adds nothing to
    top-level `Object`. The gotcha: a bare sibling constant does **not** resolve from inside
-   compact-form nesting, which is why `publication_date.rb` writes the fully-qualified
+   compact-form nesting, which is why the date Generator in `publication_order.rb` writes the fully-qualified
    `Jekyll::OrderedPublications`. If a constant mysteriously goes missing, this is why.
 2. **Each identifies itself in the build log by its filename** —
    `Jekyll.logger.warn 'publication_figures:', …` — so a warning names the file to open rather
@@ -139,7 +137,7 @@ ships.
   checkout degrades every date to a fallback, silently.
 - **One `git log` walk, not one per document.** The per-file dates come from a single
   `--name-only` walk.
-- **`publication_date.rb`'s value is a sort key, not a publication date.** January 1st at
+- **`page.date` (`publication_order.rb`) is a sort key, not a publication date.** January 1st at
   noon plus a few seconds of offset, arranged so jekyll-feed's newest-first ordering reproduces
   the homepage's order within each year. Nothing may read it as a real date.
 - **A `Forthcoming` entry counts as the current year**, in the order and in the feed dates
