@@ -1,10 +1,7 @@
 # The grid
 
-The card width is the constant and the column count follows from it, rather than a set of
-hand-picked breakpoints. `--card-w` (270px), `--card-gap` (24px) and `--page-gutter` (32px)
-are declared once in `styles-base.css` and read at runtime by the masonry
-(`CARD_W`/`GAP_X`/`PAGE_PAD`, via `getComputedStyle`) instead of being copied into it, so
-retuning a card is a one-place edit that the header's alignment picks up on its own.
+The premise — the card width is the constant, read from the tokens at runtime — is in
+`../SKILL.md`. The numbers: `--card-w` 270px, `--card-gap` 24px, `--page-gutter` 32px.
 
 The gallery fits as many `--card-w` columns as the page can hold, **capped at 4**, so a card
 is the same size at every width above mobile and the leftover goes to the margins.
@@ -36,13 +33,6 @@ paint the toggle out of existence. A gutter puts the toggle outside the bar's bo
 
 28px is the floor, where the ring touches both edges; 32px is the first pair with air on
 both. **Retuning the gutter, the inset, the icon or the focus ring means redoing that sum.**
-
-## `clientWidth`, not `innerWidth`
-
-The measurement is `document.documentElement.clientWidth`. `window.innerWidth` counts a
-classic scrollbar (Windows, Linux, macOS set to always show them) as page width, and the
-grid would then overhang the body by exactly the scrollbar's width — a horizontal scrollbar
-on the whole page.
 
 ## One column
 
@@ -236,7 +226,3 @@ unsupported it degrades to plain `hidden`, the same invisible panel. Print overr
 itself: the masonry does not depend on the header (tiles sit inside `#publications`, which
 merely moves), and when losing ~400px of page takes a scrollbar with it, that width change
 reaches the observer on `<html>` like any other (see the width gate).
-
-Bio prose itself lives in `README.md`, split into three paragraphs with `<!-- split -->`
-comments; `_plugins/system_readme.rb` exposes it as `site.data.readme_content`, so `README.md`
-doubles as the GitHub repo readme.

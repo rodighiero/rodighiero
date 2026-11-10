@@ -22,19 +22,16 @@ of re-cutting the gallery in place. That is also why it is the one special card 
 announcement reads the same everywhere.
 
 Every card titles itself with `.card-title` — the publication's is an `<h2>`, the action
-card's a `<span>` — styled by one shared rule for size, margin and weight. That rule's
-`display: inline-block` is **load-bearing**: an inline-block's top margin does not collapse
-with the meta line's bottom margin, so a `display: block` title would sit at half the gap.
+card's a `<span>` — styled by one shared rule (why it is `inline-block`: the invariants in
+`../SKILL.md`).
 
 `styles-base.css` sets the sub-row type on `.authors, .card-text` together, and `.card-media`
 is the one wrapper class for both media slots — a publication's `<img>` thumbnail or an
 action/filter's inlined SVG miniature — framed by a single rule, the thumbnail's loading tint
 being the only difference.
 
-The only per-kind declaration left is the action/filter tile's hairline: an **inset
-`box-shadow`** rather than a real border, since a border eats 1px of content width per side
-that a plain publication card keeps, which would sit the two kinds on slightly different
-inner grids.
+The only per-kind declaration left is the action/filter tile's hairline, an inset
+`box-shadow` (also in the invariants).
 
 ## `_includes/card-action.html`
 
@@ -73,7 +70,7 @@ handler and its `mousedown` `preventDefault`.
 ## The two actions the click handler knows
 
 `data-action` carries `view:<gallery|network>` (the network tile) or `cluster:<id>` (the seven
-cluster tiles), and the handler in `home.html` reads exactly those two. `_data/home_cards.yml`
+cluster tiles), and the handler in `scripts-gallery.js` reads exactly those two. `_data/home_cards.yml`
 once fed arbitrary `type:` and `search:` tiles as well; nothing set one, so the data key, the
 verbs and the include's fallback-to-a-hash path are gone. A `?type=` URL still filters — it is
 read at load, not through a card — and its label comes from `TYPE_LABELS`.
@@ -120,15 +117,9 @@ rule the same typography, a publication card gives its authors. Its meta line re
 ## Where special cards appear
 
 - **Gallery view only** (hidden in network via CSS), and hidden whenever a filter is active.
-- Events lead the flow, sorted by `date` descending. Nothing expires them — a past event
-  sits at the top of the homepage until its entry is deleted.
-- Cluster cards sit one every `publications ÷ (clusters + 1)` entries, with the `view:network`
-  card leading the publication flow, before the first publication.
-- The network and cluster tiles are hidden below 921px along with the view toggle; events
-  stay. The filter count is visually hidden while remaining available to screen readers.
+- Placement, expiry and the 921px rule are above and in `grid.md`.
 
-Publications render in one ordered loop in `publication_order.rb`'s order — year-descending,
-the current year (Forthcoming included) newest-added first, older years title-ascending — so
+Publications render in one ordered loop in `publication_order.rb`'s order, so
 `forloop.index` is each card's position, which is what the thumbnail loading priority reads.
 
 ## Search
