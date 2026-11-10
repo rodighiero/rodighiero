@@ -58,6 +58,28 @@
   --tint-hover: color-mix(in srgb, var(--fg) 5%, transparent);
   --tint-active: color-mix(in srgb, var(--fg) 10%, transparent);
 }
+/* More contrast, when the reader's system asks for it: the secondary text and the
+   hairlines firm up, and nothing else moves. */
+@media (prefers-contrast: more) {
+  :root {
+    --muted:        light-dark(rgba(0,0,0,0.85), rgba(255,255,255,0.85));
+    --border:       light-dark(rgba(0,0,0,0.45), rgba(255,255,255,0.45));
+    --border-hover: light-dark(rgba(0,0,0,0.75), rgba(255,255,255,0.75));
+  }
+}
+/* Forced colors (Windows high contrast): the palette is the system's. The browser forces
+   most colour properties itself; the tokens follow, so the places that opt out of forcing
+   (the network graph, the active view button) draw from the same system colours. After
+   the contrast block, which a high-contrast theme can match as well. */
+@media (forced-colors: active) {
+  :root {
+    --fg: CanvasText;
+    --bg: Canvas;
+    --muted: GrayText;
+    --border: CanvasText;
+    --border-hover: Highlight;
+  }
+}
 html.dark { color-scheme: dark; }
 html.light { color-scheme: light; }
 html { font-size: 16px; }
@@ -89,6 +111,14 @@ a {
   text-decoration-thickness: max(1px, 0.06em);
 }
 a:hover { text-decoration: underline; }
+/* A passage reached through a text fragment (#:~:text=, which search results append) is
+   marked in the site's own tint rather than the browser's yellow. The colour is restated
+   because the UA pairs its own background with its own text colour, black in either
+   scheme. */
+::target-text {
+  background: color-mix(in srgb, var(--fg) 15%, transparent);
+  color: var(--fg);
+}
 :focus { outline: none; }
 a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   outline: 2px solid var(--fg);
