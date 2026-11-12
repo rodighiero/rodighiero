@@ -9,18 +9,23 @@ use `_includes/site-image.html` for the social image tags, passing its path and 
 Everything here is page-invariant, which is the admission test: a tag whose value depends on
 the page does not belong in this file.
 
-`viewport`, `robots`, two `theme-color`s (light/dark), `color-scheme`, the RSS
+`viewport`, `robots`, two `theme-color`s (light/dark), the RSS
 `<link rel=alternate>`, `og:site_name`, `twitter:card`, the two Dublin Core schema links, and
 the icon/manifest set. `<meta name="author">` is *not* here: it names the page's creators, so
-each layout writes its own (Dario on the homepage, the creators list on a publication). It opens by including `_includes/site-scheme.html`, the pre-paint
-`colorScheme` restore script — not metadata, but it must run before the first paint. That one
-lives in its own file because `404.html` includes it directly and takes nothing else from here.
+each layout writes its own (Dario on the homepage, the creators list on a publication). It opens by including `_includes/site-scheme.html`:
+`<meta name="color-scheme">` and, directly after it, the inline script that writes a stored
+`colorScheme` override into that meta before the first paint. The meta is the scheme's one
+piece of state — `light dark` follows the system, `light` or `dark` is an override — and
+`styles-base.css` maps it back onto the `color-scheme` property with `:root:has(…)`, since
+the meta alone is a hint the stylesheet's own declaration outranks. The pair lives in its own
+file because `404.html` includes it directly and takes nothing else from here.
 
 The two `theme-color`s are keyed to `prefers-color-scheme`, so they follow the system only.
-Once a reader has made a manual choice, `_includes/scripts-site.js` (the mode toggle) rewrites
-both to the page's computed `body` background, on load and on every toggle, so the browser
-toolbar matches the page rather than the system. The colour is read, not restated, so it
-cannot drift from `--bg`.
+While an override stands, `_includes/scripts-site.js` (the mode toggle) rewrites both to the
+page's computed `body` background, so the browser toolbar matches the page rather than the
+system; the colour is read, not restated, so it cannot drift from `--bg`. Toggling back to
+the system's own scheme removes the override instead of storing it, and restores both metas
+to the values written here.
 
 `robots` is `index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1`.
 Indexing was never blocked; the three `max-*` directives only lift the caps on how a result

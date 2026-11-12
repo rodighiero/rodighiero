@@ -1,5 +1,9 @@
 {%- comment -%}
-Stamps the stored color scheme on <html> before first paint, so the system palette never
-flashes. Separate from site-head.html because 404.html needs this alone.
+The colour scheme's one piece of state: `light dark` follows the system, `light` or `dark`
+is a reader's stored override, which styles-base.css maps back onto the color-scheme
+property. The script restores that override before first paint, so the system palette never
+flashes; it must stay inline and directly after the meta. Separate from site-head.html
+because 404.html needs this alone.
 {%- endcomment -%}
-<script>!function(){try{var c=localStorage.getItem('colorScheme');if(c)document.documentElement.classList.add(c)}catch(e){}}()</script>
+<meta name="color-scheme" content="light dark">
+<script>!function(){try{var c=localStorage.getItem('colorScheme');if(c==='dark'||c==='light')document.querySelector('meta[name="color-scheme"]').content=c}catch(e){}}()</script>

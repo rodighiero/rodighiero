@@ -9,7 +9,6 @@ permalink: /404.html
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Page not found — Dario Rodighiero</title>
   <meta name="robots" content="noindex">
-  <meta name="color-scheme" content="light dark">
   {%- comment -%} No rel=canonical here: this page is noindex, and pointing a canonical at
   the homepage would ask a crawler to consolidate every missing URL into it instead. {%- endcomment -%}
   <link rel="icon" href="/images/@icons/favicon.ico" sizes="any">
@@ -19,15 +18,15 @@ permalink: /404.html
     {% include styles-font.css %}
     *, *::before, *::after { box-sizing: border-box; }
     /* light-dark() honours both the system preference and the stored choice
-       site-scheme.html stamps on <html>. */
+       site-scheme.html writes into <meta name="color-scheme">. */
     :root {
       color-scheme: light dark;
       --fg: light-dark(#000, #e8e8e8);
       --bg: light-dark(#fff, #111);
       --muted: light-dark(rgba(0,0,0,0.6), rgba(255,255,255,0.5));
     }
-    html.dark { color-scheme: dark; }
-    html.light { color-scheme: light; }
+    :root:has(> head > meta[name="color-scheme"][content="dark"]) { color-scheme: dark; }
+    :root:has(> head > meta[name="color-scheme"][content="light"]) { color-scheme: light; }
     html { font-size: 16px; }
     body {
       font-family: "Nunito", sans-serif;

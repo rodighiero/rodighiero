@@ -8,24 +8,40 @@ function promoteLazyImages(root) {
   });
 }
 
-// Mode toggle
+// Mode toggle. The state is <meta name="color-scheme"> (site-scheme.html): `light dark`
+// follows the system, `dark` or `light` is the reader's override, stored under colorScheme.
 (function() {
-  var html = document.documentElement;
-  // A manual choice retints the browser toolbar too: the two theme-color metas in
-  // site-head.html follow only the system setting, so both take the page's own background.
-  function syncThemeColor() {
-    var bg = getComputedStyle(document.body).backgroundColor;
-    document.querySelectorAll('meta[name="theme-color"]').forEach(function(m) { m.content = bg; });
+  var meta = document.querySelector('meta[name="color-scheme"]');
+  var systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+  // The two theme-color metas in site-head.html follow only the system setting, so an
+  // override gives both the page's own background, and its removal gives them back.
+  var themeMetas = Array.prototype.slice.call(document.querySelectorAll('meta[name="theme-color"]'));
+  var themeDefaults = themeMetas.map(function(m) { return m.content; });
+  function apply(scheme) {
+    meta.content = scheme || 'light dark';
+    var bg = scheme && getComputedStyle(document.body).backgroundColor;
+    themeMetas.forEach(function(m, i) { m.content = bg || themeDefaults[i]; });
   }
-  if (html.classList.contains('dark') || html.classList.contains('light')) syncThemeColor();
+  function override() { return meta.content === 'dark' || meta.content === 'light' ? meta.content : null; }
+  if (override()) apply(override());
   document.querySelector('.mode-toggle').addEventListener('click', function() {
-    var isDark = html.classList.contains('dark') ||
-      (!html.classList.contains('light') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    html.classList.remove('dark', 'light');
-    var next = isDark ? 'light' : 'dark';
-    html.classList.add(next);
-    syncThemeColor();
-    try { localStorage.setItem('colorScheme', next); } catch (e) {}
+    var system = systemDark.matches ? 'dark' : 'light';
+    // The opposite of what is on screen. Landing back on the system's own scheme is an
+    // undo, so the override is dropped rather than stored: a stored match would pin the
+    // page against the system's next change. Judged only here, never afterwards — an
+    // override the system later comes to agree with is kept.
+    var next = (override() || system) === 'dark' ? 'light' : 'dark';
+    var stored = next === system ? null : next;
+    apply(stored);
+    try {
+      if (stored) localStorage.setItem('colorScheme', stored);
+      else localStorage.removeItem('colorScheme');
+    } catch (e) {}
+  });
+  // A choice made in another tab.
+  window.addEventListener('storage', function(e) {
+    if (e.key !== 'colorScheme' && e.key !== null) return;
+    apply(e.newValue === 'dark' || e.newValue === 'light' ? e.newValue : null);
   });
 })();
 
@@ -33,25 +49,30 @@ function promoteLazyImages(root) {
    .cite-btn is emitted beside its .cite-data. */
 (function() {
   var liveMsg = document.getElementById('live-msg');
+  // VoiceOver skips a message identical to the region's last one, even after it was
+  // emptied; a trailing no-break space makes a repeat differ without being read aloud.
+  var lastMsg = '';
+  function announce(msg) {
+    if (msg === lastMsg) msg += '\u00A0';
+    liveMsg.textContent = lastMsg = msg;
+  }
   document.querySelectorAll('.cite-btn').forEach(function(btn) {
     var label = btn.textContent;
     var resetTimer;
     btn.addEventListener('click', async function() {
       var data = btn.closest('article').querySelector('.cite-data');
       clearTimeout(resetTimer);
-      btn.disabled = true;
       btn.classList.remove('copied');
       try {
         await navigator.clipboard.writeText(data.textContent.trim());
         btn.textContent = 'Copied!';
         btn.classList.add('copied');
-        liveMsg.textContent = 'Citation copied to clipboard.';
+        announce('Citation copied to clipboard.');
       } catch (e) {
         // Includes browsers where the Clipboard API is unavailable.
         btn.textContent = 'Copy failed';
-        liveMsg.textContent = 'Could not copy citation. Please try again.';
+        announce('Could not copy citation. Please try again.');
       } finally {
-        btn.disabled = false;
         resetTimer = setTimeout(function() {
           btn.textContent = label;
           btn.classList.remove('copied');
