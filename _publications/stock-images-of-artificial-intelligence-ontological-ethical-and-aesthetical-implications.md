@@ -7,6 +7,7 @@ author: "Alberto Romele and Dario Rodighiero"
 editor: "José Higuera Rubio and Alberto Romele and Dario Rodighiero and Celeste Pedro"
 publisher: "University of Porto Press"
 place: "Porto"
+pdf_url: "https://pure.rug.nl/ws/portalfiles/portal/1570432059/Stock_Images_of_Artificial_Intelligence_Ontological_Ethical_and_Aesthetical_Implications.pdf"
 isbn: "9789897463150"
 thumb: "stock-images-of-artificial-intelligence-ontological-ethical-and-aesthetical-implications/fig_003.webp"
 ---
