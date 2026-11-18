@@ -1,0 +1,57 @@
+---
+permalink: /privacy.html
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  {% include site-scheme.html %}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy — Alfred Drive Search — Dario Rodighiero</title>
+  <meta name="description" content="Privacy policy for Alfred Drive Search, a personal tool that searches the owner's Google Drive from Alfred on macOS.">
+  {%- comment -%} The privacy policy Google Cloud links from the OAuth consent screen of
+  Alfred Drive Search, Dario's personal Alfred workflow. It is a utility page, not site
+  content: noindex, and deliberately absent from sitemap.xml. {%- endcomment -%}
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/images/@icons/favicon.ico" sizes="any">
+  <link rel="icon" href="/images/@icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/images/@icons/apple-touch-icon.png">
+  <style>
+    {% include styles-font.css %}
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      color-scheme: light dark;
+      --fg: light-dark(#000, #e8e8e8);
+      --bg: light-dark(#fff, #111);
+      --muted: light-dark(rgba(0,0,0,0.6), rgba(255,255,255,0.5));
+    }
+    :root:has(> head > meta[name="color-scheme"][content="dark"]) { color-scheme: dark; }
+    :root:has(> head > meta[name="color-scheme"][content="light"]) { color-scheme: light; }
+    html { font-size: 16px; }
+    body {
+      font-family: "Nunito", sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--fg);
+      background: var(--bg);
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      max-width: 1200px;
+    }
+    a { color: inherit; text-decoration: underline; }
+    .wrap { margin-top: 4rem; max-width: 36rem; }
+    h1 { font-size: 1.3rem; font-weight: 500; margin: 0 0 1rem; }
+    p { font-size: 0.78rem; color: var(--muted); margin: 0 0 0.75rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Alfred Drive Search — Privacy</h1>
+    <p>Alfred Drive Search is a personal tool that lets its owner search his own Google Drive from Alfred on macOS. It is not offered to the public.</p>
+    <p>It asks Google for read-only access to file names and metadata. It cannot open, change or delete files. Search results are shown only in Alfred on the user’s own computer, the sign-in token is kept in the macOS Keychain, and nothing is collected, stored elsewhere or shared with anyone.</p>
+    <p>Access can be revoked at any time from the <a href="https://myaccount.google.com/connections">Google account settings</a>, or by typing <code>drive:logout</code> in Alfred.</p>
+    <p>Back to the <a href="https://dariorodighiero.com">homepage</a>.</p>
+  </div>
+  {% include site-analytics.html %}
+</body>
+</html>
