@@ -53,6 +53,6 @@ class Jekyll::PublicationRelationsGenerator < Jekyll::Generator
   end
 
   def ref(doc)
-    doc.data.slice('title', 'lang', 'type', 'doi').merge('url' => doc.url)
+    doc.data.slice('title', 'edition', 'lang', 'type', 'doi').merge('url' => doc.url)
   end
 end

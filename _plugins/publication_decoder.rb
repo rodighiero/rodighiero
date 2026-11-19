@@ -36,6 +36,11 @@
 # leading digits borrowed from the first page. A single page gives [first].
 module Jekyll
   module DecoderFilter
+    def title_with_edition(title, edition)
+      edition = edition.to_s.strip
+      edition.empty? ? title : "#{title} (#{edition})"
+    end
+
     def decode_numeric_entities(input)
       input.to_s.gsub(/&#(x[0-9a-fA-F]+|\d+);/) do
         code = Regexp.last_match(1)

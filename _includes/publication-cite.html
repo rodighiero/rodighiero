@@ -31,7 +31,8 @@ taxonomy. {%- endcomment -%}
 {%- assign _container = site.data.publication_types[_t].container -%}
 {%- if _container -%}{%- assign _pub = _item.publisher -%}{%- else -%}{%- assign _pub = _item.publisher | default: _item.venue -%}{%- endif -%}
 {%- comment -%} Drop the title-final period when the title already ends in ? or !. {%- endcomment -%}
-{%- assign _tlast = _item.title | slice: -1, 1 -%}
+{%- assign _cite_title = _item.title | title_with_edition: _item.edition -%}
+{%- assign _tlast = _cite_title | slice: -1, 1 -%}
 {%- if _tlast == '?' or _tlast == '!' -%}{%- assign _dot = '' -%}{%- else -%}{%- assign _dot = '.' -%}{%- endif -%}
 {%- comment -%} Give the author block exactly one terminal period, even when a name already ends in one (e.g. an author string ending in "metaLAB."). {%- endcomment -%}
 {%- assign _authblock = _authors | append: _roleword -%}
@@ -40,11 +41,11 @@ taxonomy. {%- endcomment -%}
 {%- assign _doi_id = _item.doi | doi_id -%}
 {%- capture _ref -%}
 {{ _authblock }} {{ _item.year }}.
-{%- if _t == 'book' or _t == 'map' %} {{ _item.title }}{{ _dot }}{% if _item.translator %} Translated by {{ _translators }}.{% endif %}{% if _item.place %} {{ _item.place }}:{% endif %} {{ _pub }}.
-{%- elsif _t == 'journal' or _t == 'magazine' %} “{{ _item.title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}{% if _item.volume %} {{ _item.volume }}{% endif %}{% if _item.issue %} ({{ _item.issue }}){% endif %}{% if _item.pages %}: {{ _item.pages }}{% endif %}.
-{%- elsif _t == 'chapter' or _t == 'conference' %} “{{ _item.title }}{{ _dot }}” In {{ _item.venue }}{% if _item.editor and _item.author %}, edited by {{ _editors }}{% endif %}{% if _item.translator %}, translated by {{ _translators }}{% endif %}{% if _item.pages %}, {{ _item.pages }}{% endif %}.{% if _item.place %} {{ _item.place }}:{% endif %}{% if _pub %} {{ _pub }}.{% endif %}
-{%- elsif _t == 'interview' %} “{{ _item.title }}{{ _dot }}”{% if _item.interviewer %} Interview by {{ _interviewers }}.{% endif %}{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}.
-{%- else %} “{{ _item.title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}.
+{%- if _t == 'book' or _t == 'map' %} {{ _cite_title }}{{ _dot }}{% if _item.translator %} Translated by {{ _translators }}.{% endif %}{% if _item.place %} {{ _item.place }}:{% endif %} {{ _pub }}.
+{%- elsif _t == 'journal' or _t == 'magazine' %} “{{ _cite_title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}{% if _item.volume %} {{ _item.volume }}{% endif %}{% if _item.issue %} ({{ _item.issue }}){% endif %}{% if _item.pages %}: {{ _item.pages }}{% endif %}.
+{%- elsif _t == 'chapter' or _t == 'conference' %} “{{ _cite_title }}{{ _dot }}” In {{ _item.venue }}{% if _item.editor and _item.author %}, edited by {{ _editors }}{% endif %}{% if _item.translator %}, translated by {{ _translators }}{% endif %}{% if _item.pages %}, {{ _item.pages }}{% endif %}.{% if _item.place %} {{ _item.place }}:{% endif %}{% if _pub %} {{ _pub }}.{% endif %}
+{%- elsif _t == 'interview' %} “{{ _cite_title }}{{ _dot }}”{% if _item.interviewer %} Interview by {{ _interviewers }}.{% endif %}{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}.
+{%- else %} “{{ _cite_title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}.
 {%- endif -%}
 {%- if _item.doi %} {% if _doi_id %}https://doi.org/{{ _doi_id }}{% else %}{{ _item.doi }}{% endif %}.{% endif -%}
 {%- endcapture -%}

@@ -2,6 +2,8 @@
 {%- assign _lang = page.lang -%}
 {%- assign _url = site.url | append: page.url -%}
 {%- assign _title_attr = page.title | escape -%}
+{%- assign _display_title = page.title | title_with_edition: page.edition -%}
+{%- assign _display_title_attr = _display_title | escape -%}
 <!DOCTYPE html>
 <html lang="{{ _lang }}">
 <head>
@@ -16,7 +18,7 @@
   {% assign _ptype = site.data.publication_types[page.type] %}
   {%- comment -%} The bare title: authors and site name are declared elsewhere and would
   only spend Google's ~60-character budget. {%- endcomment -%}
-  <title>{{ _title_attr }}</title>
+  <title>{{ _display_title_attr }}</title>
   <meta name="description" content="{{ _excerpt_attr }}">
   <link rel="canonical" href="{{ _url }}">
   {%- comment -%} The language set, original first (publication_relations.rb): hreflang
@@ -25,7 +27,7 @@
   {%- assign _alt_pages = _set | where_exp: 't', 't.url != page.url' -%}
   {% if _set.size > 0 %}{% for _t in _set %}<link rel="alternate" hreflang="{{ _t.lang }}" href="{{ site.url }}{{ _t.url }}">
   {% endfor %}<link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ _set[0].url }}">
-  {% endif %}<meta property="og:title" content="{{ _title_attr }}">
+  {% endif %}<meta property="og:title" content="{{ _display_title_attr }}">
   <meta property="og:description" content="{{ _excerpt_attr }}">
   <meta property="og:url" content="{{ _url }}">
   <meta property="og:type" content="article">
@@ -35,13 +37,13 @@
   {%- comment -%} `thumb` is required and supplies both social cards. {%- endcomment -%}
   {% assign _social_img = page.thumb %}
   {% assign _social_src = _social_img | prepend: '/images/' %}
-  {% include site-image.html src=_social_src alt=page.title %}
+  {% include site-image.html src=_social_src alt=_display_title %}
   {%- comment -%} No article:published_time: a bare year would become an invented
   1 January. {%- endcomment -%}
   <meta property="article:modified_time" content="{{ page.commit_date }}">
   {% if page.author %}{% assign _oa = page.author | split: ' and ' %}{% for _a in _oa %}<meta property="article:author" content="{{ _a | strip | escape }}">
   {% endfor %}{% endif %}
-  <meta name="twitter:title" content="{{ _title_attr }}">
+  <meta name="twitter:title" content="{{ _display_title_attr }}">
   <meta name="twitter:description" content="{{ _excerpt_attr }}">
   <!-- HighWire Press / Google Scholar citation tags -->
   <meta name="citation_title" content="{{ _title_attr }}">
@@ -144,7 +146,7 @@
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": {{ site.title | jsonify }}, "item": "{{ site.url }}/" },
-      { "@type": "ListItem", "position": 2, "name": {{ page.title | jsonify }}, "item": "{{ _url }}" }
+      { "@type": "ListItem", "position": 2, "name": {{ _display_title | jsonify }}, "item": "{{ _url }}" }
     ]
   }
   </script>
@@ -163,7 +165,7 @@
   <article>
   <div class="title-block">
   {% include card-meta.html item=page %}
-  <h1>{{ page.title }}</h1>
+  <h1>{{ _display_title }}</h1>
   {% include credit-full.html item=page %}
   {%- comment -%} External repository PDFs stay visible links: Scholar only accepts
   citation_pdf_url for a PDF hosted in the abstract page's own subdirectory. {%- endcomment -%}
@@ -183,7 +185,7 @@
     <h2>{{ page.publication_series.title }}</h2>
     <ul>
       {% for _r in page.publication_series.items %}{% unless _r.url == page.url %}
-      <li><a href="{{ _r.url }}" lang="{{ _r.lang }}">{{ _r.title }} <span class="related-lang">{{ _r.year }} · {{ _r.lang }}</span></a></li>
+      <li><a href="{{ _r.url }}" lang="{{ _r.lang }}">{{ _r.title | title_with_edition: _r.edition }} <span class="related-lang">{{ _r.year }} · {{ _r.lang }}</span></a></li>
       {% endunless %}{% endfor %}
     </ul>
   </nav>
@@ -192,7 +194,7 @@
     <h2>Related publications</h2>
     <ul>
       {% for _r in page.related %}
-      <li><a href="{{ _r.url }}" lang="{{ _r.lang }}">{{ _r.title }}{% unless _r.lang == 'en' %} <span class="related-lang">{{ _r.lang }}</span>{% endunless %}</a></li>
+      <li><a href="{{ _r.url }}" lang="{{ _r.lang }}">{{ _r.title | title_with_edition: _r.edition }}{% unless _r.lang == 'en' %} <span class="related-lang">{{ _r.lang }}</span>{% endunless %}</a></li>
       {% endfor %}
     </ul>
   </nav>

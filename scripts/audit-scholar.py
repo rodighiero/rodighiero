@@ -244,7 +244,9 @@ def audit(item, site_dir=None, expected_alternates=None):
 
     if p.canonical != [url]:
         finding('source', 'Unexpected canonical URL')
-    if normalize(''.join(p.h1)) != front['title']:
+    edition = (front.get('edition') or '').strip()
+    display_title = f"{front['title']} ({edition})" if edition else front['title']
+    if normalize(''.join(p.h1)) != display_title:
         finding('source', 'Visible title differs from source')
     if len(p.meta['description']) != 1 or not p.meta['description'][0].strip():
         finding('convention', 'Missing or duplicate search description')

@@ -240,7 +240,8 @@ width that still shows 3 columns. {%- endcomment -%}
       {% include card-action.html eyebrow="Filter" venue=_cluster_venue label=_cluster.title sublabel=_cluster.description action=_cluster.action slugs=_cluster.slugs year=_cluster.span filterlabel=_cluster.filter_label media=_cluster_media gcclick=_cluster.title %}
       {%- endif -%}
       {%- assign _lang = publication.lang -%}
-      {%- capture _search_text %}{{ publication.title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.interviewer }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ site.data.publication_types[publication.type].label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ site.data.languages[_lang].search }}{% endcapture %}
+      {%- assign _display_title = publication.title | title_with_edition: publication.edition -%}
+      {%- capture _search_text %}{{ _display_title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.interviewer }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ site.data.publication_types[publication.type].label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ site.data.languages[_lang].search }}{% endcapture %}
       <div class="card publication" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-year="{{ publication.year }}" data-search="{{ _search_text | strip_newlines | escape }}">
         <div class="card-media{% if publication.img_border %} bordered{% endif %}">
           {%- comment -%} The first row is the likely LCP; below the fold loads lazily.
@@ -256,7 +257,7 @@ width that still shows 3 columns. {%- endcomment -%}
         {% include card-meta.html item=publication %}
         {%- comment -%} lang on the title alone: the only part of a tile in the work's own
         language. {%- endcomment %}
-        <h2 class="card-title" lang="{{ _lang }}"><a href="{{ publication.url }}">{{ publication.title }}</a></h2>
+        <h2 class="card-title" lang="{{ _lang }}"><a href="{{ publication.url }}">{{ _display_title }}</a></h2>
         {% include credit-short.html item=publication %}
       </div>
       {%- endfor %}
