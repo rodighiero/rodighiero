@@ -29,8 +29,16 @@ each filter exists: the header comment of `_plugins/publication_figures.rb`.
 
 | URL | Source |
 |---|---|
-| a publication | `page.commit_date` — that file's last commit |
+| a publication | latest of its source commit and a change to its published metadata |
 | the homepage | `site.data.commit_date` — **not `HEAD`** |
+
+Jekyll supplies the source dates. During deployment, `scripts/publication-lastmod.py`
+compares each rendered publication's title, metadata tags, canonical and alternate links,
+and JSON-LD with the snapshot at `/publication-lastmod.json`. A metadata change advances
+that page to the deployed revision's commit time. The script writes the same timestamp
+to the sitemap, Open Graph and JSON-LD. Modification dates themselves are excluded from
+the comparison. The checked-in baseline seeds the first deployment and records the
+19 November translation correction on the French and Italian Stock Images pages.
 
 The homepage is the one URL with no file of its own. Its date is the last commit touching a
 path that *reaches `_site`*, so a commit to `CLAUDE.md`, a skill or a build script does not
