@@ -26,7 +26,8 @@ SEARCH_ROOTS = [
 ]
 
 URL_LINE_RE = re.compile(
-    r"\*\s*\[([^\]]+)\]\s*<(https?://[^>]+)>\s*\|\s*(.+)"
+    r"\*\s*\[([^\]]+)\]\s*<(https?://[^>]+)>"
+    r"(?:\s+\(at \d+:\d+\))?\s*\|\s*(.+)"
 )
 BULLET_RE = re.compile(r"^[-*+]\s+")
 
