@@ -9,9 +9,8 @@
 # translation_set is the work's language set, original first and then each
 # translation in collection order — this page included, which gives hreflang its
 # required self-reference. It is empty for a work with no translations. On a
-# translation, its first entry is therefore the source. translated_by is the set's
-# translations minus this page: on the original all of them, on a translation its
-# siblings.
+# translation, its first entry is therefore the source. translated_by lists the
+# publications whose translation_of names this particular work.
 #
 # related is the page's node's `related` list from _data/network.json, the same list
 # the network view's details panel shows; empty for a page with no node.
@@ -31,7 +30,7 @@ class Jekyll::PublicationRelationsGenerator < Jekyll::Generator
       origin = by_slug[doc.data['translation_of'].to_s] || doc
       siblings = translations.fetch(slug(origin), [])
       doc.data['translation_set'] = siblings.empty? ? [] : [origin, *siblings].map { |d| ref(d) }
-      doc.data['translated_by'] = (siblings - [doc]).map { |d| ref(d) }
+      doc.data['translated_by'] = translations.fetch(slug(doc), []).map { |d| ref(d) }
       doc.data['related'] = related[doc.url] || []
     end
 

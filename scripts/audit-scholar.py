@@ -337,9 +337,16 @@ def audit(item, site_dir=None, expected_alternates=None):
                   ('sameAs', work.get('sameAs'), front.get('doi')),
                   ('pagination', work.get('pagination'),
                    str(front['pages']) if front.get('pages') else None)]
-        if front.get('translation_of'):
-            checks.append(('translationOfWork', (work.get('translationOfWork') or {}).get('@id'),
-                           f'{BASE}/{front["translation_of"]}'))
+        source = front.get('translation_of')
+        expected_translations = set(want.values()) - {url} if not source else set()
+        for field, expected in [('translationOfWork', [f'{BASE}/{source}'] if source else []),
+                                ('workTranslation', sorted(expected_translations))]:
+            nodes = work.get(field, [])
+            if not isinstance(nodes, list):
+                nodes = [nodes]
+            ids = [node.get('@id') if isinstance(node, dict) else None for node in nodes]
+            if len(ids) != len(expected) or any(target not in ids for target in expected):
+                finding('source', f'JSON-LD {field} differs from publication source')
         for field, got, expected in checks:
             if got != expected:
                 finding('source', f'JSON-LD {field} differs from publication source')

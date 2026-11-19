@@ -75,7 +75,7 @@ Across pages, `translation_of` is resolved once per build by `publication_relati
 | Field | What it holds |
 |---|---|
 | `page.translation_set` | the original first, then every translation — **this page included**; empty without translations |
-| `page.translated_by` | the set's translations minus this page → JSON-LD `workTranslation` |
+| `page.translated_by` | works translated directly from this publication → JSON-LD `workTranslation` |
 
 `hreflang` covers the whole set, which always contains the page itself — that supplies the
 required self-reference for free. `x-default` goes on entry 0, the original, which on a
