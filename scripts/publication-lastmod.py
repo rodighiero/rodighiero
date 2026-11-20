@@ -85,7 +85,7 @@ def main():
                 dates.append(revision)
         modified = max(dates, key=datetime.fromisoformat)
         if modified != stamp.text:
-            for template in ['"dateModified": "{}"', 'property="article:modified_time" content="{}"']:
+            for template in ['"dateModified":"{}"', 'property="article:modified_time" content="{}"']:
                 old = template.format(stamp.text)
                 if source.count(old) != 1:
                     raise ValueError(f'{path}: expected one {old}')
