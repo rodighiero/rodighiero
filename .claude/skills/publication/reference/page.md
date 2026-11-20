@@ -81,6 +81,13 @@ than squeezing.
 `<p class="equation"><span class="eq-formula">…</span></p>` — a centred flex line. There is
 no math renderer; the formula is written as markup.
 
+### Table of contents
+
+A book-length body (*Mapping Affinities*) opens with kramdown's own TOC, so no plugin or script
+is involved: `{::options toc_levels="2" /}`, then `## Contents` marked `{:.no_toc}`, then
+`* TOC` / `{:toc}`. Chapters are the `##` headings, so the list stays one level deep; the
+`###` sections keep their auto ids, so any of them can still be linked as `#slug`.
+
 ## Print
 
 The page has a print stylesheet: figures avoid breaking across pages, `data-table` is allowed

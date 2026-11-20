@@ -80,7 +80,7 @@ Absent `lang` means English: `_config.yml`'s `defaults:` sets `lang: en` on ever
 |---|---|
 | `edition` | a later edition of a work already on the site, in the work's own language (`Second revised edition`, `Tweede herziene editie`). Keep it out of `title`: readers see `Title (Edition)` on the card, h1, `<title>`, social tags, nav, cluster lists, the Cite text and the RSS entry, while `citation_title` and JSON-LD `name` keep the bare work title and JSON-LD adds `bookEdition` (Book) or `version` (other types) |
 | `img_border: true` | hairline around the homepage card |
-| `fulltext: false` | the text after `<!--more-->` is only part of the work (a book's preface and introduction, a catalogue's editorial), so the page does not emit `citation_fulltext_html_url`. Set on the four books: *From Wisdom to Data*, *Mapping Affinities*, *Cartographie des affinités*, *Collective Care*. Every other entry is a complete text |
+| `fulltext: false` | the text after `<!--more-->` is only part of the work (a book's preface and introduction, a catalogue's editorial), so the page does not emit `citation_fulltext_html_url`. Set on three books: *From Wisdom to Data*, *Cartographie des affinités*, *Collective Care*. *Mapping Affinities* carries its whole text, so it no longer sets it. Every other entry is a complete text |
 | `redirect_from` | string or list of site-absolute paths; each becomes a refresh stub canonicalised to the real page |
 
 `page.date` is **derived**, not declared — `publication_order.rb` synthesizes it from `year`
