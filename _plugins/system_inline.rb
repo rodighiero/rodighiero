@@ -1,13 +1,17 @@
+require 'json'
+
 # | strip_css_comments — read by home.html, publication.html and 404.html.
 # | strip_js_comments  — read by home.html, publication.html and site-analytics.html.
+# | minify_json        — read by home.html and publication.html (the JSON-LD blocks).
 #
-# The stylesheets and scripts are inlined into every page (styles-*.css, scripts-*.js),
-# and their comments are written for the maintainer, not the reader: about half the
-# bytes of what the homepage inlines. Each <style> and <script> block is captured and
-# passed through one of these filters, so the source keeps every comment and the page
-# ships none. Usage:
+# What the pages inline, made as small as it can be without changing what it says. The
+# stylesheets and scripts (styles-*.css, scripts-*.js) carry comments written for the
+# maintainer, not the reader: about half the bytes of what the homepage inlines. The
+# JSON-LD is written indented, to be read and diffed as a template. Each <style>,
+# <script> and JSON-LD block is captured and passed through one of these filters, so
+# the source keeps its comments and layout and the page ships neither. Usage:
 #   {% capture _css %}{% include styles-base.css %}{% endcapture %}{{ _css | strip_css_comments }}
-module Jekyll::CommentFilter
+module Jekyll::InlineFilter
   # CSS comments do not nest, so the non-greedy match is the language's own rule. It
   # would misfire on a "/*" inside a string or an unquoted url(), which no stylesheet
   # here contains — keep it that way. Then indentation and the blank lines left behind.
@@ -21,9 +25,19 @@ module Jekyll::CommentFilter
   # automatic semicolon insertion reads them (site-analytics.html relies on it); only
   # indentation, trailing space and blank lines go, and never inside a literal.
   def strip_js_comments(js)
-    Jekyll::CommentFilter.js_segments(js.to_s).map do |code, text|
+    Jekyll::InlineFilter.js_segments(js.to_s).map do |code, text|
       code ? text.gsub(/[ \t]*\n\s*/, "\n") : text
     end.join.strip
+  end
+
+  # Parsed and re-serialised, so invalid JSON-LD fails the build rather than shipping
+  # structured data a crawler silently discards. Key order survives (Ruby hashes keep
+  # it). "</" is escaped as "<\/", which JSON reads as the same string, so no value can
+  # close the <script> early.
+  def minify_json(json)
+    JSON.generate(JSON.parse(json.to_s)).gsub('</', '<\\/')
+  rescue JSON::ParserError => e
+    raise "minify_json: invalid JSON-LD on #{@context.registers[:page]['path']}: #{e.message}"
   end
 
   # Words after which a "/" starts a regex rather than dividing.
@@ -76,7 +90,7 @@ module Jekyll::CommentFilter
         out << [false, src[start...i]]
         prev = opened ? '{' : c
         word = +''
-      elsif c == '/' && Jekyll::CommentFilter.regex_allowed?(prev, word)
+      elsif c == '/' && Jekyll::InlineFilter.regex_allowed?(prev, word)
         flush.call
         start = i
         i += 1
@@ -119,4 +133,4 @@ module Jekyll::CommentFilter
   end
 end
 
-Liquid::Template.register_filter(Jekyll::CommentFilter)
+Liquid::Template.register_filter(Jekyll::InlineFilter)

@@ -100,7 +100,7 @@
   {% if _publisher %}<meta name="DC.publisher" content="{{ _publisher | escape }}">{% endif %}
   <meta name="DCTERMS.isPartOf" content="{{ site.url }}/">
   {% assign _schema_type = _ptype.schema %}
-  <script type="application/ld+json">
+  {%- capture _jsonld1 %}
   {
     "@context": "https://schema.org",
     "@type": "{{ _schema_type }}",
@@ -141,8 +141,9 @@
     {% if _abstract != '' %}"abstract": {{ _abstract | jsonify }},{% endif %}
     "description": {{ _excerpt | jsonify }}
   }
-  </script>
-  <script type="application/ld+json">
+  {%- endcapture %}
+  <script type="application/ld+json">{{ _jsonld1 | minify_json }}</script>
+  {%- capture _jsonld2 %}
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -151,8 +152,9 @@
       { "@type": "ListItem", "position": 2, "name": {{ _display_title | jsonify }}, "item": "{{ _url }}" }
     ]
   }
-  </script>
-  {%- comment -%} Captured so the shipped CSS loses its comments (system_comments.rb). {%- endcomment -%}
+  {%- endcapture %}
+  <script type="application/ld+json">{{ _jsonld2 | minify_json }}</script>
+  {%- comment -%} Captured so the shipped CSS loses its comments (system_inline.rb). {%- endcomment -%}
   {%- capture _css -%}
 {% include styles-font.css %}
 {% include styles-base.css %}

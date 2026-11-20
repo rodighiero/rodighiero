@@ -40,7 +40,7 @@ width that still shows 3 columns. {%- endcomment -%}
   <link rel="me" href="https://www.linkedin.com/in/dariorodighiero/">
   <link rel="me" href="{{ site.orcid }}">
   <link rel="image_src" href="{{ site.url }}{{ _portrait }}">
-  <script type="application/ld+json">
+  {%- capture _jsonld1 %}
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -122,8 +122,9 @@ width that still shows 3 columns. {%- endcomment -%}
       }
     ]
   }
-  </script>
-  {%- comment -%} Captured so the shipped CSS loses its comments (system_comments.rb). {%- endcomment -%}
+  {%- endcapture %}
+  <script type="application/ld+json">{{ _jsonld1 | minify_json }}</script>
+  {%- comment -%} Captured so the shipped CSS loses its comments (system_inline.rb). {%- endcomment -%}
   {%- capture _css -%}
 {% include styles-font.css %}
 {% include styles-base.css %}
