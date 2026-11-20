@@ -184,7 +184,7 @@
   </article>
   {% if _content_parts.size > 1 and page.publication_cluster %}
   <nav class="related-pubs" aria-labelledby="publication-cluster-title" lang="en">
-    <h2 id="publication-cluster-title">{{ page.publication_cluster.title | escape }}</h2>
+    <h2 id="publication-cluster-title">{{ page.publication_cluster.title | escape }}{% if page.publication_cluster.number %} · Research cluster {{ page.publication_cluster.number }}{% endif %}</h2>
     <ul>
       {% for _r in page.publication_cluster.items %}{% unless _r.url == page.url %}
       <li>{% include publication-cite.html item=_r linked=true %}</li>

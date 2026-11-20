@@ -31,12 +31,14 @@ class Jekyll::PublicationRelationsGenerator < Jekyll::Generator
     end
 
     network = site.data['network'] || {}
-    clusters = (network['clusters'] || []).each_with_object({}) do |cluster, groups|
+    # number is the cluster's 1-based position in network.json, the same number
+    # home.html prints on its cluster card ("Research cluster N").
+    clusters = (network['clusters'] || []).each_with_index.each_with_object({}) do |(cluster, index), groups|
       members = cluster.fetch('slugs').filter_map { |member| by_slug[member] }
       next if members.size < 2
 
       items = members.map { |doc| citation_ref(doc) }
-      group = { 'title' => cluster.fetch('title'), 'items' => items }
+      group = { 'title' => cluster.fetch('title'), 'number' => index + 1, 'items' => items }
       members.each { |doc| groups[slug(doc)] = group }
     end
 
