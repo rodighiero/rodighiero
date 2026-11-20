@@ -45,7 +45,7 @@
   {% endfor %}{% endif %}
   <meta name="twitter:title" content="{{ _display_title_attr }}">
   <meta name="twitter:description" content="{{ _excerpt_attr }}">
-  <!-- HighWire Press / Google Scholar citation tags -->
+  {%- comment -%} HighWire Press / Google Scholar citation tags {%- endcomment %}
   <meta name="citation_title" content="{{ _title_attr }}">
   {%- comment -%} Scholar requires actual authors; editors must never stand in for them.
   citation_editor preserves the editor role in Zotero, including on editor-only books.
