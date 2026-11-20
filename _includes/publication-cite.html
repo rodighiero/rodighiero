@@ -30,11 +30,25 @@ taxonomy. {%- endcomment -%}
 {%- assign _container = site.data.publication_types[_t].container -%}
 {%- if _container -%}{%- assign _pub = _item.publisher -%}{%- else -%}{%- assign _pub = _item.publisher | default: _item.venue -%}{%- endif -%}
 {%- comment -%} Drop the title-final period when the title already ends in ? or !. {%- endcomment -%}
-{%- assign _cite_title = _item.title | title_with_edition: _item.edition -%}
+{%- assign _cite_title = _item.title -%}
 {%- assign _tlast = _cite_title | slice: -1, 1 -%}
 {%- if _tlast == '?' or _tlast == '!' -%}{%- assign _dot = '' -%}{%- else -%}{%- assign _dot = '.' -%}{%- endif -%}
 {%- assign _cite_venue = _item.venue -%}
+{%- assign _place = _item.place -%}
+{%- comment -%} Chicago gives a later edition its own element after the title ("Title.
+Second revised edition."), not a parenthesis inside it; the field is free text in the
+work's own language, so it is quoted as written. {%- endcomment -%}
+{%- assign _edition = _item.edition | strip -%}
+{%- comment -%} Linked mode writes HTML outside a <pre>, so every field is escaped there,
+names included; the copied plain text is left as it was. {%- endcomment -%}
 {%- if include.linked -%}
+  {%- assign _authors = _authors | escape_once -%}
+  {%- assign _editors = _editors | escape_once -%}
+  {%- assign _translators = _translators | escape_once -%}
+  {%- assign _interviewers = _interviewers | escape_once -%}
+  {%- if _pub -%}{%- assign _pub = _pub | escape_once -%}{%- endif -%}
+  {%- if _place -%}{%- assign _place = _place | escape_once -%}{%- endif -%}
+  {%- assign _edition = _edition | escape_once -%}
   {%- capture _cite_title -%}
     <a href="{{ _item.url | escape }}" lang="{{ _item.lang | escape }}">{% if _t == 'book' or _t == 'map' %}<i>{{ _cite_title | escape_once }}</i>{% else %}{{ _cite_title | escape_once }}{% endif %}</a>
   {%- endcapture -%}
@@ -49,11 +63,11 @@ taxonomy. {%- endcomment -%}
 {%- assign _doi_id = _item.doi | doi_id -%}
 {%- capture _ref -%}
 {{ _authblock }} {{ _item.year }}.
-{%- if _t == 'book' or _t == 'map' %} {{ _cite_title }}{{ _dot }}{% if _item.translator %} Translated by {{ _translators }}.{% endif %}{% if _item.place %} {{ _item.place }}:{% endif %} {{ _pub }}.
-{%- elsif _t == 'journal' or _t == 'magazine' %} “{{ _cite_title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _cite_venue }}{% if _item.volume %} {{ _item.volume }}{% endif %}{% if _item.issue %} ({{ _item.issue }}){% endif %}{% if _item.pages %}: {{ _item.pages }}{% endif %}.
-{%- elsif _t == 'chapter' or _t == 'conference' %} “{{ _cite_title }}{{ _dot }}” In {{ _cite_venue }}{% if _item.editor and _item.author %}, edited by {{ _editors }}{% endif %}{% if _item.translator %}, translated by {{ _translators }}{% endif %}{% if _item.pages %}, {{ _item.pages }}{% endif %}.{% if _item.place %} {{ _item.place }}:{% endif %}{% if _pub %} {{ _pub }}.{% endif %}
-{%- elsif _t == 'interview' %} “{{ _cite_title }}{{ _dot }}”{% if _item.interviewer %} Interview by {{ _interviewers }}.{% endif %}{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _cite_venue }}.
-{%- else %} “{{ _cite_title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _cite_venue }}.
+{%- if _t == 'book' or _t == 'map' %} {{ _cite_title }}{{ _dot }}{% if _edition != '' %} {{ _edition }}.{% endif %}{% if _item.translator %} Translated by {{ _translators }}.{% endif %}{% if _place %} {{ _place }}:{% endif %} {{ _pub }}.
+{%- elsif _t == 'journal' or _t == 'magazine' %} “{{ _cite_title }}{{ _dot }}”{% if _edition != '' %} {{ _edition }}.{% endif %}{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _cite_venue }}{% if _item.volume %} {{ _item.volume }}{% endif %}{% if _item.issue %} ({{ _item.issue }}){% endif %}{% if _item.pages %}: {{ _item.pages }}{% endif %}.
+{%- elsif _t == 'chapter' or _t == 'conference' %} “{{ _cite_title }}{{ _dot }}”{% if _edition != '' %} {{ _edition }}.{% endif %} In {{ _cite_venue }}{% if _item.editor and _item.author %}, edited by {{ _editors }}{% endif %}{% if _item.translator %}, translated by {{ _translators }}{% endif %}{% if _item.pages %}, {{ _item.pages }}{% endif %}.{% if _place %} {{ _place }}:{% endif %}{% if _pub %} {{ _pub }}.{% endif %}
+{%- elsif _t == 'interview' %} “{{ _cite_title }}{{ _dot }}”{% if _edition != '' %} {{ _edition }}.{% endif %}{% if _item.interviewer %} Interview by {{ _interviewers }}.{% endif %}{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _cite_venue }}.
+{%- else %} “{{ _cite_title }}{{ _dot }}”{% if _edition != '' %} {{ _edition }}.{% endif %}{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _cite_venue }}.
 {%- endif -%}
 {%- if _item.doi %} {% if _doi_id %}https://doi.org/{{ _doi_id }}{% else %}{{ _item.doi }}{% endif %}.{% endif -%}
 {%- endcapture -%}
