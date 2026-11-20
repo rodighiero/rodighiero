@@ -3,6 +3,8 @@
 # | snippet — read by publication.html (the excerpt).
 # | doi_id — read by publication.html (citation_doi, the DOI button) and publication-cite.html.
 # | page_range — read by publication.html (citation_firstpage / citation_lastpage).
+# | title_with_edition — read wherever a reader sees a title: card, h1, <title>, social
+# tags, nav, cluster lists, the Cite text. The hooks at the end give the feed the same.
 #
 # The filters that turn front-matter and body text into what a publication's
 # machine-facing tags need — the ones a reader only ever sees in a search snippet,
@@ -85,3 +87,24 @@ module Jekyll
 end
 
 Liquid::Template.register_filter(Jekyll::DecoderFilter)
+
+# jekyll-feed reads post.title from a template it owns, so an entry with an
+# `edition` would reach feed readers under the bare title its other editions
+# share. The edition is added for the feed's render alone and taken off again,
+# leaving `title` the bare work title every other reader of the field expects.
+Jekyll::Hooks.register :pages, :pre_render do |page|
+  next unless page.url == '/feed.xml'
+  page.site.collections['publications']&.docs&.each do |doc|
+    edition = doc.data['edition'].to_s.strip
+    next if edition.empty?
+    doc.data['bare_title'] = doc.data['title']
+    doc.data['title'] = "#{doc.data['title']} (#{edition})"
+  end
+end
+
+Jekyll::Hooks.register :pages, :post_render do |page|
+  next unless page.url == '/feed.xml'
+  page.site.collections['publications']&.docs&.each do |doc|
+    doc.data['title'] = doc.data.delete('bare_title') if doc.data.key?('bare_title')
+  end
+end

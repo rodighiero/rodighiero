@@ -107,6 +107,8 @@
     "@id": "{{ _url }}",
     "headline": {{ page.title | jsonify }},
     "name": {{ page.title | jsonify }},
+    {%- if page.edition %}
+    "{% if _schema_type == 'Book' %}bookEdition{% else %}version{% endif %}": {{ page.edition | jsonify }},{% endif %}
     {%- include jsonld-people.html property="author" names=page.author %}
     {%- comment -%} The other roles, so a work Dario edited, translated or conducted still
     carries his ORCID node. Interviewer and preface have no Schema.org property, so they

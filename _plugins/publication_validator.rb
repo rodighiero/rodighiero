@@ -115,6 +115,12 @@ class Jekyll::FrontMatterValidator < Jekyll::Generator
       end
     end
 
+    # edition is appended to the displayed title in parentheses, so it must be
+    # a phrase, not a number or a list.
+    if data.key?('edition') && !(data['edition'].is_a?(String) && !data['edition'].strip.empty?)
+      @warnings << "#{slug}: edition must be a non-empty string, e.g. \"Second revised edition\""
+    end
+
     # A translation names its original by slug; an unresolved one silently costs
     # the page its hreflang alternates and its forced network edge.
     if data['translation_of'] && !@slugs.include?(data['translation_of'].to_s)

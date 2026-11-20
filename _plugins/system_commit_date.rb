@@ -22,7 +22,7 @@ class Jekyll::CommitDateGenerator < Jekyll::Generator
   # Jekyll's own `exclude:` already names most of what never reaches _site, so
   # the list is read from the config rather than kept in step with it by hand.
   # Two adjustments it cannot supply:
-  UNPUBLISHED = %w[.claude .github .gitignore].freeze          # dot-paths Jekyll drops implicitly
+  UNPUBLISHED = %w[.claude .github .gitignore .memory].freeze  # dot-paths Jekyll drops implicitly
   PUBLISHED_ANYWAY = %w[README.md].freeze                      # excluded from the build, but it *is* the bio
 
   def generate(site)
