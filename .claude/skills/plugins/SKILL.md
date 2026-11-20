@@ -24,7 +24,7 @@ it.** Everything here is one of three shapes:
 | Shape | Registered how | Examples |
 |---|---|---|
 | A **Liquid filter** | `Liquid::Template.register_filter` | `image_size`, `autolink_urls`, `ordered_references`, `decode_numeric_entities`, `snippet`, `doi_id`, `page_range`, `credit_short`, `chicago_names` |
-| A **field on a document** | a generator or `post_read` hook writing `doc.data[…]` | `commit_date`, `figures`, `prev_pub`/`next_pub`, `translation_set`, `related`, `date` |
+| A **field on a document** | a generator or `post_read` hook writing `doc.data[…]` | `commit_date`, `figures`, `prev_pub`/`next_pub`, `translation_set`, `publication_cluster`, `date` |
 | A **site-wide datum** | writing `site.data[…]` | `ordered_publications`, `readme_content`, `commit_date` |
 
 Two files fit none of them and produce no identifier a template can read:
@@ -56,7 +56,7 @@ written down.
 | `publication_decoder.rb` | `\| decode_numeric_entities`, `\| snippet`, `\| doi_id`, `\| page_range` | `publication.html`, `publication-cite.html`, `figure-image.html` |
 | `publication_order.rb` | `site.data.ordered_publications`; `prev_pub` / `next_pub`; `page.date` | `home.html`; `publication-nav.html`; the jekyll-feed gem |
 | `publication_credits.rb` | `\| credit_short`, `\| chicago_names` | `credit-short.html`, `publication-cite.html` |
-| `publication_relations.rb` | `translation_set` / `translated_by`, `related`, `publication_series` | `publication.html` |
+| `publication_relations.rb` | `translation_set` / `translated_by`, `publication_cluster` | `publication.html` |
 | `publication_figures.rb` | `figures` | `sitemap.xml` |
 | `system_commit_date.rb` | `commit_date` (per doc **and** `site.data`) | `sitemap.xml`, `publication.html` |
 | `system_readme.rb` | `site.data.readme_content` | `home.html` |

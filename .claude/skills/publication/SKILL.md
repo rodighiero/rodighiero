@@ -29,7 +29,7 @@ and `redirect_from`. Renaming a file means renaming all of those.
 4. `uv run scripts/optimize-images.py` — re-encodes new WebPs at method 6, visually lossless, idempotent. `--dry-run` to preview.
 5. `uv run scripts/generate-thumbnails.py` — writes `images/@cards/<slug>.webp`, the only image set the homepage loads.
 6. `bundle exec jekyll build` — `publication_validator.rb` **aborts on error**, so this is the check that matters.
-7. `KMP_DUPLICATE_LIB_OK=TRUE uv run scripts/build-network.py` — the new entry has no node, no `related`, and no cluster membership until this runs. See the `network` skill.
+7. `KMP_DUPLICATE_LIB_OK=TRUE uv run scripts/build-network.py` — the new entry has no network node or cluster membership until this runs. See the `network` skill.
 
 Steps 4–7 are also what a *changed body* or a *changed image* needs; a front-matter-only
 edit that doesn't touch `thumb` or the abstract needs only step 6.
@@ -97,7 +97,7 @@ One entry in `_data/publication_types.yml` — `label`, `schema`, `dc`, optional
 - **Curly quotes** (`“ ”`) for English and Italian; French guillemets only inside French quotations.
 - **American English** in English entries (`livable`, not `liveable`). Italian and French entries keep their own orthography.
 - **Chicago author-date** throughout, in three places that are not the same thing:
-  - the **bibliography** — a `## References` (or `Bibliography` / `Références` / `Bibliographie`) section of `- ` bullets: `Bertin, Jacques. 1981. *Graphics and Graphic Information-Processing*. Berlin and New York: De Gruyter.` Keep writing bullets: `publication_body.rb` renders the list as `<ol class="references">` for Google Scholar, still shown with bullets. A heading outside that vocabulary (References, Références, Referenties, Bibliography, Bibliographie, Bibliografia) stays `<ul>`, so a new language needs adding to the plugin;
+  - the **bibliography** — a `## References` (or `Bibliography` / `Références` / `Bibliographie`) section of `- ` Markdown entries, such as `Bertin, Jacques. 1981. *Graphics and Graphic Information-Processing*. Berlin and New York: De Gruyter.` The renderer emits `<ol class="references">` for Google Scholar and displays hanging indents without markers. A heading outside that vocabulary (References, Références, Referenties, Bibliography, Bibliographie, Bibliografia) stays `<ul>`, so a new language needs adding to the plugin;
   - **inline citations** — parenthetical `(Author Year)`, no comma before the year;
   - **footnotes** — kramdown (`[^1]` … `[^1]:`), for discursive notes rather than for bare references.
 
@@ -129,7 +129,7 @@ maintenance, not a broken build. See the `links` skill.
 | Symptom | Cause |
 |---|---|
 | Build aborts naming a publication | a required field is missing, or `year` / `type` / `thumb` is invalid — the validator's message names the file and the field |
-| A new entry has no `related` list and sits in no cluster | the network was not rebuilt after it was added |
+| A new entry is missing from the network | the network was not rebuilt after it was added |
 | Card image is right, social preview is wrong (or vice versa) | impossible by construction — both read `thumb`; if they differ, one surface is reading a stale `@cards/` copy, so rerun `generate-thumbnails.py` |
 | A table renders as literal pipes | the wrapping `<figure>` is missing `markdown="1"` |
 | A figure is missing from the image sitemap | it isn't in the body — only body figures are declared |

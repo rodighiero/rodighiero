@@ -776,10 +776,8 @@ def main() -> int:
     # array, and the browser's projection numbers its own too. Writing it down
     # made it a second place the same fact could be wrong.
     #
-    # No "lang" either. The language of a *related* entry is shown (publication.html
-    # marks a suggestion in another language), so it rides on `related` below, taken
-    # from `pubs`; the language of a node in its own right is displayed nowhere and
-    # read by nobody — not layout-network.js, not the preview SVGs, not the browser.
+    # Node language is unused by the graph. Cluster lists on publication pages
+    # read the language from publication front matter.
     nodes = [{"slug": p["slug"], "title": p["title"], "url": p["url"]} for p in pubs]
 
     # ── One embedding space, one cosine matrix, two consumers ──
@@ -789,8 +787,7 @@ def main() -> int:
     #   • the graph layout — layout-network.js skips translation nodes, so their
     #     rows/columns are simply never read and the links match an originals-only
     #     matrix exactly;
-    #   • each node's `related` list — its RELATED_K closest works, the single
-    #     "three closest" shared by the publication pages and the network panel.
+    #   • each node's `related` list — its RELATED_K closest works, shown in the network panel.
     def _work(p: dict) -> str:
         return p.get("translation_of") or p["slug"]
 

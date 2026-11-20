@@ -1,7 +1,7 @@
 # translation_set / translated_by on each publication — read by publication.html
 # (hreflang, og:locale:alternate, JSON-LD translationOfWork / workTranslation).
-# related on each publication — read by publication.html ("Related publications").
-# publication_series — curated edition/research links from publication_series.yml.
+# publication_cluster — a publication's named cluster or connected group from
+# network.json, read by publication.html.
 #
 # A publication's links to other publications, worked out once per build instead of
 # by Liquid scanning the whole collection three times on every page.
@@ -12,9 +12,6 @@
 # translation, its first entry is therefore the source. translated_by lists the
 # publications whose translation_of names this particular work.
 #
-# related is the page's node's `related` list from _data/network.json, the same list
-# the network view's details panel shows; empty for a page with no node.
-#
 # Entries are plain hashes of what the layout reads (doi so a translation can tell
 # whether it shares its source's identifier), not Documents, so no page
 # references another through its data (as publication_order.rb does for prev/next).
@@ -24,28 +21,68 @@ class Jekyll::PublicationRelationsGenerator < Jekyll::Generator
     by_slug = docs.to_h { |doc| [slug(doc), doc] }
     translations = docs.select { |doc| doc.data['translation_of'] }
                        .group_by { |doc| doc.data['translation_of'].to_s }
-    related = (site.data.dig('network', 'nodes') || []).to_h { |node| [node['url'], node['related']] }
 
     docs.each do |doc|
       origin = by_slug[doc.data['translation_of'].to_s] || doc
       siblings = translations.fetch(slug(origin), [])
       doc.data['translation_set'] = siblings.empty? ? [] : [origin, *siblings].map { |d| ref(d) }
       doc.data['translated_by'] = translations.fetch(slug(doc), []).map { |d| ref(d) }
-      doc.data['related'] = related[doc.url] || []
+      doc.data.delete('publication_cluster')
     end
 
-    (site.data['publication_series'] || []).each do |series|
-      members = series.fetch('publications').map do |member|
-        by_slug.fetch(member) do
-          raise Jekyll::Errors::FatalException, "publication_relations: unknown series publication '#{member}'"
-        end
-      end
-      group = { 'title' => series.fetch('title'), 'items' => members.map { |d| ref(d).merge('year' => d.data['year']) } }
-      members.each { |doc| doc.data['publication_series'] = group }
+    network = site.data['network'] || {}
+    clusters = (network['clusters'] || []).each_with_object({}) do |cluster, groups|
+      members = cluster.fetch('slugs').filter_map { |member| by_slug[member] }
+      next if members.size < 2
+
+      items = members.map { |doc| citation_ref(doc) }
+      group = { 'title' => cluster.fetch('title'), 'items' => items }
+      members.each { |doc| groups[slug(doc)] = group }
+    end
+
+    connected_groups(network).each do |slugs|
+      members = slugs.filter_map { |member| by_slug[member] }
+      next if members.size < 2
+
+      items = members.map { |doc| citation_ref(doc) }
+      group = { 'title' => 'Related publications', 'items' => items }
+      members.each { |doc| clusters[slug(doc)] ||= group }
+    end
+
+    clusters.each do |member, group|
+      by_slug.fetch(member).data['publication_cluster'] = group
     end
   end
 
   private
+
+  def connected_groups(network)
+    nodes = network.fetch('nodes', []).map { |node| node.fetch('slug') }
+    neighbors = Array.new(nodes.size) { [] }
+    network.fetch('links', []).each do |link|
+      source = link.fetch('source')
+      target = link.fetch('target')
+      neighbors.fetch(source) << target
+      neighbors.fetch(target) << source
+    end
+
+    visited = {}
+    nodes.each_index.filter_map do |index|
+      next if visited[index] || neighbors[index].empty?
+
+      visited[index] = true
+      group = [index]
+      group.each do |member|
+        neighbors[member].each do |neighbor|
+          next if visited[neighbor]
+
+          visited[neighbor] = true
+          group << neighbor
+        end
+      end
+      group.sort.map { |member| nodes.fetch(member) }
+    end
+  end
 
   def slug(doc)
     doc.url.delete_prefix('/')
@@ -53,5 +90,10 @@ class Jekyll::PublicationRelationsGenerator < Jekyll::Generator
 
   def ref(doc)
     doc.data.slice('title', 'edition', 'lang', 'type', 'doi').merge('url' => doc.url)
+  end
+
+  def citation_ref(doc)
+    ref(doc).merge(doc.data.slice('author', 'editor', 'translator', 'interviewer', 'year',
+                                  'venue', 'publisher', 'place', 'volume', 'issue', 'pages'))
   end
 end

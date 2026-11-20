@@ -7,9 +7,11 @@ figure, table and print vocabulary below) and its print path `_includes/scripts-
 both inlined like the homepage's.
 
 Its `<head>` is not documented here — every meta, link and JSON-LD tag on this page belongs
-to the **`seo`** skill. The "Related publications" list is data, and belongs to the
-**`network`** skill; this page only reads `page.related` — the matching node's `related` array, attached by
-`publication_relations.rb` — and tags a non-English suggestion with its language.
+to the **`seo`** skill. The **`network`** skill owns research cluster data. The page reads
+`page.publication_cluster`, attached by `publication_relations.rb`. Full-text pages list
+the other publications in their named cluster or connected group as Chicago author-date
+references with linked titles, using `publication-cite.html`.
+Isolated publications have no list.
 
 ## What the page assembles
 
@@ -18,7 +20,7 @@ to the **`seo`** skill. The "Related publications" list is data, and belongs to 
 | Byline | `credit-full.html` — every contributor in citation order. The `<title>` is the bare title, to stay inside Google's display budget |
 | "Cite" button | `publication-cite.html` writes a Chicago author-date reference into a hidden `<pre class="cite-data">`; `scripts-site.js` copies it on click |
 | Prev/next | `publication-nav.html`, reading the `prev_pub` / `next_pub` refs (URL, title, language) that `publication_order.rb` precomputes — no page scans the collection in Liquid |
-| Related publications | `page.related`, the page's node in `site.data.network` (`publication_relations.rb`) |
+| Research cluster | `page.publication_cluster`, built from `site.data.network.clusters` by `publication_relations.rb` |
 
 ## The body vocabulary
 

@@ -1,9 +1,9 @@
 # site.data.network_client — read by home.html's #net-data script tag.
 #
 # The browser's share of _data/network.json, and only that. The file on disk is
-# read by three surfaces with three different appetites: publication.html walks
-# `nodes[].related` for its "Related publications" list, home.html's Liquid
-# builds the cluster cards from `clusters` and quotes `params` in the network
+# read by three surfaces with three different appetites: publication.html reads
+# membership from `clusters`, home.html's Liquid builds the cluster cards from
+# the same data and quotes `params` in the network
 # legend — both at build time — while the network view's JavaScript needs a much
 # smaller thing at run time. Inlining the whole file served the third from the
 # union of all three, and every visitor paid for it in the homepage's HTML,

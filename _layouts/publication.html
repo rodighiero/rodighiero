@@ -180,22 +180,13 @@
   </div>
   {% if _content_parts.size > 1 %}<footer class="editorial-note" lang="en"><p>Editorial note: this text is republished from its original venue and lightly edited for uniformity across the site. Citations and references have been restated in Chicago author-date style; obvious typos, incidental reference errors, and occasional language slips have been corrected. Small differences from the original publication may therefore exist; the version of record is the publisher’s, linked at the top of this page.</p></footer>{% endif %}
   </article>
-  {% if page.publication_series %}
-  <nav class="related-pubs" aria-label="{{ page.publication_series.title | escape }}" lang="en">
-    <h2>{{ page.publication_series.title }}</h2>
+  {% if _content_parts.size > 1 and page.publication_cluster %}
+  <nav class="related-pubs" aria-labelledby="publication-cluster-title" lang="en">
+    <h2 id="publication-cluster-title">{{ page.publication_cluster.title | escape }}</h2>
     <ul>
-      {% for _r in page.publication_series.items %}{% unless _r.url == page.url %}
-      <li><a href="{{ _r.url }}" lang="{{ _r.lang }}">{{ _r.title | title_with_edition: _r.edition }} <span class="related-lang">{{ _r.year }} · {{ _r.lang }}</span></a></li>
+      {% for _r in page.publication_cluster.items %}{% unless _r.url == page.url %}
+      <li>{% include publication-cite.html item=_r linked=true %}</li>
       {% endunless %}{% endfor %}
-    </ul>
-  </nav>
-  {% elsif page.related.size > 0 %}
-  <nav class="related-pubs" aria-label="Related publications" lang="en">
-    <h2>Related publications</h2>
-    <ul>
-      {% for _r in page.related %}
-      <li><a href="{{ _r.url }}" lang="{{ _r.lang }}">{{ _r.title | title_with_edition: _r.edition }}{% unless _r.lang == 'en' %} <span class="related-lang">{{ _r.lang }}</span>{% endunless %}</a></li>
-      {% endfor %}
     </ul>
   </nav>
   {% endif %}

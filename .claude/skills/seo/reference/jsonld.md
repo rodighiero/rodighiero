@@ -96,9 +96,8 @@ Each nested node carries its **own** `@type` from the taxonomy (an Italian chapt
 English chapter is a `ScholarlyArticle` in its own right), plus `@id`, `name` and
 `inLanguage`. Fallback for a nested type is `CreativeWork`.
 
-Note this is a different mechanism from the "Related publications" list at the foot of a
-publication page — that comes from `network.json` and is nearest-neighbour similarity, not a
-declared relationship. See the `network` skill.
+The research-cluster list at the foot of a publication page uses cluster membership from
+`network.json`. See the `network` skill.
 
 ## Two descriptions
 
@@ -110,11 +109,6 @@ abstract already. Emitting the same string twice would waste the one field that 
 real thing.
 
 ## BreadcrumbList
-
-`_data/publication_series.yml` defines curated groups of editions and research.
-The relations generator validates their slugs and exposes plain references as
-`publication_series`. Members render this navigation instead of the automatic
-related-publications list; the network data and translations remain unchanged.
 
 Two levels — site title → page title. Flat by design: publications have no category pages to
 sit under, so a deeper trail would invent structure the site does not have.

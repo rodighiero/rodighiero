@@ -9,11 +9,10 @@
 # ordered_references turns the <ul> that follows a bibliography heading into
 # <ol class="references">, the markup Google Scholar's inclusion guidelines name
 # for HTML reference lists. The Markdown keeps writing `- ` bullets, so no
-# publication file changes; the list still shows bullets through
-# `.body ol.references` in styles-article.css, because Chicago author-date entries
-# are alphabetical, not numbered. Only headings in the bibliography vocabulary
-# match, in every language the corpus uses. The layout's own "Related publications"
-# list is outside the body this filter sees, so it is never touched.
+# publication file changes. CSS hides the markers and gives each entry a hanging
+# indent. Only headings in the bibliography vocabulary
+# match, in every language the corpus uses. The research-cluster
+# list sits outside the body this filter sees.
 module Jekyll
   module BodyFilter
     # Group 1 swallows existing anchors and any other HTML tag, so URLs

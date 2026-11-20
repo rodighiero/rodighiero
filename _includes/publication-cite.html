@@ -1,7 +1,6 @@
 {%- comment -%}
-Formatted Chicago author-date reference for the "Cite" button, emitted as a
-hidden <pre> and copied to the clipboard (see scripts-site.js). Plain text:
-titles are not italicised — the reader can style them after pasting.
+Chicago author-date reference. The "Cite" button copies plain text from a hidden
+<pre> (see scripts-site.js). Footer references use linked titles and italics.
 
 Primary contributor is the author, or the editor(s) when there is no author
 (publication_validator.rb requires one of the two).
@@ -34,6 +33,15 @@ taxonomy. {%- endcomment -%}
 {%- assign _cite_title = _item.title | title_with_edition: _item.edition -%}
 {%- assign _tlast = _cite_title | slice: -1, 1 -%}
 {%- if _tlast == '?' or _tlast == '!' -%}{%- assign _dot = '' -%}{%- else -%}{%- assign _dot = '.' -%}{%- endif -%}
+{%- assign _cite_venue = _item.venue -%}
+{%- if include.linked -%}
+  {%- capture _cite_title -%}
+    <a href="{{ _item.url | escape }}" lang="{{ _item.lang | escape }}">{% if _t == 'book' or _t == 'map' %}<i>{{ _cite_title | escape_once }}</i>{% else %}{{ _cite_title | escape_once }}{% endif %}</a>
+  {%- endcapture -%}
+  {%- if _t == 'journal' or _t == 'magazine' or _t == 'chapter' or _t == 'conference' or _t == 'interview' -%}
+    {%- capture _cite_venue -%}<i>{{ _cite_venue | escape_once }}</i>{%- endcapture -%}
+  {%- endif -%}
+{%- endif -%}
 {%- comment -%} Give the author block exactly one terminal period, even when a name already ends in one (e.g. an author string ending in "metaLAB."). {%- endcomment -%}
 {%- assign _authblock = _authors | append: _roleword -%}
 {%- assign _ablast = _authblock | slice: -1, 1 -%}
@@ -42,11 +50,16 @@ taxonomy. {%- endcomment -%}
 {%- capture _ref -%}
 {{ _authblock }} {{ _item.year }}.
 {%- if _t == 'book' or _t == 'map' %} {{ _cite_title }}{{ _dot }}{% if _item.translator %} Translated by {{ _translators }}.{% endif %}{% if _item.place %} {{ _item.place }}:{% endif %} {{ _pub }}.
-{%- elsif _t == 'journal' or _t == 'magazine' %} “{{ _cite_title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}{% if _item.volume %} {{ _item.volume }}{% endif %}{% if _item.issue %} ({{ _item.issue }}){% endif %}{% if _item.pages %}: {{ _item.pages }}{% endif %}.
-{%- elsif _t == 'chapter' or _t == 'conference' %} “{{ _cite_title }}{{ _dot }}” In {{ _item.venue }}{% if _item.editor and _item.author %}, edited by {{ _editors }}{% endif %}{% if _item.translator %}, translated by {{ _translators }}{% endif %}{% if _item.pages %}, {{ _item.pages }}{% endif %}.{% if _item.place %} {{ _item.place }}:{% endif %}{% if _pub %} {{ _pub }}.{% endif %}
-{%- elsif _t == 'interview' %} “{{ _cite_title }}{{ _dot }}”{% if _item.interviewer %} Interview by {{ _interviewers }}.{% endif %}{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}.
-{%- else %} “{{ _cite_title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _item.venue }}.
+{%- elsif _t == 'journal' or _t == 'magazine' %} “{{ _cite_title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _cite_venue }}{% if _item.volume %} {{ _item.volume }}{% endif %}{% if _item.issue %} ({{ _item.issue }}){% endif %}{% if _item.pages %}: {{ _item.pages }}{% endif %}.
+{%- elsif _t == 'chapter' or _t == 'conference' %} “{{ _cite_title }}{{ _dot }}” In {{ _cite_venue }}{% if _item.editor and _item.author %}, edited by {{ _editors }}{% endif %}{% if _item.translator %}, translated by {{ _translators }}{% endif %}{% if _item.pages %}, {{ _item.pages }}{% endif %}.{% if _item.place %} {{ _item.place }}:{% endif %}{% if _pub %} {{ _pub }}.{% endif %}
+{%- elsif _t == 'interview' %} “{{ _cite_title }}{{ _dot }}”{% if _item.interviewer %} Interview by {{ _interviewers }}.{% endif %}{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _cite_venue }}.
+{%- else %} “{{ _cite_title }}{{ _dot }}”{% if _item.translator %} Translated by {{ _translators }}.{% endif %} {{ _cite_venue }}.
 {%- endif -%}
 {%- if _item.doi %} {% if _doi_id %}https://doi.org/{{ _doi_id }}{% else %}{{ _item.doi }}{% endif %}.{% endif -%}
 {%- endcapture -%}
-<pre class="cite-data" hidden>{{ _ref | normalize_whitespace | replace: ' .', '.' | replace: ' :', ':' | strip }}</pre>
+{%- assign _ref = _ref | normalize_whitespace | replace: ' .', '.' | replace: ' :', ':' | strip -%}
+{%- if include.linked -%}
+  {{ _ref }}
+{%- else -%}
+  <pre class="cite-data" hidden>{{ _ref }}</pre>
+{%- endif -%}
