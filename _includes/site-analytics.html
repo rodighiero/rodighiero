@@ -6,7 +6,7 @@ still counts the view and binds the click events (js/count.js:106). Self-declare
 dropped first, but a headless Chrome passes those tests, so the real gate is engagement:
 count.js loads on the first genuine input event. A reader who never moves is uncounted,
 which is the bias wanted. {%- endcomment %}
-<script>
+{%- capture _js_analytics %}
   (function () {
     var n = navigator, uad = n.userAgentData
 
@@ -30,5 +30,8 @@ which is the bias wanted. {%- endcomment %}
 
     events.forEach(function (e) { addEventListener(e, load, { capture: true, passive: true }) })
   })()
+{%- endcapture %}
+<script>
+{{ _js_analytics | strip_js_comments }}
 </script>
 {% endif %}

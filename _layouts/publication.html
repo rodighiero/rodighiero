@@ -152,7 +152,7 @@
     ]
   }
   </script>
-  {%- comment -%} Captured so the shipped CSS loses its comments (system_stylesheet.rb). {%- endcomment -%}
+  {%- comment -%} Captured so the shipped CSS loses its comments (system_comments.rb). {%- endcomment -%}
   {%- capture _css -%}
 {% include styles-font.css %}
 {% include styles-base.css %}
@@ -199,11 +199,17 @@
   {% include publication-nav.html modifier="publication-nav-footer" label="Project navigation, end of page" %}
   </main>
 
-  <script>
+  {%- capture _js_site %}
 {% include scripts-site.js %}
-  </script>
+  {%- endcapture %}
   <script>
+{{ _js_site | strip_js_comments }}
+  </script>
+  {%- capture _js_print %}
 {% include scripts-print.js %}
+  {%- endcapture %}
+  <script>
+{{ _js_print | strip_js_comments }}
   </script>
   {% include site-speculation.html %}
   {% include site-analytics.html %}

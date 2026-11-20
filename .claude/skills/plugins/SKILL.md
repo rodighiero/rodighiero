@@ -23,7 +23,7 @@ it.** Everything here is one of three shapes:
 
 | Shape | Registered how | Examples |
 |---|---|---|
-| A **Liquid filter** | `Liquid::Template.register_filter` | `image_size`, `strip_css_comments`, `autolink_urls`, `ordered_references`, `decode_numeric_entities`, `snippet`, `doi_id`, `page_range`, `credit_short`, `chicago_names` |
+| A **Liquid filter** | `Liquid::Template.register_filter` | `image_size`, `strip_css_comments`, `strip_js_comments`, `autolink_urls`, `ordered_references`, `decode_numeric_entities`, `snippet`, `doi_id`, `page_range`, `credit_short`, `chicago_names` |
 | A **field on a document** | a generator or `post_read` hook writing `doc.data[…]` | `commit_date`, `figures`, `prev_pub`/`next_pub`, `translation_set`, `publication_cluster`, `date` |
 | A **site-wide datum** | writing `site.data[…]` | `ordered_publications`, `readme_content`, `commit_date` |
 
@@ -61,7 +61,7 @@ written down.
 | `system_commit_date.rb` | `commit_date` (per doc **and** `site.data`) | `sitemap.xml`, `publication.html` |
 | `system_readme.rb` | `site.data.readme_content` | `home.html` |
 | `system_network_client.rb` | `site.data.network_client` | `home.html` (the `#net-data` tag) |
-| `system_stylesheet.rb` | `\| strip_css_comments` | `home.html`, `publication.html`, `404.html` (each captured `<style>` block) |
+| `system_comments.rb` | `\| strip_css_comments`, `\| strip_js_comments` | `home.html`, `publication.html`, `404.html`, `site-analytics.html` (each captured `<style>`/`<script>` block) |
 | `publication_redirect.rb` | redirect stub pages | crawlers |
 | `publication_validator.rb` | build-log warnings; a fatal error | the deploy |
 

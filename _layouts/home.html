@@ -123,7 +123,7 @@ width that still shows 3 columns. {%- endcomment -%}
     ]
   }
   </script>
-  {%- comment -%} Captured so the shipped CSS loses its comments (system_stylesheet.rb). {%- endcomment -%}
+  {%- comment -%} Captured so the shipped CSS loses its comments (system_comments.rb). {%- endcomment -%}
   {%- capture _css -%}
 {% include styles-font.css %}
 {% include styles-base.css %}
@@ -308,14 +308,20 @@ width that still shows 3 columns. {%- endcomment -%}
     <cite>— Bruno Latour, Paris 2013</cite>
   </footer>
 
-  <script>
+  {%- capture _js %}
     // Type labels from _data/publication_types.yml; only a ?type= URL sets a type filter.
     var TYPE_LABELS = { {% for t in site.data.publication_types %}{{ t[0] | jsonify }}: {{ t[1].label | jsonify }}{% unless forloop.last %}, {% endunless %}{% endfor %} };
 {% include scripts-gallery.js %}
 {% include scripts-network.js %}
-  </script>
+  {%- endcapture %}
   <script>
+{{ _js | strip_js_comments }}
+  </script>
+  {%- capture _js_site %}
 {% include scripts-site.js %}
+  {%- endcapture %}
+  <script>
+{{ _js_site | strip_js_comments }}
   </script>
   {% include site-speculation.html %}
   {% include site-analytics.html %}
