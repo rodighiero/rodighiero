@@ -153,7 +153,8 @@ main:focus { outline: none; }
 }
 .card-meta .venue { font-style: italic; }
 /* The lines under a card title: a card's byline, a special card's description. Loose,
-   as the bio is, so the homepage's small running text shares one leading. */
+   as the bio is, so the homepage's small running text shares one leading. Bylines are
+   the exception: a list of names, not prose, they take --lh-normal (styles-gallery.css). */
 .card-text { font-size: var(--text-xs); line-height: var(--lh-loose); color: var(--fg); }
 /* Opt-in hairline frame for a thumbnail/figure image (publication front matter's
    img_border, or a figure's class="bordered"). Shared by home.html's .card-media
