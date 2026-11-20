@@ -11,9 +11,13 @@
     1.007, 1.005, 1.003, 1.001, 1);
   --tile-move: 0.42s;
 }
-/* The column count; the masonry overwrites it before first paint, so 4 stands only
-   for a reader without JS. */
-body { --cols: 4; }
+/* The column count and the page width; the masonry overwrites both before first paint,
+   so 4 columns stand only for a reader without JS. The width is MAX_CONTENT + PAGE_PAD
+   in scripts-gallery.js, derived from the same tokens. */
+body {
+  --cols: 4;
+  max-width: calc(4 * var(--card-w) + 3 * var(--card-gap) + 2 * var(--page-gutter));
+}
 
 /* ── Bio toggle ── */
 .bio-toggle {
@@ -29,7 +33,6 @@ body { --cols: 4; }
   padding: 2px 6px;
   font: inherit;
   font-size: var(--text-xs);
-  line-height: var(--lh-normal);
 }
 .bio-toggle:hover { color: var(--fg); }
 .bio-toggle svg, .filter-search-icon, .view-toggle svg { width: 16px; height: 16px; }
@@ -48,7 +51,6 @@ html[data-bio-visible="0"] .bio-toggle svg { transform: rotate(-90deg); }
   white-space: nowrap;
   max-width: 0;
   opacity: 0;
-  margin-left: 0;
   transition: max-width 0.35s ease, opacity 0.3s ease, margin-left 0.35s ease;
 }
 html[data-bio-visible="0"] .bio-toggle-label {
@@ -65,7 +67,6 @@ html[data-bio-visible="0"] .bio-toggle-label {
    clip: the bio's first line is trimmed flush to the top edge, so clipping while open
    would shave its ascenders. */
 .bio-shell {
-  height: auto;
   margin-bottom: 6.2rem;
   /* The critically damped spring: a panel must not open past its own height. The fade
      is shorter and plain, so the masthead dismisses itself rather than being cropped. */
@@ -151,10 +152,7 @@ body[data-cols="3"] .header .bio-col { grid-row: 2; }
   border: none;
   padding: 0.2rem 0;
   font: inherit;
-  font-size: var(--text-base);
-  line-height: var(--lh-normal);
 }
-.filters input[type="search"]:focus { outline: none; }
 .filters input[type="search"]::placeholder { color: var(--muted); }
 .filters input[type="search"]::-webkit-search-cancel-button,
 .filters input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
@@ -197,7 +195,7 @@ body[data-cols="3"] .header .bio-col { grid-row: 2; }
   @starting-style { opacity: 0; }
   @media (prefers-reduced-motion: reduce) { transition: none; }
 }
-.no-results[hidden] { display: none; opacity: 0; }
+.no-results[hidden] { opacity: 0; }
 /* Network view fades non-matching nodes in place, so the empty-state copy would duplicate the signal. */
 body[data-view="network"] .no-results { display: none; }
 
@@ -221,11 +219,10 @@ body[data-view="network"] .no-results { display: none; }
   cursor: pointer;
   transition: background 0.15s ease, box-shadow 0.15s ease;
 }
-.card:hover,
-.publication:has(h2 a:focus-visible) { background: var(--tint-hover); }
+#publications :is(.card:hover, .publication:has(h2 a:focus-visible)) { background: var(--tint-hover); }
 /* Scoped, or a publication card would gain a hairline on hover. */
 :is(.action, .filter, .event):hover { box-shadow: inset 0 0 0 1px var(--border-hover); }
-.card:focus-visible,
+/* The other cards are <a>/<button> and take the shared ring; a publication is a <div>. */
 .publication:has(h2 a:focus-visible) { outline: 2px solid var(--fg); outline-offset: 2px; }
 
 /* inline-block is load-bearing: its margin does not collapse with the meta line's,
@@ -239,7 +236,9 @@ body[data-view="network"] .no-results { display: none; }
   max-width: 100%;
 }
 
-.card-text { margin-top: 0.4rem; }
+/* The lines under a card title: a card's byline, a special card's description. Loose,
+   as the bio is, so the homepage's small running text shares one leading. */
+.card-text { font-size: var(--text-xs); line-height: var(--lh-loose); margin-top: 0.4rem; }
 /* Bylines: a list of names reads as one credit at the tighter leading. */
 .publication .card-text { line-height: var(--lh-normal); }
 /* The homepage's prose — bio columns and special-card descriptions — shares one measure
@@ -252,8 +251,8 @@ body[data-view="network"] .no-results { display: none; }
 
 .card-media img,
 .card-media .network-preview { width: 100%; height: auto; display: block; }
-/* The card's tint already signals the link (the sidebar clone restores the underline). */
-h2 a:hover { text-decoration: none; }
+/* The card's tint already signals the link; the untinted sidebar clone keeps the underline. */
+#publications h2 a:hover { text-decoration: none; }
 h2 a:focus-visible { outline: none; }
 
 /* ── Special cards ── .action (a view switch), .filter (a cluster tile) and .event
@@ -304,14 +303,9 @@ body[data-view="gallery"] #publications.animating .card {
     box-shadow 0.15s ease;
 }
 /* An arriving tile takes its slot outright and fades in there. */
-body[data-view="gallery"] #publications.animating .card.entering {
-  transition: none;
-  opacity: 0;
-}
 /* A move longer than the viewport is cut: the eye has nothing to follow. */
-body[data-view="gallery"] #publications.animating .card.snapping {
-  transition: none;
-}
+body[data-view="gallery"] #publications.animating .card:is(.entering, .snapping) { transition: none; }
+body[data-view="gallery"] #publications.animating .card.entering { opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
   body[data-view="gallery"] #publications.animating .card { transition: none; }
 }
@@ -333,7 +327,7 @@ body[data-view="gallery"] .card[data-gap]::after {
   height: 1px;
   /* Half the --border weight: repeated down every column, a full hairline reads as
      structure. */
-  background: color-mix(in srgb, var(--fg) 10%, transparent);
+  background: var(--tint-active);
   pointer-events: none; /* or the card's hover would fire from the gap */
 }
 
@@ -391,9 +385,8 @@ footer cite {
   /* …and the UA's rule for hidden="until-found": content-visibility where it is
      supported, display where it falls back to plain `hidden`. */
   .bio-shell[hidden] { display: block; content-visibility: visible; }
-  .header { display: block; margin-bottom: 0; }
+  .header { display: block; }
   .header .card-media { display: none; }
   .header h1 { font-size: 16pt; margin-bottom: 0.4rem; }
   .header .bio-col { font-size: 8.5pt; margin-top: 0.6rem; }
-  a { text-decoration: none; }
 }

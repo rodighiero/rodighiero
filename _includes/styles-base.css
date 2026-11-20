@@ -80,9 +80,6 @@ body {
   background: var(--bg);
   margin: 0 auto;
   padding: 4rem var(--page-gutter) 2rem;
-  /* MAX_CONTENT + PAGE_PAD (1152 + 64), for the moment before the masonry first writes
-     the page's real width and for a reader with no JS. */
-  max-width: 1216px;
 }
 /* Underline metrics, applying wherever one is actually drawn — link hovers, the bio
    column's permanently underlined links, the network sidebar. Nunito's own are poor at
@@ -138,11 +135,9 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   border: 1px solid var(--border);
   border-radius: 4px;
   font-size: var(--text-xs);
-  text-decoration: none;
   transition: top 0.15s ease;
 }
 .skip-link:focus { top: 0.5rem; outline: 2px solid var(--fg); outline-offset: 2px; }
-main:focus { outline: none; }
 .card-meta {
   font-size: var(--text-xs);
   line-height: var(--lh-loose);
@@ -152,10 +147,6 @@ main:focus { outline: none; }
   margin-bottom: 0.3rem;
 }
 .card-meta .venue { font-style: italic; }
-/* The lines under a card title: a card's byline, a special card's description. Loose,
-   as the bio is, so the homepage's small running text shares one leading. Bylines are
-   the exception: a list of names, not prose, they take --lh-normal (styles-gallery.css). */
-.card-text { font-size: var(--text-xs); line-height: var(--lh-loose); color: var(--fg); }
 /* Opt-in hairline frame for a thumbnail/figure image (publication front matter's
    img_border, or a figure's class="bordered"). Shared by home.html's .card-media
    and publication.html's .body figure. */
@@ -187,19 +178,12 @@ main:focus { outline: none; }
    line end. Prefer the rewording where the prose can take it — a soft hyphen is invisible
    in the source and outlives the line break that motivated it. */
 .hyphenate-prose {
-  -webkit-hyphens: auto;
   hyphens: auto;
   -webkit-hyphenate-limit-before: var(--hyphen-min, 4);
   -webkit-hyphenate-limit-after: var(--hyphen-min, 4);
   -webkit-hyphenate-limit-lines: 2;
   hyphenate-limit-chars: var(--hyphen-word, 8) var(--hyphen-min, 4) var(--hyphen-min, 4);
 }
-/* Shared pill-button chrome — applied alongside behavioral hook classes
-   like .cite-btn/.print-btn, so JS selectors stay decoupled from style. */
-.pill-btn { display: inline-flex; background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 0 0.55rem; font: inherit; font-size: var(--text-xs); cursor: pointer; border-radius: 2px; line-height: var(--lh-normal); text-decoration: none; }
-.pill-btn:hover { color: var(--fg); border-color: var(--border-hover); }
-.pill-btn.copied { color: var(--fg); border-color: var(--fg); }
-
 /* ── Mode toggle ──
    Fixed to the viewport, and parked in the page's own --page-gutter so the content
    column never reaches it. The two numbers are one calculation and have to be read
@@ -266,6 +250,5 @@ main:focus { outline: none; }
 
 @media print {
   :root { color-scheme: light !important; }
-  html, body { background: #fff !important; color: #000 !important; }
-  a { color: #000 !important; }
+  a { color: var(--fg) !important; }
 }

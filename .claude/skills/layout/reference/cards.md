@@ -25,7 +25,7 @@ Every card titles itself with `.card-title` — the publication's is an `<h2>`, 
 card's a `<span>` — styled by one shared rule (why it is `inline-block`: the invariants in
 `../SKILL.md`).
 
-`styles-base.css` sets the sub-row type on `.authors, .card-text` together, and `.card-media`
+`styles-gallery.css` sets the sub-row type on `.card-text` (bylines tighter, at `--lh-normal`), and `.card-media`
 is the one wrapper class for both media slots — a publication's `<img>` thumbnail or an
 action/filter's inlined SVG miniature — framed by a single rule, the thumbnail's loading tint
 being the only difference.
@@ -109,8 +109,8 @@ that stops two miniatures stacking in one column.
 
 Like the `view:network` card, a cluster card reads as a **short title over a quieter
 description** — the cluster's emitted `title` in the `.card-title` slot and its `description`
-in the `.card-text` slot beneath, the same place, and via the shared `.authors, .card-text`
-rule the same typography, a publication card gives its authors. Its meta line reads
+in the `.card-text` slot beneath, the same place, and via the shared `.card-text` rule the
+same type size a publication card gives its authors. Its meta line reads
 `Research cluster <n>`, numbered by the order the cards are emitted down the gallery (the
 `_cluster_n` counter in `home.html`), **not** by the cluster's internal `id`.
 

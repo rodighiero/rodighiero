@@ -12,7 +12,7 @@ body[data-view="network"] #network-view {
 }
 
 /* Scoped rather than chained off the id, so these rules meet the cloned card's
-   gallery rules on class count; :scope adds one class where that is close. */
+   gallery rules on class count. */
 @scope (#network-view) {
   .sidebar {
     font-size: var(--text-xs);
@@ -51,14 +51,13 @@ body[data-view="network"] #network-view {
     font-size: var(--text-base);
     line-height: var(--lh-tight);
     font-weight: 500;
-    margin: 0 0 0.9rem;
   }
   .lede ol { margin: 0 0 0.9rem; padding-left: 1.1rem; }
   .lede ol li { margin-bottom: 0.35rem; }
   .lede ol li:last-child { margin-bottom: 0; }
   .lede code { font-family: inherit; color: var(--fg); }
-  /* The graph's three link styles, inline. Two classes, to beat the bare `svg` rule. */
-  .lede .edge-sample {
+  /* The graph's three link styles, inline. */
+  .edge-sample {
     display: inline-block;
     width: 34px;
     height: 8px;
@@ -66,10 +65,10 @@ body[data-view="network"] #network-view {
     vertical-align: -1px;
     overflow: visible;
   }
-  .lede .edge-sample line { stroke: var(--fg); stroke-width: 1.2; }
-  .lede .edge-sample circle { fill: var(--bg); stroke: var(--fg); stroke-width: 1; }
-  .lede .edge-sample.fallback line { opacity: 0.55; }
-  .lede .edge-sample.translation line { stroke-dasharray: 3 2.5; stroke-width: 1.4; }
+  .edge-sample line { stroke: var(--fg); stroke-width: 1.2; }
+  .edge-sample circle { fill: var(--bg); stroke: var(--fg); stroke-width: 1; }
+  .edge-sample.fallback line { opacity: 0.55; }
+  .edge-sample.translation line { stroke-dasharray: 3 2.5; stroke-width: 1.4; }
   /* A square two columns wide — the size the canvas is baked at — centred in what
      the sidebar leaves. */
   .stage {
@@ -80,7 +79,7 @@ body[data-view="network"] #network-view {
     position: relative;
     overflow: hidden;
   }
-  svg { display: block; width: 100%; height: 100%; }
+  .stage svg { display: block; width: 100%; height: 100%; }
   .node .hit { fill: transparent; cursor: pointer; }
   :is(.node .marker, .node .ring, .link) {
     stroke: var(--fg);
@@ -105,7 +104,7 @@ body[data-view="network"] #network-view {
   }
   /* Dashed to its original; a fallback (unreciprocated rescue edge) faint. */
   .link.translation { stroke-width: 0.9; stroke-dasharray: 3 2.5; }
-  .link.fallback { opacity: 0.5; }
+  .link:is(.fallback, .filtered-out) { opacity: 0.5; }
   .node.highlight .marker { fill: var(--fg); }
   .node.connected .marker { stroke: var(--fg); stroke-width: 1.25; }
   .link.highlight { stroke-width: 1; }
@@ -118,24 +117,15 @@ body[data-view="network"] #network-view {
   .node.dimmed.hover .marker { stroke: var(--fg); }
   .labels text.dimmed.hover { fill: var(--fg); }
   .node.filtered-out { pointer-events: none; opacity: 0.5; }
-  .link.filtered-out { opacity: 0.5; }
 
-  .details {
-    font-size: var(--text-xs);
-    line-height: var(--lh-normal);
-    padding: var(--card-pad);
-  }
-  .details[hidden] { display: none; }
-  /* :scope for weight: .publication:has(h2 a:focus-visible) would otherwise win
-     `background` when the cloned title takes focus. */
-  :scope .details .publication {
+  /* Type comes from .sidebar. */
+  .details { padding: var(--card-pad); }
+  /* The gallery's hover tint is scoped to #publications, so the clone stays untinted
+     and its title link keeps the shared hover underline. */
+  .details .publication {
     padding: 0;
     cursor: default;
-    background: none;
   }
-  :scope .details .publication:hover { background: none; }
-  /* No tint here, so the title link gets its underline back. */
-  .details .publication h2 a:hover { text-decoration: underline; }
   .details h3 { margin: 0 0 0.5rem; font-weight: 500; }
   .details .neighbors { margin-top: 1.5rem; }
   .details .neighbors ol { list-style: none; padding: 0; margin: 0; }
