@@ -14,7 +14,7 @@ permalink: /404.html
   <link rel="icon" href="/images/@icons/favicon.ico" sizes="any">
   <link rel="icon" href="/images/@icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/images/@icons/apple-touch-icon.png">
-  <style>
+  {%- capture _css %}
     {% include styles-font.css %}
     *, *::before, *::after { box-sizing: border-box; }
     /* light-dark() honours both the system preference and the stored choice
@@ -42,6 +42,9 @@ permalink: /404.html
     .wrap { margin-top: 4rem; }
     h1 { font-size: 1.3rem; font-weight: 500; margin: 0 0 1rem; }
     p { font-size: 0.78rem; color: var(--muted); margin: 0 0 0.5rem; }
+  {%- endcapture %}
+  <style>
+{{ _css | strip_css_comments }}
   </style>
 </head>
 <body>

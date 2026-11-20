@@ -123,11 +123,15 @@ width that still shows 3 columns. {%- endcomment -%}
     ]
   }
   </script>
-  <style>
+  {%- comment -%} Captured so the shipped CSS loses its comments (system_stylesheet.rb). {%- endcomment -%}
+  {%- capture _css -%}
 {% include styles-font.css %}
 {% include styles-base.css %}
 {% include styles-gallery.css %}
 {% include styles-network.css %}
+  {%- endcapture %}
+  <style>
+{{ _css | strip_css_comments }}
   </style>
   <noscript><style>
     /* These controls need JavaScript; publication and event links work without it. */

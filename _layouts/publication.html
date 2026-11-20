@@ -152,10 +152,14 @@
     ]
   }
   </script>
-  <style>
+  {%- comment -%} Captured so the shipped CSS loses its comments (system_stylesheet.rb). {%- endcomment -%}
+  {%- capture _css -%}
 {% include styles-font.css %}
 {% include styles-base.css %}
 {% include styles-article.css %}
+  {%- endcapture %}
+  <style>
+{{ _css | strip_css_comments }}
   </style>
 </head>
 <body>

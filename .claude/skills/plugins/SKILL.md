@@ -1,17 +1,17 @@
 ---
 name: plugins
-description: The twelve local Ruby plugins in _plugins/ — what each registers, publishes or attaches, who reads it, and the naming scheme and cross-cutting rules they all follow. Use when adding or editing a plugin, when a Liquid filter or a page-data field is missing at render time, when a build warning or fatal error names a plugin, when working out where a derived value comes from, or when deciding whether a new behaviour belongs in a plugin at all.
+description: The thirteen local Ruby plugins in _plugins/ — what each registers, publishes or attaches, who reads it, and the naming scheme and cross-cutting rules they all follow. Use when adding or editing a plugin, when a Liquid filter or a page-data field is missing at render time, when a build warning or fatal error names a plugin, when working out where a derived value comes from, or when deciding whether a new behaviour belongs in a plugin at all.
 ---
 
 # The plugin layer
 
-Twelve Ruby files in `_plugins/`, plus one gem (`jekyll-feed`). They exist so that templates
+Thirteen Ruby files in `_plugins/`, plus one gem (`jekyll-feed`). They exist so that templates
 read values rather than derive them: a Liquid loop that scans the whole collection on each of
 sixty-odd pages is the thing these replace.
 
 They run **only because the site deploys through GitHub Actions** rather than GitHub's branch
 build, which whitelists gems and ignores `_plugins/` entirely. That is not a preference; the
-site would silently lose all twelve under branch deployment.
+site would silently lose all thirteen under branch deployment.
 
 **No plugin depends on a gem.** `system_image_size.rb` is a hand-written WebP parser rather
 than ImageMagick, and `publication_redirect.rb` replaced `jekyll-redirect-from` outright.
@@ -23,7 +23,7 @@ it.** Everything here is one of three shapes:
 
 | Shape | Registered how | Examples |
 |---|---|---|
-| A **Liquid filter** | `Liquid::Template.register_filter` | `image_size`, `autolink_urls`, `ordered_references`, `decode_numeric_entities`, `snippet`, `doi_id`, `page_range`, `credit_short`, `chicago_names` |
+| A **Liquid filter** | `Liquid::Template.register_filter` | `image_size`, `strip_css_comments`, `autolink_urls`, `ordered_references`, `decode_numeric_entities`, `snippet`, `doi_id`, `page_range`, `credit_short`, `chicago_names` |
 | A **field on a document** | a generator or `post_read` hook writing `doc.data[…]` | `commit_date`, `figures`, `prev_pub`/`next_pub`, `translation_set`, `publication_cluster`, `date` |
 | A **site-wide datum** | writing `site.data[…]` | `ordered_publications`, `readme_content`, `commit_date` |
 
@@ -34,7 +34,7 @@ Two files fit none of them and produce no identifier a template can read:
 ## The naming scheme, in one line
 
 Two words. The first is **`publication_`** (eight files) if the file works on the
-`publications` collection, or **`system_`** (four) if it does not; the second says what it
+`publications` collection, or **`system_`** (five) if it does not; the second says what it
 does to that subject. Two prefixes with no third case means there is nothing to adjudicate.
 The full rule, its three genuine edge cases, and the two schemes tried and rejected:
 `reference/naming.md` — read it before naming a new file, not after.
@@ -61,6 +61,7 @@ written down.
 | `system_commit_date.rb` | `commit_date` (per doc **and** `site.data`) | `sitemap.xml`, `publication.html` |
 | `system_readme.rb` | `site.data.readme_content` | `home.html` |
 | `system_network_client.rb` | `site.data.network_client` | `home.html` (the `#net-data` tag) |
+| `system_stylesheet.rb` | `\| strip_css_comments` | `home.html`, `publication.html`, `404.html` (each captured `<style>` block) |
 | `publication_redirect.rb` | redirect stub pages | crawlers |
 | `publication_validator.rb` | build-log warnings; a fatal error | the deploy |
 
