@@ -11,7 +11,7 @@ One artifact — **`_data/network.json`** (committed) — feeds three surfaces:
 |---|---|
 | Homepage network view (`_layouts/home.html`) | `nodes` (baked `x`/`y`), `links`, `canvas`, `params` — but **via `site.data.network_client`**, the trimmed projection `_plugins/system_network_client.rb` builds for the browser, not the file whole (see the `plugins` skill) |
 | Homepage research-cluster cards | `clusters` (+ `_includes/network-cluster-<id>.svg`) |
-| Related publications on a full-text page (`_layouts/publication.html`) | `clusters[].title` and `clusters[].slugs` for named clusters, or connected groups from `nodes` and `links`, via `publication_relations.rb` |
+| Related publications on a publication page (`_layouts/publication.html`) | `clusters[].title` and `clusters[].slugs` for named clusters, otherwise `nodes[].related` (three closest), via `publication_relations.rb` |
 
 Nothing is computed in the browser. The page only fit-scales baked coordinates.
 

@@ -37,8 +37,8 @@ compares each rendered publication's title, metadata tags, canonical and alterna
 and JSON-LD with the snapshot at `/publication-lastmod.json`. A metadata change advances
 that page to the deployed revision's commit time. The script writes the same timestamp
 to the sitemap, Open Graph and JSON-LD. Modification dates themselves are excluded from
-the comparison. The checked-in baseline seeds the first deployment and records the
-19 November translation correction on the French and Italian Stock Images pages.
+the comparison. If the snapshot cannot be fetched or read, the deploy goes ahead and every
+page keeps its commit date (a metadata-only bump recorded in the lost snapshot is dropped).
 
 The homepage is the one URL with no file of its own. Its date is the last commit touching a
 path that *reaches `_site`*, so a commit to `CLAUDE.md`, a skill or a build script does not

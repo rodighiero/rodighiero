@@ -6,6 +6,7 @@ from html.parser import HTMLParser
 import json
 from pathlib import Path
 import subprocess
+import sys
 from urllib.parse import urlsplit
 import xml.etree.ElementTree as ET
 
@@ -53,9 +54,15 @@ def signature(source):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('site', type=Path)
-    parser.add_argument('previous', type=Path)
+    parser.add_argument('previous', type=Path, nargs='?',
+                        help='last published snapshot; omitted, every page keeps its commit date')
     args = parser.parse_args()
-    previous = json.loads(args.previous.read_text())
+    previous = {}
+    if args.previous:
+        try:
+            previous = json.loads(args.previous.read_text())
+        except (OSError, ValueError) as error:
+            print(f'warning: unreadable snapshot ({error}); using commit dates', file=sys.stderr)
     revision = subprocess.check_output(['git', 'show', '-s', '--format=%cI', 'HEAD'], text=True).strip()
     sitemap = args.site / 'sitemap.xml'
     tree = ET.parse(sitemap)

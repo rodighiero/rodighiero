@@ -8,10 +8,11 @@ both inlined like the homepage's.
 
 Its `<head>` is not documented here — every meta, link and JSON-LD tag on this page belongs
 to the **`seo`** skill. The **`network`** skill owns research cluster data. The page reads
-`page.publication_cluster`, attached by `publication_relations.rb`. Full-text pages list
-the other publications in their named cluster or connected group as Chicago author-date
-references with linked titles, using `publication-cite.html`.
-Isolated publications have no list.
+`page.publication_cluster`, attached by `publication_relations.rb`. A page in a named
+cluster lists the cluster's other publications under "Title · Research cluster N" (N as on
+the homepage card); any other page lists its three closest works (the node's `related`)
+under "Related publications". Both are Chicago author-date references with linked titles,
+using `publication-cite.html`.
 
 ## What the page assembles
 

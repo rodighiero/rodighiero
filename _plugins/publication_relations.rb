@@ -1,7 +1,7 @@
 # translation_set / translated_by on each publication — read by publication.html
 # (hreflang, og:locale:alternate, JSON-LD translationOfWork / workTranslation).
-# publication_cluster — a publication's named cluster or connected group from
-# network.json, read by publication.html.
+# publication_cluster — a publication's named cluster from network.json, or else
+# its three closest works (the node's `related`), read by publication.html.
 #
 # A publication's links to other publications, worked out once per build instead of
 # by Liquid scanning the whole collection three times on every page.
@@ -42,13 +42,13 @@ class Jekyll::PublicationRelationsGenerator < Jekyll::Generator
       members.each { |doc| groups[slug(doc)] = group }
     end
 
-    connected_groups(network).each do |slugs|
-      members = slugs.filter_map { |member| by_slug[member] }
-      next if members.size < 2
+    # Outside a named cluster, the page's three closest works — the node's
+    # `related` list, the same one the network view's details panel shows.
+    network.fetch('nodes', []).each do |node|
+      next if clusters.key?(node['slug'])
 
-      items = members.map { |doc| citation_ref(doc) }
-      group = { 'title' => 'Related publications', 'items' => items }
-      members.each { |doc| clusters[slug(doc)] ||= group }
+      items = (node['related'] || []).filter_map { |r| by_slug[r['slug']] }.map { |doc| citation_ref(doc) }
+      clusters[node['slug']] = { 'title' => 'Related publications', 'items' => items } if items.any?
     end
 
     clusters.each do |member, group|
@@ -57,34 +57,6 @@ class Jekyll::PublicationRelationsGenerator < Jekyll::Generator
   end
 
   private
-
-  def connected_groups(network)
-    nodes = network.fetch('nodes', []).map { |node| node.fetch('slug') }
-    neighbors = Array.new(nodes.size) { [] }
-    network.fetch('links', []).each do |link|
-      source = link.fetch('source')
-      target = link.fetch('target')
-      neighbors.fetch(source) << target
-      neighbors.fetch(target) << source
-    end
-
-    visited = {}
-    nodes.each_index.filter_map do |index|
-      next if visited[index] || neighbors[index].empty?
-
-      visited[index] = true
-      group = [index]
-      group.each do |member|
-        neighbors[member].each do |neighbor|
-          next if visited[neighbor]
-
-          visited[neighbor] = true
-          group << neighbor
-        end
-      end
-      group.sort.map { |member| nodes.fetch(member) }
-    end
-  end
 
   def slug(doc)
     doc.url.delete_prefix('/')
