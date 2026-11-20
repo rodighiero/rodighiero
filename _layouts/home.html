@@ -133,9 +133,12 @@ width that still shows 3 columns. {%- endcomment -%}
   <style>
 {{ _css | strip_css_comments }}
   </style>
-  <noscript><style>
+  {%- capture _css_noscript %}
     /* These controls need JavaScript; publication and event links work without it. */
     .filters, .bio-toggle, .mode-toggle, .action, .filter { display: none; }
+  {%- endcapture %}
+  <noscript><style>
+{{ _css_noscript | strip_css_comments }}
   </style></noscript>
 </head>
 <body data-view="gallery">
