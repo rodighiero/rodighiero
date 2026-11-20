@@ -240,6 +240,8 @@ body[data-view="network"] .no-results { display: none; }
 }
 
 .card-text { margin-top: 0.4rem; }
+/* Bylines: a list of names reads as one credit at the tighter leading. */
+.publication .card-text { line-height: var(--lh-normal); }
 /* The homepage's prose — bio columns and special-card descriptions — shares one measure
    (a card's), so it shares one hyphenation, looser than the article body's: at ~251px
    one unbroken long word leaves a gap a short text never recovers from. This file is
