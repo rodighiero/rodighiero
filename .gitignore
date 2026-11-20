@@ -10,3 +10,4 @@ __pycache__/
 scripts/.embedding-cache.npz
 scripts/.translation-cache.json
 scripts/scholar-audit.md
+.memory/

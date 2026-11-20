@@ -25,6 +25,7 @@ plugins:
 # worth keeping (Gemfile and friends) are repeated here rather than inherited.
 exclude:
   - CLAUDE.md
+  - AGENTS.md
   - README.md
   - scripts/
   - pyproject.toml

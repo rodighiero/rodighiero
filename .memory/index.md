@@ -1,1 +1,0 @@
-- [[browser-preference]] — browser for local previews
