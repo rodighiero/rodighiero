@@ -2,13 +2,13 @@ require 'json'
 
 # | strip_css_comments — read by home.html, publication.html and 404.html.
 # | strip_js_comments  — read by home.html, publication.html and site-analytics.html.
-# | minify_json        — read by home.html and publication.html (the JSON-LD blocks).
+# | minify_json        — read by home.html, publication.html (JSON-LD) and site-speculation.html.
 #
 # What the pages inline, made as small as it can be without changing what it says. The
 # stylesheets and scripts (styles-*.css, scripts-*.js) carry comments written for the
 # maintainer, not the reader: about half the bytes of what the homepage inlines. The
-# JSON-LD is written indented, to be read and diffed as a template. Each <style>,
-# <script> and JSON-LD block is captured and passed through one of these filters, so
+# JSON-LD and the speculation rules are written indented, to be read and diffed as
+# templates. Each <style>, <script>, JSON-LD and speculation-rules block is captured and passed through one of these filters, so
 # the source keeps its comments and layout and the page ships neither. Usage:
 #   {% capture _css %}{% include styles-base.css %}{% endcapture %}{{ _css | strip_css_comments }}
 module Jekyll::InlineFilter
@@ -30,14 +30,14 @@ module Jekyll::InlineFilter
     end.join.strip
   end
 
-  # Parsed and re-serialised, so invalid JSON-LD fails the build rather than shipping
-  # structured data a crawler silently discards. Key order survives (Ruby hashes keep
+  # Parsed and re-serialised, so invalid JSON fails the build rather than shipping
+  # structured data a crawler, or rules a browser, silently discards. Key order survives (Ruby hashes keep
   # it). "</" is escaped as "<\/", which JSON reads as the same string, so no value can
   # close the <script> early.
   def minify_json(json)
     JSON.generate(JSON.parse(json.to_s)).gsub('</', '<\\/')
   rescue JSON::ParserError => e
-    raise "minify_json: invalid JSON-LD on #{@context.registers[:page]['path']}: #{e.message}"
+    raise "minify_json: invalid JSON on #{@context.registers[:page]['path']}: #{e.message}"
   end
 
   # Words after which a "/" starts a regex rather than dividing.

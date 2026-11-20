@@ -7,7 +7,7 @@ selector that matches nothing does nothing.
 - Selectors, since `/*` would also match the feed and every alias. `.publication h2 a`
   covers the network sidebar's cloned card too.
 {%- endcomment -%}
-<script type="speculationrules">
+{%- capture _speculation %}
 {
   "prefetch": [
     {
@@ -23,4 +23,5 @@ selector that matches nothing does nothing.
     }
   ]
 }
-</script>
+{%- endcapture -%}
+<script type="speculationrules">{{ _speculation | minify_json }}</script>

@@ -61,7 +61,7 @@ written down.
 | `system_commit_date.rb` | `commit_date` (per doc **and** `site.data`) | `sitemap.xml`, `publication.html` |
 | `system_readme.rb` | `site.data.readme_content` | `home.html` |
 | `system_network_client.rb` | `site.data.network_client` | `home.html` (the `#net-data` tag) |
-| `system_inline.rb` | `\| strip_css_comments`, `\| strip_js_comments`, `\| minify_json` | `home.html`, `publication.html`, `404.html`, `site-analytics.html` (each captured `<style>`, `<script>` and JSON-LD block) |
+| `system_inline.rb` | `\| strip_css_comments`, `\| strip_js_comments`, `\| minify_json` | `home.html`, `publication.html`, `404.html`, `site-analytics.html`, `site-speculation.html` (each captured `<style>`, `<script>`, JSON-LD and speculation-rules block) |
 | `publication_redirect.rb` | redirect stub pages | crawlers |
 | `publication_validator.rb` | build-log warnings; a fatal error | the deploy |
 
