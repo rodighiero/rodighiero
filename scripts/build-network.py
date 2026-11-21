@@ -215,6 +215,12 @@ def precompute_layout(
     return json.loads(proc.stdout)
 
 MODEL_NAME = "Alibaba-NLP/gte-base-en-v1.5"
+# Pinned to the hub commit the embeddings were built with. On 2026-11-21 the
+# repo moved to a native `gte` model type that only transformers 5 knows, and
+# transformers stays on 4.x here (see pyproject.toml); this revision still uses
+# the remote-code `NewModel`, with the same weights. Moving it means rebuilding
+# the embedding cache, since the key below does not include the revision.
+MODEL_REVISION = "a829fd0e060bb84554da0dfd354d0de0f7712b7f"
 # gte-base-en-v1.5 has an 8192 word-piece window, so full-text articles inform
 # the embedding instead of being truncated to their first few hundred tokens
 # (the previous bge-base-en-v1.5 capped at 512, discarding 90%+ of long papers).
@@ -762,7 +768,9 @@ def main() -> int:
     )
     if missing:
         print(f"loading model {MODEL_NAME}…", file=sys.stderr)
-        model = SentenceTransformer(MODEL_NAME, device=DEVICE, trust_remote_code=True)
+        model = SentenceTransformer(
+            MODEL_NAME, revision=MODEL_REVISION, device=DEVICE, trust_remote_code=True
+        )
         model.max_seq_length = MAX_SEQ_LENGTH
         new_vecs = model.encode(
             [t for _, t in missing], normalize_embeddings=True, show_progress_bar=False
