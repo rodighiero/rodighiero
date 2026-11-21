@@ -1,17 +1,17 @@
 ---
 name: plugins
-description: The thirteen local Ruby plugins in _plugins/ — what each registers, publishes or attaches, who reads it, and the naming scheme and cross-cutting rules they all follow. Use when adding or editing a plugin, when a Liquid filter or a page-data field is missing at render time, when a build warning or fatal error names a plugin, when working out where a derived value comes from, or when deciding whether a new behaviour belongs in a plugin at all.
+description: The fourteen local Ruby plugins in _plugins/ — what each registers, publishes or attaches, who reads it, and the naming scheme and cross-cutting rules they all follow. Use when adding or editing a plugin, when a Liquid filter or a page-data field is missing at render time, when a build warning or fatal error names a plugin, when working out where a derived value comes from, or when deciding whether a new behaviour belongs in a plugin at all.
 ---
 
 # The plugin layer
 
-Thirteen Ruby files in `_plugins/`, plus one gem (`jekyll-feed`). They exist so that templates
+Fourteen Ruby files in `_plugins/`, plus one gem (`jekyll-feed`). They exist so that templates
 read values rather than derive them: a Liquid loop that scans the whole collection on each of
 sixty-odd pages is the thing these replace.
 
 They run **only because the site deploys through GitHub Actions** rather than GitHub's branch
 build, which whitelists gems and ignores `_plugins/` entirely. That is not a preference; the
-site would silently lose all thirteen under branch deployment.
+site would silently lose all fourteen under branch deployment.
 
 **No plugin depends on a gem.** `system_image_size.rb` is a hand-written WebP parser rather
 than ImageMagick, and `publication_redirect.rb` replaced `jekyll-redirect-from` outright.
@@ -27,14 +27,15 @@ it.** Everything here is one of three shapes:
 | A **field on a document** | a generator or `post_read` hook writing `doc.data[…]` | `commit_date`, `figures`, `prev_pub`/`next_pub`, `translation_set`, `publication_cluster`, `date` |
 | A **site-wide datum** | writing `site.data[…]` | `ordered_publications`, `readme_content`, `commit_date` |
 
-Two files fit none of them and produce no identifier a template can read:
-`publication_validator.rb` (whose output is the build log, and an abort) and
-`publication_redirect.rb` (whose output is extra pages).
+Three files fit none of them and produce no identifier a template can read:
+`publication_validator.rb` (whose output is the build log, and an abort),
+`publication_redirect.rb` (whose output is extra pages) and `system_server.rb` (whose
+output is a response header from the local dev server, and nothing in the build).
 
 ## The naming scheme, in one line
 
 Two words. The first is **`publication_`** (eight files) if the file works on the
-`publications` collection, or **`system_`** (five) if it does not; the second says what it
+`publications` collection, or **`system_`** (six) if it does not; the second says what it
 does to that subject. Two prefixes with no third case means there is nothing to adjudicate.
 The full rule, its three genuine edge cases, and the two schemes tried and rejected:
 `reference/naming.md` — read it before naming a new file, not after.
@@ -64,6 +65,7 @@ written down.
 | `system_inline.rb` | `\| strip_css_comments`, `\| strip_js_comments`, `\| minify_json` | `home.html`, `publication.html`, `404.html`, `site-analytics.html`, `site-speculation.html` (each captured `<style>`, `<script>`, JSON-LD and speculation-rules block) |
 | `publication_redirect.rb` | redirect stub pages | crawlers |
 | `publication_validator.rb` | build-log warnings; a fatal error | the deploy |
+| `system_server.rb` | `Cache-Control: no-store` on every `jekyll serve` response | the browser, during local editing only |
 
 Per-file detail — what each actually does and the decisions inside it — is the file's own
 header comment and nowhere else, so it cannot drift from the code.
@@ -77,6 +79,7 @@ header comment and nowhere else, so it cannot drift from the code.
 | Generator, default priority | `publication_order.rb` (`prev_pub` / `next_pub`), `publication_relations.rb` |
 | Generator, `priority :low` | `publication_redirect.rb` (last, so every page it might alias exists) |
 | `pre_render` hook | `system_image_size.rb`'s cache clear |
+| `:site, :after_init` hook | `system_server.rb` — only when `config["serving"]`, so never in `jekyll build` or the deploy |
 
 Two consequences worth holding on to:
 
