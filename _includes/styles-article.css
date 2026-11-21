@@ -100,6 +100,10 @@ footer.editorial-note p { margin: 0; }
   .body figure.data-table thead { display: table-header-group; }
   /* The caption sits below the table: keep it on the page with the last rows. */
   .body figure.data-table figcaption { page-break-before: avoid; break-before: avoid; }
+  /* Paper cannot scroll: a table wider than the measure would be clipped, so cells
+     wrap and the table fits the column. */
+  .body figure.data-table { overflow: visible; }
+  .body figure.data-table :is(th, td) { white-space: normal; padding-inline: 0.4rem; }
 }
 .publication-nav { font-size: var(--text-xs); color: var(--muted); }
 .publication-nav-top { margin-bottom: 3rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
