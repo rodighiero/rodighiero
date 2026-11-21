@@ -58,7 +58,7 @@ h1 { font-size: var(--text-xxl); font-weight: 500; margin: 0.6rem 0; }
   /* Breaks out of the measure, but stops at --page-gutter, where the mode toggle sits. */
   .body figure.wide { --bleed: min(990px, calc(100vw - 2 * var(--page-gutter))); width: var(--bleed); margin-left: calc(50% - var(--bleed) / 2); }
   .body figure.wide img { width: auto; max-width: 100%; max-height: 660px; margin: 0 auto; }
-  .body figure.wide:not(.data-table) figcaption { width: calc(min(660px, 100vw) - 3rem); max-width: 100%; margin-inline: auto; }
+  .body figure.wide:not(.data-table) figcaption { width: calc(min(660px, 100vw) - 2 * var(--page-gutter)); max-width: 100%; margin-inline: auto; }
   .body figure:is(.narrow, .half, .three-quarter) img { margin: 0 auto; }
   .body figure.narrow img { width: 33%; }
   .body figure.half img { width: 50%; }
