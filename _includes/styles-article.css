@@ -70,6 +70,12 @@ h1 { font-size: var(--text-xxl); font-weight: 500; margin: 0.6rem 0; }
      a wide one's (above) keeps the text column's width. */
   .body figure:is(.narrow, .half, .three-quarter) figcaption { width: 75%; margin-inline: auto; }
 }
+/* Below the 660px measure the column is already narrow: narrowed images, tables and
+   their captions take the full column instead of shrinking further. */
+@media screen and (max-width: 660px) {
+  .body figure:is(.narrow, .half, .three-quarter) :is(img, table, figcaption) { width: 100%; }
+  .body figure.figure-group.three-quarter .subfig img { max-width: 100%; }
+}
 .body sup a.footnote { font-size: 0.7em; font-weight: 500; text-decoration: none; padding: 0 0.1em; }
 .body .footnotes { margin-top: 3rem; padding-top: 1.2rem; font-size: var(--text-xs); line-height: var(--lh-normal); color: var(--muted); }
 .body .footnotes ol { padding-left: 1.3em; }
