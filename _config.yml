@@ -14,6 +14,8 @@ orcid: https://orcid.org/0000-0002-1405-7062
 
 # Local dev server port for `jekyll serve`; ignored by `jekyll build` and the deploy.
 port: 8000
+# Reload the browser when a rebuild finishes; `jekyll serve` only, never in a build.
+livereload: true
 
 plugins:
   - jekyll-feed
