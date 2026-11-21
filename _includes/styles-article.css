@@ -38,6 +38,9 @@ h1 { font-size: var(--text-xxl); font-weight: 500; margin: 0.6rem 0; }
 .body figure.figure-group.three-quarter .subfig img { max-width: 75%; }
 /* Data tables: a markdown table inside <figure class="data-table" markdown="1">. */
 .body figure.data-table { overflow-x: auto; }
+/* The caption sits inside the scroller: pinned to its left edge, it stays in view while
+   a table wider than the screen is scrolled sideways. */
+.body figure.data-table figcaption { position: sticky; left: 0; }
 .body figure.data-table table { width: 100%; border-collapse: collapse; font-size: var(--text-xs); line-height: var(--lh-normal); font-variant-numeric: tabular-nums; }
 .body figure.data-table th, .body figure.data-table td { padding: 0.4rem 0.7rem; border-bottom: 1px solid var(--border); white-space: nowrap; }
 .body figure.data-table thead th { font-weight: 500; color: var(--fg); border-bottom: 1px solid var(--fg); }
