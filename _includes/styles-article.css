@@ -98,6 +98,8 @@ footer.editorial-note p { margin: 0; }
   .body figure { page-break-inside: avoid; break-inside: avoid; }
   .body figure.data-table { page-break-inside: auto; break-inside: auto; }
   .body figure.data-table thead { display: table-header-group; }
+  /* The caption sits below the table: keep it on the page with the last rows. */
+  .body figure.data-table figcaption { page-break-before: avoid; break-before: avoid; }
 }
 .publication-nav { font-size: var(--text-xs); color: var(--muted); }
 .publication-nav-top { margin-bottom: 3rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
