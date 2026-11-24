@@ -69,6 +69,8 @@ jobs:
             --exclude 'parismetropole2020\.com'
             --exclude 'infoscience\.epfl\.ch'
             --exclude 'biblhertz\.it'
+            --exclude 'dhlab\.yale\.edu'
+            --exclude 'affinitymap\.epfl\.ch'
             './_site/*.html'
           fail: false
       - name: Annotate broken links with source context
