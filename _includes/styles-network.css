@@ -99,9 +99,25 @@ body[data-view="network"] #network-view {
     text-anchor: middle;
     paint-order: stroke;
     stroke: var(--bg);
-    stroke-width: 3px;
+    stroke-width: 5px;
     stroke-linejoin: round;
   }
+  /* Cluster names: the caps eyebrow of the lede, centred on each cluster. */
+  .clusters text {
+    font-family: var(--font);
+    font-size: var(--text-xxs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-caps);
+    fill: var(--muted);
+    pointer-events: none;
+    text-anchor: middle;
+    dominant-baseline: central;
+    paint-order: stroke;
+    stroke: var(--bg);
+    stroke-width: 5px;
+    stroke-linejoin: round;
+  }
+  .clusters text:is(.dimmed, .filtered-out) { opacity: 0.35; }
   /* Dashed to its original; a fallback (unreciprocated rescue edge) faint. */
   .link.translation { stroke-width: 0.9; stroke-dasharray: 3 2.5; }
   .link:is(.fallback, .filtered-out) { opacity: 0.5; }

@@ -15,11 +15,13 @@
 #   nodes[]  slug, title, url, x, y, tr?, related[]{slug, sim}
 #   links[]  source, target, fb?
 #   canvas, params
+#   clusters[] title, members (node indices) — the stage's cluster names
 #
 # What it drops, and why each is safe:
 #
-#   clusters            no JS touches it; the cluster cards are rendered
-#                       server-side and carry their own data-slugs
+#   clusters[] the rest  label, terms, span, description… are card text,
+#                       rendered server-side; the view needs only a name and
+#                       which nodes to put it over, as indices into nodes[]
 #   related[].title     the panel maps r.slug to a node index and reads the
 #   related[].url       title and url off `nodes`, so these are the same
 #   related[].lang      strings a second time — the bulk of the saving
@@ -51,6 +53,7 @@ class Jekyll::NetworkClientGenerator < Jekyll::Generator
       'links'  => net['links'].map { |l| link_for(l) },
       'canvas' => net['canvas'],
       'params' => net['params'],
+      'clusters' => clusters_for(net),
     }
   end
 
@@ -68,6 +71,14 @@ class Jekyll::NetworkClientGenerator < Jekyll::Generator
     related = (node['related'] || []).map { |r| { 'slug' => r['slug'], 'sim' => r['sim'] } }
     out['related'] = related unless related.empty?
     out
+  end
+
+  def clusters_for(net)
+    idx = {}
+    net['nodes'].each_with_index { |n, i| idx[n['slug']] = i }
+    (net['clusters'] || []).map do |c|
+      { 'title' => c['title'], 'members' => c['slugs'].map { |s| idx[s] }.compact }
+    end
   end
 
   def link_for(link)

@@ -40,6 +40,8 @@ function buildNetwork() {
   var root = svg.appendChild(svgEl('g'));
   var linkLayer = root.appendChild(svgEl('g', { class: 'links' }));
   var nodeLayer = root.appendChild(svgEl('g', { class: 'nodes' }));
+  // Under the hover labels, so a publication title always reads over a cluster name.
+  var clusterLayer = root.appendChild(svgEl('g', { class: 'clusters', 'aria-hidden': 'true' }));
   var labelLayer = root.appendChild(svgEl('g', { class: 'labels' }));
 
   function clearSelection() {
@@ -65,6 +67,11 @@ function buildNetwork() {
   var labelEls = [];
   var linkEls = [];
   var selectedNode = null;
+  // Each cluster's name sits at its members' barycentre.
+  var clusters = (data.clusters || []).map(function(c) {
+    return { title: c.title, members: c.members.map(function(i) { return nodes[i]; }) };
+  });
+  var clusterEls = [];
 
   var neighborsByIdx = nodes.map(function() { return []; });
   links.forEach(function(l) {
@@ -84,6 +91,21 @@ function buildNetwork() {
       var t = 'translate(' + n.x + ',' + n.y + ')';
       nodeEls[i].setAttribute('transform', t);
       labelEls[i].setAttribute('transform', t);
+    });
+    placeClusters();
+  }
+
+  /* At the members' barycentre, slid back inside the stage like a hover label; the
+     halo stroke keeps it legible over the nodes and edges beneath. */
+  function placeClusters() {
+    var w = dimensions().w;
+    clusters.forEach(function(c, k) {
+      var sx = 0, sy = 0;
+      c.members.forEach(function(n) { sx += n.x; sy += n.y; });
+      var half = measureText(c.title, clusterEls[k]) / 2;
+      var x = Math.max(half + 2, Math.min(w - half - 2, sx / c.members.length));
+      clusterEls[k].setAttribute('x', x);
+      clusterEls[k].setAttribute('y', sy / c.members.length);
     });
   }
 
@@ -157,19 +179,35 @@ function buildNetwork() {
       labelEls.push(labelLayer.appendChild(svgEl('text')));
     });
 
+    clusters.forEach(function(c) {
+      var t = svgEl('text');
+      t.textContent = c.title;
+      clusterEls.push(clusterLayer.appendChild(t));
+    });
+
     placeNodes();
   }
 
-  // Labels are measured in the live label's font, not counted in characters.
+  /* Labels are measured in the live label's font, not counted in characters; a
+     cluster name passes its own element, as it is set in caps and tracked. */
   var measureText = (function() {
-    var ctx = document.createElement('canvas').getContext('2d'), font = '';
-    return function(s) {
-      if (!font && labelEls.length) {
-        var cs = getComputedStyle(labelEls[0]);
-        font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+    var ctx = document.createElement('canvas').getContext('2d'), fonts = new Map();
+    return function(s, elRef) {
+      var ref = elRef || labelEls[0];
+      if (!ref) return 0;
+      var f = fonts.get(ref.parentNode);
+      if (!f) {
+        var cs = getComputedStyle(ref);
+        f = {
+          font: cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily,
+          caps: cs.textTransform === 'uppercase',
+          track: parseFloat(cs.letterSpacing) || 0
+        };
+        fonts.set(ref.parentNode, f);
       }
-      ctx.font = font;
-      return ctx.measureText(s).width;
+      ctx.font = f.font;
+      if (f.caps) s = s.toUpperCase();
+      return ctx.measureText(s).width + f.track * s.length;
     };
   })();
 
@@ -269,6 +307,9 @@ function buildNetwork() {
       nodeEls[i].classList.toggle('connected', near && i !== d.i);
       labelEls[i].classList.toggle('dimmed', !near);
     });
+    clusters.forEach(function(c, k) {
+      clusterEls[k].classList.toggle('dimmed', c.members.indexOf(d) < 0);
+    });
     links.forEach(function(l, k) {
       var touches = l.source.i === d.i || l.target.i === d.i;
       linkEls[k].classList.toggle('dimmed', !touches);
@@ -282,6 +323,7 @@ function buildNetwork() {
       labelEls[i].classList.remove('dimmed');
       setLabel(labelEls[i], '');
     });
+    clusterEls.forEach(function(t) { t.classList.remove('dimmed'); });
     linkEls.forEach(function(line) { line.classList.remove('dimmed', 'highlight'); });
   }
 
@@ -334,6 +376,10 @@ function buildNetwork() {
     links.forEach(function(l, k) {
       var shown = !slugs || (slugs.has(l.source.slug) && slugs.has(l.target.slug));
       linkEls[k].classList.toggle('filtered-out', !shown);
+    });
+    clusters.forEach(function(c, k) {
+      var shown = !slugs || c.members.some(function(n) { return slugs.has(n.slug); });
+      clusterEls[k].classList.toggle('filtered-out', !shown);
     });
   }
   /* Re-fit whenever the stage changes size, whatever the cause (a column change, the
