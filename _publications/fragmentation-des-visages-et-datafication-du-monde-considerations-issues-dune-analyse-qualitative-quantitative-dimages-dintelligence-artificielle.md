@@ -106,7 +106,7 @@ En passant de la figure des images (les fragmentations du visage) à un élémen
 [^8]: https://www.instagram.com/p/CVA9Y-dIoRv/.
 [^9]: https://www.project-sherpa.eu/.
 [^10]: https://github.com/chuanenlin/shutterscrape.
-[^11]: https://dhlab.yale.edu/projects/pixplot/.
+[^11]: https://dhlab.yale.edu/projects/pixplot/ ([archivé](https://web.archive.org/web/20230512124654/https://dhlab.yale.edu/projects/pixplot/)).
 [^12]: https://arxiv.org/abs/1802.03426.
 [^13]: https://rodighiero.github.io/AI-Imaginary/.
 [^14]: Quelques images représentatives du cluster sont consultables dans notre catalogue en ligne : https://rodighiero.github.io/AI-Imaginary/.

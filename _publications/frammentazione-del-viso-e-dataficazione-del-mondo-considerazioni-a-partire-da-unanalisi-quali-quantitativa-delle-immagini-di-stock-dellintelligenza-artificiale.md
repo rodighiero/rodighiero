@@ -104,7 +104,7 @@ Ora, secondo Pastoureau, il successo del blu oggi non è l’espressione di qual
 [^10]: [https://www.instagram.com/p/CVA9Y-dIoRv/](https://www.instagram.com/p/CVA9Y-dIoRv/).
 [^11]: [https://www.project-sherpa.eu/](https://www.project-sherpa.eu/).
 [^12]: [https://github.com/chuanenlin/shutterscrape](https://github.com/chuanenlin/shutterscrape).
-[^13]: [https://dhlab.yale.edu/projects/pixplot/](https://dhlab.yale.edu/projects/pixplot/).
+[^13]: [https://dhlab.yale.edu/projects/pixplot/](https://dhlab.yale.edu/projects/pixplot/) ([archiviato](https://web.archive.org/web/20220625004741/https://dhlab.yale.edu/projects/pixplot/)).
 [^14]: [https://arxiv.org/abs/1802.03426](https://arxiv.org/abs/1802.03426).
 [^15]: [https://rodighiero.github.io/AI-Imaginary/](https://rodighiero.github.io/AI-Imaginary/).
 [^16]: Per esempio, [particle-digital-face-concept-design](https://rodighiero.github.io/AI-Imaginary/data/originals/particle-digital-face-concept-design-260nw-1040364190.jpg), [man-face-pixel-dispersion-effect](https://rodighiero.github.io/AI-Imaginary/data/originals/man-face-pixel-dispersion-effect-260nw-424934146.jpg) e [artificial-intelligence-ai-deep-learning](https://rodighiero.github.io/AI-Imaginary/data/originals/artificial-intelligence-ai-deep-learning-260nw-1056809690.jpg).

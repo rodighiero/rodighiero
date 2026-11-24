@@ -618,7 +618,7 @@ Selecting the affinities that readers want to see through a control panel, the A
 
 ### A Journey from Micro to Macro
 
-The best way to understand the map is to handle it as an instrument. The Affinity Map is available at https://affinitymap.epfl.ch. Properly preparing to read the map is recommended as it presents a high level of information. As expected from sophisticated instruments, it takes time to become familiar with its workings, and this process demands diligence. The following section is a short handbook for its use. The working of the Affinity Map is presented by zooming out from Professor Jacques Lévy to the whole school. This movement goes through the CHÔROS laboratory and the Institute of Architecture, showing a progression from the individual to the whole organization.
+The best way to understand the map is to handle it as an instrument. The Affinity Map is available at https://affinitymap.epfl.ch ([archived](https://web.archive.org/web/20210316174019/https://affinitymap.epfl.ch/)). Properly preparing to read the map is recommended as it presents a high level of information. As expected from sophisticated instruments, it takes time to become familiar with its workings, and this process demands diligence. The following section is a short handbook for its use. The working of the Affinity Map is presented by zooming out from Professor Jacques Lévy to the whole school. This movement goes through the CHÔROS laboratory and the Institute of Architecture, showing a progression from the individual to the whole organization.
 
 #### Looking at Laboratory Members
 
