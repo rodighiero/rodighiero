@@ -20,7 +20,6 @@
   only spend Google's ~60-character budget. {%- endcomment -%}
   <title>{{ _display_title_attr }}</title>
   <meta name="description" content="{{ _excerpt_attr }}">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="{{ _url }}">
   {%- comment -%} The language set, original first (publication_relations.rb): hreflang
   lists all of it, x-default the original; og:locale:alternate all but this page. {%- endcomment -%}
@@ -39,7 +38,8 @@
   {% assign _social_img = page.thumb %}
   {% assign _social_src = _social_img | prepend: '/images/' %}
   {% include site-image.html src=_social_src alt=_display_title %}
-  {% if page.year != "Forthcoming" %}<meta property="article:published_time" content="{{ page.year }}-01-01T00:00:00+00:00">{% endif %}
+  {%- comment -%} No article:published_time: a bare year would become an invented
+  1 January. {%- endcomment -%}
   <meta property="article:modified_time" content="{{ page.commit_date }}">
   {% if page.author %}{% assign _oa = page.author | split: ' and ' %}{% for _a in _oa %}<meta property="article:author" content="{{ _a | strip | escape }}">
   {% endfor %}{% endif %}
@@ -47,7 +47,9 @@
   <meta name="twitter:description" content="{{ _excerpt_attr }}">
   {%- comment -%} HighWire Press / Google Scholar citation tags {%- endcomment %}
   <meta name="citation_title" content="{{ _title_attr }}">
-  {% if page.pdf_url %}<meta name="citation_pdf_url" content="{{ page.pdf_url | escape }}">{% endif %}
+  {%- comment -%} Scholar only accepts citation_pdf_url for a PDF hosted in the abstract
+  page's own subdirectory; external repository PDFs stay visible links below. {%- endcomment -%}
+  {% if page.pdf_url contains _url %}<meta name="citation_pdf_url" content="{{ page.pdf_url | escape }}">{% endif %}
   {%- comment -%} Scholar requires actual authors; editors must never stand in for them.
   citation_editor preserves the editor role in Zotero, including on editor-only books.
   The general HTML author tag can still name the page's primary creators. {%- endcomment -%}
