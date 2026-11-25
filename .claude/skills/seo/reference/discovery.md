@@ -63,6 +63,19 @@ The rendered file allows `/` for everyone and declares the sitemap URL, derived 
 `site.url` through Liquid front matter. Nothing is disallowed, and the `@cards/` note above
 is the reason to keep it that way.
 
+## Verification
+
+Search-engine ownership is proven by tokens set in `_config.yml`, both emitted only when
+set, so nothing ships until the site is claimed in the respective console:
+
+- `google_site_verification` → the `google-site-verification` meta in
+  `_includes/site-head.html`; `bing_verification` → the `msvalidate.01` meta there. Both
+  layouts carry them; the 404 and privacy pages take no head include and need none.
+- `bing_verification` also fills `/BingSiteAuth.xml` at the root, the XML file Bing
+  Webmaster Tools offers as an alternative to the meta tag. It is a `layout: null` Liquid
+  file like `robots.txt`, stays out of `sitemap.xml` (which loops the homepage and
+  publications only), and must stay fetchable — so `robots.txt` allows it.
+
 ## URL aliases
 
 `_data/legacy_redirects.yml` holds reviewed migration routes as old-path → current
