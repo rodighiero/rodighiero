@@ -48,8 +48,11 @@
   {%- comment -%} HighWire Press / Google Scholar citation tags {%- endcomment %}
   <meta name="citation_title" content="{{ _title_attr }}">
   {%- comment -%} Scholar only accepts citation_pdf_url for a PDF hosted in the abstract
-  page's own subdirectory; external repository PDFs stay visible links below. {%- endcomment -%}
-  {% if page.pdf_url contains _url %}<meta name="citation_pdf_url" content="{{ page.pdf_url | escape }}">{% endif %}
+  page's own subdirectory; external repository PDFs stay visible links below. The trailing
+  slash is the path boundary: matching _url alone would also match a sibling whose slug
+  starts with this one (/foo vs /foo-bar/x.pdf). {%- endcomment -%}
+  {% assign _pdf_dir = _url | append: '/' %}
+  {% if page.pdf_url contains _pdf_dir %}<meta name="citation_pdf_url" content="{{ page.pdf_url | escape }}">{% endif %}
   {%- comment -%} Scholar requires actual authors; editors must never stand in for them.
   citation_editor preserves the editor role in Zotero, including on editor-only books.
   The general HTML author tag can still name the page's primary creators. {%- endcomment -%}
