@@ -12,13 +12,11 @@ goatcounter_code: fumoseaffabulazioni
 # files, kept in step by a sentence in the `seo` skill. See that skill's reference/jsonld.md.
 orcid: https://orcid.org/0000-0002-1405-7062
 
-# Search-engine verification tokens, emitted only when set, so nothing ships until the
-# site is claimed in the respective console. google_site_verification becomes the
-# google-site-verification meta tag in site-head.html; bing_verification feeds both the
-# msvalidate.01 meta tag there and /BingSiteAuth.xml at the root. Uncomment and fill
-# after claiming dariorodighiero.com in Google Search Console / Bing Webmaster Tools:
+# Search Console verification token, emitted as a meta tag by site-head.html only when
+# set, so nothing ships until the site is claimed in Google Search Console. (Bing
+# verification is a literal msvalidate.01 meta tag in _layouts/home.html.) Uncomment and
+# fill after claiming dariorodighiero.com in Search Console:
 # google_site_verification: "…"
-# bing_verification: "…"
 
 # Local dev server port for `jekyll serve`; ignored by `jekyll build` and the deploy.
 port: 8000

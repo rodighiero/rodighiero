@@ -18,8 +18,8 @@ preload the browser discovers the font only after the inline CSS parses and the 
 paint falls back to a system font. One file covers every weight (the face is variable,
 200–1000); latin-ext and italic load on demand through unicode-range and use. {%- endcomment -%}
 <link rel="preload" href="/fonts/nunito-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
-{%- comment -%} Search-engine verification, emitted only when a token is set in _config.yml
-(the gateway to Search Console and Bing Webmaster Tools). Nothing ships until then. {%- endcomment -%}
+{%- comment -%} Search Console verification, emitted only when google_site_verification is
+set in _config.yml — nothing ships until the site is claimed there. Bing's verification
+is a literal msvalidate.01 meta in _layouts/home.html. {%- endcomment -%}
 {% if site.google_site_verification %}<meta name="google-site-verification" content="{{ site.google_site_verification }}">
-{% endif %}{% if site.bing_verification %}<meta name="msvalidate.01" content="{{ site.bing_verification }}">
 {% endif %}

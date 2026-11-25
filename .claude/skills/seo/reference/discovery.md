@@ -65,16 +65,12 @@ is the reason to keep it that way.
 
 ## Verification
 
-Search-engine ownership is proven by tokens set in `_config.yml`, both emitted only when
-set, so nothing ships until the site is claimed in the respective console:
-
-- `google_site_verification` → the `google-site-verification` meta in
-  `_includes/site-head.html`; `bing_verification` → the `msvalidate.01` meta there. Both
-  layouts carry them; the 404 and privacy pages take no head include and need none.
-- `bing_verification` also fills `/BingSiteAuth.xml` at the root, the XML file Bing
-  Webmaster Tools offers as an alternative to the meta tag. It is a `layout: null` Liquid
-  file like `robots.txt`, stays out of `sitemap.xml` (which loops the homepage and
-  publications only), and must stay fetchable — so `robots.txt` allows it.
+Search-engine ownership is proven in the homepage's head. Bing's is a literal
+`msvalidate.01` meta tag in `_layouts/home.html`; Google's is conditional —
+`_includes/site-head.html` emits `google-site-verification` only when
+`google_site_verification` is set in `_config.yml`, so nothing ships until the site is
+claimed in Search Console. Both layouts carry the Google one via the shared head; the 404
+and privacy pages take no head include and need none.
 
 ## URL aliases
 
