@@ -49,7 +49,15 @@ width that still shows 3 columns. {%- endcomment -%}
         "@id": "{{ site.url }}/#website",
         "name": {{ site.title | jsonify }},
         "url": "{{ site.url }}/",
-        "description": "Personal website of Dario Rodighiero — researcher in data visualization, digital humanities, and Science and Technology Studies."
+        "description": "Personal website of Dario Rodighiero — researcher in data visualization, digital humanities, and Science and Technology Studies.",
+        {%- comment -%} The homepage honours ?q= on load (scripts-gallery.js reads it), so the
+        site qualifies for Google's sitelinks search box: the template resolves to a page
+        whose results are filtered to the query. {%- endcomment -%}
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": { "@type": "EntryPoint", "urlTemplate": "{{ site.url }}/?q={search_term_string}" },
+          "query-input": "required name=search_term_string"
+        }
       },
       {
         "@type": "ProfilePage",

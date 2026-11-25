@@ -39,8 +39,9 @@
   {% assign _social_src = _social_img | prepend: '/images/' %}
   {% include site-image.html src=_social_src alt=_display_title %}
   {%- comment -%} No article:published_time: a bare year would become an invented
-  1 January. {%- endcomment -%}
+  1 January. og:updated_time mirrors article:modified_time in Open Graph's vocabulary. {%- endcomment -%}
   <meta property="article:modified_time" content="{{ page.commit_date }}">
+  <meta property="og:updated_time" content="{{ page.commit_date }}">
   {% if page.author %}{% assign _oa = page.author | split: ' and ' %}{% for _a in _oa %}<meta property="article:author" content="{{ _a | strip | escape }}">
   {% endfor %}{% endif %}
   <meta name="twitter:title" content="{{ _display_title_attr }}">
