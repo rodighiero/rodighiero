@@ -9,7 +9,7 @@ issue: "43"
 pages: "312–325"
 doi: "https://doi.org/10.82068/pgjournal.2026.23.43.13"
 issn: "1824-1301"
-thumb: "design-without-hands-rebuilding-a-web-application-with-ai/fig_004.webp"
+thumb: "progettare-senza-mani-ricostruire-unapplicazione-web-con-lia/cover.webp"
 lang: it
 translation_of: design-without-hands-rebuilding-a-web-application-with-ai
 ---
