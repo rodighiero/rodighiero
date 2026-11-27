@@ -36,11 +36,19 @@ the **`seo`** skill (`reference/discovery.md`).
 ## Compression — method 6
 
 All source WebPs are stored at libwebp's **method 6** (max compression effort). Run
-`uv run scripts/optimize-images.py` after adding new images: it re-encodes every WebP under
-`images/` — except `@cards/`, which its own generator already writes at method 6, and
-`@icons/` — at method 6 to a strict visually-lossless PSNR target, keeping the result only
-when it is meaningfully smaller. So no image is ever degraded or enlarged, and the pass is
-idempotent. `--dry-run` previews the savings.
+`uv run scripts/optimize-images.py` after adding images: it takes only the **new** WebPs under
+`images/` — untracked or modified in git, never `@cards/` or `@icons/` — and re-encodes each
+**once**. Every lossy re-encode costs a generation, so committed images are skipped, and a
+git-ignored hash list (`scripts/.optimized-images.json`) skips a file it already handled
+before the commit. Pass paths to narrow it; `--force` re-optimizes a named file regardless.
+
+Fidelity is **measured**: it bisects `-q` for the smallest file whose decoded RGB pixels reach
+50 dB PSNR against the input, tries a lossless encode too, and replaces the file only when
+the winner is meaningfully smaller. cwebp's own `-psnr` flag is not used — it scores in YUV
+and landed 43–48 dB in RGB, and the old sweep of the whole folder with it compounded loss on
+every run (fixed 2026-11-27). Expect a lossless export to shrink and an already-lossy image
+to stay as it is: lossy WebP is 4:2:0, so a detailed colour photo may not reach 50 dB even
+at q100, and then only lossless passes. `--dry-run` previews.
 
 `method` is cwebp's effort dial `-m` (0–6) and does **not** change quality — a higher method
 means a smaller file at the same fidelity. Most gains come from figures originally saved with
