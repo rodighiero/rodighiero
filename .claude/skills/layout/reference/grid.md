@@ -69,6 +69,13 @@ Three columns is the one count where the four blocks don't divide evenly, so
 second row — side by side across the full measure, with the identity block alone in the first
 column above them — rather than leaving two beside the portrait and the third under it.
 
+At two columns the header fills down instead of across
+(`body[data-cols="2"] .header { grid-auto-flow: column; grid-template-rows: auto auto }`):
+the first paragraph sits under the portrait and the second and third share the other
+column, so the bio reads as two newspaper columns rather than zigzagging from the
+portrait's right to the next row's left. It relies on the three paragraphs staying close
+in length — a much longer one would open a gap in the column beside it.
+
 **Footer and network view** follow the count instead of hardcoding four. `syncPageWidth`
 publishes it as `--cols` (the number to compute with) and `data-cols` (the hook for rules
 that can't, since a grid line counted from the end needs a line to exist), and both use

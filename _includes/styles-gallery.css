@@ -105,6 +105,11 @@ html[data-bio-visible="0"] .bio-shell { height: 0; overflow: hidden; margin-bott
 /* At three columns the four blocks don't divide evenly: send all three paragraphs to
    the second row rather than stranding the last one under the portrait. */
 body[data-cols="3"] .header .bio-col { grid-row: 2; }
+/* At two columns, fill down rather than across: the first paragraph under the
+   portrait, the second and third in the other column, so the bio reads as two
+   newspaper columns instead of zigzagging. The paragraphs are near-equal in length,
+   so the rows still align. */
+body[data-cols="2"] .header { grid-auto-flow: column; grid-template-rows: auto auto; }
 .header .bio-col {
   font-size: var(--text-xs);
   line-height: var(--lh-loose);
