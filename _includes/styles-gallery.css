@@ -330,9 +330,8 @@ body[data-view="gallery"] .card[data-gap]::after {
   margin: 0 auto;
   width: calc(var(--card-w) / 16 + var(--gap-span, 0) * var(--card-w) / 32);
   height: 1px;
-  /* Half the --border weight: repeated down every column, a full hairline reads as
-     structure. */
-  background: var(--tint-active);
+  /* The filter bar's own hairline colour, so the page has one rule weight. */
+  background: var(--border);
   pointer-events: none; /* or the card's hover would fire from the gap */
 }
 
