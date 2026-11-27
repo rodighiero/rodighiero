@@ -8,21 +8,25 @@ Params (pipe-delimited lists align by position):
   alts     — optional per-panel alt text (falls back to the caption)
   caption  — optional shared caption
   class    — optional extra classes on the <figure>; `wide` sets the panels side by
-             side, each growing by its aspect ratio (--ar) so all share one height
+             side in one grid row, each column sized in fr by its panel's aspect
+             ratio (--cols), so all panels share one height
 {%- endcomment -%}
 {%- assign _imgs = include.images | split: "|" -%}
 {%- assign _alts = include.alts | split: "|" -%}
-<figure class="figure-group{% if include.class %} {{ include.class | escape }}{% endif %}">
+{%- assign _cols = "" -%}
+{%- if include.class contains "wide" -%}
+  {%- for src in _imgs -%}
+    {%- assign _dims = "/images/" | append: src | strip | image_size -%}
+    {%- if _dims.width -%}{%- assign _ar = _dims.width | times: 1.0 | divided_by: _dims.height | round: 4 -%}{%- else -%}{%- assign _ar = 1 -%}{%- endif -%}
+    {%- assign _cols = _cols | append: " minmax(0, " | append: _ar | append: "fr)" -%}
+  {%- endfor -%}
+{%- endif -%}
+<figure class="figure-group{% if include.class %} {{ include.class | escape }}{% endif %}"{% if _cols != "" %} style="--cols:{{ _cols }}"{% endif %}>
   {%- for src in _imgs -%}
     {%- assign _src = src | strip -%}
     {%- assign _full = "/images/" | append: _src -%}
     {%- assign _alt = _alts[forloop.index0] | default: include.caption -%}
-    {%- assign _ar = nil -%}
-    {%- if include.class contains "wide" -%}
-      {%- assign _dims = _full | image_size -%}
-      {%- if _dims.width -%}{%- assign _ar = _dims.width | times: 1.0 | divided_by: _dims.height | round: 4 -%}{%- endif -%}
-    {%- endif -%}
-    <div class="subfig"{% if _ar %} style="--ar: {{ _ar }}"{% endif %}>
+    <div class="subfig">
       {% include figure-image.html src=_full alt=_alt %}
     </div>
   {%- endfor -%}
