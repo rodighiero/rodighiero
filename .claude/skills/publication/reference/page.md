@@ -57,6 +57,9 @@ without decoupling from its figure. `wide` and full-width tables keep a full-wid
 `figure-single.html` for one image, `figure-group.html` for a multi-panel figure (pipe-delimited
 `images=`). A group's panels keep their intrinsic width and share one caption;
 `figure-group.three-quarter` narrows the *panels* to 75% while the caption stays full width.
+`figure-group.wide` sets the panels **side by side** across the breakout (on screen; print
+stacks them): the include emits each panel's aspect ratio as `--ar`, which becomes its
+`flex-grow`, so the row has one common height and fills the width exactly.
 
 `bordered` (from `styles-base.css`) puts a hairline on an image whose own edges are white.
 

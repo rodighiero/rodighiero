@@ -7,7 +7,8 @@ Params (pipe-delimited lists align by position):
   images   — required, e.g. "slug/fig_002a.webp|slug/fig_002b.webp"
   alts     — optional per-panel alt text (falls back to the caption)
   caption  — optional shared caption
-  class    — optional extra classes on the <figure>
+  class    — optional extra classes on the <figure>; `wide` sets the panels side by
+             side, each growing by its aspect ratio (--ar) so all share one height
 {%- endcomment -%}
 {%- assign _imgs = include.images | split: "|" -%}
 {%- assign _alts = include.alts | split: "|" -%}
@@ -16,7 +17,12 @@ Params (pipe-delimited lists align by position):
     {%- assign _src = src | strip -%}
     {%- assign _full = "/images/" | append: _src -%}
     {%- assign _alt = _alts[forloop.index0] | default: include.caption -%}
-    <div class="subfig">
+    {%- assign _ar = nil -%}
+    {%- if include.class contains "wide" -%}
+      {%- assign _dims = _full | image_size -%}
+      {%- if _dims.width -%}{%- assign _ar = _dims.width | times: 1.0 | divided_by: _dims.height | round: 4 -%}{%- endif -%}
+    {%- endif -%}
+    <div class="subfig"{% if _ar %} style="--ar: {{ _ar }}"{% endif %}>
       {% include figure-image.html src=_full alt=_alt %}
     </div>
   {%- endfor -%}

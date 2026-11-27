@@ -62,6 +62,12 @@ h1 { font-size: var(--text-xxl); font-weight: 500; margin: 0.6rem 0; }
   .body figure.wide { --bleed: min(990px, calc(100vw - 2 * var(--page-gutter))); width: var(--bleed); margin-left: calc(50% - var(--bleed) / 2); }
   .body figure.wide img { width: auto; max-width: 100%; max-height: 660px; margin: 0 auto; }
   .body figure.wide figcaption { width: calc(min(660px, 100vw) - 2 * var(--page-gutter)); max-width: 100%; margin-inline: auto; }
+  /* A wide group sets its panels in one row; each grows by its aspect ratio (--ar, from
+     figure-group.html), so the panels share one height and fill the breakout exactly. */
+  .body figure.figure-group.wide { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0.75rem; }
+  .body figure.figure-group.wide .subfig { flex: var(--ar, 1) 1 0; min-width: 0; margin: 0; }
+  .body figure.figure-group.wide .subfig img { width: 100%; max-height: none; }
+  .body figure.figure-group.wide figcaption { flex: none; }
 }
 /* Narrowed figures and tables keep their reduced size on screen and in print. */
 .body figure:is(.narrow, .half, .three-quarter) img { margin: 0 auto; }
