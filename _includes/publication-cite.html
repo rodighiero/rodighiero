@@ -75,5 +75,5 @@ names included; the copied plain text is left as it was. {%- endcomment -%}
 {%- if include.linked -%}
   {{ _ref }}
 {%- else -%}
-  <pre class="cite-data" hidden>{{ _ref }}</pre>
+  <pre class="cite-data" hidden>{{ _ref | escape }}</pre>
 {%- endif -%}

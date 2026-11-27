@@ -4,4 +4,4 @@
   order, is credit-full.html.
 {%- endcomment -%}
 {%- assign _credit = include.item | credit_short -%}
-{%- if _credit != "" -%}<div class="card-text">{{ _credit }}</div>{%- endif -%}
+{%- if _credit != "" -%}<div class="card-text">{{ _credit | escape }}</div>{%- endif -%}

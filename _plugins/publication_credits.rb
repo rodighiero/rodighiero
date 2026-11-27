@@ -27,12 +27,12 @@ module Jekyll
     ME = 'Rodighiero'
 
     # [field, prefix when Dario is among the names, prefix when he is not], in the
-    # order a card lists them.
+    # order credit-full.html lists them (translator before preface, as Chicago does).
     ROLES = [
       ['author',      'with ',            ''],
       ['editor',      'edited with ',     'edited by '],
-      ['preface',     'preface with ',    'preface by '],
       ['translator',  'translated with ', 'translated by '],
+      ['preface',     'preface with ',    'preface by '],
       ['interviewer', 'interview with ',  'interview by '],
     ].freeze
 

@@ -14,11 +14,11 @@ Params:
 {%- endcomment -%}
 {%- assign _yr = include.year -%}
 {%- if _yr == 'now' -%}{%- assign _yr = site.time | date: '%Y' -%}{%- endif -%}
-<button type="button" class="card {% if include.action contains 'cluster:' %}filter{% else %}action{% endif %}" data-action="{{ include.action }}"{% if include.slugs %} data-slugs="{{ include.slugs | join: ' ' }}"{% endif %}{% if include.filterlabel %} data-filter-label="{{ include.filterlabel }}"{% endif %}{% if include.gcclick %} data-goatcounter-click="{{ include.gcclick }}" data-goatcounter-title="{{ include.gctitle | default: include.gcclick }}"{% endif %}>
+<button type="button" class="card {% if include.action contains 'cluster:' %}filter{% else %}action{% endif %}" data-action="{{ include.action }}"{% if include.slugs %} data-slugs="{{ include.slugs | join: ' ' }}"{% endif %}{% if include.filterlabel %} data-filter-label="{{ include.filterlabel | escape }}"{% endif %}{% if include.gcclick %} data-goatcounter-click="{{ include.gcclick | escape }}" data-goatcounter-title="{{ include.gctitle | default: include.gcclick | escape }}"{% endif %}>
   {%- if include.media -%}<span class="card-media">{% include {{ include.media }} %}</span>{%- endif -%}
   {%- if _yr or include.eyebrow or include.venue -%}
-  <span class="card-meta">{% if _yr %}{% if _yr contains '–' or _yr contains '-' %}<span>{{ _yr }}</span>{% else %}<time datetime="{{ _yr }}">{{ _yr }}</time>{% endif %}{% if include.eyebrow %} · {% endif %}{% endif %}{{ include.eyebrow }}{% if include.venue %}<br><span class="venue">{{ include.venue }}</span>{% endif %}</span>
+  <span class="card-meta">{% if _yr %}{% if _yr contains '–' or _yr contains '-' %}<span>{{ _yr }}</span>{% else %}<time datetime="{{ _yr }}">{{ _yr }}</time>{% endif %}{% if include.eyebrow %} · {% endif %}{% endif %}{{ include.eyebrow | escape }}{% if include.venue %}<br><span class="venue">{{ include.venue | escape }}</span>{% endif %}</span>
   {%- endif -%}
-  <span class="card-title">{{ include.label }}</span>
-  {% if include.sublabel %}<span class="card-text hyphenate-prose">{{ include.sublabel }}</span>{% endif %}
+  <span class="card-title">{{ include.label | escape }}</span>
+  {% if include.sublabel %}<span class="card-text hyphenate-prose">{{ include.sublabel | escape }}</span>{% endif %}
 </button>

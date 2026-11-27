@@ -180,7 +180,7 @@
   <article>
   <div class="title-block">
   {% include card-meta.html item=page %}
-  <h1>{{ _display_title }}</h1>
+  <h1>{{ _display_title | escape }}</h1>
   {% include credit-full.html item=page %}
   {%- comment -%} External repository PDFs stay visible links: Scholar only accepts
   citation_pdf_url for a PDF hosted in the abstract page's own subdirectory. {%- endcomment -%}
@@ -188,9 +188,13 @@
   </div>
   {% include publication-cite.html item=page %}
   <div class="content">
+    {%- comment -%} The body is everything after the FIRST marker — parts[1..] rejoined —
+    matching Jekyll's excerpt_separator semantics: split cuts at every marker, so
+    _content_parts[1] alone would silently drop the tail of a file with a second one.
+    {%- endcomment -%}
     {% assign _content_parts = content | split: '<!--more-->' %}
     <div class="body hyphenate-prose">
-      {% if _content_parts.size > 1 %}<div class="abstract">{{ _content_parts[0] }}</div>{{ _content_parts[1] | autolink_urls | ordered_references }}{% else %}{{ content | autolink_urls | ordered_references }}{% endif %}
+      {% if _content_parts.size > 1 %}<div class="abstract">{{ _content_parts[0] }}</div>{{ _content_parts | slice: 1, 10000 | join: '<!--more-->' | autolink_urls | ordered_references }}{% else %}{{ content | autolink_urls | ordered_references }}{% endif %}
     </div>
   </div>
   {% if _content_parts.size > 1 %}<footer class="editorial-note" lang="en"><p>Editorial note: this text is republished from its original venue and lightly edited for uniformity across the site. Citations and references have been restated in Chicago author-date style; obvious typos, incidental reference errors, and occasional language slips have been corrected. Small differences from the original publication may therefore exist; the version of record is the publisher’s, linked at the top of this page.</p></footer>{% endif %}

@@ -326,8 +326,8 @@ function setView(view, persist) {
     b.setAttribute('aria-pressed', b.dataset.view === view ? 'true' : 'false');
   });
   updateViewButtonLabels();
-  // Leaving the network view means it was built.
-  if (prev === 'network' && view !== 'network') networkApi.clearSelection();
+  // Leaving the network view clears its selection — when it was built.
+  if (prev === 'network' && view !== 'network' && networkApi) networkApi.clearSelection();
   // Both branches lay out synchronously, so the view is settled before it paints.
   if (view === 'gallery') {
     layoutMasonry();
@@ -337,7 +337,9 @@ function setView(view, persist) {
     // ResizeObserver refits it as the stage appears.
     syncPageWidth();
     if (!networkApi) buildNetwork();
-    networkApi.filter(matchedSlugs); // catch up with any filter set meanwhile
+    // A failed build (missing or malformed #net-data) leaves networkApi null: the stage
+    // stays empty, but every other control keeps working.
+    if (networkApi) networkApi.filter(matchedSlugs); // catch up with any filter set meanwhile
   }
 }
 // Clicking the active view button clears the filter; say so, since nothing else does.
@@ -376,7 +378,7 @@ viewButtons.forEach(function(b) {
     if (document.body.dataset.view === clicked) {
       // The active button resets: clear the filter and any node selection.
       resetFilters();
-      if (clicked === 'network') networkApi.clearSelection();
+      if (clicked === 'network' && networkApi) networkApi.clearSelection();
     } else {
       withCrossfade(function() { setView(clicked); });
     }

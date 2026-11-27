@@ -14,12 +14,12 @@ Fields come from one entry of _data/home_cards.yml `events`:
 {%- endcomment -%}
 {%- assign _e = include.event -%}
 {%- if _e.link and _e.link != '' -%}
-<a class="card event" href="{{ _e.link }}" target="_blank" rel="noopener" data-goatcounter-click="{{ _e.label }}" data-goatcounter-title="{{ _e.label }}">
+<a class="card event" href="{{ _e.link | escape }}" target="_blank" rel="noopener" data-goatcounter-click="{{ _e.label | escape }}" data-goatcounter-title="{{ _e.label | escape }}">
   {%- if _e.date or _e.eyebrow or _e.venue -%}
-  <span class="card-meta">{% if _e.date %}<time datetime="{{ _e.date | date: '%Y-%m-%d' }}">{{ _e.date | date: '%-d %B %Y' }}</time> · {% endif %}{{ _e.eyebrow | default: 'Event' }}{% if _e.venue %}<br><span class="venue">{{ _e.venue }}</span>{% endif %}</span>
+  <span class="card-meta">{% if _e.date %}<time datetime="{{ _e.date | date: '%Y-%m-%d' }}">{{ _e.date | date: '%-d %B %Y' }}</time> · {% endif %}{{ _e.eyebrow | default: 'Event' | escape }}{% if _e.venue %}<br><span class="venue">{{ _e.venue | escape }}</span>{% endif %}</span>
   {%- endif -%}
-  <span class="card-title">{{ _e.label }}</span>
-  {% if _e.sublabel %}<span class="card-text hyphenate-prose">{{ _e.sublabel }}</span>{% endif %}
+  <span class="card-title">{{ _e.label | escape }}</span>
+  {% if _e.sublabel %}<span class="card-text hyphenate-prose">{{ _e.sublabel | escape }}</span>{% endif %}
   {% include credit-short.html item=_e %}
 </a>
 {%- endif -%}

@@ -31,6 +31,9 @@ module Jekyll
           url = $2
           trailing = ''
           while url =~ /[.,;:!?)]\z/
+            # A ")" that closes a "(" inside the URL (Wikipedia's Foo_(bar)) is
+            # part of the URL; only an unmatched one is sentence punctuation.
+            break if url[-1] == ')' && url.count('(') >= url.count(')')
             trailing = url[-1] + trailing
             url = url[0..-2]
           end

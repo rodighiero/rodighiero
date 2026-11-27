@@ -6,7 +6,8 @@
 function buildNetwork() {
   var dataNode = document.getElementById('net-data');
   if (!dataNode) return;
-  var data = JSON.parse(dataNode.textContent);
+  var data;
+  try { data = JSON.parse(dataNode.textContent); } catch (e) { return; }
   var pubs = data.nodes;
   var idxBySlug = {};
   pubs.forEach(function(p, i) { idxBySlug[p.slug] = i; });

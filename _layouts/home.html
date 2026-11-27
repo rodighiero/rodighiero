@@ -274,7 +274,7 @@ width that still shows 3 columns. {%- endcomment -%}
         {% include card-meta.html item=publication %}
         {%- comment -%} lang on the title alone: the only part of a tile in the work's own
         language. {%- endcomment %}
-        <h2 class="card-title" lang="{{ _lang }}"><a href="{{ publication.url }}">{{ _display_title }}</a></h2>
+        <h2 class="card-title" lang="{{ _lang }}"><a href="{{ publication.url }}">{{ _display_title | escape }}</a></h2>
         {% include credit-short.html item=publication %}
       </div>
       {%- endfor %}
