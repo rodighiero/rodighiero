@@ -7,7 +7,7 @@ author: "Tina Rosado and Sabina Rosenbergová and Dario Rodighiero"
 publisher: "Data Visualization Society"
 issue: "6"
 pages: "26–27"
-thumb: "mapping-memory-of-an-arctic-community/fig_001.webp"
+thumb: "mapping-memory-of-an-arctic-community/cover.webp"
 ---
 The main settlement of the High Arctic archipelago of Svalbard, Longyearbyen, is home to about 2,500 residents. People arrive, stay a few years, and leave. Norwegians stay about six years on average, residents of other nationalities around four. The latter make up more than a third of the town and come from over 50 countries. When people leave, they take with them memories of why things are as they are. What endures is mostly the Svalbard shown to outsiders—through museums, research, and tourism—while the community’s everyday memory slips away.
 
