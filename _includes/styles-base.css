@@ -71,7 +71,6 @@
 }
 :root:has(> head > meta[name="color-scheme"][content="dark"]) { color-scheme: dark; }
 :root:has(> head > meta[name="color-scheme"][content="light"]) { color-scheme: light; }
-html { font-size: 16px; }
 body {
   font-family: var(--font);
   font-size: var(--text-base);

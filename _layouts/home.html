@@ -262,14 +262,14 @@ width that still shows 3 columns. {%- endcomment -%}
       {%- capture _search_text %}{{ _display_title }} {{ publication.author }} {{ publication.editor }} {{ publication.translator }} {{ publication.preface }} {{ publication.interviewer }} {{ publication.venue }} {{ publication.publisher }} {{ publication.year }} {{ site.data.publication_types[publication.type].label }} {{ publication.volume }} {{ publication.issue }} {{ publication.pages }} {{ publication.doi }} {{ site.data.languages[_lang].search }}{% endcapture %}
       <div class="card publication" data-slug="{{ publication.slug }}" data-type="{{ publication.type }}" data-year="{{ publication.year }}" data-search="{{ _search_text | strip_newlines | escape }}">
         <div class="card-media{% if publication.img_border %} bordered{% endif %}">
-          {%- comment -%} The first row is the likely LCP; below the fold loads lazily.
+          {%- comment -%} Only the portrait asks for high priority; below the fold loads lazily.
           The srcset lists the rungs that exist, at their real widths; width/height are the
           800's, the same ratio. {%- endcomment -%}
           {%- assign _card = '/images/@cards/' | append: publication.slug -%}
           {%- assign _thumb = _card | append: '.webp' -%}
           {%- assign _thumb_dims = _thumb | image_size -%}
           {%- capture _srcset -%}{%- for _w in _card_rungs -%}{%- assign _rung = _card | append: '-' | append: _w | append: '.webp' -%}{%- assign _rd = _rung | image_size -%}{% if _rd.width %}{{ _rung }} {{ _rd.width }}w, {% endif %}{%- endfor -%}{{ _thumb }} {{ _thumb_dims.width }}w{%- endcapture %}
-          <img src="{{ _thumb }}" srcset="{{ _srcset }}" sizes="{{ _media_sizes }}" alt="{{ _display_title | escape }}" {% if forloop.index <= 4 %}fetchpriority="high"{% elsif forloop.index > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width }}" height="{{ _thumb_dims.height }}">
+          <img src="{{ _thumb }}" srcset="{{ _srcset }}" sizes="{{ _media_sizes }}" alt="{{ _display_title | escape }}" {% if forloop.index > 8 %}loading="lazy"{% endif %} width="{{ _thumb_dims.width }}" height="{{ _thumb_dims.height }}">
         </div>
         {% include card-meta.html item=publication %}
         {%- comment -%} lang on the title alone: the only part of a tile in the work's own
